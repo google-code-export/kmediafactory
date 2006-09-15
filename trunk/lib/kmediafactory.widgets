@@ -1,0 +1,29 @@
+[Global]
+PluginName=KMediaFactoryWidgets
+Includes=kinstance.h
+Init=new KInstance("kmfwidgets");
+
+[KMFImageView]
+ToolTip=Image viewer (KMF)
+WhatsThis=KMediaFactory image viewer
+IncludeFile=kmfimageview.h
+Group=KMediaFactory
+
+[KMFLanguageComboBox]
+ToolTip=Language ComboBox (KMF)
+WhatsThis=KMediaFactory language combobox
+IncludeFile=kmflanguagewidgets.h
+Group=KMediaFactory
+
+[KMFLanguageListBox]
+ToolTip=Language ListBox (KMF)
+WhatsThis=KMediaFactory language listbox
+IncludeFile=kmflanguagewidgets.h
+Group=KMediaFactory
+
+[KMFFontChooser]
+ToolTip=Font Chooser Widget (KMF)
+WhatsThis=Font chooser widget
+IncludeFile=kmffontchooser.h
+Group=KMediaFactory
+

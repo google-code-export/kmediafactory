@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=KMFSlideshow
+Comment=Slideshow plugin for KMediaFactory
+ServiceTypes=KMediaFactory/Plugin
+Type=Service
+X-KDE-Library=kmediafactory_slideshow

@@ -1,0 +1,408 @@
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2006-06-01 11:30+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: ENCODING\n"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr ""
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr ""
+
+#: kmfplayer.cpp:112
+msgid "*.png|PNG Graphics file"
+msgstr ""
+
+#: kmfplayer.cpp:118
+#, c-format
+msgid "Could not write to file: %1"
+msgstr ""
+
+#: kmfplayer.cpp:134
+msgid "DVD files and directories"
+msgstr ""
+
+#: kxinewidget.cpp:407
+msgid "auto"
+msgstr ""
+
+#: kxinewidget.cpp:409
+msgid "off"
+msgstr ""
+
+#: kxinewidget.cpp:418 kxinewidget.cpp:429
+msgid "Ch "
+msgstr ""
+
+#: kxinewidget.cpp:572
+msgid "General Warning: \n"
+msgstr ""
+
+#: kxinewidget.cpp:577
+msgid "No Informations available."
+msgstr ""
+
+#: kxinewidget.cpp:583
+msgid "Security Warning: \n"
+msgstr ""
+
+#: kxinewidget.cpp:592
+msgid ""
+"The host you're trying to connect is unknown.\n"
+"Check the validity of the specified hostname. "
+msgstr ""
+
+#: kxinewidget.cpp:599
+msgid "The device name you specified seems invalid. "
+msgstr ""
+
+#: kxinewidget.cpp:606
+msgid ""
+"The network looks unreachable.\n"
+"Check your network setup and the server name. "
+msgstr ""
+
+#: kxinewidget.cpp:613
+msgid "Audio output unavailable. Device is busy. "
+msgstr ""
+
+#: kxinewidget.cpp:620
+msgid ""
+"The connection was refused.\n"
+"Check the host name. "
+msgstr ""
+
+#: kxinewidget.cpp:627
+msgid "The specified file or url was not found. Please check it. "
+msgstr ""
+
+#: kxinewidget.cpp:634
+msgid "Permission to this source was denied. "
+msgstr ""
+
+#: kxinewidget.cpp:641
+msgid ""
+"The source can't be read.\n"
+"Maybe you don't have enough rights for this, or source doesn't contain data "
+"(e.g: no disc in drive). "
+msgstr ""
+
+#: kxinewidget.cpp:648
+msgid "A problem occur while loading a library or a decoder: "
+msgstr ""
+
+#: kxinewidget.cpp:655
+msgid "The source seems encrypted, and can't be read. "
+msgstr ""
+
+#: kxinewidget.cpp:657
+msgid ""
+"\n"
+"Your DVD is probably crypted. According to your country laws, you can or "
+"can't use libdvdcss to be able to read this disc. "
+msgstr ""
+
+#: kxinewidget.cpp:664
+msgid "Unknown error: \n"
+msgstr ""
+
+#: kxinewidget.cpp:859
+msgid "Error: Can't init new Video Driver %1 - using %2!"
+msgstr ""
+
+#: kxinewidget.cpp:869
+msgid "Using Video Driver: "
+msgstr ""
+
+#: kxinewidget.cpp:945
+msgid "Error: Can't init new Audio Driver %1 - using %2!"
+msgstr ""
+
+#: kxinewidget.cpp:953
+msgid "Using Audio Driver: "
+msgstr ""
+
+#: kxinewidget.cpp:1077
+msgid "Init xine..."
+msgstr ""
+
+#: kxinewidget.cpp:1088
+msgid "Failed to connect to X-Server!"
+msgstr ""
+
+#: kxinewidget.cpp:1132
+msgid "Can't init xine Engine!"
+msgstr ""
+
+#: kxinewidget.cpp:1168
+msgid "Audiodriver to use (default: auto)"
+msgstr ""
+
+#: kxinewidget.cpp:1194
+msgid "Videodriver to use (default: auto)"
+msgstr ""
+
+#: kxinewidget.cpp:1205
+msgid "Use software audio mixer"
+msgstr ""
+
+#: kxinewidget.cpp:1209
+msgid "Show OSD Messages"
+msgstr ""
+
+#: kxinewidget.cpp:1222
+msgid "Size of OSD text"
+msgstr ""
+
+#: kxinewidget.cpp:1226
+msgid "Font for OSD Messages"
+msgstr ""
+
+#: kxinewidget.cpp:1246
+msgid "Can't init Video Driver '%1' - trying 'auto'..."
+msgstr ""
+
+#: kxinewidget.cpp:1255
+msgid "All Video Drivers failed to initialize!"
+msgstr ""
+
+#: kxinewidget.cpp:1266
+msgid "Can't init Audio Driver '%1' - trying 'auto'..."
+msgstr ""
+
+#: kxinewidget.cpp:1273
+msgid "All Audio Drivers failed to initialize!"
+msgstr ""
+
+#: kxinewidget.cpp:1282
+msgid "Can't create a new xine Stream!"
+msgstr ""
+
+#: kxinewidget.cpp:1313
+msgid "Ready"
+msgstr ""
+
+#: kxinewidget.cpp:1444 kxinewidget.cpp:2024 kxinewidget.cpp:2873
+msgid "Playing"
+msgstr ""
+
+#: kxinewidget.cpp:1773
+msgid "DVB: opening..."
+msgstr ""
+
+#: kxinewidget.cpp:1827
+msgid "Opening..."
+msgstr ""
+
+#: kxinewidget.cpp:2022
+msgid "Recording"
+msgstr ""
+
+#: kxinewidget.cpp:2063
+msgid "Audio Codec"
+msgstr ""
+
+#: kxinewidget.cpp:2065
+msgid "Video Codec"
+msgstr ""
+
+#: kxinewidget.cpp:2075
+msgid "No plugin found to handle this resource"
+msgstr ""
+
+#: kxinewidget.cpp:2080
+msgid "Resource seems to be broken"
+msgstr ""
+
+#: kxinewidget.cpp:2085
+msgid "Requested resource does not exist"
+msgstr ""
+
+#: kxinewidget.cpp:2090
+msgid "Resource can not be opened"
+msgstr ""
+
+#: kxinewidget.cpp:2095
+msgid "Generic error"
+msgstr ""
+
+#: kxinewidget.cpp:2533
+msgid "Volume"
+msgstr ""
+
+#: kxinewidget.cpp:2569 kxinewidget.cpp:2574
+msgid "Mute"
+msgstr ""
+
+#: kxinewidget.cpp:2863
+msgid "Pause"
+msgstr ""
+
+#: kxinewidget.cpp:2884 kxinewidget.cpp:2908 kxinewidget.cpp:2939
+#, c-format
+msgid "Fast Forward %1"
+msgstr ""
+
+#: kxinewidget.cpp:2901 kxinewidget.cpp:2922 kxinewidget.cpp:2946
+#, c-format
+msgid "Slow Motion %1"
+msgstr ""
+
+#: kxinewidget.cpp:3075 kxinewidget.cpp:3099
+msgid "Position"
+msgstr ""
+
+#: kxinewidget.cpp:3174
+msgid "Deinterlace: on"
+msgstr ""
+
+#: kxinewidget.cpp:3175
+msgid "Deinterlace: off"
+msgstr ""
+
+#: kxinewidget.cpp:3198 kxinewidget.cpp:3204 kxinewidget.cpp:3210
+#: kxinewidget.cpp:3216 kxinewidget.cpp:3222
+msgid "Aspect Ratio"
+msgstr ""
+
+#: kxinewidget.cpp:3198
+msgid "Auto"
+msgstr ""
+
+#: kxinewidget.cpp:3204
+msgid "4:3"
+msgstr ""
+
+#: kxinewidget.cpp:3210
+msgid "16:9"
+msgstr ""
+
+#: kxinewidget.cpp:3216
+msgid "1:1"
+msgstr ""
+
+#: kxinewidget.cpp:3222
+msgid "2.11:1"
+msgstr ""
+
+#: kxinewidget.cpp:3231 kxinewidget.cpp:3241
+msgid "Zoom X"
+msgstr ""
+
+#: kxinewidget.cpp:3251 kxinewidget.cpp:3261
+msgid "Zoom Y"
+msgstr ""
+
+#: kxinewidget.cpp:3363
+msgid "Hue"
+msgstr ""
+
+#: kxinewidget.cpp:3369
+msgid "Saturation"
+msgstr ""
+
+#: kxinewidget.cpp:3375
+msgid "Contrast"
+msgstr ""
+
+#: kxinewidget.cpp:3381
+msgid "Brightness"
+msgstr ""
+
+#: kxinewidget.cpp:3387
+msgid "Audio/Video Offset"
+msgstr ""
+
+#: kxinewidget.cpp:3387 kxinewidget.cpp:3393
+msgid "msec"
+msgstr ""
+
+#: kxinewidget.cpp:3393
+msgid "Subtitle Offset"
+msgstr ""
+
+#: main.cpp:30
+msgid "KMediaFactory DVD player"
+msgstr ""
+
+#: main.cpp:36
+msgid "DVD to open"
+msgstr ""
+
+#: main.cpp:52
+msgid "KMediaFactoryPlayer"
+msgstr ""
+
+#: postfilter.cpp:158
+msgid "Delete Filter"
+msgstr ""
+
+#. i18n: file kmfplayerlayout.ui line 16
+#: rc.cpp:3
+#, no-c-format
+msgid "KmediaFactory Player"
+msgstr ""
+
+#. i18n: file kmfplayerlayout.ui line 80
+#: rc.cpp:6
+#, no-c-format
+msgid "Title Me&nu"
+msgstr ""
+
+#. i18n: file kmfplayerlayout.ui line 83
+#: rc.cpp:9
+#, no-c-format
+msgid "Alt+N"
+msgstr ""
+
+#. i18n: file kmfplayerlayout.ui line 94
+#: rc.cpp:12
+#, no-c-format
+msgid "Root Men&u"
+msgstr ""
+
+#. i18n: file kmfplayerlayout.ui line 97
+#: rc.cpp:15
+#, no-c-format
+msgid "Alt+U"
+msgstr ""
+
+#. i18n: file kmfplayerlayout.ui line 276
+#: rc.cpp:27
+#, no-c-format
+msgid "1 - 00:00:00"
+msgstr ""
+
+#. i18n: file kmfplayerlayout.ui line 287
+#: rc.cpp:30
+#, no-c-format
+msgid "S&ave Frame"
+msgstr ""
+
+#. i18n: file kmfplayerlayout.ui line 290
+#: rc.cpp:33
+#, no-c-format
+msgid "Alt+A"
+msgstr ""
+
+#. i18n: file kmfplayerlayout.ui line 321
+#: rc.cpp:39
+#, no-c-format
+msgid "Alt+C"
+msgstr ""

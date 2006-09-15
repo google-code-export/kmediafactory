@@ -1,0 +1,4 @@
+File=videoplugin.kcfg
+ClassName=VideoPluginSettings
+Singleton=true
+Mutators=true

@@ -1,0 +1,228 @@
+<ui version="4.0" >
+ <class>KMFMultiURLDialog</class>
+ <widget class="QDialog" name="KMFMultiURLDialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>549</width>
+    <height>260</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Title</string>
+  </property>
+  <layout class="QVBoxLayout" >
+   <property name="margin" >
+    <number>11</number>
+   </property>
+   <property name="spacing" >
+    <number>6</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" >
+     <property name="margin" >
+      <number>0</number>
+     </property>
+     <property name="spacing" >
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="Q3ListView" name="fileListView" >
+       <property name="acceptDrops" >
+        <bool>true</bool>
+       </property>
+       <property name="selectionMode" >
+        <enum>Q3ListView::Extended</enum>
+       </property>
+       <property name="allColumnsShowFocus" >
+        <bool>true</bool>
+       </property>
+       <column>
+        <property name="text" >
+         <string>File</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" >
+       <property name="margin" >
+        <number>0</number>
+       </property>
+       <property name="spacing" >
+        <number>6</number>
+       </property>
+       <item>
+        <widget class="KPushButton" name="addButton" >
+         <property name="toolTip" >
+          <string>Add (Alt+ Insert)</string>
+         </property>
+         <property name="text" >
+          <string/>
+         </property>
+         <property name="shortcut" >
+          <string>Alt+Ins</string>
+         </property>
+         <property name="flat" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="KPushButton" name="removeButton" >
+         <property name="toolTip" >
+          <string>Remove (Alt + Delete)</string>
+         </property>
+         <property name="text" >
+          <string/>
+         </property>
+         <property name="shortcut" >
+          <string>Alt+Del</string>
+         </property>
+         <property name="flat" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType" >
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="KPushButton" name="upButton" >
+         <property name="toolTip" >
+          <string>Move up (Alt + Up)</string>
+         </property>
+         <property name="text" >
+          <string/>
+         </property>
+         <property name="shortcut" >
+          <string>Alt+Up</string>
+         </property>
+         <property name="flat" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="KPushButton" name="downButton" >
+         <property name="toolTip" >
+          <string>Move down (Alt + Down)</string>
+         </property>
+         <property name="text" >
+          <string/>
+         </property>
+         <property name="shortcut" >
+          <string>Alt+Down</string>
+         </property>
+         <property name="flat" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
+ <pixmapfunction>BTN_ICON</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Q3ListView</class>
+   <extends>Q3Frame</extends>
+   <header>q3listview.h</header>
+  </customwidget>
+ </customwidgets>
+ <includes>
+  <include location="global" >kpushbutton.h</include>
+  <include location="local" >common.h</include>
+ </includes>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>addButton</sender>
+   <signal>clicked()</signal>
+   <receiver>KMFMultiURLDialog</receiver>
+   <slot>add()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>removeButton</sender>
+   <signal>clicked()</signal>
+   <receiver>KMFMultiURLDialog</receiver>
+   <slot>remove()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>upButton</sender>
+   <signal>clicked()</signal>
+   <receiver>KMFMultiURLDialog</receiver>
+   <slot>moveUp()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>downButton</sender>
+   <signal>clicked()</signal>
+   <receiver>KMFMultiURLDialog</receiver>
+   <slot>moveDown()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
