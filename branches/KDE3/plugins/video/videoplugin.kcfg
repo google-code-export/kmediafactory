@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile name="kmediafactory_videopluginrc"/>
+  <group name="video">
+      <entry name="UsePreviewCache" type="Bool">
+          <label>Save preview pictures in menu dir. Usefull when making
+same DVD multiple times (testing).</label>
+          <default>false</default>
+      </entry>
+      <entry name="BlackFrameJump" type="Double">
+          <label>Black frame detection offset</label>
+          <default>1.0</default>
+      </entry>
+      <entry name="DefaultAudioLanguage" type="String">
+          <label>Use this as a default audio language for new files.</label>
+          <default>en</default>
+      </entry>
+      <entry name="DefaultSubtitleLanguage" type="String">
+          <label>Use this as a default subtitle language for new
+                 subtitles.</label>
+          <default>en</default>
+      </entry>
+  </group>
+</kcfg>

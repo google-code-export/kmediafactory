@@ -1,0 +1,4 @@
+File=dvimportplugin.kcfg
+ClassName=DVImportPluginSettings
+Singleton=true
+Mutators=true

@@ -1,0 +1,4 @@
+File=slideshowplugin.kcfg
+ClassName=SlideshowPluginSettings
+Singleton=true
+Mutators=true

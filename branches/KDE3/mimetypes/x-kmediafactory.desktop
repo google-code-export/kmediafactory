@@ -1,0 +1,8 @@
+[Desktop Entry]
+Comment=KMediaFactory Project File
+DefaultApp=kmediafactory
+Icon=kmediafactory_project
+MimeType=application/x-kmediafactory
+Patterns=*.kmf;*.KMF;
+Type=MimeType
+X-KDE-AutoEmbed=false

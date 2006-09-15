@@ -1,0 +1,91 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>ConfigureVideoPluginLayout</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>ConfigureVideoPluginLayout</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>288</width>
+            <height>185</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Configure Video Plugin</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>defaultAudioLanguageLabel</cstring>
+            </property>
+            <property name="text">
+                <string>Default &amp;Audio Language:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>kcfg_DefaultAudioLanguage</cstring>
+            </property>
+        </widget>
+        <widget class="KMFLanguageComboBox">
+            <property name="name">
+                <cstring>kcfg_DefaultAudioLanguage</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>defaultSubtitleLanguageLabel</cstring>
+            </property>
+            <property name="text">
+                <string>Default Subtitle Lan&amp;guage:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>kcfg_DefaultSubtitleLanguage</cstring>
+            </property>
+        </widget>
+        <widget class="KMFLanguageComboBox">
+            <property name="name">
+                <cstring>kcfg_DefaultSubtitleLanguage</cstring>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_UsePreviewCache</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Use Image Cache</string>
+            </property>
+            <property name="accel">
+                <string>Alt+U</string>
+            </property>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer1</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>40</height>
+                </size>
+            </property>
+        </spacer>
+    </vbox>
+</widget>
+<customwidgets>
+</customwidgets>
+<includes>
+    <include location="local" impldecl="in implementation">kmflanguagewidgets.h</include>
+</includes>
+<layoutdefaults spacing="6" margin="11"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+</UI>
