@@ -1,8 +1,8 @@
 <?xml version = '1.0'?>
 <kdevelop>
   <general>
-    <author/>
-    <email/>
+    <author></author>
+    <email></email>
     <version>$VERSION$</version>
     <projectmanagement>KDevCustomProject</projectmanagement>
     <primarylanguage>C++</primarylanguage>
@@ -12,8 +12,8 @@
     <secondaryLanguages>
       <language>C</language>
     </secondaryLanguages>
-    <description/>
-    <defaultencoding/>
+    <description></description>
+    <defaultencoding></defaultencoding>
   </general>
   <kdevcustomproject>
     <filelistdirectory>/home/damu/files/code/linux/kmediafactory/debug</filelistdirectory>
@@ -26,14 +26,14 @@
       <autocompile>true</autocompile>
       <envvars>
         <envvar value="/opt/kde4" name="KDEDIR" />
-        <envvar value="$HOME/.kde4:/opt/kde4" name="KDEDIRS" />
-        <envvar value="$HOME/.kde4" name="KDEHOME" />
-        <envvar value="/tmp/$USER-kde4)" name="KDETMP" />
-        <envvar value="/var/tmp/$USER-kde4" name="KDEVARTMP" />
-        <envvar value="$HOME/.kde4/lib:/opt/kde4/lib:/opt/qt4/lib:$LD_LIBRARY_PATH" name="LD_LIBRARY_PATH" />
-        <envvar value="$HOME/.kde4/bin:/opt/kde4/bin:/opt/qt4/bin:$PATH" name="PATH" />
+        <envvar value="/home/damu/.kde4:/opt/kde4" name="KDEDIRS" />
+        <envvar value="/home/damu/.kde4" name="KDEHOME" />
+        <envvar value="/tmp/damu-kde4" name="KDETMP" />
+        <envvar value="/var/tmp/damu-kde4" name="KDEVARTMP" />
+        <envvar value="/home/damu/.kde4/lib:/opt/kde4/lib:/opt/qt4/lib:$LD_LIBRARY_PATH" name="LD_LIBRARY_PATH" />
+        <envvar value="/home/damu/.kde4/bin:/opt/kde4/bin:/opt/qt4/bin:$PATH" name="PATH" />
         <envvar value="/opt/qt4" name="QTDIR" />
-        <envvar value="$HOME/.kde4/lib/kde4/plugins:/opt/kde4/lib/kde4/plugins" name="QT_PLUGIN_PATH" />
+        <envvar value="/home/damu/.kde4/lib/kde4/plugins:/opt/kde4/lib/kde4/plugins" name="QT_PLUGIN_PATH" />
         <envvar value=" " name="XDG_CONFIG_DIRS" />
         <envvar value=" " name="XDG_DATA_DIRS" />
       </envvars>
@@ -46,14 +46,14 @@
       <abortonerror>true</abortonerror>
       <numberofjobs>1</numberofjobs>
       <dontact>false</dontact>
-      <makebin/>
+      <makebin></makebin>
       <selectedenvironment>default</selectedenvironment>
       <environments>
         <default/>
       </environments>
       <prio>0</prio>
-      <defaulttarget/>
-      <makeoptions/>
+      <defaulttarget></defaulttarget>
+      <makeoptions></makeoptions>
     </make>
   </kdevcustomproject>
   <kdevfilecreate>
@@ -111,7 +111,7 @@
       <designerintegration>EmbeddedKDevDesigner</designerintegration>
     </qt>
     <creategettersetter>
-      <prefixGet/>
+      <prefixGet></prefixGet>
       <prefixSet>set</prefixSet>
       <prefixVariable>m_,_</prefixVariable>
       <parameterName>theValue</parameterName>
@@ -140,12 +140,12 @@
   </kdevfileview>
   <kdevdebugger>
     <general>
-      <programargs/>
-      <gdbpath/>
-      <dbgshell/>
-      <configGdbScript/>
-      <runShellScript/>
-      <runGdbScript/>
+      <programargs></programargs>
+      <gdbpath></gdbpath>
+      <dbgshell></dbgshell>
+      <configGdbScript></configGdbScript>
+      <runShellScript></runShellScript>
+      <runGdbScript></runGdbScript>
       <breakonloadinglibs>true</breakonloadinglibs>
       <separatetty>false</separatetty>
       <floatingtoolbar>false</floatingtoolbar>
