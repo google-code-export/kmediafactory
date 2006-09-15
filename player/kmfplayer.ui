@@ -1,0 +1,496 @@
+<ui version="4.0" stdsetdef="1" >
+  <author></author>
+  <comment></comment>
+  <exportmacro></exportmacro>
+  <class>KMF::PlayerLayout</class>
+  <widget class="QWidget" name="KMF::PlayerLayout" >
+    <property name="geometry" >
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>713</width>
+        <height>455</height>
+      </rect>
+    </property>
+    <property name="windowTitle" >
+      <string>KmediaFactory Player</string>
+    </property>
+    <layout class="QHBoxLayout" >
+      <item>
+        <layout class="QVBoxLayout" >
+          <property name="margin" >
+            <number>0</number>
+          </property>
+          <item>
+            <widget class="KUrlRequester" name="url" >
+              <property name="mode" >
+                <number>27</number>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <widget class="KXineWidget" name="xine" >
+              <property name="sizePolicy" >
+                <sizepolicy>
+                  <hsizetype>7</hsizetype>
+                  <vsizetype>7</vsizetype>
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                </sizepolicy>
+              </property>
+              <property name="minimumSize" >
+                <size>
+                  <width>534</width>
+                  <height>400</height>
+                </size>
+              </property>
+            </widget>
+          </item>
+        </layout>
+      </item>
+      <item>
+        <layout class="QVBoxLayout" >
+          <property name="margin" >
+            <number>0</number>
+          </property>
+          <item>
+            <layout class="QVBoxLayout" >
+              <property name="margin" >
+                <number>0</number>
+              </property>
+              <item>
+                <widget class="KPushButton" name="titleMenuButton" >
+                  <property name="text" >
+                    <string>Title Me&amp;nu</string>
+                  </property>
+                  <property name="shortcut" >
+                    <string>Alt+N</string>
+                  </property>
+                  <property name="iconSet" >
+                    <iconset>"gohome"</iconset>
+                  </property>
+                </widget>
+              </item>
+              <item>
+                <widget class="KPushButton" name="rootMenuButton" >
+                  <property name="text" >
+                    <string>Root Men&amp;u</string>
+                  </property>
+                  <property name="shortcut" >
+                    <string>Alt+U</string>
+                  </property>
+                  <property name="iconSet" >
+                    <iconset>"undo"</iconset>
+                  </property>
+                </widget>
+              </item>
+            </layout>
+          </item>
+          <item>
+            <layout class="QVBoxLayout" >
+              <property name="margin" >
+                <number>0</number>
+              </property>
+              <item>
+                <layout class="QGridLayout" >
+                  <property name="margin" >
+                    <number>0</number>
+                  </property>
+                  <item row="1" column="1" >
+                    <widget class="KPushButton" name="selectButton" >
+                      <property name="text" >
+                        <string/>
+                      </property>
+                      <property name="iconSet" >
+                        <iconset>"button_ok"</iconset>
+                      </property>
+                    </widget>
+                  </item>
+                  <item row="1" column="0" >
+                    <widget class="KPushButton" name="leftButton" >
+                      <property name="text" >
+                        <string/>
+                      </property>
+                      <property name="iconSet" >
+                        <iconset>"back"</iconset>
+                      </property>
+                    </widget>
+                  </item>
+                  <item row="1" column="2" >
+                    <widget class="KPushButton" name="rightButton" >
+                      <property name="text" >
+                        <string/>
+                      </property>
+                      <property name="iconSet" >
+                        <iconset>"forward"</iconset>
+                      </property>
+                    </widget>
+                  </item>
+                  <item row="2" column="1" >
+                    <widget class="KPushButton" name="downButton" >
+                      <property name="text" >
+                        <string/>
+                      </property>
+                      <property name="iconSet" >
+                        <iconset>"down"</iconset>
+                      </property>
+                    </widget>
+                  </item>
+                  <item row="0" column="1" >
+                    <widget class="KPushButton" name="upButton" >
+                      <property name="text" >
+                        <string/>
+                      </property>
+                      <property name="iconSet" >
+                        <iconset>"up"</iconset>
+                      </property>
+                    </widget>
+                  </item>
+                </layout>
+              </item>
+            </layout>
+          </item>
+          <item>
+            <layout class="QHBoxLayout" >
+              <property name="margin" >
+                <number>0</number>
+              </property>
+              <item>
+                <widget class="KPushButton" name="playButton" >
+                  <property name="text" >
+                    <string/>
+                  </property>
+                  <property name="iconSet" >
+                    <iconset>"player_play"</iconset>
+                  </property>
+                </widget>
+              </item>
+              <item>
+                <widget class="KPushButton" name="pauseButton" >
+                  <property name="text" >
+                    <string/>
+                  </property>
+                  <property name="iconSet" >
+                    <iconset>"player_pause"</iconset>
+                  </property>
+                </widget>
+              </item>
+            </layout>
+          </item>
+          <item>
+            <layout class="QHBoxLayout" >
+              <property name="margin" >
+                <number>0</number>
+              </property>
+              <item>
+                <widget class="KPushButton" name="rewButton" >
+                  <property name="text" >
+                    <string/>
+                  </property>
+                  <property name="iconSet" >
+                    <iconset>"player_rew"</iconset>
+                  </property>
+                </widget>
+              </item>
+              <item>
+                <widget class="KPushButton" name="fwdButton" >
+                  <property name="text" >
+                    <string/>
+                  </property>
+                  <property name="iconSet" >
+                    <iconset>"player_fwd"</iconset>
+                  </property>
+                </widget>
+              </item>
+            </layout>
+          </item>
+          <item>
+            <widget class="PositionSlider" name="sliderPosition" >
+              <property name="sizePolicy" >
+                <sizepolicy>
+                  <hsizetype>1</hsizetype>
+                  <vsizetype>0</vsizetype>
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                </sizepolicy>
+              </property>
+              <property name="minimumSize" >
+                <size>
+                  <width>0</width>
+                  <height>15</height>
+                </size>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <widget class="QLabel" name="labelInfo" >
+              <property name="sizePolicy" >
+                <sizepolicy>
+                  <hsizetype>1</hsizetype>
+                  <vsizetype>5</vsizetype>
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                </sizepolicy>
+              </property>
+              <property name="text" >
+                <string>1 - 00:00:00</string>
+              </property>
+              <property name="alignment" >
+                <set>Qt::AlignCenter</set>
+              </property>
+              <property name="wordWrap" >
+                <bool>false</bool>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <widget class="KPushButton" name="saveButton" >
+              <property name="text" >
+                <string>S&amp;ave Frame</string>
+              </property>
+              <property name="shortcut" >
+                <string>Alt+A</string>
+              </property>
+              <property name="iconSet" >
+                <iconset>"filesave"</iconset>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <spacer name="spacer5" >
+              <property name="sizeHint" >
+                <size>
+                  <width>20</width>
+                  <height>90</height>
+                </size>
+              </property>
+              <property name="sizeType" >
+                <enum>Expanding</enum>
+              </property>
+              <property name="orientation" >
+                <enum>Vertical</enum>
+              </property>
+            </spacer>
+          </item>
+          <item>
+            <widget class="KPushButton" name="closeButton" >
+              <property name="text" >
+                <string>&amp;Close</string>
+              </property>
+              <property name="shortcut" >
+                <string>Alt+C</string>
+              </property>
+              <property name="stdItem" stdset="0" >
+                <number>13</number>
+              </property>
+            </widget>
+          </item>
+        </layout>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11" />
+  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
+  <pixmapfunction>BTN_ICON</pixmapfunction>
+  <customwidgets>
+    <customwidget>
+      <class>KXineWidget</class>
+      <header location="local" >kxinewidget.h</header>
+      <sizehint>
+        <width>720</width>
+        <height>576</height>
+      </sizehint>
+      <container>0</container>
+      <sizepolicy>
+        <hordata>0</hordata>
+        <verdata>0</verdata>
+      </sizepolicy>
+      <pixmap>image0</pixmap>
+    </customwidget>
+    <customwidget>
+      <class>PositionSlider</class>
+      <header location="local" >positionslider.h</header>
+      <sizehint>
+        <width>-1</width>
+        <height>24</height>
+      </sizehint>
+      <container>0</container>
+      <sizepolicy>
+        <hordata>7</hordata>
+        <verdata>0</verdata>
+      </sizepolicy>
+      <pixmap>image0</pixmap>
+    </customwidget>
+  </customwidgets>
+  <images>
+    <image name="image0" >
+      <data format="PNG" length="1188" >89504e470d0a1a0a0000000d4948445200000016000000160806000000c4b46c3b0000046b49444154388db595cd6b135d18c57f33b9339986183b11db4493c6850dd1d89285a0048a1f48b5746745dc0815a45d88ff84eebb72e1525410115d885414e3375908929060413a5a9b7ea44d13a8b526997492ebe2c54879abc80bef59de7b39e7720ecf7994743acddfc0b22cb977ef5ee5af1e03ca9f8893c9a4340c836030c8c0c0001f3f7e6479799962b1886ddba4d3e9df0a89df5d9c3c79521e3e7c9883070f128bc50887c394cb656ab51a535353643219060707e5d3a74fb724ff17f1850b17e4e8e8286fdfbea5b7b7978e8e0e72b91c00baaeb36bd72e2e5dba44bd5e677a7a9a870f1fca9b376f72e3c68d4d026d2b8e1c3922c7c6c6b87cf932ddddddd8b68da669dcb97387bb77efd2dbdb8b9412cbb2387ffe3c232323341a0d0cc360656585898909ae5fbfdeb64749a7d39c3871425ebd7a953367ce20a5a4d168a0aa2a524a363636c86432944a255656563870e00089440221042e978b66b389aeebb85c2e6edfbecd952b5748a5528a00b878f122434343148b45161717999999a15aad128fc7e9e9e9a1afaf0f4dd30068b55ad46a35969797c9e572b8dd6e76efde4d281462707090a9a9a97fac884422f2dab56b747676f2f9f367161616f8f2e50b009aa6313434c4fafafaa61c363636c8e7f394cb655455251a8da2eb3aaaaad26ab598989840edefefc7eff7b3baba8ac7e361616101c7711042108bc568369b44a351b66ddb86cfe7c3ebf5128fc789c562783c1e1cc7219fcf238440d334c2e130fbf7ef4798a689c7e34151141445e1dcb973341a0d344dc3300c1cc7c1711c02810000524a6cdb261e8f138d46b16d9b56abc5dada1a524a0281007ebf1fa1280a8661a0280a524a00dc6e773b44c3301042d0dddd8d941297cbd51e908e8e0e344da356aba1aa2a9d9d9d188681aaaa88efdfbfa3eb3a4288b6aff97c9e172f5e502a95a856ab1c3a7488d3a74f2384a052a970ebd62d2a950abaaee3f3f9181f1f67fbf6ed48299152f2eddb37d4f9f979666666300c03afd78bcfe7e3fdfbf7bc7af58a4aa542abd5e2c99327140a0582c120efdebd2393c9b0b4b4442e97637d7d1dcbb2304d13b7db4da150a0582ca2cecdcdf1e8d1232ccb221008609a26a74e9d42d3341e3f7ecc9b376f884422ecdbb70f4551482412341a0d9e3d7b46369b0520168b619a261f3e7c6072729242a18002c8e1e16142a110c78f1fe7ecd9b300349b4d52a9147ebf9ffefe7ea494388e83dbeda65eaf93cd66711c87bebe3e76ecd8412a95e2fefdfbcccece323939f96bf24646465014856030c8f0f030030303bfeba74d989e9ee6debd7b7cfaf4897abdce83070f78fefcb9d2ee8a63c78ec9a3478fb267cf1ebe7efd8ad7eb25140a110e87e9e9e9c1ebf502b0b6b6c6ecec2cf3f3f32c2e2e52ad56f1f97c5896c5cb972f79fdfaf5afaef889643229239108894482aeae2e1cc7a15eafd36c3637fd5208816118b85c2e969696c866b3cccdcd6deae72d8b3e994c4ad334e9eaea62e7ce9dedc4016cdba652a9502e9729954aacaeae6e59f87fdc203f45b63affd3f6f82be2ff0af57f61057e0084e7fefb8a884e330000000049454e44ae426082</data>
+    </image>
+  </images>
+  <includes>
+    <include location="local" >kurlrequester.h</include>
+    <include location="local" >klineedit.h</include>
+    <include location="local" >kpushbutton.h</include>
+    <include location="local" >kxinewidget.h</include>
+    <include location="local" >kpushbutton.h</include>
+    <include location="local" >kpushbutton.h</include>
+    <include location="local" >kpushbutton.h</include>
+    <include location="local" >kpushbutton.h</include>
+    <include location="local" >kpushbutton.h</include>
+    <include location="local" >kpushbutton.h</include>
+    <include location="local" >kpushbutton.h</include>
+    <include location="local" >kpushbutton.h</include>
+    <include location="local" >kpushbutton.h</include>
+    <include location="local" >kpushbutton.h</include>
+    <include location="local" >kpushbutton.h</include>
+    <include location="local" >positionslider.h</include>
+    <include location="local" >kpushbutton.h</include>
+    <include location="local" >kpushbutton.h</include>
+  </includes>
+  <connections>
+    <connection>
+      <sender>titleMenuButton</sender>
+      <signal>clicked()</signal>
+      <receiver>xine</receiver>
+      <slot>slotMenuTitle()</slot>
+    </connection>
+    <connection>
+      <sender>rootMenuButton</sender>
+      <signal>clicked()</signal>
+      <receiver>xine</receiver>
+      <slot>slotMenuRoot()</slot>
+    </connection>
+    <connection>
+      <sender>upButton</sender>
+      <signal>clicked()</signal>
+      <receiver>xine</receiver>
+      <slot>slotDVDMenuUp()</slot>
+    </connection>
+    <connection>
+      <sender>leftButton</sender>
+      <signal>clicked()</signal>
+      <receiver>xine</receiver>
+      <slot>slotDVDMenuLeft()</slot>
+    </connection>
+    <connection>
+      <sender>rightButton</sender>
+      <signal>clicked()</signal>
+      <receiver>xine</receiver>
+      <slot>slotDVDMenuRight()</slot>
+    </connection>
+    <connection>
+      <sender>downButton</sender>
+      <signal>clicked()</signal>
+      <receiver>xine</receiver>
+      <slot>slotDVDMenuDown()</slot>
+    </connection>
+    <connection>
+      <sender>selectButton</sender>
+      <signal>clicked()</signal>
+      <receiver>xine</receiver>
+      <slot>slotDVDMenuSelect()</slot>
+    </connection>
+    <connection>
+      <sender>saveButton</sender>
+      <signal>clicked()</signal>
+      <receiver>KMF::PlayerLayout</receiver>
+      <slot>saveFrame()</slot>
+    </connection>
+    <connection>
+      <sender>xine</sender>
+      <signal>signalXineError(QString)</signal>
+      <receiver>KMF::PlayerLayout</receiver>
+      <slot>xineMessage(QString)</slot>
+    </connection>
+    <connection>
+      <sender>xine</sender>
+      <signal>signalXineFatal(QString)</signal>
+      <receiver>KMF::PlayerLayout</receiver>
+      <slot>xineMessage(QString)</slot>
+    </connection>
+    <connection>
+      <sender>xine</sender>
+      <signal>signalXineMessage(QString)</signal>
+      <receiver>KMF::PlayerLayout</receiver>
+      <slot>xineMessage(QString)</slot>
+    </connection>
+    <connection>
+      <sender>xine</sender>
+      <signal>signalXineStatus(QString)</signal>
+      <receiver>KMF::PlayerLayout</receiver>
+      <slot>xineMessage(QString)</slot>
+    </connection>
+    <connection>
+      <sender>pauseButton</sender>
+      <signal>clicked()</signal>
+      <receiver>xine</receiver>
+      <slot>slotSpeedPause()</slot>
+    </connection>
+    <connection>
+      <sender>playButton</sender>
+      <signal>clicked()</signal>
+      <receiver>xine</receiver>
+      <slot>slotSpeedNormal()</slot>
+    </connection>
+    <connection>
+      <sender>rewButton</sender>
+      <signal>clicked()</signal>
+      <receiver>KMF::PlayerLayout</receiver>
+      <slot>prevChapter()</slot>
+    </connection>
+    <connection>
+      <sender>fwdButton</sender>
+      <signal>clicked()</signal>
+      <receiver>KMF::PlayerLayout</receiver>
+      <slot>nextChapter()</slot>
+    </connection>
+    <connection>
+      <sender>closeButton</sender>
+      <signal>clicked()</signal>
+      <receiver>KMF::PlayerLayout</receiver>
+      <slot>close()</slot>
+    </connection>
+    <connection>
+      <sender>url</sender>
+      <signal>returnPressed()</signal>
+      <receiver>KMF::PlayerLayout</receiver>
+      <slot>open()</slot>
+    </connection>
+    <connection>
+      <sender>url</sender>
+      <signal>urlSelected(QString)</signal>
+      <receiver>KMF::PlayerLayout</receiver>
+      <slot>open()</slot>
+    </connection>
+    <connection>
+      <sender>url</sender>
+      <signal>openFileDialog(KURLRequester*)</signal>
+      <receiver>KMF::PlayerLayout</receiver>
+      <slot>configureFileDialog(KURLRequester*)</slot>
+    </connection>
+    <connection>
+      <sender>sliderPosition</sender>
+      <signal>signalStartSeeking()</signal>
+      <receiver>xine</receiver>
+      <slot>slotStartSeeking()</slot>
+    </connection>
+    <connection>
+      <sender>sliderPosition</sender>
+      <signal>signalStopSeeking()</signal>
+      <receiver>xine</receiver>
+      <slot>slotStopSeeking()</slot>
+    </connection>
+    <connection>
+      <sender>sliderPosition</sender>
+      <signal>sliderMoved(int)</signal>
+      <receiver>xine</receiver>
+      <slot>slotSeekToPosition(int)</slot>
+    </connection>
+    <connection>
+      <sender>xine</sender>
+      <signal>signalNewPosition(int,QTime)</signal>
+      <receiver>KMF::PlayerLayout</receiver>
+      <slot>slotNewPosition(int,QTime)</slot>
+    </connection>
+  </connections>
+</ui>

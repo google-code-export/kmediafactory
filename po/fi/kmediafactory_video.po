@@ -1,0 +1,519 @@
+# translation of kmediafactory_video.po to Finnish
+# This file is put in the public domain.
+#
+# Petri Damsten <petri.damsten@iki.fi>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmediafactory_video\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-02-10 09:20+0200\n"
+"PO-Revision-Date: 2006-02-10 09:25+0200\n"
+"Last-Translator: Petri Damsten <petri.damsten@iki.fi>\n"
+"Language-Team: Finnish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.1\n"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "Petri Damstén"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "petri.damsten@iki.fi"
+
+#. i18n: file addchapterlayout.ui line 16
+#: addchapterlayout.cpp:96 autochapterslayout.cpp:99 rc.cpp:3 rc.cpp:25
+#, no-c-format
+msgid "KMediaFactory"
+msgstr "KMediaFactory"
+
+#. i18n: file addchapterlayout.ui line 27
+#: addchapterlayout.cpp:97 rc.cpp:6
+#, no-c-format
+msgid "&Name:"
+msgstr "&Nimi:"
+
+#. i18n: file addchapterlayout.ui line 46
+#: addchapterlayout.cpp:99 rc.cpp:10
+#, no-c-format
+msgid "&Position:"
+msgstr "&Paikka:"
+
+#. i18n: file addchapterlayout.ui line 126
+#: addchapterlayout.cpp:101 autochapterslayout.cpp:104 chapterslayout.cpp:217
+#: conversionlayout.cpp:146 languageselectionlayout.cpp:89 rc.cpp:16 rc.cpp:40
+#: rc.cpp:99 rc.cpp:150 rc.cpp:168 rc.cpp:219 rc.cpp:300
+#: subtitleoptionslayout.cpp:139 videooptionslayout.cpp:211
+#, no-c-format
+msgid "Alt+O"
+msgstr "Alt+O"
+
+#. i18n: file addchapterlayout.ui line 146
+#: addchapterlayout.cpp:103 conversionlayout.cpp:148
+#: languageselectionlayout.cpp:91 rc.cpp:22 rc.cpp:156 rc.cpp:174 rc.cpp:225
+#: rc.cpp:306 subtitleoptionslayout.cpp:141 videooptionslayout.cpp:213
+#, no-c-format
+msgid "Alt+C"
+msgstr "Alt+C"
+
+#. i18n: file autochapterslayout.ui line 27
+#: autochapterslayout.cpp:100 rc.cpp:28
+#, no-c-format
+msgid "&Name (Use %1 for digit):"
+msgstr "&Nimi (Käytä %1 jos haluat juoksevan numeron):"
+
+#. i18n: file autochapterslayout.ui line 38
+#: autochapterslayout.cpp:101 rc.cpp:31 videoobject.cpp:858
+#, no-c-format
+msgid "Chapter %1"
+msgstr "Kappale %1"
+
+#. i18n: file autochapterslayout.ui line 46
+#: autochapterslayout.cpp:102 rc.cpp:34
+#, no-c-format
+msgid "&Interval:"
+msgstr "Aikaväl&i:"
+
+#. i18n: file autochapterslayout.ui line 143
+#: autochapterslayout.cpp:105 rc.cpp:43
+#, no-c-format
+msgid "C&ancel"
+msgstr "&Peru"
+
+#. i18n: file autochapterslayout.ui line 146
+#: autochapterslayout.cpp:106 rc.cpp:46
+#, no-c-format
+msgid "Alt+A"
+msgstr "Alt+A"
+
+#: chapters.cpp:221
+msgid "&Delete all"
+msgstr "Poista &kaikki"
+
+#: chapters.cpp:222
+msgid "&Rename all"
+msgstr "&Nimeä kaikki uudelleen"
+
+#: chapters.cpp:223
+msgid "&Auto chapters"
+msgstr "&Automaattiset kappaleet"
+
+#: chapters.cpp:224
+msgid ""
+"_: Import chapter file\n"
+"&Import"
+msgstr "&Tuo kappaleet tiedostosta"
+
+#: chapters.cpp:328
+msgid "You should have atleast one chapter."
+msgstr "Listassa pitää olla ainakin yksi kappale."
+
+#. i18n: file chapterslayout.ui line 22
+#: chapterslayout.cpp:195 rc.cpp:49
+#, no-c-format
+msgid "Chapters"
+msgstr "Kappaleet"
+
+#. i18n: file chapterslayout.ui line 41
+#: chapterslayout.cpp:196 rc.cpp:52
+#, no-c-format
+msgid "&Chapters:"
+msgstr "&Kappaleet:"
+
+#. i18n: file chapterslayout.ui line 184
+#: chapterslayout.cpp:201 rc.cpp:63
+#, no-c-format
+msgid "&Use as Custom Preview"
+msgstr "Käytä valinnaisena kuvana"
+
+#. i18n: file chapterslayout.ui line 187
+#: chapterslayout.cpp:202 rc.cpp:66 rc.cpp:240 videoconfiglayout.cpp:77
+#, no-c-format
+msgid "Alt+U"
+msgstr "Alt+U"
+
+#. i18n: file chapterslayout.ui line 220
+#: chapterslayout.cpp:204 kmfchapterlistview.cpp:85 rc.cpp:70
+#, no-c-format
+msgid "Start"
+msgstr "Alku"
+
+#. i18n: file chapterslayout.ui line 237
+#: chapterslayout.cpp:206 rc.cpp:74
+#, no-c-format
+msgid "Rewind"
+msgstr "Kelaa takaisin"
+
+#. i18n: file chapterslayout.ui line 254
+#: chapterslayout.cpp:208 rc.cpp:78
+#, no-c-format
+msgid "Previous frame"
+msgstr "Edellinen ruutu"
+
+#. i18n: file chapterslayout.ui line 271
+#: chapterslayout.cpp:210 rc.cpp:82
+#, no-c-format
+msgid "Next frame"
+msgstr "Seuraava ruutu"
+
+#. i18n: file chapterslayout.ui line 288
+#: chapterslayout.cpp:212 rc.cpp:86
+#, no-c-format
+msgid "Forward"
+msgstr "Kelaa eteenpäin"
+
+#. i18n: file chapterslayout.ui line 305
+#: chapterslayout.cpp:214 rc.cpp:90
+#, no-c-format
+msgid "End"
+msgstr "Loppu"
+
+#. i18n: file chapterslayout.ui line 315
+#: chapterslayout.cpp:215 rc.cpp:93
+#, no-c-format
+msgid "00:00"
+msgstr "00:00"
+
+#. i18n: file chapterslayout.ui line 387
+#: chapterslayout.cpp:218 rc.cpp:102
+#, no-c-format
+msgid "Ca&ncel"
+msgstr "&Peru"
+
+#. i18n: file chapterslayout.ui line 390
+#: chapterslayout.cpp:219 rc.cpp:105
+#, no-c-format
+msgid "Alt+N"
+msgstr "Alt+N"
+
+#. i18n: file conversionlayout.ui line 16
+#: conversionlayout.cpp:131 rc.cpp:108
+#, no-c-format
+msgid "Conversion Params"
+msgstr "Muunnos parametrit"
+
+#. i18n: file conversionlayout.ui line 27
+#: conversionlayout.cpp:132 rc.cpp:111
+#, no-c-format
+msgid "Higher qualit&y encoding (Two pass)"
+msgstr "Korkea laatuinen muunnos (Kaksi kertaa)"
+
+#. i18n: file conversionlayout.ui line 30
+#: conversionlayout.cpp:133 rc.cpp:114
+#, no-c-format
+msgid "Alt+Y"
+msgstr "Alt+Y"
+
+#. i18n: file conversionlayout.ui line 46
+#: conversionlayout.cpp:134 rc.cpp:117
+#, no-c-format
+msgid "Video &bitrate:"
+msgstr "Videon bittivirta"
+
+#. i18n: file conversionlayout.ui line 74
+#: conversionlayout.cpp:135 conversionlayout.cpp:143 rc.cpp:120 rc.cpp:141
+#, no-c-format
+msgid "0"
+msgstr "0"
+
+#. i18n: file conversionlayout.ui line 82
+#: conversionlayout.cpp:136 conversionlayout.cpp:144 rc.cpp:123 rc.cpp:144
+#, no-c-format
+msgid "kb/s"
+msgstr "kb/s"
+
+#. i18n: file conversionlayout.ui line 100
+#: conversionlayout.cpp:137 rc.cpp:126
+#, no-c-format
+msgid "Audio &type:"
+msgstr "Äänen muoto:"
+
+#. i18n: file conversionlayout.ui line 109
+#: conversionlayout.cpp:139 rc.cpp:129
+#, no-c-format
+msgid "AC3"
+msgstr "AC3"
+
+#. i18n: file conversionlayout.ui line 114
+#: conversionlayout.cpp:140 rc.cpp:132
+#, no-c-format
+msgid "MP2"
+msgstr "MP2"
+
+#. i18n: file conversionlayout.ui line 119
+#: conversionlayout.cpp:141 rc.cpp:135
+#, no-c-format
+msgid "PCM"
+msgstr "PCM"
+
+#. i18n: file conversionlayout.ui line 139
+#: conversionlayout.cpp:142 rc.cpp:138
+#, no-c-format
+msgid "&Audio bitrate:"
+msgstr "Äänen bittivirta"
+
+#: kmfchapterlistview.cpp:84
+msgid "Name"
+msgstr "Nimi"
+
+#: kmfchapterlistview.cpp:86
+msgid "Length"
+msgstr "Pituus"
+
+#. i18n: file languageselectionlayout.ui line 16
+#: languageselectionlayout.cpp:86 rc.cpp:159
+#, no-c-format
+msgid "Select language"
+msgstr "Valitse kieli"
+
+#. i18n: file languageselectionlayout.ui line 27
+#: languageselectionlayout.cpp:87 rc.cpp:162
+#, no-c-format
+msgid "La&nguages:"
+msgstr "&Kielet:"
+
+#. i18n: file subtitleoptionslayout.ui line 16
+#: rc.cpp:177 subtitleoptionslayout.cpp:121
+#, no-c-format
+msgid "Subtitle options"
+msgstr "Tekstityksen ominaisuudet"
+
+#. i18n: file subtitleoptionslayout.ui line 27
+#: rc.cpp:180 subtitleoptionslayout.cpp:122
+#, no-c-format
+msgid "La&nguage:"
+msgstr "&Kieli:"
+
+#. i18n: file subtitleoptionslayout.ui line 43
+#: rc.cpp:183 subtitleoptionslayout.cpp:123
+#, no-c-format
+msgid "Su&btitle File:"
+msgstr "&Tekstitys tiedosto:"
+
+#. i18n: file subtitleoptionslayout.ui line 59
+#: rc.cpp:186 subtitleoptionslayout.cpp:124
+#, no-c-format
+msgid "Subtitle Font:"
+msgstr "Tekstitys kirjasin:"
+
+#. i18n: file subtitleoptionslayout.ui line 75
+#: rc.cpp:189 subtitleoptionslayout.cpp:125
+#, no-c-format
+msgid "Hori&zontal Alignment:"
+msgstr "&Vaakasuora kohdistus:"
+
+#. i18n: file subtitleoptionslayout.ui line 114
+#: rc.cpp:204 subtitleoptionslayout.cpp:132
+#, no-c-format
+msgid "Vertical &Alignment"
+msgstr "Pystysuor&a kohdistus:"
+
+#. i18n: file videoconfiglayout.ui line 16
+#: rc.cpp:228 videoconfiglayout.cpp:73
+#, no-c-format
+msgid "Configure Video Plugin"
+msgstr "Konfiguroi video lisäosa"
+
+#. i18n: file videoconfiglayout.ui line 27
+#: rc.cpp:231 videoconfiglayout.cpp:74
+#, no-c-format
+msgid "Default &Audio Language:"
+msgstr "Oletus &audio kieli:"
+
+#. i18n: file videoconfiglayout.ui line 43
+#: rc.cpp:234 videoconfiglayout.cpp:75
+#, no-c-format
+msgid "Default Subtitle Lan&guage:"
+msgstr "Oletus tekstitys &kieli:"
+
+#. i18n: file videoconfiglayout.ui line 59
+#: rc.cpp:237 videoconfiglayout.cpp:76
+#, no-c-format
+msgid "&Use Image Cache"
+msgstr "&Käytä kuville välimuistia"
+
+#. i18n: file videooptionslayout.ui line 16
+#: rc.cpp:243 videooptionslayout.cpp:187
+#, no-c-format
+msgid "Video Options"
+msgstr "Videon ominaisuudet"
+
+#. i18n: file videooptionslayout.ui line 27
+#: rc.cpp:246 videooptionslayout.cpp:188
+#, no-c-format
+msgid "Tit&le:"
+msgstr "Otsi&kko:"
+
+#. i18n: file videooptionslayout.ui line 43
+#: rc.cpp:249 videooptionslayout.cpp:189
+#, no-c-format
+msgid "Custom &preview:"
+msgstr "Valinnainen &kuva:"
+
+#. i18n: file videooptionslayout.ui line 62
+#: rc.cpp:252 videooptionslayout.cpp:190
+#, no-c-format
+msgid "&Aspect ratio:"
+msgstr "Kuv&asuhde:"
+
+#. i18n: file videooptionslayout.ui line 71
+#: rc.cpp:255 videooptionslayout.cpp:192
+#, no-c-format
+msgid "4:3"
+msgstr "4:3"
+
+#. i18n: file videooptionslayout.ui line 76
+#: rc.cpp:258 videooptionslayout.cpp:193
+#, no-c-format
+msgid "16:9"
+msgstr "16:9"
+
+#. i18n: file videooptionslayout.ui line 88
+#: rc.cpp:261 videooptionslayout.cpp:194
+#, no-c-format
+msgid "Audio Trac&ks:"
+msgstr "Ääni rai&dat:"
+
+#. i18n: file videooptionslayout.ui line 155
+#: rc.cpp:268 videooptionslayout.cpp:197
+#, no-c-format
+msgid "Subtitles:"
+msgstr "Tekstitykset:"
+
+#. i18n: file videooptionslayout.ui line 263
+#: rc.cpp:283 rc.cpp:290 videooptionslayout.cpp:204 videooptionslayout.cpp:207
+#, no-c-format
+msgid "xx"
+msgstr "xx"
+
+#. i18n: file videoplugin.kcfg line 10
+#: rc.cpp:309
+#, no-c-format
+msgid ""
+"Save preview pictures in menu dir. Usefull when making\n"
+"same DVD multiple times (testing)."
+msgstr ""
+"Tallenna esikatselu kuvat media hakemistoon. Hyödyllinen<br>jos teet saman "
+"DVD useampaan kertaan (testatessa):"
+
+#. i18n: file videoplugin.kcfg line 14
+#: rc.cpp:313
+#, no-c-format
+msgid "Black frame detection offset"
+msgstr "Mustien ruutujen siirros aika:"
+
+#. i18n: file videoplugin.kcfg line 18
+#: rc.cpp:316
+#, no-c-format
+msgid "Use this as a default audio language for new files."
+msgstr "Käytä tätä oletus audio kielenä uusille tiedostoille."
+
+#. i18n: file videoplugin.kcfg line 23
+#: rc.cpp:319
+#, no-c-format
+msgid ""
+"Use this as a default subtitle language for new\n"
+"                 subtitles."
+msgstr "Käytä tätä oletus tekstitys kielenä uusille tiedostoille."
+
+#: subtitleoptions.cpp:59
+msgid "Subtitle files"
+msgstr "Tekstitys tiedostot"
+
+#: subtitleoptions.cpp:60
+msgid "All files"
+msgstr "Kaikki tiedostot"
+
+#: subtitleoptions.cpp:80
+msgid "Subtitle file does not exists."
+msgstr "Tekstitys tiedostoa ei ole olemassa."
+
+#: videoobject.cpp:52
+msgid "&Properties"
+msgstr "&Ominaisuudet"
+
+#: videoobject.cpp:57
+msgid "Play video"
+msgstr "Soita video"
+
+#: videoobject.cpp:501
+msgid "   Converting %1 to DVD format%2"
+msgstr "   Muunnetaan %1 DVD formaattiin %2"
+
+#: videoobject.cpp:531 videoobject.cpp:688
+msgid "   Conversion error."
+msgstr "   Muunnos virhe."
+
+#: videoobject.cpp:547
+msgid "   Conversion of %1 seems to be up to date"
+msgstr "   Muunnos %1 näyttää olevan ajan tasalla"
+
+#: videoobject.cpp:667
+#, c-format
+msgid "   Adding subtitles to %1"
+msgstr "   Lisätään %1 tekstitystä"
+
+#: videoobject.cpp:695
+msgid "   Subtitle conversion seems to be up to date"
+msgstr "   Tekstitys näyttää olevan ajan tasalla"
+
+#: videoobject.cpp:704
+#, c-format
+msgid "Preparing file(s) for %1"
+msgstr "Valmistellaan tiedostoja (%1)"
+
+#: videoobject.cpp:996
+msgid "Make DVD"
+msgstr "Tee DVD"
+
+#: videoobject.cpp:997
+msgid "Make preview DVD with dummy videos"
+msgstr "Tee esitkatselu DVD jossa on lyhyet videot"
+
+#: videooptions.cpp:197
+msgid ""
+"_n: Video has %1 chapter\n"
+"Video has %1 chapters"
+msgstr ""
+"Videossa on %1 kappale\n"
+"Videossa on %1 kappaletta"
+
+#: videooptions.cpp:199
+msgid "Video %1kb/s, Audio %2kb/s"
+msgstr "Video %1kb/s, Audio %2kb/s"
+
+#: videoplugin.cpp:41
+msgid "Video plugin for KMediaFactory."
+msgstr "Video lisäosa KMediaFactoryyn"
+
+#: videoplugin.cpp:44
+msgid "KMediaFactory Video"
+msgstr "KMediaFactory Video"
+
+#: videoplugin.cpp:64
+msgid "Add Video"
+msgstr "Lisää video"
+
+#: videoplugin.cpp:78
+msgid "Video plugin"
+msgstr "Video lisäosa"
+
+#: videoplugin.cpp:103
+msgid "Multiple files make multiple titles."
+msgstr "Useampi tiedosto muodostaa useamman nimikkeen"
+
+#: videoplugin.cpp:124
+msgid "Cannot add directory."
+msgstr "Hakemistoa ei voi lisätä."
+
+#: videoplugin.cpp:132
+#, c-format
+msgid "Couldn't add file: %1"
+msgstr "Tiedostoa ei saatu lisättyä: %1"
+
