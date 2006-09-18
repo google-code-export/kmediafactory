@@ -23,6 +23,7 @@
 #include <kmf_stddef.h>
 #include "ui_videooptions.h"
 #include "videoobject.h"
+#include "kmflanguagewidgets.h"
 
 /**
 */
@@ -49,7 +50,9 @@ class VideoOptions : public KDialog, public Ui::VideoOptions
     const VideoObject* m_obj;
     QDVD::CellList m_cells;
     QDVD::SubtitleList m_subtitles;
+    LanguageListModel m_subtitleModel;
     QDVD::AudioList m_audioTracks;
+    LanguageListModel m_audioModel;
     ConversionParams m_conversionParams;
 
     bool isSelectedSubtitleInVideo();

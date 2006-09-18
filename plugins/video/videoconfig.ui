@@ -30,7 +30,7 @@
         </widget>
       </item>
       <item>
-        <widget class="KMFLanguageComboBox" name="kcfg_DefaultAudioLanguage" />
+        <widget class="QComboBox" name="kcfg_DefaultAudioLanguage" />
       </item>
       <item>
         <widget class="QLabel" name="defaultSubtitleLanguageLabel" >
@@ -46,7 +46,7 @@
         </widget>
       </item>
       <item>
-        <widget class="KMFLanguageComboBox" name="kcfg_DefaultSubtitleLanguage" />
+        <widget class="QComboBox" name="kcfg_DefaultSubtitleLanguage" />
       </item>
       <item>
         <widget class="QCheckBox" name="kcfg_UsePreviewCache" >
@@ -79,11 +79,4 @@
   <layoutdefault spacing="6" margin="11" />
   <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
   <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
-  <customwidgets>
-    <customwidget>
-      <class>KMFLanguageComboBox</class>
-      <extends>QComboBox</extends>
-      <header>kmflanguagewidgets.h</header>
-    </customwidget>
-  </customwidgets>
 </ui>

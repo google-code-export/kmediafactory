@@ -110,8 +110,22 @@ class XineLib
       xine_get_pos_length (m_stream, &pos_stream, &pos_time, &length_time);
       result.duration.addMSecs(length_time);
       result.size = fi.size();
-      result.audioStreamCount = xine_get_stream_info(m_stream, XINE_STREAM_INFO_AUDIO_CHANNELS);
+      result.audioStreamCount = xine_get_stream_info(m_stream,
+          XINE_STREAM_INFO_AUDIO_CHANNELS);
+      if(result.audioStreamCount < 1)
+        result.audioStreamCount = xine_get_stream_info(m_stream,
+            XINE_STREAM_INFO_HAS_AUDIO);
       result.filename = file;
+
+      kDebug() << k_funcinfo << "width: " << result.width << endl;
+      kDebug() << k_funcinfo << "height: " << result.height << endl;
+      kDebug() << k_funcinfo << "fps: " << result.fps << endl;
+      kDebug() << k_funcinfo << "aspect: " << result.aspect << endl;
+      kDebug() << k_funcinfo << "duration: " << result.duration << endl;
+      kDebug() << k_funcinfo << "size: " << result.size << endl;
+      kDebug() << k_funcinfo << "audio streams: "
+          << result.audioStreamCount << endl;
+      kDebug() << k_funcinfo << "file: " << result.filename << endl;
       return result;
     };
 

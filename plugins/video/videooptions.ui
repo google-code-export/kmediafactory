@@ -100,7 +100,7 @@
       <number>6</number>
      </property>
      <item>
-      <widget class="KMFLanguageListBox" name="audioListBox" />
+      <widget class="QListView" name="audioListBox" />
      </item>
      <item>
       <layout class="QVBoxLayout" >
@@ -162,7 +162,7 @@
       <number>6</number>
      </property>
      <item>
-      <widget class="KMFLanguageListBox" name="subtitleListBox" />
+      <widget class="QListView" name="subtitleListBox" />
      </item>
      <item>
       <layout class="QVBoxLayout" >
@@ -282,11 +282,6 @@
    <class>KPushButton</class>
    <extends>QPushButton</extends>
    <header>kpushbutton.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KMFLanguageListBox</class>
-   <extends>QListView</extends>
-   <header>kmflanguagewidgets.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

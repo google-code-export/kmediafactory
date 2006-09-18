@@ -18,28 +18,12 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 #include "kmflanguagewidgets.h"
-#include "qdvdinfo.h"
 #include <kdebug.h>
 #include <QPixmap>
 #include <QBitmap>
 
-// Test if the widget is in designer window. We don't want to fill listbox or
-// combobox when in designer window because items are then saved to ui file.
-// There is propably better way to do this which I would be glad to here...
-bool inDesigner(QObject* p)
-{
-  while(p)
-  {
-    if(p->objectName() == "designer_mainwindow")
-      return true;
-    p = p->parent();
-  }
-  return false;
-}
-
-
 LanguageListModel::LanguageListModel(QObject *parent) :
-    QAbstractListModel(parent)
+    QAbstractListModel(parent), m_audio(0), m_subtitle(0)
 {
 }
 
@@ -55,7 +39,12 @@ void LanguageListModel::setLanguages(QStringList languages)
 
 int LanguageListModel::rowCount(const QModelIndex&) const
 {
-  return m_languageList.count();
+  if(m_audio)
+    return m_audio->count();
+  else if(m_subtitle)
+    return m_subtitle->count();
+  else
+    return m_languageList.count();
 }
 
 QVariant LanguageListModel::data(const QModelIndex &index, int role) const
@@ -63,27 +52,15 @@ QVariant LanguageListModel::data(const QModelIndex &index, int role) const
   if (!index.isValid())
     return QVariant();
 
-  if (index.row() >= m_languageList.size())
+  if (index.row() >= rowCount(index))
     return QVariant();
 
   if (role == Qt::DisplayRole)
-    return QDVD::Languages::language(m_languageList.at(index.row()));
+    return QDVD::Languages::language(at(index.row()));
   else if (role == Qt::DecorationRole)
-    return flag(m_languageList.at(index.row()));
+    return flag(at(index.row()));
   else
     return QVariant();
-}
-
-bool LanguageListModel::setData(const QModelIndex& index,
-                                const QVariant& value, int)
-{
-  if(index.row() < m_languageList.count())
-  {
-    m_languageList[index.row()] = value.toString();
-    emit dataChanged(index, index);
-    return true;
-  }
-  return false;
 }
 
 QVariant LanguageListModel::headerData(int, Qt::Orientation, int role) const
@@ -153,97 +130,39 @@ QPixmap LanguageListModel::flag(QString languageId) const
     return QPixmap(file);
 }
 
-QModelIndex LanguageListModel::languageIndex(
-    const QString& languageId, const QModelIndex& parent) const
+QString LanguageListModel::at(int i) const
 {
-  int i = m_languageList.indexOf(languageId);
-  return index(i, 0, parent);
+  if(m_audio)
+    return m_audio->at(i).language();
+  else if(m_subtitle)
+    return m_subtitle->at(i).language();
+  else
+    return m_languageList.at(i);
 }
 
-QString LanguageListModel::language(QModelIndex index) const
+QModelIndex LanguageListModel::index(const QString& lang) const
 {
-  return m_languageList[index.row()];
-}
+  int i = -1;
 
-QString LanguageListModel::language(int index) const
-{
-  return m_languageList[index];
+  if(m_audio)
+  {
+    for(i = 0; i < m_audio->count(); ++i)
+      if(m_audio->at(i).language() == lang)
+        break;
+  }
+  else if(m_subtitle)
+  {
+    for(i = 0; i < m_subtitle->count(); ++i)
+      if(m_subtitle->at(i).language() == lang)
+        break;
+  }
+  else
+    i = m_languageList.findIndex(lang);
+  if(i >= 0)
+    return createIndex(i, 0);
+  return QModelIndex();
 }
 
 QMap<QString, QString> LanguageListModel::m_dvd2l10n;
-
-
-KMFLanguageComboBox::KMFLanguageComboBox(QWidget *parent)
- : QComboBox(parent)
-{
-  m_model = new LanguageListModel;
-  setModel(m_model);
-}
-
-KMFLanguageComboBox::~KMFLanguageComboBox()
-{
-  delete m_model;
-}
-
-QString KMFLanguageComboBox::language() const
-{
-  int index = currentIndex();
-  if(index >= 0)
-    return m_model->language(index);
-  return "";
-}
-
-void KMFLanguageComboBox::setLanguage(QString language)
-{
-  QModelIndex i = m_model->languageIndex(language);
-  setCurrentIndex(i.row());
-}
-
-
-KMFLanguageListBox::KMFLanguageListBox(QWidget *parent)
-  : QListView(parent), m_autoFill(false)
-{
-  m_model = new LanguageListModel;
-  setModel(m_model);
-}
-
-KMFLanguageListBox::~KMFLanguageListBox()
-{
-  delete m_model;
-}
-
-QString KMFLanguageListBox::language() const
-{
-  QModelIndexList indexes = selectionModel()->selectedIndexes();
-  if(indexes.count() > 0)
-    return m_model->language(indexes[0]);
-  return "";
-}
-
-void KMFLanguageListBox::setLanguage(QString language)
-{
-  QModelIndex i = m_model->languageIndex(language);
-  selectionModel()->select(QItemSelection(i, i), QItemSelectionModel::Select);
-}
-
-void KMFLanguageListBox::setAutoFill(bool autoFill)
-{
-  m_autoFill = autoFill;
-  if(m_autoFill)
-    m_model->useAllLanguages();
-}
-
-void KMFLanguageListBox::setItemLanguage(QString language, int i)
-{
-  QModelIndex index = m_model->index(i, 0);
-  m_model->setData(index, language);
-}
-
-void KMFLanguageListBox::filter(const QStringList& list)
-{
-  QString lang = language();
-  m_model->setLanguages(list);
-  setLanguage(lang);
-}
 
 #include "kmflanguagewidgets.moc"

@@ -21,6 +21,7 @@
 #define KMFLANGUAGEWIDGETS_H
 
 #include "kmf_stddef.h"
+#include "qdvdinfo.h"
 #include <kstandarddirs.h>
 #include <QComboBox>
 #include <QListView>
@@ -37,61 +38,26 @@ class LanguageListModel : public QAbstractListModel
   public:
     LanguageListModel(QObject *parent = 0);
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    int rowCount(const QModelIndex&) const;
     virtual QVariant data(const QModelIndex &index, int role) const;
-    virtual bool setData(const QModelIndex& index,
-                         const QVariant& value, int role = Qt::EditRole);
     QVariant headerData(int section, Qt::Orientation orientation,
                         int role = Qt::DisplayRole) const;
     void useAllLanguages();
     void setLanguages(QStringList languages);
-    virtual QModelIndex languageIndex(
-        const QString& languageId,
-        const QModelIndex& parent = QModelIndex()) const;
-    virtual QString language(QModelIndex index) const;
-    QString language(int index) const;
+    void setLanguages(const QDVD::AudioList* audio) { m_audio = audio; };
+    void setLanguages(const QDVD::SubtitleList* subtitle)
+      { m_subtitle = subtitle; };
+    QStringList* list() { return &m_languageList; };
+    QString at(int i) const;
+    QModelIndex index(const QString& lang) const;
 
   private:
     QPixmap flag(QString languageId) const;
+
     QStringList m_languageList;
+    const QDVD::AudioList* m_audio;
+    const QDVD::SubtitleList* m_subtitle;
     static QMap<QString, QString> m_dvd2l10n;
-};
-
-class KMFLanguageComboBox : public QComboBox
-{
-    Q_OBJECT
-    Q_PROPERTY(QString language READ language WRITE setLanguage)
-  public:
-    KMFLanguageComboBox(QWidget *parent = 0);
-    ~KMFLanguageComboBox();
-
-    QString language() const;
-    void setLanguage(QString language);
-
-  private:
-    LanguageListModel* m_model;
-};
-
-class KMFLanguageListBox : public QListView
-{
-    Q_OBJECT
-    Q_PROPERTY(QString language READ language WRITE setLanguage)
-    Q_PROPERTY(bool autoFill READ autoFill WRITE setAutoFill)
-  public:
-    KMFLanguageListBox(QWidget *parent = 0);
-    ~KMFLanguageListBox();
-
-    QString language() const;
-    void setLanguage(QString language);
-    void setItemLanguage(QString language, int index = -1);
-    bool autoFill() const { return m_autoFill; };
-    void setAutoFill(bool autoFill);
-
-    void filter(const QStringList& list);
-
-  private:
-    bool m_autoFill;
-    LanguageListModel* m_model;
 };
 
 #endif
