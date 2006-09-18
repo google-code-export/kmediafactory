@@ -51,6 +51,7 @@ Slide::Slide() : chapter(true)
 SlideshowObject::SlideshowObject(QObject* parent)
   : MediaObject(parent), m_loop(false), m_includeOriginals(true)
 {
+  setObjectName("slideshow");
   KAction* action =
       new KAction(i18n("&Properties"), plugin()->actionCollection(),
                   "mob_properties");

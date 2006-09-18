@@ -51,6 +51,7 @@ K_EXPORT_COMPONENT_FACTORY(kmediafactory_slideshow,
 SlideshowPlugin::SlideshowPlugin(QObject *parent, const QStringList&) :
   KMF::Plugin(parent)
 {
+  setObjectName("KMFSlideshow");
   // Initialize GUI
   setInstance(KGenericFactory<SlideshowPlugin>::instance());
   setXMLFile("kmediafactory_slideshowui.rc");

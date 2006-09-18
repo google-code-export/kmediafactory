@@ -59,6 +59,7 @@ OutputPlugin::OutputPlugin(QObject *parent, const QStringList&) :
   KMF::Plugin(parent), addPreviewDVD(0),
   addPreviewDVDXine(0), addPreviewDVDKaffeine(0)
 {
+  setObjectName("KMFOutput");
   // Initialize GUI
   setInstance(KGenericFactory<OutputPlugin>::instance());
   setXMLFile("kmediafactory_outputui.rc");
