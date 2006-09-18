@@ -100,6 +100,12 @@ void VideoOptions::setData(const VideoObject& obj)
   m_subtitleModel.setLanguages(&m_subtitles);
   subtitleListBox->setModel(&m_subtitleModel);
 
+  connect(audioListBox->selectionModel(),
+      SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
+      this, SLOT(enableButtons()));
+  connect(subtitleListBox->selectionModel(),
+      SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
+      this, SLOT(enableButtons()));
   enableButtons();
   updateTexts();
 }
@@ -191,10 +197,12 @@ void VideoOptions::chaptersClicked()
 
 void VideoOptions::enableButtons()
 {
-  audioPropertiesButton->setEnabled(m_audioTracks.count() > 0);
-  subtitleRemoveButton->setEnabled(m_subtitles.count() > 0 &&
+  int a = audioListBox->selectionModel()->selectedIndexes().count();
+  int s = subtitleListBox->selectionModel()->selectedIndexes().count();
+  audioPropertiesButton->setEnabled(m_audioTracks.count() > 0 && a > 0);
+  subtitleRemoveButton->setEnabled(m_subtitles.count() > 0 && s > 0 &&
                                    !isSelectedSubtitleInVideo());
-  subtitlePropertiesButton->setEnabled(m_subtitles.count() > 0);
+  subtitlePropertiesButton->setEnabled(m_subtitles.count() > 0 && s > 0);
 }
 
 void VideoOptions::updateTexts()
@@ -207,13 +215,12 @@ void VideoOptions::updateTexts()
 
 bool VideoOptions::isSelectedSubtitleInVideo()
 {
-  /* TODO
-  if(m_subtitles.count() > 0 && subtitleListBox->selectedItem())
+  if(m_subtitles.count() > 0)
   {
-    int n = subtitleListBox->index(subtitleListBox->selectedItem());
-    return m_subtitles[n].file().isEmpty();
+    int n = subtitleListBox->selectionModel()->selectedIndexes().first().row();
+    if(n >= 0)
+      return m_subtitles[n].file().isEmpty();
   }
-  */
   return false;
 }
 
