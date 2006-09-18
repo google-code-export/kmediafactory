@@ -22,6 +22,7 @@
 
 #include <kmf_stddef.h>
 #include <qdvdinfo.h>
+#include <kmflanguagewidgets.h>
 #include "ui_subtitleoptions.h"
 
 /**
@@ -39,6 +40,9 @@ class SubtitleOptions : public KDialog, public Ui::SubtitleOptions
 
   protected slots:
     void okClicked();
+
+  private:
+    LanguageListModel m_languageModel;
 };
 
 #endif

@@ -32,6 +32,9 @@ SubtitleOptions::SubtitleOptions(QWidget *parent)
 {
   setupUi(mainWidget());
   setButtons(KDialog::Ok | KDialog::Cancel);
+  setCaption(i18n("Subtitle options"));
+  m_languageModel.useAllLanguages();
+  languageCombo->setModel(&m_languageModel);
 }
 
 SubtitleOptions::~SubtitleOptions()
@@ -41,13 +44,14 @@ SubtitleOptions::~SubtitleOptions()
 void SubtitleOptions::getData(QDVD::Subtitle& obj) const
 {
   int align;
+  int n = languageCombo->currentIndex();
 
-  // TODO obj.setLanguage(languageCombo->language());
+  obj.setLanguage(m_languageModel.at(n));
   obj.setFile(subtitleUrl->url().prettyUrl());
   obj.setFont(subtitleFontChooser->font());
 
   align =  0x10 << verticalAlignCombo->currentIndex();
-  int n = horizontalAlignCombo->currentIndex();
+  n = horizontalAlignCombo->currentIndex();
   align |= (n == 0) ? 0 : 0x01 << (n - 1);
   obj.setAlignment(QFlags<Qt::AlignmentFlag>(align));
 }
@@ -60,8 +64,8 @@ void SubtitleOptions::setData(const QDVD::Subtitle& obj)
       "*.sub *.srt *.ssa *.smi *.rt *.txt *.aqt *.jss *.js *.ass|" +
       i18n("Subtitle files") +
       "\n*.*|" + i18n("All files"));
-
-  // TODO languageCombo->setLanguage(obj.language());
+  QModelIndex i = m_languageModel.index(obj.language());
+  languageCombo->setCurrentIndex(i.row());
   subtitleUrl->setUrl(obj.file());
   subtitleFontChooser->setFont(obj.font());
 
