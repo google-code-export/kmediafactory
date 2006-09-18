@@ -49,6 +49,7 @@ VideoObject::VideoObject(QObject* parent)
   : MediaObject(parent), m_videoPlay(0),
     m_aspect(QDVD::VideoTrack::Aspect_Unknown)
 {
+  setObjectName("video");
   m_decoder = new QMpegVideo;
   m_videoProperties = new KAction(
       i18n("&Properties"), plugin()->actionCollection(),"mob_properties");

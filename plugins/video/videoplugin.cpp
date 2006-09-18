@@ -66,6 +66,7 @@ VideoPlugin::VideoPlugin(QObject *parent, const QStringList&) :
   KMF::Plugin(parent)
 {
   // Initialize GUI
+  setObjectName("KMFImportVideo");
   setInstance(KGenericFactory<VideoPlugin>::instance());
   setXMLFile("kmediafactory_videoui.rc");
   // Add action for menu item
