@@ -42,7 +42,7 @@ void SubtitleOptions::getData(QDVD::Subtitle& obj) const
 {
   int align;
 
-  obj.setLanguage(languageCombo->language());
+  // TODO obj.setLanguage(languageCombo->language());
   obj.setFile(subtitleUrl->url().prettyUrl());
   obj.setFont(subtitleFontChooser->font());
 
@@ -61,7 +61,7 @@ void SubtitleOptions::setData(const QDVD::Subtitle& obj)
       i18n("Subtitle files") +
       "\n*.*|" + i18n("All files"));
 
-  languageCombo->setLanguage(obj.language());
+  // TODO languageCombo->setLanguage(obj.language());
   subtitleUrl->setUrl(obj.file());
   subtitleFontChooser->setFont(obj.font());
 

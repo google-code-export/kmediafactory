@@ -30,7 +30,7 @@
         </widget>
       </item>
       <item>
-        <widget class="KMFLanguageComboBox" name="kcfg_DefaultMenuLanguage" />
+        <widget class="QComboBox" name="kcfg_DefaultMenuLanguage" />
       </item>
       <item>
         <spacer name="spacer1" >

@@ -229,13 +229,15 @@ void TemplateObject::slotProperties()
 
   // Give special treatment to widget named kcfg_language so we can show only
   // languages actually found from template
+#warning TODO
+#if 0
   QObject* w = page->findChild<QObject*>("kcfg_language");
   if(w->metaObject()->className() == "KMFLanguageListBox")
   {
     KMFLanguageListBox* lbox = static_cast<KMFLanguageListBox*>(w);
     lbox->filter(m_menu.templateStore()->languages());
   }
-
+#endif
   /*
   kdDebug() << k_funcinfo << &m_customProperties << endl;
   KConfigSkeletonItem::List list = m_customProperties.items();

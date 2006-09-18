@@ -39,7 +39,25 @@ class LanguageSelection : public KDialog, public Ui::LanguageSelection
     {
       setupUi(mainWidget());
       setButtons(KDialog::Ok | KDialog::Cancel);
+      setCaption(i18n("Select Language"));
+      m_languages.useAllLanguages();
+      languageListBox->setModel(&m_languages);
     };
+    QString language()
+    {
+      int n = languageListBox->selectionModel()->
+          selectedIndexes().first().row();
+      return m_languages.at(n);
+    };
+    void setLanguage(const QString& lang)
+    {
+      QModelIndex i = m_languages.index(lang);
+      languageListBox->selectionModel()->setCurrentIndex(i,
+          QItemSelectionModel::ClearAndSelect);
+    };
+
+  private:
+    LanguageListModel m_languages;
 };
 
 VideoOptions::VideoOptions(QWidget *parent)
@@ -47,6 +65,19 @@ VideoOptions::VideoOptions(QWidget *parent)
 {
   setupUi(mainWidget());
   setButtons(KDialog::Ok | KDialog::Cancel);
+  setCaption(i18n("Video Options"));
+  connect(subtitleAddButton, SIGNAL(clicked()),
+          this, SLOT(subtitleAddClicked()));
+  connect(subtitlePropertiesButton, SIGNAL(clicked()),
+          this, SLOT(subtitlePropertiesClicked()));
+  connect(subtitleRemoveButton, SIGNAL(clicked()),
+          this, SLOT(subtitleRemoveClicked()));
+  connect(audioPropertiesButton, SIGNAL(clicked()),
+          this, SLOT(audioPropertiesClicked()));
+  connect(subtitleListBox, SIGNAL(selectionChanged()),
+          this, SLOT(enableButtons()));
+  connect(chapterPropertiesButton, SIGNAL(clicked()),
+          this, SLOT(chaptersClicked()));
 }
 
 VideoOptions::~VideoOptions()
@@ -55,8 +86,6 @@ VideoOptions::~VideoOptions()
 
 void VideoOptions::setData(const VideoObject& obj)
 {
-#warning TODO
-#if 0
   titleEdit->setText(obj.title());
   previewUrl->setUrl(obj.previewUrl().prettyUrl());
   aspectComboBox->setCurrentIndex((int)obj.aspect());
@@ -64,68 +93,41 @@ void VideoOptions::setData(const VideoObject& obj)
   m_cells = obj.cellList();
 
   m_audioTracks = obj.audioTracks();
-  for(QDVD::AudioList::ConstIterator it = m_audioTracks.begin();
-      it != m_audioTracks.end(); ++it)
-    new KMFLanguageItem(audioListBox, (*it).language());
-  audioListBox->setSelected(0, true);
+  m_audioModel.setLanguages(&m_audioTracks);
+  audioListBox->setModel(&m_audioModel);
 
   m_subtitles = obj.subtitles();
-  for(QDVD::SubtitleList::ConstIterator it = m_subtitles.begin();
-      it != m_subtitles.end(); ++it)
-    new KMFLanguageItem(subtitleListBox, (*it).language());
-  subtitleListBox->setSelected(0, true);
+  m_subtitleModel.setLanguages(&m_subtitles);
+  subtitleListBox->setModel(&m_subtitleModel);
 
-  m_conversionParams = obj.conversion();
-  m_obj = &obj;
-  if(!obj.isDVDCompatible())
-  {
-    conversionLabel->show();
-    conversionPropertiesButton->show();
-  }
-  else
-  {
-    conversionLabel->hide();
-    conversionPropertiesButton->hide();
-  }
   enableButtons();
   updateTexts();
-#endif
 }
 
 void VideoOptions::getData(VideoObject& obj) const
 {
-#warning TODO
-#if 0
   obj.setTitle(titleEdit->text());
   obj.setCellList(m_cells);
   obj.setPreviewUrl(KUrl(previewUrl->url()));
   obj.setAspect((QDVD::VideoTrack::AspectRatio)aspectComboBox->currentIndex());
   obj.setSubtitles(m_subtitles);
   obj.setAudioTracks(m_audioTracks);
-  obj.setConversion(m_conversionParams);
-#endif
 }
 
 void VideoOptions::audioPropertiesClicked()
 {
-#warning TODO
-#if 0
   LanguageSelection dlg(this);
-  dlg.languageListBox->setLanguage(audioListBox->language());
+  int n = audioListBox->selectionModel()->selectedIndexes().first().row();
+  dlg.setLanguage(m_audioTracks[n].language());
   if (dlg.exec())
   {
-    QString lang = dlg.languageListBox->language();
-    int n = audioListBox->index(audioListBox->selectedItem());
-    m_audioTracks[n].setLanguage(lang);
-    audioListBox->setItemLanguage(lang);
+    QString newLanguage = dlg.language();
+    m_audioTracks[n].setLanguage(newLanguage);
   }
-#endif
 }
 
 void VideoOptions::subtitleAddClicked()
 {
-#warning TODO
-#if 0
   QDVD::Subtitle subtitle;
   SubtitleOptions dlg(this);
 
@@ -134,42 +136,32 @@ void VideoOptions::subtitleAddClicked()
   if (dlg.exec())
   {
     dlg.getData(subtitle);
-    KMFLanguageItem* item = new KMFLanguageItem(subtitleListBox,
-                                                subtitle.language());
-    subtitleListBox->setSelected(item, true);
     m_subtitles.append(subtitle);
   }
   enableButtons();
-#endif
 }
 
 void VideoOptions::subtitleRemoveClicked()
 {
-#warning TODO
-#if 0
-  int n = subtitleListBox->index(subtitleListBox->selectedItem());
+  int n = subtitleListBox->selectionModel()->selectedIndexes().first().row();
 
-  m_subtitles.remove(m_subtitles.at(n));
-  subtitleListBox->removeItem(n);
+  m_subtitles.removeAt(n);
   enableButtons();
-#endif
 }
 
 void VideoOptions::subtitlePropertiesClicked()
 {
-#warning TODO
-#if 0
-  int n = subtitleListBox->index(subtitleListBox->selectedItem());
+  int n = subtitleListBox->selectionModel()->selectedIndexes().first().row();
 
   if(isSelectedSubtitleInVideo())
   {
-    LanguageSelectionLayout dlg(this);
-    dlg.languageListBox->setLanguage(subtitleListBox->language());
+    LanguageSelection dlg(this);
+    int n = subtitleListBox->selectionModel()->selectedIndexes().first().row();
+    dlg.setLanguage(m_subtitles[n].language());
     if (dlg.exec())
     {
-      QString lang = dlg.languageListBox->language();
+      QString lang = dlg.language();
       m_subtitles[n].setLanguage(lang);
-      subtitleListBox->setItemLanguage(lang);
     }
   }
   else
@@ -179,10 +171,8 @@ void VideoOptions::subtitlePropertiesClicked()
     if (dlg.exec())
     {
       dlg.getData(m_subtitles[n]);
-      subtitleListBox->setItemLanguage(m_subtitles[n].language());
     }
   }
-#endif
 }
 
 void VideoOptions::chaptersClicked()
@@ -217,14 +207,13 @@ void VideoOptions::updateTexts()
 
 bool VideoOptions::isSelectedSubtitleInVideo()
 {
-#warning TODO
-#if 0
+  /* TODO
   if(m_subtitles.count() > 0 && subtitleListBox->selectedItem())
   {
     int n = subtitleListBox->index(subtitleListBox->selectedItem());
     return m_subtitles[n].file().isEmpty();
   }
-#endif
+  */
   return false;
 }
 
