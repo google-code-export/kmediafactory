@@ -49,6 +49,7 @@ class AddChapter : public KDialog, public Ui::AddChapter
     {
       setupUi(mainWidget());
       setButtons(KDialog::Ok | KDialog::Cancel);
+      setCaption(i18n("Add chapters"));
     };
 };
 
@@ -59,6 +60,7 @@ class AutoChapters : public KDialog, public Ui::AutoChapters
     {
       setupUi(mainWidget());
       setButtons(KDialog::Ok | KDialog::Cancel);
+      setCaption(i18n("Auto chapters"));
     };
 };
 
@@ -67,6 +69,7 @@ Chapters::Chapters(QWidget *parent)
 {
   setupUi(mainWidget());
   setButtons(KDialog::Ok | KDialog::Cancel);
+  setCaption(i18n("Chapters"));
 
   video->setScaled(true);
 }

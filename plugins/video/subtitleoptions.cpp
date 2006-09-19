@@ -75,7 +75,7 @@ void SubtitleOptions::setData(const QDVD::Subtitle& obj)
   horizontalAlignCombo->setCurrentIndex((n > 2)?3:n);
 }
 
-void SubtitleOptions::okClicked()
+void SubtitleOptions::slotOk()
 {
   QFileInfo fi(subtitleUrl->url().prettyUrl());
 
