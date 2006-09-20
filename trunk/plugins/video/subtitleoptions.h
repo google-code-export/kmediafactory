@@ -39,7 +39,7 @@ class SubtitleOptions : public KDialog, public Ui::SubtitleOptions
     void setData(const QDVD::Subtitle& obj);
 
   protected slots:
-    virtual void slotOk();
+    virtual void accept();
 
   private:
     LanguageListModel m_languageModel;

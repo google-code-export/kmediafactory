@@ -29,6 +29,14 @@ class QStringList;
 class QFont;
 class QDomElement;
 
+#define Q_SELECT(w, m, i) ((w)->selectionModel()->select( \
+    (m)->index(i), QItemSelectionModel::Rows))
+
+#define Q_SELECT_FIRST(w, m) Q_SELECT(w, m, 0)
+
+#define Q_SELECTED_INDEX(w) \
+    ((w)->selectionModel()->selectedIndexes().first().row())
+
 namespace KMF
 {
 

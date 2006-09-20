@@ -28,6 +28,8 @@
 /**
 @author Petri Damsten
 */
+class CellListModel;
+
 class Chapters : public KDialog, public Ui::Chapters
 {
     Q_OBJECT
@@ -55,13 +57,15 @@ class Chapters : public KDialog, public Ui::Chapters
     virtual void autoChapters();
     virtual void import();
     virtual void saveCustomPreview();
-    virtual void okClicked();
+    virtual void accept();
 
   private:
     const VideoObject* m_obj;
     KMF::Time m_pos;
     QString m_duration;
     QString m_preview;
+    QDVD::CellList m_cells;
+    CellListModel* m_model;
 
     int selectedItemIndex(Q3ListView* lv);
     void moveFrames(int direction);
