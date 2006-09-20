@@ -43,6 +43,7 @@ class QMpegFile
     QString filename;
     uint64_t size;
     int audioStreamCount;
+    QImage frame(const QTime&) const;
 };
 
 class QMpegVideo : QList<QMpegFile>
@@ -57,9 +58,9 @@ class QMpegVideo : QList<QMpegFile>
     bool addFile(const QString& file);
     int audioStreamCount() const;
     int aspectRatio() const;
-    bool isDVDCompatible();
-    QImage frame(const QTime&) { return QImage(); };
-    uint64_t size();
+    bool isDVDCompatible() const;
+    QImage frame(const QTime&) const;
+    uint64_t size() const;
 };
 
 #endif
