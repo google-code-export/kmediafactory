@@ -8,7 +8,6 @@ set(kmediafactory_video_SRCS
   videoobject.cpp
   videooptions.cpp
   chapters.cpp
-  kmfchapterlistview.cpp
   subtitleoptions.cpp
 )
 

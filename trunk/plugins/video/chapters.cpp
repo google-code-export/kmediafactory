@@ -20,7 +20,6 @@
 
 #include "chapters.h"
 #include "videoplugin.h"
-#include "kmfchapterlistview.h"
 #include "kmftime.h"
 #include "kmftools.h"
 #include "ui_autochapters.h"
@@ -138,16 +137,14 @@ Chapters::Chapters(QWidget *parent)
   connect(endButton, SIGNAL(clicked()), this, SLOT(slotEnd()));
   connect(addButton, SIGNAL(clicked()), this, SLOT(slotAdd()));
   connect(removeButton, SIGNAL(clicked()), this, SLOT(slotRemove()));
-  connect(chaptersView, SIGNAL(selectionChanged()),
-          this, SLOT(slotSelectionChanged()));
   connect(timeSlider, SIGNAL(sliderMoved(int)),
           this, SLOT(slotSliderMoved(int)));
   connect(fwdButton, SIGNAL(clicked()), this, SLOT(slotForward()));
   connect(rewButton, SIGNAL(clicked()), this, SLOT(slotRewind()));
   connect(nextButton, SIGNAL(clicked()), this, SLOT(slotNextFrame()));
   connect(prevButton, SIGNAL(clicked()), this, SLOT(slotPrevFrame()));
-  connect(chaptersView, SIGNAL(contextMenu(KListView*,QListViewItem*,const QPoint&)),
-          this, SLOT( slotContextMenu(KListView*,QListViewItem*,const QPoint&)));
+  connect(chaptersView, SIGNAL(customContextMenuRequested(const QPoint&)),
+          this, SLOT(slotContextMenu(const QPoint&)));
   connect(customPreviewButton, SIGNAL(clicked()),
           this, SLOT(saveCustomPreview()));
 
@@ -184,6 +181,9 @@ void Chapters::setData(const QDVD::CellList& cells,
   m_pos = 0.0;
   chaptersView->setCurrentIndex(m_model->index(0));
   updateVideo();
+  connect(chaptersView->selectionModel(),
+      SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
+      this, SLOT(slotSelectionChanged()));
 }
 
 void Chapters::updateVideo()
@@ -301,7 +301,7 @@ void Chapters::slotAdd()
   }
 }
 
-void Chapters::slotContextMenu(Q3ListView*, Q3ListViewItem*, const QPoint& p)
+void Chapters::slotContextMenu(const QPoint& p)
 {
   QMenu *popup = new QMenu( this );
   popup->insertItem(i18n("&Delete all"), this, SLOT(deleteAll()));

@@ -70,8 +70,6 @@ VideoOptions::VideoOptions(QWidget *parent)
           this, SLOT(subtitleRemoveClicked()));
   connect(audioPropertiesButton, SIGNAL(clicked()),
           this, SLOT(audioPropertiesClicked()));
-  connect(subtitleListBox, SIGNAL(selectionChanged()),
-          this, SLOT(enableButtons()));
   connect(chapterPropertiesButton, SIGNAL(clicked()),
           this, SLOT(chaptersClicked()));
 }

@@ -24,7 +24,6 @@
 #include <ui_chapters.h>
 #include <videooptions.h>
 #include <kmftime.h>
-#include <Q3ListView>
 
 /**
 @author Petri Damsten
@@ -52,7 +51,7 @@ class Chapters : public KDialog, public Ui::Chapters
     virtual void slotAdd();
     virtual void slotSelectionChanged();
     virtual void slotSliderMoved(int value);
-    virtual void slotContextMenu(Q3ListView*, Q3ListViewItem*, const QPoint& p);
+    virtual void slotContextMenu(const QPoint& p);
     virtual void renameAll();
     virtual void deleteAll();
     virtual void autoChapters();
@@ -68,7 +67,6 @@ class Chapters : public KDialog, public Ui::Chapters
     QDVD::CellList m_cells;
     CellListModel* m_model;
 
-    int selectedItemIndex(Q3ListView* lv);
     void moveFrames(int direction);
     void updateVideo();
 };
