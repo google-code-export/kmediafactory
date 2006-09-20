@@ -47,7 +47,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QTreeView" name="chaptersListView" >
+      <widget class="QTreeView" name="chaptersView" >
        <property name="sizePolicy" >
         <sizepolicy>
          <hsizetype>5</hsizetype>
@@ -345,9 +345,7 @@
   <tabstop>chaptersListView</tabstop>
  </tabstops>
  <includes>
-  <include location="global" >q3listview.h</include>
   <include location="local" >kpushbutton.h</include>
-  <include location="local" >kmfchapterlistview.h</include>
   <include location="local" >kmfimageview.h</include>
   <include location="local" >common.h</include>
  </includes>

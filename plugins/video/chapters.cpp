@@ -35,6 +35,7 @@
 #include <kinputdialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kicon.h>
 #include <kdebug.h>
 #include <QMenu>
 #include <QSlider>
@@ -46,7 +47,8 @@
 class CellListModel : public QAbstractListModel
 {
   public:
-    CellListModel(const QDVD::CellList& data) : m_data(data) {};
+    CellListModel(const QDVD::CellList& data, QTime total) :
+      m_data(data), m_total(total) {};
 
     virtual int rowCount(const QModelIndex&) const
     {
@@ -100,6 +102,7 @@ class CellListModel : public QAbstractListModel
 
   private:
     const QDVD::CellList& m_data;
+    QTime m_total;
 };
 
 class AddChapter : public KDialog, public Ui::AddChapter
@@ -135,7 +138,7 @@ Chapters::Chapters(QWidget *parent)
   connect(endButton, SIGNAL(clicked()), this, SLOT(slotEnd()));
   connect(addButton, SIGNAL(clicked()), this, SLOT(slotAdd()));
   connect(removeButton, SIGNAL(clicked()), this, SLOT(slotRemove()));
-  connect(chaptersListView, SIGNAL(selectionChanged()),
+  connect(chaptersView, SIGNAL(selectionChanged()),
           this, SLOT(slotSelectionChanged()));
   connect(timeSlider, SIGNAL(sliderMoved(int)),
           this, SLOT(slotSliderMoved(int)));
@@ -143,10 +146,17 @@ Chapters::Chapters(QWidget *parent)
   connect(rewButton, SIGNAL(clicked()), this, SLOT(slotRewind()));
   connect(nextButton, SIGNAL(clicked()), this, SLOT(slotNextFrame()));
   connect(prevButton, SIGNAL(clicked()), this, SLOT(slotPrevFrame()));
-  connect(chaptersListView, SIGNAL(contextMenu(KListView*,QListViewItem*,const QPoint&)),
+  connect(chaptersView, SIGNAL(contextMenu(KListView*,QListViewItem*,const QPoint&)),
           this, SLOT( slotContextMenu(KListView*,QListViewItem*,const QPoint&)));
   connect(customPreviewButton, SIGNAL(clicked()),
           this, SLOT(saveCustomPreview()));
+
+  startButton->setIcon(KIcon("player_start"));
+  rewButton->setIcon(KIcon("player_rew"));
+  prevButton->setIcon(KIcon("back"));
+  nextButton->setIcon(KIcon("next"));
+  fwdButton->setIcon(KIcon("player_fwd"));
+  endButton->setIcon(KIcon("player_end"));
 
   video->setScaled(true);
 }
@@ -166,27 +176,14 @@ void Chapters::setData(const QDVD::CellList& cells,
                        const VideoObject* obj)
 {
   m_cells = cells;
-  m_model = new CellListModel(m_cells);
-  chaptersListView->setModel(m_model);
+  m_model = new CellListModel(m_cells, QTime());//m_obj->duration());
+  chaptersView->setModel(m_model);
   m_obj = obj;
-  //chaptersListView->setDuration(KMF::Time(m_obj->duration()));
   //timeSlider->setMaximum((int)KMF::Time(m_obj->duration()));
   //m_duration = KMF::Time(m_obj->duration()).toString();
-  //m_pos = 0.0;
-  Q_SELECT_FIRST(chaptersListView, m_model);
-  //updateVideo();
-
-  /* TODO: Why this DOESN'T work ?????????????
-  KMF::Plugin* plugin = m_obj->plugin();
-  new KAction(i18n("&Delete all"), "editdelete", CTRL+Key_Delete,
-      this, SLOT(deleteAll()), plugin->actionCollection(), "delete_all");
-  new KAction(i18n("&Rename all"), "", KShortcut(), this,
-      SLOT(renameAll()), plugin->actionCollection(), "rename_all" );
-  new KAction(i18n("&Auto cells"), "", KShortcut(), this,
-      SLOT(autoCells()), plugin->actionCollection(), "auto_cells");
-  new KAction(i18n("&Import"), "", KShortcut(), this,
-      SLOT(import()), plugin->actionCollection(), "import" );
-  */
+  m_pos = 0.0;
+  chaptersView->setCurrentIndex(m_model->index(0));
+  updateVideo();
 }
 
 void Chapters::updateVideo()
@@ -254,68 +251,58 @@ void Chapters::slotEnd()
 
 void Chapters::slotSelectionChanged()
 {
-#warning TODO
-/*
-  if(chaptersListView->selectedItem())
+  int i = chaptersView->currentIndex().row();
+  if(i >= 0)
   {
-    m_pos = chaptersListView->selectedItem()->pos();
+    m_pos = m_cells.at(i).start();
     updateVideo();
   }
-  */
 }
 
 void Chapters::slotRemove()
 {
-  int i = Q_SELECTED_INDEX(chaptersListView);
-  m_cells.removeAt(i);
-  if(i > 0)
-    --i;
-  Q_SELECT(chaptersListView, m_model, i);
-  m_cells.last().setLength(QTime(0, 0, 0, 0));
-  chaptersListView->viewport()->update();
+  if(m_cells.count() > 0)
+  {
+    int i = chaptersView->currentIndex().row();
+    m_cells.removeAt(i);
+    if(i > 0)
+      --i;
+    chaptersView->setCurrentIndex(m_model->index(i));
+    m_cells.last().setLength(QTime(0, 0, 0, 0));
+    chaptersView->viewport()->update();
+  }
 }
 
 void Chapters::slotAdd()
 {
-#warning TODO
-/*
   AddChapter dlg(this);
 
   dlg.chapterTime->setMaximumTime(m_obj->duration());
   dlg.chapterTime->setTime(m_pos);
   if(dlg.exec() == QDialog::Accepted)
   {
-    KMFChapterListViewItem* item = 0;
     QTime pos = dlg.chapterTime->time();
     QString text = dlg.nameEdit->text();
+    int i;
 
     // Don't lose milliseconds
     if(pos.hour() == m_pos.hour() && pos.minute() == m_pos.minute() &&
        pos.second() == m_pos.second())
-      pos = m_pos;
-    for(Q3ListViewItemIterator it(chaptersListView); *it != 0; ++it)
     {
-      item = static_cast<KMFChapterListViewItem*>(*it);
-      if(pos < item->pos())
+      pos = m_pos;
+    }
+    for(i = 0; i < m_cells.count(); ++i)
+    {
+      if(pos < m_cells[i].start())
         break;
     }
-    if(item && pos < item->pos())
-      item = static_cast<KMFChapterListViewItem*>(item->itemAbove());
-    new KMFChapterListViewItem(chaptersListView, item, text, pos);
+    m_cells.insert(i, QDVD::Cell(pos, QTime(), text));
+    chaptersView->viewport()->update();
   }
-  */
 }
 
 void Chapters::slotContextMenu(Q3ListView*, Q3ListViewItem*, const QPoint& p)
 {
-  /* TODO: Why this DOESN'T work ?????????????
-  KMF::Plugin* plugin = m_obj->plugin();
-  KXMLGUIFactory* factory = plugin->factory();
-  QPopupMenu *popup =
-      static_cast<QPopupMenu*>(factory->container("cell_popup", plugin));
-  if(popup)
-    popup->exec(p);
-  */
   QMenu *popup = new QMenu( this );
   popup->insertItem(i18n("&Delete all"), this, SLOT(deleteAll()));
   popup->insertItem(i18n("&Rename all"), this, SLOT(renameAll()));
@@ -327,8 +314,6 @@ void Chapters::slotContextMenu(Q3ListView*, Q3ListViewItem*, const QPoint& p)
 
 void Chapters::renameAll()
 {
-#warning TODO
-/*
   AutoChapters dlg(kapp->activeWindow());
   dlg.intervalLabel->hide();
   dlg.intervalTime->hide();
@@ -337,28 +322,20 @@ void Chapters::renameAll()
   {
     QString text = dlg.nameEdit->text();
     int i = 1;
-
-    for(Q3ListViewItemIterator it(chaptersListView); *it != 0; ++it)
-    {
-      KMFChapterListViewItem* item = static_cast<KMFChapterListViewItem*>(*it);
-      item->setName(QString(text).arg(i++));
-    }
+    foreach(QDVD::Cell cell, m_cells)
+      cell.setName(QString(text).arg(i++));
+    chaptersView->viewport()->update();
   }
-  */
 }
 
 void Chapters::deleteAll()
 {
-#warning TODO
-/*
-  chaptersListView->clear();
-  */
+  m_cells.clear();
+  chaptersView->viewport()->update();
 }
 
 void Chapters::autoChapters()
 {
-#warning TODO
-/*
   AutoChapters dlg(kapp->activeWindow());
   if (dlg.exec())
   {
@@ -369,7 +346,7 @@ void Chapters::autoChapters()
 
     if(interval < 1.0)
       return;
-    chaptersListView->clear();
+    m_cells.clear();
     while(time < m_obj->duration())
     {
       QString s;
@@ -378,21 +355,16 @@ void Chapters::autoChapters()
         s = QString(text).arg(i);
       else
         s = time.toString("h:mm:ss");
-      new KMFChapterListViewItem(chaptersListView,
-                                chaptersListView->lastItem(),
-                                s, time);
+      m_cells.insert(i, QDVD::Cell(time, QTime(), s));
       time += interval;
       ++i;
     }
+    chaptersView->viewport()->update();
   }
-  */
 }
 
 void Chapters::import()
 {
-#warning TODO
-/*
-
   QString chapterFile = KFileDialog::getOpenFileName(
       KUrl("kfiledialog:///<Chapters"), "*.*|All files");
 
@@ -402,7 +374,7 @@ void Chapters::import()
     int i = 1;
     QString entry;
 
-    chaptersListView->clear();
+    m_cells.clear();
     while((entry = chapters.readEntry(
            QString("CHAPTER%1").arg(i).rightJustified(2, '0'),
            QString(""))) != QString(""))
@@ -411,13 +383,11 @@ void Chapters::import()
       QString s = chapters.readEntry(
           QString("CHAPTER%1NAME").arg(i).rightJustified(2, '0'),
           QString("%1").arg(i));
-      new KMFChapterListViewItem(chaptersListView,
-                                 chaptersListView->lastItem(),
-                                 s, time);
+      m_cells.insert(i, QDVD::Cell(time, QTime(), s));
       ++i;
     }
+    chaptersView->viewport()->update();
   }
-  */
 }
 
 void Chapters::saveCustomPreview( )

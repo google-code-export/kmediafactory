@@ -45,15 +45,11 @@ class LanguageSelection : public KDialog, public Ui::LanguageSelection
     };
     QString language()
     {
-      int n = languageListBox->selectionModel()->
-          selectedIndexes().first().row();
-      return m_languages.at(n);
+      return m_languages.at(languageListBox->currentIndex().row());
     };
     void setLanguage(const QString& lang)
     {
-      QModelIndex i = m_languages.index(lang);
-      languageListBox->selectionModel()->setCurrentIndex(i,
-          QItemSelectionModel::ClearAndSelect);
+      languageListBox->setCurrentIndex(m_languages.index(lang));
     };
 
   private:
@@ -91,7 +87,7 @@ void VideoOptions::setData(const VideoObject& obj)
   aspectComboBox->setCurrentIndex((int)obj.aspect());
 
   m_cells = obj.cellList();
-
+  m_obj = &obj;
   m_audioTracks = obj.audioTracks();
   m_audioModel.setLanguages(&m_audioTracks);
   audioListBox->setModel(&m_audioModel);
@@ -99,6 +95,7 @@ void VideoOptions::setData(const VideoObject& obj)
   m_subtitles = obj.subtitles();
   m_subtitleModel.setLanguages(&m_subtitles);
   subtitleListBox->setModel(&m_subtitleModel);
+  subtitleListBox->setCurrentIndex(m_subtitleModel.index(0));
 
   connect(audioListBox->selectionModel(),
       SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
@@ -149,7 +146,7 @@ void VideoOptions::subtitleAddClicked()
 
 void VideoOptions::subtitleRemoveClicked()
 {
-  int n = subtitleListBox->selectionModel()->selectedIndexes().first().row();
+  int n = subtitleListBox->currentIndex().row();
 
   m_subtitles.removeAt(n);
   enableButtons();
@@ -157,12 +154,12 @@ void VideoOptions::subtitleRemoveClicked()
 
 void VideoOptions::subtitlePropertiesClicked()
 {
-  int n = subtitleListBox->selectionModel()->selectedIndexes().first().row();
+  int n = subtitleListBox->currentIndex().row();
 
   if(isSelectedSubtitleInVideo())
   {
     LanguageSelection dlg(this);
-    int n = subtitleListBox->selectionModel()->selectedIndexes().first().row();
+    int n = subtitleListBox->currentIndex().row();
     dlg.setLanguage(m_subtitles[n].language());
     if (dlg.exec())
     {
@@ -217,7 +214,7 @@ bool VideoOptions::isSelectedSubtitleInVideo()
 {
   if(m_subtitles.count() > 0)
   {
-    int n = subtitleListBox->selectionModel()->selectedIndexes().first().row();
+    int n = subtitleListBox->currentIndex().row();
     if(n >= 0)
       return m_subtitles[n].file().isEmpty();
   }

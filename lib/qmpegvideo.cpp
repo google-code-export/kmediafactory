@@ -176,6 +176,7 @@ double QMpegVideo::frameRate() const
 
 QTime QMpegVideo::duration(int index) const
 {
+  kDebug() << k_funcinfo << endl;
   if(index != -1)
     return at(index).duration;
 
