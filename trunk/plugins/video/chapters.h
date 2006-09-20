@@ -24,6 +24,7 @@
 #include <ui_chapters.h>
 #include <videooptions.h>
 #include <kmftime.h>
+#include <Q3ListView>
 
 /**
 @author Petri Damsten
