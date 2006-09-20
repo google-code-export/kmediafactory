@@ -75,12 +75,12 @@ void SubtitleOptions::setData(const QDVD::Subtitle& obj)
   horizontalAlignCombo->setCurrentIndex((n > 2)?3:n);
 }
 
-void SubtitleOptions::slotOk()
+void SubtitleOptions::accept()
 {
   QFileInfo fi(subtitleUrl->url().prettyUrl());
 
   if(fi.exists())
-    accept();
+    KDialog::accept();
   else
     KMessageBox::sorry(kapp->activeWindow(),
                        i18n("Subtitle file does not exists."));

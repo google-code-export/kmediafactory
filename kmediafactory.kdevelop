@@ -140,7 +140,7 @@
   </kdevfileview>
   <kdevdebugger>
     <general>
-      <programargs/>
+      <programargs>file:///home/damu/kmf_test/test.kmf</programargs>
       <gdbpath/>
       <dbgshell/>
       <configGdbScript/>
