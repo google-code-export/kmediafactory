@@ -108,7 +108,7 @@ class XineLib
         result.aspect = QDVD::VideoTrack::Aspect_16_9;
 
       xine_get_pos_length (m_stream, &pos_stream, &pos_time, &length_time);
-      result.duration.addMSecs(length_time);
+      result.duration = QTime().addMSecs(length_time);
       result.size = fi.size();
       result.audioStreamCount = xine_get_stream_info(m_stream,
           XINE_STREAM_INFO_AUDIO_CHANNELS);
@@ -121,7 +121,8 @@ class XineLib
       kDebug() << k_funcinfo << "height: " << result.height << endl;
       kDebug() << k_funcinfo << "fps: " << result.fps << endl;
       kDebug() << k_funcinfo << "aspect: " << result.aspect << endl;
-      kDebug() << k_funcinfo << "duration: " << result.duration << endl;
+      kDebug() << k_funcinfo << "duration: "
+          << QTime().msecsTo(result.duration) << endl;
       kDebug() << k_funcinfo << "size: " << result.size << endl;
       kDebug() << k_funcinfo << "audio streams: "
           << result.audioStreamCount << endl;
@@ -135,6 +136,197 @@ class XineLib
         xineDeleter.setObject(m_self, new XineLib);
       return m_self;
     };
+
+    //************************************************************
+    // Helpers to convert yuy and yv12 frames to rgb             *
+    // code from gxine modified for 32bit output                 *
+    // Copyright (C) 2000-2003 the xine project                  *
+    //************************************************************
+    void yuy2Toyv12(uint8_t *y, uint8_t *u, uint8_t *v,
+                    uint8_t *input, int width, int height) const
+    {
+      int i, j, w2;
+      w2 = width / 2;
+
+      for (i = 0; i < height; i += 2)
+      {
+        for (j = 0; j < w2; j++)
+        {
+          // packed YUV 422 is: Y[i] U[i] Y[i+1] V[i]
+          *(y++) = *(input++);
+          *(u++) = *(input++);
+          *(y++) = *(input++);
+          *(v++) = *(input++);
+        }
+        // down sampling
+
+        for (j = 0; j < w2; j++)
+        {
+          // skip every second line for U and V
+          *(y++) = *(input++);
+          input++;
+          *(y++) = *(input++);
+          input++;
+        }
+      }
+    }
+
+    uchar* yv12ToRgb(uint8_t *src_y, uint8_t *src_u, uint8_t *src_v,
+                     int width, int height) const
+    {
+      // Create rgb data from yv12
+
+      #define clip_8_bit(val)           \
+      {                                 \
+        if(val < 0)                     \
+          val = 0;                      \
+        else                            \
+          if (val > 255) val = 255;     \
+      }
+
+      int     i, j;
+      int     y, u, v;
+      int     r, g, b;
+      int     sub_i_uv;
+      int     sub_j_uv;
+      int     uv_width, uv_height;
+      uchar *rgb;
+
+      uv_width  = width / 2;
+      uv_height = height / 2;
+
+      rgb = new uchar[(width * height * 4)]; //qt needs a 32bit align
+      if (!rgb)
+      {
+        kDebug() << k_funcinfo <<
+            "Not enough memory to make screenshot!" << endl;
+        return NULL;
+      }
+
+      for (i = 0; i < height; ++i)
+      {
+        // calculate u & v rows
+        sub_i_uv = ((i * uv_height) / height);
+
+        for (j = 0; j < width; ++j)
+        {
+          // calculate u & v columns
+          sub_j_uv = ((j * uv_width) / width);
+
+          //***************************************************
+          //
+          //  Colour conversion from
+          //  http://www.inforamp.net/~poynton/notes/colour_and_gamma/
+          //      ColorFAQ.html#RTFToC30
+          //
+          // Thanks to Billy Biggs <vektor@dumbterm.net>
+          // for the pointer and the following conversion.
+          //
+          //   R' = [ 1.1644         0    1.5960 ]   ([ Y' ]   [  16 ])
+          //   G' = [ 1.1644   -0.3918   -0.8130 ] * ([ Cb ] - [ 128 ])
+          //   B' = [ 1.1644    2.0172         0 ]   ([ Cr ]   [ 128 ])
+          //
+          //  Where in xine the above values are represented as
+          //
+          //   Y' == image->y
+          //   Cb == image->u
+          //   Cr == image->v
+          //
+          //***************************************************
+
+          y = src_y[(i * width) + j] - 16;
+          u = src_u[(sub_i_uv * uv_width) + sub_j_uv] - 128;
+          v = src_v[(sub_i_uv * uv_width) + sub_j_uv] - 128;
+
+          r = (int)((1.1644 * (double)y) + (1.5960 * (double)v));
+          g = (int)((1.1644 * (double)y) - (0.3918 * (double)u) - (0.8130 * (double)v));
+          b = (int)((1.1644 * (double)y) + (2.0172 * (double)u));
+
+          clip_8_bit (r);
+          clip_8_bit (g);
+          clip_8_bit (b);
+
+          rgb[(i * width + j) * 4 + 0] = b;
+          rgb[(i * width + j) * 4 + 1] = g;
+          rgb[(i * width + j) * 4 + 2] = r;
+          rgb[(i * width + j) * 4 + 3] = 0;
+        }
+      }
+      return rgb;
+    }
+
+    // From KXineWidget
+    bool getScreenshot(uchar* rgb32BitData) const
+    {
+      uint8_t   *yuv = NULL, *y = NULL, *u = NULL, *v =NULL;
+      int        width, height, ratio, format;
+
+      if(!xine_get_current_frame(m_stream, &width, &height, &ratio,
+                                 &format, NULL))
+      {
+        return false;
+      }
+      yuv = new uint8_t[((width+8) * (height+1) * 2)];
+      if (yuv == NULL)
+      {
+        kDebug() << k_funcinfo <<
+            "Not enough memory to make screenshot!" << endl;
+        return false;
+      }
+
+      xine_get_current_frame(m_stream, &width, &height, &ratio,
+                             &format, yuv);
+
+      // convert to yv12 if necessary
+      switch (format)
+      {
+        case XINE_IMGFMT_YUY2:
+        {
+          uint8_t *yuy2 = yuv;
+
+          yuv = new uint8_t[(width * height * 2)];
+          if (yuv == NULL)
+          {
+            kDebug() << k_funcinfo <<
+                "Not enough memory to make screenshot!" << endl;
+            return false;
+          }
+          y = yuv;
+          u = yuv + width * height;
+          v = yuv + width * height * 5 / 4;
+
+          yuy2Toyv12 (y, u, v, yuy2, width, height);
+
+          delete [] yuy2;
+        }
+        break;
+        case XINE_IMGFMT_YV12:
+          y = yuv;
+          u = yuv + width * height;
+          v = yuv + width * height * 5 / 4;
+
+          break;
+        default:
+        {
+          kDebug() << k_funcinfo <<
+              QString("Screenshot: Format %1 not supported!")\
+              .arg((char*)&format) << endl;
+          delete [] yuv;
+          return false;
+        }
+      }
+
+      // convert to rgb
+      rgb32BitData = yv12ToRgb(y, u, v, width, height);
+      delete [] yuv;
+      return true;
+    }
+
+    void seek(const QTime& time)
+    {
+      xine_play(m_stream, 0, QTime().msecsTo(time));
+      xine_set_param(m_stream, XINE_PARAM_SPEED, XINE_SPEED_PAUSE);
+    }
 
   private:
     xine_t* m_xine;
@@ -151,6 +343,24 @@ XineLib *XineLib::m_self = 0;
 QMpegFile::QMpegFile(const QString& file)
 {
   *this = XineLib::self()->fileInfo(file);
+}
+
+QImage QMpegFile::frame(const QTime& time) const
+{
+  XineLib::self()->setFile(filename);
+  XineLib::self()->seek(time);
+
+  // From KXineWidget
+  uchar *rgbPile = NULL;
+
+  XineLib::self()->getScreenshot(rgbPile);
+
+  if(!rgbPile)
+    return QImage();
+
+  QImage screenShot(rgbPile, width, height, 32, 0, 0, QImage::IgnoreEndian);
+  delete []rgbPile;
+  return screenShot;
 }
 
 QMpegVideo::QMpegVideo()
@@ -176,7 +386,6 @@ double QMpegVideo::frameRate() const
 
 QTime QMpegVideo::duration(int index) const
 {
-  kDebug() << k_funcinfo << endl;
   if(index != -1)
     return at(index).duration;
 
@@ -210,13 +419,13 @@ int QMpegVideo::aspectRatio() const
   return QDVD::VideoTrack::Aspect_4_3;
 }
 
-bool QMpegVideo::isDVDCompatible()
+bool QMpegVideo::isDVDCompatible() const
 {
 #warning TODO
   return true;
 }
 
-uint64_t QMpegVideo::size()
+uint64_t QMpegVideo::size() const
 {
   uint64_t result;
 
@@ -225,3 +434,16 @@ uint64_t QMpegVideo::size()
   return result;
 }
 
+QImage QMpegVideo::frame(const QTime& time) const
+{
+  for(int i = 0; i < count(); ++i)
+  {
+    kDebug() << k_funcinfo << QTime().msecsTo(time) << ", "
+        << QTime().msecsTo(at(i).duration) << endl;
+    if(QTime().msecsTo(time) < QTime().msecsTo(at(i).duration))
+      return at(i).frame(time);
+    else
+      time.addMSecs(-1 * QTime().msecsTo(at(i).duration));
+  }
+  return QImage();
+}
