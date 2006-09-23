@@ -21,20 +21,16 @@
 #define KMFIMAGEVIEW_H
 
 #include "rect.h"
-#include <Q3ScrollView>
 #include <QImage>
-//Added by qt3to4:
-#include <QResizeEvent>
-#include <QContextMenuEvent>
-#include <QLabel>
-
-class QLabel;
-class Q3VBox;
+#include <QGraphicsView>
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
 
 /**
 @author Petri Damsten
 */
-class KMFImageView : public Q3ScrollView
+
+class KMFImageView : public QGraphicsView
 {
     Q_OBJECT
   public:
@@ -45,23 +41,21 @@ class KMFImageView : public Q3ScrollView
     const QImage& image() { return m_image; };
     void clear();
     bool scaled() { return m_scaled; };
-    void setScaled(bool scaled) { m_scaled = scaled; };
+    void setScaled(bool scaled);
 
   protected:
     void newImage();
-    virtual void resizeEvent (QResizeEvent*);
-    void contentsContextMenuEvent(QContextMenuEvent* e);
-
-  protected slots:
-    void updateImage();
+    void scale();
+    virtual void contextMenuEvent(QContextMenuEvent* e);
+    virtual void resizeEvent(QResizeEvent* e);
 
   signals:
     void contextMenuRequested(const QPoint &pos);
 
   private:
     QImage m_image;
-    QLabel* m_label;
-    Q3VBox* m_box;
+    QGraphicsPixmapItem* m_imageItem;
+    QGraphicsScene m_scene;
     bool m_scaled;
 };
 

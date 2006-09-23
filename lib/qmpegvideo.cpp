@@ -71,7 +71,11 @@ class XineLib
 
       xine_close(m_stream);
 
-      if(!(xine_open(m_stream, "/mnt/stuff/pov/juggler2/juggler.mpg")))
+      xine_set_param(m_stream, XINE_PARAM_AUDIO_MUTE, 1);
+      xine_set_param(m_stream, XINE_PARAM_AUDIO_AMP_MUTE, 1);
+      xine_set_param(m_stream, XINE_PARAM_IGNORE_AUDIO, 1);
+
+      if(!(xine_open(m_stream, file.toLocal8Bit())))
       {
         kDebug() << k_funcinfo << "xine_open failed." << endl;
         return;
@@ -111,7 +115,7 @@ class XineLib
       result.duration = QTime().addMSecs(length_time);
       result.size = fi.size();
       result.audioStreamCount = xine_get_stream_info(m_stream,
-          XINE_STREAM_INFO_AUDIO_CHANNELS);
+          XINE_STREAM_INFO_MAX_AUDIO_CHANNEL);
       if(result.audioStreamCount < 1)
         result.audioStreamCount = xine_get_stream_info(m_stream,
             XINE_STREAM_INFO_HAS_AUDIO);
@@ -256,22 +260,23 @@ class XineLib
     }
 
     // From KXineWidget
-    bool getScreenshot(uchar* rgb32BitData) const
+    uchar* getScreenshot(int& width, int& height) const
     {
       uint8_t   *yuv = NULL, *y = NULL, *u = NULL, *v =NULL;
-      int        width, height, ratio, format;
+      int        ratio, format;
+      uchar*     rgb32BitData;
 
       if(!xine_get_current_frame(m_stream, &width, &height, &ratio,
                                  &format, NULL))
       {
-        return false;
+        return 0;
       }
       yuv = new uint8_t[((width+8) * (height+1) * 2)];
       if (yuv == NULL)
       {
         kDebug() << k_funcinfo <<
             "Not enough memory to make screenshot!" << endl;
-        return false;
+        return 0;
       }
 
       xine_get_current_frame(m_stream, &width, &height, &ratio,
@@ -289,7 +294,7 @@ class XineLib
           {
             kDebug() << k_funcinfo <<
                 "Not enough memory to make screenshot!" << endl;
-            return false;
+            return 0;
           }
           y = yuv;
           u = yuv + width * height;
@@ -312,14 +317,14 @@ class XineLib
               QString("Screenshot: Format %1 not supported!")\
               .arg((char*)&format) << endl;
           delete [] yuv;
-          return false;
+          return 0;
         }
       }
 
       // convert to rgb
       rgb32BitData = yv12ToRgb(y, u, v, width, height);
       delete [] yuv;
-      return true;
+      return rgb32BitData;
     }
 
     void seek(const QTime& time)
@@ -351,14 +356,14 @@ QImage QMpegFile::frame(const QTime& time) const
   XineLib::self()->seek(time);
 
   // From KXineWidget
-  uchar *rgbPile = NULL;
-
-  XineLib::self()->getScreenshot(rgbPile);
+  int width, height;
+  uchar *rgbPile = XineLib::self()->getScreenshot(width, height);
 
   if(!rgbPile)
     return QImage();
 
-  QImage screenShot(rgbPile, width, height, 32, 0, 0, QImage::IgnoreEndian);
+  QImage screenShot =
+      QImage(rgbPile, width, height, QImage::Format_RGB32).copy();
   delete []rgbPile;
   return screenShot;
 }
