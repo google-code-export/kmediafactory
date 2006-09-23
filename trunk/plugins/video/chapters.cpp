@@ -154,7 +154,6 @@ Chapters::Chapters(QWidget *parent)
   nextButton->setIcon(KIcon("next"));
   fwdButton->setIcon(KIcon("player_fwd"));
   endButton->setIcon(KIcon("player_end"));
-
   video->setScaled(true);
 }
 

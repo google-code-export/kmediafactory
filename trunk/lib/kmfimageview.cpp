@@ -19,26 +19,16 @@
 //**************************************************************************
 #include "kmfimageview.h"
 #include <kdebug.h>
-#include <qpainter.h>
-#include <qscrollbar.h>
-#include <qlabel.h>
-#include <q3vbox.h>
-#include <qtimer.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <QResizeEvent>
 #include <QContextMenuEvent>
 
 KMFImageView::KMFImageView(QWidget *parent)
-  : Q3ScrollView(parent), m_label(0),
-    m_box(0), m_scaled(false)
+  : QGraphicsView(parent), m_imageItem(0), m_scaled(false)
 {
+  setScene(&m_scene);
 }
 
 KMFImageView::~KMFImageView()
 {
-  delete m_label;
-  delete m_box;
 }
 
 void KMFImageView::setImage(const QImage& image)
@@ -53,67 +43,41 @@ void KMFImageView::clear()
   newImage();
 }
 
-void KMFImageView::resizeEvent(QResizeEvent* re)
+void KMFImageView::setScaled(bool scaled)
 {
-  Q3ScrollView::resizeEvent(re);
-
-  if(m_label && m_box)
-  {
-    updateImage();
-  }
+  m_scaled = scaled;
+  scale();
 }
 
-void KMFImageView::updateImage()
+void KMFImageView::scale()
 {
   if(m_scaled)
   {
-    m_box->resize(viewport()->width(), viewport()->height());
-    m_label->resize(viewport()->width(), viewport()->height());
+    if(m_imageItem)
+      fitInView(m_imageItem);
   }
   else
   {
-    int x = 0, y = 0;
-
-    if(viewport()->width() > m_box->width())
-      x = (viewport()->width() - m_box->width()) / 2;
-    if(viewport()->height() > m_box->height())
-      y = (viewport()->height() - m_box->height()) / 2;
-    moveChild(m_box, x, y);
+    fitInView(0, 0, viewport()->width(), viewport()->height());
   }
 }
 
 void KMFImageView::newImage()
 {
-  if(!m_box)
-  {
-    m_box = new Q3VBox(viewport());
-    addChild(m_box);
-  }
-  if(!m_label)
-    m_label = new QLabel("Image", m_box);
+  if(m_imageItem)
+    m_scene.removeItem(m_imageItem);
+  m_scene.setSceneRect(0, 0, m_image.width(), m_image.height());
+  m_imageItem = m_scene.addPixmap(QPixmap::fromImage(m_image));
+  scale();
+}
 
-  QPixmap tmp;
-  tmp.fromImage(m_image);
-  m_label->setPixmap(tmp);
-
-  if(m_scaled)
-  {
-    m_label->setScaledContents(true);
-    setHScrollBarMode(AlwaysOff);
-    setVScrollBarMode(AlwaysOff);
-  }
-  else
-  {
-    setHScrollBarMode(Auto);
-    setVScrollBarMode(Auto);
-  }
-  // Somehow this works better
-  QTimer::singleShot(0, this, SLOT(updateImage()));
-  updateContents();
+void KMFImageView::resizeEvent(QResizeEvent*)
+{
+  scale();
 }
 
 // From QTable
-void KMFImageView::contentsContextMenuEvent(QContextMenuEvent* e)
+void KMFImageView::contextMenuEvent(QContextMenuEvent* e)
 {
   if(!receivers(SIGNAL(contextMenuRequested(const QPoint &))))
   {
@@ -122,8 +86,7 @@ void KMFImageView::contentsContextMenuEvent(QContextMenuEvent* e)
   }
   if (e->reason() == QContextMenuEvent::Keyboard)
   {
-    emit contextMenuRequested(viewport()->mapToGlobal(
-        contentsToViewport(rect().center())));
+    emit contextMenuRequested(rect().center());
   }
   else
   {

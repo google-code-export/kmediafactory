@@ -48,8 +48,6 @@ TemplatePage::TemplatePage(QWidget *parent) :
   connect(templatePreview,
           SIGNAL(contextMenuRequested(const QPoint&)),
           this, SLOT(imageContextMenuRequested(const QPoint&)));
-  templatePreview->setVScrollBarMode(Q3ScrollView::Auto);
-  templatePreview->setHScrollBarMode(Q3ScrollView::Auto);
 }
 
 TemplatePage::~TemplatePage()
@@ -117,7 +115,6 @@ void TemplatePage::updatePreview()
     QImage image = ob->preview(menu).scaled(768, 576, Qt::IgnoreAspectRatio,
                                             Qt::SmoothTransformation);
     templatePreview->setImage(image);
-    templatePreview->resizeContents(image.width(), image.height());
     kmfApp->uiInterface()->setUseMessageBox(false);
     kmfApp->restoreOverrideCursor();
     m_lastUpdate = QDateTime::currentDateTime();
