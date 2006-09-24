@@ -41,9 +41,7 @@ class MediaPage : public QWidget, public Ui::MediaPage
   public slots:
     void contextMenuRequested(const QPoint& pos);
     void calculateSizes();
-
-  protected slots:
-    void lateInit();
+    void projectInit();
 
   private:
     KMFObjectListModel<KMF::MediaObject> m_model;

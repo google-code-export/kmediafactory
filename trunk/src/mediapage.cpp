@@ -42,13 +42,13 @@ MediaPage::~MediaPage()
 {
 }
 
-void MediaPage::lateInit()
+void MediaPage::projectInit()
 {
   calculateSizes();
+
   QList<KMF::MediaObject*>* mobs = kmfApp->project()->mediaObjects();
-  mediaFiles->setModel(&m_model);
-  kDebug() << k_funcinfo << mobs->count() << endl;
   m_model.setData(mobs);
+  mediaFiles->setModel(&m_model);
 }
 
 void MediaPage::contextMenuRequested(const QPoint &pos)

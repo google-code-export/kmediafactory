@@ -233,7 +233,7 @@ void KMediaFactory::connectProject()
   connect(kmfApp->project(), SIGNAL(itemRemoved(KMF::Object*)),
           mediaPage, SLOT(calculateSizes()));
   connect(kmfApp->project(), SIGNAL(init(const QString&)),
-          mediaPage, SLOT(calculateSizes()));
+          mediaPage, SLOT(projectInit()));
   connect(kmfApp->project(), SIGNAL(modified(const QString&, bool)),
           this, SLOT(setCaption(const QString&, bool)));
 
