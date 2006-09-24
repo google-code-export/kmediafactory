@@ -24,28 +24,36 @@
 #include "sizewidget.h"
 #include <kxmlguifactory.h>
 #include <QPoint>
-#include <Q3PopupMenu>
-#include <Q3IconView>
-#include <Q3PtrList>
+#include <QMenu>
+#include <QTimer>
 
 MediaPage::MediaPage(QWidget *parent) :
   QWidget(parent)
 {
   setupUi(this);
-  connect(mediaFiles,
-          SIGNAL(contextMenuRequested(Q3IconViewItem*, const QPoint&)),
-          this, SLOT(contextMenuRequested(Q3IconViewItem*, const QPoint&)));
-  mediaFiles->setItemsMovable(true);
-  mediaFiles->setAutoArrange(true);
-  calculateSizes();
+  mediaFiles->setContextMenuPolicy(Qt::CustomContextMenu);
+  //mediaFiles->setItemsMovable(true);
+  //mediaFiles->setAutoArrange(true);
+  connect(mediaFiles, SIGNAL(customContextMenuRequested(const QPoint&)),
+          this, SLOT(slotContextMenu(const QPoint&)));
 }
 
 MediaPage::~MediaPage()
 {
 }
 
-void MediaPage::contextMenuRequested(Q3IconViewItem *item, const QPoint &pos)
+void MediaPage::lateInit()
 {
+  calculateSizes();
+  QList<KMF::MediaObject*>* mobs = kmfApp->project()->mediaObjects();
+  mediaFiles->setModel(&m_model);
+  kDebug() << k_funcinfo << mobs->count() << endl;
+  m_model.setData(mobs);
+}
+
+void MediaPage::contextMenuRequested(const QPoint &pos)
+{
+  /*
   if(item)
   {
     KMediaFactory* mainWindow = kmfApp->mainWindow();
@@ -72,6 +80,7 @@ void MediaPage::contextMenuRequested(Q3IconViewItem *item, const QPoint &pos)
     }
     factory->unplugActionList(mainWindow, "media_file_actionlist");
   }
+  */
 }
 
 void MediaPage::calculateSizes()

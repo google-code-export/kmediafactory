@@ -33,7 +33,7 @@
     </widget>
    </item>
    <item>
-    <widget class="KMFIconView" name="outputs" >
+    <widget class="QListView" name="outputs" >
      <property name="sizePolicy" >
       <sizepolicy>
        <hsizetype>5</hsizetype>
@@ -224,7 +224,6 @@
   <tabstop>stopPushBtn</tabstop>
  </tabstops>
  <includes>
-  <include location="local" >kmficonview.h</include>
   <include location="local" >kmfprogresslistview.h</include>
   <include location="local" >kprogressbar.h</include>
   <include location="local" >kpushbutton.h</include>

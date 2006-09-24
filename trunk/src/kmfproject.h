@@ -72,6 +72,11 @@ class KMFProject : public QObject
     void templateFromXML(const QDomElement& e);
     void outputFromXML(const QDomElement& e);
     QString lastSubType() const { return m_subType; };
+    void addTemplate(KMF::TemplateObject* obj) { m_templates.append(obj); };
+    void addOutput(KMF::OutputObject* obj) { m_outputs.append(obj); };
+    void removeTemplate(KMF::TemplateObject* obj)
+        { m_templates.removeAll(obj); };
+    void removeOutput(KMF::OutputObject* obj) { m_outputs.removeAll(obj); };
 
   signals:
     void init(const QString&);
@@ -86,6 +91,8 @@ class KMFProject : public QObject
     QString m_directory;
     QString m_title;
     QList<KMF::MediaObject*> m_list;
+    QList<KMF::TemplateObject*> m_templates;
+    QList<KMF::OutputObject*> m_outputs;
     KMF::TemplateObject* m_template;
     KMF::OutputObject* m_output;
     KUrl m_url;

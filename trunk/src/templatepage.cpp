@@ -55,6 +55,7 @@ TemplatePage::~TemplatePage()
 
 void TemplatePage::currentChanged(Q3IconViewItem* item)
 {
+  /*
   if(item && kmfApp->project())
   {
     KMFIconViewItem* it = static_cast<KMFIconViewItem*>(item);
@@ -76,11 +77,13 @@ void TemplatePage::currentChanged(Q3IconViewItem* item)
       m_settingPrevious = false;
     }
   }
+  */
 }
 
 void TemplatePage::currentPageChanged(KPageWidgetItem* current,
                                       KPageWidgetItem*)
 {
+  /*
   m_previous = templates->currentItem();
 
   if (current->parent() == this &&
@@ -88,10 +91,12 @@ void TemplatePage::currentPageChanged(KPageWidgetItem* current,
       m_lastUpdate <
       kmfApp->project()->lastModified(KMF::ProjectInterface::DirtyMedia)))
     QTimer::singleShot(0, this, SLOT(updatePreview()));
+  */
 }
 
 void TemplatePage::updatePreview()
 {
+  /*
   KMFIconViewItem* item =
       static_cast<KMFIconViewItem*>(templates->currentItem());
   if(item)
@@ -118,10 +123,12 @@ void TemplatePage::updatePreview()
     kmfApp->restoreOverrideCursor();
     m_lastUpdate = QDateTime::currentDateTime();
   }
+  */
 }
 
 void TemplatePage::contextMenuRequested(Q3IconViewItem *item, const QPoint &pos)
 {
+  /*
   if(item)
   {
     KMediaFactory* mainWindow = kmfApp->mainWindow();
@@ -142,6 +149,7 @@ void TemplatePage::contextMenuRequested(Q3IconViewItem *item, const QPoint &pos)
     }
     factory->unplugActionList(mainWindow, "template_actionlist");
   }
+  */
 }
 
 void TemplatePage::imageContextMenuRequested(const QPoint& pos)
@@ -194,6 +202,7 @@ void TemplatePage::previewClicked()
 
 void TemplatePage::loadingFinished()
 {
+  /*
   Q3IconViewItem* item = templates->lastItem();
 
   if(item)
@@ -202,6 +211,7 @@ void TemplatePage::loadingFinished()
     if(item)
       templates->setAfter(item);
   }
+  */
 }
 
 #include "templatepage.moc"

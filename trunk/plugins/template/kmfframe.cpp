@@ -19,8 +19,9 @@
 //**************************************************************************
 #include "kmfframe.h"
 #include <kdebug.h>
-#include <qrect.h>
-#include <qdom.h>
+#include <QRect>
+#include <QDomElement>
+#include <QPainter>
 
 KMFFrame::KMFFrame(QObject *parent) :
   KMFWidget(parent), m_lineWidth(0), m_rounded(0)
@@ -41,42 +42,29 @@ void KMFFrame::fromXML(const QDomElement& element)
 
 void KMFFrame::paintWidget(QImage& layer, bool shdw)
 {
-#warning TODO
-#if 0
-  if(m_fillColor.isNull() && m_lineWidth == 0)
+  if(m_fillColor.alpha() == 0 && m_lineWidth == 0)
     return;
 
-  std::list<Magick::Drawable> drawList;
+  QPainter p(&layer);
   QRect rc = (shdw)? paintRect(shadow().offset()) : paintRect();
-  KMF::Color rgb = (shdw)? shadow().color() : color();
-  KMF::Color rgbFill = (shdw)? shadow().color() : m_fillColor;
+  QColor rgb = (shdw)? shadow().color() : color();
+  QColor rgbFill = (shdw)? shadow().color() : m_fillColor;
 
-  if(!m_fillColor.isNull())
+  if(!m_fillColor.alpha() == 0)
   {
-    drawList.push_back(Magick::DrawableFillColor(rgbFill));
-    drawList.push_back(Magick::DrawableFillOpacity(rgbFill.opacity()));
-    drawList.push_back(Magick::DrawableStrokeWidth(0));
     if(m_rounded == 0)
     {
-      drawList.push_back(Magick::DrawableRectangle(
-          rc.left(),
-          rc.top(),
-          rc.right(),
-          rc.bottom()));
+      p.fillRect(rc, rgbFill);
     }
     else
     {
-      drawList.push_back(Magick::DrawableRoundRectangle(
-          rc.x(),
-          rc.y(),
-          rc.right(),
-          rc.bottom(),
-          m_rounded,
-          m_rounded));
+      // TODO: fill rounded rectangle
     }
   }
   if(m_lineWidth > 0)
   {
+    p.drawRoundRect(rc, m_rounded);
+    /*
     // I could not get DrawableRectangle or DrawableLine to draw exact line
     // widths with or without antialias. So Rectangle is drawn with 4 filled
     // rectangles
@@ -106,18 +94,8 @@ void KMFFrame::paintWidget(QImage& layer, bool shdw)
         rc.top() + m_lineWidth,
         rc.right(),
         rc.bottom() - m_lineWidth));
+    */
   }
-  /*
-  // This doesn't draw rectangle that would be acceptable
-  //drawList.push_back(Magick::DrawableFillColor("white"));
-  drawList.push_back(Magick::DrawableFillOpacity(0.0));
-  drawList.push_back(Magick::DrawableRectangle(rc.left(),
-                                               rc.top(),
-                                               rc.right(),
-                                               rc.bottom()));
-  */
-  layer.draw(drawList);
-#endif
 }
 
 #include "kmfframe.moc"
