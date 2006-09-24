@@ -59,6 +59,7 @@ OutputPage::~OutputPage()
 
 void OutputPage::currentChanged(Q3IconViewItem* item)
 {
+  /*
   if(item && kmfApp->project())
   {
     KMFIconViewItem* it = static_cast<KMFIconViewItem*>(item);
@@ -66,10 +67,12 @@ void OutputPage::currentChanged(Q3IconViewItem* item)
 
     kmfApp->project()->setOutput(ob);
   }
+  */
 }
 
 void OutputPage::contextMenuRequested(Q3IconViewItem *item, const QPoint &pos)
 {
+  /*
   if(item)
   {
     KMediaFactory* mainWindow = kmfApp->mainWindow();
@@ -89,6 +92,7 @@ void OutputPage::contextMenuRequested(Q3IconViewItem *item, const QPoint &pos)
     }
     factory->unplugActionList(mainWindow, "output_actionlist");
   }
+  */
 }
 
 void OutputPage::showLog()

@@ -19,7 +19,11 @@
 //**************************************************************************
 #include "kmficonview.h"
 #include <kdebug.h>
-#include <qpainter.h>
+#include <klocale.h>
+#include <QPainter>
+#include <QList>
+
+#if 0
 
 #define MARGIN 3
 
@@ -122,4 +126,4 @@ void KMFIconView::clear()
   m_obs.clear();
 }
 
-#include "kmficonview.moc"
+#endif

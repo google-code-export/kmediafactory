@@ -21,58 +21,57 @@
 #define KMFTEMPLATEICONVIEW_H
 
 #include <kmediafactory/projectinterface.h>
-#include <Q3IconView>
-#include <QPixmap>
+#include <klocale.h>
+#include <kdebug.h>
+#include <QAbstractListModel>
 
-/**
-*/
-class KMFIconViewItem : public Q3IconViewItem
+template <class T>
+class KMFObjectListModel : public QAbstractListModel
 {
   public:
-    KMFIconViewItem(Q3IconView* parent, const QString& text,
-                    const QPixmap& icon):
-        Q3IconViewItem(parent, text, icon) { calcRect(); };
-    KMFIconViewItem(Q3IconView* parent, Q3IconViewItem* after,
-                    const QString& text, const QPixmap& icon):
-        Q3IconViewItem(parent, after, text, icon) { calcRect(); };
-    virtual ~KMFIconViewItem() {};
+    KMFObjectListModel() : m_data(0) {};
+    virtual ~KMFObjectListModel() {};
 
-    KMF::Object* ob() { return m_ob; };
-    void setOb(KMF::Object* ob) { m_ob = ob; };
+    void setData(const QList<T*>* data)
+    {
+      m_data = data;
+      kDebug() << k_funcinfo << rowCount(QModelIndex()) << endl;
+    }
 
-  protected:
-    virtual void paintItem(QPainter* p, const QColorGroup& cg);
-    virtual void paintFocus(QPainter* p, const QColorGroup& cg);
-    virtual void calcRect(const QString& text_ = QString::null);
+    int rowCount(const QModelIndex&) const
+    {
+      if(m_data)
+        return m_data->count();
+      return 0;
+    }
+
+    QVariant data(const QModelIndex &index, int role) const
+    {
+      if (!m_data || !index.isValid() || index.row() >= rowCount(index))
+        return QVariant();
+
+      if (role == Qt::DisplayRole)
+        return m_data->at(index.row())->title();
+      else if (role == Qt::DecorationRole)
+        return m_data->at(index.row())->pixmap();
+      return QVariant();
+    }
+
+    QVariant headerData(int, Qt::Orientation, int role) const
+    {
+      if (role != Qt::DisplayRole)
+        return QVariant();
+
+      return i18n("Title");
+    }
+
+    void changed()
+    {
+      emit dataChanged(index(0, 0), index(m_data.count(), 0));
+    }
 
   private:
-    KMF::Object* m_ob;
-};
-
-/**
-*/
-class KMFIconView : public Q3IconView
-{
-    Q_OBJECT
-  public:
-    KMFIconView(QWidget *parent = 0, const char *name = 0);
-    ~KMFIconView();
-
-    virtual void setCurrentItem(Q3IconViewItem* item)
-        { Q3IconView::setCurrentItem(item); };
-    void setAfter(Q3IconViewItem* after) { m_after = after; };
-
-  public slots:
-    void init(const QString &project_type);
-    KMFIconViewItem* newItem(KMF::Object* ob);
-    void itemRemoved(KMF::Object* ob);
-    void setCurrentItem(KMF::Object* ob);
-    void setSelected(KMF::Object* ob, bool s, bool cb = false);
-    virtual void clear();
-
-  private:
-    QMap<KMF::Object*, KMFIconViewItem*> m_obs;
-    Q3IconViewItem* m_after;
+    const QList<T*>* m_data;
 };
 
 #endif // KMFTEMPLATEICONVIEW_H

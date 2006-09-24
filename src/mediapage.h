@@ -21,10 +21,10 @@
 #define MEDIAPAGE_H
 
 #include "ui_mediapage.h"
-#include <kpagewidgetmodel.h>
+#include <kmficonview.h>
 
-class Q3IconViewItem;
 class QPoint;
+namespace KMF { class MediaObject; };
 
 /**
  * @short Page for media selection
@@ -37,9 +37,16 @@ class MediaPage : public QWidget, public Ui::MediaPage
   public:
     MediaPage(QWidget* parent = 0);
     virtual ~MediaPage();
+
   public slots:
-    void contextMenuRequested(Q3IconViewItem* item, const QPoint& pos);
+    void contextMenuRequested(const QPoint& pos);
     void calculateSizes();
+
+  protected slots:
+    void lateInit();
+
+  private:
+    KMFObjectListModel<KMF::MediaObject> m_model;
 };
 
 #endif

@@ -248,6 +248,7 @@ void KMediaFactory::connectProject()
 
 void KMediaFactory::itemDelete()
 {
+  /*
   KMFIconViewItem* item =
       static_cast<KMFIconViewItem*>(mediaPage->mediaFiles->currentItem());
   if(item)
@@ -255,6 +256,7 @@ void KMediaFactory::itemDelete()
     KMF::Object *ob = item->ob();
     kmfApp->project()->removeItem(static_cast<KMF::MediaObject*>(ob));
   }
+  */
 }
 
 void KMediaFactory::projectOptions()
@@ -288,10 +290,7 @@ void KMediaFactory::initGUI()
 
 void KMediaFactory::resetGUI()
 {
-  mediaPage->mediaFiles->clear();
-  //templatePage->templates->clear();
   templatePage->templatePreview->clear();
-  //outputPage->outputs->clear();
   outputPage->progressListView->clear();
   outputPage->progressBar->reset();
   outputPage->showLogPushBtn->setEnabled(false);
@@ -335,11 +334,11 @@ void KMediaFactory::load(const KUrl& url)
     connectProject();
     kmfApp->project()->open(url);
     templatePage->templates->blockSignals(true);
-    templatePage->templates->setCurrentItem(kmfApp->project()->templateObj());
+    // TODO: templatePage->templates->setCurrentItem(kmfApp->project()->templateObj());
     templatePage->templates->blockSignals(false);
     templatePage->updatePreview();
     outputPage->outputs->blockSignals(true);
-    outputPage->outputs->setCurrentItem(kmfApp->project()->output());
+    // TODO: outputPage->outputs->setCurrentItem(kmfApp->project()->output());
     outputPage->outputs->blockSignals(false);
     templatePage->loadingFinished();
   }

@@ -39,7 +39,7 @@
     </widget>
    </item>
    <item>
-    <widget class="KMFIconView" name="templates" >
+    <widget class="QListView" name="templates" >
      <property name="sizePolicy" >
       <sizepolicy>
        <hsizetype>5</hsizetype>
@@ -94,13 +94,8 @@
  <customwidgets>
   <customwidget>
    <class>KMFImageView</class>
-   <extends>QWidget</extends>
+   <extends>QGraphicsView</extends>
    <header>kmfimageview.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KMFIconView</class>
-   <extends>QWidget</extends>
-   <header>kmficonview.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
