@@ -22,10 +22,7 @@
    <item>
     <widget class="QLabel" name="nameLabel" >
      <property name="text" >
-      <string>&amp;Name (Use %1 for digit):</string>
-     </property>
-     <property name="wordWrap" >
-      <bool>false</bool>
+      <string>&amp;Name (Use # for digit):</string>
      </property>
      <property name="buddy" >
       <cstring>nameEdit</cstring>
@@ -33,22 +30,12 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="nameEdit" >
-     <property name="text" >
-      <string>Chapter %1</string>
-     </property>
-    </widget>
+    <widget class="QLineEdit" name="nameEdit" />
    </item>
    <item>
     <widget class="QLabel" name="intervalLabel" >
      <property name="text" >
       <string>&amp;Interval:</string>
-     </property>
-     <property name="textFormat" >
-      <enum>Qt::PlainText</enum>
-     </property>
-     <property name="wordWrap" >
-      <bool>false</bool>
      </property>
      <property name="buddy" >
       <cstring>intervalTime</cstring>
@@ -87,9 +74,7 @@
    </item>
   </layout>
  </widget>
- <layoutdefault spacing="6" margin="11" />
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
- <pixmapfunction>BTN_ICON</pixmapfunction>
  <includes>
   <include location="global" >kpushbutton.h</include>
  </includes>

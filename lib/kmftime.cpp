@@ -40,7 +40,7 @@ void KMF::Time::set(double seconds)
   setHMS(s / (60*60), (s / 60) % 60, s % 60, ms);
 }
 
-int KMF::Time::toMsec() const
+int KMF::Time::toMSec() const
 {
   int s = hour() * (60*60) + minute() * 60 + second();
   return (s * 1000 + msec());
@@ -68,24 +68,24 @@ KMF::Time& KMF::Time::operator+=(double seconds)
 
 KMF::Time& KMF::Time::operator-=(const KMF::Time& t)
 {
-  *this = addMSecs(-1 * t.toMsec());
+  *this = addMSecs(-1 * t.toMSec());
   return *this;
 }
 
 KMF::Time& KMF::Time::operator+=(const KMF::Time& t)
 {
-  *this = addMSecs(t.toMsec());
+  *this = addMSecs(t.toMSec());
   return *this;
 }
 
 KMF::Time KMF::Time::operator+(const KMF::Time& t)
 {
-  return addMSecs(t.toMsec());
+  return addMSecs(t.toMSec());
 }
 
 KMF::Time KMF::Time::operator-(const KMF::Time& t)
 {
-  return addMSecs(-1 * t.toMsec());
+  return addMSecs(-1 * t.toMSec());
 }
 
 KMF::Time KMF::Time::operator+(double seconds)
@@ -96,6 +96,11 @@ KMF::Time KMF::Time::operator+(double seconds)
 QString KMF::Time::toString() const
 {
   return QTime::toString("h:mm:ss.zzz");
+}
+
+bool KMF::Time::operator<(const QTime& b)
+{
+  return (toMSec() < KMF::Time(b).toMSec());
 }
 
 void KMF::Time::set(const QString& time)

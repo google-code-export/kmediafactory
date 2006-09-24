@@ -19,11 +19,11 @@
 //**************************************************************************
 
 #include "qmpegvideo.h"
+#include "kmftime.h"
 #include <kstaticdeleter.h>
 #include <kdebug.h>
 #include <QFileInfo>
 #include <xine.h>
-//#include <xine/xineutils.h>
 
 class XineLib;
 
@@ -394,10 +394,10 @@ QTime QMpegVideo::duration(int index) const
   if(index != -1)
     return at(index).duration;
 
-  QTime result;
+  KMF::Time result;
 
   for(int i = 0; i < count(); ++i)
-    result.addMSecs(at(i).duration.msecsTo(QTime()) * -1);
+    result += at(i).duration;
   return result;
 }
 

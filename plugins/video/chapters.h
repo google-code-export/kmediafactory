@@ -69,6 +69,7 @@ class Chapters : public KDialog, public Ui::Chapters
 
     void moveFrames(int direction);
     void updateVideo();
+    void checkLengths();
 };
 
 #endif
