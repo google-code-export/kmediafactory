@@ -7,7 +7,7 @@
 //   gettext.c -- implementation of gettext(3) function
 //   Copyright (C) 1995 Software Foundation, Inc.
 //
-//   Copyright (C) 2004, 2005 by Petri Damstén
+//   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
