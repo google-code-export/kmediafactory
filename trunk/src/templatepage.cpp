@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004 by Petri Damst�
+//   Copyright (C) 2004 - 2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -33,8 +33,7 @@
 #include <QTimer>
 #include <QCheckBox>
 #include <QLabel>
-#include <Q3PopupMenu>
-#include <Q3PtrList>
+#include <QMenu>
 
 TemplatePage::TemplatePage(QWidget *parent) :
   QWidget(parent), m_previous(0), m_settingPrevious(false)

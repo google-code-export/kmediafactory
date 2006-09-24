@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004, 2005 by Petri Damstén
+//   Copyright (C) 2004, 2005 by Petri Damstï¿½
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -36,7 +36,7 @@ namespace KMF
       Time(double seconds) { set(seconds); };
       Time(const QString& time) { set(time); };
 
-      int toMsec() const;
+      int toMSec() const;
       double toSeconds() const;
       QString toString() const;
       QString toString(QString format) const
@@ -47,7 +47,7 @@ namespace KMF
       void set(const QString& time);
 
       operator double() const { return toSeconds(); };
-      operator int() const { return toMsec(); };
+      operator int() const { return toMSec(); };
       Time& operator-=(const Time& t);
       Time& operator+=(const Time& t);
       Time  operator+(double seconds);
@@ -57,6 +57,7 @@ namespace KMF
       Time& operator+=(double seconds);
       Time& operator=(double seconds) { set(seconds); return *this; };
       Time& operator=(int msec) { set(msec); return *this; };
+      bool operator<(const QTime& b);
   };
 }
 

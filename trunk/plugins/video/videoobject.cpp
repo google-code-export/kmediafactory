@@ -81,7 +81,6 @@ double VideoObject::frameRate() const
 
 QTime VideoObject::duration() const
 {
-  kDebug() << k_funcinfo << endl;
   return m_decoder->duration();
 }
 

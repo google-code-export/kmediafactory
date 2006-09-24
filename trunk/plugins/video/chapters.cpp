@@ -76,7 +76,14 @@ class CellListModel : public QAbstractListModel
           case 1:
             return KMF::Time(m_data.at(index.row()).start()).toString();
           case 2:
-            return KMF::Time(m_data.at(index.row()).length()).toString();
+            if(index.row() == m_data.count() - 1)
+            {
+              KMF::Time t(m_total);
+              t -= m_data.at(index.row()).start();
+              return t.toString();
+            }
+            else
+              return KMF::Time(m_data.at(index.row()).length()).toString();
         }
       }
       return QVariant();
@@ -97,6 +104,11 @@ class CellListModel : public QAbstractListModel
           return i18n("Length");
       }
       return "";
+    };
+
+    void changed()
+    {
+      emit dataChanged(index(0, 0), index(m_data.count(), 0));
     };
 
   private:
@@ -122,7 +134,6 @@ class AutoChapters : public KDialog, public Ui::AutoChapters
     {
       setupUi(mainWidget());
       setButtons(KDialog::Ok | KDialog::Cancel);
-      setCaption(i18n("Auto chapters"));
     };
 };
 
@@ -132,6 +143,7 @@ Chapters::Chapters(QWidget *parent)
   setupUi(mainWidget());
   setButtons(KDialog::Ok | KDialog::Cancel);
   setCaption(i18n("Chapters"));
+  chaptersView->setContextMenuPolicy(Qt::CustomContextMenu);
 
   connect(startButton, SIGNAL(clicked()), this, SLOT(slotStart()));
   connect(endButton, SIGNAL(clicked()), this, SLOT(slotEnd()));
@@ -172,11 +184,11 @@ void Chapters::setData(const QDVD::CellList& cells,
                        const VideoObject* obj)
 {
   m_cells = cells;
-  m_model = new CellListModel(m_cells, QTime());//m_obj->duration());
-  chaptersView->setModel(m_model);
   m_obj = obj;
-  //timeSlider->setMaximum((int)KMF::Time(m_obj->duration()));
-  //m_duration = KMF::Time(m_obj->duration()).toString();
+  m_model = new CellListModel(m_cells, m_obj->duration());
+  chaptersView->setModel(m_model);
+  timeSlider->setMaximum((int)KMF::Time(m_obj->duration()));
+  m_duration = KMF::Time(m_obj->duration()).toString();
   m_pos = 0.0;
   chaptersView->setCurrentIndex(m_model->index(0));
   updateVideo();
@@ -267,7 +279,7 @@ void Chapters::slotRemove()
     if(i > 0)
       --i;
     chaptersView->setCurrentIndex(m_model->index(i));
-    m_cells.last().setLength(QTime(0, 0, 0, 0));
+    checkLengths();
     chaptersView->viewport()->update();
   }
 }
@@ -296,6 +308,7 @@ void Chapters::slotAdd()
         break;
     }
     m_cells.insert(i, QDVD::Cell(pos, QTime(), text));
+    checkLengths();
     chaptersView->viewport()->update();
   }
 }
@@ -308,7 +321,7 @@ void Chapters::slotContextMenu(const QPoint& p)
   popup->insertItem(i18n("&Auto chapters"), this, SLOT(autoChapters()));
   popup->insertItem(i18nc("Import chapter file", "&Import"),
                     this, SLOT(import()));
-  popup->exec(p);
+  popup->exec(chaptersView->viewport()->mapToGlobal(p));
 }
 
 void Chapters::renameAll()
@@ -317,12 +330,15 @@ void Chapters::renameAll()
   dlg.intervalLabel->hide();
   dlg.intervalTime->hide();
   dlg.resize(dlg.minimumSize());
+  dlg.setCaption(i18n("Rename All"));
   if (dlg.exec())
   {
-    QString text = dlg.nameEdit->text();
+    QString text = dlg.nameEdit->text().replace("#", "%1");
     int i = 1;
     foreach(QDVD::Cell cell, m_cells)
+    {
       cell.setName(QString(text).arg(i++));
+    }
     chaptersView->viewport()->update();
   }
 }
@@ -336,14 +352,15 @@ void Chapters::deleteAll()
 void Chapters::autoChapters()
 {
   AutoChapters dlg(kapp->activeWindow());
+  dlg.setCaption(i18n("Auto chapters"));
   if (dlg.exec())
   {
-    QString text = dlg.nameEdit->text();
-    double interval = (double)dlg.intervalTime->time().msecsTo(QTime())/-1000.0;
+    QString text = dlg.nameEdit->text().replace("#", "%1");
+    KMF::Time interval = dlg.intervalTime->time();
     KMF::Time time;
     int i = 1;
 
-    if(interval < 1.0)
+    if(interval.toMSec() < 1000)
       return;
     m_cells.clear();
     while(time < m_obj->duration())
@@ -354,10 +371,12 @@ void Chapters::autoChapters()
         s = QString(text).arg(i);
       else
         s = time.toString("h:mm:ss");
-      m_cells.insert(i, QDVD::Cell(time, QTime(), s));
+      m_cells << QDVD::Cell(time, interval, s);
+      kDebug() << k_funcinfo << m_cells.count() << endl;
       time += interval;
       ++i;
     }
+    checkLengths();
     chaptersView->viewport()->update();
   }
 }
@@ -385,6 +404,7 @@ void Chapters::import()
       m_cells.insert(i, QDVD::Cell(time, QTime(), s));
       ++i;
     }
+    checkLengths();
     chaptersView->viewport()->update();
   }
 }
@@ -397,6 +417,19 @@ void Chapters::saveCustomPreview( )
   m_preview.sprintf("%3.3d_preview.png", serial);
   m_preview = dir.filePath(m_preview);
   video->image().save(m_preview, "PNG");
+}
+
+void Chapters::checkLengths()
+{
+  if(m_cells.count() == 0)
+    return;
+  for(int i=0; i < m_cells.count() -1; ++i)
+  {
+    KMF::Time next = m_cells[i+1].start();
+    m_cells[i].setLength(next - m_cells[i].start());
+  }
+  m_cells.last().setLength(QTime(0, 0));
+  m_model->changed();
 }
 
 void Chapters::accept()
