@@ -42,7 +42,6 @@ class KMFProject : public QObject
     bool open(const KUrl &url);
     QString toXML();
     void fromXML(QString xml);
-    QList<KMF::MediaObject*>* mediaObjects() { return &m_list; };
     int mediaCount() const { return m_list.count(); };
 
     const QString& type() const { return m_type; };
@@ -72,17 +71,16 @@ class KMFProject : public QObject
     void templateFromXML(const QDomElement& e);
     void outputFromXML(const QDomElement& e);
     QString lastSubType() const { return m_subType; };
-    void addTemplate(KMF::TemplateObject* obj) { m_templates.append(obj); };
-    void addOutput(KMF::OutputObject* obj) { m_outputs.append(obj); };
-    void removeTemplate(KMF::TemplateObject* obj)
-        { m_templates.removeAll(obj); };
-    void removeOutput(KMF::OutputObject* obj) { m_outputs.removeAll(obj); };
+    QList<KMF::MediaObject*>* mediaObjects() { return &m_list; };
+    QList<KMF::TemplateObject*>* templateObjects() { return &m_templates; };
+    QList<KMF::OutputObject*>* outputObjects() { return &m_outputs; };
 
   signals:
     void init(const QString&);
-    void newItem(KMF::Object*);
-    void itemRemoved(KMF::Object*);
     void modified(const QString& file, bool modified);
+    void mediaModified();
+    void templatesModified();
+    void outputsModified();
 
   private:
     enum Modified { ModMedia = 0, ModTemplate = 1, ModOutput = 2, ModLast = 3 };

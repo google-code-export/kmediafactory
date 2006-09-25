@@ -222,20 +222,23 @@ void KMediaFactory::setupActions()
 
 void KMediaFactory::connectProject()
 {
-  connect(kmfApp->project(), SIGNAL(init(const QString&)),
-          mediaPage->mediaFiles, SLOT(init(const QString&)));
-  connect(kmfApp->project(), SIGNAL(newItem(KMF::Object*)),
-          mediaPage->mediaFiles, SLOT(newItem(KMF::Object*)));
-  connect(kmfApp->project(), SIGNAL(itemRemoved(KMF::Object*)),
-          mediaPage->mediaFiles, SLOT(itemRemoved(KMF::Object*)));
-  connect(kmfApp->project(), SIGNAL(newItem(KMF::Object*)),
-          mediaPage, SLOT(calculateSizes()));
-  connect(kmfApp->project(), SIGNAL(itemRemoved(KMF::Object*)),
-          mediaPage, SLOT(calculateSizes()));
-  connect(kmfApp->project(), SIGNAL(init(const QString&)),
-          mediaPage, SLOT(projectInit()));
   connect(kmfApp->project(), SIGNAL(modified(const QString&, bool)),
           this, SLOT(setCaption(const QString&, bool)));
+
+  connect(kmfApp->project(), SIGNAL(init(const QString&)),
+          mediaPage, SLOT(projectInit()));
+  connect(kmfApp->project(), SIGNAL(mediaModified()),
+          mediaPage, SLOT(mediaModified()));
+
+  connect(kmfApp->project(), SIGNAL(init(const QString&)),
+          outputPage, SLOT(projectInit()));
+  connect(kmfApp->project(), SIGNAL(mediaModified()),
+          outputPage, SLOT(mediaModified()));
+
+  connect(kmfApp->project(), SIGNAL(init(const QString&)),
+          templatePage, SLOT(projectInit()));
+  connect(kmfApp->project(), SIGNAL(mediaModified()),
+          templatePage, SLOT(mediaModified()));
 
   const KMF::PluginList list = kmfApp->plugins();
   for(KMF::PluginList::ConstIterator obj = list.begin();

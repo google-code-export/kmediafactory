@@ -21,6 +21,7 @@
 #include "kmediafactory.h"
 #include "kmfapplication.h"
 #include "kmficonview.h"
+#include <kmftools.h>
 #include "sizewidget.h"
 #include <kxmlguifactory.h>
 #include <QPoint>
@@ -32,10 +33,9 @@ MediaPage::MediaPage(QWidget *parent) :
 {
   setupUi(this);
   mediaFiles->setContextMenuPolicy(Qt::CustomContextMenu);
-  //mediaFiles->setItemsMovable(true);
-  //mediaFiles->setAutoArrange(true);
+  mediaFiles->setViewMode(QListView::IconMode);
   connect(mediaFiles, SIGNAL(customContextMenuRequested(const QPoint&)),
-          this, SLOT(slotContextMenu(const QPoint&)));
+          this, SLOT(contextMenuRequested(const QPoint&)));
 }
 
 MediaPage::~MediaPage()
@@ -51,36 +51,34 @@ void MediaPage::projectInit()
   mediaFiles->setModel(&m_model);
 }
 
+void MediaPage::mediaModified()
+{
+  calculateSizes();
+  KMF::Tools::updateView(mediaFiles);
+}
+
 void MediaPage::contextMenuRequested(const QPoint &pos)
 {
-  /*
-  if(item)
-  {
-    KMediaFactory* mainWindow = kmfApp->mainWindow();
-    KXMLGUIFactory* factory = mainWindow->factory();
-    KMF::Object* ob = (static_cast<KMFIconViewItem*>(item))->ob();
-    Q3IconView* iconView = item->iconView();
+  QModelIndex i = mediaFiles->indexAt(pos);
 
-    QList<KAction*> actions;
-    ob->actions(actions);
-    factory->plugActionList(mainWindow,
-        QString::fromLatin1("media_file_actionlist"), actions);
-    QWidget *w = factory->container("media_file_popup", mainWindow);
-    if(w)
-    {
-      Q3PopupMenu *popup = static_cast<Q3PopupMenu*>(w);
-      popup->exec(pos);
-      // TODO: Should object update itself?
-      if(iconView->index(item) != -1)
-      {
-        item->setText(ob->title());
-        item->setPixmap(ob->pixmap());
-        calculateSizes();
-      }
-    }
-    factory->unplugActionList(mainWindow, "media_file_actionlist");
+  if(i.row() < 0 || i.row() > kmfApp->project()->mediaObjects()->count())
+    return;
+
+  KMF::MediaObject* ob = kmfApp->project()->mediaObjects()->at(i.row());
+  KMediaFactory* mainWindow = kmfApp->mainWindow();
+  KXMLGUIFactory* factory = mainWindow->factory();
+
+  QList<KAction*> actions;
+  ob->actions(actions);
+  factory->plugActionList(mainWindow,
+      QString::fromLatin1("media_file_actionlist"), actions);
+  QWidget *w = factory->container("media_file_popup", mainWindow);
+  if(w)
+  {
+    QMenu* popup = static_cast<QMenu*>(w);
+    popup->exec(mediaFiles->viewport()->mapToGlobal(pos));
   }
-  */
+  factory->unplugActionList(mainWindow, "media_file_actionlist");
 }
 
 void MediaPage::calculateSizes()

@@ -28,6 +28,8 @@
 #include <QTextStream>
 #include <QFont>
 #include <QDomElement>
+#include <QAbstractItemView>
+#include <QItemSelection>
 #include <sys/stat.h>
 #include <errno.h>
 #include <fontconfig/fontconfig.h>
@@ -416,4 +418,19 @@ void KMF::Tools::printChilds(QObject* obj, int level)
         << child->objectName() << endl;
     printChilds(child, level + 1);
   }
+}
+
+// Not very efficient but I only have couple of items in a list so it's OK.
+void KMF::Tools::updateView(QAbstractItemView* v,
+                            const QModelIndex& i)
+{
+  QItemSelection s;
+
+  if(!i.isValid())
+    s = v->selectionModel()->selection();
+  v->reset();
+  if(!i.isValid())
+    v->selectionModel()->select(s, QItemSelectionModel::SelectCurrent);
+  else
+    v->selectionModel()->select(i, QItemSelectionModel::SelectCurrent);
 }

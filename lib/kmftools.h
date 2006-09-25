@@ -24,10 +24,12 @@
 #include <qsize.h>
 #include <stdint.h>
 #include <kurl.h>
+#include <QModelIndex>
 
 class QStringList;
 class QFont;
 class QDomElement;
+class QAbstractItemView;
 
 namespace KMF
 {
@@ -70,6 +72,8 @@ namespace KMF
       static QString longFontName(const QFont& font);
       static int fcWeight2QtWeight(int fcWeight);
       static void printChilds(QObject* obj, int level = 0);
+      static void updateView(QAbstractItemView* v,
+                             const QModelIndex& i = QModelIndex());
   };
 }
 

@@ -58,13 +58,13 @@ bool KMFUiInterface::addMediaObject(KMF::MediaObject *media) const
 
 bool KMFUiInterface::addTemplateObject(KMF::TemplateObject* tob)
 {
-  kmfApp->project()->addTemplate(tob);
+  kmfApp->project()->templateObjects()->append(tob);
   return true;
 }
 
 bool KMFUiInterface::addOutputObject(KMF::OutputObject* oob)
 {
-  kmfApp->project()->addOutput(oob);
+  kmfApp->project()->outputObjects()->append(oob);
   return true;
 }
 
@@ -76,13 +76,13 @@ bool KMFUiInterface::removeMediaObject(KMF::MediaObject *media) const
 
 bool KMFUiInterface::removeTemplateObject(KMF::TemplateObject* tob)
 {
-  kmfApp->project()->removeTemplate(tob);
+  kmfApp->project()->templateObjects()->removeAll(tob);
   return true;
 }
 
 bool KMFUiInterface::removeOutputObject(KMF::OutputObject* oob)
 {
-  kmfApp->project()->removeOutput(oob);
+  kmfApp->project()->outputObjects()->removeAll(oob);
   return true;
 }
 

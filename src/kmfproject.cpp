@@ -112,14 +112,12 @@ bool KMFProject::validProject() const
 void KMFProject::addItem(KMF::MediaObject *mob)
 {
   m_list.append(mob);
-  emit newItem(mob);
   setDirty(KMF::ProjectInterface::DirtyMedia);
 }
 
 void KMFProject::removeItem(KMF::MediaObject *mob)
 {
   m_list.removeAll(mob);
-  emit itemRemoved(mob);
   setDirty(KMF::ProjectInterface::DirtyMedia);
 }
 
@@ -480,6 +478,15 @@ void KMFProject::setDirty(KMF::ProjectInterface::DirtyType type, bool dirty)
   }
   if(!m_initializing)
     emit modified(m_title, dirty);
+  if(dirty && !m_loading && !m_initializing)
+  {
+    if(type & KMF::ProjectInterface::DirtyMedia)
+      emit mediaModified();
+    if(type & KMF::ProjectInterface::DirtyTemplate)
+      emit templatesModified();
+    if(type & KMF::ProjectInterface::DirtyOutput)
+      emit outputsModified();
+  }
 }
 
 QDateTime KMFProject::lastModified(KMF::ProjectInterface::DirtyType type) const
