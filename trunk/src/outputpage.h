@@ -21,10 +21,11 @@
 #define OUTPUTPAGE_H
 
 #include <ui_outputpage.h>
+#include "kmfuiinterface.h"
 #include <QMenu>
 
-class Q3IconViewItem;
 class KPageWidgetItem;
+
 /**
 */
 class OutputPage : public QWidget, public Ui::OutputPage
@@ -37,10 +38,13 @@ class OutputPage : public QWidget, public Ui::OutputPage
   public slots:
     void currentPageChanged(KPageWidgetItem*, KPageWidgetItem*);
     void start();
+    void outputsModified();
+    void projectInit();
 
   protected slots:
-    void currentChanged(Q3IconViewItem* item);
-    void contextMenuRequested(Q3IconViewItem *item, const QPoint &pos);
+    void currentChanged(const QModelIndex & current,
+                        const QModelIndex & previous);
+    void contextMenuRequested(const QPoint &pos);
     void stop();
     void showLog();
     void start(QAction* type);
@@ -49,6 +53,7 @@ class OutputPage : public QWidget, public Ui::OutputPage
     QMenu m_startPopup;
     QMap<QAction*, QString> m_types;
     QString m_type;
+    KMFObjectListModel<KMF::OutputObject> m_model;
 };
 
 #endif

@@ -22,7 +22,7 @@
 #include "kmediafactory.h"
 #include "kmfapplication.h"
 #include "kmfimageview.h"
-#include "kmfuiinterface.h"
+#include <kmftools.h>
 #include <kpagedialog.h>
 #include <kcursor.h>
 #include <klocale.h>
@@ -36,14 +36,17 @@
 #include <QMenu>
 
 TemplatePage::TemplatePage(QWidget *parent) :
-  QWidget(parent), m_previous(0), m_settingPrevious(false)
+  QWidget(parent), m_settingPrevious(false)
 {
   setupUi(this);
-  connect(templates, SIGNAL(currentChanged(Q3IconViewItem*)),
-          this, SLOT(currentChanged(Q3IconViewItem*)));
-  connect(templates,
-          SIGNAL(contextMenuRequested(Q3IconViewItem*, const QPoint&)),
-          this, SLOT(contextMenuRequested(Q3IconViewItem*, const QPoint&)));
+  templates->setContextMenuPolicy(Qt::CustomContextMenu);
+  templates->setViewMode(QListView::IconMode);
+  connect(templates, SIGNAL(currentChanged(const QModelIndex & current,
+                            const QModelIndex & previous)),
+          this, SLOT(currentChanged(const QModelIndex & current,
+                     const QModelIndex & previous)));
+  connect(templates, SIGNAL(customContextMenuRequested(const QPoint&)),
+          this, SLOT(contextMenuRequested(const QPoint&)));
   connect(templatePreview,
           SIGNAL(contextMenuRequested(const QPoint&)),
           this, SLOT(imageContextMenuRequested(const QPoint&)));
@@ -53,13 +56,25 @@ TemplatePage::~TemplatePage()
 {
 }
 
-void TemplatePage::currentChanged(Q3IconViewItem* item)
+void TemplatePage::projectInit()
 {
-  /*
-  if(item && kmfApp->project())
+  QList<KMF::TemplateObject*>* tobs = kmfApp->project()->templateObjects();
+  m_model.setData(tobs);
+  templates->setModel(&m_model);
+}
+
+void TemplatePage::templatesModified()
+{
+  KMF::Tools::updateView(templates);
+}
+
+void TemplatePage::currentChanged(const QModelIndex & current,
+                                  const QModelIndex & previous)
+{
+  if(kmfApp->project())
   {
-    KMFIconViewItem* it = static_cast<KMFIconViewItem*>(item);
-    KMF::TemplateObject* ob = static_cast<KMF::TemplateObject*>(it->ob());
+    KMF::TemplateObject* ob =
+        kmfApp->project()->templateObjects()->at(current.row());
 
     if(ob->clicked() == false and !m_settingPrevious)
     {
@@ -68,16 +83,17 @@ void TemplatePage::currentChanged(Q3IconViewItem* item)
 
       kmfApp->project()->setTemplateObj(ob);
       updatePreview();
-      m_previous = item;
+      m_previous = current;
     }
     else if(!m_settingPrevious)
     {
+      /* TODO What was this :-)
       m_settingPrevious = true;
       templates->setCurrentItem(m_previous);
       m_settingPrevious = false;
+      */
     }
   }
-  */
 }
 
 void TemplatePage::currentPageChanged(KPageWidgetItem* current,
@@ -126,30 +142,30 @@ void TemplatePage::updatePreview()
   */
 }
 
-void TemplatePage::contextMenuRequested(Q3IconViewItem *item, const QPoint &pos)
+void TemplatePage::contextMenuRequested(const QPoint &pos)
 {
-  /*
-  if(item)
-  {
-    KMediaFactory* mainWindow = kmfApp->mainWindow();
-    KXMLGUIFactory* factory = mainWindow->factory();
-    KMF::Object* ob = (static_cast<KMFIconViewItem*>(item))->ob();
+  QModelIndex i = templates->indexAt(pos);
 
-    QList<KAction*> actions;
-    ob->actions(actions);
-    factory->plugActionList(mainWindow,
-        QString::fromLatin1("template_actionlist"), actions);
-    QWidget *w = factory->container("template_popup", mainWindow);
-    if(w)
-    {
-      QMenu* popup = static_cast<QMenu*>(w);
-      if(popup->actions().count() > 0)
-        if(popup->exec(pos) != 0)
-          updatePreview();
-    }
-    factory->unplugActionList(mainWindow, "template_actionlist");
+  if(i.row() < 0 || i.row() > kmfApp->project()->templateObjects()->count())
+    return;
+
+  KMF::TemplateObject* ob = kmfApp->project()->templateObjects()->at(i.row());
+  KMediaFactory* mainWindow = kmfApp->mainWindow();
+  KXMLGUIFactory* factory = mainWindow->factory();
+
+  QList<KAction*> actions;
+  ob->actions(actions);
+  factory->plugActionList(mainWindow,
+      QString::fromLatin1("template_actionlist"), actions);
+  QWidget *w = factory->container("template_popup", mainWindow);
+  if(w)
+  {
+    QMenu* popup = static_cast<QMenu*>(w);
+    if(popup->actions().count() > 0)
+      if(popup->exec(pos) != 0)
+        updatePreview();
   }
-  */
+  factory->unplugActionList(mainWindow, "template_actionlist");
 }
 
 void TemplatePage::imageContextMenuRequested(const QPoint& pos)

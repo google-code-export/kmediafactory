@@ -26,6 +26,7 @@
 #include "kmfuiinterface.h"
 #include "kmftoolbutton.h"
 #include "logview.h"
+#include <kmftools.h>
 #include <kcursor.h>
 #include <kpushbutton.h>
 #include <kprogressbar.h>
@@ -35,20 +36,19 @@
 #include <kpagedialog.h>
 #include <QToolButton>
 #include <QTimer>
-#include <Q3PtrList>
-#include <Q3ListView>
-#include <Q3PopupMenu>
-#include <Q3Header>
 
 OutputPage::OutputPage(QWidget *parent) :
   QWidget(parent)
 {
   setupUi(this);
-  connect(outputs, SIGNAL(currentChanged(Q3IconViewItem*)),
-          this, SLOT(currentChanged(Q3IconViewItem*)));
-  connect(outputs,
-          SIGNAL(contextMenuRequested(Q3IconViewItem*, const QPoint&)),
-          this, SLOT(contextMenuRequested(Q3IconViewItem*, const QPoint&)));
+  outputs->setContextMenuPolicy(Qt::CustomContextMenu);
+  outputs->setViewMode(QListView::IconMode);
+  connect(outputs, SIGNAL(currentChanged(const QModelIndex & current,
+                          const QModelIndex & previous)),
+          this, SLOT(currentChanged(const QModelIndex & current,
+                     const QModelIndex & previous)));
+  connect(outputs, SIGNAL(customContextMenuRequested(const QPoint&)),
+          this, SLOT(contextMenuRequested(const QPoint&)));
 
   connect(&m_startPopup, SIGNAL(activated(int)), this, SLOT(start(int)));
 }
@@ -57,42 +57,52 @@ OutputPage::~OutputPage()
 {
 }
 
-void OutputPage::currentChanged(Q3IconViewItem* item)
+void OutputPage::projectInit()
 {
-  /*
-  if(item && kmfApp->project())
-  {
-    KMFIconViewItem* it = static_cast<KMFIconViewItem*>(item);
-    KMF::OutputObject* ob = static_cast<KMF::OutputObject*>(it->ob());
-
-    kmfApp->project()->setOutput(ob);
-  }
-  */
+  QList<KMF::OutputObject*>* oobs = kmfApp->project()->outputObjects();
+  m_model.setData(oobs);
+  outputs->setModel(&m_model);
 }
 
-void OutputPage::contextMenuRequested(Q3IconViewItem *item, const QPoint &pos)
+void OutputPage::outputsModified()
 {
-  /*
-  if(item)
-  {
-    KMediaFactory* mainWindow = kmfApp->mainWindow();
-    KXMLGUIFactory* factory = mainWindow->factory();
-    KMF::Object* ob = (static_cast<KMFIconViewItem*>(item))->ob();
+  KMF::Tools::updateView(outputs);
+}
 
-    QList<KAction*> actions;
-    ob->actions(actions);
-    factory->plugActionList(mainWindow,
-        QString::fromLatin1("output_actionlist"), actions);
-    QWidget *w = factory->container("output_popup", mainWindow);
-    if(w)
-    {
-      QMenu* popup = static_cast<QMenu*>(w);
-      if(popup->actions().count() > 0)
-        popup->exec(pos);
-    }
-    factory->unplugActionList(mainWindow, "output_actionlist");
+void OutputPage::currentChanged(const QModelIndex & current,
+                                const QModelIndex & previous)
+{
+  if(kmfApp->project())
+  {
+    KMF::OutputObject* ob =
+        kmfApp->project()->outputObjects()->at(current.row());
+    kmfApp->project()->setOutput(ob);
   }
-  */
+}
+
+void OutputPage::contextMenuRequested(const QPoint &pos)
+{
+  QModelIndex i = outputs->indexAt(pos);
+
+  if(i.row() < 0 || i.row() > kmfApp->project()->outputObjects()->count())
+    return;
+
+  KMF::OutputObject* ob = kmfApp->project()->outputObjects()->at(i.row());
+  KMediaFactory* mainWindow = kmfApp->mainWindow();
+  KXMLGUIFactory* factory = mainWindow->factory();
+
+  QList<KAction*> actions;
+  ob->actions(actions);
+  factory->plugActionList(mainWindow,
+      QString::fromLatin1("output_actionlist"), actions);
+  QWidget *w = factory->container("output_popup", mainWindow);
+  if(w)
+  {
+    QMenu* popup = static_cast<QMenu*>(w);
+    if(popup->actions().count() > 0)
+      popup->exec(pos);
+  }
+  factory->unplugActionList(mainWindow, "output_actionlist");
 }
 
 void OutputPage::showLog()

@@ -22,8 +22,9 @@
 
 #include <ui_templatepage.h>
 #include <qdatetime.h>
+#include "kmfuiinterface.h"
+#include <kmficonview.h>
 
-class Q3IconViewItem;
 class KPageWidgetItem;
 
 /**
@@ -39,11 +40,14 @@ class TemplatePage : public QWidget, public Ui::TemplatePage
     void loadingFinished();
 
   public slots:
-    void currentChanged(Q3IconViewItem* item);
+    void currentChanged(const QModelIndex & current,
+                        const QModelIndex & previous);
     void currentPageChanged(KPageWidgetItem*, KPageWidgetItem*);
     void updatePreview();
-    void contextMenuRequested(Q3IconViewItem *item, const QPoint &pos);
+    void contextMenuRequested(const QPoint &pos);
     void imageContextMenuRequested(const QPoint &pos);
+    void templatesModified();
+    void projectInit();
 
   protected slots:
     virtual void previewClicked();
@@ -52,8 +56,9 @@ class TemplatePage : public QWidget, public Ui::TemplatePage
     int m_menu;
     QStringList m_menus;
     QDateTime m_lastUpdate;
-    Q3IconViewItem* m_previous;
+    QModelIndex m_previous;
     bool m_settingPrevious;
+    KMFObjectListModel<KMF::TemplateObject> m_model;
 };
 
 #endif

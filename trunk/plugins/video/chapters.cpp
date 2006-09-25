@@ -106,11 +106,6 @@ class CellListModel : public QAbstractListModel
       return "";
     };
 
-    void changed()
-    {
-      emit dataChanged(index(0, 0), index(m_data.count(), 0));
-    };
-
   private:
     const QDVD::CellList& m_data;
     QTime m_total;
@@ -280,7 +275,6 @@ void Chapters::slotRemove()
       --i;
     chaptersView->setCurrentIndex(m_model->index(i));
     checkLengths();
-    chaptersView->viewport()->update();
   }
 }
 
@@ -309,7 +303,6 @@ void Chapters::slotAdd()
     }
     m_cells.insert(i, QDVD::Cell(pos, QTime(), text));
     checkLengths();
-    chaptersView->viewport()->update();
   }
 }
 
@@ -377,7 +370,6 @@ void Chapters::autoChapters()
       ++i;
     }
     checkLengths();
-    chaptersView->viewport()->update();
   }
 }
 
@@ -405,7 +397,6 @@ void Chapters::import()
       ++i;
     }
     checkLengths();
-    chaptersView->viewport()->update();
   }
 }
 
@@ -429,7 +420,7 @@ void Chapters::checkLengths()
     m_cells[i].setLength(next - m_cells[i].start());
   }
   m_cells.last().setLength(QTime(0, 0));
-  m_model->changed();
+  KMF::Tools::updateView(chaptersView);
 }
 
 void Chapters::accept()

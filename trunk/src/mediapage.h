@@ -42,6 +42,7 @@ class MediaPage : public QWidget, public Ui::MediaPage
     void contextMenuRequested(const QPoint& pos);
     void calculateSizes();
     void projectInit();
+    void mediaModified();
 
   private:
     KMFObjectListModel<KMF::MediaObject> m_model;
