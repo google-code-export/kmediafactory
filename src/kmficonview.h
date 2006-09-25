@@ -35,7 +35,6 @@ class KMFObjectListModel : public QAbstractListModel
     void setData(const QList<T*>* data)
     {
       m_data = data;
-      kDebug() << k_funcinfo << rowCount(QModelIndex()) << endl;
     }
 
     int rowCount(const QModelIndex&) const

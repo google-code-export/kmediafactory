@@ -96,7 +96,6 @@ QStringList VideoObject::files() const
 
 QString VideoObject::fileName() const
 {
-  kDebug() << k_funcinfo << endl;
   return m_decoder->files().first();
 }
 

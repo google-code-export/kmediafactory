@@ -34,6 +34,15 @@ MediaPage::MediaPage(QWidget *parent) :
   setupUi(this);
   mediaFiles->setContextMenuPolicy(Qt::CustomContextMenu);
   mediaFiles->setViewMode(QListView::IconMode);
+
+  //mediaButtons->setIconDimensions(K3Icon::SizeLarge);
+  mediaButtons->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+  mediaButtons->setAllowedAreas(Qt::NoToolBarArea);
+  //mediaButtons->setParent(0);
+  //mediaButtons->setFrameStyle(Q3Frame::Panel | Q3Frame::Raised);
+  //mediaButtons->setLineWidth(1);
+  //mediaButtons->setMargin(0);
+
   connect(mediaFiles, SIGNAL(customContextMenuRequested(const QPoint&)),
           this, SLOT(contextMenuRequested(const QPoint&)));
 }
