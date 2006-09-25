@@ -58,6 +58,7 @@ bool KMFUiInterface::addMediaObject(KMF::MediaObject *media) const
 
 bool KMFUiInterface::addTemplateObject(KMF::TemplateObject* tob)
 {
+  kDebug() << k_funcinfo << tob->title() << endl;
   kmfApp->project()->templateObjects()->append(tob);
   return true;
 }

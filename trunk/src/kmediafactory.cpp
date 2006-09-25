@@ -108,12 +108,6 @@ KMediaFactory::KMediaFactory()
   // Media
 
   mediaPage = new MediaPage;
-  mediaPage->mediaButtons->setIconDimensions(K3Icon::SizeLarge);
-  mediaPage->mediaButtons->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-  //mediaPage->mediaButtons->setFrameStyle(Q3Frame::Panel | Q3Frame::Raised);
-  //mediaPage->mediaButtons->setLineWidth(1);
-  //mediaPage->mediaButtons->setMargin(0);
-
   m_mediaPageItem = new KPageWidgetItem(mediaPage, i18n( "Media"));
   m_mediaPageItem->setHeader(i18n("Media"));
   m_mediaPageItem->setIcon(KIcon("folder_video"));
@@ -231,14 +225,14 @@ void KMediaFactory::connectProject()
           mediaPage, SLOT(mediaModified()));
 
   connect(kmfApp->project(), SIGNAL(init(const QString&)),
-          outputPage, SLOT(projectInit()));
-  connect(kmfApp->project(), SIGNAL(mediaModified()),
-          outputPage, SLOT(mediaModified()));
+          templatePage, SLOT(projectInit()));
+  connect(kmfApp->project(), SIGNAL(templateModified()),
+          templatePage, SLOT(templatesModified()));
 
   connect(kmfApp->project(), SIGNAL(init(const QString&)),
-          templatePage, SLOT(projectInit()));
-  connect(kmfApp->project(), SIGNAL(mediaModified()),
-          templatePage, SLOT(mediaModified()));
+          outputPage, SLOT(projectInit()));
+  connect(kmfApp->project(), SIGNAL(outputModified()),
+          outputPage, SLOT(outputsModified()));
 
   const KMF::PluginList list = kmfApp->plugins();
   for(KMF::PluginList::ConstIterator obj = list.begin();
