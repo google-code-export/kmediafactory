@@ -226,12 +226,12 @@ void KMediaFactory::connectProject()
 
   connect(kmfApp->project(), SIGNAL(init(const QString&)),
           templatePage, SLOT(projectInit()));
-  connect(kmfApp->project(), SIGNAL(templateModified()),
+  connect(kmfApp->project(), SIGNAL(templatesModified()),
           templatePage, SLOT(templatesModified()));
 
   connect(kmfApp->project(), SIGNAL(init(const QString&)),
           outputPage, SLOT(projectInit()));
-  connect(kmfApp->project(), SIGNAL(outputModified()),
+  connect(kmfApp->project(), SIGNAL(outputsModified()),
           outputPage, SLOT(outputsModified()));
 
   const KMF::PluginList list = kmfApp->plugins();

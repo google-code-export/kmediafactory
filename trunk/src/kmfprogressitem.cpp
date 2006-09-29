@@ -22,8 +22,8 @@
 #include <QPainter>
 #include <QPixmap>
 
-KMFProgressItem::KMFProgressItem(Q3ListView *parent, Q3ListViewItem *after)
-  : Q3ListViewItem(parent, after), m_bar(0)
+KMFProgressItem::KMFProgressItem()
+  : QListWidgetItem(), m_bar(0)
 {
 }
 
@@ -36,8 +36,8 @@ void KMFProgressItem::checkBar()
 {
   if(!m_bar)
   {
-    m_bar = new KProgressBar();
-    m_bar->resize(ProgressWidth - 2 * Margin, height());
+    m_bar = new QProgressBar();
+    m_bar->resize(ProgressWidth - 2 * Margin, sizeHint().height());
   }
 }
 
@@ -45,14 +45,14 @@ void KMFProgressItem::setTotalSteps(int totalSteps)
 {
   checkBar();
   m_bar->setRange(0, totalSteps);
-  repaint();
+  listWidget()->update();
 }
 
 void KMFProgressItem::setProgress(int progress)
 {
   checkBar();
   m_bar->setValue(progress);
-  repaint();
+  listWidget()->update();
 }
 
 void KMFProgressItem::showProgressBar(bool showProgressBar)
@@ -66,25 +66,27 @@ void KMFProgressItem::showProgressBar(bool showProgressBar)
     delete m_bar;
     m_bar = 0;
   }
-  repaint();
+  listWidget()->update();
 }
 
 // Taken from Autopackage statuslistitems.cpp
 void KMFProgressItem::paintCell(QPainter* p, const QColorGroup& cg, int column,
                                 int width, int align)
 {
-  p->fillRect(0, 0, width, height(), cg.base());
+  p->fillRect(0, 0, width, sizeHint().height(), cg.base());
 
   if(column != 1)
   {
-    Q3ListViewItem::paintCell(p, cg, column, width, align);
+#warning TODO
+    // QListWidgetItem::paintCell(p, cg, column, width, align);
+    // Must be done with QItemDelegate since it's dynamic content???
     return;
   }
 
   if(m_bar && m_bar->value() >= 0 && m_bar->value() < m_bar->maximum())
   {
     QPixmap barPixmap = QPixmap::grabWidget(m_bar, 0, 0,
-                                            ProgressWidth, height());
+                                            ProgressWidth, sizeHint().height());
     p->drawPixmap(Margin, 0, barPixmap);
   }
 }

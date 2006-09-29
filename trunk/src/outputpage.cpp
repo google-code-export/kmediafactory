@@ -41,16 +41,12 @@ OutputPage::OutputPage(QWidget *parent) :
   QWidget(parent)
 {
   setupUi(this);
-  outputs->setContextMenuPolicy(Qt::CustomContextMenu);
-  outputs->setViewMode(QListView::IconMode);
-  connect(outputs, SIGNAL(currentChanged(const QModelIndex & current,
-                          const QModelIndex & previous)),
-          this, SLOT(currentChanged(const QModelIndex & current,
-                     const QModelIndex & previous)));
+  connect(outputs, SIGNAL(activated(const QModelIndex&)),
+          this, SLOT(currentChanged(const QModelIndex&)));
   connect(outputs, SIGNAL(customContextMenuRequested(const QPoint&)),
           this, SLOT(contextMenuRequested(const QPoint&)));
-
-  connect(&m_startPopup, SIGNAL(activated(int)), this, SLOT(start(int)));
+  connect(&m_startPopup, SIGNAL(triggered(QAction*)),
+           this, SLOT(start(QAction*)));
 }
 
 OutputPage::~OutputPage()
@@ -69,13 +65,12 @@ void OutputPage::outputsModified()
   KMF::Tools::updateView(outputs);
 }
 
-void OutputPage::currentChanged(const QModelIndex & current,
-                                const QModelIndex & previous)
+void OutputPage::currentChanged(const QModelIndex& index)
 {
   if(kmfApp->project())
   {
     KMF::OutputObject* ob =
-        kmfApp->project()->outputObjects()->at(current.row());
+        kmfApp->project()->outputObjects()->at(index.row());
     kmfApp->project()->setOutput(ob);
   }
 }

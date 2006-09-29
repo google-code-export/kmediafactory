@@ -20,19 +20,19 @@
 #ifndef KMFPROGRESSITEM_H
 #define KMFPROGRESSITEM_H
 
-#include <Q3ListView>
+#include <QListWidget>
 
-class KProgressBar;
+class QProgressBar;
 
 /**
 @author Petri Damsten
 */
-class KMFProgressItem : public Q3ListViewItem
+class KMFProgressItem : public QListWidgetItem
 {
   public:
     enum { ProgressWidth = 150, Margin = 5 };
 
-    KMFProgressItem(Q3ListView *parent, Q3ListViewItem *after);
+    KMFProgressItem();
     ~KMFProgressItem();
 
     void paintCell(QPainter* p, const QColorGroup& cg,
@@ -44,7 +44,7 @@ class KMFProgressItem : public Q3ListViewItem
     void setProgress(int progress);
 
   private:
-    KProgressBar* m_bar;
+    QProgressBar* m_bar;
 
     void checkBar();
 };

@@ -32,10 +32,8 @@ MediaPage::MediaPage(QWidget *parent) :
   QWidget(parent)
 {
   setupUi(this);
-  mediaFiles->setContextMenuPolicy(Qt::CustomContextMenu);
-  mediaFiles->setViewMode(QListView::IconMode);
 
-  //mediaButtons->setIconDimensions(K3Icon::SizeLarge);
+  mediaButtons->setIconDimensions(K3Icon::SizeLarge);
   mediaButtons->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
   mediaButtons->setAllowedAreas(Qt::NoToolBarArea);
   //mediaButtons->setParent(0);

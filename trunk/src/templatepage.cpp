@@ -39,12 +39,8 @@ TemplatePage::TemplatePage(QWidget *parent) :
   QWidget(parent), m_settingPrevious(false)
 {
   setupUi(this);
-  templates->setContextMenuPolicy(Qt::CustomContextMenu);
-  templates->setViewMode(QListView::IconMode);
-  connect(templates, SIGNAL(currentChanged(const QModelIndex & current,
-                            const QModelIndex & previous)),
-          this, SLOT(currentChanged(const QModelIndex & current,
-                     const QModelIndex & previous)));
+  connect(templates, SIGNAL(activated(const QModelIndex&)),
+          this, SLOT(currentChanged(const QModelIndex&)));
   connect(templates, SIGNAL(customContextMenuRequested(const QPoint&)),
           this, SLOT(contextMenuRequested(const QPoint&)));
   connect(templatePreview,
@@ -68,13 +64,12 @@ void TemplatePage::templatesModified()
   KMF::Tools::updateView(templates);
 }
 
-void TemplatePage::currentChanged(const QModelIndex & current,
-                                  const QModelIndex & previous)
+void TemplatePage::currentChanged(const QModelIndex& index)
 {
   if(kmfApp->project())
   {
     KMF::TemplateObject* ob =
-        kmfApp->project()->templateObjects()->at(current.row());
+        kmfApp->project()->templateObjects()->at(index.row());
 
     if(ob->clicked() == false and !m_settingPrevious)
     {
@@ -83,15 +78,13 @@ void TemplatePage::currentChanged(const QModelIndex & current,
 
       kmfApp->project()->setTemplateObj(ob);
       updatePreview();
-      m_previous = current;
+      m_previous = index;
     }
     else if(!m_settingPrevious)
     {
-      /* TODO What was this :-)
       m_settingPrevious = true;
-      templates->setCurrentItem(m_previous);
+      templates->setCurrentIndex(m_previous);
       m_settingPrevious = false;
-      */
     }
   }
 }
@@ -99,30 +92,27 @@ void TemplatePage::currentChanged(const QModelIndex & current,
 void TemplatePage::currentPageChanged(KPageWidgetItem* current,
                                       KPageWidgetItem*)
 {
-  /*
-  m_previous = templates->currentItem();
+  m_previous = templates->currentIndex();
 
   if (current->parent() == this &&
       (templatePreview->image().size() == QSize(0,0) ||
       m_lastUpdate <
       kmfApp->project()->lastModified(KMF::ProjectInterface::DirtyMedia)))
     QTimer::singleShot(0, this, SLOT(updatePreview()));
-  */
 }
 
 void TemplatePage::updatePreview()
 {
-  /*
-  KMFIconViewItem* item =
-      static_cast<KMFIconViewItem*>(templates->currentItem());
-  if(item)
+  int n = templates->currentIndex().row();
+
+  if(n >= 0 && n < kmfApp->project()->templateObjects()->count())
   {
     QString menu;
 
     kmfApp->setOverrideCursor(KCursor::waitCursor());
     kmfApp->uiInterface()->setUseMessageBox(true);
     kmfApp->uiInterface()->setStopped(false);
-    if(item && kmfApp->project()->mediaObjects()->count() > 0 &&
+    if(kmfApp->project()->mediaObjects()->count() > 0 &&
       previewCheckBox->isChecked())
     {
       if(m_menu < m_menus.count())
@@ -130,7 +120,7 @@ void TemplatePage::updatePreview()
       else
         menu = "Main";
     }
-    KMF::TemplateObject* ob = static_cast<KMF::TemplateObject*>(item->ob());
+    KMF::TemplateObject* ob = kmfApp->project()->templateObjects()->at(n);
     // Scale to real 4:3. Should get aspect ratio from template plugin?
     QImage image = ob->preview(menu).scaled(768, 576, Qt::IgnoreAspectRatio,
                                             Qt::SmoothTransformation);
@@ -139,11 +129,11 @@ void TemplatePage::updatePreview()
     kmfApp->restoreOverrideCursor();
     m_lastUpdate = QDateTime::currentDateTime();
   }
-  */
 }
 
 void TemplatePage::contextMenuRequested(const QPoint &pos)
 {
+  kDebug() << k_funcinfo << endl;
   QModelIndex i = templates->indexAt(pos);
 
   if(i.row() < 0 || i.row() > kmfApp->project()->templateObjects()->count())
@@ -176,8 +166,8 @@ void TemplatePage::imageContextMenuRequested(const QPoint& pos)
   QAction* action;
   QAction* saveAction = new QAction(i18n("Save image"), this);
 
-  popup.addAction(action);
-  popup.insertSeparator(action);
+  popup.addAction(saveAction);
+  popup.insertSeparator(saveAction);
   for(QStringList::Iterator it = m_menus.begin();
       it != m_menus.end(); ++it, ++i)
   {

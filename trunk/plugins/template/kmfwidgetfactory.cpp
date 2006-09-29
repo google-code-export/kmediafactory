@@ -27,8 +27,8 @@
 #include "kmflayout.h"
 #include "templateobject.h"
 #include <kdebug.h>
-#include <qregexp.h>
-#include <qvariant.h>
+#include <QRegExp>
+#include <QVariant>
 
 KMFWidgetFactory::KMFWidgetFactory(QObject *parent)
   : KMFTemplateBase(parent), m_title(0), m_chapter(0),
@@ -89,7 +89,7 @@ KMFWidget* KMFWidgetFactory::create(const QDomElement& element,
                                     QObject* parent)
 {
   KMFWidget* result = newWidget(element.tagName(), parent);
-  //kdDebug() << element.tagName() << ": " << result << "/" << parent << endl;
+  //kDebug() << element.tagName() << ": " << result << "/" << parent << endl;
   if (!result && !parent)
     return 0;
 
@@ -100,29 +100,28 @@ KMFWidget* KMFWidgetFactory::create(const QDomElement& element,
     result->fromXML(element);
 
     KConfigSkeletonItem::List items = m_customProperties->items();
-    KConfigSkeletonItem::List::ConstIterator it;
 
-    for(it = items.begin(); it != items.end(); ++it)
+    foreach(KConfigSkeletonItem* item, items)
     {
-      if((*it)->group().startsWith("%"))
+      if(item->group().startsWith("%"))
       {
-        set = ((*it)->group().remove('%') == result->metaObject()->className());
-        //if(set) kdDebug() << k_funcinfo << result->className() << endl;
+        set = (item->group().remove('%') == result->metaObject()->className());
+        //if(set) kDebug() << k_funcinfo << result->className() << endl;
       }
       else
       {
-        set = QRegExp((*it)->group()).exactMatch(result->objectName());
-        //if(set) kdDebug() << k_funcinfo << result->name() << endl;
+        set = QRegExp(item->group()).exactMatch(result->objectName());
+        //if(set) kDebug() << k_funcinfo << result->name() << endl;
       }
 
       if(set)
       {
-        QString name = (*it)->name();
+        QString name = item->name();
         int n = name.indexOf("::");
         if(n >= 0)
           name = name.mid(n+2);
-        result->setProperty(name, (*it)->property());
-        //kdDebug() << k_funcinfo << name << " : " << (*it)->property() << endl;
+        //kDebug() << k_funcinfo << name << " : " << item->property() << endl;
+        result->setProperty(name, item->property());
       }
     }
   }

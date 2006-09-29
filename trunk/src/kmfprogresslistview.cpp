@@ -19,20 +19,20 @@
 //**************************************************************************
 #include "kmfprogresslistview.h"
 #include "kmfprogressitem.h"
-#include <q3header.h>
-//Added by qt3to4:
+#include <kdebug.h>
 #include <QResizeEvent>
 #include <QPixmap>
-#include <kdebug.h>
 
-KMFProgressListView::KMFProgressListView(QWidget *parent, const char *name)
-  : Q3ListView(parent, name)
+KMFProgressListView::KMFProgressListView(QWidget *parent)
+  : QListWidget(parent)
 {
+  /*
   addColumn("", 10);
   addColumn("", KMFProgressItem::ProgressWidth);
   header()->hide();
   setSorting(-1);
   setFocusPolicy(Qt::NoFocus);
+  */
 }
 
 KMFProgressListView::~KMFProgressListView()
@@ -41,12 +41,15 @@ KMFProgressListView::~KMFProgressListView()
 
 void KMFProgressListView::viewportResizeEvent(QResizeEvent* e)
 {
+  /*
   setColumnWidth(0, e->size().width() - KMFProgressItem::ProgressWidth);
+  */
 }
 
 void KMFProgressListView::insertItem(const QPixmap &pixmap,
                                      const QString &text)
 {
+  /*
   KMFProgressItem* li = static_cast<KMFProgressItem*>(lastItem());
   if(li)
   {
@@ -57,18 +60,23 @@ void KMFProgressListView::insertItem(const QPixmap &pixmap,
   li->setPixmap(0, pixmap);
   li->setText(0, text);
   ensureItemVisible(li);
+  */
 }
 
 void KMFProgressListView::setTotalSteps(int totalSteps)
 {
+  /*
   //kdDebug() << k_funcinfo << totalSteps << endl;
   static_cast<KMFProgressItem*>(lastItem())->setTotalSteps(totalSteps);
   repaintItem(lastItem());
+  */
 }
 
 void KMFProgressListView::setProgress(int progress)
 {
+  /*
   //kdDebug() << k_funcinfo << progress << endl;
   static_cast<KMFProgressItem*>(lastItem())->setProgress(progress);
   repaintItem(lastItem());
+  */
 }
