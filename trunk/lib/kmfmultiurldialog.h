@@ -21,6 +21,7 @@
 #define KMFMULTIURLDIALOG_H
 
 #include "ui_kmfmultiurldialog.h"
+#include <QStringListModel>
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
@@ -46,12 +47,10 @@ class KMFMultiURLDialog : public KDialog, public Ui::KMFMultiURLDialog
     virtual void add();
     virtual void remove();
 
-  protected:
-    void select(Q3ListViewItem* item);
-
   private:
     QString m_dir;
     QString m_filter;
+    QStringListModel m_model;
 };
 
 #endif

@@ -25,9 +25,7 @@
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <Q3ListView>
 #include <QStringList>
-#include <Q3Header>
 
 KMFMultiURLDialog::KMFMultiURLDialog(const QString& startDir,
                                      const QString& filter,
@@ -35,10 +33,9 @@ KMFMultiURLDialog::KMFMultiURLDialog(const QString& startDir,
                                      const QString& title)
   : KDialog(parent), m_dir(startDir), m_filter(filter)
 {
+  setupUi(mainWidget());
+  setButtons(KDialog::Ok | KDialog::Cancel);
   setCaption(title);
-  fileListView->header()->hide();
-  // User sorting
-  fileListView->setSorting(1000);
 }
 
 KMFMultiURLDialog::~KMFMultiURLDialog()
@@ -47,22 +44,30 @@ KMFMultiURLDialog::~KMFMultiURLDialog()
 
 void KMFMultiURLDialog::moveDown()
 {
+#warning TODO
+/*
   Q3ListViewItem* item = fileListView->currentItem();
   if(item->itemBelow())
     item->moveItem(item->itemBelow());
   fileListView->ensureItemVisible(item);
+*/
 }
 
 void KMFMultiURLDialog::moveUp()
 {
+#warning TODO
+/*
   Q3ListViewItem* item = fileListView->currentItem();
   if(item->itemAbove())
     item->itemAbove()->moveItem(item);
   fileListView->ensureItemVisible(item);
+*/
 }
 
 void KMFMultiURLDialog::remove()
 {
+#warning TODO
+/*
   Q3ListViewItemIterator it(fileListView);
   Q3ListViewItem* first = 0;
 
@@ -79,7 +84,8 @@ void KMFMultiURLDialog::remove()
   }
   if(!first)
     first = fileListView->firstChild();
-  select(first);
+*/
+  fileListView->setCurrentIndex(m_model.index(0));
 }
 
 void KMFMultiURLDialog::add()
@@ -89,14 +95,15 @@ void KMFMultiURLDialog::add()
 
   if(files.count() > 0)
   {
-    addFiles(files);
+    QStringList l = m_model.stringList();
+     l << files;
+     m_model.setStringList(l);
   }
 }
 
 void KMFMultiURLDialog::addFiles(const QStringList& files)
 {
-  Q3ListViewItem* prev = fileListView->currentItem();
-  Q3ListViewItem* first = 0;
+  QStringList l = m_model.stringList();
 
   for(QStringList::ConstIterator it = files.begin();
       it != files.end(); ++it)
@@ -109,39 +116,15 @@ void KMFMultiURLDialog::addFiles(const QStringList& files)
                          i18n("Cannot add directory."));
       continue;
     }
-    prev = new Q3ListViewItem(fileListView, prev, *it);
-    if(!first)
-      first = prev;
+    l << files;
   }
-  /*
-  KIO::PreviewJob* job =  KIO::filePreview(list, 80, 60);
-  connect(job, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-          this, SLOT(gotPreview(const KFileItem*, const QPixmap&)));
-  */
-  select(first);
-}
-
-void KMFMultiURLDialog::select(Q3ListViewItem* item)
-{
-  for(Q3ListViewItemIterator it(fileListView); *it != 0; ++it)
-    (*it)->setSelected(false);
-  if(item)
-  {
-    fileListView->setSelected(item, true);
-    fileListView->setCurrentItem(item);
-    fileListView->ensureItemVisible(item);
-  }
+  m_model.setStringList(l);
+  fileListView->setCurrentIndex(m_model.index(0));
 }
 
 QStringList KMFMultiURLDialog::files()
 {
-  QStringList list;
-
-  for(Q3ListViewItemIterator it(fileListView); *it != 0; ++it)
-  {
-    list.append((*it)->text(0));
-  }
-  return list;
+  return m_model.stringList();
 }
 
 #include "kmfmultiurldialog.moc"

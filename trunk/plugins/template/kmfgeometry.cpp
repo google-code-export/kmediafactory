@@ -108,11 +108,11 @@ int KMFUnit::absoluteValue() const
     {
       case KMFUnit::Top:
       case KMFUnit::Height:
-        m_save = QMIN(QMAX(m_save, 0), m_maxSize.height());
+        m_save = qMin(qMax(m_save, 0), m_maxSize.height());
         break;
       case KMFUnit::Left:
       case KMFUnit::Width:
-        m_save = QMIN(QMAX(m_save, 0), m_maxSize.width());
+        m_save = qMin(qMax(m_save, 0), m_maxSize.width());
         break;
     }
     /*

@@ -309,11 +309,11 @@ void Chapters::slotAdd()
 void Chapters::slotContextMenu(const QPoint& p)
 {
   QMenu *popup = new QMenu( this );
-  popup->insertItem(i18n("&Delete all"), this, SLOT(deleteAll()));
-  popup->insertItem(i18n("&Rename all"), this, SLOT(renameAll()));
-  popup->insertItem(i18n("&Auto chapters"), this, SLOT(autoChapters()));
-  popup->insertItem(i18nc("Import chapter file", "&Import"),
-                    this, SLOT(import()));
+  popup->addAction(i18n("&Delete all"), this, SLOT(deleteAll()));
+  popup->addAction(i18n("&Rename all"), this, SLOT(renameAll()));
+  popup->addAction(i18n("&Auto chapters"), this, SLOT(autoChapters()));
+  popup->addAction(i18nc("Import chapter file", "&Import"),
+                   this, SLOT(import()));
   popup->exec(chaptersView->viewport()->mapToGlobal(p));
 }
 

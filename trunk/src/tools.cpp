@@ -65,19 +65,17 @@ void Tools::addClicked()
 
   if (dlg.exec())
   {
-    QToolListItem* item = new QToolListItem(toolsListView);
+    QToolListItem* item = new QToolListItem();
     dlg.getData(item);
-    item->setText(0, item->name);
-    item->setText(1, item->description);
-    item->setPixmap(0, appIcon(item->icon));
+#warning TODO add to treeview model
   }
   enableButtons();
 }
 
 void Tools::propertiesClicked()
 {
-  QToolListItem* item =
-      static_cast<QToolListItem*>(toolsListView->selectedItem());
+#warning TODO get item data
+  QToolListItem* item = 0;
 
   if(item)
   {
@@ -87,17 +85,15 @@ void Tools::propertiesClicked()
     if (dlg.exec())
     {
       dlg.getData(item);
-      item->setText(0, item->name);
-      item->setText(1, item->description);
-      item->setPixmap(0, appIcon(item->icon));
+      KMF::Tools::updateView(toolsListView);
     }
   }
 }
 
 void Tools::removeClicked()
 {
-  QToolListItem* item =
-      static_cast<QToolListItem*>(toolsListView->selectedItem());
+#warning TODO get item data
+  QToolListItem* item = 0;
 
   if(item)
   {
@@ -117,6 +113,8 @@ void Tools::save()
   QFileInfo file;
   QString name;
 
+#warning TODO save data
+/*
   for(Q3ListViewItemIterator it(toolsListView); *it != 0; ++it)
   {
     item = static_cast<QToolListItem*>(*it);
@@ -149,6 +147,7 @@ void Tools::save()
     df.writeEntry("Terminal", item->runInTerminal);
     df.writeEntry("X-KMF-MediaMenu", item->mediaMenu);
   }
+  */
 }
 
 void Tools::load()
@@ -165,7 +164,7 @@ void Tools::load()
     if(df.readType() != "Application")
       continue;
 
-    item = new QToolListItem(toolsListView);
+    item = new QToolListItem();
     item->name = df.readName();
     item->icon = df.readIcon();
     item->description = df.readGenericName();
@@ -174,10 +173,7 @@ void Tools::load()
     item->mediaMenu = (df.readEntry("X-KMF-MediaMenu") == "true");
     item->runInTerminal = (df.readEntry("Terminal") == "true");
     item->desktopFile = *it;
-
-    item->setText(0, item->name);
-    item->setText(1, item->description);
-    item->setPixmap(0, appIcon(item->icon));
+#warning TODO add to treeview model
   }
   enableButtons();
 }
@@ -200,8 +196,8 @@ bool Tools::writableItem(QToolListItem* item)
 
 void Tools::enableButtons()
 {
-  QToolListItem* item =
-      static_cast<QToolListItem*>(toolsListView->selectedItem());
+#warning TODO get item data
+  QToolListItem* item = 0;
   if(item)
   {
     bool writable = writableItem(item);

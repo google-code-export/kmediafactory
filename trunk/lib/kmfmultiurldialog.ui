@@ -1,6 +1,6 @@
 <ui version="4.0" >
  <class>KMFMultiURLDialog</class>
- <widget class="QDialog" name="KMFMultiURLDialog" >
+ <widget class="QWidget" name="KMFMultiURLDialog" >
   <property name="geometry" >
    <rect>
     <x>0</x>
@@ -28,21 +28,10 @@
       <number>6</number>
      </property>
      <item>
-      <widget class="Q3ListView" name="fileListView" >
+      <widget class="QListView" name="fileListView" >
        <property name="acceptDrops" >
         <bool>true</bool>
        </property>
-       <property name="selectionMode" >
-        <enum>Q3ListView::Extended</enum>
-       </property>
-       <property name="allColumnsShowFocus" >
-        <bool>true</bool>
-       </property>
-       <column>
-        <property name="text" >
-         <string>File</string>
-        </property>
-       </column>
       </widget>
      </item>
      <item>
@@ -148,15 +137,9 @@
    <extends>QPushButton</extends>
    <header>kpushbutton.h</header>
   </customwidget>
-  <customwidget>
-   <class>Q3ListView</class>
-   <extends>Q3Frame</extends>
-   <header>q3listview.h</header>
-  </customwidget>
  </customwidgets>
  <includes>
   <include location="global" >kpushbutton.h</include>
-  <include location="local" >common.h</include>
  </includes>
  <resources/>
  <connections>

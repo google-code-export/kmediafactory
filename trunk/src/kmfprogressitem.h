@@ -23,6 +23,7 @@
 #include <QListWidget>
 
 class QProgressBar;
+class QColorGroup;
 
 /**
 @author Petri Damsten
@@ -35,7 +36,7 @@ class KMFProgressItem : public QListWidgetItem
     KMFProgressItem();
     ~KMFProgressItem();
 
-    void paintCell(QPainter* p, const QColorGroup& cg,
+    void paintCell(QPainter* p,
                    int column, int width, int align);
 
   public slots:

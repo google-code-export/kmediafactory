@@ -22,17 +22,16 @@
 
 #include "ui_tools.h"
 #include <kurl.h>
-#include <Q3ListView>
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
 
-class QToolListItem : public Q3ListViewItem
+class QToolListItem
 {
   public:
-    QToolListItem(Q3ListView* listbox) :
-      Q3ListViewItem(listbox), mediaMenu(false), runInTerminal(false) {};
+    QToolListItem() :
+      mediaMenu(false), runInTerminal(false) {};
 
     QString name;
     QString description;

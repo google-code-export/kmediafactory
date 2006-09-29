@@ -23,10 +23,6 @@
 #include <kmf_stddef.h>
 #include <kmediafactory/plugin.h>
 #include <kurl.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <Q3ValueList>
-#include <Q3PtrList>
 
 /**
 */
@@ -41,7 +37,7 @@ class Slide
     bool    chapter;
 };
 
-typedef Q3ValueList<Slide> SlideList;
+typedef QList<Slide> SlideList;
 
 class SlideshowObject : public KMF::MediaObject
 {
@@ -54,7 +50,7 @@ class SlideshowObject : public KMF::MediaObject
     virtual QPixmap pixmap() const;
     virtual bool make(QString type);
     virtual int timeEstimate() const;
-    virtual void actions(Q3PtrList<KAction>&) const;
+    virtual void actions(QList<KAction*>&) const;
     virtual void writeDvdAuthorXml(QDomElement& element,
                                    QString preferredLanguage,
                                    QString post, QString type);
@@ -70,8 +66,8 @@ class SlideshowObject : public KMF::MediaObject
 
     void addPics(QStringList list);
 
-    const Q3ValueList<Slide>& slides() const { return m_slides; };
-    void setSlides(const Q3ValueList<Slide>& slides) { m_slides = slides; };
+    const SlideList& slides() const { return m_slides; };
+    void setSlides(const SlideList& slides) { m_slides = slides; };
     double slideDuration() const { return m_duration; };
     void setSlideDuration(double duration) { m_duration = duration; };
     bool loop() const { return m_loop; };
@@ -103,7 +99,7 @@ class SlideshowObject : public KMF::MediaObject
 
   private:
     KAction* m_slideshowProperties;
-    Q3ValueList<Slide> m_slides;
+    QList<Slide> m_slides;
     QString m_id;
     double  m_duration;
     bool m_loop;
