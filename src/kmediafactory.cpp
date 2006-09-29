@@ -86,9 +86,10 @@ KMediaFactory::KMediaFactory()
   // Centra widget
   QWidget* main = new QWidget;
   QVBoxLayout* vbox = new QVBoxLayout;
-  m_janus = new KPageWidget(main);
+  m_janus = new KPageWidget;
   m_janus->setFaceType(KPageView::List);
   vbox->setMargin(KDialog::marginHint());
+  vbox->addWidget(m_janus);
   main->setLayout(vbox);
   setCentralWidget(main);
   const QObjectList& list = m_janus->children();
