@@ -43,7 +43,6 @@ class SlideshowProperties : public KDialog, public Ui::SlideshowProperties
 
   protected:
     void addSlides(const SlideList& slides);
-    void select(Q3ListViewItem* item);
 
   public slots:
     void gotPreview(const KFileItem* item, const QPixmap& pixmap);

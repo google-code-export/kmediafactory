@@ -26,12 +26,9 @@
     <number>6</number>
    </property>
    <item>
-    <widget class="Q3ListView" name="toolsListView" >
+    <widget class="QTreeView" name="toolsListView" >
      <property name="allColumnsShowFocus" >
       <bool>true</bool>
-     </property>
-     <property name="resizeMode" >
-      <enum>Q3ListView::LastColumn</enum>
      </property>
      <column>
       <property name="text" >
@@ -117,15 +114,8 @@
    <extends>QPushButton</extends>
    <header>kpushbutton.h</header>
   </customwidget>
-  <customwidget>
-   <class>Q3ListView</class>
-   <extends>Q3Frame</extends>
-   <header>q3listview.h</header>
-  </customwidget>
  </customwidgets>
  <includes>
-  <include location="local" >kpushbutton.h</include>
-  <include location="local" >kpushbutton.h</include>
   <include location="local" >kpushbutton.h</include>
  </includes>
  <resources/>

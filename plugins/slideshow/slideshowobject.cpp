@@ -361,7 +361,7 @@ QPixmap SlideshowObject::pixmap() const
     return KIO::pixmapForUrl(KUrl(""));
 }
 
-void SlideshowObject::actions(Q3PtrList<KAction>& actionList) const
+void SlideshowObject::actions(QList<KAction*>& actionList) const
 {
   actionList.append(m_slideshowProperties);
 }
@@ -430,7 +430,7 @@ bool SlideshowObject::writeSlideshowFile() const
       comment.replace("\n", " ");
       ts << (*it).picture << ":" << QString::number(duration, 'f', 2) <<
           ":" << comment << "\n";
-      if(it != m_slides.fromLast())
+      if(it != m_slides.end())
         ts << "crossfade:1\n";
     }
     ts << "fadeout:1\n";
@@ -576,7 +576,7 @@ void SlideshowObject::writeDvdAuthorXml(QDomElement& element,
   {
     vob.setAttribute("file", dir.filePath(QString("%1.vob").arg(m_id)));
 
-    Q3ValueList<double> chapters;
+    QList<double> chapters;
     double start = 0.0;
     double duration = calculatedSlideDuration();
 
@@ -592,20 +592,17 @@ void SlideshowObject::writeDvdAuthorXml(QDomElement& element,
         start = 1.4;
       start += duration + 1.0;
     }
-    for(Q3ValueList<double>::ConstIterator it = chapters.begin();
-        it != chapters.end(); ++it)
+    for(int i; i < chapters.count(); ++i)
     {
       QDomElement c = vob.ownerDocument().createElement("cell");
 
-      c.setAttribute("start", KMF::Time(*it).toString());
-      ++it;
-      if(it == chapters.end())
+      c.setAttribute("start", KMF::Time(chapters[i]).toString());
+      if(i == chapters.count())
         c.setAttribute("end", "-1");
       else
       {
-        c.setAttribute("end", KMF::Time(*it).toString());
+        c.setAttribute("end", KMF::Time(chapters[i+1]).toString());
       }
-      --it;
       c.setAttribute("chapter", 1);
       vob.appendChild(c);
     }

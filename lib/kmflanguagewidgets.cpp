@@ -157,7 +157,7 @@ QModelIndex LanguageListModel::index(const QString& lang) const
         break;
   }
   else
-    i = m_languageList.findIndex(lang);
+    i = m_languageList.indexOf(lang);
   if(i >= 0)
     return createIndex(i, 0);
   return QModelIndex();

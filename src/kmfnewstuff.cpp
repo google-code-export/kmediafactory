@@ -28,7 +28,8 @@
 #include <qstringlist.h>
 
 KMFNewStuff::KMFNewStuff(const QString& provider, QWidget* parentWidget) :
-  QObject(parentWidget),
+#warning why this is an error
+  //QObject(parentWidget),
   KNewStuff("kmediafactory/tools", provider, parentWidget)
 {
 }

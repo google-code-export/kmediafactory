@@ -74,7 +74,7 @@ int KMFWidget::minimumPaintWidth() const
 
   foreach(QObject* ob, children())
     if(ob->inherits("KMFWidget"))
-      result = QMAX(static_cast<KMFWidget*>(ob)->minimumWidth(), result);
+      result = qMax(static_cast<KMFWidget*>(ob)->minimumWidth(), result);
   return result;
 }
 
@@ -84,7 +84,7 @@ int KMFWidget::minimumPaintHeight() const
 
   foreach(QObject* ob, children())
     if(ob->inherits("KMFWidget"))
-      result = QMAX(static_cast<KMFWidget*>(ob)->minimumHeight(), result);
+      result = qMax(static_cast<KMFWidget*>(ob)->minimumHeight(), result);
   return result;
 }
 

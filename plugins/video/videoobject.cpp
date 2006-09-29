@@ -715,7 +715,7 @@ QImage VideoObject::preview(int chap) const
   QSize imageSize = img.size();
   QSize res = KMF::Tools::resolution(imageSize, imageRatio,
                                      templateSize, templateRatio);
-  img = img.scaled(res, Qt::ScaleFree, Qt::SmoothTransformation);
+  img = img.scaled(res, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
   /*
   kdDebug() << k_funcinfo << "Template size: " << templateSize << endl;
   kdDebug() << k_funcinfo << "Template ratio:" << templateRatio << endl;

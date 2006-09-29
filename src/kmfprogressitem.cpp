@@ -70,10 +70,10 @@ void KMFProgressItem::showProgressBar(bool showProgressBar)
 }
 
 // Taken from Autopackage statuslistitems.cpp
-void KMFProgressItem::paintCell(QPainter* p, const QColorGroup& cg, int column,
+void KMFProgressItem::paintCell(QPainter* p, int column,
                                 int width, int align)
 {
-  p->fillRect(0, 0, width, sizeHint().height(), cg.base());
+  //p->fillRect(0, 0, width, sizeHint().height(), cg.base());
 
   if(column != 1)
   {

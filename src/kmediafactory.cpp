@@ -66,13 +66,6 @@
 #include <QToolButton>
 #include <QPoint>
 #include <QTimer>
-#include <Q3VBox>
-#include <Q3PopupMenu>
-#include <Q3SqlPropertyMap>
-#include <Q3ValueList>
-#include <Q3CString>
-#include <Q3PtrList>
-#include <Q3Frame>
 #include <QDragEnterEvent>
 #include <QDropEvent>
 
@@ -91,11 +84,13 @@ KMediaFactory::KMediaFactory()
   setXMLFile("kmediafactoryui.rc");
 
   // Centra widget
-  Q3VBox* vbox = new Q3VBox(this);
-  m_janus = new KPageWidget(vbox);
+  QWidget* main = new QWidget;
+  QVBoxLayout* vbox = new QVBoxLayout;
+  m_janus = new KPageWidget(main);
   m_janus->setFaceType(KPageView::List);
   vbox->setMargin(KDialog::marginHint());
-  setCentralWidget(vbox);
+  main->setLayout(vbox);
+  setCentralWidget(main);
   const QObjectList& list = m_janus->children();
   for(int i = 0; i < list.size(); ++i)
   {
@@ -474,9 +469,12 @@ void KMediaFactory::optionsPreferences()
     KConfigDialog* dialog = new KConfigDialog(this, "KMediaFactorySettings",
                                               KMediaFactorySettings::self(),
                                               KPageDialog::List);
+#warning TODO how to do this KDE4
+/*
     Q3SqlPropertyMap::defaultMap()->insert("KMFLanguageComboBox", "language");
     Q3SqlPropertyMap::defaultMap()->insert("KMFLanguageListBox", "language");
     Q3SqlPropertyMap::defaultMap()->insert("KColorCombo", "color");
+    */
 
     dialog->addPage(new KMFOptions(dialog), i18n("KMediaFactory"),
                     "kmediafactory", i18n("KMediaFactory"));

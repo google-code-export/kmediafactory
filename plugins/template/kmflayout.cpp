@@ -173,7 +173,7 @@ int KMFVBox::minimumPaintWidth() const
   {
     KMFWidget* widget = static_cast<KMFWidget*>(ob);
     if(!widget->isHidden())
-      result = QMAX(widget->minimumWidth(), result);
+      result = qMax(widget->minimumWidth(), result);
   }
   return result;
 }
@@ -197,7 +197,7 @@ int KMFHBox::minimumPaintHeight() const
     //kdDebug() << widget->className() << ": "
     //    << widget->minimumHeight() << endl;
     if(!widget->isHidden())
-      result = QMAX(widget->minimumHeight(), result);
+      result = qMax(widget->minimumHeight(), result);
   }
   return result;
 }

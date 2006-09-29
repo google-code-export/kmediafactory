@@ -31,7 +31,6 @@ add_definitions(
     ${QT_DEFINITIONS}
     ${QT_QTDBUS_DEFINITIONS}
     ${KDE4_DEFINITIONS}
-    -DQT3_SUPPORT=1
     -DHAVE_CONFIG_H=1
 )
 

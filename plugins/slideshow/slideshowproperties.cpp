@@ -34,7 +34,6 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QLineEdit>
-#include <Q3ListView>
 
 SlideshowProperties::SlideshowProperties(QWidget *parent)
   : KDialog(parent)
@@ -42,9 +41,10 @@ SlideshowProperties::SlideshowProperties(QWidget *parent)
   setupUi(mainWidget());
   setButtons(KDialog::Ok | KDialog::Cancel);
 
-  slideListView->setDefaultRenameAction(Q3ListView::Accept);
+#warning TODO
+  //slideListView->setDefaultRenameAction(Q3ListView::Accept);
   // User sorting
-  slideListView->setSorting(1000);
+  //slideListView->setSorting(1000);
   audioButton->setIcon(
       KGlobal::iconLoader()->loadIconSet(("arts"), K3Icon::Small,
       K3Icon::SizeMedium));
@@ -63,6 +63,8 @@ void SlideshowProperties::getData(SlideshowObject& obj) const
   obj.setAudioFile(m_audioFiles);
 
   SlideList list;
+#warning TODO
+/*
   for(Q3ListViewItemIterator it(slideListView); *it != 0; ++it)
   {
     Q3CheckListItem* litem = static_cast<Q3CheckListItem*>(*it);
@@ -73,6 +75,7 @@ void SlideshowProperties::getData(SlideshowObject& obj) const
     slide.comment = litem->text(3);
     list.append(slide);
   }
+  */
   obj.setSlides(list);
 }
 
@@ -90,6 +93,8 @@ void SlideshowProperties::setData(const SlideshowObject& obj)
 
 void SlideshowProperties::addSlides(const SlideList& slides)
 {
+#warning TODO
+/*
   Q3CheckListItem* prev =
       static_cast<Q3CheckListItem*>(slideListView->currentItem());
   Q3CheckListItem* first = 0;
@@ -117,24 +122,14 @@ void SlideshowProperties::addSlides(const SlideList& slides)
           this, SLOT(gotPreview(const KFileItem*, const QPixmap&)));
   select(first);
   updateInfo();
-}
-
-void SlideshowProperties::select(Q3ListViewItem* item)
-{
-  for(Q3ListViewItemIterator it(slideListView); *it != 0; ++it)
-    (*it)->setSelected(false);
-  if(item)
-  {
-    slideListView->setSelected(item, true);
-    slideListView->setCurrentItem(item);
-    slideListView->ensureItemVisible(item);
-  }
+  */
 }
 
 void SlideshowProperties::gotPreview(const KFileItem* item,
                                      const QPixmap& pixmap)
 {
-
+#warning TODO
+/*
   for(Q3ListViewItemIterator it(slideListView); *it != 0; ++it)
   {
     Q3CheckListItem* litem = static_cast<Q3CheckListItem*>(*it);
@@ -144,26 +139,36 @@ void SlideshowProperties::gotPreview(const KFileItem* item,
       break;
     }
   }
+  */
 }
 
 void SlideshowProperties::moveDown()
 {
+#warning TODO
+/*
   Q3ListViewItem* item = slideListView->currentItem();
   if(item->itemBelow())
     item->moveItem(item->itemBelow());
   slideListView->ensureItemVisible(item);
+  */
 }
 
 void SlideshowProperties::moveUp()
 {
+#warning TODO
+/*
   Q3ListViewItem* item = slideListView->currentItem();
   if(item->itemAbove())
     item->itemAbove()->moveItem(item);
   slideListView->ensureItemVisible(item);
+  */
 }
 
 void SlideshowProperties::updateInfo()
 {
+#warning TODO
+/*
+
   QString info(i18n("Info: "));
   int count = slideListView->childCount();
   KMF::Time duration = (double)durationSpinBox->value();
@@ -188,10 +193,13 @@ void SlideshowProperties::updateInfo()
     info += i18n(", Audio duration %1").arg(audioDuration.toString("h:mm:ss"));
 
   infoLabel->setText(info);
+  */
 }
 
 void SlideshowProperties::remove()
 {
+#warning TODO
+/*
   Q3ListViewItemIterator it(slideListView);
   Q3ListViewItem* first = 0;
 
@@ -210,6 +218,7 @@ void SlideshowProperties::remove()
     first = slideListView->firstChild();
   select(first);
   updateInfo();
+  */
 }
 
 void SlideshowProperties::add()
@@ -242,6 +251,8 @@ void SlideshowProperties::audioClicked()
 
 void SlideshowProperties::okClicked()
 {
+#warning TODO
+/*
   for(Q3ListViewItemIterator it(slideListView); *it != 0; ++it)
   {
     Q3CheckListItem* litem = static_cast<Q3CheckListItem*>(*it);
@@ -254,6 +265,7 @@ void SlideshowProperties::okClicked()
   }
   KMessageBox::sorry(this,
                       i18n("You should have atleast one chapter."));
+                      */
 }
 
 #include "slideshowproperties.moc"
