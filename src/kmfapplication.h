@@ -25,8 +25,6 @@
 #include <kapplication.h>
 #include <kurl.h>
 #include <QMap>
-#include <Q3CString>
-#include <Q3ValueList>
 
 class KMediaFactory;
 class QObject;

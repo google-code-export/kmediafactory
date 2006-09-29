@@ -20,17 +20,17 @@
 #ifndef KMFPROGRESSLISTVIEW_H
 #define KMFPROGRESSLISTVIEW_H
 
-#include <Q3ListView>
+#include <QListWidget>
 #include <QPixmap>
 #include <QResizeEvent>
 
 /**
 @author Petri Damsten
 */
-class KMFProgressListView : public Q3ListView
+class KMFProgressListView : public QListWidget
 {
   public:
-    KMFProgressListView(QWidget *parent = 0, const char *name = 0);
+    KMFProgressListView(QWidget *parent = 0);
     ~KMFProgressListView();
 
     void insertItem(const QPixmap &pixmap, const QString &text);

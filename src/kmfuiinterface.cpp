@@ -150,7 +150,8 @@ bool KMFUiInterface::progress(int advance)
         << " / " << mainWindow->outputPage->progressBar->totalSteps()
         << endl;
     */
-    mainWindow->outputPage->progressBar->advance(advance);
+    mainWindow->outputPage->progressBar->setValue(
+        mainWindow->outputPage->progressBar->value()+advance);
   }
 #if RECORD_TIMINGS
   stopWatch.progress(advance);

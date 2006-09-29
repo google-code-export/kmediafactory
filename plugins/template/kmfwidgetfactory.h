@@ -22,7 +22,6 @@
 
 #include <kmftemplatebase.h>
 #include <templateobject.h>
-#include <q3dict.h>
 
 class QDomElement;
 class KMFWidget;
@@ -44,8 +43,7 @@ class KMFWidgetFactory : public KMFTemplateBase
                                  int title = 0, int chapter = 0);
 
   private:
-    KMFWidget* newWidget(QString type,
-                                           QObject* parent = 0);
+    KMFWidget* newWidget(QString type, QObject* parent = 0);
     int m_title;
     int m_chapter;
     const KConfigXML* m_customProperties;

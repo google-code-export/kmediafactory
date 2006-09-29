@@ -57,6 +57,15 @@
      <property name="focusPolicy" >
       <enum>Qt::StrongFocus</enum>
      </property>
+     <property name="contextMenuPolicy" >
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
+     <property name="flow" >
+      <enum>QListView::LeftToRight</enum>
+     </property>
+     <property name="viewMode" >
+      <enum>QListView::IconMode</enum>
+     </property>
     </widget>
    </item>
    <item>
@@ -73,7 +82,7 @@
     </widget>
    </item>
    <item>
-    <widget class="KMFProgressListView" name="progressListView" >
+    <widget class="KMFProgressListView" native="1" name="progressListView" >
      <property name="sizePolicy" >
       <sizepolicy>
        <hsizetype>7</hsizetype>
@@ -85,7 +94,7 @@
     </widget>
    </item>
    <item>
-    <widget class="KProgressBar" name="progressBar" >
+    <widget class="QProgressBar" name="progressBar" >
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
      </property>
@@ -116,7 +125,7 @@
       </spacer>
      </item>
      <item>
-       <widget class="QToolButton" name="showLogPushBtn" >
+      <widget class="QToolButton" name="showLogPushBtn" >
        <property name="enabled" >
         <bool>false</bool>
        </property>
@@ -143,7 +152,7 @@
       </widget>
      </item>
      <item>
-       <widget class="QToolButton" name="stopPushBtn" >
+      <widget class="QToolButton" name="stopPushBtn" >
        <property name="enabled" >
         <bool>false</bool>
        </property>
@@ -170,7 +179,7 @@
       </widget>
      </item>
      <item>
-      <widget class="KMFToolButton" name="startButton" >
+      <widget class="KMFToolButton" native="1" name="startButton" >
        <property name="sizePolicy" >
         <sizepolicy>
          <hsizetype>0</hsizetype>
@@ -185,9 +194,6 @@
          <height>0</height>
         </size>
        </property>
-       <property name="text" >
-        <string>&amp;Start</string>
-       </property>
       </widget>
      </item>
     </layout>
@@ -198,24 +204,15 @@
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
  <customwidgets>
   <customwidget>
-   <class>KProgressBar</class>
-   <extends>QProgressBar</extends>
-   <header>kprogressbar.h</header>
-  </customwidget>
-  <customwidget>
    <class>KMFProgressListView</class>
    <extends>QWidget</extends>
    <header>kmfprogresslistview.h</header>
   </customwidget>
   <customwidget>
-   <class>KMFIconView</class>
+   <class>KMFToolButton</class>
    <extends>QWidget</extends>
-   <header>kmficonview.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
+   <header>kmftoolbutton.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>
@@ -225,8 +222,6 @@
  </tabstops>
  <includes>
   <include location="local" >kmfprogresslistview.h</include>
-  <include location="local" >kprogressbar.h</include>
-  <include location="local" >kpushbutton.h</include>
   <include location="local" >kpushbutton.h</include>
   <include location="local" >kmftoolbutton.h</include>
  </includes>

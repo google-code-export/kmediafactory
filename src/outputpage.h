@@ -22,6 +22,7 @@
 
 #include <ui_outputpage.h>
 #include "kmfuiinterface.h"
+#include "kmficonview.h"
 #include <QMenu>
 
 class KPageWidgetItem;
@@ -42,8 +43,7 @@ class OutputPage : public QWidget, public Ui::OutputPage
     void projectInit();
 
   protected slots:
-    void currentChanged(const QModelIndex & current,
-                        const QModelIndex & previous);
+    void currentChanged(const QModelIndex& index);
     void contextMenuRequested(const QPoint &pos);
     void stop();
     void showLog();
