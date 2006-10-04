@@ -434,3 +434,45 @@ void KMF::Tools::updateView(QAbstractItemView* v,
   else
     v->selectionModel()->select(i, QItemSelectionModel::SelectCurrent);
 }
+
+// This function is from qcolor.cpp
+int KMF::Tools::hex2int(QChar hexchar)
+{
+  int v;
+  if ( hexchar.isDigit() )
+    v = hexchar.digitValue();
+  else if ( hexchar >= 'A' && hexchar <= 'F' )
+    v = hexchar.cell() - 'A' + 10;
+  else if ( hexchar >= 'a' && hexchar <= 'f' )
+    v = hexchar.cell() - 'a' + 10;
+  else
+    v = 0;
+  return v;
+}
+
+
+QColor KMF::Tools::toColor(const QString& s)
+{
+  QColor result;
+
+  if(s.isEmpty())
+  {
+    result.setRgb(0);
+  }
+  else if (s[0].isDigit()) // Color as integer
+  {
+    result.setRgb(s.toLong());
+  }
+  else if (s[0] == '#' && s.length() == 9) // Special alpha channel case
+  {
+    result.setRgb(qRgba((hex2int(s[1]) << 4) + hex2int(s[2]),
+                        (hex2int(s[3]) << 4) + hex2int(s[4]),
+                        (hex2int(s[5]) << 4) + hex2int(s[6]),
+                        (hex2int(s[7]) << 4) + hex2int(s[8])));
+  }
+  else
+  {
+    result.setNamedColor(s);
+  }
+  return result;
+}

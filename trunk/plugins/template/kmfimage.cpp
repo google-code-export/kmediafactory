@@ -26,6 +26,7 @@
 #include <kstandarddirs.h>
 #include <QVariant>
 #include <QApplication>
+#include <QPainter>
 
 const char * transparent_xpm[] =
 {
@@ -91,38 +92,60 @@ QRect KMFImage::paintRect(const QPoint offset) const
   return rc;
 }
 
+QImage KMFImage::mask(const QImage& img, const QRgb& maskColor, bool oneBitMask)
+{
+  QImage result(img.width(), img.height(), QImage::Format_ARGB32);
+  double alphaScale = qAlpha(maskColor) / (256.0 * 256.0);
+
+  result.fill(maskColor);
+  for (int y = 0; y < img.height(); y++)
+  {
+    for (int x = 0; x < img.width(); x++)
+    {
+      QRgb pix = img.pixel(x, y);
+      if(oneBitMask)
+      {
+        if(qAlpha(pix) > 128)
+          pix = qRgba(qRed(pix), qGreen(pix), qBlue(pix), 255);
+        else
+          pix = qRgba(qRed(pix), qGreen(pix), qBlue(pix), 0);
+      }
+      else
+      {
+        pix = qRgba(qRed(pix), qGreen(pix), qBlue(pix),
+                    (int)(alphaScale * qAlpha(pix)));
+      }
+      result.setPixel(x, y, pix);
+    }
+  }
+  return result;
+}
+
 void KMFImage::paintWidget(QImage& layer, bool shdw)
 {
-#warning TODO
-#if 0
   QPoint off = (shdw) ? shadow().offset() : QPoint();
-  KMF::Color clr = (shdw) ? shadow().color() : color();
+  QColor clr = (shdw) ? shadow().color() : color();
   QRect rc = paintRect(off);
-  QMImage image;
+  QPainter p(&layer);
+  QImage image;
 
-  if(!clr.isNull())
-  {
-    QMImage img(m_image, clr.rgb(), !shdw);
-    image = img;
-  }
+  if(!clr.isValid())
+    image = mask(m_image, clr.rgb(), !shdw);
   else
-  {
-    QMImage img(m_image);
-    image = img;
-  }
+    image = m_image;
 
-  if(image.columns() == 0 || image.rows() == 0)
+  if(image.width() == 0 || image.height() == 0)
     return;
 
   if(m_scale)
   {
-    Magick::Geometry g(rc.width(), rc.height());
-    g.aspect(!m_proportional);
-    image.scale(g);
+    Qt::AspectRatioMode mode = (m_proportional)?
+        Qt::KeepAspectRatio:Qt::IgnoreAspectRatio;
+    image = image.scaled(rc.width(), rc.height(),
+                         mode, Qt::SmoothTransformation);
   }
   //kdDebug() << k_funcinfo << name() << rc << endl;
-  layer.composite(image, rc.left(), rc.top(), Magick::OverCompositeOp);
-#endif
+  p.drawImage(QPoint(rc.left(), rc.top()), image);
 }
 
 void KMFImage::setImage(KUrl url)

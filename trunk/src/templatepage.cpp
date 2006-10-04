@@ -36,7 +36,7 @@
 #include <QMenu>
 
 TemplatePage::TemplatePage(QWidget *parent) :
-  QWidget(parent), m_settingPrevious(false)
+  QWidget(parent), m_menu(0), m_settingPrevious(false)
 {
   setupUi(this);
   connect(templates, SIGNAL(activated(const QModelIndex&)),

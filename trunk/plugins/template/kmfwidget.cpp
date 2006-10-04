@@ -20,6 +20,7 @@
 #include "kmfwidget.h"
 #include "kmflayout.h"
 #include "kmfmenupage.h"
+#include <kmftools.h>
 #include <kdebug.h>
 #include <QObject>
 #include <QVariant>
@@ -39,7 +40,7 @@ void KMFShadow::fromXML(const QDomElement& element)
 {
   m_offset.setX(element.attribute("offset.x", 0).toInt());
   m_offset.setY(element.attribute("offset.y", 0).toInt());
-  m_color.setNamedColor(element.attribute("color", "#00000088"));
+  m_color = KMF::Tools::toColor(element.attribute("color", "#00000088"));
   m_type = static_cast<Type>(element.attribute("type", "0").toInt());
   m_radius = element.attribute("radius", "1").toDouble();
   m_sigma = element.attribute("sigma", "0.5").toDouble();
@@ -115,32 +116,25 @@ QRect KMFWidget::paintRect(const QPoint offset) const
 
 void KMFWidget::paint(KMFMenuPage* page)
 {
-#warning TODO
-#if 0
   if(m_shadow.type() != KMFShadow::None && layer() == Background)
   {
-    Magick::Image& temp = page->layer(Temp);
-    temp.read(QString("xc:%1FF").arg(QColor(m_shadow.color()).name()));
+    QImage& temp = page->layer(Temp);
+    temp.fill(m_shadow.color().rgba());
     paintWidget(temp, true);
     if(m_shadow.type() == KMFShadow::Blur)
     {
-      MagickLib::ExceptionInfo exceptionInfo;
-      GetExceptionInfo(&exceptionInfo);
-      MagickLib::Image* newImage =
-          BlurImageChannel(temp.image(), MagickLib::AllChannels,
-                       m_shadow.radius(), m_shadow.sigma(), &exceptionInfo);
-      temp.replaceImage(newImage);
-      //throwException(exceptionInfo);
+#warning TODO blur image here
+      //blur(&temp);
     }
-    page->layer(Background).composite(temp, 0, 0, Magick::OverCompositeOp);
+#warning TODO composite image here
+    //composite(&page->layer(Background), temp);
   }
   paintWidget(page->layer(layer()), false);
-#endif
 }
 
 void KMFWidget::setColor(const QString& s)
 {
-  m_color.setNamedColor(s);
+  m_color = KMF::Tools::toColor(s);
 }
 
 void KMFWidget::fromXML(const QDomElement& element)

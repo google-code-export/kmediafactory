@@ -18,6 +18,7 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 #include "kmfframe.h"
+#include <kmftools.h>
 #include <kdebug.h>
 #include <QRect>
 #include <QDomElement>
@@ -36,7 +37,8 @@ void KMFFrame::fromXML(const QDomElement& element)
 {
   KMFWidget::fromXML(element);
   m_lineWidth = element.attribute("line_width", "0").toInt();
-  m_fillColor.setNamedColor(element.attribute("fill_color", "#00000000"));
+  m_fillColor =
+       KMF::Tools::toColor(element.attribute("fill_color", "#00000000"));
   m_rounded = element.attribute("rounded", "0").toInt();
 }
 
