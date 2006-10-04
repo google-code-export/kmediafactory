@@ -22,9 +22,11 @@
 #include "kmfmenupage.h"
 #include <kmftools.h>
 #include <kdebug.h>
+#include <kimageeffect.h>
 #include <QObject>
 #include <QVariant>
 #include <QRegExp>
+#include <QPainter>
 
 void KMFShadow::toXML(QDomElement& element) const
 {
@@ -119,15 +121,15 @@ void KMFWidget::paint(KMFMenuPage* page)
   if(m_shadow.type() != KMFShadow::None && layer() == Background)
   {
     QImage& temp = page->layer(Temp);
-    temp.fill(m_shadow.color().rgba());
+    QColor c = m_shadow.color();
+
+    c.setAlpha(0);
+    temp.fill(c.rgba());
     paintWidget(temp, true);
     if(m_shadow.type() == KMFShadow::Blur)
-    {
-#warning TODO blur image here
-      //blur(&temp);
-    }
-#warning TODO composite image here
-    //composite(&page->layer(Background), temp);
+      temp = KImageEffect::blur(temp, m_shadow.radius(), m_shadow.sigma());
+    QPainter p(&page->layer(Background));
+    p.drawImage(QPoint(0, 0), temp);
   }
   paintWidget(page->layer(layer()), false);
 }
