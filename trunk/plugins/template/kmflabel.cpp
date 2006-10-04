@@ -26,6 +26,7 @@
 #include <QColor>
 #include <QRegExp>
 #include <QVariant>
+#include <QPainter>
 #include <string>
 
 KMFLabel::KMFLabel(QObject *parent) :
@@ -39,15 +40,17 @@ KMFLabel::~KMFLabel()
 
 int KMFLabel::minimumPaintWidth() const
 {
-#warning TODO
-  return 0; //m_font.pixelWidth(m_text);
+  QImage img(1, 1, QImage::Format_ARGB32);
+  QFontMetrics fm(m_font, &img);
+  return fm.size(Qt::TextSingleLine, m_text).width();
 }
 
 int KMFLabel::minimumPaintHeight() const
 {
   //kdDebug() << k_funcinfo << m_font.pixelHeight(m_text, m_descent) << endl;
-#warning TODO
-  return 0;//m_font.pixelHeight();
+  QImage img(1, 1, QImage::Format_ARGB32);
+  QFontMetrics fm(m_font, &img);
+  return fm.size(Qt::TextSingleLine, m_text).height();
 }
 
 void KMFLabel::fromXML(const QDomElement& element)
@@ -107,53 +110,25 @@ void KMFLabel::setText(const QString& text)
 
 void KMFLabel::paintWidget(QImage& layer, bool shdw)
 {
-#warning TODO
-#if 0
-  /*
-  int h = (int)t.textHeight();
-  QRegExp re("[gjpqy]");
+  QPainter p(&layer);
+  QFontMetrics fm(m_font, &layer);
 
-  if(descent || re.search(text) == -1) // no letters that have descent
-    h += (int)t.descent();
-  */
   //kdDebug() << k_funcinfo << m_font.family() << m_font.pointSize() <<
   //    m_font.weight() << endl;
   Layer lt = page()->layerType(layer);
   QRect rc = (shdw)? paintRect(shadow().offset()) : paintRect();
   QString text = fitText(m_text, rc.width());
   QColor rgb = (shdw)? shadow().color() : color() ;
-  KMF::Rect textrc(QPoint(0, 0), m_font.pixelSize(text));
-  std::list<Magick::Drawable> drawList;
+  KMF::Rect textrc(QPoint(0, 0), fm.size(Qt::TextSingleLine, m_text));
 
-  drawList.push_back(Magick::DrawableStrokeWidth(0));
-  drawList.push_back(Magick::DrawableGravity(Magick::NorthWestGravity));
-  drawList.push_back(Magick::DrawableFillColor(rgb));
-  drawList.push_back(Magick::DrawableFillOpacity((double)rgb.alpha() / 255.0));
-  if(!m_font.file().isEmpty())
-  {
-    drawList.push_back(Magick::DrawableFont(
-        (const char*)m_font.file().local8Bit()));
-    /*
-    kdDebug() << k_funcinfo << (const char*)m_font.file().local8Bit() << endl;
-    */
-  }
-  else
-  {
-    drawList.push_back(Magick::DrawableFont(
-        (const char*)m_font.family().local8Bit()));
-    /*
-    kdDebug() << k_funcinfo << (const char*)m_font.family().local8Bit() << endl;
-    */
-  }
-  drawList.push_back(Magick::DrawablePointSize(m_font.pointSize()));
+  p.setPen(QPen());
+  p.setBrush(QBrush(rgb));
+  p.setFont(m_font);
 
   textrc.align(rc, halign(), valign());
-  drawList.push_back(
-      Magick::DrawableTextAntialias(lt == Background || lt == Temp));
-  drawList.push_back(Magick::DrawableText(textrc.x(), textrc.y(),
-                     (const char*)text.utf8(), "UTF-8"));
-  layer.draw(drawList);
-#endif
+  bool aa = (lt == Background || lt == Temp);
+  p.setRenderHint(QPainter::TextAntialiasing, aa);
+  p.drawText(QPoint(textrc.x(), textrc.y()), text);
 }
 
 void KMFLabel::setProperty(const QString& name, QVariant value)
@@ -169,16 +144,16 @@ void KMFLabel::setProperty(const QString& name, QVariant value)
 
 QString KMFLabel::fitText(QString txt, int width)
 {
-#warning TODO
-#if 0
   QString s = txt;
   int i = 0;
+  QImage img(1, 1, QImage::Format_ARGB32);
+  QFontMetrics fm(m_font, &img);
 
   if(!s.isEmpty())
   {
-    while(!s.isEmpty() && m_font.pixelWidth(s) > width)
+    while(!s.isEmpty() && fm.size(Qt::TextSingleLine, s).width() > width)
     {
-      int n = s.findRev(' ');
+      int n = s.lastIndexOf(' ');
       if(n < 0)
       {
         s = "";
@@ -188,7 +163,7 @@ QString KMFLabel::fitText(QString txt, int width)
     }
     if(s.isEmpty())
     {
-      while(m_font.pixelWidth(s) < width)
+      while(fm.size(Qt::TextSingleLine, s).width() < width)
       {
         s += txt[i++];
       }
@@ -198,7 +173,6 @@ QString KMFLabel::fitText(QString txt, int width)
   }
   //kdDebug() << k_funcinfo << "return: " << s << endl;
   return s;
-#endif
 }
 
 #include "kmflabel.moc"
