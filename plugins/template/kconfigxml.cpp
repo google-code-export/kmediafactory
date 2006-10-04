@@ -76,6 +76,17 @@ KConfigXML::KConfigXML(QByteArray* kcfgFile)
 KConfigXML::~KConfigXML()
 {
   TempFileStore::removeTempFile(this);
+
+  while(!m_strings.isEmpty())
+    delete m_strings.takeFirst();
+  while(!m_bools.isEmpty())
+    delete m_bools.takeFirst();
+  while(!m_colors.isEmpty())
+    delete m_colors.takeFirst();
+  while(!m_fonts.isEmpty())
+    delete m_fonts.takeFirst();
+  while(!m_ints.isEmpty())
+    delete m_ints.takeFirst();
 }
 
 bool KConfigXML::parse(QString kcfgFile)
@@ -245,31 +256,36 @@ void KConfigXML::parseKCFGXMLEntry(const QDomElement& element)
 
   if(type == "String")
   {
-    m_strings.append("");
-    addItemString(name, m_strings.last(), defaultValue);
+    QString* s = new QString("");
+    addItemString(name, *s, defaultValue);
+    m_strings.append(s);
   }
   else if(type == "Bool")
   {
-    m_bools.append(false);
-    addItemBool(name, m_bools.last(), (defaultValue == "true"));
+    bool* b = new bool(false);
+    addItemBool(name, *b, (defaultValue == "true"));
+    m_bools.append(b);
   }
   else if(type == "Color")
   {
-    m_colors.append(QColor(192, 192, 192));
-    addItemColor(name, m_colors.last(), QColor(defaultValue));
+    QColor* c = new QColor(192, 192, 192);
+    addItemColor(name, *c, QColor(defaultValue));
+    m_colors.append(c);
   }
   else if(type == "Font")
   {
-    m_fonts.append(QFont());
-    QFont f;
+    QFont* f = new QFont();
+    QFont def;
 
-    f.fromString(defaultValue);
-    addItemFont(name, m_fonts.last(), f);
+    def.fromString(defaultValue);
+    addItemFont(name, *f, def);
+    m_fonts.append(f);
   }
   else if(type == "Int")
   {
-    m_ints.append(0);
-    addItemInt(name, m_ints.last(), defaultValue.toInt());
+    qint32* i = new qint32(0);
+    addItemInt(name, *i, defaultValue.toInt());
+    m_ints.append(i);
   }
 }
 

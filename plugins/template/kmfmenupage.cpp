@@ -41,6 +41,7 @@
 #include <QDateTime>
 #include <QRegExp>
 #include <QTextStream>
+#include <QPainter>
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -83,26 +84,21 @@ void KMFMenuPage::fromXML(const QDomElement& element)
 
 void KMFMenuPage::setResolution(QSize resolution)
 {
-#warning TODO
-#if 0
   KMFUnit::setMaxRes(resolution);
   m_resolution = resolution;
-  QString size =
-      QString("%1x%2").arg(resolution.width()).arg(resolution.height());
-  m_background.size((const char*)size.local8Bit());
-  m_background.read("xc:#44444400");
-  m_sub.size((const char*)size.local8Bit());
-  m_sub.read("xc:#000000FF");
-  m_subHighlight.size((const char*)size.local8Bit());
-  m_subHighlight.read("xc:#000000FF");
-  m_subSelect.size((const char*)size.local8Bit());
-  m_subSelect.read("xc:#000000FF");
-  m_temp.size((const char*)size.local8Bit());
+  m_background = QImage(m_resolution, QImage::Format_ARGB32);
+  m_background.fill(KMF::Tools::toColor("#44444400").rgba());
+  m_sub = QImage(m_resolution, QImage::Format_ARGB32);
+  m_sub.fill(KMF::Tools::toColor("#000000FF").rgba());
+  m_subHighlight = QImage(m_resolution, QImage::Format_ARGB32);
+  m_subHighlight.fill(KMF::Tools::toColor("#000000FF").rgba());
+  m_subSelect = QImage(m_resolution, QImage::Format_ARGB32);
+  m_subSelect.fill(KMF::Tools::toColor("#000000FF").rgba());
+  m_temp = QImage(m_resolution, QImage::Format_ARGB32);
   geometry().left().set(0, KMFUnit::Absolute);
   geometry().top().set(0, KMFUnit::Absolute);
   geometry().width().set(resolution.width(), KMFUnit::Absolute);
   geometry().height().set(resolution.height(), KMFUnit::Absolute);
-#endif
 }
 
 bool KMFMenuPage::writeSpumuxXml(QDomDocument& doc)
@@ -644,8 +640,6 @@ bool KMFMenuPage::paint()
 
 bool KMFMenuPage::paintChildWidgets(QObject* parent)
 {
-#warning TODO
-#if 0
   foreach(QObject *obj, parent->children())
   {
     if(obj->inherits("KMFWidget"))
@@ -658,80 +652,59 @@ bool KMFMenuPage::paintChildWidgets(QObject* parent)
         QRect paintRC = widget->paintRect();
         QRect rc = widget->rect();
         QString type = widget->metaObject()->className();
-        QString color;
-        std::list<Magick::Drawable> drawList;
+        QColor color;
 
         if(TemplatePluginSettings::widgetDebugInfo())
-          kdDebug() << type << " (" << widget->objectName() << "): " << rc
+          kDebug() << type << " (" << widget->objectName() << "): " << rc
               << " - " << paintRC << endl;
 
         if(type == "KMFImage" &&
             TemplatePluginSettings::widgetDebugImage())
         {
-          color = "blue";
+          color.setNamedColor("blue");
         }
         else if(type == "KMFLabel" &&
                 TemplatePluginSettings::widgetDebugLabel())
         {
-          color = "red";
+          color.setNamedColor("red");
         }
         else if(type == "KMFFrame" &&
                 TemplatePluginSettings::widgetDebugFrame())
         {
-          color = "green";
+          color.setNamedColor("green");
         }
         else if(type == "KMFButton" &&
                 TemplatePluginSettings::widgetDebugButton())
         {
-          color = "yellow";
+          color.setNamedColor("yellow");
         }
         else if((type == "KMFVBox" || type == "KMFHBox")
                   && TemplatePluginSettings::widgetDebugBox())
         {
-          color = "white";
+          color.setNamedColor("white");
         }
         else if(type == "KMWidget" &&
                 TemplatePluginSettings::widgetDebugWidget())
         {
-          color = "gray";
+          color.setNamedColor("gray");
         }
-        if(!color.isEmpty())
+        if(color.isValid())
         {
-          drawList.push_back(Magick::DrawableFillColor(
-                  (const char*)color.local8Bit()));
-          drawList.push_back(Magick::DrawableStrokeColor(
-                  (const char*)color.local8Bit()));
-          drawList.push_back(Magick::DrawableStrokeWidth(1));
+          QPainter p(&m_background);
+
+          p.setPen(QPen(QBrush(color), 1));
           if(TemplatePluginSettings::withMargin())
           {
-            drawList.push_back(Magick::DrawableFillOpacity(0.1));
-            drawList.push_back(Magick::DrawableRectangle(rc.left(),
-                                                          rc.top(),
-                                                          rc.right(),
-                                                          rc.bottom()));
+            color.setAlphaF(0.1);
+            p.setBrush(QBrush(color));
+            p.drawRect(rc);
           }
-          drawList.push_back(Magick::DrawableFillOpacity(0.3));
-          drawList.push_back(Magick::DrawableRectangle(paintRC.left(),
-                                                        paintRC.top(),
-                                                        paintRC.right(),
-                                                        paintRC.bottom()));
-          m_background.draw(drawList);
+          color.setAlphaF(0.3);
+          p.setBrush(QBrush(color));
+          p.drawRect(rc);
         }
       }
-      try
-      {
-        widget->paint(this);
-      }
-      catch(Magick::Exception &e)
-      {
-        magickReport(e, QString("%1 : %2, %3, %4, %5")
-            .arg(widget->objectName())
-            .arg(widget->paintRect().x())
-            .arg(widget->paintRect().y())
-            .arg(widget->paintRect().width())
-            .arg(widget->paintRect().height()));
-        return false;
-      }
+      widget->paint(this);
       m_modifiedLayers |= widget->layer();
       if(paintChildWidgets(obj) == false)
         return false;
@@ -741,7 +714,6 @@ bool KMFMenuPage::paintChildWidgets(QObject* parent)
     }
   }
   return true;
-#endif
 }
 
 KMFButton* KMFMenuPage::button(const QString& name)

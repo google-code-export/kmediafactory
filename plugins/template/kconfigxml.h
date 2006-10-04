@@ -50,11 +50,11 @@ class KConfigXML : public KConfigSkeleton
   private:
     void parseKCFGXMLEntry(const QDomElement& element);
 
-    QList<QString> m_strings;
-    QList<bool>    m_bools;
-    QList<QColor>  m_colors;
-    QList<QFont>   m_fonts;
-    QList<qint32>  m_ints;
+    QList<QString*> m_strings;
+    QList<bool*>    m_bools;
+    QList<QColor*>  m_colors;
+    QList<QFont*>   m_fonts;
+    QList<qint32*>  m_ints;
 };
 
 #endif

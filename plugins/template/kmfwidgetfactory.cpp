@@ -105,7 +105,7 @@ KMFWidget* KMFWidgetFactory::create(const QDomElement& element,
     {
       if(item->group().startsWith("%"))
       {
-        QSttring className = result->metaObject()->className();
+        QString className = result->metaObject()->className();
         set = (item->group().remove('%') == className);
         if(set) kDebug() << k_funcinfo << className << endl;
       }
