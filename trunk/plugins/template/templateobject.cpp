@@ -100,7 +100,7 @@ TemplateObject::~TemplateObject()
     uiInterface()->removeTemplateObject(this);
 }
 
-void TemplateObject::actions(Q3PtrList<KAction>& actionList) const
+void TemplateObject::actions(QList<KAction*>& actionList) const
 {
   if(m_templateProperties)
     actionList.append(m_templateProperties);
@@ -232,7 +232,7 @@ void TemplateObject::slotProperties()
   // Give special treatment to widget named kcfg_language so we can show only
   // languages actually found from template
   QObject* w = page->findChild<QObject*>("kcfg_language");
-  if(w->metaObject()->className() == "QListView")
+  if(w && w->metaObject()->className() == "QListView")
   {
     QListView* lbox = static_cast<QListView*>(w);
     model.setLanguages(m_menu.templateStore()->languages());

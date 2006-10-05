@@ -26,9 +26,6 @@
 #include <kmediafactory/plugin.h>
 #include <kurl.h>
 #include <kaction.h>
-//Added by qt3to4:
-#include <Q3PtrList>
-#include <QPixmap>
 
 /**
 */
@@ -61,7 +58,7 @@ class TemplateObject : public KMF::TemplateObject
     virtual QPixmap pixmap() const;
     virtual QStringList menus();
     virtual QImage preview(const QString& menu = "");
-    virtual void actions(Q3PtrList<KAction>& actionList) const;
+    virtual void actions(QList<KAction*>&) const;
     KConfigXML& customProperties() { return m_customProperties; };
     QVariant property(const QString& widget, const QString& name) const;
     void setProperty(const QString& widget, const QString& name,

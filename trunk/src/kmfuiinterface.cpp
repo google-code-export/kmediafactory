@@ -52,38 +52,55 @@ KMFUiInterface::~KMFUiInterface()
 
 bool KMFUiInterface::addMediaObject(KMF::MediaObject *media) const
 {
-  kmfApp->project()->addItem(media);
+  KMFProject* project = kmfApp->project();
+
+  if(project)
+    project->addItem(media);
   return true;
 }
 
 bool KMFUiInterface::addTemplateObject(KMF::TemplateObject* tob)
 {
-  kDebug() << k_funcinfo << tob->title() << endl;
-  kmfApp->project()->templateObjects()->append(tob);
+  KMFProject* project = kmfApp->project();
+
+  if(project)
+    project->templateObjects()->append(tob);
   return true;
 }
 
 bool KMFUiInterface::addOutputObject(KMF::OutputObject* oob)
 {
-  kmfApp->project()->outputObjects()->append(oob);
+  KMFProject* project = kmfApp->project();
+
+  if(project)
+    project->outputObjects()->append(oob);
   return true;
 }
 
 bool KMFUiInterface::removeMediaObject(KMF::MediaObject *media) const
 {
-  kmfApp->project()->removeItem(media);
+  KMFProject* project = kmfApp->project();
+
+  if(project)
+    project->removeItem(media);
   return true;
 }
 
 bool KMFUiInterface::removeTemplateObject(KMF::TemplateObject* tob)
 {
-  kmfApp->project()->templateObjects()->removeAll(tob);
+  KMFProject* project = kmfApp->project();
+
+  if(project)
+    project->templateObjects()->removeAll(tob);
   return true;
 }
 
 bool KMFUiInterface::removeOutputObject(KMF::OutputObject* oob)
 {
-  kmfApp->project()->outputObjects()->removeAll(oob);
+  KMFProject* project = kmfApp->project();
+
+  if(project)
+    project->outputObjects()->removeAll(oob);
   return true;
 }
 
