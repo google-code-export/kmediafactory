@@ -32,8 +32,7 @@ NewStuffObject::NewStuffObject(QObject* parent):
 {
   setObjectName("newstuff");
   setTitle(i18n("Get more..."));
-#warning TODO
-  //uiInterface()->addTemplateObject(this);
+  uiInterface()->addTemplateObject(this);
 }
 
 NewStuffObject::~NewStuffObject()

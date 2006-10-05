@@ -106,7 +106,6 @@ class KMFMenuPage : public KMFWidget
     bool writeSpumuxXml(QDomDocument& doc);
     bool writeSpumuxXml();
     bool runScript(QString scriptName, QString place = "menus");
-    bool saveImage(QImage& image, const QString& file);
     static int mjpegtoolsVersion();
     static int makeVersion(KProcIO& proc);
 };

@@ -126,8 +126,11 @@ void KMFWidget::paint(KMFMenuPage* page)
     c.setAlpha(0);
     temp.fill(c.rgba());
     paintWidget(temp, true);
+#warning TODO KImageEffect::blur crashes
+    /*
     if(m_shadow.type() == KMFShadow::Blur)
       temp = KImageEffect::blur(temp, m_shadow.radius(), m_shadow.sigma());
+    */
     QPainter p(&page->layer(Background));
     p.drawImage(QPoint(0, 0), temp);
   }

@@ -215,6 +215,8 @@ QPixmap TemplateObject::pixmap() const
 void TemplateObject::slotProperties()
 {
   KMFTranslator kmftr(kapp, *m_menu.templateStore());
+  LanguageListModel model;
+
   kapp->installTranslator(&kmftr);
   kDebug() << k_funcinfo << KGlobal::locale()->language() << endl;
   m_menu.setLanguage("ui", KGlobal::locale()->language());
@@ -229,15 +231,13 @@ void TemplateObject::slotProperties()
 
   // Give special treatment to widget named kcfg_language so we can show only
   // languages actually found from template
-#warning TODO
-#if 0
   QObject* w = page->findChild<QObject*>("kcfg_language");
-  if(w->metaObject()->className() == "KMFLanguageListBox")
+  if(w->metaObject()->className() == "QListView")
   {
-    KMFLanguageListBox* lbox = static_cast<KMFLanguageListBox*>(w);
-    lbox->filter(m_menu.templateStore()->languages());
+    QListView* lbox = static_cast<QListView*>(w);
+    model.setLanguages(m_menu.templateStore()->languages());
+    lbox->setModel(&model);
   }
-#endif
   /*
   kdDebug() << k_funcinfo << &m_customProperties << endl;
   KConfigSkeletonItem::List list = m_customProperties.items();
