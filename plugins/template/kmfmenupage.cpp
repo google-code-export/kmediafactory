@@ -485,8 +485,6 @@ bool KMFMenuPage::runScript(QString scriptName, QString place)
   }
 #endif
 
-  // TODO: This is for converting pnm to mpg. This should be done with ffmpeg
-  // but I don't know how or if ffmpeg can do menu mpegs for dvdauthor/spumux
   QFile file(m_prjIf->projectDir(place) +
              QString("%1.sh").arg(scriptName));
   QString videoNorm;

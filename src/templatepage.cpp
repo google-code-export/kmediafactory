@@ -133,7 +133,6 @@ void TemplatePage::updatePreview()
 
 void TemplatePage::contextMenuRequested(const QPoint &pos)
 {
-  kDebug() << k_funcinfo << endl;
   QModelIndex i = templates->indexAt(pos);
 
   if(i.row() < 0 || i.row() > kmfApp->project()->templateObjects()->count())
@@ -152,7 +151,7 @@ void TemplatePage::contextMenuRequested(const QPoint &pos)
   {
     QMenu* popup = static_cast<QMenu*>(w);
     if(popup->actions().count() > 0)
-      if(popup->exec(pos) != 0)
+      if(popup->exec(templates->viewport()->mapToGlobal(pos)) != 0)
         updatePreview();
   }
   factory->unplugActionList(mainWindow, "template_actionlist");
@@ -160,6 +159,7 @@ void TemplatePage::contextMenuRequested(const QPoint &pos)
 
 void TemplatePage::imageContextMenuRequested(const QPoint& pos)
 {
+  kDebug() << k_funcinfo << endl;
   QMenu popup;
   int i = 0;
 
