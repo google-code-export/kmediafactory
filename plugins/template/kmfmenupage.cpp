@@ -276,21 +276,18 @@ void KMFMenuPage::checkDummyVideo()
 
   if(!fi.exists())
   {
-#warning TODO
-#if 0
     QImage temp;
     QString size;
+
     if(m_prjIf->type() == "DVD-PAL")
-      temp.size("720x576");
+      temp = QImage(720, 576, QImage::Format_RGB32);
     else
-      temp.size("720x480");
-    temp.read("xc:#00000000");
-    temp.depth(8);
-    temp.type(Magick::TrueColorType);
-    saveImage(temp, m_prjIf->projectDir("media") + "dummy.pnm");
+      temp = QImage(720, 480, QImage::Format_RGB32);
+    temp.fill(QColor("black").rgba());
+    // PNM P6 256
+    temp.save(m_prjIf->projectDir("media") + "dummy.pnm", "PPM");
     m_sound = "";
     runScript("dummy", "media");
-#endif
   }
 }
 
@@ -331,11 +328,6 @@ void KMFMenuPage::writeDvdAuthorXmlNoMenu(QDomElement& element)
   element.appendChild(pgc);
 }
 
-bool KMFMenuPage::saveImage(QImage& image, const QString& file)
-{
-  return image.save(file);
-}
-
 bool KMFMenuPage::saveImages()
 {
   QString file;
@@ -344,42 +336,25 @@ bool KMFMenuPage::saveImages()
   // Save subpicture files
   if(m_modifiedLayers & Sub)
   {
-    //m_sub.quantizeColorSpace(Magick::TransparentColorspace);
-    //m_sub.quantizeDither(true);
-    //m_sub.quantizeColors(4);
-    //m_sub.quantize();
     file = menus + QString("%1_sub.png").arg(objectName());
-    saveImage(m_sub, file);
+    m_sub.save(file);
   }
 
   if(m_modifiedLayers & Highlight)
   {
-    //m_subHighlight.quantizeColorSpace(Magick::TransparentColorspace);
-    //m_subHighlight.quantizeDither(true);
-    //m_subHighlight.quantizeColors(4);
-    //m_subHighlight.quantize();
     file = menus + QString("%1_highlight.png").arg(objectName());
-    saveImage(m_subHighlight, file);
+    m_subHighlight.save(file);
   }
 
   if(m_modifiedLayers & Select)
   {
-    //m_subSelect.quantizeColorSpace(Magick::TransparentColorspace);
-    //m_subSelect.quantizeDither(true);
-    //m_subSelect.quantizeColors(4);
-    //m_subSelect.quantize();
     file = menus + QString("%1_select.png").arg(objectName());
-    saveImage(m_subSelect, file);
+    m_subSelect.save(file);
   }
 
-#warning TODO
-#if 0
   file = menus + QString("%1.pnm").arg(objectName());
-  // 8 bits per channle for ppmtoy4m
-  m_background.depth(8);
-  m_background.type(Magick::TrueColorType);
-#endif
-  return saveImage(m_background, file);
+  // PNM P6 256
+  return m_background.save(file, "PPM");
 }
 
 bool KMFMenuPage::writeSpumuxXml()
@@ -453,7 +428,7 @@ bool KMFMenuPage::runScript(QString scriptName, QString place)
   QString menuSound = "silence.mp2";
   KMF::Time seconds = 1.0;
 
-#warning TODO
+#warning TODO file format conversion
 #if 0
   if(!m_sound.isEmpty())
   {

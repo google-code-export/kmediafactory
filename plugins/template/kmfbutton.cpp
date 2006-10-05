@@ -218,13 +218,10 @@ KMFButton* KMFButton::parseDirection(const QString& dir)
 
 void KMFButton::parseDirections()
 {
-#warning TODO
-#if 0
   setUp(parseDirection(direction(Up)));
   setLeft(parseDirection(direction(Left)));
   setDown(parseDirection(direction(Down)));
   setRight(parseDirection(direction(Right)));
-#endif
 }
 
 #include "kmfbutton.moc"

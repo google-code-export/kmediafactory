@@ -71,7 +71,7 @@ class KMFButton : public KMFWidget
     void setLeft(KMFButton* left) { m_buttons[Left] = left; };
     KMFButton* right() { return m_buttons[Right]; };
     void setRight(KMFButton* right) { m_buttons[Right] = right; };
-    const QString& direction(Qt::Orientation dir) { return m_directions[dir]; };
+    const QString& direction(Direction dir) { return m_directions[dir]; };
 
     KMFJump jump() { return m_jump; };
     void setJump(KMFJump jump) { m_jump = jump; };
