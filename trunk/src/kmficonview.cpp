@@ -26,6 +26,7 @@ void KMFItemDelegate::paint(QPainter* painter,
                             const QStyleOptionViewItem& option,
                             const QModelIndex& index) const
 {
+  painter->save();
   if(option.state & QStyle::State_Selected)
   {
     QRect rc = option.rect;
@@ -39,6 +40,7 @@ void KMFItemDelegate::paint(QPainter* painter,
   op.state = QStyle::State_Enabled;
   painter->translate(MARGIN, MARGIN);
   QItemDelegate::paint(painter, op, index);
+  painter->restore();
 }
 
 QSize KMFItemDelegate::sizeHint(const QStyleOptionViewItem& option,

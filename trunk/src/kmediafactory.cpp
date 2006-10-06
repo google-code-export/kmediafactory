@@ -286,7 +286,8 @@ void KMediaFactory::initGUI()
 void KMediaFactory::resetGUI()
 {
   templatePage->templatePreview->clear();
-  outputPage->progressListView->clear();
+#warning TODO: delete KMFProgressItems
+  //outputPage->progressListView->clear();
   outputPage->progressBar->reset();
   outputPage->showLogPushBtn->setEnabled(false);
   m_janus->setCurrentPage(m_mediaPageItem);

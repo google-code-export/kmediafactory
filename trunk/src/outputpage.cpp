@@ -22,7 +22,6 @@
 #include "kmediafactory.h"
 #include "kmfapplication.h"
 #include "kmfprogresslistview.h"
-#include "kmfprogressitem.h"
 #include "kmfuiinterface.h"
 #include "kmftoolbutton.h"
 #include "logview.h"
@@ -143,7 +142,8 @@ void OutputPage::start()
   kmfApp->uiInterface()->setStopped(false);
   progressBar->setRange(0, kmfApp->project()->timeEstimate());
   progressBar->setValue(0);
-  progressListView->clear();
+#warning TODO
+  //progressListView->clear();
   kmfApp->logger().start();
   if(kmfApp->project()->make(m_type) == false)
     if(!kmfApp->project()->error().isEmpty())

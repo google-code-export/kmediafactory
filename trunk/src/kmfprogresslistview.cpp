@@ -18,10 +18,9 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 #include "kmfprogresslistview.h"
-#include "kmfprogressitem.h"
 #include <kdebug.h>
-#include <QResizeEvent>
-#include <QPixmap>
+
+#if 0
 
 KMFProgressListView::KMFProgressListView(QWidget *parent)
   : QListWidget(parent)
@@ -80,3 +79,5 @@ void KMFProgressListView::setProgress(int progress)
   repaintItem(lastItem());
   */
 }
+
+#endif
