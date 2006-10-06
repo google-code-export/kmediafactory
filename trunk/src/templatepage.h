@@ -40,7 +40,8 @@ class TemplatePage : public QWidget, public Ui::TemplatePage
     void loadingFinished();
 
   public slots:
-    void currentChanged(const QModelIndex& index);
+    void currentChanged(const QModelIndex& index,
+                        const QModelIndex& previous);
     void currentPageChanged(KPageWidgetItem*, KPageWidgetItem*);
     void updatePreview();
     void contextMenuRequested(const QPoint &pos);

@@ -39,8 +39,6 @@ TemplatePage::TemplatePage(QWidget *parent) :
   QWidget(parent), m_menu(0), m_settingPrevious(false)
 {
   setupUi(this);
-  connect(templates, SIGNAL(activated(const QModelIndex&)),
-          this, SLOT(currentChanged(const QModelIndex&)));
   connect(templates, SIGNAL(customContextMenuRequested(const QPoint&)),
           this, SLOT(contextMenuRequested(const QPoint&)));
   connect(templatePreview,
@@ -57,6 +55,9 @@ void TemplatePage::projectInit()
   QList<KMF::TemplateObject*>* tobs = kmfApp->project()->templateObjects();
   m_model.setData(tobs);
   templates->setModel(&m_model);
+  connect(templates->selectionModel(),
+          SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
+          this, SLOT(currentChanged(const QModelIndex&, const QModelIndex&)));
 }
 
 void TemplatePage::templatesModified()
@@ -64,8 +65,9 @@ void TemplatePage::templatesModified()
   KMF::Tools::updateView(templates);
 }
 
-void TemplatePage::currentChanged(const QModelIndex& index)
+void TemplatePage::currentChanged(const QModelIndex& index, const QModelIndex&)
 {
+  kDebug() << k_funcinfo << endl;
   if(kmfApp->project())
   {
     KMF::TemplateObject* ob =
@@ -159,7 +161,6 @@ void TemplatePage::contextMenuRequested(const QPoint &pos)
 
 void TemplatePage::imageContextMenuRequested(const QPoint& pos)
 {
-  kDebug() << k_funcinfo << endl;
   QMenu popup;
   int i = 0;
 
@@ -172,10 +173,12 @@ void TemplatePage::imageContextMenuRequested(const QPoint& pos)
       it != m_menus.end(); ++it, ++i)
   {
     action = new QAction(*it, this);
+    action->setCheckable(true);
+    action->setData(i);
+    if(i == m_menu)
+      action->setChecked(true);
     popup.addAction(action);
   }
-#warning TODO
-  //popup.setItemChecked(m_menu, true);
   if((action = popup.exec(pos)) != 0)
   {
     if(action == saveAction)
@@ -193,8 +196,7 @@ void TemplatePage::imageContextMenuRequested(const QPoint& pos)
     }
     else
     {
-#warning TODO
-      m_menu = 0;
+      m_menu = action->data().toInt();
       previewCheckBox->setChecked(true);
       updatePreview();
     }
@@ -208,6 +210,7 @@ void TemplatePage::previewClicked()
 
 void TemplatePage::loadingFinished()
 {
+#warning TODO ???
   /*
   Q3IconViewItem* item = templates->lastItem();
 
