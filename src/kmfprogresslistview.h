@@ -20,27 +20,22 @@
 #ifndef KMFPROGRESSLISTVIEW_H
 #define KMFPROGRESSLISTVIEW_H
 
-#include <QListWidget>
-#include <QPixmap>
-#include <QResizeEvent>
+#include <QProgressBar>
+#include <QAbstractItemDelegate>
 
-/**
-@author Petri Damsten
-*/
-class KMFProgressListView : public QListWidget
+class KMFProgressItem
 {
   public:
-    KMFProgressListView(QWidget *parent = 0);
-    ~KMFProgressListView();
+    QPixmap pixmap;
+    QString text;
+    QProgressBar progressBar;
+};
 
-    void insertItem(const QPixmap &pixmap, const QString &text);
+class KMFProgressItemDelegate : public QAbstractItemDelegate
+{
+    Q_OBJECT
+  public:
 
-  public slots:
-    void setTotalSteps(int totalSteps);
-    void setProgress(int progress);
-
-  protected:
-    virtual void viewportResizeEvent(QResizeEvent* e);
 };
 
 #endif

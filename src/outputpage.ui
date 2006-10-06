@@ -82,7 +82,7 @@
     </widget>
    </item>
    <item>
-    <widget class="KMFProgressListView" native="1" name="progressListView" >
+    <widget class="QListView" native="1" name="progressListView" >
      <property name="sizePolicy" >
       <sizepolicy>
        <hsizetype>7</hsizetype>
@@ -204,11 +204,6 @@
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
  <customwidgets>
   <customwidget>
-   <class>KMFProgressListView</class>
-   <extends>QWidget</extends>
-   <header>kmfprogresslistview.h</header>
-  </customwidget>
-  <customwidget>
    <class>KMFToolButton</class>
    <extends>QWidget</extends>
    <header>kmftoolbutton.h</header>
@@ -221,7 +216,6 @@
   <tabstop>stopPushBtn</tabstop>
  </tabstops>
  <includes>
-  <include location="local" >kmfprogresslistview.h</include>
   <include location="local" >kpushbutton.h</include>
   <include location="local" >kmftoolbutton.h</include>
  </includes>

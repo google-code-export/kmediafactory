@@ -20,7 +20,6 @@
 #include "kmfuiinterface.h"
 #include "kmfapplication.h"
 #include "kmfproject.h"
-#include "kmfprogressitem.h"
 #include "kmfprogresslistview.h"
 #include "kmediafactory.h"
 #include "mediapage.h"
@@ -35,7 +34,7 @@
 #include <QToolButton>
 #include <QEventLoop>
 #include <QPixmap>
-#include <Q3Frame>
+#include <QStandardItemModel>
 
 #if RECORD_TIMINGS
   StopWatch stopWatch;
@@ -139,8 +138,14 @@ bool KMFUiInterface::message(KMF::MsgType type, const QString& msg)
       dlgType = KMessageBox::Information;
       break;
   }
-  KMFProgressListView* lv = mainWindow->outputPage->progressListView;
-  lv->insertItem(pixmap, msg);
+  QListView* lv = mainWindow->outputPage->progressListView;
+  QStandardItem* item = new QStandardItem;
+#warning TODO Don't use pointer
+  KMFProgressItem* data = new KMFProgressItem;
+  data->pixmap = pixmap;
+  data->text = msg;
+  item->setData(data);
+  static_cast<QStandardItemModel*>(lv->model())->insertRow(0, item);
   kmfApp->logger().message(msg, color);
   if(m_useMessageBox)
     KMessageBox::messageBox(mainWindow, dlgType, msg);
@@ -179,22 +184,30 @@ bool KMFUiInterface::progress(int advance)
 
 bool KMFUiInterface::setItemTotalSteps(int totalSteps)
 {
+#warning TODO
+  /*
   KMediaFactory* mainWindow =
       kmfApp->mainWindow();
-  KMFProgressListView* lv = mainWindow->outputPage->progressListView;
+  QListView* lv = mainWindow->outputPage->progressListView;
+  QStandardItemModel* model = static_cast<QStandardItemModel*>(lv->model());
+  model->
   lv->setTotalSteps(totalSteps);
   kmfApp->processEvents(QEventLoop::AllEvents);
   return m_stopped;
+  */
 }
 
 bool KMFUiInterface::setItemProgress(int progress)
 {
+#warning TODO
+  /*
   KMediaFactory* mainWindow =
       kmfApp->mainWindow();
   KMFProgressListView* lv = mainWindow->outputPage->progressListView;
   lv->setProgress(progress);
   kmfApp->processEvents(QEventLoop::AllEvents);
   return m_stopped;
+  */
 }
 
 #include "kmfuiinterface.moc"
