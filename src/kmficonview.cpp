@@ -18,112 +18,34 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 #include "kmficonview.h"
-#include <kdebug.h>
-#include <klocale.h>
 #include <QPainter>
-#include <QList>
-
-#if 0
 
 #define MARGIN 3
 
-void KMFIconViewItem::paintItem(QPainter* p, const QColorGroup& cg)
+void KMFItemDelegate::paint(QPainter* painter,
+                            const QStyleOptionViewItem& option,
+                            const QModelIndex& index) const
 {
-  if(iconView()->currentItem() == this)
+  if(option.state & QStyle::State_Selected)
   {
-    QRect rc = rect();
+    QRect rc = option.rect;
 
-    p->setBrush(QBrush(cg.highlight()));
-    p->setPen(Qt::NoPen);
-    p->drawRoundRect(rc, 20, 20);
+    painter->setBrush(option.palette.brush(QPalette::Highlight));
+    painter->setPen(Qt::NoPen);
+    painter->setRenderHint(QPainter::Antialiasing);
+    painter->drawRoundRect(rc, 30, 30);
   }
-  Q3IconViewItem::paintItem(p, cg);
+  QStyleOptionViewItem op = option;
+  op.state = QStyle::State_Enabled;
+  painter->translate(MARGIN, MARGIN);
+  QItemDelegate::paint(painter, op, index);
 }
 
-void KMFIconViewItem::paintFocus(QPainter*, const QColorGroup&)
+QSize KMFItemDelegate::sizeHint(const QStyleOptionViewItem& option,
+                                const QModelIndex& index) const
 {
-  // No focus rectangle
+  QSize res = QItemDelegate::sizeHint(option, index);
+  return res + QSize(2*MARGIN, 2*MARGIN);
 }
 
-void KMFIconViewItem::calcRect(const QString& text_)
-{
-  Q3IconViewItem::calcRect(text_);
-  QRect itemIconRect = pixmapRect();
-  QRect itemTextRect = textRect();
-  QRect itemRect = rect();
-
-  itemRect.adjust(0, 0, 2*MARGIN, 2*MARGIN);
-  itemIconRect.translate(MARGIN, MARGIN);
-  itemTextRect.translate(MARGIN, MARGIN);
-
-  setPixmapRect(itemIconRect);
-  setTextRect(itemTextRect);
-  setItemRect(itemRect);
-}
-
-KMFIconView::KMFIconView(QWidget *parent, const char *name) :
-    Q3IconView(parent, name), m_after(0)
-{
-  setSelectionMode(Q3IconView::NoSelection);
-}
-
-KMFIconView::~KMFIconView()
-{
-}
-
-void KMFIconView::init(const QString&)
-{
-  clear();
-}
-
-KMFIconViewItem* KMFIconView::newItem(KMF::Object *ob)
-{
-  KMFIconViewItem* item;
-  if(m_after)
-    item = new KMFIconViewItem(this, m_after, ob->title(), ob->pixmap());
-  else
-    item = new KMFIconViewItem(this, ob->title(), ob->pixmap());
-  m_obs.insert(ob, item);
-  item->setOb(ob);
-  if(count() == 1)
-    setCurrentItem(ob);
-  return item;
-}
-
-void KMFIconView::itemRemoved(KMF::Object *ob)
-{
-  const Q3IconViewItem *item = m_obs.find(ob).value();
-  if(item == m_after)
-    m_after = 0;
-  delete item;
-  m_obs.remove(ob);
-}
-
-void KMFIconView::setCurrentItem(KMF::Object* ob)
-{
-  if(ob)
-  {
-    Q3IconViewItem *item = m_obs[ob];
-    if(item)
-      Q3IconView::setCurrentItem(item);
-  }
-}
-
-void KMFIconView::setSelected(KMF::Object* ob, bool s, bool cb)
-{
-  if(ob)
-  {
-    Q3IconViewItem *item = m_obs.find(ob).value();
-    if(item)
-      Q3IconView::setSelected(item, s, cb);
-  }
-}
-
-void KMFIconView::clear()
-{
-  m_after = 0;
-  Q3IconView::clear();
-  m_obs.clear();
-}
-
-#endif
+#include "kmficonview.moc"

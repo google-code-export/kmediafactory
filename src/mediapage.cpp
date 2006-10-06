@@ -36,6 +36,7 @@ MediaPage::MediaPage(QWidget *parent) :
   mediaButtons->setIconDimensions(K3Icon::SizeLarge);
   mediaButtons->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
   mediaButtons->setAllowedAreas(Qt::NoToolBarArea);
+  mediaFiles->setSpacing(20);
   //mediaButtons->setParent(0);
   //mediaButtons->setFrameStyle(Q3Frame::Panel | Q3Frame::Raised);
   //mediaButtons->setLineWidth(1);
@@ -56,6 +57,7 @@ void MediaPage::projectInit()
   QList<KMF::MediaObject*>* mobs = kmfApp->project()->mediaObjects();
   m_model.setData(mobs);
   mediaFiles->setModel(&m_model);
+  mediaFiles->setItemDelegate(&m_delegate);
 }
 
 void MediaPage::mediaModified()

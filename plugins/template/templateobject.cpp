@@ -251,8 +251,7 @@ void TemplateObject::slotProperties()
     // This didn't work in TemplatePlugin constructor so we do it here.
     // It should not be a problem to insert them more than once since
     // it's a QMap.
-    Q3SqlPropertyMap::defaultMap()->insert("KMFLanguageComboBox", "language");
-    Q3SqlPropertyMap::defaultMap()->insert("KMFLanguageListBox", "language");
+#warning TODO howto add custom widgets to KConfigDialog in KDE4
     Q3SqlPropertyMap::defaultMap()->insert("KMFFontChooser", "font");
     Q3SqlPropertyMap::defaultMap()->insert("KColorCombo", "color");
 

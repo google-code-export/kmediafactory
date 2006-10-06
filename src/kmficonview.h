@@ -24,6 +24,17 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <QAbstractListModel>
+#include <QItemDelegate>
+
+class KMFItemDelegate : public QItemDelegate
+{
+    Q_OBJECT
+  public:
+    virtual void paint(QPainter* painter, const QStyleOptionViewItem& option,
+                       const QModelIndex& index) const;
+    virtual QSize sizeHint(const QStyleOptionViewItem& option,
+                           const QModelIndex& index) const;
+};
 
 template <class T>
 class KMFObjectListModel : public QAbstractListModel

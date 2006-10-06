@@ -46,6 +46,7 @@ class MediaPage : public QWidget, public Ui::MediaPage
 
   private:
     KMFObjectListModel<KMF::MediaObject> m_model;
+    KMFItemDelegate m_delegate;
 };
 
 #endif
