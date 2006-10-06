@@ -212,6 +212,16 @@ void KMediaFactory::setupActions()
 
 void KMediaFactory::connectProject()
 {
+  kmfApp->project()->disconnect();
+
+  const KMF::PluginList list = kmfApp->plugins();
+  for(KMF::PluginList::ConstIterator obj = list.begin();
+      obj != list.end(); ++obj)
+  {
+    connect(kmfApp->project(), SIGNAL(preinit(const QString&)),
+            *obj, SLOT(init(const QString&)));
+  }
+
   connect(kmfApp->project(), SIGNAL(modified(const QString&, bool)),
           this, SLOT(setCaption(const QString&, bool)));
 
@@ -229,14 +239,6 @@ void KMediaFactory::connectProject()
           outputPage, SLOT(projectInit()));
   connect(kmfApp->project(), SIGNAL(outputsModified()),
           outputPage, SLOT(outputsModified()));
-
-  const KMF::PluginList list = kmfApp->plugins();
-  for(KMF::PluginList::ConstIterator obj = list.begin();
-      obj != list.end(); ++obj)
-  {
-    connect(kmfApp->project(), SIGNAL(init(const QString&)),
-            *obj, SLOT(init(const QString&)));
-  }
 }
 
 void KMediaFactory::itemDelete()
@@ -326,13 +328,7 @@ void KMediaFactory::load(const KUrl& url)
     kmfApp->newProject();
     connectProject();
     kmfApp->project()->open(url);
-    templatePage->templates->blockSignals(true);
-    // TODO: templatePage->templates->setCurrentItem(kmfApp->project()->templateObj());
-    templatePage->templates->blockSignals(false);
     templatePage->updatePreview();
-    outputPage->outputs->blockSignals(true);
-    // TODO: outputPage->outputs->setCurrentItem(kmfApp->project()->output());
-    outputPage->outputs->blockSignals(false);
     templatePage->loadingFinished();
   }
 }

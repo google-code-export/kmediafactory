@@ -58,6 +58,12 @@ void TemplatePage::projectInit()
   connect(templates->selectionModel(),
           SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
           this, SLOT(currentChanged(const QModelIndex&, const QModelIndex&)));
+  templates->blockSignals(true);
+  KMF::TemplateObject* obj = kmfApp->project()->templateObj();
+  QModelIndex i = m_model.index(obj);
+  kDebug() << k_funcinfo << obj << ", " << i.row() << endl;
+  templates->setCurrentIndex(i);
+  templates->blockSignals(false);
 }
 
 void TemplatePage::templatesModified()

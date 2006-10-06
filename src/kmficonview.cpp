@@ -44,6 +44,8 @@ void KMFItemDelegate::paint(QPainter* painter,
 QSize KMFItemDelegate::sizeHint(const QStyleOptionViewItem& option,
                                 const QModelIndex& index) const
 {
+  if(!index.isValid())
+    return QSize(0, 0);
   QSize res = QItemDelegate::sizeHint(option, index);
   return res + QSize(2*MARGIN, 2*MARGIN);
 }

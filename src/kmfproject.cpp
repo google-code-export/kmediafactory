@@ -126,8 +126,10 @@ void KMFProject::setType(const QString& type)
   if(type != m_type)
   {
     m_type = type;
-    emit init(type);
+    kDebug() << k_funcinfo << "Project Init" << endl;
+    emit preinit(m_type);
     m_list.clear();
+    emit init(type);
   }
 }
 
@@ -158,6 +160,8 @@ void KMFProject::setOutput(KMF::OutputObject* output)
 void KMFProject::init()
 {
   m_initializing = true;
+  kDebug() << k_funcinfo << "Project Init" << endl;
+  emit preinit(m_type);
   emit init(m_type);
   m_initializing = false;
   setDirty(KMF::ProjectInterface::DirtyAny, false);
@@ -204,6 +208,7 @@ void KMFProject::outputFromXML(const QDomElement& e)
 
 void KMFProject::fromXML(QString xml)
 {
+  emit preinit(m_type);
   QDomDocument doc("kmf_project");
   doc.setContent(xml);
   QDomElement element = doc.documentElement();
@@ -223,8 +228,6 @@ void KMFProject::fromXML(QString xml)
     QDateTime::fromString(element.attribute("last_mod_output"), Qt::ISODate);
   if(element.hasAttribute("last_subtype"))
     m_subType = element.attribute("last_subtype");
-
-  emit init(m_type);
 
   QDomNode n = element.firstChild();
   while(!n.isNull())
@@ -247,6 +250,8 @@ void KMFProject::fromXML(QString xml)
     }
     n = n.nextSibling();
   }
+  kDebug() << k_funcinfo << "Project Init" << endl;
+  emit init(m_type);
 }
 
 void KMFProject::saveObj(QDomDocument& doc, QDomElement& root,
@@ -493,13 +498,13 @@ QDateTime KMFProject::lastModified(KMF::ProjectInterface::DirtyType type) const
 {
   QDateTime d;
 
-  if(type & KMF::ProjectInterface::DirtyMedia &&
+  if((type & KMF::ProjectInterface::DirtyMedia) &&
      d < m_lastModified[ModTemplate])
     d = m_lastModified[ModMedia];
-  if(type & KMF::ProjectInterface::DirtyTemplate &&
+  if((type & KMF::ProjectInterface::DirtyTemplate) &&
      d < m_lastModified[ModTemplate])
     d = m_lastModified[ModTemplate];
-  if(type & KMF::ProjectInterface::DirtyOutput &&
+  if((type & KMF::ProjectInterface::DirtyOutput) &&
      d < m_lastModified[ModTemplate])
     d = m_lastModified[ModOutput];
   return d;
@@ -510,7 +515,8 @@ QMap<QString, QString> KMFProject::subTypes() const
   QMap<QString, QString> result;
 
   foreach(KMF::MediaObject* obj, m_list)
-    addMap(&result, obj->subTypes());
+    if(obj)
+      addMap(&result, obj->subTypes());
   if(m_template)
     addMap(&result, m_template->subTypes());
   if(m_output)

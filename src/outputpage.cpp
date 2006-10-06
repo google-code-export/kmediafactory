@@ -41,8 +41,6 @@ OutputPage::OutputPage(QWidget *parent) :
   QWidget(parent)
 {
   setupUi(this);
-  connect(outputs, SIGNAL(activated(const QModelIndex&)),
-          this, SLOT(currentChanged(const QModelIndex&)));
   connect(outputs, SIGNAL(customContextMenuRequested(const QPoint&)),
           this, SLOT(contextMenuRequested(const QPoint&)));
   connect(&m_startPopup, SIGNAL(triggered(QAction*)),
@@ -58,6 +56,12 @@ void OutputPage::projectInit()
   QList<KMF::OutputObject*>* oobs = kmfApp->project()->outputObjects();
   m_model.setData(oobs);
   outputs->setModel(&m_model);
+  connect(outputs->selectionModel(),
+          SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
+          this, SLOT(currentChanged(const QModelIndex&, const QModelIndex&)));
+  outputs->blockSignals(true);
+  outputs->setCurrentIndex(m_model.index(kmfApp->project()->output()));
+  outputs->blockSignals(false);
 }
 
 void OutputPage::outputsModified()
@@ -65,7 +69,7 @@ void OutputPage::outputsModified()
   KMF::Tools::updateView(outputs);
 }
 
-void OutputPage::currentChanged(const QModelIndex& index)
+void OutputPage::currentChanged(const QModelIndex& index, const QModelIndex&)
 {
   if(kmfApp->project())
   {

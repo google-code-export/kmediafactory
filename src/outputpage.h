@@ -43,7 +43,7 @@ class OutputPage : public QWidget, public Ui::OutputPage
     void projectInit();
 
   protected slots:
-    void currentChanged(const QModelIndex& index);
+    void currentChanged(const QModelIndex& index, const QModelIndex&);
     void contextMenuRequested(const QPoint &pos);
     void stop();
     void showLog();
