@@ -48,6 +48,12 @@ class KMFObjectListModel : public QAbstractListModel
       m_data = data;
     }
 
+    virtual QModelIndex index(T* d) const
+    {
+      int i = m_data->indexOf(d);
+      return QAbstractListModel::index(i);
+    }
+
     int rowCount(const QModelIndex&) const
     {
       if(m_data)
@@ -57,7 +63,8 @@ class KMFObjectListModel : public QAbstractListModel
 
     QVariant data(const QModelIndex &index, int role) const
     {
-      if (!m_data || !index.isValid() || index.row() >= rowCount(index))
+      if (!m_data || !index.isValid() ||
+           index.row() >= rowCount(index) || index.row() < 0)
         return QVariant();
 
       if (role == Qt::DisplayRole)

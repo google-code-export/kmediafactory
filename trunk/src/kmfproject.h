@@ -76,6 +76,7 @@ class KMFProject : public QObject
     QList<KMF::OutputObject*>* outputObjects() { return &m_outputs; };
 
   signals:
+    void preinit(const QString&);
     void init(const QString&);
     void modified(const QString& file, bool modified);
     void mediaModified();

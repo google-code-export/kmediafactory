@@ -120,7 +120,7 @@ class XineLib
         result.audioStreamCount = xine_get_stream_info(m_stream,
             XINE_STREAM_INFO_HAS_AUDIO);
       result.filename = file;
-
+      /*
       kDebug() << k_funcinfo << "width: " << result.width << endl;
       kDebug() << k_funcinfo << "height: " << result.height << endl;
       kDebug() << k_funcinfo << "fps: " << result.fps << endl;
@@ -131,6 +131,7 @@ class XineLib
       kDebug() << k_funcinfo << "audio streams: "
           << result.audioStreamCount << endl;
       kDebug() << k_funcinfo << "file: " << result.filename << endl;
+      */
       return result;
     };
 
