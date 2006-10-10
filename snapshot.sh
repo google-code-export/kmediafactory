@@ -49,8 +49,8 @@ function make_ebuild()
   cd $PORTAGE_KMF
 
   rm $PORTAGE_KMF/Manifest -f
-  svn rm $PORTAGE_KMF/kmediafactory-200*.ebuild
-  svn rm $PORTAGE_KMF/files/digest-kmediafactory-200*
+  rm $PORTAGE_KMF/kmediafactory-200*.ebuild
+  rm $PORTAGE_KMF/files/digest-kmediafactory-200*
 
   cp $KMF/distros/gentoo/media-video/kmediafactory/$EBUILD_BASE $PORTAGE_KMF
 
@@ -61,9 +61,7 @@ function make_ebuild()
   fi
 
   ebuild $EBUILD digest
-
-  cd $PORTAGE_OVERLAY
-  ./commit.sh --nopause "$EBUILD"
+  cp $PORTAGE_KMF/$EBUILD $LOCALKMFDIR
 }
 
 function fix_versions()
@@ -151,7 +149,7 @@ function make_html()
   echo "<ul>" >> $HTML
   echo "<li>Source package: <a href=\"$BZ2FILE\">$BZ2FILE</a> "\
       "<a href=\"$BZ2FILE.md5\">MD5</a>.</li>" >> $HTML
-  echo "<li>Gentoo ebuild: <a href=\"#overlay\">See overlay</a> " >> $HTML
+  echo "<li>Gentoo ebuild: <a href=\"$EBUILD\">$EBUILD</a> " >> $HTML
   echo "</ul>" >> $HTML
 }
 
@@ -160,7 +158,7 @@ function upload()
   echo "Uploading files to web..."
 
   echo -e "put $DESTINATION.md5\nput $DESTINATION\nput " \
-      "$LOCALKMFDIR/snapshot.html" | sftp -b - $WEB
+      "$LOCALKMFDIR/snapshot.html\nput $LOCALKMFDIR/$EBUILD" | sftp -b - $WEB
 }
 
 function mail_to_news()
@@ -186,7 +184,7 @@ read ans
 if [ "$ans" == y -o "$ans" == Y ]; then
   tag_svn
   make_html
-  upload
   make_ebuild
-  mail_to_news
+  upload
+  #mail_to_news
 fi
