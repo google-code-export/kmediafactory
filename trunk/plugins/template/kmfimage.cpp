@@ -97,7 +97,6 @@ QImage KMFImage::mask(const QImage& img, const QRgb& maskColor, bool oneBitMask)
   QImage result(img.width(), img.height(), QImage::Format_ARGB32);
   double alphaScale = qAlpha(maskColor) / (256.0 * 256.0);
 
-  result.fill(maskColor);
   for (int y = 0; y < img.height(); y++)
   {
     for (int x = 0; x < img.width(); x++)
@@ -106,13 +105,14 @@ QImage KMFImage::mask(const QImage& img, const QRgb& maskColor, bool oneBitMask)
       if(oneBitMask)
       {
         if(qAlpha(pix) > 128)
-          pix = qRgba(qRed(pix), qGreen(pix), qBlue(pix), 255);
+          pix = qRgba(qRed(maskColor), qGreen(maskColor),
+                      qBlue(maskColor), 255);
         else
-          pix = qRgba(qRed(pix), qGreen(pix), qBlue(pix), 0);
+          pix = qRgba(qRed(maskColor), qGreen(maskColor), qBlue(maskColor), 0);
       }
       else
       {
-        pix = qRgba(qRed(pix), qGreen(pix), qBlue(pix),
+        pix = qRgba(qRed(maskColor), qGreen(maskColor), qBlue(maskColor),
                     (int)(alphaScale * qAlpha(pix)));
       }
       result.setPixel(x, y, pix);

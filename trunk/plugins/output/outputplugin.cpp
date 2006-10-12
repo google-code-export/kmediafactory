@@ -49,11 +49,7 @@ static const KAboutData about("kmediafactory_output",
                               "petri.damsten@iki.fi");
 
 typedef KGenericFactory<OutputPlugin> outputFactory;
-#if KDE_IS_VERSION(3, 3, 0)
 K_EXPORT_COMPONENT_FACTORY(kmediafactory_output, outputFactory(&about))
-#else
-K_EXPORT_COMPONENT_FACTORY(kmediafactory_output, outputFactory(about.appName()))
-#endif
 
 OutputPlugin::OutputPlugin(QObject *parent, const QStringList&) :
   KMF::Plugin(parent), addPreviewDVD(0),
@@ -79,9 +75,9 @@ OutputPlugin::OutputPlugin(QObject *parent, const QStringList&) :
   {
     addPreviewDVD =
         new KAction(i18n("Preview DVD"),actionCollection(), "preview_dvd");
-    dvdInfo->setShortcut(Qt::CTRL + Qt::Key_P);
-    dvdInfo->setIcon(KIcon("viewmag"));
-    connect(dvdInfo, SIGNAL(triggered()),
+    addPreviewDVD->setShortcut(Qt::CTRL + Qt::Key_P);
+    addPreviewDVD->setIcon(KIcon("viewmag"));
+    connect(addPreviewDVD, SIGNAL(triggered()),
             this, SLOT(slotPreviewDVD()));
   }
   if(!m_xine.isEmpty())

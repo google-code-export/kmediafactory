@@ -30,6 +30,7 @@
 #include <QDomElement>
 #include <QAbstractItemView>
 #include <QItemSelection>
+#include <QStringListModel>
 #include <sys/stat.h>
 #include <errno.h>
 #include <fontconfig/fontconfig.h>
@@ -433,6 +434,18 @@ void KMF::Tools::updateView(QAbstractItemView* v,
     v->selectionModel()->select(s, QItemSelectionModel::SelectCurrent);
   else
     v->selectionModel()->select(i, QItemSelectionModel::SelectCurrent);
+}
+
+void KMF::Tools::appendString(QStringListModel* model,
+                              const QString& string)
+{
+  int rows = model->rowCount();
+
+  if(model->insertRows(rows, 1))
+  {
+    QModelIndex item = model->index(rows, 0);
+    model->setData(item, string, Qt::EditRole);
+  }
 }
 
 // This function is from qcolor.cpp

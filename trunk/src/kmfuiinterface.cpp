@@ -25,6 +25,7 @@
 #include "mediapage.h"
 #include "templatepage.h"
 #include "kmficonview.h"
+#include "kmftools.h"
 #include "outputpage.h"
 #include <kprogressbar.h>
 #include <kdebug.h>
@@ -35,6 +36,8 @@
 #include <QEventLoop>
 #include <QPixmap>
 #include <QStandardItemModel>
+#include <QStringListModel>
+#include <QTextStream>
 
 #if RECORD_TIMINGS
   StopWatch stopWatch;
@@ -106,7 +109,7 @@ bool KMFUiInterface::removeOutputObject(KMF::OutputObject* oob)
 bool KMFUiInterface::message(KMF::MsgType type, const QString& msg)
 {
   KMediaFactory* mainWindow = kmfApp->mainWindow();
-  QPixmap pixmap;
+  QString pixmap;
   QColor color;
   KMessageBox::DialogType dlgType = KMessageBox::Information;
 
@@ -118,38 +121,33 @@ bool KMFUiInterface::message(KMF::MsgType type, const QString& msg)
   {
     case KMF::None:
     case KMF::Info:
-      pixmap = KGlobal::iconLoader()->loadIcon("info", K3Icon::Small);
+      pixmap = "info";
       color = QColor("darkGreen");
       dlgType = KMessageBox::Information;
       break;
     case KMF::Warning:
-      pixmap = KGlobal::iconLoader()->loadIcon("flag", K3Icon::Small);
+      pixmap = "flag";
       color = QColor(211, 183, 98);
       dlgType = KMessageBox::Sorry;
       break;
     case KMF::Error:
-      pixmap = KGlobal::iconLoader()->loadIcon("cancel", K3Icon::Small);
+      pixmap = "cancel";
       color = QColor("red");
       dlgType = KMessageBox::Error;
       break;
     case KMF::OK:
-      pixmap = KGlobal::iconLoader()->loadIcon("ok", K3Icon::Small);
+      pixmap = "ok";
       color = QColor("darkGreen");
       dlgType = KMessageBox::Information;
       break;
   }
+  QString item;
   QListView* lv = mainWindow->outputPage->progressListView;
-  QStandardItem* item = new QStandardItem;
-#warning TODO Don't use pointer
-  KMFProgressItem* data = new KMFProgressItem;
-  data->pixmap = pixmap;
-  data->text = msg;
-  item->setData(data);
-  static_cast<QStandardItemModel*>(lv->model())->insertRow(0, item);
+  QTextStream(&item) << pixmap << msg << 0 << 0;
+  KMF::Tools::appendString(static_cast<QStringListModel*>(lv->model()), item);
   kmfApp->logger().message(msg, color);
   if(m_useMessageBox)
     KMessageBox::messageBox(mainWindow, dlgType, msg);
-  //mainWindow->outputPage->progressListbox->repaint();
   kmfApp->processEvents(QEventLoop::AllEvents);
   return m_stopped;
 }

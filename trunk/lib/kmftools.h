@@ -30,6 +30,7 @@ class QStringList;
 class QFont;
 class QDomElement;
 class QAbstractItemView;
+class QStringListModel;
 
 namespace KMF
 {
@@ -76,6 +77,8 @@ namespace KMF
                              const QModelIndex& i = QModelIndex());
       static int hex2int(QChar hexchar);
       static QColor toColor(const QString& s);
+      static void appendString(QStringListModel* model,
+                               const QString& string);
   };
 }
 

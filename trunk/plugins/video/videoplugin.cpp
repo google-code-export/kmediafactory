@@ -47,11 +47,8 @@ static const KAboutData about("kmediafactory_video",
                               "petri.damsten@iki.fi");
 
 typedef KGenericFactory<VideoPlugin> videoFactory;
-#if KDE_IS_VERSION(3, 3, 0)
-K_EXPORT_COMPONENT_FACTORY(kmediafactory_video, videoFactory(&about))
-#else
-K_EXPORT_COMPONENT_FACTORY(kmediafactory_video, videoFactory(about.appName()))
-#endif
+K_EXPORT_COMPONENT_FACTORY(kmediafactory_video, videoFactory(&about));
+//K_EXPORT_PLUGIN(VideoPlugin);
 
 class VideoConfig : public QWidget, public Ui::VideoConfig
 {
