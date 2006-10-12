@@ -82,7 +82,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QListView" native="1" name="progressListView" >
+    <widget class="QListView" name="progressListView" >
      <property name="sizePolicy" >
       <sizepolicy>
        <hsizetype>7</hsizetype>
@@ -179,7 +179,7 @@
       </widget>
      </item>
      <item>
-      <widget class="KMFToolButton" native="1" name="startButton" >
+      <widget class="KMFToolButton" name="startButton" >
        <property name="sizePolicy" >
         <sizepolicy>
          <hsizetype>0</hsizetype>
@@ -194,6 +194,9 @@
          <height>0</height>
         </size>
        </property>
+       <property name="text" >
+        <string>&amp;Start</string>
+       </property>
       </widget>
      </item>
     </layout>
@@ -205,7 +208,7 @@
  <customwidgets>
   <customwidget>
    <class>KMFToolButton</class>
-   <extends>QWidget</extends>
+   <extends>QToolButton</extends>
    <header>kmftoolbutton.h</header>
    <container>1</container>
   </customwidget>

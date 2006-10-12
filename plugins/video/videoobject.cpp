@@ -559,7 +559,7 @@ bool VideoObject::convertSubtitles(const QDVD::Subtitle& subtitle)
       fiSub.lastModified() > fio.lastModified())
     {
       uiInterface()->message(KMF::Info,
-          i18n("   Adding subtitles to %1").arg(fii.fileName()));
+          i18n("   Adding subtitles to %1", fii.fileName()));
 
       KShellProcess m_spumux("bash");
       //kdDebug() << k_funcinfo << fiXml.filePath() << endl;
@@ -595,8 +595,7 @@ bool VideoObject::convertSubtitles(const QDVD::Subtitle& subtitle)
 
 bool VideoObject::make(QString type)
 {
-  uiInterface()->message(KMF::Info,
-      i18n("Preparing file(s) for %1").arg(title()));
+  uiInterface()->message(KMF::Info, i18n("Preparing file(s) for %1", title()));
   QString fileName;
 
   if(type != "dummy")

@@ -35,6 +35,7 @@
 #include <kpagedialog.h>
 #include <QToolButton>
 #include <QTimer>
+#include <QStringListModel>
 
 OutputPage::OutputPage(QWidget *parent) :
   QWidget(parent)
@@ -44,6 +45,7 @@ OutputPage::OutputPage(QWidget *parent) :
           this, SLOT(contextMenuRequested(const QPoint&)));
   connect(&m_startPopup, SIGNAL(triggered(QAction*)),
            this, SLOT(start(QAction*)));
+  progressListView->setModel(new QStringListModel(progressListView));
 }
 
 OutputPage::~OutputPage()
@@ -137,13 +139,12 @@ void OutputPage::start()
   showLogPushBtn->setEnabled(false);
   stopPushBtn->setEnabled(true);
   startButton->setEnabled(false);
-  //kmfApp->setOverrideCursor(KCursor::waitCursor());
   kmfApp->uiInterface()->setUseMessageBox(false);
   kmfApp->uiInterface()->setStopped(false);
   progressBar->setRange(0, kmfApp->project()->timeEstimate());
   progressBar->setValue(0);
-#warning TODO
-  //progressListView->clear();
+  static_cast<QStringListModel*>(progressListView->model())->
+      setStringList(QStringList());
   kmfApp->logger().start();
   if(kmfApp->project()->make(m_type) == false)
     if(!kmfApp->project()->error().isEmpty())
@@ -151,7 +152,6 @@ void OutputPage::start()
   m_type = "";
   kmfApp->logger().stop();
   kmfApp->logger().save(kmfApp->project()->directory() + "kmf_log.html");
-  //kmfApp->restoreOverrideCursor();
   showLogPushBtn->setEnabled(true);
   stopPushBtn->setEnabled(false);
   startButton->setEnabled(true);

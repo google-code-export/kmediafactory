@@ -384,8 +384,7 @@ bool SlideshowObject::copyOriginals() const
 
 bool SlideshowObject::make(QString type)
 {
-  uiInterface()->message(KMF::Info,
-      i18n("Preparing file(s) for %1").arg(title()));
+  uiInterface()->message(KMF::Info, i18n("Preparing file(s) for %1", title()));
   if(type != "dummy")
   {
     if(m_includeOriginals)
