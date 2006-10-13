@@ -44,6 +44,7 @@ QVariant KMFProgressItemModel::data(const QModelIndex &index, int role) const
 }
 
 #define BARW 100
+#define GRADIENTW 40
 
 void KMFProgressItemDelegate::paint(QPainter* painter,
                                     const QStyleOptionViewItem& option,
@@ -54,16 +55,23 @@ void KMFProgressItemDelegate::paint(QPainter* painter,
   QRect rc = option.rect;
   const KMFProgressItem& item = m_model->data()->at(index.row());
 
-  // If value < max
-  // Paint gradient
-  // Paint progress bar
-  //kDebug() << k_funcinfo << rc << endl;
-  QProgressBar bar;
-  bar.setRange(0, item.max);
-  bar.setValue(item.value);
-  bar.resize(BARW, rc.height());
-  QPixmap barPixmap = QPixmap::grabWidget(&bar, QRect(0, 0, BARW, rc.height()));
-  painter->drawPixmap(rc.width() - BARW, rc.y(), barPixmap);
+  //if(item.value < item.max)
+  {
+    // Paint gradient
+    QRect rc2(rc.width() - BARW - GRADIENTW, rc.y(), GRADIENTW, rc.height());
+    QLinearGradient fade(rc2.x(), 0, rc2.x() + rc2.width(), 0);
+
+    fade.setColorAt(0, QColor(255, 255, 255, 0));
+    fade.setColorAt(0.9, QColor(255, 255, 255, 255));
+    painter->fillRect(rc2, fade);
+    // Paint progress bar
+    QProgressBar bar;
+    bar.setRange(0, item.max);
+    bar.setValue(item.value);
+    bar.resize(BARW, rc.height());
+    QPixmap barPixmap = QPixmap::grabWidget(&bar, QRect(0, 0, BARW, rc.height()));
+    painter->drawPixmap(rc.width() - BARW, rc.y(), barPixmap);
+  }
   painter->restore();
 }
 
