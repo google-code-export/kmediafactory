@@ -19,65 +19,35 @@
 //**************************************************************************
 #include "kmfprogresslistview.h"
 #include <kdebug.h>
+#include <kicon.h>
+#include <QPainter>
+#include <QModelIndex>
 
-#if 0
-
-KMFProgressListView::KMFProgressListView(QWidget *parent)
-  : QListWidget(parent)
+int KMFProgressItemModel::rowCount(const QModelIndex&) const
 {
-  /*
-  addColumn("", 10);
-  addColumn("", KMFProgressItem::ProgressWidth);
-  header()->hide();
-  setSorting(-1);
-  setFocusPolicy(Qt::NoFocus);
-  */
+  return m_data.count();
 }
 
-KMFProgressListView::~KMFProgressListView()
+QVariant KMFProgressItemModel::data(const QModelIndex &index, int role) const
 {
+  if (!index.isValid())
+    return QVariant();
+
+  if (index.row() >= rowCount(index))
+    return QVariant();
+
+  if (role == Qt::DisplayRole)
+    return m_data.at(index.row()).text;
+  if (role == Qt::DecorationRole)
+    return KIcon(m_data.at(index.row()).pixmap);
+  return QVariant();
 }
 
-void KMFProgressListView::viewportResizeEvent(QResizeEvent* e)
+void KMFProgressItemDelegate::paint(QPainter* painter,
+                                    const QStyleOptionViewItem& option,
+                                    const QModelIndex& index) const
 {
-  /*
-  setColumnWidth(0, e->size().width() - KMFProgressItem::ProgressWidth);
-  */
+  painter->save();
+  QItemDelegate::paint(painter, option, index);
+  painter->restore();
 }
-
-void KMFProgressListView::insertItem(const QPixmap &pixmap,
-                                     const QString &text)
-{
-  /*
-  KMFProgressItem* li = static_cast<KMFProgressItem*>(lastItem());
-  if(li)
-  {
-    li->showProgressBar(false);
-    updateContents();
-  }
-  li = new KMFProgressItem(this, li);
-  li->setPixmap(0, pixmap);
-  li->setText(0, text);
-  ensureItemVisible(li);
-  */
-}
-
-void KMFProgressListView::setTotalSteps(int totalSteps)
-{
-  /*
-  //kdDebug() << k_funcinfo << totalSteps << endl;
-  static_cast<KMFProgressItem*>(lastItem())->setTotalSteps(totalSteps);
-  repaintItem(lastItem());
-  */
-}
-
-void KMFProgressListView::setProgress(int progress)
-{
-  /*
-  //kdDebug() << k_funcinfo << progress << endl;
-  static_cast<KMFProgressItem*>(lastItem())->setProgress(progress);
-  repaintItem(lastItem());
-  */
-}
-
-#endif

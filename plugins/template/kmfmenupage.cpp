@@ -452,7 +452,7 @@ bool KMFMenuPage::runScript(QString scriptName, QString place)
         m_stopped = false;
 
         m_uiIf->message(KMF::Info,
-            i18n("   Converting %1 to ac3 format").arg(sound.fileName()));
+            i18n("   Converting %1 to ac3 format", sound.fileName()));
         m_uiIf->setItemTotalSteps(fi.size());
 
         QFFMpegConvertTo dvd;
@@ -513,8 +513,7 @@ bool KMFMenuPage::runScript(QString scriptName, QString place)
   if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
   {
     m_uiIf->message(KMF::Error,
-        i18n("   Script file open failed. %1")
-        .arg(file.errorString()));
+        i18n("   Script file open failed. %1", file.errorString()));
     return false;
   }
 
