@@ -43,11 +43,28 @@ QVariant KMFProgressItemModel::data(const QModelIndex &index, int role) const
   return QVariant();
 }
 
+#define BARW 100
+
 void KMFProgressItemDelegate::paint(QPainter* painter,
                                     const QStyleOptionViewItem& option,
                                     const QModelIndex& index) const
 {
   painter->save();
   QItemDelegate::paint(painter, option, index);
+  QRect rc = option.rect;
+  const KMFProgressItem& item = m_model->data()->at(index.row());
+
+  // If value < max
+  // Paint gradient
+  // Paint progress bar
+  //kDebug() << k_funcinfo << rc << endl;
+  QProgressBar bar;
+  bar.setRange(0, item.max);
+  bar.setValue(item.value);
+  bar.resize(BARW, rc.height());
+  QPixmap barPixmap = QPixmap::grabWidget(&bar, QRect(0, 0, BARW, rc.height()));
+  painter->drawPixmap(rc.width() - BARW, rc.y(), barPixmap);
   painter->restore();
 }
+
+#include "kmfprogresslistview.moc"

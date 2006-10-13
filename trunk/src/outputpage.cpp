@@ -45,7 +45,10 @@ OutputPage::OutputPage(QWidget *parent) :
           this, SLOT(contextMenuRequested(const QPoint&)));
   connect(&m_startPopup, SIGNAL(triggered(QAction*)),
            this, SLOT(start(QAction*)));
-  progressListView->setModel(new KMFProgressItemModel(progressListView));
+  KMFProgressItemModel* model = new KMFProgressItemModel(progressListView);
+  progressListView->setModel(model);
+  progressListView->setItemDelegate(new KMFProgressItemDelegate(model,
+                                        progressListView));
 }
 
 OutputPage::~OutputPage()

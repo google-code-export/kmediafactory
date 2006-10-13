@@ -49,8 +49,12 @@ class KMFProgressItemDelegate : public QItemDelegate
 {
     Q_OBJECT
   public:
+    KMFProgressItemDelegate(KMFProgressItemModel* model, QObject* parent = 0) :
+        QItemDelegate(parent), m_model(model) {};
     virtual void paint(QPainter* painter, const QStyleOptionViewItem& option,
                        const QModelIndex& index) const;
+  private:
+    KMFProgressItemModel* m_model;
 };
 
 #endif
