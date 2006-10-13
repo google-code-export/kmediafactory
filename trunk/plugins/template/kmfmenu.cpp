@@ -54,12 +54,12 @@ bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
 {
   QDomElement root = doc.createElement("dvdauthor");
   int i, j;
-  QString header = QString(i18n("\n"
+  QString header = i18n("\n"
     " *********************************************************************\n"
     " %1\n"
     " *********************************************************************\n "
-    ));
-  QString comment = QString(i18n("\n"
+    );
+  QString comment = i18n("\n"
     "**********************************************************************\n"
     "\n"
     "This file was made with %1 - %2\n"
@@ -80,8 +80,8 @@ bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
     "g7: temporary variable\n"
     "\n"
     "**********************************************************************\n"
-    )).arg(KGlobal::instance()->aboutData()->programName())
-      .arg(KGlobal::instance()->aboutData()->version());
+    , KGlobal::instance()->aboutData()->programName()
+    , KGlobal::instance()->aboutData()->version());
 
   doc.appendChild(doc.createComment(comment));
   doc.appendChild(doc.createTextNode("\n"));
@@ -91,7 +91,7 @@ bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
 
   root.appendChild(doc.createTextNode("\n "));
   root.appendChild(doc.createComment(
-      header.arg(i18n("Main menu for %1").arg(m_prjIf->title()))));
+      header.arg(i18n("Main menu for %1", m_prjIf->title()))));
   root.appendChild(doc.createTextNode("\n "));
 
   QDomElement elem = doc.createElement("vmgm");
@@ -199,7 +199,7 @@ bool KMFMenu::makeMenuMpegs()
       {
         progress(m_pagePoints);
         if(m_uiIf->message(KMF::Info,
-           QString(i18n("   Menu: %1")).arg(uiText(ob->objectName()))))
+           i18n("   Menu: %1", uiText(ob->objectName()))))
           return false;
 
         if(!ob->makeMpeg())
@@ -226,7 +226,7 @@ bool KMFMenu::addPage(const QDomElement& element, int pageSet,
   if(menuPage)
   {
     if(m_uiIf->message(KMF::Info,
-       QString(i18n("   Menu: %1")).arg(uiText(menuPage->objectName()))))
+       i18n("   Menu: %1", uiText(menuPage->objectName()))))
       return false;
     if(pageSet == 0)
       menuPage->setVmgm(true);
@@ -289,7 +289,7 @@ QDomElement KMFMenu::getPage(const QDomNode& node, const QString& name)
     n = n.nextSibling();
   }
   m_uiIf->message(KMF::Error,
-                  i18n("Cannot find page %1 from template.").arg(name));
+                  i18n("Cannot find page %1 from template.", name));
   return QDomElement();
 }
 

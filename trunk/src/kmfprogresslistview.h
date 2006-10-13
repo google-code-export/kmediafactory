@@ -21,21 +21,36 @@
 #define KMFPROGRESSLISTVIEW_H
 
 #include <QProgressBar>
-#include <QAbstractItemDelegate>
+#include <QItemDelegate>
+#include <QAbstractListModel>
 
 class KMFProgressItem
 {
   public:
-    QPixmap pixmap;
+    QString pixmap;
     QString text;
-    QProgressBar progressBar;
+    int max;
+    int value;
 };
 
-class KMFProgressItemDelegate : public QAbstractItemDelegate
+class KMFProgressItemModel : public QAbstractListModel
+{
+  public:
+    KMFProgressItemModel(QObject* parent = 0) : QAbstractListModel(parent) {};
+    QList<KMFProgressItem>* data() { return &m_data; };
+    virtual int rowCount(const QModelIndex&) const;
+    virtual QVariant data(const QModelIndex &index, int role) const;
+
+  private:
+    QList<KMFProgressItem> m_data;
+};
+
+class KMFProgressItemDelegate : public QItemDelegate
 {
     Q_OBJECT
   public:
-
+    virtual void paint(QPainter* painter, const QStyleOptionViewItem& option,
+                       const QModelIndex& index) const;
 };
 
 #endif
