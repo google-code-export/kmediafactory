@@ -1010,4 +1010,5 @@ void Info::clear()
 }
 
 }
+
 #include "qdvdinfo.moc"

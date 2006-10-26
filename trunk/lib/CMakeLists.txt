@@ -3,8 +3,6 @@ add_subdirectory(pics)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 set(kmf_LIB_SRCS
-  qdvdinfo.cpp
-  qmpegvideo.cpp
   rect.cpp
   dvdauthorparser.cpp
   kmflanguagewidgets.cpp
@@ -14,6 +12,7 @@ set(kmf_LIB_SRCS
   kmftools.cpp
   kmfmultiurldialog.cpp
   kmftoolbutton.cpp
+  qdvdinfo.cpp
 )
 
 kde4_add_ui_files(kmf_LIB_SRCS

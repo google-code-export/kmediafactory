@@ -22,6 +22,7 @@
 
 #include "kmfproject.h"
 #include "kmflogger.h"
+#include "kmediafactorysettings.h"
 #include <kapplication.h>
 #include <kurl.h>
 #include <QMap>
@@ -59,6 +60,7 @@ class KMFApplication : public KApplication
     KMFLogger& logger() { return m_logger; };
     KMF::PluginList plugins();
     void finalize();
+    KConfigBase* config() { return KMediaFactorySettings::self()->config(); };
     const QStringList& supportedProjects() { return m_supportedProjects; };
     int startServiceByDesktopPath(const QString& _name,
                                   const QString &URL,

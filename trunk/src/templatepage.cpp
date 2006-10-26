@@ -61,7 +61,6 @@ void TemplatePage::projectInit()
   templates->blockSignals(true);
   KMF::TemplateObject* obj = kmfApp->project()->templateObj();
   QModelIndex i = m_model.index(obj);
-  kDebug() << k_funcinfo << obj << ", " << i.row() << endl;
   templates->setCurrentIndex(i);
   templates->blockSignals(false);
 }
@@ -73,7 +72,6 @@ void TemplatePage::templatesModified()
 
 void TemplatePage::currentChanged(const QModelIndex& index, const QModelIndex&)
 {
-  kDebug() << k_funcinfo << endl;
   if(kmfApp->project())
   {
     KMF::TemplateObject* ob =

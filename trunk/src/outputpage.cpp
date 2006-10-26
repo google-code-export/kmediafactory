@@ -111,7 +111,7 @@ void OutputPage::contextMenuRequested(const QPoint &pos)
 void OutputPage::showLog()
 {
   LogView dlg(this);
-  KUrl url = "file://" + kmfApp->project()->directory() + "kmf_log.html";
+  KUrl url = kmfApp->project()->directory() + "kmf_log.html";
   dlg.setData(url);
   dlg.exec();
 }

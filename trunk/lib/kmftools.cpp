@@ -478,10 +478,11 @@ QColor KMF::Tools::toColor(const QString& s)
   }
   else if (s[0] == '#' && s.length() == 9) // Special alpha channel case
   {
-    result.setRgb(qRgba((hex2int(s[1]) << 4) + hex2int(s[2]),
-                        (hex2int(s[3]) << 4) + hex2int(s[4]),
-                        (hex2int(s[5]) << 4) + hex2int(s[6]),
-                        (hex2int(s[7]) << 4) + hex2int(s[8])));
+    int a = (hex2int(s[7]) << 4) + hex2int(s[8]);
+    result.setRgba(qRgba((hex2int(s[1]) << 4) + hex2int(s[2]),
+                         (hex2int(s[3]) << 4) + hex2int(s[4]),
+                         (hex2int(s[5]) << 4) + hex2int(s[6]),
+                         255 - a));
   }
   else
   {

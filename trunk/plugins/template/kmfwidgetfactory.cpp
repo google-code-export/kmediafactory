@@ -89,7 +89,6 @@ KMFWidget* KMFWidgetFactory::create(const QDomElement& element,
                                     QObject* parent)
 {
   KMFWidget* result = newWidget(element.tagName(), parent);
-  kDebug() << element.tagName() << ": " << result << "/" << parent << endl;
   if (!result && !parent)
     return 0;
 
@@ -107,12 +106,12 @@ KMFWidget* KMFWidgetFactory::create(const QDomElement& element,
       {
         QString className = result->metaObject()->className();
         set = (item->group().remove('%') == className);
-        if(set) kDebug() << k_funcinfo << className << endl;
+        //if(set) kDebug() << k_funcinfo << className << endl;
       }
       else
       {
         set = QRegExp(item->group()).exactMatch(result->objectName());
-        if(set) kDebug() << k_funcinfo << result->objectName() << endl;
+        //if(set) kDebug() << k_funcinfo << result->objectName() << endl;
       }
 
       if(set)
@@ -121,7 +120,7 @@ KMFWidget* KMFWidgetFactory::create(const QDomElement& element,
         int n = name.indexOf("::");
         if(n >= 0)
           name = name.mid(n+2);
-        kDebug() << k_funcinfo << name << " : " << item->property() << endl;
+        //kDebug() << k_funcinfo << name << " : " << item->property() << endl;
         result->setProperty(name, item->property());
       }
     }

@@ -24,7 +24,7 @@
 #include <QRegExp>
 #include <QFile>
 #include <QTextStream>
-#include <Q3StyleSheet>
+#include <QTextDocument>
 
 void KMFLogger::start()
 {
@@ -69,7 +69,7 @@ void KMFLogger::message(const QString& msg, const QColor& color)
     m_log += QString("<font color=%1>").arg(color.name());
   //m_log += "         1         2         3         4         5         6"
   //         "         7         8\n";
-  m_log += Q3StyleSheet::escape(s) + "\n";
+  m_log += Qt::escape(s) + "\n";
   if(color != QColor("black"))
     m_log += "</font>";
 }
