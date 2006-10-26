@@ -40,8 +40,7 @@ QImage KMFImage::m_empty(transparent_xpm);
 KMFImage::KMFImage(QObject *parent)
   : KMFWidget(parent), m_scale(true), m_proportional(true)
 {
-  // set color to transparent, otherwise image will be drawn with one color.
-  setColor(QColor(0,0,0,0));
+  setColor(QColor());
 }
 
 KMFImage::~KMFImage()
@@ -129,8 +128,8 @@ void KMFImage::paintWidget(QImage& layer, bool shdw)
   QPainter p(&layer);
   QImage image;
 
-  if(!clr.isValid())
-    image = mask(m_image, clr.rgb(), !shdw);
+  if(clr.isValid())
+    image = mask(m_image, clr.rgba(), !shdw);
   else
     image = m_image;
 

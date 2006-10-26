@@ -55,7 +55,7 @@ void KMFProgressItemDelegate::paint(QPainter* painter,
   QRect rc = option.rect;
   const KMFProgressItem& item = m_model->data()->at(index.row());
 
-  //if(item.value < item.max)
+  if(item.value < item.max)
   {
     // Paint gradient
     QRect rc2(rc.width() - BARW - GRADIENTW, rc.y(), GRADIENTW, rc.height());

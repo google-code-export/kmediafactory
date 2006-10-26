@@ -87,7 +87,7 @@ void KMFMenuPage::setResolution(QSize resolution)
   KMFUnit::setMaxRes(resolution);
   m_resolution = resolution;
   m_background = QImage(m_resolution, QImage::Format_ARGB32);
-  m_background.fill(KMF::Tools::toColor("#44444400").rgba());
+  m_background.fill(KMF::Tools::toColor("#444444FF").rgba());
   m_sub = QImage(m_resolution, QImage::Format_ARGB32);
   m_sub.fill(KMF::Tools::toColor("#000000FF").rgba());
   m_subHighlight = QImage(m_resolution, QImage::Format_ARGB32);

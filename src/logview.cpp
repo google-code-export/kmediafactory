@@ -18,6 +18,7 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 #include "logview.h"
+#include "kmfapplication.h"
 #include <QLayout>
 #include <QLabel>
 #include <QVBoxLayout>
@@ -33,14 +34,12 @@ LogView::LogView(QWidget *parent)
   m_htmlPart = new KHTMLPart(htmlFrame);
   m_layout->addWidget(m_htmlPart->widget());
   logLabel->setBuddy(m_htmlPart->widget());
-
-  //restoreDialogSize(KGlobal::config());
+  restoreDialogSize(kmfApp->config());
 }
 
 LogView::~LogView()
 {
-  //saveDialogSize(KGlobal::config());
-
+  saveDialogSize(kmfApp->config());
   delete m_htmlPart;
   delete m_layout;
 }

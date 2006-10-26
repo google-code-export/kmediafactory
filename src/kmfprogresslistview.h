@@ -27,6 +27,7 @@
 class KMFProgressItem
 {
   public:
+    KMFProgressItem() : max(0), value(0) {};
     QString pixmap;
     QString text;
     int max;

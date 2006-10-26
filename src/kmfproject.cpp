@@ -126,7 +126,6 @@ void KMFProject::setType(const QString& type)
   if(type != m_type)
   {
     m_type = type;
-    kDebug() << k_funcinfo << "Project Init" << endl;
     emit preinit(m_type);
     m_list.clear();
     emit init(type);
@@ -136,6 +135,7 @@ void KMFProject::setType(const QString& type)
 void KMFProject::setDirectory(const QString& directory)
 {
   m_directory = KMF::Tools::addSlash(directory);
+  if(m_directory.startsWith("file://")) m_directory = m_directory.mid(7);
   setDirty(KMF::ProjectInterface::DirtyAny);
 }
 
@@ -160,7 +160,6 @@ void KMFProject::setOutput(KMF::OutputObject* output)
 void KMFProject::init()
 {
   m_initializing = true;
-  kDebug() << k_funcinfo << "Project Init" << endl;
   emit preinit(m_type);
   emit init(m_type);
   m_initializing = false;
@@ -214,6 +213,7 @@ void KMFProject::fromXML(QString xml)
   QDomElement element = doc.documentElement();
   m_type = element.attribute("type");
   m_directory = element.attribute("dir");
+  if(m_directory.startsWith("file://")) m_directory = m_directory.mid(7);
   m_title = element.attribute("title");
   m_serial = element.attribute("serial").toInt();
 
@@ -250,7 +250,6 @@ void KMFProject::fromXML(QString xml)
     }
     n = n.nextSibling();
   }
-  kDebug() << k_funcinfo << "Project Init" << endl;
   emit init(m_type);
 }
 
