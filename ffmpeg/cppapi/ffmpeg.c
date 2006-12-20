@@ -23,7 +23,7 @@
 #include <limits.h>
 #include "avformat.h"
 #include "framehook.h"
-
+#include "fifo.h"
 #else
 
 #include "ffmpeg.h"
@@ -32,7 +32,7 @@
 #include <limits.h>
 #include <math.h>
 #include <errno.h>
-
+#include <ffmpeg/fifo.h>
 #define exit(v) return
 #define fprintf(fh, args...) av_log(NULL, AV_LOG_INFO, args)
 #define printf(args...) av_log(NULL, AV_LOG_INFO, args)
@@ -40,14 +40,14 @@
 #define ABS(a) ((a) >= 0 ? (a) : (-(a)))
 #define FFMAX(a,b) ((a) > (b) ? (a) : (b))
 #define FFMIN(a,b) ((a) > (b) ? (b) : (a))
-
+/*
 static inline int clip(int a, int amin, int amax)
 {
   if (a < amin)      return amin;
   else if (a > amax) return amax;
   else               return a;
 }
-
+*/
 static Progress* av_progress = 0;
 
 typedef struct {
@@ -74,7 +74,7 @@ typedef struct {
     const char *help;
     const char *argname;
 } OptionDef;
-
+/*
 void print_error(const char *filename, int err)
 {
   switch(err) {
@@ -104,7 +104,7 @@ void print_error(const char *filename, int err)
       break;
   }
 }
-
+*/
 #endif
 
 #include "dsputil.h"
@@ -177,7 +177,7 @@ static int nb_meta_data_maps;
 
 static AVInputFormat *file_iformat;
 static AVOutputFormat *file_oformat;
-static AVImageFormat *image_format;
+//static AVImageFormat *image_format;
 static int frame_width  = 0;
 static int frame_height = 0;
 static float frame_aspect_ratio = 0;
@@ -249,7 +249,7 @@ static int me_penalty_compensation= 256;
 static int frame_skip_threshold= 0;
 static int frame_skip_factor= 0;
 static int frame_skip_exp= 0;
-extern int loop_input; /* currently a hack */
+static int loop_input = 0; /* currently a hack */
 static int loop_output = AVFMT_NOOUTPUTLOOP;
 static int genpts = 0;
 static int qp_hist = 0;
@@ -375,7 +375,7 @@ typedef struct AVOutputStream {
     /* audio only */
     int audio_resample;
     ReSampleContext *resample; /* for audio resampling */
-    FifoBuffer fifo;     /* for compression: one audio fifo per codec */
+    AVFifoBuffer fifo;     /* for compression: one audio fifo per codec */
     FILE *logfile;
 } AVOutputStream;
 
@@ -560,7 +560,7 @@ static void do_audio_out(AVFormatContext *s,
 
     if(audio_sync_method){
         double delta = get_sync_ipts(ost) * enc->sample_rate - ost->sync_opts
-                - fifo_size(&ost->fifo, ost->fifo.rptr)/(ost->st->codec->channels * 2);
+                - av_fifo_size(&ost->fifo)/(ost->st->codec->channels * 2);
         double idelta= delta*ist->st->codec->sample_rate / enc->sample_rate;
         int byte_delta= ((int)idelta)*2*ist->st->codec->channels;
 
@@ -603,7 +603,7 @@ static void do_audio_out(AVFormatContext *s,
         }
     }else
         ost->sync_opts= lrintf(get_sync_ipts(ost) * enc->sample_rate)
-                        - fifo_size(&ost->fifo, ost->fifo.rptr)/(ost->st->codec->channels * 2); //FIXME wrong
+                        - av_fifo_size(&ost->fifo)/(ost->st->codec->channels * 2); //FIXME wrong
 
     if (ost->audio_resample) {
         buftmp = audio_buf;
@@ -619,13 +619,10 @@ static void do_audio_out(AVFormatContext *s,
     /* now encode as many frames as possible */
     if (enc->frame_size > 1) {
         /* output resampled raw samples */
-        fifo_write(&ost->fifo, buftmp, size_out,
-                   &ost->fifo.wptr);
+        av_fifo_write(&ost->fifo, buftmp, size_out);
 
         frame_bytes = enc->frame_size * 2 * enc->channels;
-
-        while (fifo_read(&ost->fifo, audio_buf, frame_bytes,
-                     &ost->fifo.rptr) == 0) {
+        while (av_fifo_read(&ost->fifo, audio_buf, frame_bytes) == 0) {
             AVPacket pkt;
             av_init_packet(&pkt);
 
@@ -1754,7 +1751,7 @@ static int av_encode(AVFormatContext **output_files,
         } else {
             switch(codec->codec_type) {
             case CODEC_TYPE_AUDIO:
-                if (fifo_init(&ost->fifo, 2 * MAX_AUDIO_PACKET_SIZE))
+                if (av_fifo_init(&ost->fifo, 2 * MAX_AUDIO_PACKET_SIZE))
                     goto fail;
 
                 if (codec->channels == icodec->channels &&
@@ -2227,7 +2224,7 @@ static int av_encode(AVFormatContext **output_files,
                     fclose(ost->logfile);
                     ost->logfile = NULL;
                 }
-                fifo_free(&ost->fifo); /* works even if fifo is not
+                av_fifo_free(&ost->fifo); /* works even if fifo is not
                                           initialized but set to zero */
                 av_free(ost->pict_tmp.data[0]);
                 if (ost->video_resample)
@@ -2266,7 +2263,7 @@ int file_read(const char *filename)
     return 0;
 }
 #endif
-
+/*
 static void opt_image_format(const char *arg)
 {
     AVImageFormat *f;
@@ -2281,7 +2278,7 @@ static void opt_image_format(const char *arg)
     }
     image_format = f;
 }
-
+*/
 static void opt_format(const char *arg)
 {
     /* compatibility stuff for pgmyuv */
@@ -2971,7 +2968,7 @@ static void opt_input_file(const char *filename)
     ap->time_base.num = frame_rate_base;
     ap->width = frame_width + frame_padleft + frame_padright;
     ap->height = frame_height + frame_padtop + frame_padbottom;
-    ap->image_format = image_format;
+    //ap->image_format = image_format;
     ap->pix_fmt = frame_pix_fmt;
     ap->device  = grab_device;
     ap->channel = video_channel;
@@ -2984,7 +2981,7 @@ static void opt_input_file(const char *filename)
     /* open the input file with generic libav function */
     err = av_open_input_file(&ic, filename, file_iformat, 0, ap);
     if (err < 0) {
-        print_error(filename, err);
+        //print_error(filename, err);
         exit(1);
     }
 
@@ -3094,7 +3091,7 @@ static void opt_input_file(const char *filename)
     nb_input_files++;
     file_iformat = NULL;
     file_oformat = NULL;
-    image_format = NULL;
+    //image_format = NULL;
 
     grab_device = NULL;
     video_channel = 0;
@@ -3557,8 +3554,8 @@ static void opt_output_file(const char *filename)
 
     /* check filename in case of an image number is expected */
     if (oc->oformat->flags & AVFMT_NEEDNUMBER) {
-        if (filename_number_test(oc->filename) < 0) {
-            print_error(oc->filename, AVERROR_NUMEXPECTED);
+        if (av_filename_number_test(oc->filename) < 0) {
+            //print_error(oc->filename, AVERROR_NUMEXPECTED);
             exit(1);
         }
     }
@@ -3595,7 +3592,7 @@ static void opt_output_file(const char *filename)
     }
 
     memset(ap, 0, sizeof(*ap));
-    ap->image_format = image_format;
+    //ap->image_format = image_format;
     if (av_set_parameters(oc, ap) < 0) {
         fprintf(stderr, "%s: Invalid encoding parameters\n",
                 oc->filename);
@@ -3611,7 +3608,7 @@ static void opt_output_file(const char *filename)
     /* reset some options */
     file_oformat = NULL;
     file_iformat = NULL;
-    image_format = NULL;
+    //image_format = NULL;
 }
 
 /* prepare dummy protocols for grab */
@@ -4054,11 +4051,13 @@ static void opt_target(const char *arg)
 static void show_version(void)
 {
     /* TODO: add function interface to avutil and avformat */
+  /*
     fprintf(stderr, "ffmpeg      " FFMPEG_VERSION "\n"
            "libavutil   %d\n"
            "libavcodec  %d\n"
            "libavformat %d\n",
            LIBAVUTIL_BUILD, avcodec_build(), LIBAVFORMAT_BUILD);
+  */
     exit(1);
 }
 
@@ -4091,7 +4090,7 @@ const OptionDef options[] = {
 #endif
     { "formats", 0, {(void*)show_formats}, "show available formats, codecs, protocols, ..." },
     { "f", HAS_ARG, {(void*)opt_format}, "force format", "fmt" },
-    { "img", HAS_ARG, {(void*)opt_image_format}, "force image format", "img_fmt" },
+    //{ "img", HAS_ARG, {(void*)opt_image_format}, "force image format", "img_fmt" },
     { "i", HAS_ARG, {(void*)opt_input_file}, "input file name", "filename" },
     { "y", OPT_BOOL, {(void*)&file_overwrite}, "overwrite output files" },
     { "map", HAS_ARG | OPT_EXPERT, {(void*)opt_map}, "set input stream mapping", "file:stream[:syncfile:syncstream]" },
@@ -4474,7 +4473,7 @@ void av_reset()
   nb_meta_data_maps = 0;
   file_iformat = 0;
   file_oformat = 0;
-  image_format = 0;
+  //image_format = 0;
   frame_width  = 0;
   frame_height = 0;
   frame_aspect_ratio = 0;
