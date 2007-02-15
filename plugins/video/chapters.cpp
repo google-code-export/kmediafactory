@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004, 2005 by Petri Damstén
+//   Copyright (C) 2004, 2005 by Petri Damstï¿½
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,6 @@
 #include "kmftime.h"
 #include "autochapterslayout.h"
 #include "addchapterlayout.h"
-#include <qffmpeg.h>
 #include "kmfimageview.h"
 #include <kmediafactory/plugin.h>
 #include <kapplication.h>

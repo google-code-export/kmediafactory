@@ -55,3 +55,5 @@ void Script::stderr(KProcess* proc, char* buffer, int buflen)
 {
   stdout(proc, buffer, buflen);
 }
+
+#include "runscript.moc"
