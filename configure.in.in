@@ -344,7 +344,6 @@ if test "$ac_have_libffmpeg" = "yes"; then
   echo "Yes" >> $srcdir/config.summary
 else
   echo "No" >> $srcdir/config.summary
-  stop="yes"
 fi
 
 echo -n "- msgfmt ......................... " >> $srcdir/config.summary

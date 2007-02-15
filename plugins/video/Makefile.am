@@ -16,16 +16,13 @@ kmediafactory_video_la_SOURCES = \
 	videoconfiglayout.ui \
 	subtitleoptionslayout.ui \
 	subtitleoptions.cpp \
-	conversionlayout.ui \
-	conversion.cpp \
 	addchapterlayout.ui
 
 noinst_HEADERS = \
 	videooptions.h \
 	chapters.h \
 	kmfchapterlistview.h \
-	subtitleoptions.h \
-	conversion.h
+	subtitleoptions.h
 
 kmediafactoryincludedir = $(includedir)/kmediafactory/plugin
 kmediafactoryinclude_HEADERS = videoobject.h

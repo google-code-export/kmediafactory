@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 TARGET=`pwd`
 BUILD=$TARGET'/debug'
@@ -65,6 +65,9 @@ makedir $LINKS/share/locale/fi
 makedir $LINKS/share/locale/fi/LC_MESSAGES
 
 makedir $LINKS/share/apps/kmediafactory/tools
+
+softlink $TARGET/scripts \
+         $LINKS/share/apps/kmediafactory/scripts
 
 # dvb tool softlinks
 #echo "dvb tool"
