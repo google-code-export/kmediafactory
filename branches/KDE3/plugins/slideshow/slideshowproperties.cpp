@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004, 2005 by Petri Damstén
+//   Copyright (C) 2004, 2005 by Petri Damstï¿½
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,6 @@
 #include "slideshowobject.h"
 #include <kmftime.h>
 #include <kmfmultiurldialog.h>
-#include <qffmpeg.h>
 #include <kurlrequester.h>
 #include <kmessagebox.h>
 #include <kio/previewjob.h>
@@ -35,6 +34,7 @@
 #include <qcheckbox.h>
 #include <qlistview.h>
 #include <qlineedit.h>
+#include <runscript.h>
 
 SlideshowProperties::SlideshowProperties(QWidget *parent, const char *name)
   : SlideshowPropertiesLayout(parent, name)
@@ -165,12 +165,13 @@ void SlideshowProperties::updateInfo()
   int count = slideListView->childCount();
   KMF::Time duration = (double)durationSpinBox->value();
   KMF::Time audioDuration = 0.0;
+  Script script("duration.sh");
 
   for(QStringList::ConstIterator it = m_audioFiles.begin();
       it != m_audioFiles.end(); ++it)
   {
-    QFFMpeg audio(*it);
-    audioDuration += audio.duration();
+    if(script.run(*it))
+      audioDuration += KMF::Time(script.output());
   }
   info += i18n("%1 images").arg(count);
   if(duration < KMF::Time(1.0))

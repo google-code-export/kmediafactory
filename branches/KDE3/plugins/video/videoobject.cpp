@@ -24,7 +24,6 @@
 #include <kfileitem.h>
 #include <kmftime.h>
 #include <kmftools.h>
-#include <qffmpeg.h>
 #include <kapplication.h>
 #include <kstandarddirs.h>
 #include <kmimetype.h>
@@ -40,14 +39,14 @@
 #include <qdir.h>
 #include <unistd.h>
 #include <errno.h>
+#include <runscript.h>
 
 char* VideoObject::m_prefixes[] = {".sub.mpg", ".mpg", "", ".xml", ".sub"};
 
 VideoObject::VideoObject(QObject* parent)
-  : MediaObject(parent, "video"), m_decoder(0), m_videoPlay(0),
+  : MediaObject(parent, "video"), m_videoPlay(0),
     m_aspect(QDVD::VideoTrack::Aspect_Unknown)
 {
-  m_decoder = new QFFMpeg;
   m_videoProperties = new KAction(
       i18n("&Properties"), "pencil", 0, this,
       SLOT(slotProperties()),plugin()->actionCollection(),"mob_properties");
@@ -59,15 +58,10 @@ VideoObject::VideoObject(QObject* parent)
                               this, SLOT(slotPlayVideo()),
                               plugin()->actionCollection(),
                               "mob_play");
-  connect(m_decoder, SIGNAL(convertProgress(int)),
-          this, SLOT(slotProgress(int)));
-  connect(m_decoder, SIGNAL(message(const QString&)),
-          uiInterface()->logger(), SLOT(message(const QString&)));
 }
 
 VideoObject::~VideoObject()
 {
-  delete m_decoder;
 }
 
 double VideoObject::frameRate() const
@@ -88,12 +82,12 @@ QTime VideoObject::chapterTime(int chap) const
 
 QStringList VideoObject::files() const
 {
-  return m_decoder->fileNames();
+  return m_files;
 }
 
 QString VideoObject::fileName() const
 {
-  return m_decoder->fileNames().first();
+  return m_files.first();
 }
 
 void VideoObject::actions(QPtrList<KAction>& actionList) const
@@ -101,15 +95,6 @@ void VideoObject::actions(QPtrList<KAction>& actionList) const
   if(m_videoPlay)
     actionList.append(m_videoPlay);
   actionList.append(m_videoProperties);
-}
-
-void VideoObject::slotProgress(int progress)
-{
-  if(uiInterface()->setItemProgress(progress))
-  {
-    m_stopped = true;
-    m_decoder->stop();
-  }
 }
 
 void VideoObject::fromXML(const QDomElement& element)
@@ -140,7 +125,7 @@ void VideoObject::fromXML(const QDomElement& element)
           {
             if(e2.tagName() == "file")
             {
-              m_decoder->addFile(e2.attribute("path"));
+              m_files.append(e2.attribute("path"));
             }
             else if(e2.tagName() == "cell")
             {
@@ -153,9 +138,7 @@ void VideoObject::fromXML(const QDomElement& element)
               uint file = e2.attribute("file", 0).toUInt();
               if(file > 1)
               {
-                const QFFMpegFileList& files = m_decoder->files();
-
-                for(uint i= 0; i < file - 1 && i < files.count(); ++i)
+                for(uint i= 0; i < file - 1 && i < m_files.count(); ++i)
                   start += files[i].duration();
               }
               //kdDebug() << k_funcinfo << file  << ", " << start
@@ -198,16 +181,6 @@ void VideoObject::fromXML(const QDomElement& element)
               s.setFont(font);
               addSubtitle(s);
             }
-            else if(e2.tagName() == "convert_params")
-            {
-              m_conversion.m_pass = e2.attribute("passes", "1").toInt();
-              m_conversion.m_videoBitrate = e2.attribute("video_bitrate",
-                  "8000").toInt();
-              m_conversion.m_audioBitrate = e2.attribute("audio_bitrate",
-                  "128").toInt();
-              m_conversion.m_audioType = e2.attribute("audio_type",
-                  "0").toInt();
-            }
           }
           m = m.nextSibling();
         }
@@ -246,14 +219,7 @@ void VideoObject::toXML(QDomElement& element) const
   if(m_previewURL.isValid())
     video.setAttribute("custom_preview", m_previewURL.prettyURL());
 
-  QDomElement convert = doc.createElement("convert_params");
-  convert.setAttribute("passes", m_conversion.m_pass);
-  convert.setAttribute("video_bitrate", m_conversion.m_videoBitrate);
-  convert.setAttribute("audio_bitrate", m_conversion.m_audioBitrate);
-  convert.setAttribute("audio_type", m_conversion.m_audioType);
-  video.appendChild(convert);
-
-  QStringList lst = m_decoder->fileNames();
+  QStringList lst = m_files;
   for(QStringList::ConstIterator it = lst.begin(); it != lst.end(); ++it)
   {
     QDomElement e = doc.createElement("file");
@@ -383,8 +349,8 @@ void VideoObject::writeDvdAuthorXml(QDomElement& element,
   i = 0;
   QDVD::CellList::ConstIterator cell = m_cells.begin();
 
-  for(QFFMpegFileList::const_iterator it = m_decoder->files().begin();
-      it != m_decoder->files().end(); ++it, ++i)
+  for(QStringList::Iterator it = m_files.begin();
+      it != m_files.end(); ++it, ++i)
   {
     QDomElement vob = doc.createElement("vob");
     if(type != "dummy")
@@ -437,7 +403,7 @@ int VideoObject::timeEstimate() const
 QString VideoObject::videoFileName(int index, VideoFilePrefix prefix)
 {
   QDir dir(projectInterface()->projectDir("media"));
-  QString file = QFileInfo(m_decoder->files()[index].fileName()).fileName();
+  QString file = QFileInfo(m_files[index].fileName()).fileName();
 
   /*
   kdDebug() << k_funcinfo << dir.filePath(QString("%1_%2")
@@ -452,7 +418,7 @@ QString VideoObject::videoFileName(int index, VideoFilePrefix prefix)
 QString VideoObject::videoFileFind(int index, VideoFilePrefix prefixStart) const
 {
   QDir dir(projectInterface()->projectDir("media"));
-  QString file = QFileInfo(m_decoder->files()[index].fileName()).fileName();
+  QString file = QFileInfo(m_files[index]).fileName();
 
   for(int i = prefixStart; i < PrefixEmpty; ++i)
   {
@@ -468,88 +434,6 @@ QString VideoObject::videoFileFind(int index, VideoFilePrefix prefixStart) const
   }
   //kdDebug() << k_funcinfo << m_decoder->files()[index].fileName() << endl;
   return m_decoder->files()[index].fileName();
-}
-
-bool VideoObject::convertToDVD()
-{
-  static char* codecs[] = {"ac3", "mp2", "pcm"};
-  bool result = true;
-  int i = 0;
-  QDir dir(projectInterface()->projectDir("media"));
-
-  m_stopped = false;
-
-  for(QFFMpegFileList::const_iterator it = m_decoder->files().begin();
-      it != m_decoder->files().end() && m_stopped == false; ++it, ++i)
-  {
-    QString input = (*it).fileName();
-    QFileInfo fii(input);
-    QString output = videoFileName(i, PrefixMpg);
-    output = dir.filePath(output);
-    QFileInfo fio(output);
-
-    if(fio.lastModified() < fii.lastModified())
-    {
-      for(int j = 0; j < m_conversion.m_pass && m_stopped == false; ++j)
-      {
-        QTime t; t.start();
-        //kdDebug() << k_funcinfo << input << endl;
-
-        QString pass;
-
-        if(m_conversion.m_pass > 1)
-          pass = QString(" (pass %1)").arg(j+1);
-        uiInterface()->message(KMF::Info,
-            i18n("   Converting %1 to DVD format%2")
-          .arg(fii.fileName()).arg(pass));
-        KMF::Time duration = m_decoder->duration();
-        uiInterface()->setItemTotalSteps((int)((double)duration *
-                                        m_decoder->frameRate()));
-        // ffmpeg -i koe.dv -hq -acodec ac3 -aspect 4:3 -pass 2 -target pal-dvd
-        //        ./output.mpeg
-        QFFMpegConvertTo dvd;
-        if(projectInterface()->type() == "DVD-PAL")
-          dvd.append(QFFMpegParam("target", "pal-dvd"));
-        else
-          dvd.append(QFFMpegParam("target", "ntsc-dvd"));
-        dvd.append(QFFMpegParam("aspect",
-                   QDVD::VideoTrack::aspectRatioString(m_aspect)));
-        dvd.append(QFFMpegParam("b", m_conversion.m_videoBitrate));
-        dvd.append(QFFMpegParam("maxrate", m_conversion.m_videoBitrate));
-        dvd.append(QFFMpegParam("minrate", 0));
-        dvd.append(QFFMpegParam("ab", m_conversion.m_audioBitrate));
-        dvd.append(QFFMpegParam("acodec", codecs[m_conversion.m_audioType]));
-        if(m_conversion.m_pass > 1)
-        {
-          dvd.append(QFFMpegParam("pass", j+1));
-          dvd.append(QFFMpegParam("passlogfile",
-                     videoFileName(i, PrefixEmpty)));
-        }
-        result = m_decoder->convertTo(dvd, i, fio.filePath());
-        if(result == false)
-        {
-          if(m_stopped == false)
-          {
-            uiInterface()->message(KMF::Error, i18n("   Conversion error."));
-            m_stopped = true;
-          }
-          QFile(fio.filePath()).remove();
-        }
-        kdDebug() << k_funcinfo << QString("Time elapsed: %1 ms")
-            .arg(t.elapsed()) << endl;
-      }
-    }
-    else
-    {
-      /*
-      kdDebug() << k_funcinfo << fii.fileName() << " -> " << fio.fileName()
-          << endl;
-      */
-      uiInterface()->message(KMF::Info,
-        i18n("   Conversion of %1 seems to be up to date").arg(fii.fileName()));
-    }
-  }
-  return (result && !m_stopped);
 }
 
 QString VideoObject::checkFontFile(const QString& file)
@@ -651,8 +535,8 @@ bool VideoObject::convertSubtitles(const QDVD::Subtitle& subtitle)
   QDir dir(projectInterface()->projectDir("media"));
   QStringList subtitleFiles = QStringList::split(";", subtitle.file());
 
-  for(QFFMpegFileList::const_iterator it = m_decoder->files().begin();
-      it != m_decoder->files().end(); ++it, ++i)
+  for(QStringList::Iterator it = m_files.begin();
+      it != m_files.end(); ++it, ++i)
   {
     if(i >= subtitleFiles.count())
       break;
@@ -708,12 +592,6 @@ bool VideoObject::make(QString type)
 
   if(type != "dummy")
   {
-    if(!m_decoder->isDVDCompatible())
-    {
-      if(!convertToDVD())
-        return false;
-    }
-
     for(QDVD::SubtitleList::ConstIterator it = m_subtitles.begin();
         it != m_subtitles.end(); ++it)
     {
@@ -903,15 +781,15 @@ const QDVD::Cell& VideoObject::chapter(int chap) const
 void VideoObject::generateId()
 {
   int serial = projectInterface()->serial();
-  QString name = KMF::Tools::simpleBaseName(m_decoder->fileNames().first());
+  QString name = KMF::Tools::simpleBaseName(m_files.first());
   m_id.sprintf("%3.3d_%s", serial, (const char*)name.local8Bit());
 }
 
 bool VideoObject::addFile(QString fileName)
 {
-  bool result = m_decoder->addFile(fileName);
+  m_files.append(fileName);
   checkObjectParams();
-  return result;
+  return true;
 }
 
 void VideoObject::setTitleFromFileName()
@@ -974,24 +852,11 @@ uint64_t VideoObject::size() const
   uint64_t total = 0;
   int i = 0;
 
-  for(QFFMpegFileList::const_iterator it = m_decoder->files().begin();
-      it != m_decoder->files().end(); ++it, ++i)
+  for(QStringList::Iterator it = m_files.begin();
+      it != m_files.end(); ++it, ++i)
   {
-    QString file = videoFileFind(i);
-    // DVD compatible or Converted file
-    if((*it).isDVDCompatible() || (*it).fileName() != file)
-    {
-      KFileItem finfo(KFileItem::Unknown, KFileItem::Unknown, KURL(file));
-      total += finfo.size();
-    }
-    else
-    {
-      double d = KMF::Time((*it).duration());
-      int bitrate = m_conversion.m_videoBitrate;
-      bitrate += m_audioTracks.count() * m_conversion.m_audioBitrate;
-      bitrate += m_subtitles.count() * 4;
-      total += (uint64_t)((d * bitrate * 1024.0) / 8.0);
-    }
+    KFileItem finfo(KFileItem::Unknown, KFileItem::Unknown, KURL(*it));
+    total += finfo.size();
   }
   return total;
 }

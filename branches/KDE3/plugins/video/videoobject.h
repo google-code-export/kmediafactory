@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004 by Petri Damstén
+//   Copyright (C) 2004 by Petri Damstï¿½
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -31,23 +31,10 @@
 #include <qdatetime.h>
 #include <qdvdinfo.h>
 
-class QFFMpeg;
 class QDir;
 
 namespace QDVD { class Subtitle; class Cell; };
 namespace KMF { class Time; };
-
-class ConversionParams
-{
-  public:
-    ConversionParams() : m_pass(1), m_videoBitrate(8000),
-    m_audioBitrate(192), m_audioType(0) {};
-
-    int m_pass;
-    int m_videoBitrate;
-    int m_audioBitrate;
-    int m_audioType;
-};
 
 /**
 */
@@ -112,14 +99,10 @@ class VideoObject : public KMF::MediaObject
     QString videoFileName(int index, VideoFilePrefix prefix);
     void printCells();
     bool isDVDCompatible() const;
-    ConversionParams conversion() const { return m_conversion; };
-    void setConversion(const ConversionParams& conversion)
-        { m_conversion = conversion; };
 
   public slots:
     virtual void slotProperties();
     virtual void slotPlayVideo();
-    virtual void slotProgress(int);
     virtual void clean() { };
 
   private slots:
@@ -133,7 +116,7 @@ class VideoObject : public KMF::MediaObject
     void checkObjectParams();
 
   private:
-    mutable QFFMpeg* m_decoder;
+    QStringList m_files;
     KAction* m_videoProperties;
     KAction* m_videoPlay;
     KURL m_previewURL;
@@ -144,7 +127,6 @@ class VideoObject : public KMF::MediaObject
     bool m_stopped;
     QString m_kmfplayer;
     static char* m_prefixes[];
-    ConversionParams m_conversion;
 
     void generateId();
     void setCellSecs(double secs);

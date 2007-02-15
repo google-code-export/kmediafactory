@@ -2,31 +2,12 @@ SUBDIRS = pics
 
 lib_LTLIBRARIES = libkmf.la
 
-libkmf_la_SOURCES = \
-	qdvdinfo.cpp \
-	color.cpp \
-	rect.cpp \
-	font.cpp \
-	dvdauthorparser.cpp \
-	kmflanguagewidgets.cpp \
-	kmfimageview.cpp kmftime.cpp \
-	kmffontchooser.cpp \
-	kmftools.cpp \
-	kmfmultiurldialoglayout.ui \
-	kmfmultiurldialog.cpp \
-	kmftoolbutton.cpp
+libkmf_la_SOURCES = color.cpp dvdauthorparser.cpp font.cpp kmffontchooser.cpp \
+	kmfimageview.cpp kmflanguagewidgets.cpp kmfmultiurldialog.cpp kmfmultiurldialoglayout.ui \
+	kmftime.cpp kmftoolbutton.cpp kmftools.cpp qdvdinfo.cpp rect.cpp runscript.cpp
 
-noinst_HEADERS = \
-	color.h \
-	rect.h \
-	font.h \
-	dvdauthorparser.h \
-	kmftime.h \
-	kmffontchooser.h \
-	kmftools.h \
-	kmfmultiurldialog.h \
-	kmftoolbutton.h \
-	kmf_stddef.h
+noinst_HEADERS = color.h dvdauthorparser.h font.h kmf_stddef.h kmffontchooser.h \
+	kmfmultiurldialog.h kmftime.h kmftoolbutton.h kmftools.h rect.h runscript.h
 
 kmediafactoryincludedir = $(includedir)/kmediafactory
 kmediafactoryinclude_HEADERS = \
@@ -44,7 +25,6 @@ libkmf_la_LDFLAGS = $(FONTCONFIG_LDFLAGS) $(all_libraries)
 
 libkmf_la_LIBADD = \
 	$(top_builddir)/kmediafactory/libkmediafactoryinterfaces.la \
-	$(top_builddir)/ffmpeg/cppapi/libqffmpeg.la \
 	$(top_builddir)/kstore/libkstore.la \
 	$(FONTCONFIG_LIBS) \
 	$(LIBMAGICK_LIBS) \

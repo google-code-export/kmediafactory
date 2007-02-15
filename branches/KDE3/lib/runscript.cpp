@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004, 2005 by Petri Damstén
+//   Copyright (C) 2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,32 +17,41 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
-#ifndef QFFMPEGCONVERTER_H
-#define QFFMPEGCONVERTER_H
+#include "runscript.h"
 
-#include <qobject.h>
-
-class QFFMpegConverter : public QObject
+Script::Script(QString script)
 {
-  Q_OBJECT
-  public:
-    QFFMpegConverter(int frames);
-    virtual ~QFFMpegConverter();
+  m_script = script;
+}
 
-    void transcodeProgress(int frame);
-    void stop(int stp);
-    int transcode();
-    void set(const char* option, const char* value);
-    void set_output(const char *filename);
-    static void staticProgress(int frame);
+Script::~Script()
+{
+}
 
-  signals:
-    void progress(int);
+bool Script::run(QString arguments)
+{
+  KProcess process;
+  //process.setWorkingDirectory();
+  process << "bash" << m_script << arguments;
+  connect(&process, SIGNAL(receivedStdout(KProcess*, char*, int)),
+          this, SLOT(stdout(KProcess*, char*, int)));
+  connect(&process, SIGNAL(receivedStderr(KProcess*, char*, int)),
+          this, SLOT(stderr(KProcess*, char*, int)));
+  process.start(KProcess::Block, KProcess::AllOutput);
+  m_result = process.exitStatus();
+  if(!process.normalExit() || process.exitStatus() != 0)
+  {
+    return false;
+  }
+  return true;
+}
 
-  private:
-    int m_frames;
-    int m_stopped;
-    static QFFMpegConverter* ffmpeg_instance;
-};
+void Script::stdout(KProcess*, char* buffer, int buflen)
+{
+  m_output += QString::fromLatin1(buffer, buflen);
+}
 
-#endif
+void Script::stderr(KProcess* proc, char* buffer, int buflen)
+{
+  stdout(proc, buffer, buflen);
+}

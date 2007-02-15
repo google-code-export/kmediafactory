@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004, 2005 by Petri Damst�
+//   Copyright (C) 2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,44 +17,35 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
-#include "qffmpeglogger.h"
-#include "ffmpeg/avformat.h"
-#include "ffmpeg/avcodec.h"
-#include "dopr.h"
-#include <kdebug.h>
+#ifndef RUNSCRIPT_H
+#define RUNSCRIPT_H
 
-#undef sprintf
+#include <qobject.h>
+#include <qstring.h>
+#include <kprocess.h>
 
-QFFMpegLogger* QFFMpegLogger::m_logger = 0;
-
-QFFMpegLogger::QFFMpegLogger()
+/**
+	@author Petri Damsten <petri.damsten@iki.fi>
+*/
+class Script : QObject
 {
-  av_log_set_callback(QFFMpegLogger::ffmpeg_av_log_callback);
-}
+    Q_OBJECT
+  public:
+    Script(QString script);
+    ~Script();
 
-QFFMpegLogger* QFFMpegLogger::self()
-{
-  if(!m_logger)
-    m_logger = new QFFMpegLogger;
-  return m_logger;
-}
+    bool run(QString arguments = "");
+    QString output() { return m_output; };
+    int result() { return m_result; };
 
-void QFFMpegLogger::ffmpeg_av_log_callback(void *ptr, int level,
-                                           const char *fmt, va_list vl)
-{
-  if(level > av_log_get_level())
-    return;
+  public slots:
+    virtual void stdout(KProcess *proc, char *buffer, int buflen);
+    virtual void stderr(KProcess *proc, char *buffer, int buflen);
 
-  QString prefix;
-  char buffer[1024];
+  private:
+    QString m_script;
+    QString m_output;
+    int m_result;
+};
 
-  dopr(buffer, 1023, fmt, vl);
-  if(ptr)
-  {
-    AVClass* avc= *(AVClass**)ptr;
-    prefix.sprintf("[%s @ %p] ", avc->item_name((char*)ptr), avc);
-  }
-  emit self()->message(prefix + buffer);
-}
-
-#include "qffmpeglogger.moc"
+#endif
