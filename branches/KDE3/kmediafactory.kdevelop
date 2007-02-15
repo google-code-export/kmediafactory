@@ -15,9 +15,10 @@
     <ignoreparts/>
     <projectdirectory>.</projectdirectory>
     <absoluteprojectpath>false</absoluteprojectpath>
-    <description/>
+    <description></description>
     <secondaryLanguages/>
     <projectname>kmediafactory</projectname>
+    <defaultencoding></defaultencoding>
   </general>
   <kdevautoproject>
     <general>
@@ -26,7 +27,7 @@
       <useactivetarget>true</useactivetarget>
     </general>
     <run>
-      <mainprogram>src/kmediafactory</mainprogram>
+      <mainprogram>/home/damu/files/code/linux/kmediafactory.kde3/debug/src/kmediafactory</mainprogram>
       <directoryradio>executable</directoryradio>
       <runarguments>
         <kmediafactory/>
@@ -43,6 +44,11 @@
         <envvar value="fi_FI" name="LC_NUMERIC" />
         <envvar value="/home/damu/.kde/lib/kde3/:$LD_LIBRARY_PATH" name="LD_LIBRARY_PATH" />
       </envvars>
+      <globaldebugarguments></globaldebugarguments>
+      <globalcwd>/home/damu/files/code/linux/kmediafactory.kde3/debug</globalcwd>
+      <useglobalprogram>true</useglobalprogram>
+      <autoinstall>false</autoinstall>
+      <autokdesu>false</autokdesu>
     </run>
     <configurations>
       <optimized>
@@ -148,10 +154,10 @@
     <general>
       <dbgshell>libtool</dbgshell>
       <programargs>file:///home/damu/damu/lohikäärme testi.kmf</programargs>
-      <gdbpath/>
-      <configGdbScript/>
-      <runShellScript/>
-      <runGdbScript/>
+      <gdbpath></gdbpath>
+      <configGdbScript></configGdbScript>
+      <runShellScript></runShellScript>
+      <runGdbScript></runGdbScript>
       <breakonloadinglibs>true</breakonloadinglibs>
       <separatetty>false</separatetty>
       <floatingtoolbar>false</floatingtoolbar>
@@ -224,7 +230,7 @@
     </codecompletion>
     <references/>
     <creategettersetter>
-      <prefixGet/>
+      <prefixGet></prefixGet>
       <prefixSet>set</prefixSet>
       <prefixVariable>m_,_</prefixVariable>
       <parameterName>theValue</parameterName>
@@ -246,6 +252,11 @@
       <designer>/usr/bin/designer-qt3</designer>
       <designerpluginpaths/>
     </qt>
+    <splitheadersource>
+      <enabled>false</enabled>
+      <synchronize>true</synchronize>
+      <orientation>Vertical</orientation>
+    </splitheadersource>
   </kdevcppsupport>
   <dist>
     <custom>false</custom>

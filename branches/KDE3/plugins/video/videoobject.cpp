@@ -40,6 +40,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <runscript.h>
+#include <kfilemetainfo.h>
 
 char* VideoObject::m_prefixes[] = {".sub.mpg", ".mpg", "", ".xml", ".sub"};
 
@@ -66,13 +67,28 @@ VideoObject::~VideoObject()
 
 double VideoObject::frameRate() const
 {
-  return m_decoder->frameRate();
+  KFileMetaInfo info = KFileMetaInfo(KURL(m_files[0]));
+  KFileMetaInfoItem item = info.item("Frame Rate");
+  return item.value().toDouble();
 }
 
 QTime VideoObject::duration() const
 {
-  //kdDebug() << k_funcinfo << m_decoder->duration() << endl;
-  return m_decoder->duration();
+  KMF::Time result;
+
+  for(QStringList::ConstIterator it = m_files.begin();
+      it != m_files.end(); ++it)
+  {
+    result += duration(*it);
+  }
+  return result;
+}
+
+QTime VideoObject::duration(QString file) const
+{
+  KFileMetaInfo info = KFileMetaInfo(KURL(file));
+  KFileMetaInfoItem item = info.item("Length");
+  return item.value().toTime();
 }
 
 QTime VideoObject::chapterTime(int chap) const
@@ -139,7 +155,7 @@ void VideoObject::fromXML(const QDomElement& element)
               if(file > 1)
               {
                 for(uint i= 0; i < file - 1 && i < m_files.count(); ++i)
-                  start += files[i].duration();
+                  start += duration(m_files[i]);
               }
               //kdDebug() << k_funcinfo << file  << ", " << start
               //    << ", " << chapter << endl;
@@ -193,19 +209,24 @@ void VideoObject::fromXML(const QDomElement& element)
 
 void VideoObject::checkObjectParams()
 {
-  while(m_audioTracks.count() < m_decoder->audioStreamCount())
+#warning TODO
+  /*while(m_audioTracks.count() < m_decoder->audioStreamCount())
   {
     addAudioTrack(
         QDVD::AudioTrack(VideoPluginSettings::defaultAudioLanguage()));
   }
+  */
   if(m_cells.count() < 1)
     setCellSecs(300.0);
   if(m_id.isEmpty())
     generateId();
   if(title().isEmpty())
     setTitleFromFileName();
+#warning TODO
+  /*
   if(m_aspect == QDVD::VideoTrack::Aspect_Unknown)
     m_aspect = (QDVD::VideoTrack::AspectRatio)m_decoder->aspectRatio();
+  */
 }
 
 void VideoObject::toXML(QDomElement& element) const
@@ -364,14 +385,14 @@ void VideoObject::writeDvdAuthorXml(QDomElement& element,
         KMF::Time length;
 
         if(cell != m_cells.end() &&
-          (*cell).start() < pos + (*it).duration())
+          (*cell).start() < pos + duration(*it))
         {
           length = KMF::Time((*cell).start()) - pos;
         }
         addCell(vob, QDVD::Cell(QTime(), length, "", false), pos);
       }
-      while(((*cell).start() < pos + (*it).duration()
-              || it == m_decoder->files().fromLast())
+      while(((*cell).start() < pos + duration(*it)
+              || it == m_files.fromLast())
             && cell != m_cells.end())
       {
         addCell(vob, *cell, pos);
@@ -384,7 +405,7 @@ void VideoObject::writeDvdAuthorXml(QDomElement& element,
       vob.setAttribute("file", dir.filePath("dummy.mpg"));
     }
 
-    pos += (*it).duration();
+    pos += duration(*it);
     pgc.appendChild(vob);
   }
   QDomElement postElem = doc.createElement("post");
@@ -403,7 +424,7 @@ int VideoObject::timeEstimate() const
 QString VideoObject::videoFileName(int index, VideoFilePrefix prefix)
 {
   QDir dir(projectInterface()->projectDir("media"));
-  QString file = QFileInfo(m_files[index].fileName()).fileName();
+  QString file = QFileInfo(m_files[index]).fileName();
 
   /*
   kdDebug() << k_funcinfo << dir.filePath(QString("%1_%2")
@@ -433,7 +454,7 @@ QString VideoObject::videoFileFind(int index, VideoFilePrefix prefixStart) const
     }
   }
   //kdDebug() << k_funcinfo << m_decoder->files()[index].fileName() << endl;
-  return m_decoder->files()[index].fileName();
+  return m_files[index];
 }
 
 QString VideoObject::checkFontFile(const QString& file)
@@ -648,7 +669,9 @@ bool VideoObject::isBlack(const QImage& img) const
 
 QImage VideoObject::getFrame(double time) const
 {
-  return m_decoder->frame(KMF::Time(time));
+#warning TODO
+  //return m_decoder->frame(KMF::Time(time));
+  return QImage();
 }
 
 QImage VideoObject::preview(int chap) const
@@ -852,7 +875,7 @@ uint64_t VideoObject::size() const
   uint64_t total = 0;
   int i = 0;
 
-  for(QStringList::Iterator it = m_files.begin();
+  for(QStringList::ConstIterator it = m_files.begin();
       it != m_files.end(); ++it, ++i)
   {
     KFileItem finfo(KFileItem::Unknown, KFileItem::Unknown, KURL(*it));
@@ -863,7 +886,9 @@ uint64_t VideoObject::size() const
 
 bool VideoObject::isDVDCompatible() const
 {
-  return m_decoder->isDVDCompatible();
+#warning TODO
+  //return m_decoder->isDVDCompatible();
+  return true;
 }
 
 QMap<QString, QString> VideoObject::subTypes() const

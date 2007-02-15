@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004 by Petri Damstén
+//   Copyright (C) 2004 by Petri Damstï¿½
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -23,7 +23,6 @@
 #include "progresslayout.h"
 #include <videoobject.h>
 #include <videopluginsettings.h>
-#include <qffmpeg.h>
 #include <kmftime.h>
 #include <kgenericfactory.h>
 #include <kdeversion.h>
@@ -40,6 +39,7 @@
 #include <qcheckbox.h>
 #include <libdv/dv.h>
 #include <libdv/dv_types.h>
+#include <runscript.h>
 
 static const char description[] =
   I18N_NOOP("DV Import plugin for KMediaFactory.");
@@ -187,9 +187,11 @@ bool DVImportPlugin::parseDV(VideoObject* vob, QString fileName)
   int minChapLength = DVImportPluginSettings::minChapterLength();
   int chapterOffset = DVImportPluginSettings::chapterOffset();
   ProgressLayout progressDlg;
-  QFFMpeg input(fileName);
-  KMF::Time duration = input.duration();
-  int frames = (int)(duration.toSeconds() * input.frameRate());
+  Script script("duration.sh");
+  script.run(fileName);
+  KMF::Time duration = KMF::Time(script.output());
+#warning TODO
+  int frames = 0; //(int)(duration.toSeconds() * input.frameRate());
   QDVD::AudioList audioTracks;
   QDVD::CellList cells;
 
@@ -236,9 +238,10 @@ bool DVImportPlugin::parseDV(VideoObject* vob, QString fileName)
             QDVD::Cell c;
             if(framenum > 1)
             {
+#warning TODO /*
               KMF::Time start((double)(framenum + chapterOffset) /
                   input.frameRate());
-              c.setStart(start + offset);
+              c.setStart(start + offset);*/
             }
             else
               c.setStart(offset);

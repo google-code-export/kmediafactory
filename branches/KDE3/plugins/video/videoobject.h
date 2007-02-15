@@ -92,6 +92,7 @@ class VideoObject : public KMF::MediaObject
 
     double frameRate() const;
     virtual QTime duration() const;
+    virtual QTime duration(QString file) const;
     virtual QTime chapterTime(int chapter) const;
     virtual QStringList files() const;
     QString fileName() const;

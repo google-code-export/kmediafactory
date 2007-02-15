@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004 by Petri Damstén
+//   Copyright (C) 2004 by Petri Damstï¿½
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -23,7 +23,6 @@
 #include "kmflanguagewidgets.h"
 #include "videopluginsettings.h"
 #include "subtitleoptions.h"
-#include "conversion.h"
 #include <qdvdinfo.h>
 #include <kapplication.h>
 #include <klocale.h>
@@ -63,18 +62,6 @@ void VideoOptions::setData(const VideoObject& obj)
     new KMFLanguageItem(subtitleListBox, (*it).language());
   subtitleListBox->setSelected(0, true);
 
-  m_conversionParams = obj.conversion();
-  m_obj = &obj;
-  if(!obj.isDVDCompatible())
-  {
-    conversionLabel->show();
-    conversionPropertiesButton->show();
-  }
-  else
-  {
-    conversionLabel->hide();
-    conversionPropertiesButton->hide();
-  }
   enableButtons();
   updateTexts();
 }
@@ -87,7 +74,6 @@ void VideoOptions::getData(VideoObject& obj) const
   obj.setAspect((QDVD::VideoTrack::AspectRatio)aspectComboBox->currentItem());
   obj.setSubtitles(m_subtitles);
   obj.setAudioTracks(m_audioTracks);
-  obj.setConversion(m_conversionParams);
 }
 
 void VideoOptions::audioPropertiesClicked()
@@ -171,17 +157,6 @@ void VideoOptions::chaptersClicked()
   }
 }
 
-void VideoOptions::conversionPropertiesClicked()
-{
-  Conversion dlg(this);
-  dlg.setData(m_conversionParams);
-  if (dlg.exec())
-  {
-    dlg.getData(m_conversionParams);
-    updateTexts();
-  }
-}
-
 void VideoOptions::enableButtons()
 {
   audioPropertiesButton->setEnabled(m_audioTracks.count() > 0);
@@ -196,9 +171,6 @@ void VideoOptions::updateTexts()
   chapterLabel->setText(
       i18n("Video has %1 chapter", "Video has %1 chapters", chapters)
       .arg(chapters));
-  conversionLabel->setText(i18n("Video %1kb/s, Audio %2kb/s")
-      .arg(m_conversionParams.m_videoBitrate)
-      .arg(m_conversionParams.m_audioBitrate));
 }
 
 bool VideoOptions::isSelectedSubtitleInVideo()

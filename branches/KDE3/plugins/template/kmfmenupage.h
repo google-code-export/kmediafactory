@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004 by Petri Damstén
+//   Copyright (C) 2004 by Petri Damstï¿½
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -31,7 +31,6 @@
 class KMFButton;
 class TemplateObject;
 class KMFMenuPage;
-class QFFMpeg;
 class KProcIO;
 
 typedef QPtrListIterator<KMFMenuPage> KMFMenuPageIterator;
@@ -81,9 +80,6 @@ class KMFMenuPage : public KMFWidget
     Magick::Image& layer(Layer layer);
     Layer layerType(const Magick::Image& img);
 
-  protected slots:
-    void slotProgress(int progress);
-
   private:
     Magick::Image m_background;
     Magick::Image m_sub;
@@ -94,7 +90,6 @@ class KMFMenuPage : public KMFWidget
     QSize m_resolution;
     QString m_language;
     QString m_sound;
-    QFFMpeg* m_converter;
     int m_modifiedLayers;
     int m_titles;
     int m_chapters;
