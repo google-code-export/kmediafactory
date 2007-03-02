@@ -29,7 +29,7 @@
 #include <qdatetime.h>
 #include <qptrlist.h>
 #include <qdatetime.h>
-#include <qdvdinfo.h>
+#include <qmediafile.h>
 
 class QDir;
 
@@ -87,7 +87,6 @@ class VideoObject : public KMF::MediaObject
     void setTitleFromFileName();
     const KURL& previewURL() const { return m_previewURL; };
     void setPreviewURL(const KURL& previewURL) { m_previewURL = previewURL; };
-    QImage getFrame(double time) const;
     const QString& id() const { return m_id; };
 
     double frameRate() const;
@@ -100,6 +99,7 @@ class VideoObject : public KMF::MediaObject
     QString videoFileName(int index, VideoFilePrefix prefix);
     void printCells();
     bool isDVDCompatible() const;
+    QImage getFrame(QTime time, QString file) const;
 
   public slots:
     virtual void slotProperties();
@@ -115,6 +115,7 @@ class VideoObject : public KMF::MediaObject
     QDVD::SubtitleList m_subtitles;
 
     void checkObjectParams();
+    const QMediaFile& mediaFile(const QString& file) const;
 
   private:
     QStringList m_files;
@@ -128,6 +129,7 @@ class VideoObject : public KMF::MediaObject
     bool m_stopped;
     QString m_kmfplayer;
     static char* m_prefixes[];
+    static QMap<QString, QMediaFile> m_cache;
 
     void generateId();
     void setCellSecs(double secs);

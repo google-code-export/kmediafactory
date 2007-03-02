@@ -20,46 +20,58 @@
 
 #include "qmediafile.h"
 #include "run.h"
+#include "kmftime.h"
+#include "kdebug.h"
 #include <qregexp.h>
+#include <qmap.h>
 
-QMediaFile::QMediaFile(QString file)
+QMediaFile::QMediaFile(const QString& file)
 {
-  probe(file);
+  m_file = file;
+  if(!m_file.isEmpty())
+    probe();
 }
 
 QMediaFile::~QMediaFile()
 {
 }
 
-bool QMediaFile::probe(QString file)
+bool QMediaFile::probe()
 {
-  Run run(QString("tcprobe -i %1").arg(file));
+  Run run(QString("info %1").arg(m_file));
 
   if(run.result() == 0)
   {
-    QRegExp rx;
+    QStringList lines = QStringList::split("\n", run.output());
+    QMap<QString, QString> info;
 
-    rx.setPattern("\\[(\\d+)x(\\d+)\\]");
-    if(rx.search(run.output()) != -1)
+    for(QStringList::Iterator it = lines.begin(); it != lines.end(); ++it)
     {
-        m_width = rx.cap(1).toInt();
-        m_height = rx.cap(2).toInt();
+      QStringList keyAndValue = QStringList::split("=", *it);
+      info[keyAndValue[0]] = keyAndValue[1];
     }
 
-    rx.setPattern("\\[tcprobe\\] ([\\S\\ ]*)");
-    if(rx.search(run.output()) != -1)
-        m_type = rx.cap(1);
-
-    rx.setPattern("ratio: ([\\d:]+)");
-    if(rx.search(run.output()) != -1)
-        m_type = QDVD::VideoTrack::aspectRatio(rx.cap(1));
-
-    rx.setPattern("rate: -f ([\\d\\.]+)");
-    if(rx.search(run.output()) != -1)
-        m_frameRate = rx.cap(1).toFloat();
+    m_aspectRatio =
+        (QDVD::VideoTrack::AspectRatio)(info["ASPECT_RATIO"].toInt());
+    m_frameRate = info["FRAME_RATE"].toFloat();
+    m_audioStreams = info["AUDIO_STREAMS"].toInt();
+    m_dvdCompatible = (info["DVD_COMPATIBLE"] == "1");
+    m_duration = KMF::Time(info["DURATION"].toDouble());
+    /*
+    kdDebug() << "Aspect: " << m_aspectRatio << endl;
+    kdDebug() << "Frame rate: " << m_frameRate << endl;
+    kdDebug() << "Audio: " << m_audioStreams << endl;
+    kdDebug() << "Compatible: " << m_dvdCompatible << endl;
+    kdDebug() << "Duration: " << m_duration << endl;
+    */
     return true;
   }
   return false;
 }
 
-
+bool QMediaFile::frame(QTime pos, QString output) const
+{
+  Run run(QString("frame %1 %2 %3").arg(m_file).arg(KMF::Time(pos).toString())
+      .arg(output));
+  return (run.result() == 0);
+}

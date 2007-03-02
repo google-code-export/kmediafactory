@@ -28,25 +28,27 @@
 class QMediaFile
 {
   public:
-    QMediaFile(QString file);
+    QMediaFile(const QString& file = QString::null);
     ~QMediaFile();
 
-    bool probe(QString file);
+    bool probe();
 
     const QTime& duration() const { return m_duration; };
     double frameRate() const { return m_frameRate; };
-    int audioStreams() const { return m_audioStreams; };
-    int subtitles() const { return m_subtitles; };
+    uint audioStreams() const { return m_audioStreams; };
+    uint subtitles() const { return m_subtitles; };
     QDVD::VideoTrack::AspectRatio aspectRatio() const { return m_aspectRatio; };
     bool dvdCompatible() const { return m_dvdCompatible; };
+    bool frame(QTime pos, QString output) const;
 
   private:
+    QString m_file;
     QTime m_duration;
     double m_frameRate;
-    int m_audioStreams;
-    int m_subtitles;
-    int m_width;
-    int m_height;
+    uint m_audioStreams;
+    uint m_subtitles;
+    uint m_width;
+    uint m_height;
     QString m_type;
     QDVD::VideoTrack::AspectRatio m_aspectRatio;
     bool m_dvdCompatible;
