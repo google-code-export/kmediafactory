@@ -18,6 +18,10 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 #include "run.h"
+#include <kdebug.h>
+#include <kstandarddirs.h>
+#include <qstringlist.h>
+#include <qfileinfo.h>
 
 Run::Run(QString command)
 {
@@ -34,6 +38,18 @@ bool Run::run()
 {
   KProcess process;
   //process.setWorkingDirectory();
+  QString c = QStringList::split(" ", m_command)[0];
+  if(c[0] != '/')
+  {
+    QFileInfo file;
+    file = locate("data", "kmediafactory/scripts/" + c);
+    if(file.exists())
+    {
+      process.setUseShell(true);
+      m_command = m_command.replace(0, c.length(), file.filePath());
+    }
+  }
+  //kdDebug() << "Running: " << m_command << endl;
   process << m_command;
   connect(&process, SIGNAL(receivedStdout(KProcess*, char*, int)),
           this, SLOT(stdout(KProcess*, char*, int)));
@@ -41,6 +57,7 @@ bool Run::run()
           this, SLOT(stderr(KProcess*, char*, int)));
   process.start(KProcess::Block, KProcess::AllOutput);
   m_result = process.exitStatus();
+  //kdDebug() << "Output: " << m_output << endl;
   if(!process.normalExit() || process.exitStatus() != 0)
   {
     return false;

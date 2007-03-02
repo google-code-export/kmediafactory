@@ -43,6 +43,7 @@
 #include <kfilemetainfo.h>
 
 char* VideoObject::m_prefixes[] = {".sub.mpg", ".mpg", "", ".xml", ".sub"};
+QMap<QString, QMediaFile> VideoObject::m_cache;
 
 VideoObject::VideoObject(QObject* parent)
   : MediaObject(parent, "video"), m_videoPlay(0),
@@ -209,24 +210,21 @@ void VideoObject::fromXML(const QDomElement& element)
 
 void VideoObject::checkObjectParams()
 {
-#warning TODO
-  /*while(m_audioTracks.count() < m_decoder->audioStreamCount())
+   const QMediaFile& media = mediaFile(m_files[0]);
+
+  while(m_audioTracks.count() < media.audioStreams())
   {
     addAudioTrack(
         QDVD::AudioTrack(VideoPluginSettings::defaultAudioLanguage()));
   }
-  */
   if(m_cells.count() < 1)
     setCellSecs(300.0);
   if(m_id.isEmpty())
     generateId();
   if(title().isEmpty())
     setTitleFromFileName();
-#warning TODO
-  /*
   if(m_aspect == QDVD::VideoTrack::Aspect_Unknown)
-    m_aspect = (QDVD::VideoTrack::AspectRatio)m_decoder->aspectRatio();
-  */
+    m_aspect = media.aspectRatio();
 }
 
 void VideoObject::toXML(QDomElement& element) const
@@ -667,57 +665,65 @@ bool VideoObject::isBlack(const QImage& img) const
   return true;
 }
 
-QImage VideoObject::getFrame(double time) const
+QImage VideoObject::getFrame(QTime time, QString file) const
 {
-#warning TODO
-  //return m_decoder->frame(KMF::Time(time));
-  return QImage();
+  bool ok = false;
+  KMF::Time t = time;
+
+  for(QStringList::ConstIterator it = m_files.begin();
+      it != m_files.end(); ++it)
+  {
+    const QMediaFile& media = mediaFile(*it);
+    if(t <= KMF::Time(media.duration()))
+    {
+      media.frame(t, file);
+      ok = true;
+      break;
+    }
+    else
+    {
+      t -= media.duration();
+    }
+  }
+  if(ok)
+    return QImage(file);
+  else
+    return QImage();
 }
 
 QImage VideoObject::preview(int chap) const
 {
   bool black = true;
-  double time = 0.0;
   int counter;
   QImage img;
   QString cacheFile;
-
-  if(VideoPluginSettings::usePreviewCache())
-  {
-    QDir dir(projectInterface()->projectDir() + "/media/");
-    if(!dir.exists())
-      dir.mkdir(dir.path());
-
-    QString s;
-    cacheFile = dir.filePath(s.sprintf("%s_%4.4d.png",
-                             (const char*)m_id.local8Bit(), chap));
-    if(img.load(cacheFile))
-      return img;
-  }
 
   if (chap == MainPreview)
   {
     if(m_previewURL.isValid())
     {
       img.load(m_previewURL.path());
+      return img;
     }
   }
 
-  if(img.isNull())
-  {
-    KMF::Time t = chapter(chap).start();
-    time = t.toSeconds();
+  KMF::Time t = chapter(chap).start();
+  QDir dir(projectInterface()->projectDir() + "/media/");
+  QString s;
+  cacheFile = dir.filePath(s.sprintf("%s_%s.pnm",
+      (const char*)m_id.local8Bit(), (const char*)t.toString()));
+  if(img.load(cacheFile))
+    return img;
 
-    counter = 0;
-    while(black && counter < 60)
-    {
-      img = getFrame(time);
-      black = isBlack(img);
-      if(black)
-        kdDebug() << "Black frame: " << time << endl;
-      time += VideoPluginSettings::blackFrameJump();
-      ++counter;
-    }
+  counter = 0;
+  while(black && counter < 60)
+  {
+    img = getFrame(t, cacheFile);
+    black = isBlack(img);
+    if(black)
+      kdDebug() << "Black frame: " << t.toString() << endl;
+    t += VideoPluginSettings::blackFrameJump();
+    ++counter;
   }
 
   // TODO Template aspect ratio other than 4:3 ?
@@ -738,8 +744,6 @@ QImage VideoObject::preview(int chap) const
   kdDebug() << k_funcinfo << "Image ratio:" << imageRatio << endl;
   kdDebug() << k_funcinfo << "Final resolution:" << res << endl;
   */
-  if(VideoPluginSettings::usePreviewCache())
-    img.save(cacheFile, "PNG");
   return img;
 }
 
@@ -886,9 +890,9 @@ uint64_t VideoObject::size() const
 
 bool VideoObject::isDVDCompatible() const
 {
-#warning TODO
-  //return m_decoder->isDVDCompatible();
-  return true;
+  const QMediaFile& media = mediaFile(m_files[0]);
+
+  return media.dvdCompatible();
 }
 
 QMap<QString, QString> VideoObject::subTypes() const
@@ -898,6 +902,15 @@ QMap<QString, QString> VideoObject::subTypes() const
   result[""] = i18n("Make DVD");
   result["dummy"] = i18n("Make preview DVD with dummy videos");
   return result;
+}
+
+const QMediaFile& VideoObject::mediaFile(const QString& file) const
+{
+  if(!m_cache.contains(file))
+  {
+    m_cache[file] = QMediaFile(file);
+  }
+  return m_cache[file];
 }
 
 #include "videoobject.moc"
