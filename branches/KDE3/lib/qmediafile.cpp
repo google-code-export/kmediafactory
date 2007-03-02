@@ -17,43 +17,49 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
-#include "runscript.h"
 
-Script::Script(QString script)
+#include "qmediafile.h"
+#include "run.h"
+#include <qregexp.h>
+
+QMediaFile::QMediaFile(QString file)
 {
-  m_script = script;
+  probe(file);
 }
 
-Script::~Script()
+QMediaFile::~QMediaFile()
 {
 }
 
-bool Script::run(QString arguments)
+bool QMediaFile::probe(QString file)
 {
-  KProcess process;
-  //process.setWorkingDirectory();
-  process << "bash" << m_script << arguments;
-  connect(&process, SIGNAL(receivedStdout(KProcess*, char*, int)),
-          this, SLOT(stdout(KProcess*, char*, int)));
-  connect(&process, SIGNAL(receivedStderr(KProcess*, char*, int)),
-          this, SLOT(stderr(KProcess*, char*, int)));
-  process.start(KProcess::Block, KProcess::AllOutput);
-  m_result = process.exitStatus();
-  if(!process.normalExit() || process.exitStatus() != 0)
+  Run run(QString("tcprobe -i %1").arg(file));
+
+  if(run.result() == 0)
   {
-    return false;
+    QRegExp rx;
+
+    rx.setPattern("\\[(\\d+)x(\\d+)\\]");
+    if(rx.search(run.output()) != -1)
+    {
+        m_width = rx.cap(1).toInt();
+        m_height = rx.cap(2).toInt();
+    }
+
+    rx.setPattern("\\[tcprobe\\] ([\\S\\ ]*)");
+    if(rx.search(run.output()) != -1)
+        m_type = rx.cap(1);
+
+    rx.setPattern("ratio: ([\\d:]+)");
+    if(rx.search(run.output()) != -1)
+        m_type = QDVD::VideoTrack::aspectRatio(rx.cap(1));
+
+    rx.setPattern("rate: -f ([\\d\\.]+)");
+    if(rx.search(run.output()) != -1)
+        m_frameRate = rx.cap(1).toFloat();
+    return true;
   }
-  return true;
+  return false;
 }
 
-void Script::stdout(KProcess*, char* buffer, int buflen)
-{
-  m_output += QString::fromLatin1(buffer, buflen);
-}
 
-void Script::stderr(KProcess* proc, char* buffer, int buflen)
-{
-  stdout(proc, buffer, buflen);
-}
-
-#include "runscript.moc"

@@ -17,6 +17,7 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+#include <qmediafile.h>
 #include "slideshowproperties.h"
 #include "slideshowobject.h"
 #include <kmftime.h>
@@ -34,7 +35,6 @@
 #include <qcheckbox.h>
 #include <qlistview.h>
 #include <qlineedit.h>
-#include <runscript.h>
 
 SlideshowProperties::SlideshowProperties(QWidget *parent, const char *name)
   : SlideshowPropertiesLayout(parent, name)
@@ -165,13 +165,12 @@ void SlideshowProperties::updateInfo()
   int count = slideListView->childCount();
   KMF::Time duration = (double)durationSpinBox->value();
   KMF::Time audioDuration = 0.0;
-  Script script("duration.sh");
 
   for(QStringList::ConstIterator it = m_audioFiles.begin();
       it != m_audioFiles.end(); ++it)
   {
-    if(script.run(*it))
-      audioDuration += KMF::Time(script.output());
+    QMediaFile file(*it);
+    audioDuration += KMF::Time(file.duration());
   }
   info += i18n("%1 images").arg(count);
   if(duration < KMF::Time(1.0))

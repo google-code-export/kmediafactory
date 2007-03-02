@@ -21,6 +21,7 @@
 #include "videoplugin.h"
 #include "videooptions.h"
 #include "videopluginsettings.h"
+#include <qmediafile.h>
 #include <kfileitem.h>
 #include <kmftime.h>
 #include <kmftools.h>
@@ -39,7 +40,6 @@
 #include <qdir.h>
 #include <unistd.h>
 #include <errno.h>
-#include <runscript.h>
 #include <kfilemetainfo.h>
 
 char* VideoObject::m_prefixes[] = {".sub.mpg", ".mpg", "", ".xml", ".sub"};

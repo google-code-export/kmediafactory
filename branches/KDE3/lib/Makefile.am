@@ -4,10 +4,11 @@ lib_LTLIBRARIES = libkmf.la
 
 libkmf_la_SOURCES = color.cpp dvdauthorparser.cpp font.cpp kmffontchooser.cpp \
 	kmfimageview.cpp kmflanguagewidgets.cpp kmfmultiurldialog.cpp kmfmultiurldialoglayout.ui \
-	kmftime.cpp kmftoolbutton.cpp kmftools.cpp qdvdinfo.cpp rect.cpp runscript.cpp
+	kmftime.cpp kmftoolbutton.cpp kmftools.cpp qdvdinfo.cpp qmediafile.cpp rect.cpp \
+	run.cpp
 
 noinst_HEADERS = color.h dvdauthorparser.h font.h kmf_stddef.h kmffontchooser.h \
-	kmfmultiurldialog.h kmftime.h kmftoolbutton.h kmftools.h rect.h runscript.h
+	kmfmultiurldialog.h kmftime.h kmftoolbutton.h kmftools.h qmediafile.h rect.h run.h
 
 kmediafactoryincludedir = $(includedir)/kmediafactory
 kmediafactoryinclude_HEADERS = \

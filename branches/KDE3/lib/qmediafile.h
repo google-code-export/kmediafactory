@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damst�
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,35 +17,39 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
-#ifndef RUNSCRIPT_H
-#define RUNSCRIPT_H
+#ifndef QMEDIAFILE_H
+#define QMEDIAFILE_H
 
-#include <qobject.h>
-#include <qstring.h>
-#include <kprocess.h>
+#include "qdvdinfo.h"
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
-class Script : QObject
+class QMediaFile
 {
-    Q_OBJECT
   public:
-    Script(QString script);
-    ~Script();
+    QMediaFile(QString file);
+    ~QMediaFile();
 
-    bool run(QString arguments = "");
-    QString output() { return m_output; };
-    int result() { return m_result; };
+    bool probe(QString file);
 
-  public slots:
-    virtual void stdout(KProcess *proc, char *buffer, int buflen);
-    virtual void stderr(KProcess *proc, char *buffer, int buflen);
+    const QTime& duration() const { return m_duration; };
+    double frameRate() const { return m_frameRate; };
+    int audioStreams() const { return m_audioStreams; };
+    int subtitles() const { return m_subtitles; };
+    QDVD::VideoTrack::AspectRatio aspectRatio() const { return m_aspectRatio; };
+    bool dvdCompatible() const { return m_dvdCompatible; };
 
   private:
-    QString m_script;
-    QString m_output;
-    int m_result;
+    QTime m_duration;
+    double m_frameRate;
+    int m_audioStreams;
+    int m_subtitles;
+    int m_width;
+    int m_height;
+    QString m_type;
+    QDVD::VideoTrack::AspectRatio m_aspectRatio;
+    bool m_dvdCompatible;
 };
 
 #endif
