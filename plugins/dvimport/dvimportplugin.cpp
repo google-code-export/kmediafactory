@@ -39,7 +39,6 @@
 #include <qcheckbox.h>
 #include <libdv/dv.h>
 #include <libdv/dv_types.h>
-#include <runscript.h>
 
 static const char description[] =
   I18N_NOOP("DV Import plugin for KMediaFactory.");
@@ -187,9 +186,7 @@ bool DVImportPlugin::parseDV(VideoObject* vob, QString fileName)
   int minChapLength = DVImportPluginSettings::minChapterLength();
   int chapterOffset = DVImportPluginSettings::chapterOffset();
   ProgressLayout progressDlg;
-  Script script("duration.sh");
-  script.run(fileName);
-  KMF::Time duration = KMF::Time(script.output());
+  //KMF::Time duration = KMF::Time(script.output());
 #warning TODO
   int frames = 0; //(int)(duration.toSeconds() * input.frameRate());
   QDVD::AudioList audioTracks;

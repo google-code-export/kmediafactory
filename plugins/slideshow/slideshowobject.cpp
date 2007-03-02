@@ -21,7 +21,7 @@
 #include "slideshowplugin.h"
 #include "slideshowpluginsettings.h"
 #include "slideshowproperties.h"
-#include <qdvdinfo.h>
+#include <qmediafile.h>
 #include <kio/job.h>
 #include <kfileitem.h>
 #include <kstandarddirs.h>
@@ -40,7 +40,6 @@
 #include <qregexp.h>
 #include <Magick++.h>
 #include <list>
-#include <runscript.h>
 
 Slide::Slide() : chapter(true)
 {
@@ -727,13 +726,12 @@ double SlideshowObject::calculatedSlideDuration() const
 QTime SlideshowObject::audioDuration() const
 {
   KMF::Time audioDuration = 0.0;
-  Script script("duration.sh");
 
   for(QStringList::ConstIterator it = m_audioFiles.begin();
       it != m_audioFiles.end(); ++it)
   {
-    if(script.run(*it))
-      audioDuration += KMF::Time(script.output());
+    QMediaFile file(*it);
+    audioDuration += KMF::Time(file.duration());
   }
   return audioDuration;
 }
