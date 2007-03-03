@@ -744,6 +744,8 @@ QImage VideoObject::preview(int chap) const
   kdDebug() << k_funcinfo << "Image ratio:" << imageRatio << endl;
   kdDebug() << k_funcinfo << "Final resolution:" << res << endl;
   */
+  if(!VideoPluginSettings::usePreviewCache())
+    QFile::remove(cacheFile);
   return img;
 }
 
