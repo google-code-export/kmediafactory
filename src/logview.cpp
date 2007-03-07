@@ -34,12 +34,18 @@ LogView::LogView(QWidget *parent)
   m_htmlPart = new KHTMLPart(htmlFrame);
   m_layout->addWidget(m_htmlPart->widget());
   logLabel->setBuddy(m_htmlPart->widget());
-  restoreDialogSize(kmfApp->config());
+  restoreDialogSize(KGlobal::config()->group("LogView"));
+}
+
+void LogView::closeEvent(QCloseEvent *e)
+{
+  KConfigGroup cg(KGlobal::config(), "LogView");
+  KDialog::saveDialogSize( cg );
+  KDialog::closeEvent(e);
 }
 
 LogView::~LogView()
 {
-  saveDialogSize(kmfApp->config());
   delete m_htmlPart;
   delete m_layout;
 }

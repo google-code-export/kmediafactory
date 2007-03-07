@@ -28,7 +28,6 @@
 #include <kmftools.h>
 #include <kcursor.h>
 #include <kpushbutton.h>
-#include <kprogressbar.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kxmlguifactory.h>
@@ -94,7 +93,7 @@ void OutputPage::contextMenuRequested(const QPoint &pos)
   KMediaFactory* mainWindow = kmfApp->mainWindow();
   KXMLGUIFactory* factory = mainWindow->factory();
 
-  QList<KAction*> actions;
+  QList<QAction*> actions;
   ob->actions(actions);
   factory->plugActionList(mainWindow,
       QString::fromLatin1("output_actionlist"), actions);

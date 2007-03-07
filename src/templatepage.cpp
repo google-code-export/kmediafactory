@@ -148,7 +148,7 @@ void TemplatePage::contextMenuRequested(const QPoint &pos)
   KMediaFactory* mainWindow = kmfApp->mainWindow();
   KXMLGUIFactory* factory = mainWindow->factory();
 
-  QList<KAction*> actions;
+  QList<QAction*> actions;
   ob->actions(actions);
   factory->plugActionList(mainWindow,
       QString::fromLatin1("template_actionlist"), actions);

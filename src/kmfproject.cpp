@@ -21,7 +21,6 @@
 #include "kmfapplication.h"
 #include "kmediafactorysettings.h"
 #include <kmftools.h>
-#include <ktempfile.h>
 #include <kmessagebox.h>
 #include <kio/netaccess.h>
 #include <kio/job.h>
@@ -29,6 +28,8 @@
 #include <ksavefile.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
+#include <ksavefile.h>
+#include <ktemporaryfile.h>
 #include <QFile>
 #include <QDir>
 #include <QTextStream>
@@ -440,24 +441,27 @@ bool KMFProject::save(KUrl url)
   {
     KSaveFile saveFile(url.path());
 
-    if(saveFile.status() == 0)
-      *(saveFile.textStream()) << toXML();
+    if(saveFile.open())
+    {
+      QTextStream stream(&saveFile);
+      stream << toXML();
+      stream.flush();
+    }
     else
       return false;
+    saveFile.close();
   }
   else
   {
-    KTempFile tempFile;
-    tempFile.setAutoDelete(true);
-    if(tempFile.status() == 0)
+    KTemporaryFile tempFile;
+
+    if(tempFile.open())
     {
-      *(tempFile.textStream()) << toXML();
-      if(tempFile.close())
-      {
-        if (!KIO::NetAccess::upload(tempFile.name(), url, kmfApp->widget()))
-          return false;
-      }
-      else
+      QTextStream stream(&tempFile);
+      stream << toXML();
+      stream.flush();
+      tempFile.close();
+      if (!KIO::NetAccess::upload(tempFile.fileName(), url, kmfApp->widget()))
         return false;
     }
     else
