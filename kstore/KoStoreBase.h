@@ -27,12 +27,11 @@
 
 /**
  * Helper class for KoStore (mainly for remote file support)
- * @since 1.4
  */
 class KoStoreBase : public KoStore
 {
 public:
-    KoStoreBase(void);
+    KoStoreBase();
     virtual ~KoStoreBase(void);
 public:
     enum FileMode { /*Bad=0,*/ Local=1, RemoteRead, RemoteWrite };

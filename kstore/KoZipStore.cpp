@@ -75,7 +75,8 @@ KoZipStore::KoZipStore( QWidget* window, const KUrl & _url, const QString & _fil
 KoZipStore::~KoZipStore()
 {
     kDebug(s_area) << "KoZipStore::~KoZipStore" << endl;
-    m_pZip->close();
+    if ( !m_bFinalized )
+        finalize(); // ### no error checking when the app forgot to call finalize itself
     delete m_pZip;
 
     // Now we have still some job to do for remote files.
@@ -112,6 +113,11 @@ bool KoZipStore::init( Mode _mode, const QByteArray& appIdentification )
     return good;
 }
 
+bool KoZipStore::doFinalize()
+{
+    return m_pZip->close();
+}
+
 bool KoZipStore::openWrite( const QString& name )
 {
 #if 0
@@ -143,7 +149,7 @@ bool KoZipStore::openRead( const QString& name )
     // Must cast to KZipFileEntry, not only KArchiveFile, because device() isn't virtual!
     const KZipFileEntry * f = static_cast<const KZipFileEntry *>(entry);
     delete m_stream;
-    m_stream = f->device();
+    m_stream = f->createDevice();
     m_iSize = f->size();
     return true;
 }

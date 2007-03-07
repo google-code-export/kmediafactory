@@ -36,12 +36,12 @@ public:
     /**
      * KUrl-constructor
      * @todo saving not completely implemented (fixed temporary file)
-     * @since 1.4
      */
     KoTarStore( QWidget* window, const KUrl& url, const QString & _filename, Mode _mode, const QByteArray & appIdentification );
     ~KoTarStore();
 protected:
     virtual bool init( Mode _mode );
+    virtual bool doFinalize();
     virtual bool openWrite( const QString& name );
     virtual bool openRead( const QString& name );
     virtual bool closeWrite();

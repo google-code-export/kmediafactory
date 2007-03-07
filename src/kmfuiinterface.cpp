@@ -27,9 +27,7 @@
 #include "kmficonview.h"
 #include "kmftools.h"
 #include "outputpage.h"
-#include <kprogressbar.h>
 #include <kdebug.h>
-#include <klistbox.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <QToolButton>
