@@ -28,6 +28,7 @@
 #include <kstandarddirs.h>
 #include <kdesktopfile.h>
 #include <kpushbutton.h>
+#include <kio/deletejob.h>
 #include <QImage>
 #include <QFileInfo>
 #include <QPixmap>
@@ -35,7 +36,7 @@
 // From kmenuedit - treeview.cpp
 static QPixmap appIcon(const QString &iconName)
 {
-  QPixmap normal = KGlobal::iconLoader()->loadIcon(iconName, K3Icon::Small, 0,
+  QPixmap normal = KIconLoader::global()->loadIcon(iconName, K3Icon::Small, 0,
   K3Icon::DefaultState, 0L, true);
     // make sure they are not larger than 20x20
   if (normal.width() > 20 || normal.height() > 20)

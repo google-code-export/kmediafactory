@@ -83,7 +83,8 @@ KoTarStore::KoTarStore( QWidget* window, const KUrl& _url, const QString & _file
 
 KoTarStore::~KoTarStore()
 {
-    m_pTar->close();
+    if ( !m_bFinalized )
+        finalize(); // ### no error checking when the app forgot to call finalize itself
     delete m_pTar;
 
     // Now we have still some job to do for remote files.
@@ -121,6 +122,11 @@ bool KoTarStore::init( Mode _mode )
     return good;
 }
 
+bool KoTarStore::doFinalize()
+{
+    return m_pTar->close();
+}
+
 // When reading, m_stream comes directly from KArchiveFile::device()
 // When writing, m_stream buffers the data into m_byteArray
 
@@ -151,7 +157,7 @@ bool KoTarStore::openRead( const QString& name )
     KArchiveFile * f = (KArchiveFile *) entry;
     m_byteArray.resize( 0 );
     delete m_stream;
-    m_stream = f->device();
+    m_stream = f->createDevice();
     m_iSize = f->size();
     return true;
 }

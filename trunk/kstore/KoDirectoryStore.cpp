@@ -1,5 +1,5 @@
 /* This file is part of the KDE project
-   Copyright (C) 2002 David Faure <faure@kde.org>
+   Copyright (C) 2002, 2006 David Faure <faure@kde.org>
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public
@@ -27,14 +27,11 @@
 KoDirectoryStore::KoDirectoryStore( const QString& path, Mode _mode )
     : m_basePath( path )
 {
-    // The parameter must include "maindoc.xml"
-    int pos = m_basePath.lastIndexOf( '/' );
+    const int pos = path.lastIndexOf( '/' );
     if ( pos != -1 && pos != m_basePath.length()-1 )
         m_basePath = m_basePath.left( pos );
-    if ( !m_basePath.endsWith("/") )
+    if ( !m_basePath.endsWith('/') )
         m_basePath += '/';
-    //if ( !m_basePath.startsWith("/") )
-    //    m_basePath.prepend( QDir::currentPath() + '/' );
     m_currentPath = m_basePath;
     kDebug(s_area) << "KoDirectoryStore::KoDirectoryStore base path:" << m_basePath << endl;
     m_bGood = init( _mode );
@@ -66,7 +63,7 @@ bool KoDirectoryStore::openReadOrWrite( const QString& name, QIODevice::OpenMode
     if ( pos != -1 ) // there are subdirs in the name -> maybe need to create them, when writing
     {
         pushDirectory(); // remember where we were
-        enterAbsoluteDirectory( QString::null );
+        enterAbsoluteDirectory( QString() );
         //kDebug(s_area) << "KoDirectoryStore::openReadOrWrite entering " << name.left(pos) << endl;
         bool ret = enterDirectory( name.left( pos ) );
         popDirectory();

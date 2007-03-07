@@ -24,7 +24,7 @@
 #include <QString>
 #include <QStringList>
 #include <QIODevice>
-#include <q3valuestack.h>
+#include <QStack>
 #include <QByteArray>
 
 class QWidget;
@@ -70,7 +70,7 @@ public:
   /**
    * Open a store (i.e. the representation on disk of a KOffice document).
    *
-   * @param window associated window (for the progress bar dialog and authentification)
+   * @param window associated window (for the progress bar dialog and authentication)
    * @param url URL of the file to open
    * @param mode if KoStore::Read, open an existing store to read it.
    *             if KoStore::Write, create or replace a store.
@@ -84,7 +84,6 @@ public:
    *
    * If the file is remote, the backend Directory cannot be used!
    *
-   * @since 1.4
    * @bug saving not completely implemented (fixed temporary file)
    */
   static KoStore* createStore( QWidget* window, const KUrl& url, Mode mode, const QByteArray & appIdentification = "", Backend backend = Auto );
@@ -263,15 +262,62 @@ public:
    */
   void disallowNameExpansion( void );
 
+  /**
+   * Call this before destroying the store, to be able to catch errors
+   * (e.g. from ksavefile)
+   */
+  bool finalize();
+
+  /**
+   * Sets the password to be used for decryption or encryption of the store.
+   * Use of this function is optional: an encryptable store should make
+   * a best effort in obtaining a password if it wasn't supplied.
+   *
+   * This method only works before opening a file. It might fail when a file
+   * has already been opened before calling this method.
+   *
+   * This method will not function for any store that is not encrypted or
+   * can't be encrypted when saving.
+   *
+   * @param   password    A non-empty password.
+   *
+   * @return  True if the password was set.
+   */
+  virtual bool setPassword( const QString& password );
+
+  /**
+   * Retrieves the password used to encrypt or decrypt the store. Note that
+   * QString() will returned if no password has been given or the store is
+   * not encrypted.
+   *
+   * @return  The password this store is encrypted with.
+   */
+  virtual QString password( );
+
+  /**
+   * Returns whether a store opened for reading is encrypted or a store opened
+   * for saving will be encrypted.
+   *
+   * @return  True if the store is encrypted.
+   */
+  virtual bool isEncrypted( );
+
 protected:
 
-  KoStore() {}
+  KoStore();
 
   /**
    * Init store - called by constructor.
    * @return true on success
    */
   virtual bool init( Mode mode );
+
+  /**
+   * Finalize store - called by finalize.
+   * @return true on success
+   */
+  virtual bool doFinalize() { return true; }
+
   /**
    * Open the file @p name in the store, for writing
    * On success, this method must set m_stream to a stream in which we can write.
@@ -335,13 +381,13 @@ private:
   /**
    *  Expands a full path name for a stream (directories+filename)
    */
-  QString expandEncodedPath( QString intern ) const;
+  QString expandEncodedPath( const QString& intern ) const;
 
   /**
    * Expands only directory names(!)
    * Needed for the path handling code, as we only operate on internal names
    */
-  QString expandEncodedDirectory( QString intern ) const;
+  QString expandEncodedDirectory( const QString& intern ) const;
 
   mutable enum
   {
@@ -379,20 +425,17 @@ protected:
   bool m_bIsOpen;
   /// Must be set by the constructor.
   bool m_bGood;
+  bool m_bFinalized;
 
   static const int s_area;
 
 private:
   /// Used to push/pop directories to make it easy to save/restore the state
-  Q3ValueStack<QString> m_directoryStack;
+  QStack<QString> m_directoryStack;
 
 private:
   KoStore( const KoStore& store );  ///< don't copy
   KoStore& operator=( const KoStore& store );  ///< don't assign
-
-  class Private;
-  Private * d;
-
 };
 
 #endif

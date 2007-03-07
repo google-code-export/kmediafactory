@@ -36,7 +36,6 @@ public:
     /**
      * KUrl-constructor
      * @todo saving not completely implemented (fixed temporary file)
-     * @since 1.4
      */
     KoZipStore( QWidget* window, const KUrl& _url, const QString & _filename, Mode _mode, const QByteArray & appIdentification );
     ~KoZipStore();
@@ -44,6 +43,7 @@ public:
     virtual qint64 write( const char* _data, qint64 _len );
 protected:
     virtual bool init( Mode _mode, const QByteArray& appIdentification );
+    virtual bool doFinalize();
     virtual bool openWrite( const QString& name );
     virtual bool openRead( const QString& name );
     virtual bool closeWrite();

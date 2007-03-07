@@ -34,7 +34,7 @@ add_definitions(
     -DHAVE_CONFIG_H=1
 )
 
-link_directories(${KDE4_LIB_DIR})
+#link_directories(${KDE4_LIB_DIR})
 
 include_directories(
     ${QDBUS_INCLUDE_DIRS}
@@ -45,10 +45,9 @@ include_directories(
 
 configure_file(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h )
 
-add_subdirectory(kmediafactory)
 add_subdirectory(lib)
 add_subdirectory(kstore)
-add_subdirectory(ffmpeg)
+add_subdirectory(kmediafactory)
 add_subdirectory(src)
 add_subdirectory(plugins)
 add_subdirectory(mimetypes)

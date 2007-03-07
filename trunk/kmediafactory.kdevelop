@@ -14,6 +14,7 @@
     </secondaryLanguages>
     <description/>
     <defaultencoding/>
+    <projectname>kmediafactory</projectname>
   </general>
   <kdevcustomproject>
     <filelistdirectory>/home/damu/files/code/linux/kmediafactory/debug</filelistdirectory>
@@ -101,14 +102,24 @@
       <namespaceAliases>std=_GLIBCXX_STD</namespaceAliases>
       <processPrimaryTypes>true</processPrimaryTypes>
       <processFunctionArguments>false</processFunctionArguments>
+      <preProcessAllHeaders>false</preProcessAllHeaders>
+      <parseMissingHeaders>false</parseMissingHeaders>
+      <resolveIncludePaths>true</resolveIncludePaths>
+      <alwaysParseInBackground>true</alwaysParseInBackground>
+      <usePermanentCaching>true</usePermanentCaching>
+      <alwaysIncludeNamespaces>false</alwaysIncludeNamespaces>
+      <includePaths>.;</includePaths>
     </codecompletion>
     <references/>
     <qt>
       <used>false</used>
       <version>3</version>
       <includestyle>4</includestyle>
-      <root>/usr/qt/3</root>
+      <root>/usr/share/qt3</root>
       <designerintegration>EmbeddedKDevDesigner</designerintegration>
+      <qmake>/usr/bin/qmake-qt3</qmake>
+      <designer>/usr/bin/designer-qt3</designer>
+      <designerpluginpaths/>
     </qt>
     <creategettersetter>
       <prefixGet/>
