@@ -20,7 +20,7 @@
 #ifndef KMFOBJECT_H
 #define KMFOBJECT_H
 
-#include <kaction.h>
+#include <QAction>
 #include <QObject>
 #include <QPixmap>
 #include <QDomElement>
@@ -39,7 +39,7 @@ namespace KMF
       virtual void toXML(QDomElement&) const {};
       virtual void fromXML(const QDomElement&) {};
       virtual QPixmap pixmap() const = 0;
-      virtual void actions(QList<KAction*>&) const {};
+      virtual void actions(QList<QAction*>&) const {};
       virtual bool make(QString) { return false; };
       virtual QMap<QString, QString> subTypes() const
           { return QMap<QString, QString>(); };

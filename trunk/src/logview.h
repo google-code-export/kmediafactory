@@ -38,6 +38,9 @@ class LogView : public KDialog, public Ui::LogView
     virtual ~LogView();
     void setData(const KUrl& log);
 
+protected:
+    void closeEvent(QCloseEvent *);
+
   private:
     QVBoxLayout* m_layout;
     KHTMLPart* m_htmlPart;

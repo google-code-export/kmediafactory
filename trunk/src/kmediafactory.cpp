@@ -36,22 +36,21 @@
 #include "kmfnewstuff.h"
 #include <kmediafactory/plugin.h>
 
+#include <kactioncollection.h>
 #include <kmainwindow.h>
 #include <kconfigdialog.h>
 #include <klocale.h>
-#include <kstdaction.h>
+#include <kstandardaction.h>
 #include <kpagewidget.h>
 #include <kdialog.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kiconloader.h>
 #include <kcmdlineargs.h>
-#include <kaction.h>
 #include <kconfig.h>
 #include <kkeydialog.h>
 #include <kedittoolbar.h>
 #include <kmessagebox.h>
-#include <kprogressbar.h>
 #include <kpushbutton.h>
 #include <kmenubar.h>
 #include <kio/netaccess.h>
@@ -162,47 +161,44 @@ KMediaFactory::~KMediaFactory()
 
 void KMediaFactory::setupActions()
 {
-  KAction* action;
+  QAction* action;
 
   // File
-  KStdAction::openNew(this, SLOT(fileNew()), actionCollection());
-  KStdAction::open(this, SLOT(fileOpen()), actionCollection());
-  KStdAction::save(this, SLOT(fileSave()), actionCollection());
-  KStdAction::saveAs(this, SLOT(fileSaveAs()), actionCollection());
-  KStdAction::quit(this, SLOT(quit()), actionCollection());
+  KStandardAction::openNew(this, SLOT(fileNew()), actionCollection());
+  KStandardAction::open(this, SLOT(fileOpen()), actionCollection());
+  KStandardAction::save(this, SLOT(fileSave()), actionCollection());
+  KStandardAction::saveAs(this, SLOT(fileSaveAs()), actionCollection());
+  KStandardAction::quit(this, SLOT(quit()), actionCollection());
 
   // Project
-  action = new KAction(i18n("&Options"), actionCollection(), "project_options");
-  action->setIcon(KIcon("configure"));
-  connect(action, SIGNAL(triggered()), this, SLOT(projectOptions()));
 
   // KNewStuff
-  new KAction(i18n("&Get new tools"), actionCollection(), "newstuff");
-  action->setIcon(KIcon("bookmark"));
-  connect(action, SIGNAL(triggered()), this, SLOT(newStuff()));
+  action = new KAction(KIcon("bookmark"), i18n("&Get new tools"),this);
+  actionCollection()->addAction("newstuff", action);
+  connect(action, SIGNAL(triggered()), SLOT(newStuff()));
 
   // Settings
-  KStdAction::keyBindings(this, SLOT(optionsConfigureKeys()),
+  KStandardAction::keyBindings(this, SLOT(optionsConfigureKeys()),
                           actionCollection());
-  KStdAction::configureToolbars(this, SLOT(optionsConfigureToolbars()),
+  KStandardAction::configureToolbars(this, SLOT(optionsConfigureToolbars()),
                                 actionCollection());
-  KStdAction::preferences(this, SLOT(optionsPreferences()),
+  KStandardAction::preferences(this, SLOT(optionsPreferences()),
                           actionCollection());
 
   setStandardToolBarMenuEnabled(true);
 
   // Media file menu
-  new KAction(i18n("&Delete"), actionCollection(), "delete" );
+  action = new KAction(KIcon("editdelete"), i18n("&Delete"), this);
   action->setShortcut(Qt::Key_Delete);
-  action->setIcon(KIcon("editdelete"));
-  connect(action, SIGNAL(triggered()), this, SLOT(itemDelete()));
+  actionCollection()->addAction("delete", action);
+  connect(action, SIGNAL(triggered()), SLOT(itemDelete()));
 
   // Testing
 #ifdef KMF_TEST
   new KAction(i18n("&Test"), "configure", Qt::CTRL + Qt::Key_Z, this,
               SLOT(test()), actionCollection(), "test" );
 #endif
-  //m_statusbarAction = KStdAction::showStatusbar(this,
+  //m_statusbarAction = KStandardAction::showStatusbar(this,
   //     SLOT(optionsShowStatusbar()), actionCollection());
 
   createGUI("kmediafactoryui.rc");
@@ -395,10 +391,13 @@ void KMediaFactory::optionsConfigureKeys()
 
 void KMediaFactory::optionsConfigureToolbars()
 {
-    // use the standard toolbar editor
-  saveMainWindowSettings(KGlobal::config(), autoSaveGroup());
+  if(autoSaveSettings())
+  {
+      KConfigGroup cg = KGlobal::config()->group("KMFMainWindow");
+      saveMainWindowSettings(cg);
+  }
   KEditToolbar dlg(actionCollection());
-  connect(&dlg, SIGNAL(newToolbarConfig()), this, SLOT(newToolbarConfig()));
+  connect(&dlg,SIGNAL(newToolbarConfig()),this,SLOT(newToolbarConfig()));
   dlg.setDefaultToolbar("default");
   dlg.exec();
 }
@@ -406,14 +405,15 @@ void KMediaFactory::optionsConfigureToolbars()
 void KMediaFactory::newToolbarConfig()
 {
   createGUI("kmediafactoryui.rc");
-  applyMainWindowSettings(KGlobal::config(), autoSaveGroup());
+  KConfigGroup cg = KGlobal::config()->group("KMFMainWindow");
+  applyMainWindowSettings( cg );
 }
 
 void KMediaFactory::updateToolsMenu()
 {
   KAction* action;
-  QList<KAction*> actions;
-  QList<KAction*> media_actions;
+  QList<QAction*> actions;
+  QList<QAction*> media_actions;
   QStringList files =
       KGlobal::dirs()->findAllResources("appdata", "tools/*.desktop");
 
@@ -421,12 +421,12 @@ void KMediaFactory::updateToolsMenu()
   unplugActionList("media_tools_list");
   for(QStringList::ConstIterator it = files.begin(); it != files.end(); ++it)
   {
-    KDesktopFile df(*it, true);
+    KDesktopFile df(*it);
 
     if (df.readName().isEmpty())
       continue;
-    action = new KAction(df.readName(), actionCollection(), (*it));
-    action->setIcon(KIcon(df.readIcon()));
+    action = new KAction(KIcon(df.readIcon()), df.readName(), this);
+    actionCollection()->addAction((*it), action);
     connect(action, SIGNAL(triggered()), this, SLOT(execTool()));
 
     if(df.readEntry("X-KMF-MediaMenu") == "true")
