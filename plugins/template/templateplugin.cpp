@@ -50,12 +50,7 @@ static const KAboutData about("kmediafactory_template",
                               "petri.damsten@iki.fi");
 
 typedef KGenericFactory<TemplatePlugin> templateFactory;
-#if KDE_IS_VERSION(3, 3, 0)
 K_EXPORT_COMPONENT_FACTORY(kmediafactory_template, templateFactory(&about))
-#else
-K_EXPORT_COMPONENT_FACTORY(kmediafactory_template, templateFactory(about.appName()))
-#endif
-
 
 class ConfigureTemplatePlugin :
     public KDialog, public Ui::ConfigureTemplatePlugin

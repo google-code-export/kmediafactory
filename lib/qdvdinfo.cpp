@@ -39,8 +39,6 @@
 //**************************************************************************
 #include "kmf_stddef.h"
 #include "qdvdinfo.h"
-//Added by qt3to4:
-#include <Q3ValueList>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kapplication.h>

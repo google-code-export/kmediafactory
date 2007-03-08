@@ -38,7 +38,7 @@ namespace KMF
   /**
     @author Petri Damsten <petri.damsten@iki.fi>
   */
-  class Tools
+  class KDE_EXPORT Tools
   {
     public:
       Tools();

@@ -20,12 +20,13 @@
 #ifndef KMFTOOLBUTTON_H
 #define KMFTOOLBUTTON_H
 
+#include <kdemacros.h>
 #include <qtoolbutton.h>
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
-class KMFToolButton : public QToolButton
+class KDE_EXPORT KMFToolButton : public QToolButton
 {
     Q_OBJECT
   public:

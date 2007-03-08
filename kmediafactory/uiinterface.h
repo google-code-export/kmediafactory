@@ -55,14 +55,14 @@ namespace KMF
       virtual QTime chapterTime(int chapter) const = 0;
   };
 
-  class OutputObject :public Object
+  class KDE_EXPORT OutputObject :public Object
   {
       Q_OBJECT
     public:
       OutputObject(QObject* parent);
   };
 
-  class TemplateObject :public Object
+  class KDE_EXPORT TemplateObject :public Object
   {
       Q_OBJECT
     public:
@@ -73,7 +73,7 @@ namespace KMF
       virtual bool clicked() { return false; };
   };
 
-  class Logger :public QObject
+  class KDE_EXPORT Logger :public QObject
   {
       Q_OBJECT
     public:
@@ -94,7 +94,7 @@ namespace KMF
       void message(const QString& msg) { message(msg, QColor("black")); };
   };
 
-  class UiInterface :public QObject
+  class KDE_EXPORT UiInterface :public QObject
   {
       Q_OBJECT
     public:
