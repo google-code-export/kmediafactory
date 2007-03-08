@@ -21,17 +21,16 @@
 #include <kdebug.h>
 #include <qfile.h>
 #include <qdom.h>
-#include <ktempfile.h>
+#include <ktemporaryfile.h>
 
 class TempFileStore
 {
   public:
-    static KTempFile* tempFile(KConfigXML* config)
+    static KTemporaryFile* tempFile(KConfigXML* config)
     {
       if(!m_tempFiles.contains(config))
       {
-        m_tempFiles[config] = new KTempFile();
-        m_tempFiles[config]->setAutoDelete(true);
+        m_tempFiles[config] = new KTemporaryFile();
       }
       return m_tempFiles[config];
     }
@@ -39,36 +38,36 @@ class TempFileStore
     {
       if(m_tempFiles.contains(config))
       {
-        KTempFile* tmp = m_tempFiles[config];
+        KTemporaryFile* tmp = m_tempFiles[config];
         m_tempFiles.remove(config);
         delete tmp;
       }
     }
   private:
-    static QMap<KConfigXML*, KTempFile*> m_tempFiles;
+    static QMap<KConfigXML*, KTemporaryFile*> m_tempFiles;
 };
 
-QMap<KConfigXML*, KTempFile*> TempFileStore::m_tempFiles;
+QMap<KConfigXML*, KTemporaryFile*> TempFileStore::m_tempFiles;
 
 KConfigXML::KConfigXML()
-  : KConfigSkeleton(TempFileStore::tempFile(this)->name())
+  : KConfigSkeleton(TempFileStore::tempFile(this)->fileName())
 {
 }
 
 KConfigXML::KConfigXML(QString kcfgFile)
-  : KConfigSkeleton(TempFileStore::tempFile(this)->name())
+  : KConfigSkeleton(TempFileStore::tempFile(this)->fileName())
 {
   parse(kcfgFile);
 }
 
 KConfigXML::KConfigXML(QIODevice* kcfgFile)
-  : KConfigSkeleton(TempFileStore::tempFile(this)->name())
+  : KConfigSkeleton(TempFileStore::tempFile(this)->fileName())
 {
   parse(kcfgFile);
 }
 
 KConfigXML::KConfigXML(QByteArray* kcfgFile)
-  : KConfigSkeleton(TempFileStore::tempFile(this)->name())
+  : KConfigSkeleton(TempFileStore::tempFile(this)->fileName())
 {
   parse(kcfgFile);
 }

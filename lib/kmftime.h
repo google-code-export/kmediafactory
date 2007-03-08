@@ -20,6 +20,7 @@
 #ifndef KMFKMFTIME_H
 #define KMFKMFTIME_H
 
+#include <kdemacros.h>
 #include <qdatetime.h>
 
 namespace KMF
@@ -27,7 +28,7 @@ namespace KMF
   /**
   @author Petri Damsten
   */
-  class Time : public QTime
+  class KDE_EXPORT Time : public QTime
   {
     public:
       Time() : QTime(0, 0) {};

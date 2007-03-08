@@ -21,6 +21,7 @@
 #ifndef __koStore_h_
 #define __koStore_h_
 
+#include <kdemacros.h>
 #include <QString>
 #include <QStringList>
 #include <QIODevice>
@@ -37,7 +38,7 @@ class KUrl;
  * We call a "store" the file on the hard disk (the one the users sees)
  * and call a "file" a file inside the store.
  */
-class KoStore
+class KDE_EXPORT KoStore
 {
 public:
 

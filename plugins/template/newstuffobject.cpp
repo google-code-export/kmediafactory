@@ -55,7 +55,7 @@ bool NewStuffObject::clicked()
 
 QPixmap NewStuffObject::pixmap() const
 {
-  return KGlobal::iconLoader()->loadIcon("knewstuff", K3Icon::NoGroup,
+  return KIconLoader::global()->loadIcon("knewstuff", K3Icon::NoGroup,
       K3Icon::SizeLarge);
 }
 

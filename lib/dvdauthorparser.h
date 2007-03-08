@@ -20,6 +20,7 @@
 #ifndef KMEDIAFACTORY_DVDAUTHORPARSER_H
 #define KMEDIAFACTORY_DVDAUTHORPARSER_H
 
+#include <kdemacros.h>
 #include <qobject.h>
 #include <qstring.h>
 #include <qstringlist.h>
@@ -27,7 +28,7 @@
 
 namespace KMF
 {
-  class DVDAuthorParser
+  class KDE_EXPORT DVDAuthorParser
   {
     public:
       DVDAuthorParser() {};
