@@ -20,6 +20,7 @@
 #ifndef KMFRECT_H
 #define KMFRECT_H
 
+#include <kdemacros.h>
 #include <qrect.h>
 
 /**
@@ -27,7 +28,7 @@
 */
 namespace KMF
 {
-  class Rect : public QRect
+  class KDE_EXPORT Rect : public QRect
   {
     public:
       Rect();

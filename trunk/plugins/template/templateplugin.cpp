@@ -69,7 +69,8 @@ TemplatePlugin::TemplatePlugin(QObject *parent, const QStringList&) :
 {
   setObjectName("KMFTemplateEngine");
   // Initialize GUI
-  setInstance(templateFactory::instance());
+#warning TODO
+  //setInstance(templateFactory::instance());
   setXMLFile("kmediafactory_templateui.rc");
 }
 

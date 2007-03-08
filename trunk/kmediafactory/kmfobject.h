@@ -20,6 +20,7 @@
 #ifndef KMFOBJECT_H
 #define KMFOBJECT_H
 
+#include <kdemacros.h>
 #include <QAction>
 #include <QObject>
 #include <QPixmap>
@@ -31,7 +32,7 @@ namespace KMF
   class ProjectInterface;
   class Plugin;
 
-  class Object : public QObject
+  class KDE_EXPORT Object : public QObject
   {
     public:
       Object(QObject* parent):

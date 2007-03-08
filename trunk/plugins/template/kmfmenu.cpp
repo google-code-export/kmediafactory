@@ -24,7 +24,7 @@
 #include <kstore/KoStore.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kinstance.h>
+#include <kcomponentdata.h>
 #include <QImage>
 #include <QFile>
 #include <QFileInfo>
@@ -80,8 +80,8 @@ bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
     "g7: temporary variable\n"
     "\n"
     "**********************************************************************\n"
-    , KGlobal::instance()->aboutData()->programName()
-    , KGlobal::instance()->aboutData()->version());
+    , KGlobal::mainComponent().aboutData()->programName()
+    , KGlobal::mainComponent().aboutData()->version());
 
   doc.appendChild(doc.createComment(comment));
   doc.appendChild(doc.createTextNode("\n"));

@@ -32,7 +32,7 @@
 @author Petri Damsten
 */
 
-class LanguageListModel : public QAbstractListModel
+class KDE_EXPORT LanguageListModel : public QAbstractListModel
 {
   Q_OBJECT
   public:

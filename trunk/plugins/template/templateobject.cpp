@@ -35,6 +35,7 @@
 #include <kstandarddirs.h>
 #include <kiconloader.h>
 #include <kicon.h>
+#include <kactioncollection.h>
 #include <QFile>
 #include <QFileInfo>
 #include <QImage>
@@ -78,12 +79,11 @@ TemplateObject::TemplateObject(const QString& templateFile, QObject* parent):
   if(m_menu.templateStore()->hasFile("settings.kcfg") &&
      m_menu.templateStore()->hasFile("settings.ui"))
   {
-    m_templateProperties = new KAction(i18n("&Properties"),
-                                       plugin()->actionCollection(),
-                                       "tob_properties");
-    m_templateProperties->setIcon(KIcon("pencil"));
-    connect(m_templateProperties, SIGNAL(triggered()),
-            this, SLOT(slotProperties()));
+    m_templateProperties = new KAction(KIcon("pencil"),
+                                       i18n("&Properties"),this);
+    plugin()->actionCollection()->addAction("tob_properties",
+           m_templateProperties);
+    connect(m_templateProperties, SIGNAL(triggered()), SLOT(slotProperties()));
 
     QByteArray ba = m_menu.templateStore()->readFile("settings.kcfg");
     m_customProperties.parse(&ba);
