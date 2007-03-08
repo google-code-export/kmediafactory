@@ -39,7 +39,7 @@ kde4_automoc(${kmediafactory_SRCS})
 qt4_add_dbus_adaptor(kmediafactory_SRCS org.kde.kmediafactory.KMediaFactory.xml kmfdbusinterface.h KMFDbusInterface)
 kde4_add_kcfg_files(kmediafactory_SRCS kmediafactorysettings.kcfgc)
 kde4_add_executable(kmediafactory ${kmediafactory_SRCS})
-target_link_libraries(kmediafactory ${KDE4_KPARTS_LIBS} ${KDE4_KHTML_LIBS} ${KDE4_KNEWSTUFF_LIBS} kmf kmediafactoryinterfaces)
+target_link_libraries(kmediafactory kmf kmediafactoryinterfaces ${KDE4_KPARTS_LIBS} ${KDE4_KHTML_LIBS} ${KDE4_KNEWSTUFF_LIBS})
 
 install(TARGETS kmediafactory DESTINATION ${BIN_INSTALL_DIR})
 install(FILES kmediafactoryui.rc DESTINATION ${DATA_INSTALL_DIR}/kmediafactory)

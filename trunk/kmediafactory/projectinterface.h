@@ -22,13 +22,14 @@
 
 #include "kmfobject.h"
 #include <qdatetime.h>
+#include <kdemacros.h>
 
 class QDomElement;
 class MediaObject;
 
 namespace KMF
 {
-  class ProjectInterface :public QObject
+  class KDE_EXPORT ProjectInterface :public QObject
   {
       Q_OBJECT
     public:

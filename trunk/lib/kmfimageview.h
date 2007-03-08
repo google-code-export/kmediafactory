@@ -21,6 +21,7 @@
 #define KMFIMAGEVIEW_H
 
 #include "rect.h"
+#include <kdemacros.h>
 #include <QImage>
 #include <QGraphicsView>
 #include <QGraphicsScene>
@@ -30,7 +31,7 @@
 @author Petri Damsten
 */
 
-class KMFImageView : public QGraphicsView
+class KDE_EXPORT KMFImageView : public QGraphicsView
 {
     Q_OBJECT
   public:
