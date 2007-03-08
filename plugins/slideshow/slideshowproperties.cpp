@@ -46,7 +46,7 @@ SlideshowProperties::SlideshowProperties(QWidget *parent)
   // User sorting
   //slideListView->setSorting(1000);
   audioButton->setIcon(
-      KGlobal::iconLoader()->loadIconSet(("arts"), K3Icon::Small,
+      KIconLoader::global()->loadIconSet(("arts"), K3Icon::Small,
       K3Icon::SizeMedium));
 }
 

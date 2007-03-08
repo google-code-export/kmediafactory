@@ -194,7 +194,10 @@ void Chapters::setData(const QDVD::CellList& cells,
 
 void Chapters::updateVideo()
 {
-  QImage img = m_obj->getFrame(m_pos);
+  QDir dir(m_obj->projectInterface()->projectDir() + "/media/");
+  QString file = dir.filePath(QString("%1_frame.pnm") \
+      .arg(m_obj->id()));
+  QImage img = m_obj->getFrame(m_pos, file);
   video->setImage(img);
 
   QString s = QString("%1: %2 / %3").
@@ -380,7 +383,7 @@ void Chapters::import()
 
   if(!chapterFile.isEmpty())
   {
-    KSimpleConfig chapters(chapterFile, true);
+    KConfig chapters(chapterFile, KConfig::OnlyLocal);
     int i = 1;
     QString entry;
 

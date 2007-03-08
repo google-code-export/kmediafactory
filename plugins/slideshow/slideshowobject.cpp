@@ -25,9 +25,9 @@
 #include <kio/job.h>
 #include <kfileitem.h>
 #include <kstandarddirs.h>
-#include <kprogressbar.h>
 #include <kfilemetainfo.h>
 #include <kapplication.h>
+#include <kactioncollection.h>
 #include <kaboutdata.h>
 #include <kmftools.h>
 #include <kmftime.h>
@@ -37,12 +37,14 @@
 #include <kmessagebox.h>
 #include <kicon.h>
 #include <kprogressdialog.h>
+#include <kio/copyjob.h>
 #include <QImage>
 #include <QDir>
 #include <QRegExp>
 #include <QPixmap>
 #include <QTextStream>
 #include <list>
+#include <kio/copyjob.h>
 
 Slide::Slide() : chapter(true)
 {
@@ -52,12 +54,11 @@ SlideshowObject::SlideshowObject(QObject* parent)
   : MediaObject(parent), m_loop(false), m_includeOriginals(true)
 {
   setObjectName("slideshow");
-  KAction* action =
-      new KAction(i18n("&Properties"), plugin()->actionCollection(),
-                  "mob_properties");
-  action->setIcon(KIcon("pencil"));
-  connect(action, SIGNAL(triggered()), this, SLOT(slotProperties()));
-
+  QAction* action = new KAction(KIcon("pencil"),
+                                i18n("&Properties"),this);
+  action->setShortcut(Qt::CTRL + Qt::Key_W);
+  plugin()->actionCollection()->addAction("mob_properties", action);
+  connect(action, SIGNAL(triggered()), SLOT(slotProperties()));
   m_duration = SlideshowPluginSettings::slideDuration();
 }
 
@@ -416,8 +417,8 @@ bool SlideshowObject::writeSlideshowFile() const
         "# http://www.iki.fi/damu/software/kmediafactory/\n"
         "# \n"
         "#**************************************************************\n")
-        .arg(KGlobal::instance()->aboutData()->programName())
-        .arg(KGlobal::instance()->aboutData()->version());
+        .arg(KGlobal::mainComponent().aboutData()->programName())
+        .arg(KGlobal::mainComponent().aboutData()->version());
 
     ts << "background:0::black\n";
     ts << "fadein:1\n";

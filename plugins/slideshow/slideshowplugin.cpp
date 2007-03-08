@@ -22,6 +22,7 @@
 #include "slideshowpluginsettings.h"
 #include "slideshowobject.h"
 #include <kmftools.h>
+#include <kactioncollection.h>
 #include <klocale.h>
 #include <kaboutdata.h>
 #include <kgenericfactory.h>
@@ -53,15 +54,15 @@ SlideshowPlugin::SlideshowPlugin(QObject *parent, const QStringList&) :
 {
   setObjectName("KMFSlideshow");
   // Initialize GUI
-  setInstance(KGenericFactory<SlideshowPlugin>::instance());
+#warning TODO
+  //setInstance(KGenericFactory<SlideshowPlugin>::instance());
   setXMLFile("kmediafactory_slideshowui.rc");
   // Add action for menu item
-  addSlideshowAction =
-      new KAction(i18n("Add Slideshow"), actionCollection(), "slideshow");
+  addSlideshowAction = new KAction(KIcon("icons"),
+                                   i18n("Add Slideshow"),this);
   addSlideshowAction->setShortcut(Qt::CTRL + Qt::Key_W);
-  addSlideshowAction->setIcon(KIcon("icons"));
-  connect(addSlideshowAction, SIGNAL(triggered()),
-          this, SLOT(slotAddSlideshow()));
+  actionCollection()->addAction("slideshow", addSlideshowAction);
+  connect(addSlideshowAction, SIGNAL(triggered()), SLOT(slotAddSlideshow()));
 }
 
 void SlideshowPlugin::init(const QString &type)

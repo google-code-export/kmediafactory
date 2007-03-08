@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damst�
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,41 +17,41 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
-#ifndef KMFMULTIURLDIALOG_H
-#define KMFMULTIURLDIALOG_H
+#ifndef QMEDIAFILE_H
+#define QMEDIAFILE_H
 
-#include "ui_kmfmultiurldialog.h"
-#include <QStringListModel>
+#include "qdvdinfo.h"
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
-
-class QStringList;
-
-class KDE_EXPORT KMFMultiURLDialog : public KDialog,
-                                     public Ui::KMFMultiURLDialog
+class KDE_EXPORT QMediaFile
 {
-    Q_OBJECT
   public:
-    KMFMultiURLDialog(const QString& startDir, const QString& filter,
-                      QWidget* parent, const QString& title);
-    ~KMFMultiURLDialog();
+    QMediaFile(const QString& file = QString::null);
+    ~QMediaFile();
 
-  public:
-    void addFiles(const QStringList& files);
-    QStringList files();
+    bool probe();
 
-  protected slots:
-    virtual void moveUp();
-    virtual void moveDown();
-    virtual void add();
-    virtual void remove();
+    const QTime& duration() const { return m_duration; };
+    double frameRate() const { return m_frameRate; };
+    uint audioStreams() const { return m_audioStreams; };
+    uint subtitles() const { return m_subtitles; };
+    QDVD::VideoTrack::AspectRatio aspectRatio() const { return m_aspectRatio; };
+    bool dvdCompatible() const { return m_dvdCompatible; };
+    bool frame(QTime pos, QString output) const;
 
   private:
-    QString m_dir;
-    QString m_filter;
-    QStringListModel m_model;
+    QString m_file;
+    QTime m_duration;
+    double m_frameRate;
+    uint m_audioStreams;
+    uint m_subtitles;
+    uint m_width;
+    uint m_height;
+    QString m_type;
+    QDVD::VideoTrack::AspectRatio m_aspectRatio;
+    bool m_dvdCompatible;
 };
 
 #endif

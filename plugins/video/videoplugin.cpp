@@ -24,6 +24,7 @@
 #include "videopluginsettings.h"
 #include "ui_videoconfig.h"
 #include <kgenericfactory.h>
+#include <kactioncollection.h>
 #include <kdeversion.h>
 #include <kaction.h>
 #include <kfiledialog.h>
@@ -64,14 +65,14 @@ VideoPlugin::VideoPlugin(QObject *parent, const QStringList&) :
 {
   // Initialize GUI
   setObjectName("KMFImportVideo");
-  setInstance(KGenericFactory<VideoPlugin>::instance());
+#warning TODO
+  //setInstance(KGenericFactory<VideoPlugin>::instance());
   setXMLFile("kmediafactory_videoui.rc");
   // Add action for menu item
-  addVideoAction = new KAction(i18n("Add Video"), actionCollection(), "video");
+  addVideoAction = new KAction(KIcon("video"), i18n("Add Video"),this);
   addVideoAction->setShortcut(Qt::CTRL + Qt::Key_V);
-  addVideoAction->setIcon(KIcon("video"));
-  connect(addVideoAction, SIGNAL(triggered()),
-          this, SLOT(slotAddVideo()));
+  actionCollection()->addAction("video", addVideoAction);
+  connect(addVideoAction, SIGNAL(triggered()), SLOT(slotAddVideo()));
 }
 
 VideoPlugin::~VideoPlugin()

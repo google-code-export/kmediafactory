@@ -34,7 +34,7 @@
 
 namespace QDVD
 {
-  class Languages
+  class KDE_EXPORT Languages
   {
     public:
       Languages() {};
@@ -50,7 +50,7 @@ namespace QDVD
       static const char* LanguageStrings[][2];
   };
 
-  class Base
+  class KDE_EXPORT Base
   {
     public:
       enum { CELL, AUDIO, SUBTITLE, VIDEO, TITLE, INFO };
@@ -63,7 +63,7 @@ namespace QDVD
       virtual uint rtti() const = 0;
   };
 
-  class Cell : public Base
+  class KDE_EXPORT Cell : public Base
   {
     public:
       Cell() : m_cell(0), m_chapter(true), m_startSector(0),
@@ -104,7 +104,7 @@ namespace QDVD
 
   typedef QList< Cell > CellList;
 
-  class Track : public Base
+  class KDE_EXPORT Track : public Base
   {
     public:
       Track() : m_trackId(-1), m_position(-1), m_size(0) {};
@@ -125,7 +125,7 @@ namespace QDVD
       uint64_t m_size;
   };
 
-  class Subtitle : public Track
+  class KDE_EXPORT Subtitle : public Track
   {
     public:
       enum Type { Undefined = 0, Normal, Large, Children, Reserved1,
@@ -170,7 +170,7 @@ namespace QDVD
       QFlags<Qt::AlignmentFlag> m_align;
   };
 
-  class AudioTrack : public Track
+  class KDE_EXPORT AudioTrack : public Track
   {
     public:
       enum Type { Undefined = 0, Normal, Impaired, Comments1, Comments2 };
@@ -216,7 +216,7 @@ namespace QDVD
       int m_bitrate;
   };
 
-  class VideoTrack : public Track
+  class KDE_EXPORT VideoTrack : public Track
   {
     friend class Title;
 
@@ -266,7 +266,7 @@ namespace QDVD
   typedef QList< AudioTrack > AudioList;
   typedef QList< Subtitle > SubtitleList;
 
-  class Title : public Base
+  class KDE_EXPORT Title : public Base
   {
     friend class Info;
 
@@ -344,7 +344,7 @@ namespace QDVD
 
   typedef QList< Title > TitleList;
 
-  class Info : public QObject, public Base
+  class KDE_EXPORT Info : public QObject, public Base
   {
     Q_OBJECT
 #ifdef HAVE_LIBDVDREAD

@@ -29,9 +29,8 @@
 #include <QPixmap>
 #include <QDateTime>
 
-class QFFMpeg;
 class QDir;
-class QMpegVideo;
+class QMediaFile;
 
 namespace QDVD { class Subtitle; class Cell; };
 namespace KMF { class Time; };
@@ -94,12 +93,12 @@ class VideoObject : public KMF::MediaObject
     virtual QDVD::VideoTrack::AspectRatio aspect() const { return m_aspect; };
     void setAspect(QDVD::VideoTrack::AspectRatio aspect) { m_aspect = aspect; };
 
-    virtual void actions(QList<KAction*>& actionList) const;
+    virtual void actions(QList<QAction*>& actionList) const;
     virtual bool addFile(QString fileName);
     void setTitleFromFileName();
     const KUrl& previewUrl() const { return m_previewUrl; };
     void setPreviewUrl(const KUrl& previewUrl) { m_previewUrl = previewUrl; };
-    QImage getFrame(double time) const;
+    QImage getFrame(QTime time, QString file) const;
     const QString& id() const { return m_id; };
 
     double frameRate() const;
@@ -129,10 +128,12 @@ class VideoObject : public KMF::MediaObject
     QDVD::SubtitleList m_subtitles;
 
     void checkObjectParams();
+    const QMediaFile& mediaFile(const QString& file) const;
+    QTime duration(QString file) const;
 
   private:
-    KAction* m_videoProperties;
-    KAction* m_videoPlay;
+    QAction* m_videoProperties;
+    QAction* m_videoPlay;
     KUrl m_previewUrl;
     QDVD::VideoTrack::AspectRatio m_aspect;
     QString m_id;
@@ -142,7 +143,8 @@ class VideoObject : public KMF::MediaObject
     QString m_kmfplayer;
     static const char* m_prefixes[];
     ConversionParams m_conversion;
-    QMpegVideo* m_decoder;
+    QStringList m_files;
+    static QMap<QString, QMediaFile> m_cache;
 
     void generateId();
     void setCellSecs(double secs);
