@@ -13,6 +13,8 @@ set(kmf_LIB_SRCS
   kmfmultiurldialog.cpp
   kmftoolbutton.cpp
   qdvdinfo.cpp
+  qmediafile.cpp
+  run.cpp
 )
 
 set(kmf_HEADERS
@@ -26,6 +28,8 @@ set(kmf_HEADERS
   kmfmultiurldialog.h
   kmftoolbutton.h
   qdvdinfo.h
+  qmediafile.h
+  run.h
 )
 
 kde4_add_ui_files(kmf_LIB_SRCS

@@ -66,7 +66,7 @@ void DvdAuthorObject::toXML(QDomElement&) const
 
 QPixmap DvdAuthorObject::pixmap() const
 {
-  return KGlobal::iconLoader()->loadIcon("dvd_unmount", K3Icon::NoGroup,
+  return KIconLoader::global()->loadIcon("dvd_unmount", K3Icon::NoGroup,
                                                         K3Icon::SizeLarge);
 }
 

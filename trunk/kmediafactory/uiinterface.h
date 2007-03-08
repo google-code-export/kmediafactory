@@ -36,7 +36,7 @@ namespace KMF
   enum MsgType { None = -1, Info, Warning, Error, OK };
   enum AspectRatio { ASPECT_4_3 = 0 , ASPECT_16_9, ASPECT_LAST };
 
-  class MediaObject :public Object
+  class KDE_EXPORT MediaObject :public Object
   {
       Q_OBJECT
     public:

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,41 +17,35 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
-#ifndef KMFMULTIURLDIALOG_H
-#define KMFMULTIURLDIALOG_H
+#ifndef RUN_H
+#define RUN_H
 
-#include "ui_kmfmultiurldialog.h"
-#include <QStringListModel>
+#include <qobject.h>
+#include <qstring.h>
+#include <kprocess.h>
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
-
-class QStringList;
-
-class KDE_EXPORT KMFMultiURLDialog : public KDialog,
-                                     public Ui::KMFMultiURLDialog
+class Run : QObject
 {
     Q_OBJECT
   public:
-    KMFMultiURLDialog(const QString& startDir, const QString& filter,
-                      QWidget* parent, const QString& title);
-    ~KMFMultiURLDialog();
+    Run(QString command = QString::null);
+    ~Run();
 
-  public:
-    void addFiles(const QStringList& files);
-    QStringList files();
+    bool run();
+    QString output() { return m_output; };
+    int result() { return m_result; };
 
-  protected slots:
-    virtual void moveUp();
-    virtual void moveDown();
-    virtual void add();
-    virtual void remove();
+  public slots:
+    virtual void stdout(KProcess *proc, char *buffer, int buflen);
+    virtual void stderr(KProcess *proc, char *buffer, int buflen);
 
   private:
-    QString m_dir;
-    QString m_filter;
-    QStringListModel m_model;
+    QString m_command;
+    QString m_output;
+    int m_result;
 };
 
 #endif

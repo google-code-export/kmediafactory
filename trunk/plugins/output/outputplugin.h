@@ -23,7 +23,7 @@
 #include <kmf_stddef.h>
 #include <kmediafactory/plugin.h>
 
-class KAction;
+class QAction;
 
 class OutputPlugin : public KMF::Plugin
 {
@@ -42,10 +42,10 @@ class OutputPlugin : public KMF::Plugin
     void slotDVDInfo();
 
   private:
-    KAction* dvdInfo;
-    KAction* addPreviewDVD;
-    KAction* addPreviewDVDXine;
-    KAction* addPreviewDVDKaffeine;
+    QAction* dvdInfo;
+    QAction* addPreviewDVD;
+    QAction* addPreviewDVDXine;
+    QAction* addPreviewDVDKaffeine;
     QString m_kmfplayer;
     QString m_xine;
     QString m_kaffeine;

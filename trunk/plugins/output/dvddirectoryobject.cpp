@@ -28,6 +28,7 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <kicon.h>
+#include <kactioncollection.h>
 #include <QFileInfo>
 #include <QFile>
 #include <QDir>
@@ -42,11 +43,10 @@ DvdDirectoryObject::DvdDirectoryObject(QObject* parent)
 {
   setObjectName("dvddir");
   setTitle(i18n("DVD Directory"));
-  dvdCleanDirectory =
-      new KAction(i18n("&Clean directory"),
-                  plugin()->actionCollection(), "ddob_cleandir");
-  dvdCleanDirectory->setIcon(KIcon("editdelete"));
-  connect(dvdCleanDirectory, SIGNAL(triggered()), this, SLOT(clean()));
+  dvdCleanDirectory = new KAction(KIcon("editdelete"),
+                                  i18n("&Clean directory"),this);
+  plugin()->actionCollection()->addAction("ddob_cleandir", dvdCleanDirectory);
+  connect(dvdCleanDirectory, SIGNAL(triggered()), SLOT(clean()));
 }
 
 DvdDirectoryObject::~DvdDirectoryObject()
@@ -281,8 +281,8 @@ void DvdDirectoryObject::toXML(QDomElement&) const
 
 QPixmap DvdDirectoryObject::pixmap() const
 {
-  return KGlobal::iconLoader()->loadIcon("folder_video", K3Icon::NoGroup,
-                                                         K3Icon::SizeLarge);
+  return KIconLoader::global()->loadIcon("folder_video", K3Icon::NoGroup,
+                                           K3Icon::SizeLarge);
 }
 
 #include "dvddirectoryobject.moc"

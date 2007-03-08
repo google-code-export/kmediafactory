@@ -22,6 +22,7 @@
 #include "dvddirectoryobject.h"
 #include "dvdauthorobject.h"
 #include "k3bobject.h"
+#include <kactioncollection.h>
 #include <kdeversion.h>
 #include <kapplication.h>
 #include <kgenericfactory.h>
@@ -57,7 +58,8 @@ OutputPlugin::OutputPlugin(QObject *parent, const QStringList&) :
 {
   setObjectName("KMFOutput");
   // Initialize GUI
-  setInstance(KGenericFactory<OutputPlugin>::instance());
+#warning TODO
+  //setInstance(KGenericFactory<OutputPlugin>::instance());
   setXMLFile("kmediafactory_outputui.rc");
 
   m_kmfplayer = KStandardDirs::findExe("kmediafactoryplayer");
@@ -65,40 +67,35 @@ OutputPlugin::OutputPlugin(QObject *parent, const QStringList&) :
   m_kaffeine = KStandardDirs::findExe("kaffeine");
 
 #ifdef HAVE_LIBDVDREAD
-  dvdInfo = new KAction(i18n("DVD Info"), actionCollection(), "dvd_info");
+  dvdInfo =new KAction(KIcon("viewmag"), i18n("DVD Info"),this);
   dvdInfo->setShortcut(Qt::CTRL + Qt::Key_I);
-  dvdInfo->setIcon(KIcon("viewmag"));
-  connect(dvdInfo, SIGNAL(triggered()),
-          this, SLOT(slotDVDInfo()));
+  actionCollection()->addAction("dvd_info", dvdInfo);
+  connect(dvdInfo, SIGNAL(triggered()), SLOT(slotDVDInfo()));
 #endif
   if(!m_kmfplayer.isEmpty())
   {
-    addPreviewDVD =
-        new KAction(i18n("Preview DVD"),actionCollection(), "preview_dvd");
+    addPreviewDVD =new KAction(KIcon("viewmag"), i18n("Preview DVD"),this);
     addPreviewDVD->setShortcut(Qt::CTRL + Qt::Key_P);
-    addPreviewDVD->setIcon(KIcon("viewmag"));
-    connect(addPreviewDVD, SIGNAL(triggered()),
-            this, SLOT(slotPreviewDVD()));
+    actionCollection()->addAction("preview_dvd", addPreviewDVD);
+    connect(addPreviewDVD, SIGNAL(triggered()), SLOT(slotPreviewDVD()));
   }
   if(!m_xine.isEmpty())
   {
-    addPreviewDVDXine =
-        new KAction(i18n("Preview DVD in Xine"), actionCollection(),
-                    "preview_dvd_xine");
+    addPreviewDVDXine =new KAction(KIcon("xine"),
+                                   i18n("Preview DVD in Xine"),this);
     addPreviewDVDXine->setShortcut(Qt::CTRL + Qt::Key_X);
-    addPreviewDVDXine->setIcon(KIcon("xine"));
-    connect(addPreviewDVDXine, SIGNAL(triggered()),
-            this, SLOT(slotPreviewDVDXine()));
+    actionCollection()->addAction("preview_dvd_xine", addPreviewDVDXine);
+    connect(addPreviewDVDXine, SIGNAL(triggered()), SLOT(slotPreviewDVDXine()));
   }
   if(!m_kaffeine.isEmpty())
   {
-    addPreviewDVDKaffeine =
-        new KAction(i18n("Preview DVD in Kaffeine"), actionCollection(),
-                    "preview_dvd_kaffeine");
+    addPreviewDVDKaffeine =new KAction(KIcon("xine"),
+                                   i18n("Preview DVD in Kaffeine"),this);
     addPreviewDVDKaffeine->setShortcut(Qt::CTRL + Qt::Key_K);
-    addPreviewDVDKaffeine->setIcon(KIcon("kaffeine"));
+    actionCollection()->addAction("preview_dvd_kaffeine",
+                                  addPreviewDVDKaffeine);
     connect(addPreviewDVDKaffeine, SIGNAL(triggered()),
-            this, SLOT(slotPreviewDVDKaffeine()));
+            SLOT(slotPreviewDVDKaffeine()));
   }
 }
 

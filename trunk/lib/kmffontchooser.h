@@ -31,7 +31,7 @@ class QFont;
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
 
-class KMFFontChooser : public QWidget
+class KDE_EXPORT KMFFontChooser : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(QFont font READ font WRITE setFont)

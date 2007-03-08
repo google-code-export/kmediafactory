@@ -79,7 +79,7 @@ void K3bObject::toXML(QDomElement&) const
 
 QPixmap K3bObject::pixmap() const
 {
-  return KGlobal::iconLoader()->loadIcon("k3b", K3Icon::NoGroup,
+  return KIconLoader::global()->loadIcon("k3b", K3Icon::NoGroup,
                                          K3Icon::SizeLarge);
 }
 
@@ -372,10 +372,9 @@ void K3bObject::saveDocumentDataOptions(QDomElement&)
 
 void K3bObject::saveDocumentDataHeader(QDomElement& headerElem)
 {
-  KApplication* kApp = KApplication::kApplication();
   QString app = QString(i18n("%1 - Version %2"))
-      .arg(kApp->aboutData()->productName())
-      .arg(kApp->aboutData()->version());
+      .arg(KGlobal::mainComponent().aboutData()->programName())
+      .arg(KGlobal::mainComponent().aboutData()->version());
 
   QDomDocument doc = headerElem.ownerDocument();
   QDomElement topElem = doc.createElement("volume_id");
