@@ -1,0 +1,12 @@
+#!/bin/sh
+# Usage: frame /media/movies/movie.mpg 00:10:00 /home/user/kmf/image.pnm
+
+FILE=$1
+TIME=$2
+OUTPUT="$3"
+DIR=`dirname "$OUTPUT"`
+
+mencoder -ss $TIME -endpos .1 -ovc copy -nosound $FILE -o "$DIR/kmf_tmp_x.mpg"
+mplayer -nosound -vo pnm:outdir="$DIR" "$DIR/kmf_tmp_x.mpg"
+rm "$DIR/kmf_tmp_x.mpg"
+mv "$DIR/00000001.ppm" "$OUTPUT"
