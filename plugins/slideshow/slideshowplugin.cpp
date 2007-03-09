@@ -42,20 +42,14 @@ static const KAboutData about("kmediafactory_slideshow",
                               "petri.damsten@iki.fi");
 
 typedef KGenericFactory<SlideshowPlugin> slideshowFactory;
-#if KDE_IS_VERSION(3, 3, 0)
 K_EXPORT_COMPONENT_FACTORY(kmediafactory_slideshow, slideshowFactory(&about))
-#else
-K_EXPORT_COMPONENT_FACTORY(kmediafactory_slideshow,
-    slideshowFactory(about.appName()))
-#endif
 
 SlideshowPlugin::SlideshowPlugin(QObject *parent, const QStringList&) :
-  KMF::Plugin(parent)
+  KMF::Plugin(parent), addSlideshowAction(0)
 {
   setObjectName("KMFSlideshow");
   // Initialize GUI
-#warning TODO
-  //setInstance(KGenericFactory<SlideshowPlugin>::instance());
+  setComponentData(slideshowFactory::componentData());
   setXMLFile("kmediafactory_slideshowui.rc");
   // Add action for menu item
   addSlideshowAction = new KAction(KIcon("icons"),
@@ -70,11 +64,14 @@ void SlideshowPlugin::init(const QString &type)
   deleteChildren();
   if (type.left(3) == "DVD")
   {
+#warning TODO
+  /*
     m_dvdslideshow = KStandardDirs::findExe("dvd-slideshow");
     if(m_dvdslideshow.isEmpty())
       addSlideshowAction->setEnabled(false);
     else
       addSlideshowAction->setEnabled(true);
+    */
   }
   else
   {

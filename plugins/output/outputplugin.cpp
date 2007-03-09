@@ -58,8 +58,7 @@ OutputPlugin::OutputPlugin(QObject *parent, const QStringList&) :
 {
   setObjectName("KMFOutput");
   // Initialize GUI
-#warning TODO
-  //setInstance(KGenericFactory<OutputPlugin>::instance());
+  setComponentData(outputFactory::componentData());
   setXMLFile("kmediafactory_outputui.rc");
 
   m_kmfplayer = KStandardDirs::findExe("kmediafactoryplayer");

@@ -49,7 +49,6 @@ static const KAboutData about("kmediafactory_video",
 
 typedef KGenericFactory<VideoPlugin> videoFactory;
 K_EXPORT_COMPONENT_FACTORY(kmediafactory_video, videoFactory(&about));
-//K_EXPORT_PLUGIN(VideoPlugin);
 
 class VideoConfig : public QWidget, public Ui::VideoConfig
 {
@@ -65,8 +64,6 @@ VideoPlugin::VideoPlugin(QObject *parent, const QStringList&) :
 {
   // Initialize GUI
   setObjectName("KMFImportVideo");
-#warning TODO
-  //setInstance(KGenericFactory<VideoPlugin>::instance());
   setXMLFile("kmediafactory_videoui.rc");
   // Add action for menu item
   addVideoAction = new KAction(KIcon("video"), i18n("Add Video"),this);
@@ -94,7 +91,8 @@ void VideoPlugin::init(const QString &type)
   deleteChildren();
   if (type.left(3) == "DVD")
   {
-    addVideoAction->setEnabled(true);
+#warning TODO
+    //addVideoAction->setEnabled(true);
   }
   else
   {
