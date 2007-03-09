@@ -23,6 +23,7 @@
 #include "videoobject.h"
 #include "videopluginsettings.h"
 #include "ui_videoconfig.h"
+#include <kstandarddirs.h>
 #include <kgenericfactory.h>
 #include <kactioncollection.h>
 #include <kdeversion.h>
@@ -66,6 +67,7 @@ VideoPlugin::VideoPlugin(QObject *parent, const QStringList&) :
   setObjectName("KMFImportVideo");
   setComponentData(VideoFactory::componentData());
   setXMLFile("kmediafactory_videoui.rc");
+
   // Add action for menu item
   QAction* addVideoAction = new KAction(KIcon("video"), i18n("Add Video"),this);
   addVideoAction->setShortcut(Qt::CTRL + Qt::Key_V);
@@ -91,7 +93,7 @@ void VideoPlugin::init(const QString &type)
 {
   kDebug() << k_funcinfo << type << endl;
   deleteChildren();
-  QAction* action = actionCollection()->action("slideshow");
+  QAction* action = actionCollection()->action("video");
   if(!action)
     return;
 

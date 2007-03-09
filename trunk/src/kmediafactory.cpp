@@ -68,13 +68,6 @@
 #include <QDragEnterEvent>
 #include <QDropEvent>
 
-#ifdef KMF_TEST
-#include "qdvdinfo.h"
-#endif
-
-// TODO: Move everything not related to main window to application
-// (loadPlugins...)
-
 KMediaFactory::KMediaFactory()
   : KMainWindow(0), m_janusIconList(0), m_enabled(true),
     m_newStuffDlg(0)
@@ -138,8 +131,6 @@ KMediaFactory::KMediaFactory()
   // position, icon size, etc.
   setAutoSaveSettings();
 
-  // TODO: move these to correct places
-  // TODO: make function QPtrList<KMF::Plugins> getPlugins()
   const QObjectList& l = kmfApp->pluginInterface()->children();
   for(int i = 0; i < l.size(); ++i)
     if(l[i]->inherits("KMF::Plugin"))
@@ -171,6 +162,9 @@ void KMediaFactory::setupActions()
   KStandardAction::quit(this, SLOT(quit()), actionCollection());
 
   // Project
+  action = new KAction(KIcon("configure"), i18n("&Options"),this);
+  actionCollection()->addAction("project_options", action);
+  connect(action, SIGNAL(triggered()), SLOT(projectOptions()));
 
   // KNewStuff
   action = new KAction(KIcon("bookmark"), i18n("&Get new tools"),this);
@@ -192,14 +186,6 @@ void KMediaFactory::setupActions()
   action->setShortcut(Qt::Key_Delete);
   actionCollection()->addAction("delete", action);
   connect(action, SIGNAL(triggered()), SLOT(itemDelete()));
-
-  // Testing
-#ifdef KMF_TEST
-  new KAction(i18n("&Test"), "configure", Qt::CTRL + Qt::Key_Z, this,
-              SLOT(test()), actionCollection(), "test" );
-#endif
-  //m_statusbarAction = KStandardAction::showStatusbar(this,
-  //     SLOT(optionsShowStatusbar()), actionCollection());
 
   createGUI("kmediafactoryui.rc");
 
@@ -540,15 +526,6 @@ bool KMediaFactory::queryClose()
   kmfApp->finalize();
   return true;
 }
-
-#ifdef KMF_TEST
-void KMediaFactory::test()
-{
-  QDVD::Info info;
-
-  info.parseDVD();
-}
-#endif
 
 void KMediaFactory::enableUi(bool enabled)
 {
