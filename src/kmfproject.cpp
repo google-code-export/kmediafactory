@@ -161,7 +161,9 @@ void KMFProject::setOutput(KMF::OutputObject* output)
 void KMFProject::init()
 {
   m_initializing = true;
+  kDebug() << k_funcinfo << "preinit" << endl;
   emit preinit(m_type);
+  kDebug() << k_funcinfo << "init" << endl;
   emit init(m_type);
   m_initializing = false;
   setDirty(KMF::ProjectInterface::DirtyAny, false);
