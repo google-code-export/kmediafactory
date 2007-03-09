@@ -45,15 +45,16 @@ typedef KGenericFactory<SlideshowPlugin> slideshowFactory;
 K_EXPORT_COMPONENT_FACTORY(kmediafactory_slideshow, slideshowFactory(&about))
 
 SlideshowPlugin::SlideshowPlugin(QObject *parent, const QStringList&) :
-  KMF::Plugin(parent), addSlideshowAction(0)
+  KMF::Plugin(parent)
 {
+  kDebug() << k_funcinfo << endl;
   setObjectName("KMFSlideshow");
   // Initialize GUI
   setComponentData(slideshowFactory::componentData());
   setXMLFile("kmediafactory_slideshowui.rc");
   // Add action for menu item
-  addSlideshowAction = new KAction(KIcon("icons"),
-                                   i18n("Add Slideshow"),this);
+  QAction* addSlideshowAction = new KAction(KIcon("icons"),
+                                     i18n("Add Slideshow"),this);
   addSlideshowAction->setShortcut(Qt::CTRL + Qt::Key_W);
   actionCollection()->addAction("slideshow", addSlideshowAction);
   connect(addSlideshowAction, SIGNAL(triggered()), SLOT(slotAddSlideshow()));
@@ -61,21 +62,27 @@ SlideshowPlugin::SlideshowPlugin(QObject *parent, const QStringList&) :
 
 void SlideshowPlugin::init(const QString &type)
 {
+  kDebug() << k_funcinfo << type << endl;
   deleteChildren();
+  QAction* action = actionCollection()->action("slideshow");
+  if(!action)
+    return;
+
   if (type.left(3) == "DVD")
   {
-#warning TODO
-  /*
     m_dvdslideshow = KStandardDirs::findExe("dvd-slideshow");
     if(m_dvdslideshow.isEmpty())
-      addSlideshowAction->setEnabled(false);
+    {
+      action->setEnabled(false);
+    }
     else
-      addSlideshowAction->setEnabled(true);
-    */
+    {
+      action->setEnabled(true);
+    }
   }
   else
   {
-    addSlideshowAction->setEnabled(false);
+    action->setEnabled(false);
   }
 }
 

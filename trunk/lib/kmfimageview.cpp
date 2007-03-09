@@ -65,10 +65,16 @@ void KMFImageView::scale()
 void KMFImageView::newImage()
 {
   if(m_imageItem)
+  {
     m_scene.removeItem(m_imageItem);
-  m_scene.setSceneRect(0, 0, m_image.width(), m_image.height());
-  m_imageItem = m_scene.addPixmap(QPixmap::fromImage(m_image));
-  scale();
+    m_imageItem = 0;
+  }
+  if(!m_image.isNull())
+  {
+    m_scene.setSceneRect(0, 0, m_image.width(), m_image.height());
+    m_imageItem = m_scene.addPixmap(QPixmap::fromImage(m_image));
+    scale();
+  }
 }
 
 void KMFImageView::resizeEvent(QResizeEvent*)

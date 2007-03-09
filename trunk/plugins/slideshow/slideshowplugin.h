@@ -40,8 +40,7 @@ class SlideshowPlugin : public KMF::Plugin
     void slotAddSlideshow();
 
   private:
-    KAction* addSlideshowAction;
-    QString m_dvdslideshow;
+    QString  m_dvdslideshow;
 };
 
 #endif /* SLIDESHOWPLUGIN_H */

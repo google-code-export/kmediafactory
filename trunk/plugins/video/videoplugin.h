@@ -39,12 +39,6 @@ class VideoPlugin :public KMF::Plugin
     virtual void init(const QString &type);
     virtual QStringList supportedProjectTypes();
     void slotAddVideo();
-
-  private:
-    KAction* addVideoAction;
-
-    static void ffmpeg_av_log_callback(void *ptr, int level,
-                                       const char *fmt, va_list vl);
 };
 
 #endif /* VIDEOPLUGIN_H */

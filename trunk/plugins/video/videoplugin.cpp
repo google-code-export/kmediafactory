@@ -47,8 +47,8 @@ static const KAboutData about("kmediafactory_video",
                               "(C) 2005 Petri Damsten", 0, 0,
                               "petri.damsten@iki.fi");
 
-typedef KGenericFactory<VideoPlugin> videoFactory;
-K_EXPORT_COMPONENT_FACTORY(kmediafactory_video, videoFactory(&about));
+typedef KGenericFactory<VideoPlugin> VideoFactory;
+K_EXPORT_COMPONENT_FACTORY(kmediafactory_video, VideoFactory(&about));
 
 class VideoConfig : public QWidget, public Ui::VideoConfig
 {
@@ -64,9 +64,10 @@ VideoPlugin::VideoPlugin(QObject *parent, const QStringList&) :
 {
   // Initialize GUI
   setObjectName("KMFImportVideo");
+  setComponentData(VideoFactory::componentData());
   setXMLFile("kmediafactory_videoui.rc");
   // Add action for menu item
-  addVideoAction = new KAction(KIcon("video"), i18n("Add Video"),this);
+  QAction* addVideoAction = new KAction(KIcon("video"), i18n("Add Video"),this);
   addVideoAction->setShortcut(Qt::CTRL + Qt::Key_V);
   actionCollection()->addAction("video", addVideoAction);
   connect(addVideoAction, SIGNAL(triggered()), SLOT(slotAddVideo()));
@@ -88,15 +89,19 @@ const KMF::ConfigPage* VideoPlugin::configPage() const
 
 void VideoPlugin::init(const QString &type)
 {
+  kDebug() << k_funcinfo << type << endl;
   deleteChildren();
+  QAction* action = actionCollection()->action("slideshow");
+  if(!action)
+    return;
+
   if (type.left(3) == "DVD")
   {
-#warning TODO
-    //addVideoAction->setEnabled(true);
+    action->setEnabled(true);
   }
   else
   {
-    addVideoAction->setEnabled(false);
+    action->setEnabled(false);
   }
 }
 
