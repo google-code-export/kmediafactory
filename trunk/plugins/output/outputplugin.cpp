@@ -46,11 +46,11 @@ static const char version[] = VERSION;
 static const KAboutData about("kmediafactory_output",
                               I18N_NOOP("KMediaFactory Output"),
                               version, description, KAboutData::License_GPL,
-                              "(C) 2005 Petri Damsten", 0, 0,
+                              "(C) 2005-2007 Petri Damsten", 0, 0,
                               "petri.damsten@iki.fi");
 
-typedef KGenericFactory<OutputPlugin> outputFactory;
-K_EXPORT_COMPONENT_FACTORY(kmediafactory_output, outputFactory(&about))
+typedef KGenericFactory<OutputPlugin> OutputFactory;
+K_EXPORT_COMPONENT_FACTORY(kmediafactory_output, OutputFactory(&about))
 
 OutputPlugin::OutputPlugin(QObject *parent, const QStringList&) :
   KMF::Plugin(parent), addPreviewDVD(0),
@@ -58,7 +58,7 @@ OutputPlugin::OutputPlugin(QObject *parent, const QStringList&) :
 {
   setObjectName("KMFOutput");
   // Initialize GUI
-  setComponentData(outputFactory::componentData());
+  setComponentData(OutputFactory::componentData());
   setXMLFile("kmediafactory_outputui.rc");
 
   m_kmfplayer = KStandardDirs::findExe("kmediafactoryplayer");
@@ -66,14 +66,14 @@ OutputPlugin::OutputPlugin(QObject *parent, const QStringList&) :
   m_kaffeine = KStandardDirs::findExe("kaffeine");
 
 #ifdef HAVE_LIBDVDREAD
-  dvdInfo =new KAction(KIcon("viewmag"), i18n("DVD Info"),this);
+  dvdInfo =new KAction(KIcon("viewmag"), i18n("DVD Info"), parent());
   dvdInfo->setShortcut(Qt::CTRL + Qt::Key_I);
   actionCollection()->addAction("dvd_info", dvdInfo);
   connect(dvdInfo, SIGNAL(triggered()), SLOT(slotDVDInfo()));
 #endif
   if(!m_kmfplayer.isEmpty())
   {
-    addPreviewDVD =new KAction(KIcon("viewmag"), i18n("Preview DVD"),this);
+    addPreviewDVD =new KAction(KIcon("viewmag"), i18n("Preview DVD"), parent);
     addPreviewDVD->setShortcut(Qt::CTRL + Qt::Key_P);
     actionCollection()->addAction("preview_dvd", addPreviewDVD);
     connect(addPreviewDVD, SIGNAL(triggered()), SLOT(slotPreviewDVD()));
@@ -81,7 +81,7 @@ OutputPlugin::OutputPlugin(QObject *parent, const QStringList&) :
   if(!m_xine.isEmpty())
   {
     addPreviewDVDXine =new KAction(KIcon("xine"),
-                                   i18n("Preview DVD in Xine"),this);
+                                   i18n("Preview DVD in Xine"), parent);
     addPreviewDVDXine->setShortcut(Qt::CTRL + Qt::Key_X);
     actionCollection()->addAction("preview_dvd_xine", addPreviewDVDXine);
     connect(addPreviewDVDXine, SIGNAL(triggered()), SLOT(slotPreviewDVDXine()));
@@ -89,7 +89,7 @@ OutputPlugin::OutputPlugin(QObject *parent, const QStringList&) :
   if(!m_kaffeine.isEmpty())
   {
     addPreviewDVDKaffeine =new KAction(KIcon("xine"),
-                                   i18n("Preview DVD in Kaffeine"),this);
+                                   i18n("Preview DVD in Kaffeine"), parent);
     addPreviewDVDKaffeine->setShortcut(Qt::CTRL + Qt::Key_K);
     actionCollection()->addAction("preview_dvd_kaffeine",
                                   addPreviewDVDKaffeine);

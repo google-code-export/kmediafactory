@@ -45,7 +45,7 @@ static const char version[] = VERSION;
 static const KAboutData about("kmediafactory_video",
                               I18N_NOOP("KMediaFactory Video"),
                               version, description, KAboutData::License_GPL,
-                              "(C) 2005 Petri Damsten", 0, 0,
+                              "(C) 2005-2007 Petri Damsten", 0, 0,
                               "petri.damsten@iki.fi");
 
 typedef KGenericFactory<VideoPlugin> VideoFactory;
@@ -63,16 +63,8 @@ class VideoConfig : public QWidget, public Ui::VideoConfig
 VideoPlugin::VideoPlugin(QObject *parent, const QStringList&) :
   KMF::Plugin(parent)
 {
-  // Initialize GUI
   setObjectName("KMFImportVideo");
-  setComponentData(VideoFactory::componentData());
-  setXMLFile("kmediafactory_videoui.rc");
-
-  // Add action for menu item
-  QAction* addVideoAction = new KAction(KIcon("video"), i18n("Add Video"),this);
-  addVideoAction->setShortcut(Qt::CTRL + Qt::Key_V);
-  actionCollection()->addAction("video", addVideoAction);
-  connect(addVideoAction, SIGNAL(triggered()), SLOT(slotAddVideo()));
+  setupActions();
 }
 
 VideoPlugin::~VideoPlugin()
@@ -89,10 +81,27 @@ const KMF::ConfigPage* VideoPlugin::configPage() const
   return configPage;
 }
 
+QAction* VideoPlugin::setupActions()
+{
+  setComponentData(VideoFactory::componentData());
+
+  // Add action for menu item
+  QAction* addVideoAction = new KAction(KIcon("video"), i18n("Add Video"),
+                                        parent());
+  addVideoAction->setShortcut(Qt::CTRL + Qt::Key_V);
+  actionCollection()->addAction("video", addVideoAction);
+  connect(addVideoAction, SIGNAL(triggered()), SLOT(slotAddVideo()));
+
+  setXMLFile("kmediafactory_videoui.rc");
+
+  return addVideoAction;
+}
+
 void VideoPlugin::init(const QString &type)
 {
   kDebug() << k_funcinfo << type << endl;
   deleteChildren();
+
   QAction* action = actionCollection()->action("video");
   if(!action)
     return;

@@ -152,6 +152,7 @@ KMediaFactory::~KMediaFactory()
 
 void KMediaFactory::setupActions()
 {
+  kDebug() << k_funcinfo << endl;
   QAction* action;
 
   // File
@@ -194,6 +195,7 @@ void KMediaFactory::setupActions()
 
 void KMediaFactory::connectProject()
 {
+  kDebug() << k_funcinfo << endl;
   kmfApp->project()->disconnect();
 
   const KMF::PluginList list = kmfApp->plugins();
@@ -238,6 +240,7 @@ void KMediaFactory::itemDelete()
 
 void KMediaFactory::projectOptions()
 {
+  //kDebug() << k_funcinfo << endl;
   ProjectOptions dlg(this);
   dlg.setData(*kmfApp->project());
   if (dlg.exec())
@@ -258,6 +261,7 @@ void KMediaFactory::newStuff()
 
 void KMediaFactory::initGUI()
 {
+  kDebug() << k_funcinfo << endl;
   if(!kmfApp->url().isEmpty() &&
       KIO::NetAccess::exists(kmfApp->url(), true, this))
     load(kmfApp->url());
@@ -277,6 +281,7 @@ void KMediaFactory::resetGUI()
 
 void KMediaFactory::fileNew()
 {
+  kDebug() << k_funcinfo << endl;
   if(checkSaveProject())
   {
     resetGUI();
