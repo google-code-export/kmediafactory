@@ -82,6 +82,7 @@ KMFProject *KMFApplication::newProject()
 
 void KMFApplication::loadPlugins()
 {
+  kDebug() << k_funcinfo << endl;
   m_pluginInterface = new QObject(this);
   m_pluginInterface->setObjectName("pluginInterface");
   m_uiInterface = new KMFUiInterface(m_pluginInterface);

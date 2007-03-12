@@ -23,7 +23,7 @@
 #include <kmf_stddef.h>
 #include <kmediafactory/plugin.h>
 
-class KAction;
+class QAction;
 
 class SlideshowPlugin : public KMF::Plugin
 {
@@ -38,6 +38,9 @@ class SlideshowPlugin : public KMF::Plugin
     virtual void init(const QString &type);
     virtual QStringList supportedProjectTypes();
     void slotAddSlideshow();
+
+  protected:
+    QAction* setupActions();
 
   private:
     QString  m_dvdslideshow;

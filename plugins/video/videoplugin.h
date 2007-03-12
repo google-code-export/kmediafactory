@@ -35,6 +35,9 @@ class VideoPlugin :public KMF::Plugin
     virtual KMF::MediaObject* createMediaObject(const QDomElement& element);
     virtual const KMF::ConfigPage* configPage() const;
 
+  protected:
+    QAction* setupActions();
+
   public slots:
     virtual void init(const QString &type);
     virtual QStringList supportedProjectTypes();

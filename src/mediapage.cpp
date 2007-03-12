@@ -33,9 +33,9 @@ MediaPage::MediaPage(QWidget *parent) :
 {
   setupUi(this);
 
-  mediaButtons->setIconDimensions(K3Icon::SizeLarge);
-  mediaButtons->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-  mediaButtons->setAllowedAreas(Qt::NoToolBarArea);
+  //mediaButtons->setIconDimensions(K3Icon::SizeLarge);
+  //mediaButtons->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+  //mediaButtons->setAllowedAreas(Qt::NoToolBarArea);
   //mediaButtons->setParent(0);
   //mediaButtons->setFrameStyle(Q3Frame::Panel | Q3Frame::Raised);
   //mediaButtons->setLineWidth(1);
