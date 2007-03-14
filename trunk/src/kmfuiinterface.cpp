@@ -50,6 +50,13 @@ KMFUiInterface::~KMFUiInterface()
 {
 }
 
+bool KMFUiInterface::addMediaAction(QAction* action,
+                                    const QString& group) const
+{
+  kmfApp->mainWindow()->mediaPage->mediaButtons->add(action, group);
+  return true;
+}
+
 bool KMFUiInterface::addMediaObject(KMF::MediaObject *media) const
 {
   KMFProject* project = kmfApp->project();

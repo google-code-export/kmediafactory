@@ -86,6 +86,8 @@ class KMFUiInterface : public KMF::UiInterface
   public:
     KMFUiInterface(QObject *parent = 0);
     virtual ~KMFUiInterface();
+    virtual bool addMediaAction(QAction* action,
+                                const QString& group = "") const;
     virtual bool addMediaObject(KMF::MediaObject* media) const;
     virtual bool addTemplateObject(KMF::TemplateObject* tob);
     virtual bool addOutputObject(KMF::OutputObject* oob);

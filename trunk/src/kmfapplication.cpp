@@ -36,8 +36,6 @@
 #include <klauncher_iface.h>
 #include <QObject>
 #include <QFileInfo>
-#include <Q3CString>
-#include <Q3ValueList>
 #include <QtDBus>
 #include <errno.h>
 

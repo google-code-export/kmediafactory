@@ -99,6 +99,8 @@ namespace KMF
       Q_OBJECT
     public:
       UiInterface(QObject* parent);
+      virtual bool addMediaAction(QAction* action,
+                                  const QString& group = "") const = 0;
       virtual bool addMediaObject(MediaObject* media) const = 0;
       virtual bool addTemplateObject(TemplateObject* tob) = 0;
       virtual bool addOutputObject(OutputObject* oob) = 0;
