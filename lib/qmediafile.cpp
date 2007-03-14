@@ -48,7 +48,8 @@ bool QMediaFile::probe()
     for(QStringList::Iterator it = lines.begin(); it != lines.end(); ++it)
     {
       QStringList keyAndValue = it->split("=");
-      info[keyAndValue[0]] = keyAndValue[1];
+      if(keyAndValue.count() == 2)
+        info[keyAndValue[0]] = keyAndValue[1];
     }
 
     m_aspectRatio =

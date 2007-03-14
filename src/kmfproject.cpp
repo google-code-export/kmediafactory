@@ -112,6 +112,7 @@ bool KMFProject::validProject() const
 
 void KMFProject::addItem(KMF::MediaObject *mob)
 {
+  kDebug() << k_funcinfo << endl;
   m_list.append(mob);
   setDirty(KMF::ProjectInterface::DirtyMedia);
 }
@@ -491,7 +492,10 @@ void KMFProject::setDirty(KMF::ProjectInterface::DirtyType type, bool dirty)
   if(dirty && !m_loading && !m_initializing)
   {
     if(type & KMF::ProjectInterface::DirtyMedia)
+    {
+      kDebug() << k_funcinfo << "media modified" << endl;
       emit mediaModified();
+    }
     if(type & KMF::ProjectInterface::DirtyTemplate)
       emit templatesModified();
     if(type & KMF::ProjectInterface::DirtyOutput)
