@@ -38,8 +38,80 @@ void KMFItemDelegate::paint(QPainter* painter,
   }
   QStyleOptionViewItem op = option;
   op.state = QStyle::State_Enabled;
+  op.state = QStyle::State_Selected;
   painter->translate(MARGIN, MARGIN);
   QItemDelegate::paint(painter, op, index);
+  /*
+  // This is from qitemdelegate.cpp GPL-2
+    QStyleOptionViewItemV2 opt = setOptions(index, option);
+    const QStyleOptionViewItemV2 *v2 = qstyleoption_cast<const QStyleOptionViewItemV2 *>(&option);
+    opt.features = v2 ? v2->features : QStyleOptionViewItemV2::ViewItemFeatures(QStyleOptionViewItemV2::None);
+
+    // prepare
+    painter->save();
+    if (d->clipPainting)
+        painter->setClipRect(opt.rect);
+
+    // get the data and the rectangles
+
+    QVariant value;
+
+    QIcon icon;
+    QIcon::Mode iconMode = d->iconMode(option.state);
+    QIcon::State iconState = d->iconState(option.state);
+
+    QPixmap pixmap;
+    QRect decorationRect;
+    value = index.data(Qt::DecorationRole);
+    if (value.isValid()) {
+        if (value.type() == QVariant::Icon) {
+            icon = qvariant_cast<QIcon>(value);
+            decorationRect = QRect(QPoint(0, 0),
+                                   icon.actualSize(option.decorationSize, iconMode, iconState));
+        } else {
+            pixmap = decoration(opt, value);
+            decorationRect = QRect(QPoint(0, 0), pixmap.size());
+        }
+    }
+
+    QString text;
+    QRect displayRect;
+    value = index.data(Qt::DisplayRole);
+    if (value.isValid()) {
+        if (value.type() == QVariant::Double)
+            text = QLocale().toString(value.toDouble());
+        else
+            text = QItemDelegatePrivate::replaceNewLine(value.toString());
+
+        displayRect = textRectangle(painter, d->textLayoutBounds(opt), opt.font, text);
+    }
+
+    QRect checkRect;
+    Qt::CheckState checkState = Qt::Unchecked;
+    value = index.data(Qt::CheckStateRole);
+    if (value.isValid()) {
+        checkState = static_cast<Qt::CheckState>(value.toInt());
+        checkRect = check(opt, opt.rect, value);
+    }
+
+    // do the layout
+
+    doLayout(opt, &checkRect, &decorationRect, &displayRect, false);
+
+    // draw the item
+
+    drawBackground(painter, opt, index);
+    drawCheck(painter, opt, checkRect, checkState);
+    if (!icon.isNull())
+        icon.paint(painter, decorationRect, option.decorationAlignment, iconMode, iconState);
+    else
+        drawDecoration(painter, opt, decorationRect, pixmap);
+    drawDisplay(painter, opt, displayRect, text);
+    drawFocus(painter, opt, text.isEmpty() ? QRect() : displayRect);
+
+    // done
+    painter->restore();
+  */
   painter->restore();
 }
 
