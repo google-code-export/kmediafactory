@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>466</width>
-    <height>433</height>
+    <height>424</height>
    </rect>
   </property>
   <property name="baseSize" >
@@ -33,11 +33,11 @@
     </widget>
    </item>
    <item>
-    <widget class="KToolBar" native="1" name="mediaButtons" >
+    <widget class="KMFToolBar" name="mediaButtons" >
      <property name="sizePolicy" >
       <sizepolicy>
-       <hsizetype>13</hsizetype>
-       <vsizetype>13</vsizetype>
+       <hsizetype>7</hsizetype>
+       <vsizetype>5</vsizetype>
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -47,6 +47,12 @@
        <width>0</width>
        <height>32</height>
       </size>
+     </property>
+     <property name="frameShape" >
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow" >
+      <enum>QFrame::Raised</enum>
      </property>
     </widget>
    </item>
@@ -90,9 +96,9 @@
    <header>sizewidget.h</header>
   </customwidget>
   <customwidget>
-   <class>KToolBar</class>
-   <extends>QWidget</extends>
-   <header>ktoolbar.h</header>
+   <class>KMFToolBar</class>
+   <extends>QFrame</extends>
+   <header>kmftoolbar.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

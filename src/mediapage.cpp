@@ -24,6 +24,7 @@
 #include <kmftools.h>
 #include "sizewidget.h"
 #include <kxmlguifactory.h>
+#include <kactioncollection.h>
 #include <QPoint>
 #include <QMenu>
 #include <QTimer>
@@ -32,14 +33,6 @@ MediaPage::MediaPage(QWidget *parent) :
   QWidget(parent)
 {
   setupUi(this);
-
-  //mediaButtons->setIconDimensions(K3Icon::SizeLarge);
-  //mediaButtons->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-  //mediaButtons->setAllowedAreas(Qt::NoToolBarArea);
-  //mediaButtons->setParent(0);
-  //mediaButtons->setFrameStyle(Q3Frame::Panel | Q3Frame::Raised);
-  //mediaButtons->setLineWidth(1);
-  //mediaButtons->setMargin(0);
 
   mediaFiles->setSpacing(20);
   mediaFiles->setItemDelegate(new KMFItemDelegate());

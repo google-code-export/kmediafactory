@@ -94,6 +94,8 @@ QAction* VideoPlugin::setupActions()
 
   setXMLFile("kmediafactory_videoui.rc");
 
+  //uiInterface()->addMediaAction(addVideoAction);
+
   return addVideoAction;
 }
 
@@ -104,7 +106,7 @@ void VideoPlugin::init(const QString &type)
 
   QAction* action = actionCollection()->action("video");
   if(!action)
-    return;
+    action = setupActions();
 
   if (type.left(3) == "DVD")
   {

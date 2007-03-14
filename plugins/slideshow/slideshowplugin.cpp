@@ -56,7 +56,7 @@ QAction* SlideshowPlugin::setupActions()
   // Initialize GUI
   setComponentData(SlideshowFactory::componentData());
   // Add action for menu item
-  QAction* addSlideshowAction = new KAction(KIcon("icons"),
+  QAction* addSlideshowAction = new KAction(KIcon("kuickshow"),
                                      i18n("Add Slideshow"), parent());
   addSlideshowAction->setShortcut(Qt::CTRL + Qt::Key_W);
   actionCollection()->addAction("slideshow", addSlideshowAction);

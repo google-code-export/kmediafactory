@@ -59,6 +59,7 @@
 #include <kicon.h>
 #include <kxmlguifactory.h>
 #include <ktoggleaction.h>
+#include <ktoolbar.h>
 
 #include <QLabel>
 #include <QObject>
@@ -98,14 +99,14 @@ KMediaFactory::KMediaFactory()
   mediaPage = new MediaPage;
   m_mediaPageItem = new KPageWidgetItem(mediaPage, i18n( "Media"));
   m_mediaPageItem->setHeader(i18n("Media"));
-  m_mediaPageItem->setIcon(KIcon("folder_video"));
+  m_mediaPageItem->setIcon(KIcon("folder-video"));
   m_janus->addPage(m_mediaPageItem);
 
   // Template
   templatePage = new TemplatePage;
   m_templatePageItem = new KPageWidgetItem(templatePage, i18n("Template"));
   m_templatePageItem->setHeader(i18n("Template"));
-  m_templatePageItem->setIcon(KIcon("kmultiple"));
+  m_templatePageItem->setIcon(KIcon("image2"));
   m_janus->addPage(m_templatePageItem);
   connect(m_janus,
           SIGNAL(currentPageChanged(KPageWidgetItem*, KPageWidgetItem*)),
@@ -116,7 +117,7 @@ KMediaFactory::KMediaFactory()
   outputPage = new OutputPage;
   m_ouputPageItem = new KPageWidgetItem(outputPage, i18n("Ouput"));
   m_ouputPageItem->setHeader(i18n("Output"));
-  m_ouputPageItem->setIcon(KIcon("cdwriter_unmount"));
+  m_ouputPageItem->setIcon(KIcon("cdwriter-unmount"));
   m_janus->addPage(m_ouputPageItem);
   connect(m_janus,
           SIGNAL(currentPageChanged(KPageWidgetItem*, KPageWidgetItem*)),
@@ -189,6 +190,16 @@ void KMediaFactory::setupActions()
   connect(action, SIGNAL(triggered()), SLOT(itemDelete()));
 
   createGUI("kmediafactoryui.rc");
+
+  mediaPage->mediaButtons->add(action);
+  mediaPage->mediaButtons->add(action);
+  mediaPage->mediaButtons->add(action);
+  mediaPage->mediaButtons->add(action);
+  mediaPage->mediaButtons->add(action);
+  mediaPage->mediaButtons->add(action);
+  mediaPage->mediaButtons->add(action);
+  mediaPage->mediaButtons->add(action);
+  mediaPage->mediaButtons->add(action);
 
   updateToolsMenu();
 }
@@ -402,7 +413,7 @@ void KMediaFactory::newToolbarConfig()
 
 void KMediaFactory::updateToolsMenu()
 {
-  KAction* action;
+  QAction* action;
   QList<QAction*> actions;
   QList<QAction*> media_actions;
   QStringList files =

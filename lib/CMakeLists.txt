@@ -15,6 +15,7 @@ set(kmf_LIB_SRCS
   qdvdinfo.cpp
   qmediafile.cpp
   run.cpp
+  kmftoolbar.cpp
 )
 
 set(kmf_HEADERS
@@ -30,6 +31,7 @@ set(kmf_HEADERS
   qdvdinfo.h
   qmediafile.h
   run.h
+  kmftoolbar.h
 )
 
 kde4_add_ui_files(kmf_LIB_SRCS
