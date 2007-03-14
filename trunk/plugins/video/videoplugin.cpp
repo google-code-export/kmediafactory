@@ -106,7 +106,7 @@ void VideoPlugin::init(const QString &type)
 
   QAction* action = actionCollection()->action("video");
   if(!action)
-    action = setupActions();
+    return;
 
   if (type.left(3) == "DVD")
   {

@@ -55,6 +55,7 @@ void MediaPage::projectInit()
 
 void MediaPage::mediaModified()
 {
+  kDebug() << k_funcinfo << endl;
   calculateSizes();
   KMF::Tools::updateView(mediaFiles);
 }

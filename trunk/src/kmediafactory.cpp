@@ -318,6 +318,7 @@ void KMediaFactory::load(const KUrl& url)
     kmfApp->newProject();
     connectProject();
     kmfApp->project()->open(url);
+    mediaPage->mediaModified();
     templatePage->updatePreview();
     templatePage->loadingFinished();
   }
