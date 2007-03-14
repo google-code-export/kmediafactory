@@ -63,6 +63,9 @@ QAction* SlideshowPlugin::setupActions()
   connect(addSlideshowAction, SIGNAL(triggered()), SLOT(slotAddSlideshow()));
 
   setXMLFile("kmediafactory_slideshowui.rc");
+
+  uiInterface()->addMediaAction(addSlideshowAction);
+
   return addSlideshowAction;
 }
 

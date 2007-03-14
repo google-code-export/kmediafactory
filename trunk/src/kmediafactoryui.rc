@@ -26,9 +26,11 @@
  <Menu name="output_popup" >
   <ActionList name="output_actionlist" />
  </Menu>
+ <!--
  <ToolBar name="mediaButtons">
    <ActionList name="media_tools_list" />
  </ToolBar>
+ -->
  <ToolBar noMerge="1" name="mainToolBar" >
   <text>Main Toolbar</text>
   <Action name="file_new" />

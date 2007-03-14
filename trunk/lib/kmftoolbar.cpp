@@ -23,13 +23,16 @@
 #include <QToolButton>
 #include <QAction>
 #include <QScrollBar>
+#include <QTimer>
 
 KMFToolBar::KMFToolBar(QWidget* parent)
  : QScrollArea(parent)
 {
   m_layout.setMargin(3);
+  m_layout.setSpacing(3);
   m_grid.setLayout(&m_layout);
   setWidget(&m_grid);
+  QTimer::singleShot(0, this, SLOT(lateInit()));
 }
 
 KMFToolBar::~KMFToolBar()
@@ -44,9 +47,15 @@ void KMFToolBar::resizeEvent(QResizeEvent* event)
       ((horizontalScrollBar()->isVisible())?horizontalScrollBar()->height():0));
 }
 
+void KMFToolBar::lateInit()
+{
+  m_grid.resize(m_layout.sizeHint());
+  resizeEvent(0);
+}
+
 void KMFToolBar::add(QAction* action, const QString& group)
 {
-  kDebug() << k_funcinfo << endl;
+  kDebug() << k_funcinfo << group << ": " << action->text() << endl;
   QToolButton* button = new QToolButton;
   button->setDefaultAction(action);
   button->setText(action->text());
@@ -57,10 +66,26 @@ void KMFToolBar::add(QAction* action, const QString& group)
   button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
   m_layout.addWidget(button);
-  m_grid.setLayout(&m_layout);
-  m_grid.resize(m_layout.minimumSize());
-  resizeEvent(0);
-  m_actions[group].append(action);
+  lateInit();
+  m_actions[group].append(button);
+}
+
+void KMFToolBar::addActions(QList<QAction*> actions, const QString& group)
+{
+  foreach(QAction* action, actions)
+  {
+    add(action, group);
+  }
+}
+
+void KMFToolBar::removeActions(const QString& group)
+{
+  foreach(QToolButton* button, m_actions[group])
+  {
+    m_actions[group].removeAll(button);
+    delete button->defaultAction();
+    delete button;
+  }
 }
 
 #include "kmftoolbar.moc"

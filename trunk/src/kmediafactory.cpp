@@ -132,11 +132,6 @@ KMediaFactory::KMediaFactory()
   // position, icon size, etc.
   setAutoSaveSettings();
 
-  const QObjectList& l = kmfApp->pluginInterface()->children();
-  for(int i = 0; i < l.size(); ++i)
-    if(l[i]->inherits("KMF::Plugin"))
-      guiFactory()->addClient((KMF::Plugin*)l[i]);
-
   // Do some things later
   QTimer::singleShot(0, this, SLOT(initGUI()));
 }
@@ -190,16 +185,6 @@ void KMediaFactory::setupActions()
   connect(action, SIGNAL(triggered()), SLOT(itemDelete()));
 
   createGUI("kmediafactoryui.rc");
-
-  mediaPage->mediaButtons->add(action);
-  mediaPage->mediaButtons->add(action);
-  mediaPage->mediaButtons->add(action);
-  mediaPage->mediaButtons->add(action);
-  mediaPage->mediaButtons->add(action);
-  mediaPage->mediaButtons->add(action);
-  mediaPage->mediaButtons->add(action);
-  mediaPage->mediaButtons->add(action);
-  mediaPage->mediaButtons->add(action);
 
   updateToolsMenu();
 }
@@ -273,6 +258,12 @@ void KMediaFactory::newStuff()
 void KMediaFactory::initGUI()
 {
   kDebug() << k_funcinfo << endl;
+
+  const QObjectList& l = kmfApp->pluginInterface()->children();
+  for(int i = 0; i < l.size(); ++i)
+    if(l[i]->inherits("KMF::Plugin"))
+      guiFactory()->addClient((KMF::Plugin*)l[i]);
+
   if(!kmfApp->url().isEmpty() &&
       KIO::NetAccess::exists(kmfApp->url(), true, this))
     load(kmfApp->url());
@@ -421,6 +412,8 @@ void KMediaFactory::updateToolsMenu()
 
   unplugActionList("tools_list");
   unplugActionList("media_tools_list");
+  mediaPage->mediaButtons->removeActions("media_tools_list");
+
   for(QStringList::ConstIterator it = files.begin(); it != files.end(); ++it)
   {
     KDesktopFile df(*it);
@@ -438,6 +431,7 @@ void KMediaFactory::updateToolsMenu()
   }
   plugActionList("tools_list", actions);
   plugActionList("media_tools_list", media_actions);
+  mediaPage->mediaButtons->addActions(media_actions, "media_tools_list");
 }
 
 void KMediaFactory::execTool()

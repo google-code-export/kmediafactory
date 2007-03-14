@@ -94,7 +94,7 @@ QAction* VideoPlugin::setupActions()
 
   setXMLFile("kmediafactory_videoui.rc");
 
-  //uiInterface()->addMediaAction(addVideoAction);
+  uiInterface()->addMediaAction(addVideoAction);
 
   return addVideoAction;
 }
