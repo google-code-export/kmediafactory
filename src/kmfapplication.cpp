@@ -61,12 +61,15 @@ void KMFApplication::init()
 {
   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
   QDBusConnection::sessionBus().registerObject("/KMediaFactory", iface);
-  loadPlugins();
+
   if(args->count() > 0)
     m_url = args->url(0);
 
   m_mainWin = new KMediaFactory();
   m_mainWin->show();
+
+  loadPlugins();
+
   args->clear();
 }
 

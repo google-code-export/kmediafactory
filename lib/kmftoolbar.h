@@ -26,6 +26,8 @@
 #include <QMap>
 #include <QList>
 
+class QToolButton;
+
 class KDE_EXPORT KMFToolBar : public QScrollArea
 {
     Q_OBJECT
@@ -35,6 +37,11 @@ class KDE_EXPORT KMFToolBar : public QScrollArea
 
   public slots:
     void add(QAction* action, const QString& group = "");
+    void addActions(QList<QAction*> actions, const QString& group = "");
+    void removeActions(const QString& group);
+
+  protected slots:
+    void lateInit();
 
   protected:
     virtual void resizeEvent(QResizeEvent* event);
@@ -42,7 +49,7 @@ class KDE_EXPORT KMFToolBar : public QScrollArea
   private:
     QWidget m_grid;
     QHBoxLayout m_layout;
-    QMap< QString, QList<QAction*> > m_actions;
+    QMap< QString, QList<QToolButton*> > m_actions;
 };
 
 #endif
