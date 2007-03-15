@@ -20,7 +20,7 @@
   </property>
   <layout class="QHBoxLayout" >
    <property name="margin" >
-    <number>9</number>
+    <number>0</number>
    </property>
    <property name="spacing" >
     <number>6</number>
@@ -111,9 +111,6 @@
          <property name="shortcut" >
           <string/>
          </property>
-         <property name="stdItem" stdset="0" >
-          <number>27</number>
-         </property>
         </widget>
        </item>
        <item>
@@ -129,9 +126,6 @@
          </property>
          <property name="shortcut" >
           <string/>
-         </property>
-         <property name="stdItem" stdset="0" >
-          <number>28</number>
          </property>
         </widget>
        </item>
@@ -318,15 +312,15 @@
  <pixmapfunction>BTN_ICON</pixmapfunction>
  <customwidgets>
   <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
-  </customwidget>
-  <customwidget>
    <class>KMFImageView</class>
    <extends>QWidget</extends>
    <header>kmfimageview.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

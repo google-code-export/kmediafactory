@@ -34,7 +34,7 @@ MediaPage::MediaPage(QWidget *parent) :
 {
   setupUi(this);
 
-  mediaFiles->setSpacing(20);
+  mediaFiles->setSpacing(5);
   mediaFiles->setItemDelegate(new KMFItemDelegate());
   connect(mediaFiles, SIGNAL(customContextMenuRequested(const QPoint&)),
           this, SLOT(contextMenuRequested(const QPoint&)));

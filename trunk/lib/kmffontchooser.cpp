@@ -42,12 +42,11 @@ KMFFontChooser::KMFFontChooser(QWidget *parent)
   m_button = new QPushButton(this);
   QString fontText = i18n("Font...");
   m_button->setText(fontText);
-  QIcon iconSet = SmallIconSet(QString::fromLatin1("fonts"));
+  QIcon iconSet = SmallIconSet(QString::fromLatin1("character-set"));
   QPixmap pixmap = iconSet.pixmap(QSize(K3Icon::Small, K3Icon::Small),
                                   QIcon::Normal);
   m_button->setIcon(iconSet);
-  m_button->setFixedWidth(m_button->fontMetrics().width(fontText) +
-      3 * KDialog::spacingHint() + pixmap.width());
+  m_button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
   layout->addWidget(m_button);
 
   connect(m_button, SIGNAL(clicked()), this, SLOT(buttonClicked()));

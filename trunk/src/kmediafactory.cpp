@@ -179,7 +179,7 @@ void KMediaFactory::setupActions()
   setStandardToolBarMenuEnabled(true);
 
   // Media file menu
-  action = new KAction(KIcon("editdelete"), i18n("&Delete"), this);
+  action = new KAction(KIcon("edit-delete"), i18n("&Delete"), this);
   action->setShortcut(Qt::Key_Delete);
   actionCollection()->addAction("delete", action);
   connect(action, SIGNAL(triggered()), SLOT(itemDelete()));
