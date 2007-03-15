@@ -34,6 +34,10 @@ class KMFItemDelegate : public QItemDelegate
                        const QModelIndex& index) const;
     virtual QSize sizeHint(const QStyleOptionViewItem& option,
                            const QModelIndex& index) const;
+  protected:
+    QString replaceNewLine(QString text) const;
+    QRect textLayoutBounds(const QStyleOptionViewItemV2 &option) const;
+    void drawRoundRect(QPainter* painter, const QRect& rect, int radius) const;
 };
 
 template <class T>
