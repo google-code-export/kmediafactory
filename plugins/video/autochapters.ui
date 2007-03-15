@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>291</width>
-    <height>185</height>
+    <height>104</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -14,7 +14,7 @@
   </property>
   <layout class="QVBoxLayout" >
    <property name="margin" >
-    <number>11</number>
+    <number>0</number>
    </property>
    <property name="spacing" >
     <number>6</number>

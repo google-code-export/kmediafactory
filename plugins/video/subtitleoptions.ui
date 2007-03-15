@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>357</width>
-    <height>283</height>
+    <height>242</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -14,7 +14,7 @@
   </property>
   <layout class="QVBoxLayout" >
    <property name="margin" >
-    <number>11</number>
+    <number>0</number>
    </property>
    <property name="spacing" >
     <number>6</number>
@@ -65,7 +65,14 @@
     </widget>
    </item>
    <item>
-    <widget class="KMFFontChooser" native="1" name="subtitleFontChooser" />
+    <widget class="KMFFontChooser" native="1" name="subtitleFontChooser" >
+     <property name="minimumSize" >
+      <size>
+       <width>0</width>
+       <height>16</height>
+      </size>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="horizontalLabel" >
