@@ -207,7 +207,7 @@ void VideoOptions::updateTexts()
 {
   int chapters = m_cells.count();
   chapterLabel->setText(
-      i18np("Video has 1 chapter", "Video has %n chapters", chapters));
+      i18np("Video has 1 chapter", "Video has %1 chapters", chapters));
 }
 
 bool VideoOptions::isSelectedSubtitleInVideo()

@@ -79,6 +79,7 @@ namespace KMF
       static QColor toColor(const QString& s);
       static void appendString(QStringListModel* model,
                                const QString& string);
+      static QMap<QString, QString> readIniFile(const QString& ini);
   };
 }
 
