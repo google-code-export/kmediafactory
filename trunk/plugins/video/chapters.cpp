@@ -154,13 +154,12 @@ Chapters::Chapters(QWidget *parent)
           this, SLOT(slotContextMenu(const QPoint&)));
   connect(customPreviewButton, SIGNAL(clicked()),
           this, SLOT(saveCustomPreview()));
-
-  startButton->setIcon(KIcon("player_start"));
-  rewButton->setIcon(KIcon("player_rew"));
-  prevButton->setIcon(KIcon("back"));
-  nextButton->setIcon(KIcon("next"));
-  fwdButton->setIcon(KIcon("player_fwd"));
-  endButton->setIcon(KIcon("player_end"));
+  startButton->setIcon(KIcon("media-skip-backward"));
+  rewButton->setIcon(KIcon("media-seek-backward"));
+  prevButton->setIcon(KIcon("arrow-left"));
+  nextButton->setIcon(KIcon("arrow-right"));
+  fwdButton->setIcon(KIcon("media-seek-forward"));
+  endButton->setIcon(KIcon("media-skip-forward"));
   video->setScaled(true);
 }
 
