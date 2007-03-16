@@ -329,10 +329,9 @@ void Chapters::renameAll()
   if (dlg.exec())
   {
     QString text = dlg.nameEdit->text().replace("#", "%1");
-    int i = 1;
-    foreach(QDVD::Cell cell, m_cells)
+    for(int i = 0; i < m_cells.size(); ++i)
     {
-      cell.setName(QString(text).arg(i++));
+      m_cells[i].setName(QString(text).arg(i));
     }
     chaptersView->viewport()->update();
   }
@@ -382,21 +381,19 @@ void Chapters::import()
 
   if(!chapterFile.isEmpty())
   {
-    KConfig chapters(chapterFile, KConfig::OnlyLocal);
-    int i = 1;
-    QString entry;
-
+    QMap<QString, QString> chapters = KMF::Tools::readIniFile(chapterFile);
     m_cells.clear();
-    while((entry = chapters.readEntry(
-           QString("CHAPTER%1").arg(i).rightJustified(2, '0'),
-           QString(""))) != QString(""))
+    for(int i = 1;;++i)
     {
+      QString number = QString::number(i).rightJustified(2, '0');
+      QString entry = chapters.value(QString("CHAPTER%1").arg(number), "");
+      kDebug() << k_funcinfo << chapters << entry << endl;
+      if(entry.isEmpty())
+        break;
       KMF::Time time(entry);
-      QString s = chapters.readEntry(
-          QString("CHAPTER%1NAME").arg(i).rightJustified(2, '0'),
-          QString("%1").arg(i));
+      QString s = chapters.value(QString("CHAPTER%1NAME").arg(number),
+                                 QString("%1").arg(i));
       m_cells.insert(i, QDVD::Cell(time, QTime(), s));
-      ++i;
     }
     checkLengths();
   }

@@ -490,3 +490,23 @@ QColor KMF::Tools::toColor(const QString& s)
   }
   return result;
 }
+
+QMap<QString, QString> KMF::Tools::readIniFile(const QString& ini)
+{
+  QMap<QString, QString> info;
+  QFile f(ini);
+
+  if(f.open(QIODevice::ReadOnly))
+  {
+    QStringList lines = QString(f.readAll()).split("\n");
+
+    for(QStringList::Iterator it = lines.begin(); it != lines.end(); ++it)
+    {
+      QStringList keyAndValue = it->split("=");
+      if(keyAndValue.count() == 2)
+        info[keyAndValue[0]] = keyAndValue[1];
+    }
+    f.close();
+  }
+  return info;
+}
