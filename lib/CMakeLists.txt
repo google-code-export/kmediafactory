@@ -16,6 +16,7 @@ set(kmf_LIB_SRCS
   qmediafile.cpp
   run.cpp
   kmftoolbar.cpp
+  kmflistmodel.cpp
 )
 
 set(kmf_HEADERS
@@ -32,6 +33,7 @@ set(kmf_HEADERS
   qmediafile.h
   run.h
   kmftoolbar.h
+  kmflistmodel.h
 )
 
 kde4_add_ui_files(kmf_LIB_SRCS
