@@ -35,6 +35,7 @@ KMFFontChooser::KMFFontChooser(QWidget *parent)
   QHBoxLayout* layout = new QHBoxLayout(this);
 
   m_label = new QLabel(this);
+  m_label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
   layout->addWidget(m_label);
   layout->setMargin(0);
   layout->setSpacing(KDialog::spacingHint());
@@ -42,10 +43,7 @@ KMFFontChooser::KMFFontChooser(QWidget *parent)
   m_button = new QPushButton(this);
   QString fontText = i18n("Font...");
   m_button->setText(fontText);
-  QIcon iconSet = SmallIconSet(QString::fromLatin1("character-set"));
-  QPixmap pixmap = iconSet.pixmap(QSize(K3Icon::Small, K3Icon::Small),
-                                  QIcon::Normal);
-  m_button->setIcon(iconSet);
+  m_button->setIcon(KIcon("character-set"));
   m_button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
   layout->addWidget(m_button);
 

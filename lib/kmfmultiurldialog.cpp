@@ -36,6 +36,7 @@ KMFMultiURLDialog::KMFMultiURLDialog(const QString& startDir,
   setupUi(mainWidget());
   setButtons(KDialog::Ok | KDialog::Cancel);
   setCaption(title);
+  fileListView->setModel(&m_model);
 }
 
 KMFMultiURLDialog::~KMFMultiURLDialog()
@@ -45,46 +46,33 @@ KMFMultiURLDialog::~KMFMultiURLDialog()
 void KMFMultiURLDialog::moveDown()
 {
 #warning TODO
-/*
-  Q3ListViewItem* item = fileListView->currentItem();
+  /*
+  QListWidgetItem* item = fileListView->currentItem();
   if(item->itemBelow())
     item->moveItem(item->itemBelow());
   fileListView->ensureItemVisible(item);
-*/
+  */
 }
 
 void KMFMultiURLDialog::moveUp()
 {
 #warning TODO
-/*
-  Q3ListViewItem* item = fileListView->currentItem();
+  /*
+  QListWidgetItem* item = fileListView->currentItem();
   if(item->itemAbove())
     item->itemAbove()->moveItem(item);
   fileListView->ensureItemVisible(item);
-*/
+  */
 }
 
 void KMFMultiURLDialog::remove()
 {
-#warning TODO
-/*
-  Q3ListViewItemIterator it(fileListView);
-  Q3ListViewItem* first = 0;
+  QModelIndexList list = fileListView->selectionModel()->selectedRows();
 
-  while(*it != 0)
+  for(int i; i < list.count(); ++i)
   {
-    if((*it)->isSelected())
-    {
-      if(!first)
-        first = (*it)->itemAbove();
-      delete *it;
-    }
-    else
-      ++it;
+    fileListView->model()->removeRows(list[i].row(), 1);
   }
-  if(!first)
-    first = fileListView->firstChild();
-*/
   fileListView->setCurrentIndex(m_model.index(0));
 }
 
