@@ -25,6 +25,7 @@
 #include <kmessagebox.h>
 #include <kapplication.h>
 #include <kdebug.h>
+#include <kio/netaccess.h>
 #include <QLabel>
 
 SubtitleOptions::SubtitleOptions(QWidget *parent)
@@ -77,9 +78,7 @@ void SubtitleOptions::setData(const QDVD::Subtitle& obj)
 
 void SubtitleOptions::accept()
 {
-  QFileInfo fi(subtitleUrl->url().prettyUrl());
-
-  if(fi.exists())
+  if(KIO::NetAccess::exists(subtitleUrl->url(), true, kapp->activeWindow()))
     KDialog::accept();
   else
     KMessageBox::sorry(kapp->activeWindow(),
