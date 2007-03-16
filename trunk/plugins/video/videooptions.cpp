@@ -23,6 +23,7 @@
 #include "kmflanguagewidgets.h"
 #include "videopluginsettings.h"
 #include "subtitleoptions.h"
+#include "kmftools.h"
 #include <qdvdinfo.h>
 #include <kapplication.h>
 #include <klocale.h>
@@ -139,6 +140,7 @@ void VideoOptions::subtitleAddClicked()
     dlg.getData(subtitle);
     m_subtitles.append(subtitle);
   }
+  KMF::Tools::updateView(subtitleListBox);
   enableButtons();
 }
 
@@ -147,6 +149,7 @@ void VideoOptions::subtitleRemoveClicked()
   int n = subtitleListBox->currentIndex().row();
 
   m_subtitles.removeAt(n);
+  KMF::Tools::updateView(subtitleListBox);
   enableButtons();
 }
 
@@ -212,7 +215,7 @@ bool VideoOptions::isSelectedSubtitleInVideo()
   if(m_subtitles.count() > 0)
   {
     int n = subtitleListBox->currentIndex().row();
-    if(n >= 0)
+    if(n >= 0 && n < m_subtitles.count())
       return m_subtitles[n].file().isEmpty();
   }
   return false;
