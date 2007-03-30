@@ -24,7 +24,7 @@
 #include <kmediafactory/plugin.h>
 #include "rect.h"
 #include <kurl.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <qdvdinfo.h>
 #include <QPixmap>
 #include <QDateTime>
@@ -120,7 +120,7 @@ class VideoObject : public KMF::MediaObject
     virtual void clean() { };
 
   private slots:
-    void output(KProcess* proc, char* buffer, int buflen);
+    void output(K3Process* proc, char* buffer, int buflen);
 
   protected:
     mutable QDVD::CellList m_cells;

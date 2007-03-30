@@ -22,20 +22,20 @@
 
 #include "kmflistmodel.h"
 
-template <class T>
-KMFListModel<T>::KMFListModel(QObject *parent)
+template <class D>
+KMFListModel<D>::KMFListModel(QObject *parent)
     : QAbstractListModel(parent)
 {
 }
 
-template <class T>
-KMFListModel<T>::KMFListModel(const QList<T>& values, QObject* parent)
+template <class D>
+KMFListModel<D>::KMFListModel(const QList<D>& values, QObject* parent)
     : QAbstractListModel(parent), m_lst(values)
 {
 }
 
-template <class T>
-int KMFListModel<T>::rowCount(const QModelIndex& parent) const
+template <class D>
+int KMFListModel<D>::rowCount(const QModelIndex& parent) const
 {
   if (parent.isValid())
     return 0;
@@ -43,8 +43,8 @@ int KMFListModel<T>::rowCount(const QModelIndex& parent) const
   return m_lst.count();
 }
 
-template <class T>
-T KMFListModel<T>::data(const QModelIndex& index, int role) const
+template <class D>
+D KMFListModel<D>::data(const QModelIndex& index, int role) const
 {
   if (index.row() < 0 || index.row() >= m_lst.size())
     return QVariant();
@@ -55,8 +55,8 @@ T KMFListModel<T>::data(const QModelIndex& index, int role) const
   return QVariant();
 }
 
-template <class T>
-Qt::ItemFlags KMFListModel<T>::flags(const QModelIndex& index) const
+template <class D>
+Qt::ItemFlags KMFListModel<D>::flags(const QModelIndex& index) const
 {
   if (!index.isValid())
     return QAbstractItemModel::flags(index) | Qt::ItemIsDropEnabled;
@@ -65,8 +65,8 @@ Qt::ItemFlags KMFListModel<T>::flags(const QModelIndex& index) const
       Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
 }
 
-template <class T>
-bool KMFListModel<T>::setData(const QModelIndex& index, const T& value,
+template <class D>
+bool KMFListModel<D>::setData(const QModelIndex& index, const D& value,
                               int role)
 {
   if (index.row() >= 0 && index.row() < m_lst.size()
@@ -79,8 +79,8 @@ bool KMFListModel<T>::setData(const QModelIndex& index, const T& value,
   return false;
 }
 
-template <class T>
-bool KMFListModel<T>::insertRows(const QModelIndex &index, int count,
+template <class D>
+bool KMFListModel<D>::insertRows(const QModelIndex &index, int count,
                                  const QModelIndex&)
 {
   int row = index.row();
@@ -94,8 +94,8 @@ bool KMFListModel<T>::insertRows(const QModelIndex &index, int count,
   return true;
 }
 
-template <class T>
-bool KMFListModel<T>::removeRows(const QModelIndex &index, int count,
+template <class D>
+bool KMFListModel<D>::removeRows(const QModelIndex &index, int count,
                                  const QModelIndex&)
 {
   int row = index.row();
@@ -109,25 +109,25 @@ bool KMFListModel<T>::removeRows(const QModelIndex &index, int count,
   return true;
 }
 
-template <class T>
-void KMFListModel<T>::sort(int, Qt::SortOrder order)
+template <class D>
+void KMFListModel<D>::sort(int, Qt::SortOrder order)
 {
   emit layoutAboutToBeChanged();
   if (order == Qt::AscendingOrder)
-    qSort(m_lst.begin(), m_lst.end(), qLess<T>());
+    qSort(m_lst.begin(), m_lst.end(), qLess<D>());
   else
-    qSort(m_lst.begin(), m_lst.end(), qGreater<T>());
+    qSort(m_lst.begin(), m_lst.end(), qGreater<D>());
   emit layoutChanged();
 }
 
-template <class T>
-QList<T> KMFListModel<T>::list() const
+template <class D>
+QList<D> KMFListModel<D>::list() const
 {
   return m_lst;
 }
 
-template <class T>
-void KMFListModel<T>::setList(const QList<T> &values)
+template <class D>
+void KMFListModel<D>::setList(const QList<D> &values)
 {
   m_lst = values;
   reset();

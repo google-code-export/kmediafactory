@@ -45,24 +45,32 @@ KMFMultiURLDialog::~KMFMultiURLDialog()
 
 void KMFMultiURLDialog::moveDown()
 {
-#warning TODO
-  /*
-  QListWidgetItem* item = fileListView->currentItem();
-  if(item->itemBelow())
-    item->moveItem(item->itemBelow());
-  fileListView->ensureItemVisible(item);
-  */
+  QModelIndex index = fileListView->selectionModel()->currentIndex();
+  if(index.row() < fileListView->model()->rowCount() - 1)
+  {
+    QString s = fileListView->model()->data(index, Qt::DisplayRole).toString();
+    fileListView->model()->removeRows(index.row(), 1);
+    fileListView->model()->insertRows(index.row() + 1, 1, QModelIndex());
+    QModelIndex i = fileListView->model()->index(index.row() + 1, 0,
+                                                 QModelIndex());
+    fileListView->model()->setData(i, s);
+    fileListView->scrollTo(i);
+  }
 }
 
 void KMFMultiURLDialog::moveUp()
 {
-#warning TODO
-  /*
-  QListWidgetItem* item = fileListView->currentItem();
-  if(item->itemAbove())
-    item->itemAbove()->moveItem(item);
-  fileListView->ensureItemVisible(item);
-  */
+  QModelIndex index = fileListView->selectionModel()->currentIndex();
+  if(index.row() > 0)
+  {
+    QString s = fileListView->model()->data(index, Qt::DisplayRole).toString();
+    fileListView->model()->removeRows(index.row(), 1);
+    fileListView->model()->insertRows(index.row() - 1, 1, QModelIndex());
+    QModelIndex i = fileListView->model()->index(index.row() - 1, 0,
+                                                 QModelIndex());
+    fileListView->model()->setData(i, s);
+    fileListView->scrollTo(i);
+  }
 }
 
 void KMFMultiURLDialog::remove()
@@ -104,7 +112,7 @@ void KMFMultiURLDialog::addFiles(const QStringList& files)
                          i18n("Cannot add directory."));
       continue;
     }
-    l << files;
+    l << *it;
   }
   m_model.setStringList(l);
   fileListView->setCurrentIndex(m_model.index(0));

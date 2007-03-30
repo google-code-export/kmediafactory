@@ -22,7 +22,7 @@
 
 #include <qobject.h>
 #include <qstring.h>
-#include <kprocess.h>
+#include <k3process.h>
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
@@ -39,8 +39,8 @@ class Run : QObject
     int result() { return m_result; };
 
   public slots:
-    virtual void stdout(KProcess *proc, char *buffer, int buflen);
-    virtual void stderr(KProcess *proc, char *buffer, int buflen);
+    virtual void stdout(K3Process *proc, char *buffer, int buflen);
+    virtual void stderr(K3Process *proc, char *buffer, int buflen);
 
   private:
     QString m_command;

@@ -42,8 +42,8 @@ class KMFLogger : public KMF::Logger
     virtual bool save(QString file) const;
 
   public slots:
-    virtual void stdout(KProcess *proc, char *buffer, int buflen);
-    virtual void stderr(KProcess *proc, char *buffer, int buflen);
+    virtual void stdout(K3Process *proc, char *buffer, int buflen);
+    virtual void stderr(K3Process *proc, char *buffer, int buflen);
 
   private:
     QString m_log;
