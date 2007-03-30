@@ -36,7 +36,7 @@ Run::~Run()
 
 bool Run::run()
 {
-  KProcess process;
+  K3Process process;
   //process.setWorkingDirectory();
   QString c = m_command.split(" ")[0];
   if(c[0] != '/')
@@ -51,11 +51,11 @@ bool Run::run()
   }
   //kdDebug() << "Running: " << m_command << endl;
   process << m_command;
-  connect(&process, SIGNAL(receivedStdout(KProcess*, char*, int)),
-          this, SLOT(stdout(KProcess*, char*, int)));
-  connect(&process, SIGNAL(receivedStderr(KProcess*, char*, int)),
-          this, SLOT(stderr(KProcess*, char*, int)));
-  process.start(KProcess::Block, KProcess::AllOutput);
+  connect(&process, SIGNAL(receivedStdout(K3Process*, char*, int)),
+          this, SLOT(stdout(K3Process*, char*, int)));
+  connect(&process, SIGNAL(receivedStderr(K3Process*, char*, int)),
+          this, SLOT(stderr(K3Process*, char*, int)));
+  process.start(K3Process::Block, K3Process::AllOutput);
   m_result = process.exitStatus();
   //kdDebug() << "Output: " << m_output << endl;
   if(!process.normalExit() || process.exitStatus() != 0)
@@ -65,12 +65,12 @@ bool Run::run()
   return true;
 }
 
-void Run::stdout(KProcess*, char* buffer, int buflen)
+void Run::stdout(K3Process*, char* buffer, int buflen)
 {
   m_output += QString::fromLatin1(buffer, buflen);
 }
 
-void Run::stderr(KProcess* proc, char* buffer, int buflen)
+void Run::stderr(K3Process* proc, char* buffer, int buflen)
 {
   stdout(proc, buffer, buflen);
 }

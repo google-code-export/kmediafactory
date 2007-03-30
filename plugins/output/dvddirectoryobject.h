@@ -21,7 +21,7 @@
 #define DVDDIRECTORYOBJECT_H
 
 #include "dvdauthorobject.h"
-#include <kprocess.h>
+#include <k3process.h>
 #include <QFileInfo>
 #include <QPixmap>
 
@@ -43,7 +43,7 @@ class DvdDirectoryObject : public DvdAuthorObject
     virtual bool make(QString type);
 
   private slots:
-    void output(KProcess* proc, char* buffer, int buflen);
+    void output(K3Process* proc, char* buffer, int buflen);
     virtual void clean();
 
   private:
@@ -52,7 +52,7 @@ class DvdDirectoryObject : public DvdAuthorObject
     LastLine m_lastLine;
     QString m_warning;
     KAction* dvdCleanDirectory;
-    KProcess dvdauthor;
+    K3Process dvdauthor;
     QFileInfo m_currentFile;
     int m_points;
     int m_filePoints;

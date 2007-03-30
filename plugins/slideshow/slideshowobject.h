@@ -83,7 +83,7 @@ class SlideshowObject : public KMF::MediaObject
 
   public slots:
     virtual void slotProperties();
-    void output(KProcess* process, char* buffer, int buflen);
+    void output(K3Process* process, char* buffer, int buflen);
     virtual void clean();
 
   protected:

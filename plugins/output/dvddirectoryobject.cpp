@@ -67,7 +67,7 @@ int DvdDirectoryObject::timeEstimate() const
   return TotalPoints + DvdAuthorObject::timeEstimate();
 }
 
-void DvdDirectoryObject::output(KProcess* process, char* buffer, int buflen)
+void DvdDirectoryObject::output(K3Process* process, char* buffer, int buflen)
 {
   bool stopped = false;
   int find = 0, start = 0;
@@ -258,11 +258,11 @@ bool DvdDirectoryObject::make(QString type)
   dvdauthor << "dvdauthor" << "-x" << "dvdauthor.xml";
   dvdauthor.setWorkingDirectory(projectInterface()->projectDir());
   uiInterface()->logger()->connectProcess(&dvdauthor);
-  connect(&dvdauthor, SIGNAL(receivedStdout(KProcess*, char*, int)),
-          this, SLOT(output(KProcess*, char*, int)));
-  connect(&dvdauthor, SIGNAL(receivedStderr(KProcess*, char*, int)),
-          this, SLOT(output(KProcess*, char*, int)));
-  dvdauthor.start(KProcess::Block, KProcess::AllOutput);
+  connect(&dvdauthor, SIGNAL(receivedStdout(K3Process*, char*, int)),
+          this, SLOT(output(K3Process*, char*, int)));
+  connect(&dvdauthor, SIGNAL(receivedStderr(K3Process*, char*, int)),
+          this, SLOT(output(K3Process*, char*, int)));
+  dvdauthor.start(K3Process::Block, K3Process::AllOutput);
   if(!m_error)
   {
     uiInterface()->message(KMF::OK, i18n("DVD Directory ready"));

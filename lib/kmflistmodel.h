@@ -27,17 +27,17 @@
 
 // Based on QStringListModel from qt4 GPL-2
 
-template <class T>
+template <class D>
 class KDE_EXPORT KMFListModel : public QAbstractListModel
 {
     Q_OBJECT
   public:
     KMFListModel(QObject *parent = 0);
-    KMFListModel(const QList<T> &values, QObject *parent = 0);
+    KMFListModel(const QList<D> &values, QObject *parent = 0);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    T data(const QModelIndex &index, int role) const;
-    bool setData(const QModelIndex &index, const T &value,
+    D data(const QModelIndex &index, int role) const;
+    bool setData(const QModelIndex &index, const D &value,
                  int role = Qt::EditRole);
     Qt::ItemFlags flags(const QModelIndex &index) const;
     bool insertRows(const QModelIndex &index, int count,
@@ -45,12 +45,12 @@ class KDE_EXPORT KMFListModel : public QAbstractListModel
     bool removeRows(const QModelIndex &index, int count,
                     const QModelIndex &parent = QModelIndex());
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
-    QList<T> list() const;
-    void setList(const QList<T> &values);
+    QList<D> list() const;
+    void setList(const QList<D> &values);
 
 private:
     Q_DISABLE_COPY(KMFListModel)
-    QList<T> m_lst;
+    QList<D> m_lst;
 };
 
 #endif // KMFLISTMODEL_H

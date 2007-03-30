@@ -121,7 +121,7 @@ void OutputPlugin::play(const QString& player)
 {
   QString bin;
   QString projectDir = projectInterface()->projectDir();
-  KProcess process;
+  K3Process process;
 
   if(player.isEmpty())
   {
@@ -137,7 +137,7 @@ void OutputPlugin::play(const QString& player)
   else
     bin = player;
   process << bin << "dvd:/" + projectDir + "DVD/VIDEO_TS";
-  process.start(KProcess::DontCare);
+  process.start(K3Process::DontCare);
 }
 
 void OutputPlugin::slotPreviewDVDXine()

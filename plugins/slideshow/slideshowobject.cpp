@@ -95,7 +95,7 @@ bool SlideshowObject::oooConvert(QString* file) const
 
   if(!bin.isEmpty())
   {
-    KProcess ooo;
+    K3Process ooo;
 
     ooo << bin << "-invisible" << "-norestore" <<
         QString("macro:///KMediaFactory.converter.convertToPDF(%1,%2)")
@@ -103,7 +103,7 @@ bool SlideshowObject::oooConvert(QString* file) const
 
     ooo.setWorkingDirectory(projectInterface()->projectDir("media"));
     uiInterface()->logger()->connectProcess(&ooo);
-    ooo.start(KProcess::Block, KProcess::AllOutput);
+    ooo.start(K3Process::Block, K3Process::AllOutput);
     if(ooo.normalExit())
     {
       if(ooo.exitStatus() == 0)
@@ -233,6 +233,8 @@ SlideList SlideshowObject::slideList(QStringList list) const
     else
 #endif
     {
+#warning TODO
+#if 0
       Slide slide;
 
       if(minfo.contains("Comment") && !minfo.item("Comment").string().isEmpty())
@@ -249,6 +251,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
       result.append(slide);
       dlg.progressBar()->setValue(dlg.progressBar()->value() + fileProgress);
       kapp->processEvents();
+#endif
     }
   }
   dlg.progressBar()->setRange(0, 10000);
@@ -452,7 +455,7 @@ void SlideshowObject::clean()
   plugin()->projectInterface()->cleanFiles("media", list);
 }
 
-void SlideshowObject::output(KProcess* process, char* buffer, int buflen)
+void SlideshowObject::output(K3Process* process, char* buffer, int buflen)
 {
   bool stopped = false;
   int find = 0, start = 0;
@@ -497,7 +500,7 @@ bool SlideshowObject::convertToDVD() const
       return false;
     }
 
-    KProcess dvdslideshow;
+    K3Process dvdslideshow;
 
     uiInterface()->message(KMF::Info, i18n("   Making Slideshow"));
     dvdslideshow << slideshowPlugin->dvdslideshowBin() <<
@@ -514,12 +517,12 @@ bool SlideshowObject::convertToDVD() const
     dvdslideshow.setWorkingDirectory(projectInterface()->projectDir("media"));
     uiInterface()->logger()->connectProcess(&dvdslideshow,
                                             "INFO: \\d+ bytes of data written");
-    connect(&dvdslideshow, SIGNAL(receivedStdout(KProcess*, char*, int)),
-             this, SLOT(output(KProcess*, char*, int)));
-    connect(&dvdslideshow, SIGNAL(receivedStderr(KProcess*, char*, int)),
-             this, SLOT(output(KProcess*, char*, int)));
+    connect(&dvdslideshow, SIGNAL(receivedStdout(K3Process*, char*, int)),
+             this, SLOT(output(K3Process*, char*, int)));
+    connect(&dvdslideshow, SIGNAL(receivedStderr(K3Process*, char*, int)),
+             this, SLOT(output(K3Process*, char*, int)));
     kDebug() << k_funcinfo << dvdslideshow.args() << endl;
-    dvdslideshow.start(KProcess::Block, KProcess::AllOutput);
+    dvdslideshow.start(K3Process::Block, K3Process::AllOutput);
     if(dvdslideshow.normalExit())
     {
       if(dvdslideshow.exitStatus() == 0)

@@ -528,7 +528,7 @@ bool VideoObject::writeSpumuxXml(const QString& fileName,
   return true;
 }
 
-void VideoObject::output(KProcess* process, char* buffer, int buflen)
+void VideoObject::output(K3Process* process, char* buffer, int buflen)
 {
   QRegExp re("[\n\r]");
   QRegExp bytes("INFO: (\\d+) bytes of data written");
@@ -573,20 +573,20 @@ bool VideoObject::convertSubtitles(const QDVD::Subtitle& subtitle)
       uiInterface()->message(KMF::Info,
           i18n("   Adding subtitles to %1", fii.fileName()));
 
-      KShellProcess m_spumux("bash");
+      K3ShellProcess m_spumux("bash");
       //kdDebug() << k_funcinfo << fiXml.filePath() << endl;
       writeSpumuxXml(fiXml.filePath(), fiSub.filePath(), subtitle);
       m_spumux << "spumux -P "
-          + KShellProcess::quote(fiXml.filePath())
-          + " < " + KShellProcess::quote(fii.filePath())
-          + " > " + KShellProcess::quote(fio.filePath());
+          + K3ShellProcess::quote(fiXml.filePath())
+          + " < " + K3ShellProcess::quote(fii.filePath())
+          + " > " + K3ShellProcess::quote(fio.filePath());
       m_spumux.setWorkingDirectory(projectInterface()->projectDir("media"));
       uiInterface()->logger()->connectProcess(&m_spumux,
-          "INFO: \\d+ bytes of data written", KProcess::Stderr);
-      connect(&m_spumux, SIGNAL(receivedStderr(KProcess*, char*, int)),
-              this, SLOT(output(KProcess*, char*, int)));
+          "INFO: \\d+ bytes of data written", K3Process::Stderr);
+      connect(&m_spumux, SIGNAL(receivedStderr(K3Process*, char*, int)),
+              this, SLOT(output(K3Process*, char*, int)));
       uiInterface()->setItemTotalSteps(fii.size()/1024);
-      m_spumux.start(KProcess::Block, KProcess::Stderr);
+      m_spumux.start(K3Process::Block, K3Process::Stderr);
       if(m_spumux.normalExit() && m_spumux.exitStatus() == 0)
         uiInterface()->setItemProgress(fii.size()/1024);
       else
@@ -832,10 +832,10 @@ void VideoObject::setTitleFromFileName()
 
 void VideoObject::slotPlayVideo()
 {
-  KProcess process;
+  K3Process process;
 
   process << m_kmfplayer << fileName();
-  process.start(KProcess::DontCare);
+  process.start(K3Process::DontCare);
 }
 
 void VideoObject::printCells()

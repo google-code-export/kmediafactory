@@ -64,10 +64,10 @@ bool K3bObject::make(QString type)
   uiInterface()->message(KMF::OK, i18n("K3b project ready"));
   if(app != QString::null)
   {
-    KProcess burn;
+    K3Process burn;
 
     burn << app << doc;
-    burn.start(KProcess::DontCare);
+    burn.start(K3Process::DontCare);
   }
   uiInterface()->progress(TotalPoints);
   return true;

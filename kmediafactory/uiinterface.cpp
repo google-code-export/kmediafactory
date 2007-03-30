@@ -19,7 +19,7 @@
 //**************************************************************************
 #include "uiinterface.h"
 #include <kdebug.h>
-#include <kprocess.h>
+#include <k3process.h>
 
 KMF::MediaObject::MediaObject(QObject* parent) :
   Object(parent)
@@ -42,15 +42,15 @@ KMF::UiInterface::UiInterface(QObject* parent) :
   setObjectName("KMF::UiInterface");
 }
 
-void KMF::Logger::connectProcess(KProcess *proc, const QString& filter,
-                                 KProcess::Communication comm)
+void KMF::Logger::connectProcess(K3Process *proc, const QString& filter,
+                                 K3Process::Communication comm)
 {
-  if(comm && KProcess::Stdout)
-    connect(proc, SIGNAL(receivedStdout(KProcess*, char*, int)),
-            this, SLOT(stdout(KProcess*, char*, int)));
-  if(comm && KProcess::Stderr)
-    connect(proc, SIGNAL(receivedStderr(KProcess*, char*, int)),
-            this, SLOT(stderr(KProcess*, char*, int)));
+  if(comm && K3Process::Stdout)
+    connect(proc, SIGNAL(receivedStdout(K3Process*, char*, int)),
+            this, SLOT(stdout(K3Process*, char*, int)));
+  if(comm && K3Process::Stderr)
+    connect(proc, SIGNAL(receivedStderr(K3Process*, char*, int)),
+            this, SLOT(stderr(K3Process*, char*, int)));
   setFilter(filter);
 }
 

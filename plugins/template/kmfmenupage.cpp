@@ -30,9 +30,9 @@
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <kprocio.h>
+#include <k3procio.h>
 #include <kmessagebox.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <QVariant>
 #include <QObject>
 #include <QImage>
@@ -377,11 +377,11 @@ bool KMFMenuPage::writeSpumuxXml()
 #define MAKE_VERSION(A, B, C, D) (((A) << 24) | ((B) << 16) | \
                                   ((C) << 8)  | ((D)<< 0))
 
-int KMFMenuPage::makeVersion(KProcIO& proc)
+int KMFMenuPage::makeVersion(K3ProcIO& proc)
 {
   QRegExp rx("(\\d+)\\.(\\d+)\\.(\\d+)[.\\-_a-z]*(\\d*)");
 
-  if(proc.start(KProcess::Block, true) == true)
+  if(proc.start(K3Process::Block, true) == true)
   {
     QString v;
     proc.readln(v);
@@ -404,13 +404,13 @@ int KMFMenuPage::mjpegtoolsVersion()
 {
   if(m_mjpegtoolsVersion == -1)
   {
-    KProcIO pkgconfig;
+    K3ProcIO pkgconfig;
 
     pkgconfig << "pkg-config" << "mjpegtools" << "--modversion";
     m_mjpegtoolsVersion = makeVersion(pkgconfig);
     if(m_mjpegtoolsVersion == -1)
     {
-      KProcIO mplex;
+      K3ProcIO mplex;
       mplex << "mplex";
       m_mjpegtoolsVersion = makeVersion(mplex);
     }
@@ -553,11 +553,11 @@ bool KMFMenuPage::runScript(QString scriptName, QString place)
   chmod((const char*)file.fileName().toLocal8Bit(),
       S_IRUSR|S_IWRITE|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH);
 
-  KProcess pnm2mpg;
+  K3Process pnm2mpg;
   pnm2mpg.setWorkingDirectory(m_prjIf->projectDir(place));
   pnm2mpg << "sh" << file.fileName();
   m_uiIf->logger()->connectProcess(&pnm2mpg);
-  pnm2mpg.start(KProcess::Block, KProcess::AllOutput);
+  pnm2mpg.start(K3Process::Block, K3Process::AllOutput);
   if(!pnm2mpg.normalExit() || pnm2mpg.exitStatus() != 0)
   {
     kDebug() << k_funcinfo << pnm2mpg.exitStatus() << endl;
