@@ -16,7 +16,6 @@ set(kmf_LIB_SRCS
   qmediafile.cpp
   run.cpp
   kmftoolbar.cpp
-  kmflistmodel.cpp
 )
 
 set(kmf_HEADERS
