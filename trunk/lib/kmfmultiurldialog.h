@@ -21,7 +21,7 @@
 #define KMFMULTIURLDIALOG_H
 
 #include "ui_kmfmultiurldialog.h"
-#include <QStringListModel>
+#include <kmflistmodel.h>
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
@@ -51,7 +51,7 @@ class KDE_EXPORT KMFMultiURLDialog : public KDialog,
   private:
     QString m_dir;
     QString m_filter;
-    QStringListModel m_model;
+    KMFListModel<QString> m_model;
 };
 
 #endif
