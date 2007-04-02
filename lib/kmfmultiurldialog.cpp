@@ -45,31 +45,31 @@ KMFMultiURLDialog::~KMFMultiURLDialog()
 
 void KMFMultiURLDialog::moveDown()
 {
-  QModelIndex index = fileListView->selectionModel()->currentIndex();
-  if(index.row() < fileListView->model()->rowCount() - 1)
+  QModelIndex i1 = fileListView->selectionModel()->currentIndex();
+  if(i1.row() < fileListView->model()->rowCount() - 1)
   {
-    QString s = fileListView->model()->data(index, Qt::DisplayRole).toString();
-    fileListView->model()->removeRows(index.row(), 1);
-    fileListView->model()->insertRows(index.row() + 1, 1, QModelIndex());
-    QModelIndex i = fileListView->model()->index(index.row() + 1, 0,
-                                                 QModelIndex());
-    fileListView->model()->setData(i, s);
-    fileListView->scrollTo(i);
+    QModelIndex i2 = fileListView->model()->index(i1.row() + 1, 0,
+                                                  QModelIndex());
+    QString s1 = fileListView->model()->data(i1, Qt::DisplayRole).toString();
+    QString s2 = fileListView->model()->data(i2, Qt::DisplayRole).toString();
+    fileListView->model()->setData(i1, s2);
+    fileListView->model()->setData(i2, s1);
+    fileListView->scrollTo(i2);
   }
 }
 
 void KMFMultiURLDialog::moveUp()
 {
-  QModelIndex index = fileListView->selectionModel()->currentIndex();
-  if(index.row() > 0)
+  QModelIndex i1 = fileListView->selectionModel()->currentIndex();
+  if(i1.row() > 0)
   {
-    QString s = fileListView->model()->data(index, Qt::DisplayRole).toString();
-    fileListView->model()->removeRows(index.row(), 1);
-    fileListView->model()->insertRows(index.row() - 1, 1, QModelIndex());
-    QModelIndex i = fileListView->model()->index(index.row() - 1, 0,
-                                                 QModelIndex());
-    fileListView->model()->setData(i, s);
-    fileListView->scrollTo(i);
+    QModelIndex i2 = fileListView->model()->index(i1.row() - 1, 0,
+                                                  QModelIndex());
+    QString s1 = fileListView->model()->data(i1, Qt::DisplayRole).toString();
+    QString s2 = fileListView->model()->data(i2, Qt::DisplayRole).toString();
+    fileListView->model()->setData(i1, s2);
+    fileListView->model()->setData(i2, s1);
+    fileListView->scrollTo(i2);
   }
 }
 
@@ -91,16 +91,12 @@ void KMFMultiURLDialog::add()
 
   if(files.count() > 0)
   {
-    QStringList l = m_model.stringList();
-     l << files;
-     m_model.setStringList(l);
+    m_model.append(files);
   }
 }
 
 void KMFMultiURLDialog::addFiles(const QStringList& files)
 {
-  QStringList l = m_model.stringList();
-
   for(QStringList::ConstIterator it = files.begin();
       it != files.end(); ++it)
   {
@@ -112,15 +108,14 @@ void KMFMultiURLDialog::addFiles(const QStringList& files)
                          i18n("Cannot add directory."));
       continue;
     }
-    l << *it;
+    m_model.append(*it);
   }
-  m_model.setStringList(l);
   fileListView->setCurrentIndex(m_model.index(0));
 }
 
 QStringList KMFMultiURLDialog::files()
 {
-  return m_model.stringList();
+  return m_model.list();
 }
 
 #include "kmfmultiurldialog.moc"
