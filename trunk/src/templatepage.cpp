@@ -39,6 +39,8 @@ TemplatePage::TemplatePage(QWidget *parent) :
   QWidget(parent), m_menu(0), m_settingPrevious(false)
 {
   setupUi(this);
+  templates->setSpacing(5);
+  templates->setItemDelegate(new KMFItemDelegate());
   connect(templates, SIGNAL(customContextMenuRequested(const QPoint&)),
           this, SLOT(contextMenuRequested(const QPoint&)));
   connect(templatePreview,
@@ -61,7 +63,7 @@ void TemplatePage::projectInit()
   templates->blockSignals(true);
   KMF::TemplateObject* obj = kmfApp->project()->templateObj();
   QModelIndex i = m_model.index(obj);
-  templates->setCurrentIndex(i);
+  templates->selectionModel()->select(i, QItemSelectionModel::ClearAndSelect);
   templates->blockSignals(false);
 }
 
@@ -109,31 +111,36 @@ void TemplatePage::currentPageChanged(KPageWidgetItem* current,
 
 void TemplatePage::updatePreview()
 {
-  int n = templates->currentIndex().row();
+  QModelIndexList selected = templates->selectionModel()->selectedIndexes();
 
-  if(n >= 0 && n < kmfApp->project()->templateObjects()->count())
+  if(selected.count() > 0)
   {
-    QString menu;
+    int n = selected[0].row();
 
-    kmfApp->setOverrideCursor(KCursor::waitCursor());
-    kmfApp->uiInterface()->setUseMessageBox(true);
-    kmfApp->uiInterface()->setStopped(false);
-    if(kmfApp->project()->mediaObjects()->count() > 0 &&
-      previewCheckBox->isChecked())
+    if(n < kmfApp->project()->templateObjects()->count())
     {
-      if(m_menu < m_menus.count())
-        menu = m_menus[m_menu];
-      else
-        menu = "Main";
+      QString menu;
+
+      kmfApp->setOverrideCursor(KCursor::waitCursor());
+      kmfApp->uiInterface()->setUseMessageBox(true);
+      kmfApp->uiInterface()->setStopped(false);
+      if(kmfApp->project()->mediaObjects()->count() > 0 &&
+        previewCheckBox->isChecked())
+      {
+        if(m_menu < m_menus.count())
+          menu = m_menus[m_menu];
+        else
+          menu = "Main";
+      }
+      KMF::TemplateObject* ob = kmfApp->project()->templateObjects()->at(n);
+      // Scale to real 4:3. Should get aspect ratio from template plugin?
+      QImage image = ob->preview(menu).scaled(768, 576, Qt::IgnoreAspectRatio,
+                                              Qt::SmoothTransformation);
+      templatePreview->setImage(image);
+      kmfApp->uiInterface()->setUseMessageBox(false);
+      kmfApp->restoreOverrideCursor();
+      m_lastUpdate = QDateTime::currentDateTime();
     }
-    KMF::TemplateObject* ob = kmfApp->project()->templateObjects()->at(n);
-    // Scale to real 4:3. Should get aspect ratio from template plugin?
-    QImage image = ob->preview(menu).scaled(768, 576, Qt::IgnoreAspectRatio,
-                                            Qt::SmoothTransformation);
-    templatePreview->setImage(image);
-    kmfApp->uiInterface()->setUseMessageBox(false);
-    kmfApp->restoreOverrideCursor();
-    m_lastUpdate = QDateTime::currentDateTime();
   }
 }
 

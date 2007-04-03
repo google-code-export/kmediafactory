@@ -274,8 +274,10 @@ void KMediaFactory::initGUI()
 void KMediaFactory::resetGUI()
 {
   templatePage->templatePreview->clear();
-#warning TODO: delete KMFProgressItems
-  //outputPage->progressListView->clear();
+  QListView* lv = outputPage->progressListView;
+  KMFProgressItemModel* model = static_cast<KMFProgressItemModel*>(lv->model());
+  model->data()->clear();
+  model->update();
   outputPage->progressBar->reset();
   outputPage->showLogPushBtn->setEnabled(false);
   m_janus->setCurrentPage(m_mediaPageItem);
@@ -345,7 +347,7 @@ void KMediaFactory::fileSaveAs()
   }
 }
 
-void KMediaFactory::saveProperties(KConfig *config)
+void KMediaFactory::saveProperties(KConfigGroup* config)
 {
   if (!kmfApp->url().isEmpty())
   {
@@ -353,7 +355,7 @@ void KMediaFactory::saveProperties(KConfig *config)
   }
 }
 
-void KMediaFactory::readProperties(KConfig *config)
+void KMediaFactory::readProperties(KConfigGroup* config)
 {
   QString url = config->readPathEntry("lastUrl");
 
@@ -390,9 +392,9 @@ void KMediaFactory::optionsConfigureToolbars()
       KConfigGroup cg = KGlobal::config()->group("KMFMainWindow");
       saveMainWindowSettings(cg);
   }
-  KEditToolbar dlg(actionCollection());
+  KEditToolBar dlg(actionCollection());
   connect(&dlg,SIGNAL(newToolbarConfig()),this,SLOT(newToolbarConfig()));
-  dlg.setDefaultToolbar("default");
+  dlg.setDefaultToolBar("default");
   dlg.exec();
 }
 
@@ -418,6 +420,7 @@ void KMediaFactory::updateToolsMenu()
   for(QStringList::ConstIterator it = files.begin(); it != files.end(); ++it)
   {
     KDesktopFile df(*it);
+    KConfigGroup group =   df.actionGroup("Desktop Entry");
 
     if (df.readName().isEmpty())
       continue;
@@ -425,7 +428,7 @@ void KMediaFactory::updateToolsMenu()
     actionCollection()->addAction((*it), action);
     connect(action, SIGNAL(triggered()), this, SLOT(execTool()));
 
-    if(df.readEntry("X-KMF-MediaMenu") == "true")
+    if(group.readEntry("X-KMF-MediaMenu") == "true")
       media_actions.append(action);
     else
       actions.append(action);

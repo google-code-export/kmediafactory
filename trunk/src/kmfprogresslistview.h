@@ -41,6 +41,7 @@ class KMFProgressItemModel : public QAbstractListModel
     QList<KMFProgressItem>* data() { return &m_data; };
     virtual int rowCount(const QModelIndex&) const;
     virtual QVariant data(const QModelIndex &index, int role) const;
+    void update() { reset(); };
 
   private:
     QList<KMFProgressItem> m_data;
