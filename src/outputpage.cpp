@@ -40,6 +40,8 @@ OutputPage::OutputPage(QWidget *parent) :
   QWidget(parent)
 {
   setupUi(this);
+  outputs->setSpacing(5);
+  outputs->setItemDelegate(new KMFItemDelegate());
   connect(outputs, SIGNAL(customContextMenuRequested(const QPoint&)),
           this, SLOT(contextMenuRequested(const QPoint&)));
   connect(&m_startPopup, SIGNAL(triggered(QAction*)),
