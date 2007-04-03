@@ -67,7 +67,7 @@ void TemplatePage::projectInit()
 
 void TemplatePage::templatesModified()
 {
-  KMF::Tools::updateView(templates);
+  m_model.changed();
 }
 
 void TemplatePage::currentChanged(const QModelIndex& index, const QModelIndex&)

@@ -140,7 +140,7 @@ void VideoOptions::subtitleAddClicked()
     dlg.getData(subtitle);
     m_subtitles.append(subtitle);
   }
-  KMF::Tools::updateView(subtitleListBox);
+  m_subtitleModel.setLanguages(&m_subtitles);
   enableButtons();
 }
 
@@ -149,7 +149,7 @@ void VideoOptions::subtitleRemoveClicked()
   int n = subtitleListBox->currentIndex().row();
 
   m_subtitles.removeAt(n);
-  KMF::Tools::updateView(subtitleListBox);
+  m_subtitleModel.setLanguages(&m_subtitles);
   enableButtons();
 }
 

@@ -69,7 +69,7 @@ void OutputPage::projectInit()
 
 void OutputPage::outputsModified()
 {
-  KMF::Tools::updateView(outputs);
+  m_model.changed();
 }
 
 void OutputPage::currentChanged(const QModelIndex& index, const QModelIndex&)

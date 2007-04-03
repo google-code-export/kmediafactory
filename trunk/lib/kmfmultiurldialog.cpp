@@ -46,14 +46,10 @@ KMFMultiURLDialog::~KMFMultiURLDialog()
 void KMFMultiURLDialog::moveDown()
 {
   QModelIndex i1 = fileListView->selectionModel()->currentIndex();
-  if(i1.row() < fileListView->model()->rowCount() - 1)
+  if(i1.row() < m_model.rowCount() - 1)
   {
-    QModelIndex i2 = fileListView->model()->index(i1.row() + 1, 0,
-                                                  QModelIndex());
-    QString s1 = fileListView->model()->data(i1, Qt::DisplayRole).toString();
-    QString s2 = fileListView->model()->data(i2, Qt::DisplayRole).toString();
-    fileListView->model()->setData(i1, s2);
-    fileListView->model()->setData(i2, s1);
+    QModelIndex i2 = m_model.index(i1.row() + 1, 0, QModelIndex());
+    m_model.swap(i1, i2);
     fileListView->scrollTo(i2);
   }
 }
@@ -63,12 +59,8 @@ void KMFMultiURLDialog::moveUp()
   QModelIndex i1 = fileListView->selectionModel()->currentIndex();
   if(i1.row() > 0)
   {
-    QModelIndex i2 = fileListView->model()->index(i1.row() - 1, 0,
-                                                  QModelIndex());
-    QString s1 = fileListView->model()->data(i1, Qt::DisplayRole).toString();
-    QString s2 = fileListView->model()->data(i2, Qt::DisplayRole).toString();
-    fileListView->model()->setData(i1, s2);
-    fileListView->model()->setData(i2, s1);
+    QModelIndex i2 = m_model.index(i1.row() - 1, 0, QModelIndex());
+    m_model.swap(i1, i2);
     fileListView->scrollTo(i2);
   }
 }
@@ -77,10 +69,7 @@ void KMFMultiURLDialog::remove()
 {
   QModelIndexList list = fileListView->selectionModel()->selectedRows();
 
-  for(int i; i < list.count(); ++i)
-  {
-    fileListView->model()->removeRows(list[i].row(), 1);
-  }
+  m_model.removeAt(list);
   fileListView->setCurrentIndex(m_model.index(0));
 }
 

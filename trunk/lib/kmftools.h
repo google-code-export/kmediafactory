@@ -73,12 +73,8 @@ namespace KMF
       static QString longFontName(const QFont& font);
       static int fcWeight2QtWeight(int fcWeight);
       static void printChilds(QObject* obj, int level = 0);
-      static void updateView(QAbstractItemView* v,
-                             const QModelIndex& i = QModelIndex());
       static int hex2int(QChar hexchar);
       static QColor toColor(const QString& s);
-      static void appendString(QStringListModel* model,
-                               const QString& string);
       static QMap<QString, QString> readIniFile(const QString& ini);
   };
 }

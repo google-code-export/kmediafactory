@@ -88,7 +88,7 @@ class KMFObjectListModel : public QAbstractListModel
 
     void changed()
     {
-      emit dataChanged(index(0, 0), index(m_data.count(), 0));
+      reset();
     }
 
   private:

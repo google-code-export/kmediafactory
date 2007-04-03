@@ -44,9 +44,10 @@ class KDE_EXPORT LanguageListModel : public QAbstractListModel
                         int role = Qt::DisplayRole) const;
     void useAllLanguages();
     void setLanguages(QStringList languages);
-    void setLanguages(const QDVD::AudioList* audio) { m_audio = audio; };
+    void setLanguages(const QDVD::AudioList* audio)
+      { m_audio = audio; reset(); };
     void setLanguages(const QDVD::SubtitleList* subtitle)
-      { m_subtitle = subtitle; };
+      { m_subtitle = subtitle; reset(); };
     QStringList* list() { return &m_languageList; };
     QString at(int i) const;
     QModelIndex index(const QString& lang) const;

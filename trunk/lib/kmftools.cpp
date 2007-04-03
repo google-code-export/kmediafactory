@@ -421,33 +421,6 @@ void KMF::Tools::printChilds(QObject* obj, int level)
   }
 }
 
-// Not very efficient but I only have couple of items in a list so it's OK.
-void KMF::Tools::updateView(QAbstractItemView* v,
-                            const QModelIndex& i)
-{
-  QItemSelection s;
-
-  if(!i.isValid())
-    s = v->selectionModel()->selection();
-  v->reset();
-  if(!i.isValid())
-    v->selectionModel()->select(s, QItemSelectionModel::SelectCurrent);
-  else
-    v->selectionModel()->select(i, QItemSelectionModel::SelectCurrent);
-}
-
-void KMF::Tools::appendString(QStringListModel* model,
-                              const QString& string)
-{
-  int rows = model->rowCount();
-
-  if(model->insertRows(rows, 1))
-  {
-    QModelIndex item = model->index(rows, 0);
-    model->setData(item, string, Qt::EditRole);
-  }
-}
-
 // This function is from qcolor.cpp
 int KMF::Tools::hex2int(QChar hexchar)
 {

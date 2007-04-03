@@ -57,7 +57,7 @@ void MediaPage::mediaModified()
 {
   kDebug() << k_funcinfo << endl;
   calculateSizes();
-  KMF::Tools::updateView(mediaFiles);
+  m_model.changed();
 }
 
 void MediaPage::contextMenuRequested(const QPoint &pos)

@@ -48,8 +48,10 @@ class KMFListModel : public QAbstractListModel
     void setList(const QList<T> &values);
 
     void clear();
-    void removeAt(const QModelIndex &index);
+    void removeAt(const QModelIndex& index);
+    void removeAt(const QModelIndexList& list);
     T at(const QModelIndex &index) const;
+    T at(int index) const;
     void swap(const QModelIndex &i1, const QModelIndex &i2);
     void insert(const QModelIndex &index, const T& value);
     void append(const T& value);
@@ -138,8 +140,8 @@ bool KMFListModel<T>::insertRows(const QModelIndex& index, int count,
 }
 
 template <class T>
-bool KMFListModel<T>::removeRows(const QModelIndex &index, int count,
-                                 const QModelIndex&)
+bool KMFListModel<T>::removeRows(const QModelIndex& index, int count,
+                                 const QModelIndex& parent)
 {
   int row = index.row();
   if(count <= 0 || row < 0 || (row + count) > rowCount(parent))
@@ -178,6 +180,15 @@ void KMFListModel<T>::clear()
 }
 
 template <class T>
+void KMFListModel<T>::removeAt(const QModelIndexList& list)
+{
+  for(int i; i < list.count(); ++i)
+  {
+    removeAt(list[i]);
+  }
+}
+
+template <class T>
 void KMFListModel<T>::removeAt(const QModelIndex &index)
 {
   removeRows(index, 1);
@@ -186,7 +197,13 @@ void KMFListModel<T>::removeAt(const QModelIndex &index)
 template <class T>
 T KMFListModel<T>::at(const QModelIndex &index) const
 {
-  return m_lst.at(index.row());
+  return at(index.row());
+}
+
+template <class T>
+T KMFListModel<T>::at(int index) const
+{
+  return m_lst.at(index);
 }
 
 template <class T>
