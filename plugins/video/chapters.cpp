@@ -59,6 +59,11 @@ class CellListModel : public QAbstractListModel
       return 3;
     };
 
+    void update()
+    {
+      reset();
+    };
+
     virtual QVariant data(const QModelIndex &index, int role) const
     {
       if (!index.isValid())
@@ -419,7 +424,7 @@ void Chapters::checkLengths()
     m_cells[i].setLength(next - m_cells[i].start());
   }
   m_cells.last().setLength(QTime(0, 0));
-  KMF::Tools::updateView(chaptersView);
+  m_model->update();;
 }
 
 void Chapters::accept()

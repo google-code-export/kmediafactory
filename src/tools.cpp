@@ -86,7 +86,8 @@ void Tools::propertiesClicked()
     if (dlg.exec())
     {
       dlg.getData(item);
-      KMF::Tools::updateView(toolsListView);
+#warning TODO
+//      KMF::Tools::updateView(toolsListView);
     }
   }
 }
