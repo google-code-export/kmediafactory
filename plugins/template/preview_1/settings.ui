@@ -39,11 +39,7 @@
     </widget>
    </item>
    <item>
-    <widget class="KUrlRequester" native="1" name="kcfg_background::Url" >
-     <property name="mode" stdset="0" >
-      <number>9</number>
-     </property>
-    </widget>
+    <widget class="KUrlRequester" name="kcfg_background::Url" />
    </item>
    <item>
     <widget class="QLabel" name="textLabel1" >
@@ -59,11 +55,7 @@
     </widget>
    </item>
    <item>
-    <widget class="KUrlRequester" native="1" name="kcfg_sound" >
-     <property name="mode" stdset="0" >
-      <number>9</number>
-     </property>
-    </widget>
+    <widget class="KUrlRequester" name="kcfg_sound" />
    </item>
    <item>
     <widget class="QLabel" name="mainTitleFontLabel" >
@@ -114,6 +106,96 @@
     <widget class="KColorCombo" name="kcfg_label::color" >
      <item>
       <property name="text" >
+       <string>Custom...</string>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
        <string/>
       </property>
      </item>
@@ -205,7 +287,7 @@
     </widget>
    </item>
    <item>
-    <widget class="Q3GroupBox" name="directPlayGroupBox" >
+    <widget class="QGroupBox" name="directPlayGroupBox" >
      <property name="title" >
       <string>Direct Play</string>
      </property>
@@ -267,7 +349,7 @@
     </widget>
    </item>
    <item>
-    <widget class="KMFLanguageListBox" name="kcfg_language" >
+    <widget class="QListView" name="kcfg_language" >
      <property name="autoFill" stdset="0" >
       <bool>true</bool>
      </property>
@@ -280,23 +362,14 @@
  <pixmapfunction>BTN_ICON</pixmapfunction>
  <customwidgets>
   <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>KColorCombo</class>
    <extends>QComboBox</extends>
    <header>kcolorcombo.h</header>
   </customwidget>
   <customwidget>
-   <class>KMFLanguageListBox</class>
-  </customwidget>
-  <customwidget>
    <class>KUrlRequester</class>
-   <extends>QWidget</extends>
-   <header>kUrlrequester.h</header>
+   <extends>QFrame</extends>
+   <header>kurlrequester.h</header>
   </customwidget>
   <customwidget>
    <class>KMFFontChooser</class>

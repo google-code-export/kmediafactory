@@ -240,9 +240,8 @@ void TemplateObject::slotProperties()
   // Give special treatment to widget named kcfg_language so we can show only
   // languages actually found from template
   QObject* w = page->findChild<QObject*>("kcfg_language");
-  if(w && w->metaObject()->className() == "QListView")
+  if(w && QString(w->metaObject()->className()) == "QListView")
   {
-    kDebug() << k_funcinfo << w->metaObject()->className() << endl;
     QListView* lbox = static_cast<QListView*>(w);
     model.setLanguages(m_menu.templateStore()->languages());
     lbox->setModel(&model);
