@@ -20,6 +20,7 @@
 #ifndef KMFFONTCHOOSER_H
 #define KMFFONTCHOOSER_H
 
+#include <kdemacros.h>
 #include <QWidget>
 #include <QLabel>
 
