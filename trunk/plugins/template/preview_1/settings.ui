@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>246</width>
-    <height>381</height>
+    <width>250</width>
+    <height>509</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -34,12 +34,12 @@
       <bool>false</bool>
      </property>
      <property name="buddy" >
-      <cstring>kcfg_background::Url</cstring>
+      <cstring>kcfg_background::url</cstring>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="KUrlRequester" name="kcfg_background::Url" />
+    <widget class="KUrlRequester" name="kcfg_background::url" />
    </item>
    <item>
     <widget class="QLabel" name="textLabel1" >
@@ -71,7 +71,7 @@
     </widget>
    </item>
    <item>
-    <widget class="KMFFontChooser" native="1" name="kcfg_main::font" />
+    <widget class="KMFFontChooser" name="kcfg_main::font" />
    </item>
    <item>
     <widget class="QLabel" name="textLabel3" >
@@ -87,7 +87,7 @@
     </widget>
    </item>
    <item>
-    <widget class="KMFFontChooser" native="1" name="kcfg_title::font" />
+    <widget class="KMFFontChooser" name="kcfg_title::font" />
    </item>
    <item>
     <widget class="QLabel" name="colorLabel" >
@@ -104,6 +104,96 @@
    </item>
    <item>
     <widget class="KColorCombo" name="kcfg_label::color" >
+     <item>
+      <property name="text" >
+       <string>Custom...</string>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string/>
+      </property>
+     </item>
      <item>
       <property name="text" >
        <string>Custom...</string>
@@ -362,6 +452,11 @@
  <pixmapfunction>BTN_ICON</pixmapfunction>
  <customwidgets>
   <customwidget>
+   <class>KMFFontChooser</class>
+   <extends>QWidget</extends>
+   <header>kmffontchooser.h</header>
+  </customwidget>
+  <customwidget>
    <class>KColorCombo</class>
    <extends>QComboBox</extends>
    <header>kcolorcombo.h</header>
@@ -371,14 +466,9 @@
    <extends>QFrame</extends>
    <header>kurlrequester.h</header>
   </customwidget>
-  <customwidget>
-   <class>KMFFontChooser</class>
-   <extends>QWidget</extends>
-   <header>kmffontchooser.h</header>
-  </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>kcfg_background::Url</tabstop>
+  <tabstop>kcfg_background::url</tabstop>
   <tabstop>kcfg_sound</tabstop>
   <tabstop>kcfg_main::font</tabstop>
   <tabstop>kcfg_title::font</tabstop>

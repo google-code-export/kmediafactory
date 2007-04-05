@@ -41,7 +41,7 @@
 #include <QFileInfo>
 #include <QImage>
 #include <QBuffer>
-#include <QFormBuilder>
+#include <QUiLoader>
 #include <QPixmap>
 #include <QTranslator>
 #include <Q3SqlPropertyMap>
@@ -231,21 +231,12 @@ void TemplateObject::slotProperties()
                        KDialog::Ok | KDialog::Cancel);
 
   QIODevice* di = m_menu.templateStore()->device("settings.ui");
-  QFormBuilder builder;
-  QWidget* page = builder.load(di, &dialog);
+  QUiLoader loader;
+  QWidget* page = loader.load(di, &dialog);
   //KMF::Tools::printChilds(page);
-  kDebug() << k_funcinfo << builder.pluginPaths() << endl;
+  //kDebug() << k_funcinfo << loader.availableWidgets() << endl;
   m_menu.templateStore()->close();
 
-  // Give special treatment to widget named kcfg_language so we can show only
-  // languages actually found from template
-  QObject* w = page->findChild<QObject*>("kcfg_language");
-  if(w && QString(w->metaObject()->className()) == "QListView")
-  {
-    QListView* lbox = static_cast<QListView*>(w);
-    model.setLanguages(m_menu.templateStore()->languages());
-    lbox->setModel(&model);
-  }
   /*
   kdDebug() << k_funcinfo << &m_customProperties << endl;
   KConfigSkeletonItem::List list = m_customProperties.items();
@@ -256,10 +247,21 @@ void TemplateObject::slotProperties()
   */
   if(page)
   {
+    // Give special treatment to widget named kcfg_language so we can show only
+    // languages actually found from template
+    QObject* w = page->findChild<QObject*>("kcfg_language");
+    if(w && QString(w->metaObject()->className()) == "QListView")
+    {
+      QListView* lbox = static_cast<QListView*>(w);
+      model.setLanguages(m_menu.templateStore()->languages());
+      lbox->setModel(&model);
+    }
     // This didn't work in TemplatePlugin constructor so we do it here.
     // It should not be a problem to insert them more than once since
     // it's a QMap.
 #warning TODO howto add custom widgets to KConfigDialog in KDE4
+    // KConfigDialogManager::propertyMap()->insert( "KColorButton", "color" );
+    // KConfigDialogManager::changedMap()->insert("KColorButton", SIGNAL(changed(const QColor &)));
     Q3SqlPropertyMap::defaultMap()->insert("KMFFontChooser", "font");
     Q3SqlPropertyMap::defaultMap()->insert("KColorCombo", "color");
 
