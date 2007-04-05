@@ -3,6 +3,10 @@
 # Generate list from install dir like this:
 # find . -type f -name "*" -printf "\"%P\"\n"
 
+if [[ "$1" == "--remove" ]]; then
+  REMOVE="1"
+fi
+
 TARGET=`pwd`
 LINKS="$HOME/.kde4"
 
@@ -36,11 +40,11 @@ FILES=(
 "share/apps/kmediafactory_output/kmediafactory_outputui.rc"
 "share/apps/kmediafactory_slideshow/kmediafactory_slideshowui.rc"
 "share/apps/kmediafactory_video/kmediafactory_videoui.rc"
-"share/kde4/servicetypes/kmediafactoryplugin.desktop"
-"share/kde4/services/kmediafactory_template.desktop"
-"share/kde4/services/kmediafactory_output.desktop"
-"share/kde4/services/kmediafactory_slideshow.desktop"
-"share/kde4/services/kmediafactory_video.desktop"
+"*share/kde4/servicetypes/kmediafactoryplugin.desktop"
+"*share/kde4/services/kmediafactory_video.desktop"
+"*share/kde4/services/kmediafactory_template.desktop"
+"*share/kde4/services/kmediafactory_output.desktop"
+"*share/kde4/services/kmediafactory_slideshow.desktop"
 "share/config.kcfg/kmediafactory.kcfg"
 "share/config.kcfg/templateplugin.kcfg"
 "share/config.kcfg/slideshowplugin.kcfg"
@@ -72,12 +76,34 @@ FILES=(
 function softlink()
 {
   if [ -e $1 ]; then
-#if [ -e $2 ]; then
-#     rm $2
-#   fi
-    echo "LINK: $1"
-    echo "   -> $2"
-    #ln -s $1 $2
+    if [ -e $2 ]; then
+      rm $2
+    fi
+    if [[ $REMOVE != "1" ]]; then
+      echo "LINK: $2"
+      echo "   -> $1"
+      ln -s $1 $2
+    else
+      echo "REMOVED: $2"
+    fi
+  else
+    echo "NOT FOUND: $1"
+  fi
+}
+
+function copy()
+{
+  if [ -e $1 ]; then
+    if [ -e $2 ]; then
+      rm $2
+    fi
+    if [[ $REMOVE != "1" ]]; then
+      echo "COPY: $1"
+      echo "   -> $2"
+      cp $1 $2
+    else
+      echo "REMOVED: $2"
+    fi
   else
     echo "NOT FOUND: $1"
   fi
@@ -85,16 +111,30 @@ function softlink()
 
 for FILE in "${FILES[@]}"
 do
+  if [[ "${FILE:0:1}" == "*" ]]; then
+    COPY="1"
+    FILE=${FILE:1}
+  else
+    COPY="0"
+  fi
   NAME=`basename $FILE`
   FOUND=`find . -type f -name "$NAME" -printf "%P"`
   if [[ "$FOUND" == "" ]]; then
     N=`echo $FILE | sed -e 's/.*\/\([0-9]*\)[x0-9]*\/.*/\1/'`
     if [[ "$N" != "$FILE" ]]; then
-      FOUND=`find . -type f -name "*$NAME" -printf "%P" | grep $N`
+      FOUND=`find . -type f -name "*$NAME" -printf "%P\n" | grep $N`
     else
       FOUND=`find . -type f -name "*$NAME" -printf "%P"`
     fi
   fi
-  softlink "$LINKS/$FILE" "$TARGET/$FOUND"
+  if [[ "$FOUND" != "" ]]; then
+    if [[ "$COPY" == "1" ]]; then
+      copy "$TARGET/$FOUND" "$LINKS/$FILE"
+    else
+      softlink "$TARGET/$FOUND" "$LINKS/$FILE"
+    fi
+  else
+    echo "NOT FOUND: $FILE"
+  fi
 done
 
