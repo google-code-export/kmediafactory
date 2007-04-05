@@ -26,7 +26,7 @@ kde4_add_executable(kmediafactoryplayer ${kmediafactoryplayer_SRCS})
 target_link_libraries(kmediafactoryplayer ${QT_AND_KDECORE_LIBS})
 
 install(FILES kmediafactoryplayerui.rc DESTINATION ${DATA_INSTALL_DIR}/kmediafactory)
-install_files(FILES kmediafactoryplayer.desktop DESTINATION ${XDG_APPS_DIR})
+install(FILES kmediafactoryplayer.desktop DESTINATION ${XDG_APPS_DIR})
 install(TARGETS kmediafactoryplayer DESTINATION ${BIN_INSTALL_DIR} )
 
 #KDE_PLACEHOLDER()

@@ -365,7 +365,7 @@ QPixmap SlideshowObject::pixmap() const
     return KIO::pixmapForUrl(KUrl(""));
 }
 
-void SlideshowObject::actions(QList<KAction*>& actionList) const
+void SlideshowObject::actions(QList<QAction*>& actionList) const
 {
   actionList.append(m_slideshowProperties);
 }
