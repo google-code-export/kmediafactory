@@ -20,7 +20,6 @@ kde4_add_kcfg_files(kmediafactory_slideshow_SRCS
 
 kde4_automoc(${kmediafactory_slideshow_SRCS})
 kde4_add_plugin(kmediafactory_slideshow ${kmediafactory_slideshow_SRCS})
-kde4_install_libtool_file(${PLUGIN_INSTALL_DIR} kmediafactory_slideshow)
 target_link_libraries(kmediafactory_slideshow ${KDE4_KDECORE_LIBS} kmediafactoryinterfaces kmf)
 
 install(TARGETS kmediafactory_slideshow DESTINATION ${PLUGIN_INSTALL_DIR})

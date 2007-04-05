@@ -1,17 +1,15 @@
 [Global]
-PluginName=KMediaFactoryWidgets
+PluginName=KMFWidgets
 Includes=kcomponentdata.h
-Init=new KComponentData("kmfwidgets");
 
 [KMFImageView]
 ToolTip=Image viewer (KMF)
 WhatsThis=KMediaFactory image viewer
-IncludeFile=kmfimageview.h
-Group=KMediaFactory
+Group=KMediaFactory (KDE)
+ConstructorArgs=(parent)
 
 [KMFFontChooser]
 ToolTip=Font Chooser Widget (KMF)
 WhatsThis=Font chooser widget
-IncludeFile=kmffontchooser.h
-Group=KMediaFactory
-
+Group=KMediaFactory (KDE)
+ConstructorArgs=(parent)
