@@ -21,6 +21,7 @@
 #include "templateobject.h"
 #include "templateplugin.h"
 #include "kmfmenu.h"
+#include "kmftools.h"
 #include "kmftemplate.h"
 #include "kmflanguagewidgets.h"
 #include "templatepluginsettings.h"
@@ -81,6 +82,7 @@ TemplateObject::TemplateObject(const QString& templateFile, QObject* parent):
   {
     m_templateProperties = new KAction(KIcon("pencil"),
                                        i18n("&Properties"),this);
+    kDebug() << k_funcinfo << m_templateProperties << endl;
     plugin()->actionCollection()->addAction("tob_properties",
            m_templateProperties);
     connect(m_templateProperties, SIGNAL(triggered()), SLOT(slotProperties()));
@@ -100,10 +102,13 @@ TemplateObject::~TemplateObject()
     uiInterface()->removeTemplateObject(this);
 }
 
-void TemplateObject::actions(QList<KAction*>& actionList) const
+void TemplateObject::actions(QList<QAction*>& actionList) const
 {
+  kDebug() << k_funcinfo << m_templateProperties << endl;
   if(m_templateProperties)
+  {
     actionList.append(m_templateProperties);
+  }
 }
 
 void TemplateObject::fromXML(const QDomElement& element)
@@ -222,11 +227,14 @@ void TemplateObject::slotProperties()
   m_menu.setLanguage("ui", KGlobal::locale()->language());
 
   KConfigDialog dialog(kapp->activeWindow(), "TemplateSettings",
-                       &m_customProperties);
+                       &m_customProperties, KPageDialog::Plain,
+                       KDialog::Ok | KDialog::Cancel);
 
   QIODevice* di = m_menu.templateStore()->device("settings.ui");
   QFormBuilder builder;
   QWidget* page = builder.load(di, &dialog);
+  //KMF::Tools::printChilds(page);
+  kDebug() << k_funcinfo << builder.pluginPaths() << endl;
   m_menu.templateStore()->close();
 
   // Give special treatment to widget named kcfg_language so we can show only
@@ -234,6 +242,7 @@ void TemplateObject::slotProperties()
   QObject* w = page->findChild<QObject*>("kcfg_language");
   if(w && w->metaObject()->className() == "QListView")
   {
+    kDebug() << k_funcinfo << w->metaObject()->className() << endl;
     QListView* lbox = static_cast<QListView*>(w);
     model.setLanguages(m_menu.templateStore()->languages());
     lbox->setModel(&model);

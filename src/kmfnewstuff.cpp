@@ -27,6 +27,10 @@
 #include <qfile.h>
 #include <qstringlist.h>
 
+#warning TODO KMFNewStuff
+
+#if 0
+
 KMFNewStuff::KMFNewStuff(const QString& provider, QWidget* parentWidget) :
 #warning why this is an error
   //QObject(parentWidget),
@@ -82,5 +86,7 @@ bool KMFNewStuff::createUploadFile(const QString&)
 {
   return false;
 }
+
+#endif
 
 #include "kmfnewstuff.moc"

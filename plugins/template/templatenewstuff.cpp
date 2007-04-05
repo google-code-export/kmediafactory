@@ -17,6 +17,8 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+#warning TODO TemplateNewStuff
+#if 0
 
 #include "templatenewstuff.h"
 #include "templateobject.h"
@@ -47,3 +49,4 @@ QString TemplateNewStuff::downloadDestination(KNS::Entry* entry)
   return KGlobal::dirs()->saveLocation("data", "kmediafactory_template") +
       entry->payload().fileName();
 }
+#endif

@@ -48,7 +48,6 @@
 #include <kiconloader.h>
 #include <kcmdlineargs.h>
 #include <kconfig.h>
-#include <kkeydialog.h>
 #include <kedittoolbar.h>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
@@ -60,6 +59,7 @@
 #include <kxmlguifactory.h>
 #include <ktoggleaction.h>
 #include <ktoolbar.h>
+#include <kshortcutsdialog.h>
 
 #include <QLabel>
 #include <QObject>
@@ -138,7 +138,8 @@ KMediaFactory::KMediaFactory()
 
 KMediaFactory::~KMediaFactory()
 {
-  delete m_newStuffDlg;
+  #warning TODO KMFNewStuff
+  //delete m_newStuffDlg;
   //delete mediaPage;
   //delete templatePage;
   //delete outputPage;
@@ -245,6 +246,8 @@ void KMediaFactory::projectOptions()
 
 void KMediaFactory::newStuff()
 {
+#warning TODO KMFNewStuff
+  /*
   if(!m_newStuffDlg)
   {
     m_newStuffDlg =
@@ -253,6 +256,7 @@ void KMediaFactory::newStuff()
             this, SLOT(updateToolsMenu()));
   }
   m_newStuffDlg->download();
+  */
 }
 
 void KMediaFactory::initGUI()
@@ -382,7 +386,7 @@ void KMediaFactory::dropEvent(QDropEvent *event)
 
 void KMediaFactory::optionsConfigureKeys()
 {
-  KKeyDialog::configure(actionCollection());
+  KShortcutsDialog::configure(actionCollection());
 }
 
 void KMediaFactory::optionsConfigureToolbars()

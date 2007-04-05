@@ -50,7 +50,7 @@ class SlideshowObject : public KMF::MediaObject
     virtual QPixmap pixmap() const;
     virtual bool make(QString type);
     virtual int timeEstimate() const;
-    virtual void actions(QList<KAction*>&) const;
+    virtual void actions(QList<QAction*>&) const;
     virtual void writeDvdAuthorXml(QDomElement& element,
                                    QString preferredLanguage,
                                    QString post, QString type);

@@ -52,4 +52,4 @@ add_custom_target(kmft-merge
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-install(FILES ${template} DESTINATION ${DATA_INSTALL_DIR}/kmediafactory_template)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${template} DESTINATION ${DATA_INSTALL_DIR}/kmediafactory_template)

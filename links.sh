@@ -1,102 +1,100 @@
-#!/bin/sh
+#!/bin/bash
+
+# Generate list from install dir like this:
+# find . -type f -name "*" -printf "\"%P\"\n"
 
 TARGET=`pwd`
-BUILD="$TARGET/debug"
 LINKS="$HOME/.kde4"
 
-echo "Build : $BUILD"
+echo "Target: $TARGET"
 echo "Links : $LINKS"
 
-plugins=(
-    "video"
-    "template"
-    "output"
-    "slideshow"
-)
-
-libs=(
-    "libkmf"
-    "libkmediafactoryinterfaces"
-    "libkmediafactorykstore"
+FILES=(
+"lib/libkmf.so.1.0.0"
+"lib/libkmf.la"
+"lib/kde4/plugins/designer/kmfwidgets.so"
+"lib/kde4/plugins/designer/kmfwidgets.la"
+"lib/kde4/libkmediafactorykstore.la"
+"lib/kde4/kmediafactory_template.la"
+"lib/kde4/kmediafactory_template.so"
+"lib/kde4/kmediafactory_output.la"
+"lib/kde4/kmediafactory_output.so"
+"lib/kde4/kmediafactory_slideshow.la"
+"lib/kde4/kmediafactory_slideshow.so"
+"lib/kde4/kmediafactory_video.la"
+"lib/kde4/kmediafactory_video.so"
+"lib/libkmediafactorykstore.so.1.0.0"
+"lib/libkmediafactoryinterfaces.so.1.0.0"
+"share/apps/kmediafactorywidgets/pics/kmffontchooser.png"
+"share/apps/kmediafactorywidgets/pics/kmfimageview.png"
+"share/apps/kmediafactory/kmediafactoryui.rc"
+"share/apps/kmediafactory_template/kmediafactory_templateui.rc"
+"share/apps/kmediafactory_template/simple.kmft"
+"share/apps/kmediafactory_template/preview_6.kmft"
+"share/apps/kmediafactory_template/preview_3.kmft"
+"share/apps/kmediafactory_template/preview_1.kmft"
+"share/apps/kmediafactory_output/kmediafactory_outputui.rc"
+"share/apps/kmediafactory_slideshow/kmediafactory_slideshowui.rc"
+"share/apps/kmediafactory_video/kmediafactory_videoui.rc"
+"share/kde4/servicetypes/kmediafactoryplugin.desktop"
+"share/kde4/services/kmediafactory_template.desktop"
+"share/kde4/services/kmediafactory_output.desktop"
+"share/kde4/services/kmediafactory_slideshow.desktop"
+"share/kde4/services/kmediafactory_video.desktop"
+"share/config.kcfg/kmediafactory.kcfg"
+"share/config.kcfg/templateplugin.kcfg"
+"share/config.kcfg/slideshowplugin.kcfg"
+"share/config.kcfg/videoplugin.kcfg"
+"share/mimelnk/application/x-kmediafactory.desktop"
+"share/mimelnk/application/x-kmediafactory-template.desktop"
+"share/icons/crystalsvg/128x128/apps/kmediafactory.png"
+"share/icons/crystalsvg/128x128/mimetypes/kmediafactory_project.png"
+"share/icons/crystalsvg/32x32/actions/add_video.png"
+"share/icons/crystalsvg/32x32/mimetypes/kmediafactory_project.png"
+"share/icons/crystalsvg/32x32/apps/kmediafactory.png"
+"share/icons/crystalsvg/22x22/apps/kmediafactory.png"
+"share/icons/crystalsvg/22x22/mimetypes/kmediafactory_project.png"
+"share/icons/crystalsvg/16x16/mimetypes/kmediafactory_project.png"
+"share/icons/crystalsvg/16x16/apps/kmediafactory.png"
+"share/icons/crystalsvg/64x64/mimetypes/kmediafactory_project.png"
+"share/icons/crystalsvg/64x64/apps/kmediafactory.png"
+"share/icons/crystalsvg/48x48/mimetypes/kmediafactory_project.png"
+"share/icons/crystalsvg/48x48/apps/kmediafactory.png"
+"share/icons/crystalsvg/scalable/apps/kmediafactory.svgz"
+"share/icons/crystalsvg/scalable/mimetypes/kmediafactory_project.svgz"
+"include/kmediafactory/plugin.h"
+"include/kmediafactory/projectinterface.h"
+"include/kmediafactory/uiinterface.h"
+"include/kmediafactory/kmfobject.h"
+"bin/kmediafactory"
 )
 
 function softlink()
 {
   if [ -e $1 ]; then
-    BN=`basename $1`
-    echo "Link  : $BN"
-    if [ -e $2 ]; then
-      rm $2
-    fi
-    ln -s $1 $2
+#if [ -e $2 ]; then
+#     rm $2
+#   fi
+    echo "LINK: $1"
+    echo "   -> $2"
+    #ln -s $1 $2
   else
-    echo "NOT FO: $1"
+    echo "NOT FOUND: $1"
   fi
 }
 
-function makedir()
-{
-  if [ ! -d $1 ]; then
-    echo "mkdir : $1"
-    mkdir -p $1
-  fi
-}
-
-makedir $LINKS/lib
-makedir $LINKS/lib/kde4
-
-makedir $LINKS/share
-makedir $LINKS/share/locale
-makedir $LINKS/share/locale/fi
-makedir $LINKS/share/locale/fi/LC_MESSAGES
-
-makedir $LINKS/lib/kde4/plugins
-makedir $LINKS/lib/kde4/plugins/designer
-
-# mo softlinks
-for lang in $BUILD/po/*; do
-    if [ -d $lang ]; then
-        la=`basename $lang`
-        for gmo in $BUILD/po/$la/*.gmo; do
-            tmp=`basename $gmo`
-            mo=${tmp%"gmo"}"mo"
-            echo "$la - $mo"
-            makedir $LINKS/share/locale/$la
-            makedir $LINKS/share/locale/$la/LC_MESSAGES
-            softlink $gmo $LINKS/share/locale/$la/LC_MESSAGES/$mo
-        done
+for FILE in "${FILES[@]}"
+do
+  NAME=`basename $FILE`
+  FOUND=`find . -type f -name "$NAME" -printf "%P"`
+  if [[ "$FOUND" == "" ]]; then
+    N=`echo $FILE | sed -e 's/.*\/\([0-9]*\)[x0-9]*\/.*/\1/'`
+    if [[ "$N" != "$FILE" ]]; then
+      FOUND=`find . -type f -name "*$NAME" -printf "%P" | grep $N`
+    else
+      FOUND=`find . -type f -name "*$NAME" -printf "%P"`
     fi
+  fi
+  softlink "$LINKS/$FILE" "$TARGET/$FOUND"
 done
 
-# Plugin libs
-for plugin in "${plugins[@]}"
-do
-    softlink $BUILD/lib/kmediafactory_$plugin.la \
-             $LINKS/lib/kde4/kmediafactory_$plugin.la
-    softlink $BUILD/lib/kmediafactory_$plugin.so \
-             $LINKS/lib/kde4/kmediafactory_$plugin.so
-done
-
-# lib softlinks
-for lib in "${libs[@]}"
-do
-    softlink $BUILD/lib/$lib.la $LINKS/lib/$lib.la
-    softlink $BUILD/lib/$lib.so $LINKS/lib/$lib.so
-    softlink $BUILD/lib/$lib.so.1 $LINKS/lib/$lib.so.1
-    softlink $BUILD/lib/$lib.so.1.0.0 $LINKS/lib/$lib.so.1.0.0
-done
-
-# designer plugin
-softlink $BUILD/lib/kmfwidgets.so \
-        $LINKS/lib/kde4/plugins/designer/kmfwidgets.so
-softlink $BUILD/lib/kmfwidgets.la \
-        $LINKS/lib/kde4/plugins/designer/kmfwidgets.la
-
-# template links
-cd $BUILD/plugins/template/
-for file in `find . -name *.kmft`; do
-  basename=`basename $file`
-  softlink $BUILD/plugins/template/$file \
-           $LINKS/share/apps/kmediafactory_template/$basename
-done
-cd -

@@ -21,12 +21,15 @@
 #ifndef KMFNEWSTUFF_H
 #define KMFNEWSTUFF_H
 
+#warning TODO KMFNewStuff
+/*
 #include <qobject.h>
 #include <kurl.h>
 #include "knewstuff/knewstuff.h"
 #include "knewstuff/entry.h"
 
-class KMFNewStuff : public QObject, public KNewStuff
+
+class KMFNewStuff : public QObject , public KNewStuff
 {
   Q_OBJECT
   public:
@@ -41,5 +44,6 @@ class KMFNewStuff : public QObject, public KNewStuff
   private:
     QString m_tmpFile;
 };
+*/
 
 #endif // KMFNEWSTUFF_H

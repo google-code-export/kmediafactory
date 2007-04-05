@@ -53,7 +53,7 @@ DvdDirectoryObject::~DvdDirectoryObject()
 {
 }
 
-void DvdDirectoryObject::actions(QList<KAction*>& actionList) const
+void DvdDirectoryObject::actions(QList<QAction*>& actionList) const
 {
   actionList.append(dvdCleanDirectory);
 }

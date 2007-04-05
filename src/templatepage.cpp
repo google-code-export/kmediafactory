@@ -121,7 +121,7 @@ void TemplatePage::updatePreview()
     {
       QString menu;
 
-      kmfApp->setOverrideCursor(KCursor::waitCursor());
+      kmfApp->setOverrideCursor(QCursor(Qt::WaitCursor));
       kmfApp->uiInterface()->setUseMessageBox(true);
       kmfApp->uiInterface()->setStopped(false);
       if(kmfApp->project()->mediaObjects()->count() > 0 &&
@@ -160,6 +160,7 @@ void TemplatePage::contextMenuRequested(const QPoint &pos)
   factory->plugActionList(mainWindow,
       QString::fromLatin1("template_actionlist"), actions);
   QWidget *w = factory->container("template_popup", mainWindow);
+  kDebug() << k_funcinfo << w << actions.count() << endl;
   if(w)
   {
     QMenu* popup = static_cast<QMenu*>(w);

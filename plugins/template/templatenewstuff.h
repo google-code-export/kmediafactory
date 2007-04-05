@@ -21,6 +21,8 @@
 #ifndef TEMPLATENEWSTUFF_H
 #define TEMPLATENEWSTUFF_H
 
+#warning TODO TemplateNewStuff
+/*
 #include "knewstuff/knewstuff.h"
 #include "knewstuff/entry.h"
 
@@ -40,5 +42,5 @@ class TemplateNewStuff : public KNewStuff
   private:
     QObject* m_parent;
 };
-
+*/
 #endif // TEMPLATENEWSTUFF_H

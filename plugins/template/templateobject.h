@@ -58,7 +58,7 @@ class TemplateObject : public KMF::TemplateObject
     virtual QPixmap pixmap() const;
     virtual QStringList menus();
     virtual QImage preview(const QString& menu = "");
-    virtual void actions(QList<KAction*>&) const;
+    virtual void actions(QList<QAction*>&) const;
     KConfigXML& customProperties() { return m_customProperties; };
     QVariant property(const QString& widget, const QString& name) const;
     void setProperty(const QString& widget, const QString& name,
