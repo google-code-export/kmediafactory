@@ -176,7 +176,11 @@ void TemplateObject::toXML(QDomElement& element) const
     }
     QDomElement e2 = doc.createElement("property");
     e2.setAttribute("name", (*it)->name());
-    e2.setAttribute("value", (*it)->property().toString());
+    QVariant value = (*it)->property();
+    if(QString(value.typeName()) != "KUrl")
+      e2.setAttribute("value", value.toString());
+    else
+      e2.setAttribute("value", value.value<KUrl>().prettyUrl());
     e.appendChild(e2);
   }
   if(!group.isEmpty())
