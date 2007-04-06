@@ -61,4 +61,64 @@ class KDE_EXPORT LanguageListModel : public QAbstractListModel
     static QMap<QString, QString> m_dvd2l10n;
 };
 
+class KDE_EXPORT KMFLanguageComboBox : public QComboBox
+{
+    Q_OBJECT
+    Q_PROPERTY(QString language READ language WRITE setLanguage USER true)
+  public:
+    KMFLanguageComboBox(QWidget *parent = 0) : QComboBox(parent)
+    {
+      setModel(&m_model);
+    }
+    ~KMFLanguageComboBox() {};
+
+    QString language() const
+    {
+      if(currentIndex() >= 0)
+        return m_model.at(currentIndex());
+      else
+        return "";
+    }
+    void setLanguage(const QString& language)
+    {
+      setCurrentIndex(m_model.index(language).row());
+    }
+
+    LanguageListModel* model() { return &m_model; };
+
+  private:
+    LanguageListModel m_model;
+};
+
+class KDE_EXPORT KMFLanguageListBox : public QListView
+{
+    Q_OBJECT
+    Q_PROPERTY(QString language READ language WRITE setLanguage USER true)
+  public:
+    KMFLanguageListBox(QWidget *parent = 0) : QListView(parent)
+    {
+      setModel(&m_model);
+    }
+    ~KMFLanguageListBox() {};
+
+    QString language() const
+    {
+      QModelIndexList list = selectionModel()->selectedIndexes();
+      if(list.count() > 0)
+        return m_model.at(list.first().row());
+      else
+        return "";
+    }
+    void setLanguage(const QString& language)
+    {
+      selectionModel()->select(m_model.index(language),
+                               QItemSelectionModel::ClearAndSelect);
+    }
+
+    LanguageListModel* model() { return &m_model; };
+
+  private:
+    LanguageListModel m_model;
+};
+
 #endif
