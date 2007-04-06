@@ -86,6 +86,8 @@ KConfigXML::~KConfigXML()
     delete m_fonts.takeFirst();
   while(!m_ints.isEmpty())
     delete m_ints.takeFirst();
+  while(!m_urls.isEmpty())
+    delete m_urls.takeFirst();
 }
 
 bool KConfigXML::parse(QString kcfgFile)
@@ -286,5 +288,13 @@ void KConfigXML::parseKCFGXMLEntry(const QDomElement& element)
     addItemInt(name, *i, defaultValue.toInt());
     m_ints.append(i);
   }
+  else if(type == "Url")
+  {
+    KUrl* url = new KUrl();
+    KConfigSkeleton::ItemUrl *item;
+    item = new KConfigSkeleton::ItemUrl(currentGroup(), name, *url,
+                                        KUrl(defaultValue));
+    addItem(item, name);
+    m_urls.append(url);
+  }
 }
-
