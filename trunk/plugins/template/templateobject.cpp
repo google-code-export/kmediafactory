@@ -254,9 +254,6 @@ void TemplateObject::slotProperties()
       KMFLanguageListBox* lbox = static_cast<KMFLanguageListBox*>(w);
       lbox->model()->setLanguages(m_menu.templateStore()->languages());
     }
-    KConfigDialogManager::propertyMap()->insert("KColorCombo", "color");
-    KConfigDialogManager::propertyMap()->insert("QComboBox", "currentIndex");
-    KConfigDialogManager::propertyMap()->insert("KUrlRequester", "url");
 
     //QWidget* w = (QWidget*)page->child("kcfg_language");
     //QSqlPropertyMap::defaultMap()->setProperty(w, "en");

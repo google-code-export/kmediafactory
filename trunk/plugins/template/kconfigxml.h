@@ -55,6 +55,7 @@ class KConfigXML : public KConfigSkeleton
     QList<QColor*>  m_colors;
     QList<QFont*>   m_fonts;
     QList<qint32*>  m_ints;
+    QList<KUrl*>    m_urls;
 };
 
 #endif
