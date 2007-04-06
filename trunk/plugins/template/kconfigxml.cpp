@@ -249,7 +249,7 @@ void KConfigXML::parseKCFGXMLEntry(const QDomElement& element)
   if(type.isEmpty())
     type = "String";
   /*
-  kdDebug() << k_funcinfo << type << ": " << name << ", " << defaultValue
+  kDebug() << k_funcinfo << type << ": " << name << ", " << defaultValue
       << endl;
   */
 

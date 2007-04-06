@@ -49,6 +49,7 @@ set(kmfwidgets_PART_SRCS
   ${CMAKE_CURRENT_BINARY_DIR}/kmfwidgets.cpp
 )
 kde4_add_widget_files(${kmfwidgets_PART_SRCS} kmf.widgets)
+qt4_add_resources(kmfwidgets_PART_SRCS kmfwidgets.qrc)
 kde4_add_plugin(kmfwidgets ${kmfwidgets_PART_SRCS})
 target_link_libraries(kmfwidgets ${KDE4_KDECORE_LIBS} kmf)
 install(TARGETS kmfwidgets DESTINATION ${PLUGIN_INSTALL_DIR}/plugins/designer)

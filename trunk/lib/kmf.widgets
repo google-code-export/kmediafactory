@@ -13,3 +13,17 @@ ToolTip=Font Chooser Widget (KMF)
 WhatsThis=Font chooser widget
 Group=KMediaFactory (KDE)
 ConstructorArgs=(parent)
+
+[KMFLanguageComboBox]
+ToolTip=Language ComboBox (KMF)
+WhatsThis=KMediaFactory language combobox
+IncludeFile=kmflanguagewidgets.h
+Group=KMediaFactory (KDE)
+ConstructorArgs=(parent)
+
+[KMFLanguageListBox]
+ToolTip=Language ListBox (KMF)
+WhatsThis=KMediaFactory language listbox
+IncludeFile=kmflanguagewidgets.h
+Group=KMediaFactory (KDE)
+ConstructorArgs=(parent)

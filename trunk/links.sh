@@ -22,8 +22,10 @@ FILES=(
 "lib/kde4/kmediafactory_video.so"
 "lib/libkmediafactorykstore.so.1.0.0"
 "lib/libkmediafactoryinterfaces.so.1.0.0"
-"share/apps/kmediafactorywidgets/pics/kmffontchooser.png"
-"share/apps/kmediafactorywidgets/pics/kmfimageview.png"
+"share/apps/kmfwidgets/pics/kmffontchooser.png"
+"share/apps/kmfwidgets/pics/kmflanguagelistbox.png"
+"share/apps/kmfwidgets/pics/kmflanguagecombobox.png"
+"share/apps/kmfwidgets/pics/kmfimageview.png"
 "share/apps/kmediafactory/kmediafactoryui.rc"
 "share/apps/kmediafactory_template/kmediafactory_templateui.rc"
 "share/apps/kmediafactory_template/simple.kmft"
@@ -66,11 +68,21 @@ FILES=(
 "bin/kmediafactory"
 )
 
+function makefilesdir()
+{
+  DIR=`dirname $1`
+  if [ ! -d $DIR ]; then
+    mkdir -p $DIR
+  fi
+}
+
 function softlink()
 {
   if [ -e $1 ]; then
     if [ -e $2 ]; then
       rm $2
+    else
+      makefilesdir $2
     fi
     if [[ $REMOVE != "1" ]]; then
       echo "LINK: $2"
@@ -89,6 +101,8 @@ function copy()
   if [ -e $1 ]; then
     if [ -e $2 ]; then
       rm $2
+    else
+      makefilesdir $2
     fi
     if [[ $REMOVE != "1" ]]; then
       echo "COPY: $1"

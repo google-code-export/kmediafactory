@@ -37,6 +37,7 @@
 #include <kiconloader.h>
 #include <kicon.h>
 #include <kactioncollection.h>
+#include <kconfigdialogmanager.h>
 #include <QFile>
 #include <QFileInfo>
 #include <QImage>
@@ -44,7 +45,6 @@
 #include <QUiLoader>
 #include <QPixmap>
 #include <QTranslator>
-#include <Q3SqlPropertyMap>
 
 class KMFTranslator : public QTranslator
 {
@@ -233,16 +233,15 @@ void TemplateObject::slotProperties()
   QIODevice* di = m_menu.templateStore()->device("settings.ui");
   QUiLoader loader;
   QWidget* page = loader.load(di, &dialog);
+  m_menu.templateStore()->close();
   //KMF::Tools::printChilds(page);
   //kDebug() << k_funcinfo << loader.availableWidgets() << endl;
-  m_menu.templateStore()->close();
-
   /*
-  kdDebug() << k_funcinfo << &m_customProperties << endl;
+  kDebug() << k_funcinfo << &m_customProperties << endl;
   KConfigSkeletonItem::List list = m_customProperties.items();
   KConfigSkeletonItem::List::iterator it;
   for(it = list.begin(); it != list.end(); ++it)
-    kdDebug() << k_funcinfo << (*it)->group() << " / " <<
+    kDebug() << k_funcinfo << (*it)->group() << " / " <<
         (*it)->key() << " = " << (*it)->property() << endl;
   */
   if(page)
@@ -250,20 +249,14 @@ void TemplateObject::slotProperties()
     // Give special treatment to widget named kcfg_language so we can show only
     // languages actually found from template
     QObject* w = page->findChild<QObject*>("kcfg_language");
-    if(w && QString(w->metaObject()->className()) == "QListView")
+    if(w && QString(w->metaObject()->className()) == "KMFLanguageListBox")
     {
-      QListView* lbox = static_cast<QListView*>(w);
-      model.setLanguages(m_menu.templateStore()->languages());
-      lbox->setModel(&model);
+      KMFLanguageListBox* lbox = static_cast<KMFLanguageListBox*>(w);
+      lbox->model()->setLanguages(m_menu.templateStore()->languages());
     }
-    // This didn't work in TemplatePlugin constructor so we do it here.
-    // It should not be a problem to insert them more than once since
-    // it's a QMap.
-#warning TODO howto add custom widgets to KConfigDialog in KDE4
-    // KConfigDialogManager::propertyMap()->insert( "KColorButton", "color" );
-    // KConfigDialogManager::changedMap()->insert("KColorButton", SIGNAL(changed(const QColor &)));
-    Q3SqlPropertyMap::defaultMap()->insert("KMFFontChooser", "font");
-    Q3SqlPropertyMap::defaultMap()->insert("KColorCombo", "color");
+    KConfigDialogManager::propertyMap()->insert("KColorCombo", "color");
+    KConfigDialogManager::propertyMap()->insert("QComboBox", "currentIndex");
+    KConfigDialogManager::propertyMap()->insert("KUrlRequester", "url");
 
     //QWidget* w = (QWidget*)page->child("kcfg_language");
     //QSqlPropertyMap::defaultMap()->setProperty(w, "en");
@@ -272,6 +265,14 @@ void TemplateObject::slotProperties()
   }
 
   dialog.exec();
+
+  kDebug() << k_funcinfo << &m_customProperties << endl;
+  KConfigSkeletonItem::List list = m_customProperties.items();
+  KConfigSkeletonItem::List::iterator it;
+  for(it = list.begin(); it != list.end(); ++it)
+    kDebug() << k_funcinfo << (*it)->group() << " / " <<
+        (*it)->key() << " = " << (*it)->property() << endl;
+
 
   if(dialog.result() == QDialog::Accepted)
     projectInterface()->setDirty(KMF::ProjectInterface::DirtyTemplate);

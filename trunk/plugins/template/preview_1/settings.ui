@@ -439,7 +439,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QListView" name="kcfg_language" >
+    <widget class="KMFLanguageListBox" name="kcfg_language" >
      <property name="autoFill" stdset="0" >
       <bool>true</bool>
      </property>
