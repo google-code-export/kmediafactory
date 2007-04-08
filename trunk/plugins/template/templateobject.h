@@ -76,6 +76,7 @@ class TemplateObject : public KMF::TemplateObject
     KMFConfigXML m_customProperties;
     KMFMenu m_menu;
 
+    QString propertyString(KConfigSkeletonItem* item) const;
     bool isUpToDate(QString type);
 };
 

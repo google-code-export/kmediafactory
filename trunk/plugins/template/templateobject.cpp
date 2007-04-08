@@ -176,11 +176,7 @@ void TemplateObject::toXML(QDomElement& element) const
     }
     QDomElement e2 = doc.createElement("property");
     e2.setAttribute("name", (*it)->name());
-    QVariant value = (*it)->property();
-    if(QString(value.typeName()) != "KUrl")
-      e2.setAttribute("value", value.toString());
-    else
-      e2.setAttribute("value", value.value<KUrl>().prettyUrl());
+    e2.setAttribute("value", propertyString(*it));
     e.appendChild(e2);
   }
   if(!group.isEmpty())
@@ -279,6 +275,16 @@ void TemplateObject::slotProperties()
     projectInterface()->setDirty(KMF::ProjectInterface::DirtyTemplate);
 
   kapp->removeTranslator(&kmftr);
+}
+
+QString TemplateObject::propertyString(KConfigSkeletonItem* item) const
+{
+  QVariant value = item->property();
+
+  if(QString(value.typeName()) != "KUrl")
+    return value.toString();
+  else
+    return value.value<KUrl>().prettyUrl();
 }
 
 QVariant TemplateObject::property(const QString& widget,
