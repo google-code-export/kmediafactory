@@ -314,7 +314,7 @@ void TemplateObject::setProperty(const QString& widget,
   QString group;
   QDomElement e;
   /*
-  kdDebug() << k_funcinfo
+  kDebug() << k_funcinfo
       << "Widget: " << widget
       << "\nName  : " << name
       << "\nValue : " << value
@@ -324,7 +324,10 @@ void TemplateObject::setProperty(const QString& widget,
   {
     if((*it)->group() == widget && (*it)->name() == name)
     {
-      (*it)->setProperty(value);
+      if(QString((*it)->property().typeName()) == "KUrl")
+        (*it)->setProperty(KUrl(value.toString()));
+      else
+        (*it)->setProperty(value);
       return;
     }
   }
