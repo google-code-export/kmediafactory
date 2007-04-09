@@ -46,9 +46,9 @@ class ToolItem
     bool operator <(const ToolItem &t) const { return (name < t.name); }
 };
 
-Q_DECLARE_METATYPE(ToolItem)
+Q_DECLARE_METATYPE(ToolItem);
 
-class ToolListModel : KMFListModel<ToolItem>
+class ToolListModel : public KMFListModel<ToolItem>
 {
   virtual int columnCount(const QModelIndex&) const;
   virtual QVariant data(const QModelIndex &index, int role) const;
@@ -77,6 +77,7 @@ class Tools : public QWidget, public Ui::Tools
 
   private:
     KUrl::List m_remove;
+    ToolListModel m_model;
 };
 
 #endif

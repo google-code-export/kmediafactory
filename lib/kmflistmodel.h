@@ -252,6 +252,12 @@ T KMFListModel<T>::at(const QModelIndex &index) const
 }
 
 template <class T>
+void KMFListModel<T>::replace(const QModelIndex &index, const T& value)
+{
+  replace(index.row(), value);
+}
+
+template <class T>
 void KMFListModel<T>::swap(const QModelIndex &i1, const QModelIndex &i2)
 {
   swap(i1.row(), i2.row());

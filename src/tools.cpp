@@ -72,7 +72,11 @@ QVariant ToolListModel::data(const QModelIndex &index, int role) const
   }
   if (role == Qt::DecorationRole)
   {
-    return appIcon(at(i).icon);
+    switch(index.column())
+    {
+      case 0:
+        return appIcon(at(i).icon);
+    }
   }
   return QVariant();
 };
@@ -97,7 +101,11 @@ Tools::Tools(QWidget* parent) :
 {
   setupUi(this);
   connect(parent, SIGNAL(okClicked()), this, SLOT(save()));
+  toolsListView->setModel(&m_model);
   load();
+  connect(toolsListView->selectionModel(),
+      SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
+      this, SLOT(enableButtons()));
 }
 
 Tools::~Tools()
@@ -119,19 +127,18 @@ void Tools::addClicked()
 
 void Tools::propertiesClicked()
 {
-#warning TODO get item data
-  ToolItem* item = 0;
+  QModelIndexList list = toolsListView->selectionModel()->selectedIndexes();
 
-  if(item)
+  if(list.size() > 0)
   {
+    ToolItem item = m_model.at(list.first());
     ToolProperties dlg(kapp->activeWindow());
-    dlg.setData(*item);
-    dlg.setReadOnly(!writableItem(item));
+    dlg.setData(item);
+    dlg.setReadOnly(!writableItem(&item));
     if (dlg.exec())
     {
-      dlg.getData(item);
-#warning TODO
-//      KMF::Tools::updateView(toolsListView);
+      dlg.getData(&item);
+      m_model.replace(list.first(), item);
     }
   }
 }
@@ -210,16 +217,17 @@ void Tools::load()
     if(df.readType() != "Application")
       continue;
 
-    item = new ToolItem();
-    item->name = df.readName();
-    item->icon = df.readIcon();
-    item->description = df.readGenericName();
-    item->command = df.readEntry("Exec");
-    item->workPath = df.readPath();
-    item->mediaMenu = (df.readEntry("X-KMF-MediaMenu") == "true");
-    item->runInTerminal = (df.readEntry("Terminal") == "true");
-    item->desktopFile = *it;
-#warning TODO add to treeview model
+    ToolItem item;
+    item.name = df.readName();
+    item.icon = df.readIcon();
+    item.description = df.readGenericName();
+    item.workPath = df.readPath();
+    KConfigGroup group = df.group("Desktop Entry");
+    item.command = group.readEntry("Exec");
+    item.mediaMenu = (group.readEntry("X-KMF-MediaMenu") == "true");
+    item.runInTerminal = (group.readEntry("Terminal") == "true");
+    item.desktopFile = *it;
+    m_model.append(item);
   }
   enableButtons();
 }
@@ -242,15 +250,16 @@ bool Tools::writableItem(ToolItem* item)
 
 void Tools::enableButtons()
 {
-#warning TODO get item data
-  ToolItem* item = 0;
-  if(item)
-  {
-    bool writable = writableItem(item);
+  QModelIndexList list = toolsListView->selectionModel()->selectedIndexes();
+  bool writable = false;
 
-    propertiesButton->setEnabled(item != 0L);
-    removeButton->setEnabled(item != 0L & writable);
+  if(list.size() > 0)
+  {
+    ToolItem item = m_model.at(list.first());
+    writable = writableItem(&item);
   }
+  propertiesButton->setEnabled(list.size() > 0);
+  removeButton->setEnabled(list.size() > 0 && writable);
 }
 
 #include "tools.moc"
