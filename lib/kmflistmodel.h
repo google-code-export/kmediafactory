@@ -44,20 +44,31 @@ class KMFListModel : public QAbstractListModel
     bool removeRows(const QModelIndex &index, int count,
                     const QModelIndex &parent = QModelIndex());
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
-    QList<T> list() const;
-    void setList(const QList<T> &values);
 
-    void clear();
+    void removeAt(int index);
+    void removeAt(QList<int> list);
+    T at(int index) const;
+    void replace(int index, const T& value);
+    void swap(int i1, int i2);
+    void insert(int index, const T& value);
+
     void removeAt(const QModelIndex& index);
     void removeAt(const QModelIndexList& list);
     T at(const QModelIndex &index) const;
-    T at(int index) const;
+    void replace(const QModelIndex &index, const T& value);
     void swap(const QModelIndex &i1, const QModelIndex &i2);
     void insert(const QModelIndex &index, const T& value);
+
+    void clear();
     void append(const T& value);
     void append(const QList<T>& values);
+    QList<T> list() const;
+    void setList(const QList<T> &values);
 
-private:
+  protected:
+    bool isValid(int index) const;
+
+  private:
     QList<T> m_lst;
 };
 
@@ -102,12 +113,6 @@ Qt::ItemFlags KMFListModel<T>::flags(const QModelIndex& index) const
 
   return QAbstractItemModel::flags(index) | Qt::ItemIsEditable |
       Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
-}
-
-template <class T>
-QList<T> KMFListModel<T>::list() const
-{
-  return m_lst;
 }
 
 template <class T>
@@ -165,11 +170,115 @@ void KMFListModel<T>::sort(int, Qt::SortOrder order)
   emit layoutChanged();
 }
 
+// Index base functions
+
 template <class T>
-void KMFListModel<T>::setList(const QList<T> &values)
+void KMFListModel<T>::removeAt(int index)
 {
-  m_lst = values;
-  reset();
+  if(!isValid(index))
+    return;
+  beginRemoveRows(QModelIndex(), index, index);
+  m_lst.removeAt(index);
+  endRemoveRows();
+}
+
+template <class T>
+void KMFListModel<T>::removeAt(QList<int> list)
+{
+  // Remove from end to start
+  qSort(list.begin(), list.end(), qGreater<int>());
+  foreach(int index, list)
+    removeAt(index);
+}
+
+template <class T>
+T KMFListModel<T>::at(int index) const
+{
+  if(!isValid(index))
+    return T();
+  return m_lst.at(index);
+}
+
+template <class T>
+void KMFListModel<T>::replace(int i, const T& value)
+{
+  if(!isValid(i))
+    return;
+  m_lst[i] = value;
+  emit dataChanged(index(i), index(i));
+}
+
+template <class T>
+void KMFListModel<T>::swap(int i1, int i2)
+{
+  if(!isValid(i1) or !isValid(i1))
+    return;
+
+  T s1 = at(i1);
+  replace(i1, at(i2));
+  replace(i2, s1);
+}
+
+template <class T>
+void KMFListModel<T>::insert(int index, const T& value)
+{
+  beginInsertRows(QModelIndex(), index, index);
+  m_lst.insert(index, value);
+  endInsertRows();
+}
+
+// QModelIndex based functions
+
+template <class T>
+void KMFListModel<T>::removeAt(const QModelIndexList& list)
+{
+  QList<int> l;
+
+  foreach(QModelIndex index, list)
+    l.append(index.row());
+  removeAt(l);
+}
+
+template <class T>
+void KMFListModel<T>::removeAt(const QModelIndex &index)
+{
+  removeAt(index.row());
+}
+
+template <class T>
+T KMFListModel<T>::at(const QModelIndex &index) const
+{
+  return at(index.row());
+}
+
+template <class T>
+void KMFListModel<T>::swap(const QModelIndex &i1, const QModelIndex &i2)
+{
+  swap(i1.row(), i2.row());
+}
+
+template <class T>
+void KMFListModel<T>::insert(const QModelIndex &index, const T& value)
+{
+  insert(index.row(), value);
+}
+
+// Others
+
+template <class T>
+void KMFListModel<T>::append(const T& value)
+{
+  beginInsertRows(QModelIndex(), m_lst.count(), m_lst.count());
+  m_lst.append(value);
+  endInsertRows();
+}
+
+template <class T>
+void KMFListModel<T>::append(const QList<T>& values)
+{
+  beginInsertRows(QModelIndex(), m_lst.count(), values.count());
+  m_lst << values;
+  endInsertRows();
 }
 
 template <class T>
@@ -180,62 +289,24 @@ void KMFListModel<T>::clear()
 }
 
 template <class T>
-void KMFListModel<T>::removeAt(const QModelIndexList& list)
+QList<T> KMFListModel<T>::list() const
 {
-  for(int i; i < list.count(); ++i)
-  {
-    removeAt(list[i]);
-  }
+  return m_lst;
 }
 
 template <class T>
-void KMFListModel<T>::removeAt(const QModelIndex &index)
+void KMFListModel<T>::setList(const QList<T> &values)
 {
-  removeRows(index, 1);
+  m_lst = values;
+  reset();
 }
 
 template <class T>
-T KMFListModel<T>::at(const QModelIndex &index) const
+bool KMFListModel<T>::isValid(int index) const
 {
-  return at(index.row());
-}
-
-template <class T>
-T KMFListModel<T>::at(int index) const
-{
-  return m_lst.at(index);
-}
-
-template <class T>
-void KMFListModel<T>::swap(const QModelIndex &i1, const QModelIndex &i2)
-{
-  T s1 = at(i1);
-  T s2 = at(i2);
-
-  setData(i1, s2);
-  setData(i2, s1);
-}
-
-template <class T>
-void KMFListModel<T>::insert(const QModelIndex &index, const T& value)
-{
-  insertRows(index, 1);
-  setData(index, value);
-}
-
-template <class T>
-void KMFListModel<T>::append(const T& value)
-{
-  QModelIndex i = index(rowCount(), 0, QModelIndex());
-  insert(i, value);
-}
-
-template <class T>
-void KMFListModel<T>::append(const QList<T>& values)
-{
-  QList<T> lst = list();
-  lst << values;
-  setList(lst);
+  if(index >= 0 and index < m_lst.count())
+    return true;
+  return false;
 }
 
 #endif // KMFLISTMODEL_H
