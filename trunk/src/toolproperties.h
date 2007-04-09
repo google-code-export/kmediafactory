@@ -30,8 +30,8 @@ class ToolProperties: public KDialog, public Ui::ToolProperties
     ToolProperties(QWidget *parent = 0);
     virtual ~ToolProperties() {};
 
-    void setData(const QToolListItem& item);
-    void getData(QToolListItem* item);
+    void setData(const ToolItem& item);
+    void getData(ToolItem* item);
     void setReadOnly(bool readonly);
 };
 

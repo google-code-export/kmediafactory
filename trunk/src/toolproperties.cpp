@@ -32,7 +32,7 @@ ToolProperties::ToolProperties(QWidget *parent)
   workPathUrl->setMode(KFile::Directory | KFile::LocalOnly);
 }
 
-void ToolProperties::setData(const QToolListItem& item)
+void ToolProperties::setData(const ToolItem& item)
 {
   nameEdit->setText(item.name);
   descriptionEdit->setText(item.description);
@@ -43,7 +43,7 @@ void ToolProperties::setData(const QToolListItem& item)
   runInTerminalCheckBox->setChecked(item.runInTerminal);
 }
 
-void ToolProperties::getData(QToolListItem* item)
+void ToolProperties::getData(ToolItem* item)
 {
   item->name = nameEdit->text();
   item->description = descriptionEdit->text();

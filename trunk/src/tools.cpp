@@ -48,6 +48,50 @@ static QPixmap appIcon(const QString &iconName)
   return normal;
 }
 
+int ToolListModel::columnCount(const QModelIndex&) const
+{
+  return 2;
+};
+
+QVariant ToolListModel::data(const QModelIndex &index, int role) const
+{
+  int i = index.row();
+
+  if (!isValid(i))
+    return QVariant();
+
+  if (role == Qt::DisplayRole)
+  {
+    switch(index.column())
+    {
+      case 0:
+        return at(i).name;
+      case 1:
+        return at(i).description;
+    }
+  }
+  if (role == Qt::DecorationRole)
+  {
+    return appIcon(at(i).icon);
+  }
+  return QVariant();
+};
+
+QVariant ToolListModel::headerData(int column, Qt::Orientation, int role) const
+{
+  if (role != Qt::DisplayRole)
+    return QVariant();
+
+  switch(column)
+  {
+    case 0:
+      return i18n("Name");
+    case 1:
+      return i18n("Description");
+  }
+  return "";
+};
+
 Tools::Tools(QWidget* parent) :
     QWidget(parent)
 {
@@ -66,7 +110,7 @@ void Tools::addClicked()
 
   if (dlg.exec())
   {
-    QToolListItem* item = new QToolListItem();
+    ToolItem* item = new ToolItem();
     dlg.getData(item);
 #warning TODO add to treeview model
   }
@@ -76,7 +120,7 @@ void Tools::addClicked()
 void Tools::propertiesClicked()
 {
 #warning TODO get item data
-  QToolListItem* item = 0;
+  ToolItem* item = 0;
 
   if(item)
   {
@@ -95,7 +139,7 @@ void Tools::propertiesClicked()
 void Tools::removeClicked()
 {
 #warning TODO get item data
-  QToolListItem* item = 0;
+  ToolItem* item = 0;
 
   if(item)
   {
@@ -111,7 +155,7 @@ void Tools::save()
   if(!m_remove.isEmpty())
     KIO::del(m_remove);
 
-  QToolListItem* item;
+  ToolItem* item;
   QFileInfo file;
   QString name;
 
@@ -119,7 +163,7 @@ void Tools::save()
 /*
   for(Q3ListViewItemIterator it(toolsListView); *it != 0; ++it)
   {
-    item = static_cast<QToolListItem*>(*it);
+    item = static_cast<ToolItem*>(*it);
     if(!writableItem(item))
       continue;
 
@@ -156,7 +200,7 @@ void Tools::load()
 {
   QStringList files =
       KGlobal::dirs()->findAllResources("appdata", "tools/*.desktop");
-  QToolListItem* item;
+  ToolItem* item;
 
   for(QStringList::ConstIterator it = files.begin();
       it != files.end(); ++it)
@@ -166,7 +210,7 @@ void Tools::load()
     if(df.readType() != "Application")
       continue;
 
-    item = new QToolListItem();
+    item = new ToolItem();
     item->name = df.readName();
     item->icon = df.readIcon();
     item->description = df.readGenericName();
@@ -180,7 +224,7 @@ void Tools::load()
   enableButtons();
 }
 
-bool Tools::writableItem(QToolListItem* item)
+bool Tools::writableItem(ToolItem* item)
 {
   if(item)
   {
@@ -199,7 +243,7 @@ bool Tools::writableItem(QToolListItem* item)
 void Tools::enableButtons()
 {
 #warning TODO get item data
-  QToolListItem* item = 0;
+  ToolItem* item = 0;
   if(item)
   {
     bool writable = writableItem(item);

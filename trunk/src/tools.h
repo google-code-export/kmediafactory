@@ -21,18 +21,19 @@
 #define TOOLS_H
 
 #include "ui_tools.h"
+#include "kmflistmodel.h"
 #include <kurl.h>
+#include <QObject>
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
 
-class QToolListItem
+class ToolItem
 {
   public:
-    QToolListItem() :
+    ToolItem() :
       mediaMenu(false), runInTerminal(false) {};
-
     QString name;
     QString description;
     QString command;
@@ -41,6 +42,17 @@ class QToolListItem
     QString workPath;
     bool mediaMenu;
     bool runInTerminal;
+
+    bool operator <(const ToolItem &t) const { return (name < t.name); }
+};
+
+Q_DECLARE_METATYPE(ToolItem)
+
+class ToolListModel : KMFListModel<ToolItem>
+{
+  virtual int columnCount(const QModelIndex&) const;
+  virtual QVariant data(const QModelIndex &index, int role) const;
+  virtual QVariant headerData(int column, Qt::Orientation, int role) const;
 };
 
 class Tools : public QWidget, public Ui::Tools
@@ -61,7 +73,7 @@ class Tools : public QWidget, public Ui::Tools
     virtual void enableButtons();
 
   protected:
-    bool writableItem(QToolListItem* item);
+    bool writableItem(ToolItem* item);
 
   private:
     KUrl::List m_remove;
