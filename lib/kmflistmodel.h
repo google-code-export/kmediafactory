@@ -100,7 +100,7 @@ QVariant KMFListModel<T>::data(const QModelIndex& index, int role) const
     return QVariant();
 
   if (role == Qt::DisplayRole || role == Qt::EditRole)
-    return m_lst.at(index.row());
+    return qVariantFromValue(m_lst.at(index.row()));
 
   return QVariant();
 }
@@ -284,7 +284,7 @@ void KMFListModel<T>::append(const QList<T>& values)
 template <class T>
 void KMFListModel<T>::clear()
 {
-  m_lst = QList<T>();
+  m_lst.clear();
   reset();
 }
 
