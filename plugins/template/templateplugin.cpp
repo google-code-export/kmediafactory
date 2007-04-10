@@ -76,7 +76,7 @@ const KMF::ConfigPage* TemplatePlugin::configPage() const
   configPage->page = new TemplateConfig;
   configPage->config = TemplatePluginSettings::self();
   configPage->itemName = i18n("Template plugin");
-  configPage->pixmapName = "kmultiple";
+  configPage->pixmapName = "image2";
   return configPage;
 }
 

@@ -118,9 +118,9 @@ void Tools::addClicked()
 
   if (dlg.exec())
   {
-    ToolItem* item = new ToolItem();
-    dlg.getData(item);
-#warning TODO add to treeview model
+    ToolItem item;
+    dlg.getData(&item);
+    m_model.append(item);
   }
   enableButtons();
 }
@@ -145,16 +145,17 @@ void Tools::propertiesClicked()
 
 void Tools::removeClicked()
 {
-#warning TODO get item data
-  ToolItem* item = 0;
+  QModelIndexList list = toolsListView->selectionModel()->selectedIndexes();
 
-  if(item)
+  if(list.size() > 0)
   {
-    if(!item->desktopFile.isEmpty())
-      m_remove.append(item->desktopFile);
-    delete item;
+    ToolItem item = m_model.at(list.first());
+
+    if(!item.desktopFile.isEmpty())
+      m_remove.append(item.desktopFile);
+    m_model.removeAt(list.first());
+    enableButtons();
   }
-  enableButtons();
 }
 
 void Tools::save()
@@ -162,21 +163,18 @@ void Tools::save()
   if(!m_remove.isEmpty())
     KIO::del(m_remove);
 
-  ToolItem* item;
+  QList<ToolItem> items = m_model.list();
   QFileInfo file;
   QString name;
 
-#warning TODO save data
-/*
-  for(Q3ListViewItemIterator it(toolsListView); *it != 0; ++it)
+  foreach(ToolItem item, items)
   {
-    item = static_cast<ToolItem*>(*it);
-    if(!writableItem(item))
+    if(!writableItem(&item))
       continue;
 
-    name = KMF::Tools::simpleName(item->name);
+    name = KMF::Tools::simpleName(item.name);
 
-    if(item->desktopFile.isEmpty())
+    if(item.desktopFile.isEmpty())
     {
       int i = 0;
 
@@ -189,25 +187,24 @@ void Tools::save()
       }
     }
     else
-      file = item->desktopFile;
+      file = item.desktopFile;
     KDesktopFile df(file.absoluteFilePath());
-    df.writeEntry("Name", item->name);
-    df.writeEntry("Type", "Application");
-    df.writeEntry("Icon", item->icon);
-    df.writeEntry("GenericName", item->description);
-    df.writeEntry("Exec", item->command);
-    df.writeEntry("Path", item->workPath);
-    df.writeEntry("Terminal", item->runInTerminal);
-    df.writeEntry("X-KMF-MediaMenu", item->mediaMenu);
+    KConfigGroup group = df.group("Desktop Entry");
+    group.writeEntry("Name", item.name);
+    group.writeEntry("Type", "Application");
+    group.writeEntry("Icon", item.icon);
+    group.writeEntry("GenericName", item.description);
+    group.writeEntry("Exec", item.command);
+    group.writeEntry("Path", item.workPath);
+    group.writeEntry("Terminal", item.runInTerminal);
+    group.writeEntry("X-KMF-MediaMenu", item.mediaMenu);
   }
-  */
 }
 
 void Tools::load()
 {
   QStringList files =
       KGlobal::dirs()->findAllResources("appdata", "tools/*.desktop");
-  ToolItem* item;
 
   for(QStringList::ConstIterator it = files.begin();
       it != files.end(); ++it)
