@@ -13,11 +13,17 @@
    <string>Subtitle options</string>
   </property>
   <layout class="QVBoxLayout" >
-   <property name="margin" >
+   <property name="leftMargin" >
     <number>0</number>
    </property>
-   <property name="spacing" >
-    <number>6</number>
+   <property name="topMargin" >
+    <number>0</number>
+   </property>
+   <property name="rightMargin" >
+    <number>0</number>
+   </property>
+   <property name="bottomMargin" >
+    <number>0</number>
    </property>
    <item>
     <widget class="QLabel" name="languageLabel" >
@@ -65,7 +71,7 @@
     </widget>
    </item>
    <item>
-    <widget class="KMFFontChooser" native="1" name="subtitleFontChooser" >
+    <widget class="KMFFontChooser" name="subtitleFontChooser" >
      <property name="minimumSize" >
       <size>
        <width>0</width>

@@ -52,17 +52,14 @@ static const KAboutData about("kmediafactory_template",
 typedef KGenericFactory<TemplatePlugin> templateFactory;
 K_EXPORT_COMPONENT_FACTORY(kmediafactory_template, templateFactory(&about))
 
-class ConfigureTemplatePlugin :
-    public KDialog, public Ui::ConfigureTemplatePlugin
+class TemplateConfig : public QWidget, public Ui::ConfigureTemplatePlugin
 {
   public:
-    ConfigureTemplatePlugin(QWidget *parent = 0) : KDialog(parent)
+    TemplateConfig(QWidget* parent = 0) : QWidget(parent)
     {
-      setupUi(mainWidget());
-      setButtons(KDialog::Ok | KDialog::Cancel);
+      setupUi(this);
     };
 };
-
 
 TemplatePlugin::TemplatePlugin(QObject *parent, const QStringList&) :
   KMF::Plugin(parent)
@@ -76,7 +73,7 @@ TemplatePlugin::TemplatePlugin(QObject *parent, const QStringList&) :
 const KMF::ConfigPage* TemplatePlugin::configPage() const
 {
   KMF::ConfigPage* configPage = new KMF::ConfigPage;
-  configPage->page = new ConfigureTemplatePlugin;
+  configPage->page = new TemplateConfig;
   configPage->config = TemplatePluginSettings::self();
   configPage->itemName = i18n("Template plugin");
   configPage->pixmapName = "kmultiple";

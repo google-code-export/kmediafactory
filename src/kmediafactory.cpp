@@ -424,7 +424,7 @@ void KMediaFactory::updateToolsMenu()
   for(QStringList::ConstIterator it = files.begin(); it != files.end(); ++it)
   {
     KDesktopFile df(*it);
-    KConfigGroup group =   df.group("Desktop Entry");
+    KConfigGroup group = df.group("Desktop Entry");
 
     if (df.readName().isEmpty())
       continue;
