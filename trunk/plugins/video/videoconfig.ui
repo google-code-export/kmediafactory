@@ -13,11 +13,17 @@
    <string>Configure Video Plugin</string>
   </property>
   <layout class="QVBoxLayout" >
-   <property name="margin" >
+   <property name="leftMargin" >
     <number>0</number>
    </property>
-   <property name="spacing" >
-    <number>6</number>
+   <property name="topMargin" >
+    <number>0</number>
+   </property>
+   <property name="rightMargin" >
+    <number>0</number>
+   </property>
+   <property name="bottomMargin" >
+    <number>0</number>
    </property>
    <item>
     <widget class="QLabel" name="defaultAudioLanguageLabel" >
@@ -33,7 +39,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QComboBox" name="kcfg_DefaultAudioLanguage" />
+    <widget class="KMFLanguageComboBox" name="kcfg_DefaultAudioLanguage" />
    </item>
    <item>
     <widget class="QLabel" name="defaultSubtitleLanguageLabel" >
@@ -49,7 +55,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QComboBox" name="kcfg_DefaultSubtitleLanguage" />
+    <widget class="KMFLanguageComboBox" name="kcfg_DefaultSubtitleLanguage" />
    </item>
    <item>
     <widget class="QCheckBox" name="kcfg_UsePreviewCache" >
@@ -82,6 +88,13 @@
  <layoutdefault spacing="6" margin="11" />
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>KMFLanguageComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kmflanguagewidgets.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

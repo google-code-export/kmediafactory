@@ -13,11 +13,17 @@
    <string>KMediaFactory</string>
   </property>
   <layout class="QVBoxLayout" >
-   <property name="margin" >
+   <property name="leftMargin" >
     <number>0</number>
    </property>
-   <property name="spacing" >
-    <number>6</number>
+   <property name="topMargin" >
+    <number>0</number>
+   </property>
+   <property name="rightMargin" >
+    <number>0</number>
+   </property>
+   <property name="bottomMargin" >
+    <number>0</number>
    </property>
    <item>
     <widget class="QLabel" name="nameLabel" >
@@ -44,15 +50,15 @@
    </item>
    <item>
     <widget class="QTimeEdit" name="intervalTime" >
+     <property name="displayFormat" >
+      <string>hh:mm:ss</string>
+     </property>
      <property name="time" >
       <time>
        <hour>0</hour>
        <minute>15</minute>
        <second>0</second>
       </time>
-     </property>
-     <property name="displayFormat" >
-      <string>hh:mm:ss</string>
      </property>
     </widget>
    </item>
