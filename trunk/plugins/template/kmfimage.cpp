@@ -151,6 +151,7 @@ void KMFImage::setImage(KUrl url)
 {
   bool ok = false;
 
+  //kDebug() << k_funcinfo << url << endl;
   if(url.protocol() == "project")
   {
     QList<KMF::MediaObject*>* mobs = m_prjIf->mediaObjects();
@@ -265,8 +266,8 @@ int KMFImage::minimumPaintHeight() const
 void KMFImage::setProperty(const QString& name, QVariant value)
 {
   KMFWidget::setProperty(name, value);
-  if(name == "url" && !value.toString().isEmpty())
-    setImage(KUrl(value.toString()));
+  if(name == "url")
+    setImage(value.value<KUrl>());
 }
 
 #include "kmfimage.moc"

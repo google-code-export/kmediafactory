@@ -31,6 +31,7 @@ class QFont;
 class QDomElement;
 class QAbstractItemView;
 class QStringListModel;
+class QPainter;
 
 namespace KMF
 {
@@ -76,6 +77,8 @@ namespace KMF
       static int hex2int(QChar hexchar);
       static QColor toColor(const QString& s);
       static QMap<QString, QString> readIniFile(const QString& ini);
+      static void drawRoundRect(QPainter* painter, const QRect& rect,
+                                int radius);
   };
 }
 

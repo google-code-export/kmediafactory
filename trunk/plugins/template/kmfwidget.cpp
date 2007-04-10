@@ -251,12 +251,6 @@ void KMFWidget::paint(KMFMenuPage* page)
 
     if(m_shadow.type() == KMFShadow::Blur)
     {
-      kDebug() << k_funcinfo
-          << temp.width() << ", "
-          << temp.height() << ", "
-          << m_shadow.radius() << ", "
-          << m_shadow.sigma() << ", "
-          << endl;
       expblur<16,7>(temp, (int)m_shadow.radius());
       //temp = KImageEffect::blur(temp, m_shadow.radius(), m_shadow.sigma());
     }
@@ -359,7 +353,10 @@ void KMFWidget::parseTitleChapter(const QString& s, int& title, int& chapter)
 void KMFWidget::setProperty(const QString& name, QVariant value)
 {
   if(name == "color")
-    setColor(value.value<QColor>().rgb());
+  {
+    //kDebug() << k_funcinfo << value.value<QColor>() << endl;
+    setColor(value.value<QColor>());
+  }
 }
 
 #include "kmfwidget.moc"

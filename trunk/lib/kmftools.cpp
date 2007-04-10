@@ -31,6 +31,7 @@
 #include <QAbstractItemView>
 #include <QItemSelection>
 #include <QStringListModel>
+#include <QPainter>
 #include <sys/stat.h>
 #include <errno.h>
 #include <fontconfig/fontconfig.h>
@@ -482,4 +483,25 @@ QMap<QString, QString> KMF::Tools::readIniFile(const QString& ini)
     f.close();
   }
   return info;
+}
+
+// From Qt4 examples painting/painterpaths/window.cpp GPL-2
+void KMF::Tools::drawRoundRect(QPainter* painter, const QRect& rect,
+                               int radius)
+{
+  int dr = radius * 2;
+  QPainterPath roundRectPath;
+
+  roundRectPath.moveTo(rect.right(), rect.top() + radius);
+  roundRectPath.arcTo(rect.right() - dr, rect.top(), dr, dr, 0.0, 90.0);
+  roundRectPath.lineTo(rect.left() + radius, rect.top());
+  roundRectPath.arcTo(rect.left(), rect.top(), dr, dr, 90.0, 90.0);
+  roundRectPath.lineTo(rect.left(), rect.bottom() - radius);
+  roundRectPath.arcTo(rect.left(), rect.bottom() - dr, dr, dr, 180.0, 90.0);
+  roundRectPath.lineTo(rect.right() - radius, rect.bottom());
+  roundRectPath.arcTo(rect.right() - dr, rect.bottom() -dr, dr, dr,
+                      270.0, 90.0);
+  roundRectPath.closeSubpath();
+
+  painter->drawPath(roundRectPath);
 }
