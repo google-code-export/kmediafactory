@@ -68,6 +68,7 @@ class KDE_EXPORT KMFLanguageComboBox : public QComboBox
   public:
     KMFLanguageComboBox(QWidget *parent = 0) : QComboBox(parent)
     {
+      m_model.useAllLanguages();
       setModel(&m_model);
     }
     ~KMFLanguageComboBox() {};
