@@ -49,54 +49,19 @@ void KMFFrame::paintWidget(QImage& layer, bool shdw)
 
   QPainter p(&layer);
   QRect rc = (shdw)? paintRect(shadow().offset()) : paintRect();
-  QColor rgb = (shdw)? shadow().color() : color();
-  QColor rgbFill = (shdw)? shadow().color() : m_fillColor;
+  QColor rgb = (shdw && color().alpha() != 0)? shadow().color() : color();
+  QColor rgbFill = (shdw && m_fillColor.alpha() != 0) ?
+                    shadow().color() : m_fillColor;
 
-  if(!m_fillColor.alpha() == 0)
+  p.setPen(QPen(rgb));
+  p.setBrush(QBrush(rgbFill));
+  if(m_rounded == 0)
   {
-    if(m_rounded == 0)
-    {
-      p.fillRect(rc, rgbFill);
-    }
-    else
-    {
-      // TODO: fill rounded rectangle
-    }
+    p.drawRect(rc);
   }
-  if(m_lineWidth > 0)
+  else
   {
-    p.drawRoundRect(rc, m_rounded);
-    /*
-    // I could not get DrawableRectangle or DrawableLine to draw exact line
-    // widths with or without antialias. So Rectangle is drawn with 4 filled
-    // rectangles
-    drawList.push_back(Magick::DrawableFillColor(rgb));
-    drawList.push_back(Magick::DrawableStrokeWidth(0));
-    // Top
-    drawList.push_back(Magick::DrawableRectangle(
-        rc.left(),
-        rc.top(),
-        rc.right(),
-        rc.top() + m_lineWidth - 1));
-    // Bottom
-    drawList.push_back(Magick::DrawableRectangle(
-        rc.left(),
-        rc.bottom() - m_lineWidth + 1,
-        rc.right(),
-        rc.bottom()));
-    // Left
-    drawList.push_back(Magick::DrawableRectangle(
-        rc.left(),
-      rc.top() + m_lineWidth,
-      rc.left() + m_lineWidth - 1,
-      rc.bottom() - m_lineWidth));
-    // Right
-    drawList.push_back(Magick::DrawableRectangle(
-        rc.right() - m_lineWidth + 1,
-        rc.top() + m_lineWidth,
-        rc.right(),
-        rc.bottom() - m_lineWidth));
-    */
+    KMF::Tools::drawRoundRect(&p, rc, m_rounded);
   }
 }
 

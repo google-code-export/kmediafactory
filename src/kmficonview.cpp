@@ -18,33 +18,13 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 #include "kmficonview.h"
+#include <kmftools.h>
 #include <QPainter>
 #include <QLocale>
 #include <QPainterPath>
 #include <limits.h>
 
 #define MARGIN 6
-
-// From Qt4 examples painting/painterpaths/window.cpp GPL-2
-void KMFItemDelegate::drawRoundRect(QPainter* painter, const QRect& rect,
-                                    int radius) const
-{
-  int dr = radius * 2;
-  QPainterPath roundRectPath;
-
-  roundRectPath.moveTo(rect.right(), rect.top() - radius);
-  roundRectPath.arcTo(rect.right() - dr, rect.top(), dr, dr, 0.0, 90.0);
-  roundRectPath.lineTo(rect.left() + radius, rect.top());
-  roundRectPath.arcTo(rect.left(), rect.top(), dr, dr, 90.0, 90.0);
-  roundRectPath.lineTo(rect.left(), rect.bottom() - radius);
-  roundRectPath.arcTo(rect.left(), rect.bottom() - dr, dr, dr, 180.0, 90.0);
-  roundRectPath.lineTo(rect.right() - radius, rect.bottom());
-  roundRectPath.arcTo(rect.right() - dr, rect.bottom() -dr, dr, dr,
-                      270.0, 90.0);
-  roundRectPath.closeSubpath();
-
-  painter->drawPath(roundRectPath);
-}
 
 // From qt4 qitemdelegate.cpp GPL-2
 QString KMFItemDelegate::replaceNewLine(QString text) const
@@ -96,7 +76,7 @@ void KMFItemDelegate::paint(QPainter* painter,
     painter->setBrush(option.palette.brush(QPalette::Highlight));
     painter->setPen(Qt::NoPen);
     painter->setRenderHint(QPainter::Antialiasing);
-    drawRoundRect(painter, opt.rect, 10);
+    KMF::Tools::drawRoundRect(painter, opt.rect, 10);
   }
   opt.rect.adjust(MARGIN, MARGIN, -1 * MARGIN, -1 * MARGIN);
 
