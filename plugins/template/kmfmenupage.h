@@ -25,6 +25,8 @@
 #include <QObject>
 #include <QSize>
 
+#define DPM 2700
+
 class KMFButton;
 class TemplateObject;
 class KMFMenuPage;

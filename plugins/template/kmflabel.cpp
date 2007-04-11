@@ -41,6 +41,8 @@ KMFLabel::~KMFLabel()
 int KMFLabel::minimumPaintWidth() const
 {
   QImage img(1, 1, QImage::Format_ARGB32);
+  img.setDotsPerMeterX(DPM);
+  img.setDotsPerMeterY(DPM);
   QFontMetrics fm(m_font, &img);
   return fm.size(Qt::TextSingleLine, m_text).width();
 }
@@ -49,6 +51,8 @@ int KMFLabel::minimumPaintHeight() const
 {
   //kdDebug() << k_funcinfo << m_font.pixelHeight(m_text, m_descent) << endl;
   QImage img(1, 1, QImage::Format_ARGB32);
+  img.setDotsPerMeterX(DPM);
+  img.setDotsPerMeterY(DPM);
   QFontMetrics fm(m_font, &img);
   return fm.size(Qt::TextSingleLine, m_text).height();
 }
@@ -128,7 +132,7 @@ void KMFLabel::paintWidget(QImage& layer, bool shdw)
   textrc.align(rc, halign(), valign());
   bool aa = (lt == Background || lt == Temp);
   p.setRenderHint(QPainter::TextAntialiasing, aa);
-  p.drawText(QPoint(textrc.x(), textrc.y()), text);
+  p.drawText(textrc, Qt::AlignLeft, text);
 }
 
 void KMFLabel::setProperty(const QString& name, QVariant value)
@@ -147,6 +151,8 @@ QString KMFLabel::fitText(QString txt, int width)
   QString s = txt;
   int i = 0;
   QImage img(1, 1, QImage::Format_ARGB32);
+  img.setDotsPerMeterX(DPM);
+  img.setDotsPerMeterY(DPM);
   QFontMetrics fm(m_font, &img);
 
   if(!s.isEmpty())

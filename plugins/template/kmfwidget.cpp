@@ -173,8 +173,9 @@ void KMFShadow::fromXML(const QDomElement& element)
 KMFWidget::KMFWidget(QObject *parent)
  : KMFTemplateBase(parent), m_geometry(this), m_layer(Background),
    m_valign(KMF::Rect::Middle), m_halign(KMF::Rect::Center), m_hidden(false),
-   m_color(qRgba(0,0,0,255)), m_takeSpace(false), m_row(0), m_column(0)
+   m_color("transparent"), m_takeSpace(false), m_row(0), m_column(0)
 {
+  m_color.setAlpha(0);
 }
 
 KMFWidget::~KMFWidget()
