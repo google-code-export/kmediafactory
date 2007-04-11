@@ -52,7 +52,7 @@ void KMFFrame::paintWidget(QImage& layer, bool shdw)
   QColor rgb = (shdw && color().alpha() != 0)? shadow().color() : color();
   QColor rgbFill = (shdw && m_fillColor.alpha() != 0) ?
                     shadow().color() : m_fillColor;
-
+  //kDebug() << k_funcinfo << rgb << ":" << shdw << endl;
   p.setPen(QPen(rgb));
   p.setBrush(QBrush(rgbFill));
   if(m_rounded == 0)

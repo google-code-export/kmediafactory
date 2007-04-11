@@ -45,7 +45,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-
 int KMFMenuPage::m_mjpegtoolsVersion = -1;
 
 KMFMenuPage::KMFMenuPage(QObject *parent) :
@@ -88,13 +87,23 @@ void KMFMenuPage::setResolution(QSize resolution)
   m_resolution = resolution;
   m_background = QImage(m_resolution, QImage::Format_ARGB32);
   m_background.fill(KMF::Tools::toColor("#444444FF").rgba());
+  m_background.setDotsPerMeterX(DPM);
+  m_background.setDotsPerMeterY(DPM);
   m_sub = QImage(m_resolution, QImage::Format_ARGB32);
   m_sub.fill(KMF::Tools::toColor("#000000FF").rgba());
+  m_sub.setDotsPerMeterX(DPM);
+  m_sub.setDotsPerMeterY(DPM);
   m_subHighlight = QImage(m_resolution, QImage::Format_ARGB32);
   m_subHighlight.fill(KMF::Tools::toColor("#000000FF").rgba());
+  m_subHighlight.setDotsPerMeterX(DPM);
+  m_subHighlight.setDotsPerMeterY(DPM);
   m_subSelect = QImage(m_resolution, QImage::Format_ARGB32);
   m_subSelect.fill(KMF::Tools::toColor("#000000FF").rgba());
+  m_subSelect.setDotsPerMeterX(DPM);
+  m_subSelect.setDotsPerMeterY(DPM);
   m_temp = QImage(m_resolution, QImage::Format_ARGB32);
+  m_temp.setDotsPerMeterX(DPM);
+  m_temp.setDotsPerMeterY(DPM);
   geometry().left().set(0, KMFUnit::Absolute);
   geometry().top().set(0, KMFUnit::Absolute);
   geometry().width().set(resolution.width(), KMFUnit::Absolute);
