@@ -4,7 +4,7 @@ find_program(ZIP_EXECUTABLE zip)
 MESSAGE(STATUS ${template_files})
 
 EXEC_PROGRAM(${ZIP_EXECUTABLE} ${src}
-    ARGS -X ${src}/${template} ${template_files})
+    ARGS -X ${dest}/${template} ${template_files})
 FILE(MAKE_DIRECTORY locale)
 FILE(GLOB dirs RELATIVE "${src}/locale/" "${src}/locale/??")
 FOREACH(dir ${dirs})
