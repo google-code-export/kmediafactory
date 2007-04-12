@@ -151,8 +151,7 @@ bool KMFUiInterface::message(KMF::MsgType type, const QString& msg)
   KMFProgressItem item;
   item.text = msg;
   item.pixmap = pixmap;
-  model->data()->append(item);
-  model->update();
+  model->append(item);
 
   kmfApp->logger().message(msg, color);
   if(m_useMessageBox)
@@ -193,8 +192,10 @@ bool KMFUiInterface::setItemTotalSteps(int totalSteps)
 {
   QListView* lv = kmfApp->mainWindow()->outputPage->progressListView;
   KMFProgressItemModel* model = static_cast<KMFProgressItemModel*>(lv->model());
-  model->data()->last().max = totalSteps;
-  model->update();
+  int last = model->rowCount() - 1;
+  KMFProgressItem item = model->at(last);
+  item.max = totalSteps;
+  model->replace(last, item);
   return true;
 }
 
@@ -202,8 +203,10 @@ bool KMFUiInterface::setItemProgress(int progress)
 {
   QListView* lv = kmfApp->mainWindow()->outputPage->progressListView;
   KMFProgressItemModel* model = static_cast<KMFProgressItemModel*>(lv->model());
-  model->data()->last().value = progress;
-  model->update();
+  int last = model->rowCount() - 1;
+  KMFProgressItem item = model->at(last);
+  item.value = progress;
+  model->replace(last, item);
   return true;
 }
 
