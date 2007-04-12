@@ -22,24 +22,19 @@
 #include <kicon.h>
 #include <QPainter>
 #include <QModelIndex>
-
-int KMFProgressItemModel::rowCount(const QModelIndex&) const
-{
-  return m_data.count();
-}
+#include <QProgressBar>
 
 QVariant KMFProgressItemModel::data(const QModelIndex &index, int role) const
 {
-  if (!index.isValid())
-    return QVariant();
+  int i = index.row();
 
-  if (index.row() >= rowCount(index))
+  if (!isValid(i))
     return QVariant();
 
   if (role == Qt::DisplayRole)
-    return m_data.at(index.row()).text;
+    return at(index.row()).text;
   if (role == Qt::DecorationRole)
-    return KIcon(m_data.at(index.row()).pixmap);
+    return KIcon(at(index.row()).pixmap);
   return QVariant();
 }
 
@@ -53,7 +48,7 @@ void KMFProgressItemDelegate::paint(QPainter* painter,
   painter->save();
   QItemDelegate::paint(painter, option, index);
   QRect rc = option.rect;
-  const KMFProgressItem& item = m_model->data()->at(index.row());
+  KMFProgressItem item = m_model->at(index);
 
   if(item.value < item.max)
   {

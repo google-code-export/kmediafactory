@@ -20,9 +20,8 @@
 #ifndef KMFPROGRESSLISTVIEW_H
 #define KMFPROGRESSLISTVIEW_H
 
-#include <QProgressBar>
+#include <kmflistmodel.h>
 #include <QItemDelegate>
-#include <QAbstractListModel>
 
 class KMFProgressItem
 {
@@ -32,19 +31,15 @@ class KMFProgressItem
     QString text;
     int max;
     int value;
+
+    bool operator <(const KMFProgressItem &t) const { return (text < t.text); }
 };
 
-class KMFProgressItemModel : public QAbstractListModel
-{
-  public:
-    KMFProgressItemModel(QObject* parent = 0) : QAbstractListModel(parent) {};
-    QList<KMFProgressItem>* data() { return &m_data; };
-    virtual int rowCount(const QModelIndex&) const;
-    virtual QVariant data(const QModelIndex &index, int role) const;
-    void update() { reset(); };
+Q_DECLARE_METATYPE(KMFProgressItem);
 
-  private:
-    QList<KMFProgressItem> m_data;
+class KMFProgressItemModel : public KMFListModel<KMFProgressItem>
+{
+  virtual QVariant data(const QModelIndex &index, int role) const;
 };
 
 class KMFProgressItemDelegate : public QItemDelegate

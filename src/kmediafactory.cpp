@@ -280,8 +280,7 @@ void KMediaFactory::resetGUI()
   templatePage->templatePreview->clear();
   QListView* lv = outputPage->progressListView;
   KMFProgressItemModel* model = static_cast<KMFProgressItemModel*>(lv->model());
-  model->data()->clear();
-  model->update();
+  model->clear();
   outputPage->progressBar->reset();
   outputPage->showLogPushBtn->setEnabled(false);
   m_janus->setCurrentPage(m_mediaPageItem);
