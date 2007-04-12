@@ -48,7 +48,7 @@ void KMFProgressItemDelegate::paint(QPainter* painter,
   painter->save();
   QItemDelegate::paint(painter, option, index);
   QRect rc = option.rect;
-  KMFProgressItem item = m_model->at(index);
+  KMFProgressItem item = index.data().value<KMFProgressItem>();
 
   if(item.value < item.max)
   {
