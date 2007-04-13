@@ -27,11 +27,11 @@
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
-class Run : QObject
+class KDE_EXPORT Run : QObject
 {
     Q_OBJECT
   public:
-    Run(QString command = QString::null);
+    Run(QString command = QString::null, QString dir = QString::null);
     ~Run();
 
     bool run();
@@ -44,6 +44,7 @@ class Run : QObject
 
   private:
     QString m_command;
+    QString m_dir;
     QString m_output;
     int m_result;
 };

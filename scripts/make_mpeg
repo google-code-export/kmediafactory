@@ -1,0 +1,39 @@
+#!/bin/bash
+# make_mpeg DVD-PAL/DVD-NTSC frames name sound
+
+mplex_vers=`mplex 2>&1 | grep "version" | sed 's/.*version //' | sed 's/\([\.0-9]\) .*/\1/'`
+if [[ $mplex_vers > "1.6.2" ]]; then
+  CHROMA="420mpeg2"
+else
+  CHROMA="420_mpeg2"
+fi
+
+if [[ $1 == "DVD-PAL" ]]; then
+  VIDEONORM="p"
+  FRAMERATE="25:1"
+  FRAMERATEMPLEX="3"
+  ASPECTRATIO="59:54"
+else
+  VIDEONORM="n"
+  FRAMERATE="30000:1001"
+  FRAMERATEMPLEX="4"
+  ASPECTRATIO="10:11"
+fi
+FRAMES=$2
+NAME=$3
+SOUND=$4
+SUB="$NAME.xml"
+
+ppmtoy4m -S $CHROMA -n 1 -r -I p -F $FRAMERATE -A $ASPECTRATIO $NAME.pnm | \
+mpeg2enc -a 2 -f 8 -n $VIDEONORM -F $FRAMERATEMPLEX -o $NAME.m2v
+
+if [[ $? == 0 ]]; then
+  if [ -e $SUB ]; then
+    mplex -f 8 -o ${NAME}_bg.mpg $NAME.m2v "$SOUND" && \
+    spumux $SUB < ${NAME}_bg.mpg > $NAME.mpg && \
+    rm $NAME.m2v ${NAME}_bg.mpg
+  else
+    mplex -f 8 -o $NAME.mpg $NAME.m2v "$SOUND" && \
+    rm $NAME.m2v
+  fi
+fi

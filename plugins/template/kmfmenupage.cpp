@@ -21,10 +21,11 @@
 #include "kmfbutton.h"
 #include "kmfgeometry.h"
 #include "kmfmenu.h"
-#include "kmftime.h"
-#include "kmftools.h"
 #include "templateobject.h"
 #include "templatepluginsettings.h"
+#include <kmftime.h>
+#include <kmftools.h>
+#include <run.h>
 #include <kmediafactory/projectinterface.h>
 #include <kapplication.h>
 #include <kstandarddirs.h>
@@ -383,193 +384,38 @@ bool KMFMenuPage::writeSpumuxXml()
   return true;
 }
 
-#define MAKE_VERSION(A, B, C, D) (((A) << 24) | ((B) << 16) | \
-                                  ((C) << 8)  | ((D)<< 0))
-
-int KMFMenuPage::makeVersion(K3ProcIO& proc)
-{
-  QRegExp rx("(\\d+)\\.(\\d+)\\.(\\d+)[.\\-_a-z]*(\\d*)");
-
-  if(proc.start(K3Process::Block, true) == true)
-  {
-    QString v;
-    proc.readln(v);
-    v = v.trimmed();
-    if(rx.indexIn(v) != -1)
-    {
-      kDebug() << k_funcinfo
-          << rx.cap(1).toInt() << "."
-          << rx.cap(2).toInt() << "."
-          << rx.cap(3).toInt() << "."
-          << rx.cap(4).toInt() << endl;
-      return MAKE_VERSION(rx.cap(1).toInt(), rx.cap(2).toInt(),
-                          rx.cap(3).toInt(), rx.cap(4).toInt());
-    }
-  }
-  return -1;
-}
-
-int KMFMenuPage::mjpegtoolsVersion()
-{
-  if(m_mjpegtoolsVersion == -1)
-  {
-    K3ProcIO pkgconfig;
-
-    pkgconfig << "pkg-config" << "mjpegtools" << "--modversion";
-    m_mjpegtoolsVersion = makeVersion(pkgconfig);
-    if(m_mjpegtoolsVersion == -1)
-    {
-      K3ProcIO mplex;
-      mplex << "mplex";
-      m_mjpegtoolsVersion = makeVersion(mplex);
-    }
-    if(m_mjpegtoolsVersion == -1)
-    {
-      kDebug() << "Can't determine mjpegtools version." << endl;
-      m_mjpegtoolsVersion = MAKE_VERSION(0, 0, 0, 0);
-    }
-  }
-  return m_mjpegtoolsVersion;
-}
-
 bool KMFMenuPage::runScript(QString scriptName, QString place)
 {
   QString menuSound = "silence.mp2";
   KMF::Time seconds = 1.0;
 
-#warning TODO file format conversion
-#if 0
-  if(!m_sound.isEmpty())
+  if(m_sound.isEmpty())
   {
-    m_converter = new QFFMpeg;
-
-    m_converter->addFile(m_sound);
-    seconds = m_converter->duration();
-
-    if(!m_converter->isDVDCompatible())
-    {
-      QFileInfo sound(m_sound);
-      QFileInfo fi(m_prjIf->projectDir(place) +
-          QString("%1.ac3").arg(sound.fileName()));
-
-      if(fi.lastModified() < m_converter->lastModified())
-      {
-        connect(m_converter, SIGNAL(convertProgress(int)),
-                this, SLOT(slotProgress(int)));
-        connect(m_converter, SIGNAL(message(const QString&)),
-                m_uiIf->logger(), SLOT(message(const QString&)));
-        m_stopped = false;
-
-        m_uiIf->message(KMF::Info,
-            i18n("   Converting %1 to ac3 format", sound.fileName()));
-        m_uiIf->setItemTotalSteps(fi.size());
-
-        QFFMpegConvertTo dvd;
-        dvd.append(QFFMpegParam("ab", 192));
-        dvd.append(QFFMpegParam("ar", 48000));
-        if(m_converter->convertTo(dvd, 0, fi.filePath()) == false)
-        {
-          if(!m_stopped)
-            m_uiIf->message(KMF::Error, i18n("   Conversion error."));
-          QFile(fi.filePath()).remove();
-        }
-      }
-      menuSound = fi.filePath();
-    }
-    else
-      menuSound = m_sound;
-    delete m_converter;
+    menuSound = KStandardDirs::locate("data",
+                                      "kmediafactory/media/silence.mp2");
   }
   else
   {
-    QFileInfo fi(m_prjIf->projectDir(place) + "silence.mp2");
-
-    if(!fi.exists())
-    {
-      QFFmpegEncoder encoder;
-
-      encoder.setOutput(QF_MP2);
-      encoder.write(fi.filePath());
-    }
+    menuSound = m_sound;
   }
-#endif
 
-  QFile file(m_prjIf->projectDir(place) +
-             QString("%1.sh").arg(scriptName));
-  QString videoNorm;
-  QString aspectRatio;
-  QString frameRate;
-  uint frameRateMplex;
   uint frames;
-
   if(m_prjIf->type() == "DVD-PAL")
   {
-    videoNorm = "p";
-    frameRate = "25:1";
-    frameRateMplex = 3;
     frames = (uint)(seconds.toSeconds() * 25.0);
-    aspectRatio = "59:54";
   }
   else // NTSC
   {
-    videoNorm = "n";
-    frameRate = "30000:1001";
-    frameRateMplex = 4;
     frames = (uint)(seconds.toSeconds() * 30000.0 / 1001.0);
-    aspectRatio = "10:11";
   }
 
-  if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
-  {
-    m_uiIf->message(KMF::Error,
-        i18n("   Script file open failed. %1", file.errorString()));
-    return false;
-  }
+  Run run(QString("make_mpeg %1 %2 %3 %4").arg(m_prjIf->type()).arg(frames)
+          .arg(scriptName).arg(menuSound),
+          m_prjIf->projectDir(place));
 
-  QTextStream stream(&file);
-  QString s;
-  QFileInfo fi(m_prjIf->projectDir(place) +
-      QString("%1.xml").arg(scriptName));
-
-  if(mjpegtoolsVersion() > MAKE_VERSION(1, 6, 2, 0))
-    s = "420mpeg2";
-  else
-    s = "420_mpeg2";
-  stream << "#!/bin/sh\n" <<
-      QString("ppmtoy4m -S %4 -n 1 -r -I p -F %1 -A %2 %3.pnm | ")
-          .arg(frameRate).arg(aspectRatio).arg(scriptName).arg(s) <<
-      QString("mpeg2enc -a 2 -f 8 -n %1 -F %2 -o %3.m2v && \\\n")
-          .arg(videoNorm).arg(frameRateMplex).arg(scriptName);
-  if(fi.exists())
+  m_uiIf->logger()->message(run.output());
+  if(run.result() != 0)
   {
-    stream <<
-        QString("mplex -f 8 -o %2_bg.mpg %3.m2v \"%1\" && \\\n")
-          .arg(menuSound).arg(scriptName).arg(scriptName) <<
-        QString("spumux %1.xml < %2_bg.mpg > %3.mpg && \\\n")
-          .arg(scriptName).arg(scriptName).arg(scriptName) <<
-        QString("rm %1.m2v %2_bg.mpg\n")
-          .arg(scriptName).arg(scriptName);
-  }
-  else
-  {
-    stream <<
-        QString("mplex -f 8 -o %2.mpg %3.m2v \"%1\" && \\\n")
-            .arg(menuSound).arg(scriptName).arg(scriptName) <<
-        QString("rm %1.m2v\n")
-            .arg(scriptName);
-  }
-  file.close();
-  chmod((const char*)file.fileName().toLocal8Bit(),
-      S_IRUSR|S_IWRITE|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH);
-
-  K3Process pnm2mpg;
-  pnm2mpg.setWorkingDirectory(m_prjIf->projectDir(place));
-  pnm2mpg << "sh" << file.fileName();
-  m_uiIf->logger()->connectProcess(&pnm2mpg);
-  pnm2mpg.start(K3Process::Block, K3Process::AllOutput);
-  if(!pnm2mpg.normalExit() || pnm2mpg.exitStatus() != 0)
-  {
-    kDebug() << k_funcinfo << pnm2mpg.exitStatus() << endl;
     m_uiIf->message(KMF::Error, i18n("   Conversion error."));
     return false;
   }

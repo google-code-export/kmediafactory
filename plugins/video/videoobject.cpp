@@ -378,9 +378,10 @@ void VideoObject::writeDvdAuthorXml(QDomElement& element,
     if(type != "dummy")
     {
       QString file = videoFileFind(i);
-      //kdDebug() << k_funcinfo << file << endl;
       vob.setAttribute("file", file);
 
+      kDebug() << k_funcinfo << file << endl;
+      kDebug() << k_funcinfo << pos << (*cell).start() << endl;
       if(cell == m_cells.end() || pos != (*cell).start())
       {
         KMF::Time length;
