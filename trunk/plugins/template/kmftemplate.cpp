@@ -144,9 +144,9 @@ QStringList KMFTemplate::languages() const
 
 QString KMFTemplate::translate(const char* text) const
 {
-  kDebug() << k_funcinfo << text << endl;
+  //kDebug() << k_funcinfo << text << endl;
   QString result = QString::fromUtf8(kmf_nl_find_msg(&m_domain, text));
-  kDebug() << k_funcinfo << text << "=" << result << endl;
+  //kDebug() << k_funcinfo << text << "=" << result << endl;
   if(result.isEmpty())
     return text;
   else

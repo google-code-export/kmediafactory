@@ -23,9 +23,10 @@
 #include <qstringlist.h>
 #include <qfileinfo.h>
 
-Run::Run(QString command)
+Run::Run(QString command, QString dir)
 {
   m_command = command;
+  m_dir = dir;
   if(!command.isEmpty())
     run();
 }
@@ -37,7 +38,7 @@ Run::~Run()
 bool Run::run()
 {
   K3Process process;
-  //process.setWorkingDirectory();
+  process.setWorkingDirectory(m_dir);
   QString c = m_command.split(" ")[0];
   if(c[0] != '/')
   {
@@ -49,7 +50,7 @@ bool Run::run()
       m_command = m_command.replace(0, c.length(), file.filePath());
     }
   }
-  //kdDebug() << "Running: " << m_command << endl;
+  kDebug() << "Running: " << m_command << endl;
   process << m_command;
   connect(&process, SIGNAL(receivedStdout(K3Process*, char*, int)),
           this, SLOT(stdout(K3Process*, char*, int)));
@@ -57,7 +58,7 @@ bool Run::run()
           this, SLOT(stderr(K3Process*, char*, int)));
   process.start(K3Process::Block, K3Process::AllOutput);
   m_result = process.exitStatus();
-  //kdDebug() << "Output: " << m_output << endl;
+  //kDebug() << "Output: " << m_output << endl;
   if(!process.normalExit() || process.exitStatus() != 0)
   {
     return false;
