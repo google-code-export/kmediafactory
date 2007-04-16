@@ -21,7 +21,7 @@
 #include "videoplugin.h"
 #include "videooptions.h"
 #include "videopluginsettings.h"
-#include <qmediafile.h>
+#include <kmfmediafile.h>
 #include <kactioncollection.h>
 #include <kfileitem.h>
 #include <kmftime.h>
@@ -277,29 +277,6 @@ void VideoObject::toXML(QDomElement& element) const
   element.appendChild(video);
 }
 
-void VideoObject::addCell(QDomElement& vob, const QDVD::Cell& cell,
-                          const KMF::Time& fileStart)
-{
-  KMF::Time start(cell.start());
-  KMF::Time end(cell.start());
-
-  start -= fileStart;
-  QDomElement c = vob.ownerDocument().createElement("cell");
-
-  c.setAttribute("start", KMF::Time(start).toString());
-  if(cell.length().isNull())
-    c.setAttribute("end", "-1");
-  else
-  {
-    end -= fileStart;
-    end += cell.length();
-    c.setAttribute("end", end.toString());
-  }
-  c.setAttribute("chapter", cell.isChapter());
-  vob.appendChild(c);
-  kDebug() << k_funcinfo << "Cell: " << start << ", " << end << endl;
-}
-
 void VideoObject::writeDvdAuthorXml(QDomElement& element,
                                     QString preferredLanguage,
                                     QString post, QString type)
@@ -364,46 +341,58 @@ void VideoObject::writeDvdAuthorXml(QDomElement& element,
   pre.appendChild(text);
   pgc.appendChild(pre);
 
+  // Add cells
   KMF::Time pos;
-  i = 0;
-  QDVD::CellList::ConstIterator cell = m_cells.begin();
+  bool open = false;
+  QDomElement vob;
+  QDVD::Cell cell;
+  int file = 0;
 
-  for(QStringList::Iterator it = m_files.begin();
-      it != m_files.end(); ++it, ++i)
+  for(i = 0; i <= m_cells.count(); ++i)
   {
-    QDomElement vob = doc.createElement("vob");
-    if(type != "dummy")
+    if(!open)
     {
-      QString file = videoFileFind(i);
-      vob.setAttribute("file", file);
-
-      if(cell == m_cells.end() || pos != (*cell).start())
+      vob = doc.createElement("vob");
+      if(type != "dummy")
       {
-        KMF::Time length;
-
-        if(cell != m_cells.end() &&
-           (*cell).start() < pos + duration(*it))
-        {
-          length = KMF::Time((*cell).start()) - pos;
-        }
-        addCell(vob, QDVD::Cell(QTime(), length, "", false), pos);
+        vob.setAttribute("file", videoFileFind(i));
       }
-      while(((*cell).start() < pos + duration(*it)
-               || i - 1 == m_files.count())
-            && cell != m_cells.end())
+      else
       {
-        addCell(vob, *cell, pos);
-        ++cell;
+        vob.setAttribute("file", dir.filePath("dummy.mpg"));
       }
+      open = true;
     }
+    if(KMF::Time(cell.start()) > pos + duration(m_files[file]) ||
+       i >= m_cells.count())
+    {
+      pos += duration(m_files[file]);
+      pgc.appendChild(vob);
+      if(i >= m_files.count() || i >= m_cells.count())
+        break;
+      open = false;
+      ++file;
+    }
+
+    cell = m_cells[i];
+    KMF::Time start(cell.start());
+    KMF::Time end(cell.start());
+
+    start -= pos;
+    QDomElement c = vob.ownerDocument().createElement("cell");
+
+    c.setAttribute("start", KMF::Time(start).toString());
+    if(cell.length() == KMF::Time())
+      c.setAttribute("end", "-1");
     else
     {
-      addCell(vob, QDVD::Cell(QTime(), QTime(), "", true), pos);
-      vob.setAttribute("file", dir.filePath("dummy.mpg"));
+      end -= pos;
+      end += cell.length();
+      c.setAttribute("end", end.toString());
     }
-
-    pos += duration(*it);
-    pgc.appendChild(vob);
+    c.setAttribute("chapter", cell.isChapter());
+    vob.appendChild(c);
+    kDebug() << k_funcinfo << "Cell: " << start << ", " << end << endl;
   }
   QDomElement postElem = doc.createElement("post");
   QDomText text2 = doc.createTextNode(post);
@@ -670,7 +659,7 @@ QImage VideoObject::getFrame(QTime time, QString file) const
   for(QStringList::ConstIterator it = m_files.begin();
       it != m_files.end(); ++it)
   {
-    const KMFMediaFile& media = mediaFile(*it);
+    const KMFMediaFile& media = KMFMediaFile::mediaFile(*it);
     if(t <= KMF::Time(media.duration()))
     {
       media.frame(t, file);
@@ -891,9 +880,7 @@ uint64_t VideoObject::size() const
 
 bool VideoObject::isDVDCompatible() const
 {
-  const KMFMediaFile& media = mediaFile(m_files[0]);
-
-  return media.dvdCompatible();
+  return KMFMediaFile::mediaFile(m_files[0]).dvdCompatible();
 }
 
 QMap<QString, QString> VideoObject::subTypes() const
