@@ -30,6 +30,7 @@ FILES=(
 "share/apps/kmediafactory/scripts/frame"
 "share/apps/kmediafactory/scripts/info"
 "share/apps/kmediafactory/scripts/make_mpeg"
+"share/apps/kmediafactory/scripts/tools"
 "share/apps/kmediafactory/media/silence.mp2"
 "share/apps/kmediafactory_template/kmediafactory_templateui.rc"
 "share/apps/kmediafactory_template/simple.kmft"
