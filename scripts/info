@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Get video info for KMediafactory
 # Copyright (C) 2006 by Petri Damsten - GPL-2
 # Usage:

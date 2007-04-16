@@ -128,7 +128,6 @@ class VideoObject : public KMF::MediaObject
     QDVD::SubtitleList m_subtitles;
 
     void checkObjectParams();
-    const QMediaFile& mediaFile(const QString& file) const;
     QTime duration(QString file) const;
 
   private:
@@ -144,7 +143,6 @@ class VideoObject : public KMF::MediaObject
     static const char* m_prefixes[];
     ConversionParams m_conversion;
     QStringList m_files;
-    static QMap<QString, QMediaFile> m_cache;
 
     void generateId();
     void setCellSecs(double secs);
