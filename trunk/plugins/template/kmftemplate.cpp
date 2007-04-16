@@ -109,8 +109,8 @@ void KMFTemplate::setLanguage(const QString& file, const QString& lang)
       m_file = file;
     }
   }
-  kdDebug() << k_funcinfo << m_language << ", " <<  file << ", "
-      << zfile << endl;
+  //kDebug() << k_funcinfo << m_language << ", " <<  file << ", "
+  //    << zfile << endl;
 }
 
 QStringList KMFTemplate::languages() const

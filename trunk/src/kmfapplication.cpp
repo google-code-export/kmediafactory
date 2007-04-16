@@ -70,6 +70,8 @@ void KMFApplication::init()
 
   loadPlugins();
 
+  m_mainWin->initGUI();
+
   args->clear();
 }
 

@@ -112,7 +112,7 @@ bool KMFProject::validProject() const
 
 void KMFProject::addItem(KMF::MediaObject *mob)
 {
-  kDebug() << k_funcinfo << endl;
+  //kDebug() << k_funcinfo << endl;
   m_list.append(mob);
   setDirty(KMF::ProjectInterface::DirtyMedia);
 }

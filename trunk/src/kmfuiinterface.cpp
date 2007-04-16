@@ -126,22 +126,22 @@ bool KMFUiInterface::message(KMF::MsgType type, const QString& msg)
   {
     case KMF::None:
     case KMF::Info:
-      pixmap = "info";
+      pixmap = "dialog-information";
       color = QColor("darkGreen");
       dlgType = KMessageBox::Information;
       break;
     case KMF::Warning:
-      pixmap = "flag";
+      pixmap = "dialog-warning";
       color = QColor(211, 183, 98);
       dlgType = KMessageBox::Sorry;
       break;
     case KMF::Error:
-      pixmap = "cancel";
+      pixmap = "dialog-error";
       color = QColor("red");
       dlgType = KMessageBox::Error;
       break;
     case KMF::OK:
-      pixmap = "ok";
+      pixmap = "dialog-ok";
       color = QColor("darkGreen");
       dlgType = KMessageBox::Information;
       break;

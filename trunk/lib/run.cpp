@@ -60,9 +60,9 @@ bool Run::run()
           this, SLOT(stderr(K3Process*, char*, int)));
 
   process.setEnvironment("KMF_DBUS",
-      QString("org.kde.kmediafactory_%1 /KMediaFactory").arg(getpid()));
+      QString("org.kde.kmediafactory_%1/KMediaFactory").arg(getpid()));
   process.setEnvironment("KMF_WINID",
-      QString("%1").arg(kapp->activeWindow()->winId()));
+      QString("%1").arg(QApplication::topLevelWidgets()[0]->winId()));
 
   process.start(K3Process::Block, K3Process::AllOutput);
   m_result = process.exitStatus();
