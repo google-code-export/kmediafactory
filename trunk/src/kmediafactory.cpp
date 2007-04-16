@@ -133,7 +133,7 @@ KMediaFactory::KMediaFactory()
   setAutoSaveSettings();
 
   // Do some things later
-  QTimer::singleShot(0, this, SLOT(initGUI()));
+  QTimer::singleShot(500, this, SLOT(initGUI()));
 }
 
 KMediaFactory::~KMediaFactory()

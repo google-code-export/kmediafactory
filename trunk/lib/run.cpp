@@ -19,9 +19,11 @@
 //**************************************************************************
 #include "run.h"
 #include <kdebug.h>
+#include <kapplication.h>
 #include <kstandarddirs.h>
-#include <qstringlist.h>
-#include <qfileinfo.h>
+#include <QStringList>
+#include <QFileInfo>
+#include <QWidget>
 
 Run::Run(QString command, QString dir)
 {
@@ -56,6 +58,12 @@ bool Run::run()
           this, SLOT(stdout(K3Process*, char*, int)));
   connect(&process, SIGNAL(receivedStderr(K3Process*, char*, int)),
           this, SLOT(stderr(K3Process*, char*, int)));
+
+  process.setEnvironment("KMF_DBUS",
+      QString("org.kde.kmediafactory_%1 /KMediaFactory").arg(getpid()));
+  process.setEnvironment("KMF_WINID",
+      QString("%1").arg(kapp->activeWindow()->winId()));
+
   process.start(K3Process::Block, K3Process::AllOutput);
   m_result = process.exitStatus();
   //kDebug() << "Output: " << m_output << endl;

@@ -1,0 +1,21 @@
+#!/bin/bash
+# Help functions for KMediaFactory scripts.
+# Copyright (C) 2006 by Petri Damsten - GPL-2
+
+function check_executable
+{
+  if [[ "$KMF_WINID" == "" ]]; then
+    EMBED=""
+  else
+    EMBED="--embed $KMF_WINID"
+  fi
+  BIN=`which $1`
+  if [ $? -eq 0 ]; then
+    echo $BIN
+  else
+    kdialog --title "KMediaFactory" $EMBED --sorry \
+"Cannot continue because $1 was not found from your system.\n\
+Please install package $2 (or similar)." \
+    exit 1
+  fi
+}
