@@ -25,14 +25,11 @@
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
-class KDE_EXPORT QMediaFile
+class KDE_EXPORT KMFMediaFile
 {
   public:
-    QMediaFile(const QString& file = QString::null);
-    ~QMediaFile();
-
-    bool probe();
-
+    KMFMediaFile() {};
+    ~KMFMediaFile() {};
     const QTime& duration() const { return m_duration; };
     double frameRate() const { return m_frameRate; };
     uint audioStreams() const { return m_audioStreams; };
@@ -40,6 +37,13 @@ class KDE_EXPORT QMediaFile
     QDVD::VideoTrack::AspectRatio aspectRatio() const { return m_aspectRatio; };
     bool dvdCompatible() const { return m_dvdCompatible; };
     bool frame(QTime pos, QString output) const;
+
+    static void clearCache() { m_cache.clear(); };
+    static const KMFMediaFile& mediaFile(const QString& file);
+
+  protected:
+    KMFMediaFile(const QString& file);
+    bool probe();
 
   private:
     QString m_file;
@@ -52,6 +56,8 @@ class KDE_EXPORT QMediaFile
     QString m_type;
     QDVD::VideoTrack::AspectRatio m_aspectRatio;
     bool m_dvdCompatible;
+
+    static QMap<QString, KMFMediaFile> m_cache;
 };
 
 #endif

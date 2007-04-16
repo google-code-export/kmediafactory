@@ -13,7 +13,7 @@ set(kmf_LIB_SRCS
   kmfmultiurldialog.cpp
   kmftoolbutton.cpp
   qdvdinfo.cpp
-  qmediafile.cpp
+  kmfmediafile.cpp
   run.cpp
   kmftoolbar.cpp
 )
@@ -29,7 +29,7 @@ set(kmf_HEADERS
   kmfmultiurldialog.h
   kmftoolbutton.h
   qdvdinfo.h
-  qmediafile.h
+  kmfmediafile.h
   run.h
   kmftoolbar.h
   kmflistmodel.h

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Get frame from video for KMediafactory
 # Copyright (C) 2006 by Petri Damsten - GPL-2
 # Usage:

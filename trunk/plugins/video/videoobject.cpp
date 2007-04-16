@@ -45,7 +45,6 @@
 
 const char* VideoObject::m_prefixes[] =
   {".sub.mpg", ".mpg", "", ".xml", ".sub"};
-QMap<QString, QMediaFile> VideoObject::m_cache;
 
 VideoObject::VideoObject(QObject* parent)
   : MediaObject(parent), m_videoPlay(0),
@@ -73,8 +72,7 @@ VideoObject::~VideoObject()
 
 double VideoObject::frameRate() const
 {
-  const QMediaFile& media = mediaFile(m_files[0]);
-  return media.frameRate();
+  return KMFMediaFile::mediaFile(m_files[0]).frameRate();
 }
 
 QTime VideoObject::duration() const
@@ -91,8 +89,7 @@ QTime VideoObject::duration() const
 
 QTime VideoObject::duration(QString file) const
 {
-  const QMediaFile& media = mediaFile(file);
-  return media.duration();
+  return KMFMediaFile::mediaFile(file).duration();
 }
 
 QTime VideoObject::chapterTime(int chap) const
@@ -213,7 +210,7 @@ void VideoObject::fromXML(const QDomElement& element)
 
 void VideoObject::checkObjectParams()
 {
-  const QMediaFile& media = mediaFile(m_files[0]);
+  const KMFMediaFile& media = KMFMediaFile::mediaFile(m_files[0]);
 
   while(m_audioTracks.count() < (int)media.audioStreams())
   {
@@ -300,7 +297,7 @@ void VideoObject::addCell(QDomElement& vob, const QDVD::Cell& cell,
   }
   c.setAttribute("chapter", cell.isChapter());
   vob.appendChild(c);
-  //kdDebug() << k_funcinfo << start << ", " << end << endl;
+  kDebug() << k_funcinfo << "Cell: " << start << ", " << end << endl;
 }
 
 void VideoObject::writeDvdAuthorXml(QDomElement& element,
@@ -380,8 +377,6 @@ void VideoObject::writeDvdAuthorXml(QDomElement& element,
       QString file = videoFileFind(i);
       vob.setAttribute("file", file);
 
-      kDebug() << k_funcinfo << file << endl;
-      kDebug() << k_funcinfo << pos << (*cell).start() << endl;
       if(cell == m_cells.end() || pos != (*cell).start())
       {
         KMF::Time length;
@@ -675,7 +670,7 @@ QImage VideoObject::getFrame(QTime time, QString file) const
   for(QStringList::ConstIterator it = m_files.begin();
       it != m_files.end(); ++it)
   {
-    const QMediaFile& media = mediaFile(*it);
+    const KMFMediaFile& media = mediaFile(*it);
     if(t <= KMF::Time(media.duration()))
     {
       media.frame(t, file);
@@ -896,7 +891,7 @@ uint64_t VideoObject::size() const
 
 bool VideoObject::isDVDCompatible() const
 {
-  const QMediaFile& media = mediaFile(m_files[0]);
+  const KMFMediaFile& media = mediaFile(m_files[0]);
 
   return media.dvdCompatible();
 }
@@ -908,15 +903,6 @@ QMap<QString, QString> VideoObject::subTypes() const
   result[""] = i18n("Make DVD");
   result["dummy"] = i18n("Make preview DVD with dummy videos");
   return result;
-}
-
-const QMediaFile& VideoObject::mediaFile(const QString& file) const
-{
-  if(!m_cache.contains(file))
-  {
-    m_cache[file] = QMediaFile(file);
-  }
-  return m_cache[file];
 }
 
 #include "videoobject.moc"

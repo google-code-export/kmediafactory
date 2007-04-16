@@ -31,9 +31,7 @@
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <k3procio.h>
 #include <kmessagebox.h>
-#include <k3process.h>
 #include <QVariant>
 #include <QObject>
 #include <QImage>
@@ -45,8 +43,6 @@
 #include <QPainter>
 #include <sys/types.h>
 #include <sys/stat.h>
-
-int KMFMenuPage::m_mjpegtoolsVersion = -1;
 
 KMFMenuPage::KMFMenuPage(QObject *parent) :
   KMFWidget(parent), m_language("en"), m_modifiedLayers(0), m_titles(0),

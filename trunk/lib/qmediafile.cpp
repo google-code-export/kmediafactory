@@ -25,18 +25,16 @@
 #include <qregexp.h>
 #include <qmap.h>
 
-QMediaFile::QMediaFile(const QString& file)
+QMap<QString, KMFMediaFile> KMFMediaFile::m_cache;
+
+KMFMediaFile::KMFMediaFile(const QString& file)
 {
   m_file = file;
   if(!m_file.isEmpty())
     probe();
 }
 
-QMediaFile::~QMediaFile()
-{
-}
-
-bool QMediaFile::probe()
+bool KMFMediaFile::probe()
 {
   Run run(QString("info %1").arg(m_file));
 
@@ -58,21 +56,33 @@ bool QMediaFile::probe()
     m_audioStreams = info["AUDIO_STREAMS"].toInt();
     m_dvdCompatible = (info["DVD_COMPATIBLE"] == "1");
     m_duration = KMF::Time(info["DURATION"].toDouble());
+
     /*
-    kdDebug() << "Aspect: " << m_aspectRatio << endl;
-    kdDebug() << "Frame rate: " << m_frameRate << endl;
-    kdDebug() << "Audio: " << m_audioStreams << endl;
-    kdDebug() << "Compatible: " << m_dvdCompatible << endl;
-    kdDebug() << "Duration: " << m_duration << endl;
+    kDebug() << "Output: " << run.output() << endl;
+    kDebug() << "Aspect: " << m_aspectRatio << endl;
+    kDebug() << "Frame rate: " << m_frameRate << endl;
+    kDebug() << "Audio: " << m_audioStreams << endl;
+    kDebug() << "Compatible: " << m_dvdCompatible << endl;
+    kDebug() << "Duration: " << m_duration << endl;
     */
     return true;
   }
   return false;
 }
 
-bool QMediaFile::frame(QTime pos, QString output) const
+bool KMFMediaFile::frame(QTime pos, QString output) const
 {
   Run run(QString("frame %1 %2 %3").arg(m_file).arg(KMF::Time(pos).toString())
       .arg(output));
   return (run.result() == 0);
 }
+
+const KMFMediaFile& KMFMediaFile::mediaFile(const QString& file)
+{
+  if(!m_cache.contains(file))
+  {
+    m_cache[file] = KMFMediaFile(file);
+  }
+  return m_cache[file];
+}
+
