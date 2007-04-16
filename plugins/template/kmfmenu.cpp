@@ -91,7 +91,7 @@ bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
 
   root.appendChild(doc.createTextNode("\n "));
   root.appendChild(doc.createComment(
-      header.arg(i18n("Main menu for %1", m_prjIf->title()))));
+      header.arg(i18n("Main menu for %1").arg(m_prjIf->title()))));
   root.appendChild(doc.createTextNode("\n "));
 
   QDomElement elem = doc.createElement("vmgm");

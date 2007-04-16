@@ -60,7 +60,7 @@ void OutputPage::projectInit()
   m_model.setData(oobs);
   outputs->setModel(&m_model);
   connect(outputs->selectionModel(),
-          SIGNAL(selectionChanged(const QModelIndex&, const QModelIndex&)),
+          SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
           this, SLOT(currentChanged(const QModelIndex&, const QModelIndex&)));
   outputs->blockSignals(true);
   outputs->setCurrentIndex(m_model.index(kmfApp->project()->output()));

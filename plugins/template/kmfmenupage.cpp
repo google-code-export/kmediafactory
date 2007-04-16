@@ -134,7 +134,6 @@ bool KMFMenuPage::writeSpumuxXml(QDomDocument& doc)
   {
     if(btn->isHidden())
       continue;
-    // TODO: Button class should do this
     /*QDomComment comment =
         doc.createComment(QString("Button: %1").arg(btn->objectName()));
     spu.appendChild(comment);*/

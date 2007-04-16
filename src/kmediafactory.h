@@ -57,6 +57,7 @@ class KPageWidgetItem;
  */
 class KMediaFactory : public KMainWindow
 {
+    friend class KMFApplication;
     Q_OBJECT
   public:
     enum Page { Media = 0 , Template, Output };
@@ -108,6 +109,9 @@ class KMediaFactory : public KMainWindow
     void quit();
     void load(const KUrl&);
 
+  protected slots:
+    void initGUI();
+
   private slots:
     void fileOpen();
     void projectOptions();
@@ -115,7 +119,6 @@ class KMediaFactory : public KMainWindow
     void fileSave();
     void fileSaveAs();
     void itemDelete();
-    void initGUI();
     void execTool();
     void optionsConfigureKeys();
     void optionsConfigureToolbars();

@@ -32,9 +32,9 @@ QVariant KMFProgressItemModel::data(const QModelIndex &index, int role) const
     return QVariant();
 
   if (role == Qt::DisplayRole)
-    return at(index.row()).text;
+    return at(index).text;
   if (role == Qt::DecorationRole)
-    return KIcon(at(index.row()).pixmap);
+    return KIcon(at(index).pixmap);
   return QVariant();
 }
 
@@ -45,10 +45,11 @@ void KMFProgressItemDelegate::paint(QPainter* painter,
                                     const QStyleOptionViewItem& option,
                                     const QModelIndex& index) const
 {
+  KMFProgressItem item = index.data().value<KMFProgressItem>();
+
   painter->save();
   QItemDelegate::paint(painter, option, index);
   QRect rc = option.rect;
-  KMFProgressItem item = index.data().value<KMFProgressItem>();
 
   if(item.value < item.max)
   {
