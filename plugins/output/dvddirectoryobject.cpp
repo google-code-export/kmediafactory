@@ -67,108 +67,98 @@ int DvdDirectoryObject::timeEstimate() const
   return TotalPoints + DvdAuthorObject::timeEstimate();
 }
 
-void DvdDirectoryObject::output(K3Process* process, char* buffer, int buflen)
+void DvdDirectoryObject::output(const QString& line)
 {
   bool stopped = false;
-  int find = 0, start = 0;
-  QRegExp re("[\n\r]");
-  m_buffer += QString::fromLocal8Bit(buffer, buflen);
 
-  while((find = m_buffer.indexOf(re, find)) > -1)
+  if(line.startsWith("\t") &&
+      (m_lastLine == Warning || m_lastLine == Error))
   {
-    QString line = m_buffer.mid(start, find - start);
-    if(line.startsWith("\t") &&
-       (m_lastLine == Warning || m_lastLine == Error))
+    stopped = uiInterface()->message((KMF::MsgType)m_lastLine, line.mid(1));
+  }
+  else if(line.startsWith("ERR:"))
+  {
+    m_lastLine = Error;
+    m_error = true;
+    stopped = uiInterface()->message(KMF::Error, line.mid(6));
+  }
+  else if(line.startsWith("WARN:"))
+  {
+    m_lastLine = Warning;
+    QString temp = line.mid(6);
+    // Don't print multiple similar warnings. They can be found from the log.
+    if(temp != m_warning)
     {
-      stopped = uiInterface()->message((KMF::MsgType)m_lastLine, line.mid(1));
+      stopped = uiInterface()->message(KMF::Warning, temp);
+      m_warning = temp;
     }
-    else if(line.startsWith("ERR:"))
-    {
-      m_lastLine = Error;
-      m_error = true;
-      stopped = uiInterface()->message(KMF::Error, line.mid(6));
-    }
-    else if(line.startsWith("WARN:"))
-    {
-      m_lastLine = Warning;
-      QString temp = line.mid(6);
-      // Don't print multiple similar warnings. They can be found from the log.
-      if(temp != m_warning)
-      {
-        stopped = uiInterface()->message(KMF::Warning, temp);
-        m_warning = temp;
-      }
-    }
-    else if(line.startsWith("STAT: Processing"))
-    {
-      QString previousFile = m_currentFile.filePath();
-      m_lastLine = Processing;
-      m_lastSize += m_currentFile.size() / 1024;
-      m_currentFile.setFile(line.mid(17, line.length() - 20));
+  }
+  else if(line.startsWith("STAT: Processing"))
+  {
+    QString previousFile = m_currentFile.filePath();
+    m_lastLine = Processing;
+    m_lastSize += m_currentFile.size() / 1024;
+    m_currentFile.setFile(line.mid(17, line.length() - 20));
 
+    stopped = uiInterface()->message(KMF::Info,
+        QString(i18n("  Processing: %1")).arg(m_currentFile.fileName()));
+    stopped = uiInterface()->setItemTotalSteps(m_currentFile.size()/1024);
+    if(!m_first)
+    {
+      if(previousFile != m_currentFile.filePath())
+        progress(m_filePoints);
+    }
+    else
+      m_first = false;
+    m_vobu = m_lastVobu;
+  }
+  else if(line.startsWith("STAT: VOBU"))
+  {
+    QRegExp reVobu("VOBU (\\d+) at (\\d+)MB, .*");
+
+    if(m_lastLine != Vobu && m_lastLine != Processing)
+    {
       stopped = uiInterface()->message(KMF::Info,
           QString(i18n("  Processing: %1")).arg(m_currentFile.fileName()));
       stopped = uiInterface()->setItemTotalSteps(m_currentFile.size()/1024);
-      if(!m_first)
-      {
-        if(previousFile != m_currentFile.filePath())
-          progress(m_filePoints);
-      }
-      else
-        m_first = false;
-      m_vobu = m_lastVobu;
     }
-    else if(line.startsWith("STAT: VOBU"))
+    m_lastLine = Vobu;
+    if(reVobu.indexIn(line) > -1)
     {
-      QRegExp reVobu("VOBU (\\d+) at (\\d+)MB, .*");
-
-      if(m_lastLine != Vobu && m_lastLine != Processing)
+      m_lastVobu = reVobu.cap(1).toInt();
+      if(m_vobu != 0)
       {
-        stopped = uiInterface()->message(KMF::Info,
-            QString(i18n("  Processing: %1")).arg(m_currentFile.fileName()));
-        stopped = uiInterface()->setItemTotalSteps(m_currentFile.size()/1024);
+        if(m_lastVobu < m_vobu)
+          m_lastSize = 0;
+        m_vobu = 0;
       }
-      m_lastLine = Vobu;
-      if(reVobu.indexIn(line) > -1)
-      {
-        m_lastVobu = reVobu.cap(1).toInt();
-        if(m_vobu != 0)
-        {
-          if(m_lastVobu < m_vobu)
-            m_lastSize = 0;
-          m_vobu = 0;
-        }
-        stopped = uiInterface()->setItemProgress(
-            reVobu.cap(2).toInt()*1024 - m_lastSize);
-      }
+      stopped = uiInterface()->setItemProgress(
+          reVobu.cap(2).toInt()*1024 - m_lastSize);
     }
-    else if(line.startsWith("STAT: fixing VOBU"))
-    {
-      QRegExp reFix(".* (\\d+)%\\)");
-
-      if(m_lastLine != FixingVobu)
-      {
-        stopped = uiInterface()->message(KMF::Info,
-            QString(i18n("  Fixing: %1")).arg(m_currentFile.fileName()));
-        stopped = uiInterface()->setItemTotalSteps(100);
-      }
-      m_lastLine = FixingVobu;
-      if(reFix.indexIn(line) > -1)
-        stopped = uiInterface()->setItemProgress(reFix.cap(1).toInt());
-    }
-    else
-    {
-      if(m_lastLine == Warning || m_lastLine == Error)
-        m_lastLine = None;
-    }
-    if(m_lastLine != Warning)
-      m_warning = "";
-    ++find;
-    start = find;
-    if(stopped)
-      process->kill();
   }
-  m_buffer.remove(0, start);
+  else if(line.startsWith("STAT: fixing VOBU"))
+  {
+    QRegExp reFix(".* (\\d+)%\\)");
+
+    if(m_lastLine != FixingVobu)
+    {
+      stopped = uiInterface()->message(KMF::Info,
+          QString(i18n("  Fixing: %1")).arg(m_currentFile.fileName()));
+      stopped = uiInterface()->setItemTotalSteps(100);
+    }
+    m_lastLine = FixingVobu;
+    if(reFix.indexIn(line) > -1)
+      stopped = uiInterface()->setItemProgress(reFix.cap(1).toInt());
+  }
+  else
+  {
+    if(m_lastLine == Warning || m_lastLine == Error)
+      m_lastLine = None;
+  }
+  if(m_lastLine != Warning)
+    m_warning = "";
+  if(stopped)
+    m_run.kill();
 }
 
 void DvdDirectoryObject::clean()
@@ -254,14 +244,14 @@ bool DvdDirectoryObject::make(QString type)
 
   clean();
   uiInterface()->message(KMF::Info, i18n("Making DVD Directory"));
-  dvdauthor << "dvdauthor" << "-x" << "dvdauthor.xml";
-  dvdauthor.setWorkingDirectory(projectInterface()->projectDir());
-  uiInterface()->logger()->connectProcess(&dvdauthor);
-  connect(&dvdauthor, SIGNAL(receivedStdout(K3Process*, char*, int)),
-          this, SLOT(output(K3Process*, char*, int)));
-  connect(&dvdauthor, SIGNAL(receivedStderr(K3Process*, char*, int)),
-          this, SLOT(output(K3Process*, char*, int)));
-  dvdauthor.start(K3Process::Block, K3Process::AllOutput);
+
+  m_run.setCommand("dvdauthor -x dvdauthor.xml");
+  m_run.setWorkingDirectory(projectInterface()->projectDir());
+  uiInterface()->logger()->connectProcess(&m_run);
+  connect(&m_run, SIGNAL(line(const QString&)),
+          this, SLOT(output(const QString&)));
+  m_run.run();
+  kDebug() << k_funcinfo << m_run.output() << endl;
   if(!m_error)
   {
     uiInterface()->message(KMF::OK, i18n("DVD Directory ready"));

@@ -409,7 +409,7 @@ bool KMFMenuPage::runScript(QString scriptName, QString place)
           m_prjIf->projectDir(place));
 
   m_uiIf->logger()->message(run.output());
-  if(run.result() != 0)
+  if(run.exitStatus() != 0)
   {
     m_uiIf->message(KMF::Error, i18n("   Conversion error."));
     return false;
