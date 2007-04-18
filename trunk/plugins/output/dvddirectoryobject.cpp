@@ -69,6 +69,7 @@ int DvdDirectoryObject::timeEstimate() const
 
 void DvdDirectoryObject::output(const QString& line)
 {
+  //kDebug() << k_funcinfo << line << endl;
   bool stopped = false;
 
   if(line.startsWith("\t") &&
@@ -251,7 +252,6 @@ bool DvdDirectoryObject::make(QString type)
   connect(&m_run, SIGNAL(line(const QString&)),
           this, SLOT(output(const QString&)));
   m_run.run();
-  kDebug() << k_funcinfo << m_run.output() << endl;
   if(!m_error)
   {
     uiInterface()->message(KMF::OK, i18n("DVD Directory ready"));
