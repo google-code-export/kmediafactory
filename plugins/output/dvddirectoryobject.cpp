@@ -199,14 +199,13 @@ bool DvdDirectoryObject::isUpToDate(QString type)
   dir.nameFilters().append("*.IFO");
   QStringList files = dir.entryList();
 
-  if(files.count() < 1)
+  files.removeAll(".");
+  files.removeAll("..");
+  if(files.count() <= 0)
     return false;
 
   for(QStringList::Iterator it=files.begin(); it!=files.end(); ++it )
   {
-    if(*it == "." || *it == "..")
-      continue;
-
     QFileInfo fi(dir.filePath(*it));
 
     if(fi.exists() == false || lastModified > fi.lastModified())

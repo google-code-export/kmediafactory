@@ -255,6 +255,8 @@ void KMFWidget::paint(KMFMenuPage* page)
       expblur<16,7>(temp, (int)m_shadow.radius());
       //temp = KImageEffect::blur(temp, m_shadow.radius(), m_shadow.sigma());
     }
+    //static int i = 0;
+    //temp.save(m_prjIf->projectDir("menus") + QString("%1.png").arg(++i));
 
     QPainter p(&page->layer(Background));
     p.drawImage(QPoint(0, 0), temp);
