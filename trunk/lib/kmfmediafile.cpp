@@ -38,7 +38,7 @@ bool KMFMediaFile::probe()
 {
   Run run(QString("info %1").arg(m_file));
 
-  if(run.result() == 0)
+  if(run.exitStatus() == 0)
   {
     QStringList lines = run.output().split("\n");
     QMap<QString, QString> info;
@@ -74,7 +74,7 @@ bool KMFMediaFile::frame(QTime pos, QString output) const
 {
   Run run(QString("frame %1 %2 %3").arg(m_file).arg(KMF::Time(pos).toString())
       .arg(output));
-  return (run.result() == 0);
+  return (run.exitStatus() == 0);
 }
 
 const KMFMediaFile& KMFMediaFile::mediaFile(const QString& file)

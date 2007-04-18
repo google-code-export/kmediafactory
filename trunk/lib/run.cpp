@@ -27,8 +27,8 @@
 
 Run::Run(QString command, QString dir)
 {
-  m_command = command;
-  m_dir = dir;
+  setCommand(command);
+  setWorkingDirectory(dir);
   if(!command.isEmpty())
     run();
 }
@@ -36,11 +36,13 @@ Run::Run(QString command, QString dir)
 Run::~Run()
 {
 }
+void Run::setCommand(QString command)
+{
+  m_command = command;
+}
 
 bool Run::run()
 {
-  K3Process process;
-  process.setWorkingDirectory(m_dir);
   QString c = m_command.split(" ")[0];
   if(c[0] != '/')
   {
@@ -48,26 +50,27 @@ bool Run::run()
     file = KStandardDirs::locate("data", "kmediafactory/scripts/" + c);
     if(file.exists())
     {
-      process.setUseShell(true);
+      setUseShell(true);
       m_command = m_command.replace(0, c.length(), file.filePath());
     }
   }
   kDebug() << "Running: " << m_command << endl;
-  process << m_command;
-  connect(&process, SIGNAL(receivedStdout(K3Process*, char*, int)),
+  *this << m_command;
+  connect(this, SIGNAL(receivedStdout(K3Process*, char*, int)),
           this, SLOT(stdout(K3Process*, char*, int)));
-  connect(&process, SIGNAL(receivedStderr(K3Process*, char*, int)),
-          this, SLOT(stderr(K3Process*, char*, int)));
-
-  process.setEnvironment("KMF_DBUS",
+  connect(this, SIGNAL(receivedStderr(K3Process*, char*, int)),
+          this, SLOT(stdout(K3Process*, char*, int)));
+  connect(this, SIGNAL(processExited(K3Process*)),
+          this, SLOT(exit(K3Process*)));
+  setEnvironment("KMF_DBUS",
       QString("org.kde.kmediafactory_%1/KMediaFactory").arg(getpid()));
-  process.setEnvironment("KMF_WINID",
+  setEnvironment("KMF_WINID",
       QString("%1").arg(QApplication::topLevelWidgets()[0]->winId()));
 
-  process.start(K3Process::Block, K3Process::AllOutput);
-  m_result = process.exitStatus();
+  m_outputIndex = 0;
+  start(K3Process::Block, K3Process::AllOutput);
   //kDebug() << "Output: " << m_output << endl;
-  if(!process.normalExit() || process.exitStatus() != 0)
+  if(!normalExit() || exitStatus() != 0)
   {
     return false;
   }
@@ -76,12 +79,22 @@ bool Run::run()
 
 void Run::stdout(K3Process*, char* buffer, int buflen)
 {
-  m_output += QString::fromLatin1(buffer, buflen);
+  int found;
+  QRegExp re("[\n\r]");
+
+  m_output += QString::fromLocal8Bit(buffer, buflen);
+  while((found = m_output.indexOf(re, m_outputIndex)) != -1)
+  {
+    emit line(m_output.mid(m_outputIndex, found - m_outputIndex));
+    m_outputIndex = found + 1;
+  }
 }
 
-void Run::stderr(K3Process* proc, char* buffer, int buflen)
+void Run::exit(K3Process*)
 {
-  stdout(proc, buffer, buflen);
+  if(m_outputIndex < m_output.length())
+    emit line(m_output.mid(m_outputIndex));
+
 }
 
 #include "run.moc"

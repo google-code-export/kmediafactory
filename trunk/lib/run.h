@@ -27,26 +27,28 @@
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
-class KDE_EXPORT Run : QObject
+class KDE_EXPORT Run : public K3Process
 {
     Q_OBJECT
   public:
     Run(QString command = QString::null, QString dir = QString::null);
     ~Run();
 
+    void setCommand(QString command);
     bool run();
     QString output() { return m_output; };
-    int result() { return m_result; };
 
-  public slots:
+  signals:
+    void line(const QString& line);
+
+  protected slots:
     virtual void stdout(K3Process *proc, char *buffer, int buflen);
-    virtual void stderr(K3Process *proc, char *buffer, int buflen);
+    void exit(K3Process *proc);
 
   private:
     QString m_command;
-    QString m_dir;
     QString m_output;
-    int m_result;
+    int m_outputIndex;
 };
 
 #endif
