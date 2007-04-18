@@ -82,7 +82,6 @@ TemplateObject::TemplateObject(const QString& templateFile, QObject* parent):
   {
     m_templateProperties = new KAction(KIcon("pencil"),
                                        i18n("&Properties"),this);
-    kDebug() << k_funcinfo << m_templateProperties << endl;
     plugin()->actionCollection()->addAction("tob_properties",
            m_templateProperties);
     connect(m_templateProperties, SIGNAL(triggered()), SLOT(slotProperties()));
@@ -104,7 +103,6 @@ TemplateObject::~TemplateObject()
 
 void TemplateObject::actions(QList<QAction*>& actionList) const
 {
-  kDebug() << k_funcinfo << m_templateProperties << endl;
   if(m_templateProperties)
   {
     actionList.append(m_templateProperties);
@@ -204,6 +202,7 @@ bool TemplateObject::make(QString type)
 
 QStringList TemplateObject::menus()
 {
+  //kDebug() << k_funcinfo << m_menu.menus() << endl;
   return m_menu.menus();
 }
 
@@ -223,7 +222,7 @@ void TemplateObject::slotProperties()
   LanguageListModel model;
 
   kapp->installTranslator(&kmftr);
-  kDebug() << k_funcinfo << KGlobal::locale()->language() << endl;
+  //kDebug() << k_funcinfo << KGlobal::locale()->language() << endl;
   m_menu.setLanguage("ui", KGlobal::locale()->language());
 
   KConfigDialog dialog(kapp->activeWindow(), "TemplateSettings",
@@ -263,13 +262,14 @@ void TemplateObject::slotProperties()
 
   dialog.exec();
 
+  /*
   kDebug() << k_funcinfo << &m_customProperties << endl;
   KConfigSkeletonItem::List list = m_customProperties.items();
   KConfigSkeletonItem::List::iterator it;
   for(it = list.begin(); it != list.end(); ++it)
     kDebug() << k_funcinfo << (*it)->group() << " / " <<
         (*it)->key() << " = " << (*it)->property() << endl;
-
+  */
 
   if(dialog.result() == QDialog::Accepted)
     projectInterface()->setDirty(KMF::ProjectInterface::DirtyTemplate);

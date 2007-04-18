@@ -53,6 +53,7 @@ class KMFImage : public KMFWidget
 
   private:
     QImage m_image;
+    KUrl m_url;
     bool m_scale;
     bool m_proportional;
     float m_aspectRatio;

@@ -87,15 +87,15 @@ void KMFMenuPage::setResolution(QSize resolution)
   m_background.setDotsPerMeterX(DPM);
   m_background.setDotsPerMeterY(DPM);
   m_sub = QImage(m_resolution, QImage::Format_ARGB32);
-  m_sub.fill(KMF::Tools::toColor("#000000FF").rgba());
+  m_sub.fill(KMF::Tools::toColor("#00000000").rgba());
   m_sub.setDotsPerMeterX(DPM);
   m_sub.setDotsPerMeterY(DPM);
   m_subHighlight = QImage(m_resolution, QImage::Format_ARGB32);
-  m_subHighlight.fill(KMF::Tools::toColor("#000000FF").rgba());
+  m_subHighlight.fill(KMF::Tools::toColor("#00000000").rgba());
   m_subHighlight.setDotsPerMeterX(DPM);
   m_subHighlight.setDotsPerMeterY(DPM);
   m_subSelect = QImage(m_resolution, QImage::Format_ARGB32);
-  m_subSelect.fill(KMF::Tools::toColor("#000000FF").rgba());
+  m_subSelect.fill(KMF::Tools::toColor("#00000000").rgba());
   m_subSelect.setDotsPerMeterX(DPM);
   m_subSelect.setDotsPerMeterY(DPM);
   m_temp = QImage(m_resolution, QImage::Format_ARGB32);

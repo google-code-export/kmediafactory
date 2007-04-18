@@ -94,8 +94,9 @@ QRect KMFImage::paintRect(const QPoint offset) const
 QImage KMFImage::mask(const QImage& img, const QRgb& maskColor, bool oneBitMask)
 {
   QImage result(img.width(), img.height(), QImage::Format_ARGB32);
-  double alphaScale = qAlpha(maskColor) / (256.0 * 256.0);
+  double alphaScale = qAlpha(maskColor) / 255.0;
 
+  //kDebug() << k_funcinfo << maskColor << alphaScale << endl;
   for (int y = 0; y < img.height(); y++)
   {
     for (int x = 0; x < img.width(); x++)
@@ -143,7 +144,7 @@ void KMFImage::paintWidget(QImage& layer, bool shdw)
     image = image.scaled(rc.width(), rc.height(),
                          mode, Qt::SmoothTransformation);
   }
-  //kdDebug() << k_funcinfo << name() << rc << endl;
+  //kDebug() << k_funcinfo << m_url << ": " <<  shdw << endl;
   p.drawImage(QPoint(rc.left(), rc.top()), image);
 }
 
@@ -151,6 +152,7 @@ void KMFImage::setImage(KUrl url)
 {
   bool ok = false;
 
+  m_url = url;
   //kDebug() << k_funcinfo << url << endl;
   if(url.protocol() == "project")
   {
