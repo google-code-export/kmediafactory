@@ -50,10 +50,10 @@ bool Run::run()
     file = KStandardDirs::locate("data", "kmediafactory/scripts/" + c);
     if(file.exists())
     {
-      setUseShell(true);
       m_command = m_command.replace(0, c.length(), file.filePath());
     }
   }
+  setUseShell(true);
   kDebug() << "Running: " << m_command << endl;
   *this << m_command;
   connect(this, SIGNAL(receivedStdout(K3Process*, char*, int)),
