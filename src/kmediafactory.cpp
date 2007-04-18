@@ -70,7 +70,7 @@
 #include <QDropEvent>
 
 KMediaFactory::KMediaFactory()
-  : KMainWindow(0), m_janusIconList(0), m_enabled(true),
+  : KXmlGuiWindow(0), m_janusIconList(0), m_enabled(true),
     m_newStuffDlg(0)
 {
   // set the shell's ui resource file

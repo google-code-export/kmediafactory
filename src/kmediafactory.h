@@ -25,17 +25,7 @@
 #include <config.h>
 #endif
 
-#include <kmainwindow.h>
-
-// Include these Qt headers here, so they get included before any X11 headers.
-// This enables build with --enable-final
-#include <QDir>
-//Added by qt3to4:
-#include <QDragEnterEvent>
-#include <QDropEvent>
-//#include <qvariant.h>
-//#include <qslider.h>
-// End of pre include
+#include <kxmlguiwindow.h>
 
 // Define this for the test menu item
 // #define KMF_TEST
@@ -55,10 +45,10 @@ class KPageWidgetItem;
  * @author Petri Damsten <petri.damsten@iki.fi>
  * @version 0.1
  */
-class KMediaFactory : public KMainWindow
+class KMediaFactory : public KXmlGuiWindow
 {
-    friend class KMFApplication;
     Q_OBJECT
+    friend class KMFApplication;
   public:
     enum Page { Media = 0 , Template, Output };
 

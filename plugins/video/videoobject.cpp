@@ -713,7 +713,6 @@ QImage VideoObject::preview(int chap) const
     ++counter;
   }
 
-  // TODO Template aspect ratio other than 4:3 ?
   QSize templateRatio = QSize(4, 3);
   QSize videoRatio = (aspect() == QDVD::VideoTrack::Aspect_4_3) ?
                           QSize(4, 3) : QSize(16, 9);

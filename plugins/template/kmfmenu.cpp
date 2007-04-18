@@ -140,6 +140,7 @@ bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
         {
           ob->setIndex(i, mobs->count(), j, m_pages[i].count());
           ob->writeDvdAuthorXml(menus, type);
+          ++j;
         }
       }
       if(!menus.hasChildNodes())
@@ -159,6 +160,7 @@ bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
       post += " call vmgm menu 1 ; ";
       mob->writeDvdAuthorXml(elem, m_template.language(), post, type);
       root.appendChild(elem);
+      ++i;
     }
     return true;
     //kdDebug() << doc.toString() << endl;
