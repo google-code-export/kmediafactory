@@ -102,7 +102,7 @@ void DvdDirectoryObject::output(const QString& line)
     m_currentFile.setFile(line.mid(17, line.length() - 20));
 
     stopped = uiInterface()->message(KMF::Info,
-        QString(i18n("  Processing: %1")).arg(m_currentFile.fileName()));
+        i18n("  Processing: %1", m_currentFile.fileName()));
     stopped = uiInterface()->setItemTotalSteps(m_currentFile.size()/1024);
     if(!m_first)
     {
@@ -120,7 +120,7 @@ void DvdDirectoryObject::output(const QString& line)
     if(m_lastLine != Vobu && m_lastLine != Processing)
     {
       stopped = uiInterface()->message(KMF::Info,
-          QString(i18n("  Processing: %1")).arg(m_currentFile.fileName()));
+          i18n("  Processing: %1",m_currentFile.fileName()));
       stopped = uiInterface()->setItemTotalSteps(m_currentFile.size()/1024);
     }
     m_lastLine = Vobu;
@@ -144,7 +144,7 @@ void DvdDirectoryObject::output(const QString& line)
     if(m_lastLine != FixingVobu)
     {
       stopped = uiInterface()->message(KMF::Info,
-          QString(i18n("  Fixing: %1")).arg(m_currentFile.fileName()));
+          i18n("  Fixing: %1", m_currentFile.fileName()));
       stopped = uiInterface()->setItemTotalSteps(100);
     }
     m_lastLine = FixingVobu;
