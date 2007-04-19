@@ -196,7 +196,7 @@ bool KMFUiInterface::setItemTotalSteps(int totalSteps)
   KMFProgressItem item = model->at(last);
   item.max = totalSteps;
   model->replace(last, item);
-  return true;
+  return m_stopped;
 }
 
 bool KMFUiInterface::setItemProgress(int progress)
@@ -207,7 +207,7 @@ bool KMFUiInterface::setItemProgress(int progress)
   KMFProgressItem item = model->at(last);
   item.value = progress;
   model->replace(last, item);
-  return true;
+  return m_stopped;
 }
 
 #include "kmfuiinterface.moc"
