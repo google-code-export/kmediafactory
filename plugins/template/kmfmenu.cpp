@@ -54,11 +54,11 @@ bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
 {
   QDomElement root = doc.createElement("dvdauthor");
   int i, j;
-  QString header = i18n("\n"
+  QString tmp;
+  QString header = "\n"
     " *********************************************************************\n"
     " %1\n"
-    " *********************************************************************\n "
-    );
+    " *********************************************************************\n";
   QString comment = i18n("\n"
     "**********************************************************************\n"
     "\n"
@@ -90,8 +90,8 @@ bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
   doc.appendChild(root);
 
   root.appendChild(doc.createTextNode("\n "));
-  root.appendChild(doc.createComment(
-      header.arg(i18n("Main menu for %1").arg(m_prjIf->title()))));
+  tmp = i18n("Main menu for %1", m_prjIf->title());
+  root.appendChild(doc.createComment(header.arg(tmp)));
   root.appendChild(doc.createTextNode("\n "));
 
   QDomElement elem = doc.createElement("vmgm");

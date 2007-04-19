@@ -106,7 +106,11 @@ void TemplatePage::currentPageChanged(KPageWidgetItem* current,
       (templatePreview->image().size() == QSize(0,0) ||
       m_lastUpdate <
       kmfApp->project()->lastModified(KMF::ProjectInterface::DirtyMedia)))
+  {
     QTimer::singleShot(0, this, SLOT(updatePreview()));
+  }
+  // Arranges icon in a nice row. Otherwise icons are arranged in one column
+  templates->setViewMode(QListView::IconMode);
 }
 
 void TemplatePage::updatePreview()
@@ -160,7 +164,6 @@ void TemplatePage::contextMenuRequested(const QPoint &pos)
   factory->plugActionList(mainWindow,
       QString::fromLatin1("template_actionlist"), actions);
   QWidget *w = factory->container("template_popup", mainWindow);
-  kDebug() << k_funcinfo << w << actions.count() << endl;
   if(w)
   {
     QMenu* popup = static_cast<QMenu*>(w);

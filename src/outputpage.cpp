@@ -188,6 +188,8 @@ void OutputPage::currentPageChanged(KPageWidgetItem* current, KPageWidgetItem*)
     startButton->setEnabled(kmfApp->project()->mediaObjects()->count() > 0);
     progressBar->setValue(0);
   }
+  // Arranges icon in a nice row. Otherwise icons are arranged in one column
+  outputs->setViewMode(QListView::IconMode);
 }
 
 #include "outputpage.moc"

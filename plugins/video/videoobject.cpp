@@ -761,7 +761,7 @@ void VideoObject::setCellSecs(double secs)
     if(i == chapters - 1)
       length = 0;
     QDVD::Cell c(KMF::Time(i*secs), length,
-        QString(i18n("Chapter %1")).arg(i + 1));
+        i18n("Chapter %1", i + 1));
     addCell(c);
   }
 }

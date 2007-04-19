@@ -372,9 +372,9 @@ void K3bObject::saveDocumentDataOptions(QDomElement&)
 
 void K3bObject::saveDocumentDataHeader(QDomElement& headerElem)
 {
-  QString app = QString(i18n("%1 - Version %2"))
-      .arg(KGlobal::mainComponent().aboutData()->programName())
-      .arg(KGlobal::mainComponent().aboutData()->version());
+  QString app = i18n("%1 - Version %2"
+      , KGlobal::mainComponent().aboutData()->programName()
+      , KGlobal::mainComponent().aboutData()->version());
 
   QDomDocument doc = headerElem.ownerDocument();
   QDomElement topElem = doc.createElement("volume_id");
