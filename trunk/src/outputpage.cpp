@@ -63,13 +63,8 @@ void OutputPage::projectInit()
   outputs->blockSignals(true);
   KMF::OutputObject* obj = kmfApp->project()->output();
   QModelIndex i = kmfApp->project()->outputObjects()->indexOf(obj);
-  outputs->selectionModel()->select(i, QItemSelectionModel::ClearAndSelect);
+  outputs->setCurrentIndex(i);
   outputs->blockSignals(false);
-}
-
-void OutputPage::outputsModified()
-{
-  kDebug() << k_funcinfo << "HEI HEI HEI ****************" << endl;
 }
 
 void OutputPage::currentChanged(const QModelIndex& index, const QModelIndex&)
@@ -77,7 +72,7 @@ void OutputPage::currentChanged(const QModelIndex& index, const QModelIndex&)
   if(kmfApp->project())
   {
     KMF::OutputObject* ob =
-        kmfApp->project()->outputObjects()->at(index.row());
+        kmfApp->project()->outputObjects()->at(index);
     kmfApp->project()->setOutput(ob);
   }
 }

@@ -38,7 +38,6 @@ class KMFListModel : public QAbstractListModel
     virtual QVariant data(const QModelIndex &index, int role) const;
     bool setData(const QModelIndex &index, const QVariant &value,
                  int role = Qt::EditRole);
-    Qt::ItemFlags flags(const QModelIndex &index) const;
     bool insertRows(const QModelIndex &index, int count,
                     const QModelIndex &parent = QModelIndex());
     bool removeRows(const QModelIndex &index, int count,
@@ -105,16 +104,6 @@ QVariant KMFListModel<T>::data(const QModelIndex& index, int role) const
     return qVariantFromValue(m_lst.at(index.row()));
 
   return QVariant();
-}
-
-template <class T>
-Qt::ItemFlags KMFListModel<T>::flags(const QModelIndex& index) const
-{
-  if (!index.isValid())
-    return QAbstractItemModel::flags(index) | Qt::ItemIsDropEnabled;
-
-  return QAbstractItemModel::flags(index) | Qt::ItemIsEditable |
-      Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
 }
 
 template <class T>

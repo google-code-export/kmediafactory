@@ -44,11 +44,11 @@ class TemplatePage : public QWidget, public Ui::TemplatePage
     void updatePreview();
     void contextMenuRequested(const QPoint &pos);
     void imageContextMenuRequested(const QPoint &pos);
-    void templatesModified();
     void projectInit();
 
   protected slots:
     virtual void previewClicked();
+    void cancelSelection();
 
   private:
     int m_menu;

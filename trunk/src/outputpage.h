@@ -39,7 +39,6 @@ class OutputPage : public QWidget, public Ui::OutputPage
   public slots:
     void currentPageChanged(KPageWidgetItem*, KPageWidgetItem*);
     void start();
-    void outputsModified();
     void projectInit();
 
   protected slots:

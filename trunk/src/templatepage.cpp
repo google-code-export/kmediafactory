@@ -61,37 +61,39 @@ void TemplatePage::projectInit()
   templates->blockSignals(true);
   KMF::TemplateObject* obj = kmfApp->project()->templateObj();
   QModelIndex i = kmfApp->project()->templateObjects()->indexOf(obj);
-  templates->selectionModel()->select(i, QItemSelectionModel::ClearAndSelect);
+  templates->setCurrentIndex(i);
   templates->blockSignals(false);
 }
 
-void TemplatePage::templatesModified()
+void TemplatePage::currentChanged(const QModelIndex& index,
+                                  const QModelIndex& previous)
 {
-  kDebug() << k_funcinfo << "HEI HEI HEI ****************" << endl;
-}
-
-void TemplatePage::currentChanged(const QModelIndex& index, const QModelIndex&)
-{
-  if(kmfApp->project())
+  kDebug() << k_funcinfo << index.row() << ":" << previous.row() << endl;
+  if(!m_settingPrevious && kmfApp->project())
   {
-    KMF::TemplateObject* ob =
-        kmfApp->project()->templateObjects()->at(index.row());
-
-    if(ob && ob->clicked() == false and !m_settingPrevious)
+    KMF::TemplateObject* ob = kmfApp->project()->templateObjects()->at(index);
+    if(ob)
     {
-      m_menu = 0;
-
-      kmfApp->project()->setTemplateObj(ob);
-      updatePreview();
-      m_previous = index;
-    }
-    else if(!m_settingPrevious)
-    {
-      m_settingPrevious = true;
-      templates->setCurrentIndex(m_previous);
-      m_settingPrevious = false;
+      if(ob->clicked() == false)
+      {
+        m_menu = 0;
+        kmfApp->project()->setTemplateObj(ob);
+        updatePreview();
+      }
+      else
+      {
+        m_previous = previous;
+        QTimer::singleShot(0, this, SLOT(cancelSelection()));
+      }
     }
   }
+  m_settingPrevious = false;
+}
+
+void TemplatePage::cancelSelection()
+{
+  m_settingPrevious = true;
+  templates->setCurrentIndex(m_previous);
 }
 
 void TemplatePage::currentPageChanged(KPageWidgetItem* current,
