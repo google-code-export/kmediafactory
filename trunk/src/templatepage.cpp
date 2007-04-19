@@ -54,22 +54,20 @@ TemplatePage::~TemplatePage()
 
 void TemplatePage::projectInit()
 {
-  QList<KMF::TemplateObject*>* tobs = kmfApp->project()->templateObjects();
-  m_model.setData(tobs);
-  templates->setModel(&m_model);
+  templates->setModel(kmfApp->project()->templateObjects());
   connect(templates->selectionModel(),
           SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
           this, SLOT(currentChanged(const QModelIndex&, const QModelIndex&)));
   templates->blockSignals(true);
   KMF::TemplateObject* obj = kmfApp->project()->templateObj();
-  QModelIndex i = m_model.index(obj);
+  QModelIndex i = kmfApp->project()->templateObjects()->indexOf(obj);
   templates->selectionModel()->select(i, QItemSelectionModel::ClearAndSelect);
   templates->blockSignals(false);
 }
 
 void TemplatePage::templatesModified()
 {
-  m_model.changed();
+  kDebug() << k_funcinfo << "HEI HEI HEI ****************" << endl;
 }
 
 void TemplatePage::currentChanged(const QModelIndex& index, const QModelIndex&)
@@ -79,9 +77,8 @@ void TemplatePage::currentChanged(const QModelIndex& index, const QModelIndex&)
     KMF::TemplateObject* ob =
         kmfApp->project()->templateObjects()->at(index.row());
 
-    if(ob->clicked() == false and !m_settingPrevious)
+    if(ob && ob->clicked() == false and !m_settingPrevious)
     {
-      m_menus = ob->menus();
       m_menu = 0;
 
       kmfApp->project()->setTemplateObj(ob);
@@ -121,7 +118,7 @@ void TemplatePage::updatePreview()
   {
     int n = selected[0].row();
 
-    if(n < kmfApp->project()->templateObjects()->count())
+    if(n < kmfApp->project()->templateObjects()->rowCount())
     {
       QString menu;
 
@@ -131,8 +128,11 @@ void TemplatePage::updatePreview()
       if(kmfApp->project()->mediaObjects()->count() > 0 &&
         previewCheckBox->isChecked())
       {
-        if(m_menu < m_menus.count())
-          menu = m_menus[m_menu];
+        KMF::TemplateObject* ob =
+            kmfApp->project()->templateObjects()->at(templates->currentIndex());
+        QStringList menus = ob->menus();
+        if(m_menu < menus.count())
+          menu = menus[m_menu];
         else
           menu = "Main";
       }
@@ -178,14 +178,16 @@ void TemplatePage::imageContextMenuRequested(const QPoint& pos)
 {
   QMenu popup;
   int i = 0;
-
   QAction* action;
   QAction* saveAction = new QAction(i18n("Save image"), this);
+  KMF::TemplateObject* ob =
+      kmfApp->project()->templateObjects()->at(templates->currentIndex().row());
+  QStringList menus = ob->menus();
 
   popup.addAction(saveAction);
   popup.insertSeparator(saveAction);
-  for(QStringList::Iterator it = m_menus.begin();
-      it != m_menus.end(); ++it, ++i)
+  for(QStringList::Iterator it = menus.begin();
+      it != menus.end(); ++it, ++i)
   {
     action = new QAction(*it, this);
     action->setCheckable(true);
@@ -221,21 +223,6 @@ void TemplatePage::imageContextMenuRequested(const QPoint& pos)
 void TemplatePage::previewClicked()
 {
   updatePreview();
-}
-
-void TemplatePage::loadingFinished()
-{
-#warning TODO ???
-  /*
-  Q3IconViewItem* item = templates->lastItem();
-
-  if(item)
-  {
-    item = item->prevItem();
-    if(item)
-      templates->setAfter(item);
-  }
-  */
 }
 
 #include "templatepage.moc"

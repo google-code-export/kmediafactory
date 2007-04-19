@@ -295,7 +295,6 @@ void KMediaFactory::fileNew()
     kmfApp->newProject();
     connectProject();
     kmfApp->project()->init();
-    templatePage->loadingFinished();
     if(KMediaFactorySettings::showProjectOptionsOnNew())
       projectOptions();
   }
@@ -325,7 +324,6 @@ void KMediaFactory::load(const KUrl& url)
     kmfApp->project()->open(url);
     mediaPage->mediaModified();
     templatePage->updatePreview();
-    templatePage->loadingFinished();
   }
 }
 

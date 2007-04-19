@@ -56,20 +56,20 @@ OutputPage::~OutputPage()
 
 void OutputPage::projectInit()
 {
-  QList<KMF::OutputObject*>* oobs = kmfApp->project()->outputObjects();
-  m_model.setData(oobs);
-  outputs->setModel(&m_model);
+  outputs->setModel(kmfApp->project()->outputObjects());
   connect(outputs->selectionModel(),
           SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
           this, SLOT(currentChanged(const QModelIndex&, const QModelIndex&)));
   outputs->blockSignals(true);
-  outputs->setCurrentIndex(m_model.index(kmfApp->project()->output()));
+  KMF::OutputObject* obj = kmfApp->project()->output();
+  QModelIndex i = kmfApp->project()->outputObjects()->indexOf(obj);
+  outputs->selectionModel()->select(i, QItemSelectionModel::ClearAndSelect);
   outputs->blockSignals(false);
 }
 
 void OutputPage::outputsModified()
 {
-  m_model.changed();
+  kDebug() << k_funcinfo << "HEI HEI HEI ****************" << endl;
 }
 
 void OutputPage::currentChanged(const QModelIndex& index, const QModelIndex&)

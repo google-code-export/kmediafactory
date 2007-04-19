@@ -22,6 +22,7 @@
 
 #include <kmediafactory/plugin.h>
 #include <kmediafactory/projectinterface.h>
+#include "kmficonview.h"
 #include <kurl.h>
 #include <QString>
 #include <QDateTime>
@@ -42,7 +43,6 @@ class KMFProject : public QObject
     bool open(const KUrl &url);
     QString toXML();
     void fromXML(QString xml);
-    int mediaCount() const { return m_list.count(); };
 
     const QString& type() const { return m_type; };
     QMap<QString, QString> subTypes() const;
@@ -71,9 +71,14 @@ class KMFProject : public QObject
     void templateFromXML(const QDomElement& e);
     void outputFromXML(const QDomElement& e);
     QString lastSubType() const { return m_subType; };
-    QList<KMF::MediaObject*>* mediaObjects() { return &m_list; };
-    QList<KMF::TemplateObject*>* templateObjects() { return &m_templates; };
-    QList<KMF::OutputObject*>* outputObjects() { return &m_outputs; };
+    const KMFObjectListModel<KMF::MediaObject*>& mediaObjects() const
+        { return m_list; };
+    KMFObjectListModel<KMF::MediaObject*>* mediaObjects()
+        { return &m_list; };
+    KMFObjectListModel<KMF::TemplateObject*>* templateObjects()
+        { return &m_templates; };
+    KMFObjectListModel<KMF::OutputObject*>* outputObjects()
+        { return &m_outputs; };
 
   signals:
     void preinit(const QString&);
@@ -89,9 +94,9 @@ class KMFProject : public QObject
     QString m_type;
     QString m_directory;
     QString m_title;
-    QList<KMF::MediaObject*> m_list;
-    QList<KMF::TemplateObject*> m_templates;
-    QList<KMF::OutputObject*> m_outputs;
+    KMFObjectListModel<KMF::MediaObject*> m_list;
+    KMFObjectListModel<KMF::TemplateObject*> m_templates;
+    KMFObjectListModel<KMF::OutputObject*> m_outputs;
     KMF::TemplateObject* m_template;
     KMF::OutputObject* m_output;
     KUrl m_url;

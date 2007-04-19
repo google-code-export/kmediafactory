@@ -111,12 +111,12 @@ bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
   if(pages() > 0)
   {
     KMF::MediaObject *mob;
-    QList<KMF::MediaObject*>* mobs = m_prjIf->mediaObjects();
+    QList<KMF::MediaObject*> mobs = m_prjIf->mediaObjects();
 
     j=1;
     foreach(KMFMenuPage* ob, m_pages[0])
     {
-      ob->setIndex(0, mobs->count(), j, m_pages[0].count());
+      ob->setIndex(0, mobs.count(), j, m_pages[0].count());
       ob->writeDvdAuthorXml(menus, type);
       j++;
     }
@@ -125,7 +125,7 @@ bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
     root.appendChild(elem);
 
     i=1;
-    foreach(mob, *mobs)
+    foreach(mob, mobs)
     {
       root.appendChild(doc.createTextNode("\n "));
       root.appendChild(doc.createComment(header.arg(mob->text())));
@@ -138,7 +138,7 @@ bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
         j=1;
         foreach(KMFMenuPage* ob, m_pages[i])
         {
-          ob->setIndex(i, mobs->count(), j, m_pages[i].count());
+          ob->setIndex(i, mobs.count(), j, m_pages[i].count());
           ob->writeDvdAuthorXml(menus, type);
           ++j;
         }
@@ -152,7 +152,7 @@ bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
 
       QString post;
 
-      if(i < mobs->count() && templateObject()->property("%KMFMenuPage%",
+      if(i < mobs.count() && templateObject()->property("%KMFMenuPage%",
                                  "continue_to_next_title").toInt() == 1)
       {
         post = QString(" g3 = %1 ; ").arg(i+1);
@@ -242,14 +242,14 @@ bool KMFMenu::addPage(const QString& name, int title, int chapter)
 {
   QDomElement element = m_templateXML.documentElement();
   QDomElement pageElement = getPage(element.firstChild(), name);
-  QList<KMF::MediaObject*>* mobs = m_prjIf->mediaObjects();
+  QList<KMF::MediaObject*> mobs = m_prjIf->mediaObjects();
   KMFMenuPage temp(this);
 
   temp.fromXML(pageElement);
 
   if(temp.titles() > 0)
   {
-    for(int i = 0; i < ((mobs->count() - 1) / temp.titles()) + 1; ++i)
+    for(int i = 0; i < ((mobs.count() - 1) / temp.titles()) + 1; ++i)
     {
       if(addPage(pageElement, title, i * temp.titles(), chapter) == false)
         return false;
@@ -257,7 +257,7 @@ bool KMFMenu::addPage(const QString& name, int title, int chapter)
   }
   else if(temp.chapters() > 0)
   {
-    if(title <= mobs->count())
+    if(title <= mobs.count())
     {
       for(int i = 0;
           i < ((mediaObjChapterCount(title-1) - 1) / temp.chapters()) + 1;
@@ -351,7 +351,7 @@ bool KMFMenu::makeMenu(QString type)
 {
   clear();
   m_points = TotalPoints / 4;
-  m_pagePoints = m_points / ((m_prjIf->mediaObjects()->count() * 2) + 1);
+  m_pagePoints = m_points / ((m_prjIf->mediaObjects().count() * 2) + 1);
   QDomElement element = m_templateXML.documentElement();
   QString page = element.attribute("first_page");
 
@@ -383,13 +383,13 @@ bool KMFMenu::makeMenu(QString type)
 
 int KMFMenu::mediaObjCount()
 {
-  return m_prjIf->mediaObjects()->count();
+  return m_prjIf->mediaObjects().count();
 }
 
 int KMFMenu::mediaObjChapterCount(int title)
 {
-  QList<KMF::MediaObject*>* mobs = m_prjIf->mediaObjects();
-  KMF::MediaObject* mob = mobs->at(title);
+  QList<KMF::MediaObject*> mobs = m_prjIf->mediaObjects();
+  KMF::MediaObject* mob = mobs.at(title);
   int result = mob->chapters();
   KMF::Time chapter = mob->chapterTime(result);
 

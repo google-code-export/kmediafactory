@@ -51,6 +51,7 @@ class KMFListModel : public QAbstractListModel
     void replace(int index, const T& value);
     void swap(int i1, int i2);
     void insert(int index, const T& value);
+    bool isValid(int index) const;
 
     void removeAt(const QModelIndex& index);
     void removeAt(const QModelIndexList& list);
@@ -58,15 +59,16 @@ class KMFListModel : public QAbstractListModel
     void replace(const QModelIndex &index, const T& value);
     void swap(const QModelIndex &i1, const QModelIndex &i2);
     void insert(const QModelIndex &index, const T& value);
+    bool isValid(const QModelIndex &index) const;
+    QModelIndex indexOf(const T& value, int from = 0) const;
 
     void clear();
     void append(const T& value);
     void append(const QList<T>& values);
+    int  removeAll(const T& value);
     QList<T> list() const;
     void setList(const QList<T> &values);
-
-  protected:
-    bool isValid(int index) const;
+    int  count() const;
 
   private:
     QList<T> m_lst;
@@ -168,6 +170,23 @@ void KMFListModel<T>::sort(int, Qt::SortOrder order)
   else
     qSort(m_lst.begin(), m_lst.end(), qGreater<T>());
   emit layoutChanged();
+}
+
+template <class T>
+bool KMFListModel<T>::isValid(const QModelIndex &index) const
+{
+  return isValid(index.row());
+}
+
+template <class T>
+QModelIndex KMFListModel<T>::indexOf(const T& value, int from) const
+{
+  int i = m_lst.indexOf(value, from);
+
+  if(i < 0)
+    return QModelIndex();
+  else
+    return index(i);
 }
 
 // Index base functions
@@ -288,6 +307,22 @@ void KMFListModel<T>::append(const QList<T>& values)
 }
 
 template <class T>
+int KMFListModel<T>::removeAll(const T& value)
+{
+  QList<int> l;
+  int i = 0;
+
+  foreach(T item, m_lst)
+  {
+    if(item == value)
+      l.append(i);
+    ++i;
+  }
+  removeAt(l);
+  return l.count();
+}
+
+template <class T>
 void KMFListModel<T>::clear()
 {
   m_lst.clear();
@@ -313,6 +348,12 @@ bool KMFListModel<T>::isValid(int index) const
   if(index >= 0 and index < m_lst.count())
     return true;
   return false;
+}
+
+template <class T>
+int KMFListModel<T>::count() const
+{
+  return rowCount();
 }
 
 #endif // KMFLISTMODEL_H

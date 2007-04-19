@@ -47,27 +47,23 @@ MediaPage::~MediaPage()
 void MediaPage::projectInit()
 {
   calculateSizes();
-
-  QList<KMF::MediaObject*>* mobs = kmfApp->project()->mediaObjects();
-  m_model.setData(mobs);
-  mediaFiles->setModel(&m_model);
+  mediaFiles->setModel(kmfApp->project()->mediaObjects());
 }
 
 void MediaPage::mediaModified()
 {
-  kDebug() << k_funcinfo << endl;
+  kDebug() << k_funcinfo << "HEI HEI HEI ****************" << endl;
   calculateSizes();
-  m_model.changed();
 }
 
 void MediaPage::contextMenuRequested(const QPoint &pos)
 {
   QModelIndex i = mediaFiles->indexAt(pos);
 
-  if(i.row() < 0 || i.row() > kmfApp->project()->mediaObjects()->count())
+  if(kmfApp->project()->mediaObjects()->isValid(i))
     return;
 
-  KMF::MediaObject* ob = kmfApp->project()->mediaObjects()->at(i.row());
+  KMF::MediaObject* ob = kmfApp->project()->mediaObjects()->at(i);
   KMediaFactory* mainWindow = kmfApp->mainWindow();
   KXMLGUIFactory* factory = mainWindow->factory();
 
@@ -91,10 +87,10 @@ void MediaPage::calculateSizes()
 
   if(kmfApp->project())
   {
-    QList<KMF::MediaObject*>* mobs = kmfApp->project()->mediaObjects();
+    QList<KMF::MediaObject*> mobs = kmfApp->project()->mediaObjects()->list();
     KMF::MediaObject *mob;
 
-    foreach(mob, *mobs)
+    foreach(mob, mobs)
       size += mob->size();
     // size += TODO: MENU SIZE
   }

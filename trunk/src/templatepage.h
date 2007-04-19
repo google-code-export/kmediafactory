@@ -37,8 +37,6 @@ class TemplatePage : public QWidget, public Ui::TemplatePage
     TemplatePage(QWidget *parent = 0);
     virtual ~TemplatePage();
 
-    void loadingFinished();
-
   public slots:
     void currentChanged(const QModelIndex& index,
                         const QModelIndex& previous);
@@ -54,11 +52,9 @@ class TemplatePage : public QWidget, public Ui::TemplatePage
 
   private:
     int m_menu;
-    QStringList m_menus;
     QDateTime m_lastUpdate;
     QModelIndex m_previous;
     bool m_settingPrevious;
-    KMFObjectListModel<KMF::TemplateObject> m_model;
 };
 
 #endif

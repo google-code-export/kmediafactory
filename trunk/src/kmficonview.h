@@ -20,10 +20,9 @@
 #ifndef KMFTEMPLATEICONVIEW_H
 #define KMFTEMPLATEICONVIEW_H
 
-#include <kmediafactory/projectinterface.h>
+#include <kmediafactory/kmfobject.h>
+#include "kmflistmodel.h"
 #include <klocale.h>
-#include <kdebug.h>
-#include <QAbstractListModel>
 #include <QItemDelegate>
 
 class KMFItemDelegate : public QItemDelegate
@@ -41,40 +40,18 @@ class KMFItemDelegate : public QItemDelegate
 };
 
 template <class T>
-class KMFObjectListModel : public QAbstractListModel
+class KMFObjectListModel : public KMFListModel<T>
 {
   public:
-    KMFObjectListModel() : m_data(0) {};
-    virtual ~KMFObjectListModel() {};
-
-    void setData(const QList<T*>* data)
-    {
-      m_data = data;
-    }
-
-    virtual QModelIndex index(T* d) const
-    {
-      int i = m_data->indexOf(d);
-      return QAbstractListModel::index(i);
-    }
-
-    int rowCount(const QModelIndex&) const
-    {
-      if(m_data)
-        return m_data->count();
-      return 0;
-    }
-
     QVariant data(const QModelIndex &index, int role) const
     {
-      if (!m_data || !index.isValid() ||
-           index.row() >= rowCount(index) || index.row() < 0)
+      if(!KMFListModel<T>::isValid(index))
         return QVariant();
 
       if (role == Qt::DisplayRole)
-        return m_data->at(index.row())->title();
+        return KMFListModel<T>::at(index)->title();
       else if (role == Qt::DecorationRole)
-        return m_data->at(index.row())->pixmap();
+        return KMFListModel<T>::at(index)->pixmap();
       return QVariant();
     }
 
@@ -83,16 +60,8 @@ class KMFObjectListModel : public QAbstractListModel
       if (role != Qt::DisplayRole)
         return QVariant();
 
-      return i18n("Title");
+      return ::i18n("Title");
     }
-
-    void changed()
-    {
-      reset();
-    }
-
-  private:
-    const QList<T*>* m_data;
 };
 
 #endif // KMFTEMPLATEICONVIEW_H

@@ -33,19 +33,6 @@
 #include <QFile>
 #include <QDir>
 #include <QTextStream>
-#include <Q3ValueList>
-#include <Q3PtrList>
-
-template <class T>
-Q3PtrList<T> deepCopy(Q3PtrList<T> list)
-{
-  T* item;
-  Q3PtrList<T> newList;
-
-  for(item = list.first(); item; item = list.next())
-    newList.append(new T(*item));
-  return newList;
-}
 
 template <class S, class T>
 void addMap(QMap<S, T>* map, const QMap<S, T>& add)
@@ -293,7 +280,7 @@ QString KMFProject::toXML()
 
   doc.appendChild(root);
 
-  foreach(obj, m_list)
+  foreach(obj, m_list.list())
     saveObj(doc, root, "media", obj);
   saveObj(doc, root, "template", m_template);
   saveObj(doc, root, "output", m_output);
@@ -365,7 +352,7 @@ bool KMFProject::make(QString type)
   if(!dir.exists())
     mkdir(dir.path());
 
-  foreach(obj, m_list)
+  foreach(obj, m_list.list())
   {
     if(!obj->make(type))
     {
@@ -383,11 +370,12 @@ bool KMFProject::make(QString type)
 
 int KMFProject::timeEstimate() const
 {
+  KMF::MediaObject* obj;
   int result = 0;
 
   if(!validProject())
     return result;
-  foreach(KMF::MediaObject* obj, m_list)
+  foreach(obj, m_list.list())
     result += obj->timeEstimate();
   result += m_template->timeEstimate();
   result += m_output->timeEstimate();
@@ -522,10 +510,13 @@ QDateTime KMFProject::lastModified(KMF::ProjectInterface::DirtyType type) const
 QMap<QString, QString> KMFProject::subTypes() const
 {
   QMap<QString, QString> result;
+  KMF::MediaObject* obj;
 
-  foreach(KMF::MediaObject* obj, m_list)
+  foreach(obj, m_list.list())
+  {
     if(obj)
       addMap(&result, obj->subTypes());
+  }
   if(m_template)
     addMap(&result, m_template->subTypes());
   if(m_output)
