@@ -223,7 +223,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
         img.write((const char*)file.local8Bit());
         imageList.pop_front();
 
-        slide.comment = i18n("Page %1").arg(i);
+        slide.comment = i18n("Page %1", i);
         slide.picture = file;
         result.append(slide);
         dlg.progressBar()->advance(pageProgress);
@@ -534,8 +534,7 @@ bool SlideshowObject::convertToDVD() const
   else
   {
     uiInterface()->message(KMF::Info,
-        i18n("   Slideshow \"%1\" seems to be up to date")
-            .arg(title()));
+        i18n("   Slideshow \"%1\" seems to be up to date", title()));
     result = true;
   }
   return result;

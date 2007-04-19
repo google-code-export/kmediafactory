@@ -270,7 +270,7 @@ void DvdDirectoryObject::toXML(QDomElement&) const
 
 QPixmap DvdDirectoryObject::pixmap() const
 {
-  return KIconLoader::global()->loadIcon("folder_video", K3Icon::NoGroup,
+  return KIconLoader::global()->loadIcon("folder-video", K3Icon::NoGroup,
                                            K3Icon::SizeLarge);
 }
 

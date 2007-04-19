@@ -72,7 +72,7 @@ KMFProject::KMFProject(QObject *parent) :
 
   while(1)
   {
-    QString file = QString(i18n("Project%1")).arg(i);
+    QString file = i18n("Project%1", i);
 
     QDir projectDir(dir.filePath(file));
     if(!projectDir.exists())
