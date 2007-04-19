@@ -39,7 +39,7 @@ namespace KMF
     public:
       ProjectInterface(QObject* parent);
 
-      virtual QList<MediaObject*>* mediaObjects() = 0;
+      virtual QList<MediaObject*> mediaObjects() = 0;
       virtual QString title() = 0;
       virtual void setTitle(QString title) = 0;
       virtual QString projectDir(const QString& subDir = "") = 0;

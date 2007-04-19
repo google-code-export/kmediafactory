@@ -46,9 +46,9 @@ void KMFProjectInterface::setTitle(QString title)
   return kmfApp->project()->setTitle(title);
 }
 
-QList<KMF::MediaObject*>* KMFProjectInterface::mediaObjects()
+QList<KMF::MediaObject*> KMFProjectInterface::mediaObjects()
 {
-  return kmfApp->project()->mediaObjects();
+  return kmfApp->project()->mediaObjects()->list();
 }
 
 QString KMFProjectInterface::projectDir(const QString& subDir)

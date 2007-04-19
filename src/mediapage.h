@@ -43,9 +43,6 @@ class MediaPage : public QWidget, public Ui::MediaPage
     void calculateSizes();
     void projectInit();
     void mediaModified();
-
-  private:
-    KMFObjectListModel<KMF::MediaObject> m_model;
 };
 
 #endif

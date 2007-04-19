@@ -53,7 +53,6 @@ class OutputPage : public QWidget, public Ui::OutputPage
     QMenu m_startPopup;
     QMap<QAction*, QString> m_types;
     QString m_type;
-    KMFObjectListModel<KMF::OutputObject> m_model;
 };
 
 #endif

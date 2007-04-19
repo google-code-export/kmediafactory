@@ -156,15 +156,15 @@ void KMFImage::setImage(KUrl url)
   //kDebug() << k_funcinfo << url << endl;
   if(url.protocol() == "project")
   {
-    QList<KMF::MediaObject*>* mobs = m_prjIf->mediaObjects();
+    QList<KMF::MediaObject*> mobs = m_prjIf->mediaObjects();
     int title;
     int chapter;
 
     parseTitleChapter(url.path().mid(1), title, chapter);
-    if(title > 0 && title <= (int)mobs->count()
-       && chapter <= (int)mobs->at(title-1)->chapters())
+    if(title > 0 && title <= (int)mobs.count()
+       && chapter <= (int)mobs.at(title-1)->chapters())
     {
-      setImage(mobs->at(title-1)->preview(chapter));
+      setImage(mobs.at(title-1)->preview(chapter));
       ok = true;
     }
   }

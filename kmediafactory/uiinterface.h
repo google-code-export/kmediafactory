@@ -116,5 +116,9 @@ namespace KMF
   };
 };
 
+Q_DECLARE_METATYPE(KMF::OutputObject*);
+Q_DECLARE_METATYPE(KMF::TemplateObject*);
+Q_DECLARE_METATYPE(KMF::MediaObject*);
+
 #endif // UIINTERFACE_H
 

@@ -75,7 +75,7 @@ void ProjectOptions::setData(const KMFProject& project)
   titleChangesPath = dir.dirName().startsWith(i18n("Project"));
   m_saved = dir.dirName();
   m_type = project.type();
-  m_count = project.mediaCount();
+  m_count = project.mediaObjects().count();
 }
 
 void ProjectOptions::textChanged(const QString& title)
