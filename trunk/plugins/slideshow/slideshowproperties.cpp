@@ -34,6 +34,95 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QLineEdit>
+#include <QFileInfo>
+
+#warning TODO drag & drop support
+
+int SlideListModel::columnCount(const QModelIndex&) const
+{
+  return 2;
+};
+
+Qt::ItemFlags SlideListModel::flags(const QModelIndex& index) const
+{
+  Qt::ItemFlags flags = QAbstractItemModel::flags(index);
+  if(!isValid(index))
+    return flags | Qt::ItemIsDropEnabled;
+
+  flags |= Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
+  if(index.column() == 0)
+    flags |= Qt::ItemIsUserCheckable;
+  else if(index.column() == 1)
+    flags |= Qt::ItemIsEditable;
+  return flags;
+}
+
+QVariant SlideListModel::data(const QModelIndex &index, int role) const
+{
+  if (!isValid(index))
+    return QVariant();
+
+  if (role == Qt::DisplayRole)
+  {
+    switch(index.column())
+    {
+      case 0:
+      {
+        QFileInfo fi(at(index).picture);
+        return fi.fileName();
+      }
+      case 1:
+        return at(index).comment;
+    }
+  }
+  if (role == Qt::DecorationRole)
+  {
+    if(index.column() == 0)
+      return QPixmap();
+  }
+  if (role == Qt::CheckStateRole)
+  {
+    if(index.column() == 0)
+      return ((at(index).chapter) ? Qt::Checked : Qt::Unchecked);
+  }
+  return QVariant();
+};
+
+bool SlideListModel::setData(const QModelIndex &index, const QVariant &value,
+                             int role)
+{
+  if(!isValid(index))
+    return false;
+
+  Slide slide = at(index);
+
+  if (role == Qt::EditRole)
+  {
+    if(index.column() == 2)
+      slide.comment = value.toString();
+  }
+  else if (role == Qt::CheckStateRole)
+  {
+    slide.chapter = value.toBool();
+  }
+  replace(index, slide);
+  return true;
+}
+
+QVariant SlideListModel::headerData(int column, Qt::Orientation, int role) const
+{
+  if (role != Qt::DisplayRole)
+    return QVariant();
+
+  switch(column)
+  {
+    case 0:
+      return i18n("Picture");
+    case 1:
+      return i18n("Comment");
+  }
+  return "";
+};
 
 SlideshowProperties::SlideshowProperties(QWidget *parent)
   : KDialog(parent)
@@ -41,13 +130,14 @@ SlideshowProperties::SlideshowProperties(QWidget *parent)
   setupUi(mainWidget());
   setButtons(KDialog::Ok | KDialog::Cancel);
 
-#warning TODO
-  //slideListView->setDefaultRenameAction(Q3ListView::Accept);
-  // User sorting
-  //slideListView->setSorting(1000);
-  audioButton->setIcon(
-      KIconLoader::global()->loadIconSet(("arts"), K3Icon::Small,
-      K3Icon::SizeMedium));
+  slideListView->setModel(&m_model);
+  slideListView->setRootIsDecorated(false);
+  audioButton->setIcon(KIcon("arts"));
+  audioButton->setIconSize(QSize(K3Icon::SizeLarge, K3Icon::SizeLarge));
+  addButton->setIcon(KIcon("list-add"));
+  removeButton->setIcon(KIcon("list-remove"));
+  upButton->setIcon(KIcon("arrow-up"));
+  downButton->setIcon(KIcon("arrow-down"));
 }
 
 SlideshowProperties::~SlideshowProperties()
@@ -61,22 +151,7 @@ void SlideshowProperties::getData(SlideshowObject& obj) const
   obj.setLoop(loopCheckBox->isChecked());
   obj.setTitle(titleEdit->text());
   obj.setAudioFile(m_audioFiles);
-
-  SlideList list;
-#warning TODO
-/*
-  for(Q3ListViewItemIterator it(slideListView); *it != 0; ++it)
-  {
-    Q3CheckListItem* litem = static_cast<Q3CheckListItem*>(*it);
-    Slide slide;
-
-    slide.chapter = litem->isOn();
-    slide.picture = litem->text(4);
-    slide.comment = litem->text(3);
-    list.append(slide);
-  }
-  */
-  obj.setSlides(list);
+  obj.setSlides(m_model.list());
 }
 
 void SlideshowProperties::setData(const SlideshowObject& obj)
@@ -93,6 +168,7 @@ void SlideshowProperties::setData(const SlideshowObject& obj)
 
 void SlideshowProperties::addSlides(const SlideList& slides)
 {
+  m_model.setList(slides);
 #warning TODO
 /*
   Q3CheckListItem* prev =

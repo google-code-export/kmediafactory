@@ -20,6 +20,7 @@
 #ifndef SLIDESHOWPROPERTIES_H
 #define SLIDESHOWPROPERTIES_H
 
+#include <kmflistmodel.h>
 #include <ui_slideshowproperties.h>
 #include <slideshowobject.h>
 #include <QPixmap>
@@ -30,6 +31,16 @@ class SlideshowObject;
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
+
+class SlideListModel : public KMFListModel<Slide>
+{
+  virtual int columnCount(const QModelIndex&) const;
+  virtual QVariant data(const QModelIndex &index, int role) const;
+  virtual bool setData(const QModelIndex &index, const QVariant &value,
+                       int role = Qt::EditRole);
+  virtual QVariant headerData(int column, Qt::Orientation, int role) const;
+  virtual Qt::ItemFlags flags(const QModelIndex& index) const;
+};
 
 class SlideshowProperties : public KDialog, public Ui::SlideshowProperties
 {
@@ -58,6 +69,7 @@ class SlideshowProperties : public KDialog, public Ui::SlideshowProperties
 
   private:
     const SlideshowObject* m_sob;
+    SlideListModel m_model;
     QStringList m_audioFiles;
 };
 

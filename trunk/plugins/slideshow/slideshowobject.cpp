@@ -54,11 +54,12 @@ SlideshowObject::SlideshowObject(QObject* parent)
   : MediaObject(parent), m_loop(false), m_includeOriginals(true)
 {
   setObjectName("slideshow");
-  QAction* action = new KAction(KIcon("pencil"),
-                                i18n("&Properties"),this);
-  action->setShortcut(Qt::CTRL + Qt::Key_W);
-  plugin()->actionCollection()->addAction("mob_properties", action);
-  connect(action, SIGNAL(triggered()), SLOT(slotProperties()));
+  m_slideshowProperties = new KAction(KIcon("pencil"),
+                                      i18n("&Properties"),this);
+  m_slideshowProperties->setShortcut(Qt::CTRL + Qt::Key_W);
+  plugin()->actionCollection()->addAction("mob_properties",
+                                          m_slideshowProperties);
+  connect(m_slideshowProperties, SIGNAL(triggered()), SLOT(slotProperties()));
   m_duration = SlideshowPluginSettings::slideDuration();
 }
 

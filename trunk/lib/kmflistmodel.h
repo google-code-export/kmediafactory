@@ -36,8 +36,8 @@ class KMFListModel : public QAbstractListModel
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     virtual QVariant data(const QModelIndex &index, int role) const;
-    bool setData(const QModelIndex &index, const QVariant &value,
-                 int role = Qt::EditRole);
+    virtual bool setData(const QModelIndex &index, const QVariant &value,
+                         int role = Qt::EditRole);
     bool insertRows(const QModelIndex &index, int count,
                     const QModelIndex &parent = QModelIndex());
     bool removeRows(const QModelIndex &index, int count,

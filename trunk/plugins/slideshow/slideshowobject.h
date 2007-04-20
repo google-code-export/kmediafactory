@@ -35,7 +35,11 @@ class Slide
     QString picture;
     QString comment;
     bool    chapter;
+
+    bool operator <(const Slide &t) const { return (comment < t.comment); }
 };
+
+Q_DECLARE_METATYPE(Slide);
 
 typedef QList<Slide> SlideList;
 
@@ -98,7 +102,7 @@ class SlideshowObject : public KMF::MediaObject
     bool lastChapter(SlideList::ConstIterator& iter);
 
   private:
-    KAction* m_slideshowProperties;
+    QAction* m_slideshowProperties;
     QList<Slide> m_slides;
     QString m_id;
     double  m_duration;
