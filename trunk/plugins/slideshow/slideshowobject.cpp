@@ -124,11 +124,10 @@ SlideList SlideshowObject::slideList(QStringList list) const
   dlg.setAutoClose(true);
   dlg.show();
 
-  for(QStringList::ConstIterator it = list.begin(); it != list.end(); ++it)
+  foreach(QString file, list)
   {
-    KFileMetaInfo minfo(*it, QString::null, KFileMetaInfo::ContentInfo);
+    KFileMetaInfo minfo(file, QString::null, KFileMetaInfo::ContentInfo);
     QString mime;
-    QString file = *it;
     QFileInfo fi(file);
     QDir dir(projectInterface()->projectDir("media"));
     KMimeType::Ptr type = KMimeType::findByUrl(file);
@@ -233,25 +232,25 @@ SlideList SlideshowObject::slideList(QStringList list) const
     else
 #endif
     {
-#warning TODO
-#if 0
       Slide slide;
 
-      if(minfo.contains("Comment") && !minfo.item("Comment").string().isEmpty())
-        slide.comment = minfo.item("Comment").string();
+      if(minfo.keys().contains("Comment") &&
+         !minfo.item("Comment").value().toString().isEmpty())
+      {
+        slide.comment = minfo.item("Comment").value().toString();
+      }
       else
       {
-        if(minfo.contains("CreationDate"))
-          slide.comment = minfo.item("CreationDate").string();
-        if(minfo.contains("CreationTime"))
-          slide.comment += " " + minfo.item("CreationTime").string();
+        if(minfo.keys().contains("CreationDate"))
+          slide.comment = minfo.item("CreationDate").value().toString();
+        if(minfo.keys().contains("CreationTime"))
+          slide.comment += " " + minfo.item("CreationTime").value().toString();
       }
       slide.comment = slide.comment.trimmed();
       slide.picture = file;
       result.append(slide);
       dlg.progressBar()->setValue(dlg.progressBar()->value() + fileProgress);
       kapp->processEvents();
-#endif
     }
   }
   dlg.progressBar()->setRange(0, 10000);
