@@ -52,7 +52,6 @@ void MediaPage::projectInit()
 
 void MediaPage::mediaModified()
 {
-  kDebug() << k_funcinfo << "HEI HEI HEI ****************" << endl;
   calculateSizes();
 }
 

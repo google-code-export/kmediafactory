@@ -36,7 +36,6 @@ class KMFItemDelegate : public QItemDelegate
   protected:
     QString replaceNewLine(QString text) const;
     QRect textLayoutBounds(const QStyleOptionViewItemV2 &option) const;
-    void drawRoundRect(QPainter* painter, const QRect& rect, int radius) const;
 };
 
 template <class T>

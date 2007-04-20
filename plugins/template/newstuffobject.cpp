@@ -21,10 +21,8 @@
 #include "newstuffobject.h"
 #include "templateplugin.h"
 #include "templatepluginsettings.h"
-#include "templatenewstuff.h"
 #include <klocale.h>
-#warning TODO TemplateNewStuff
-//#include <knewstuff/knewstuffgeneric.h>
+#include <knewstuff2/engine.h>
 #include <kapplication.h>
 #include <kiconloader.h>
 
@@ -41,20 +39,13 @@ NewStuffObject::~NewStuffObject()
   KMF::UiInterface *ui = uiInterface();
   if(ui)
     uiInterface()->removeTemplateObject(this);
-  #warning TODO TemplateNewStuff
-  //delete m_newstuff;
 }
 
 bool NewStuffObject::clicked()
 {
-  #warning TODO TemplateNewStuff
-/*
-  if(!m_newstuff)
-    m_newstuff = new TemplateNewStuff(TemplatePluginSettings::providersUrl(),
-                                      kapp->activeWindow(),
-                                      static_cast<TemplatePlugin*>(parent()));
-  m_newstuff->download();
-  */
+  KNS::Engine *engine = new KNS::Engine();
+  KNS::Entry::List entries = engine->downloadDialogModal();
+  delete engine;
   return true;
 }
 

@@ -33,7 +33,6 @@
 #include "kmediafactorysettings.h"
 #include "kmfimageview.h"
 #include "kmftools.h"
-#include "kmfnewstuff.h"
 #include <kmediafactory/plugin.h>
 
 #include <kactioncollection.h>
@@ -60,6 +59,7 @@
 #include <ktoggleaction.h>
 #include <ktoolbar.h>
 #include <kshortcutsdialog.h>
+#include <knewstuff2/engine.h>
 
 #include <QLabel>
 #include <QObject>
@@ -138,7 +138,6 @@ KMediaFactory::KMediaFactory()
 
 KMediaFactory::~KMediaFactory()
 {
-  #warning TODO KMFNewStuff
   //delete m_newStuffDlg;
   //delete mediaPage;
   //delete templatePage;
@@ -242,16 +241,36 @@ void KMediaFactory::projectOptions()
 
 void KMediaFactory::newStuff()
 {
-#warning TODO KMFNewStuff
+  KNS::Engine *engine = new KNS::Engine();
+  KNS::Entry::List entries = engine->downloadDialogModal();
+  delete engine;
+#warning TODO Fix desktop file
   /*
-  if(!m_newStuffDlg)
+  for(QStringList::Iterator it = list.begin(); it != list.end(); ++it)
   {
-    m_newStuffDlg =
-        new KMFNewStuff(KMediaFactorySettings::providersUrl(), this);
-    connect(m_newStuffDlg, SIGNAL(scriptInstalled()),
-            this, SLOT(updateToolsMenu()));
+    kdDebug() << k_funcinfo << "File: " << destinationPath << *it << endl;
+
+    if((*it).endsWith(".desktop"))
+    {
+      KDesktopFile df(destinationPath + *it);
+      QString exec = destinationPath + df.readEntry("Exec");
+      QString icon = destinationPath + df.readEntry("Icon");
+
+      if(QFile::exists(exec))
+      {
+        chmod((const char*)exec.local8Bit(),
+              S_IRUSR|S_IWRITE|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH);
+        df.writeEntry("Exec", exec);
+        kdDebug() << k_funcinfo << "Exec: " << exec << endl;
+      }
+      if(QFile::exists(icon))
+      {
+        df.writeEntry("Icon", icon);
+        kdDebug() << k_funcinfo << "Icon: " << icon << endl;
+      }
+    }
   }
-  m_newStuffDlg->download();
+  emit scriptInstalled();
   */
 }
 

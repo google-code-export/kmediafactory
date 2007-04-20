@@ -71,6 +71,8 @@ FILES=(
 "include/kmediafactory/uiinterface.h"
 "include/kmediafactory/kmfobject.h"
 "bin/kmediafactory"
+"share/config/kmediafactory.knsrc"
+"share/config/kmediafactory_template.knsrc"
 )
 
 function makefilesdir()
