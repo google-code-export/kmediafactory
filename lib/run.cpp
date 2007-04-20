@@ -54,7 +54,7 @@ bool Run::run()
     }
   }
   setUseShell(true);
-  kDebug() << "Running: " << m_command << endl;
+  //kDebug() << "Running: " << m_command << endl;
   *this << m_command;
   connect(this, SIGNAL(receivedStdout(K3Process*, char*, int)),
           this, SLOT(stdout(K3Process*, char*, int)));

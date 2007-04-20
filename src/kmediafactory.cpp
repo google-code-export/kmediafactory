@@ -219,15 +219,9 @@ void KMediaFactory::connectProject()
 
 void KMediaFactory::itemDelete()
 {
-  /*
-  KMFIconViewItem* item =
-      static_cast<KMFIconViewItem*>(mediaPage->mediaFiles->currentItem());
-  if(item)
-  {
-    KMF::Object *ob = item->ob();
-    kmfApp->project()->removeItem(static_cast<KMF::MediaObject*>(ob));
-  }
-  */
+  QModelIndex i = mediaPage->mediaFiles->currentIndex();
+  kmfApp->project()->mediaObjects()->removeAt(i);
+  kmfApp->project()->setDirty(KMF::ProjectInterface::DirtyMedia);
 }
 
 void KMediaFactory::projectOptions()

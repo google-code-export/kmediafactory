@@ -59,7 +59,7 @@ void MediaPage::contextMenuRequested(const QPoint &pos)
 {
   QModelIndex i = mediaFiles->indexAt(pos);
 
-  if(kmfApp->project()->mediaObjects()->isValid(i))
+  if(!kmfApp->project()->mediaObjects()->isValid(i))
     return;
 
   KMF::MediaObject* ob = kmfApp->project()->mediaObjects()->at(i);
