@@ -19,10 +19,4 @@
           <default>false</default>
       </entry>
   </group>
-  <group name="KNewStuff">
-      <entry name="ProvidersUrl" type="String">
-          <label>Providers URL for GHNS</label>
-          <default>http://download.kde.org/khotnewstuff/kmediafactorytools-providers.xml</default>
-      </entry>
-  </group>
 </kcfg>
