@@ -21,6 +21,7 @@
 #include "slideshowobject.h"
 #include <kmftime.h>
 #include <kmfmultiurldialog.h>
+#include <kmfmediafile.h>
 #include <kurlrequester.h>
 #include <kmessagebox.h>
 #include <kio/previewjob.h>
@@ -78,7 +79,12 @@ QVariant SlideListModel::data(const QModelIndex &index, int role) const
   if (role == Qt::DecorationRole)
   {
     if(index.column() == 0)
-      return QPixmap();
+    {
+      if(m_previews.keys().indexOf(at(index).picture) >= 0)
+        return m_previews[at(index).picture];
+      else
+        return QPixmap();
+    }
   }
   if (role == Qt::CheckStateRole)
   {
@@ -124,6 +130,19 @@ QVariant SlideListModel::headerData(int column, Qt::Orientation, int role) const
   return "";
 };
 
+void SlideListModel::setPreview(const QString& file, const QPixmap& pixmap)
+{
+  int i;
+
+  for(i = 0; i < m_lst.count(); ++i)
+  {
+    if(m_lst[i].picture == file)
+      break;
+  }
+  m_previews[file] = pixmap;
+  emit dataChanged(index(i), index(i));
+}
+
 SlideshowProperties::SlideshowProperties(QWidget *parent)
   : KDialog(parent)
 {
@@ -138,6 +157,13 @@ SlideshowProperties::SlideshowProperties(QWidget *parent)
   removeButton->setIcon(KIcon("list-remove"));
   upButton->setIcon(KIcon("arrow-up"));
   downButton->setIcon(KIcon("arrow-down"));
+
+  connect(downButton, SIGNAL(clicked()), this, SLOT(moveDown()));
+  connect(upButton, SIGNAL(clicked()), this, SLOT(moveUp()));
+  connect(addButton, SIGNAL(clicked()), this, SLOT(add()));
+  connect(removeButton, SIGNAL(clicked()), this, SLOT(remove()));
+  connect(audioButton, SIGNAL(clicked()), this, SLOT(audioClicked()));
+  connect(durationSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateInfo()));
 }
 
 SlideshowProperties::~SlideshowProperties()
@@ -168,133 +194,78 @@ void SlideshowProperties::setData(const SlideshowObject& obj)
 
 void SlideshowProperties::addSlides(const SlideList& slides)
 {
-  m_model.setList(slides);
-#warning TODO
-/*
-  Q3CheckListItem* prev =
-      static_cast<Q3CheckListItem*>(slideListView->currentItem());
-  Q3CheckListItem* first = 0;
+  QModelIndex current = slideListView->currentIndex();
   KFileItemList list;
 
-  for(SlideList::ConstIterator it = slides.begin();
-      it != slides.end(); ++it)
+  m_model.insert(current, slides);
+
+  foreach(Slide slide, slides)
   {
     KFileItem* item = new KFileItem(KFileItem::Unknown, KFileItem::Unknown,
-                                    (*it).picture);
-    prev = new Q3CheckListItem(slideListView, prev, "",
-                              Q3CheckListItem::CheckBox);
-    if(!first)
-      first = prev;
-    QFileInfo fi((*it).picture);
-    prev->setText(2, fi.fileName());
-    prev->setText(3, (*it).comment);
-    prev->setText(4, (*it).picture);
-    prev->setRenameEnabled(3, true);
-    prev->setState(((*it).chapter) ? Q3CheckListItem::On : Q3CheckListItem::Off);
+                                    slide.picture);
     list.append(item);
   }
   KIO::PreviewJob* job =  KIO::filePreview(list, 80, 60);
   connect(job, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
           this, SLOT(gotPreview(const KFileItem*, const QPixmap&)));
-  select(first);
   updateInfo();
-  */
 }
 
 void SlideshowProperties::gotPreview(const KFileItem* item,
                                      const QPixmap& pixmap)
 {
-#warning TODO
-/*
-  for(Q3ListViewItemIterator it(slideListView); *it != 0; ++it)
-  {
-    Q3CheckListItem* litem = static_cast<Q3CheckListItem*>(*it);
-    if(item->url() == litem->text(4))
-    {
-      litem->setPixmap(1, pixmap);
-      break;
-    }
-  }
-  */
+  m_model.setPreview(item->url().path(), pixmap);
 }
 
 void SlideshowProperties::moveDown()
 {
-#warning TODO
-/*
-  Q3ListViewItem* item = slideListView->currentItem();
-  if(item->itemBelow())
-    item->moveItem(item->itemBelow());
-  slideListView->ensureItemVisible(item);
-  */
+  QModelIndex item1 = slideListView->currentIndex();
+  QModelIndex item2 = m_model.index(item1.row() + 1);
+  m_model.swap(item1, item2);
+  slideListView->setCurrentIndex(item2);
+  slideListView->scrollTo(item2);
 }
 
 void SlideshowProperties::moveUp()
 {
-#warning TODO
-/*
-  Q3ListViewItem* item = slideListView->currentItem();
-  if(item->itemAbove())
-    item->itemAbove()->moveItem(item);
-  slideListView->ensureItemVisible(item);
-  */
+  QModelIndex item1 = slideListView->currentIndex();
+  QModelIndex item2 = m_model.index(item1.row() - 1);
+  m_model.swap(item1, item2);
+  slideListView->setCurrentIndex(item2);
+  slideListView->scrollTo(item2);
 }
 
 void SlideshowProperties::updateInfo()
 {
-#warning TODO
-/*
-
   QString info(i18n("Info: "));
-  int count = slideListView->childCount();
+  int count = m_model.count();
   KMF::Time duration = (double)durationSpinBox->value();
   KMF::Time audioDuration = 0.0;
 
-  for(QStringList::ConstIterator it = m_audioFiles.begin();
-      it != m_audioFiles.end(); ++it)
+  foreach(QString file, m_audioFiles)
   {
-# warning TODO: Get audio duration using tools that dvdslideshow depends
-    //QFFMpeg audio(*it);
-    //audioDuration += audio.duration();
+    KMFMediaFile audio = KMFMediaFile::mediaFile(file);
+    audioDuration += audio.duration();
   }
-  info += i18n("%1 images").arg(count);
+  info += i18n("%1 images", count);
   if(duration < KMF::Time(1.0))
-    info += i18n(", Duration %1").arg(audioDuration.toString("h:mm:ss"));
+    info += i18n(", Duration %1", audioDuration.toString("h:mm:ss"));
   else
   {
     duration = (1.0 + duration.toSeconds()) * count + 1.0;
-    info += i18n(", Duration %1").arg(duration.toString("h:mm:ss"));
+    info += i18n(", Duration %1", duration.toString("h:mm:ss"));
   }
   if(!audioDuration.isNull())
-    info += i18n(", Audio duration %1").arg(audioDuration.toString("h:mm:ss"));
+    info += i18n(", Audio duration %1", audioDuration.toString("h:mm:ss"));
 
   infoLabel->setText(info);
-  */
 }
 
 void SlideshowProperties::remove()
 {
-#warning TODO
-/*
-  Q3ListViewItemIterator it(slideListView);
-  Q3ListViewItem* first = 0;
-
-  while(*it != 0)
-  {
-    if((*it)->isSelected())
-    {
-      if(!first)
-        first = (*it)->itemAbove();
-      delete *it;
-    }
-    else
-      ++it;
-  }
-  if(!first)
-    first = slideListView->firstChild();
-  select(first);
+  QModelIndexList selected = slideListView->selectionModel()->selectedIndexes();
+  m_model.removeAt(selected);
   updateInfo();
-  */
 }
 
 void SlideshowProperties::add()
@@ -327,13 +298,11 @@ void SlideshowProperties::audioClicked()
 
 void SlideshowProperties::okClicked()
 {
-#warning TODO
-/*
-  for(Q3ListViewItemIterator it(slideListView); *it != 0; ++it)
-  {
-    Q3CheckListItem* litem = static_cast<Q3CheckListItem*>(*it);
+  SlideList slides = m_model.list();
 
-    if(litem->isOn())
+  foreach(Slide slide, slides)
+  {
+    if(slide.chapter)
     {
       accept();
       return;
@@ -341,7 +310,6 @@ void SlideshowProperties::okClicked()
   }
   KMessageBox::sorry(this,
                       i18n("You should have atleast one chapter."));
-                      */
 }
 
 #include "slideshowproperties.moc"

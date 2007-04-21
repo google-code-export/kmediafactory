@@ -10,12 +10,13 @@ function check_executable
     EMBED="--embed $KMF_WINID"
   fi
   BIN=`which $1`
+
   if [ $? -eq 0 ]; then
     echo $BIN
   else
     kdialog --title "KMediaFactory" $EMBED --sorry \
 "Cannot continue because $1 was not found from your system.\n\
-Please install package $2 (or similar)." \
+Please install package $2 (or similar)."
     exit 1
   fi
 }

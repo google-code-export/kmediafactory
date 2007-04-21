@@ -36,7 +36,7 @@ KMFMediaFile::KMFMediaFile(const QString& file)
 
 bool KMFMediaFile::probe()
 {
-  Run run(QString("info %1").arg(m_file));
+  Run run(QString("info \"%1\"").arg(m_file));
 
   if(run.exitStatus() == 0)
   {
@@ -56,8 +56,8 @@ bool KMFMediaFile::probe()
     m_audioStreams = info["AUDIO_STREAMS"].toInt();
     m_dvdCompatible = (info["DVD_COMPATIBLE"] == "1");
     m_duration = KMF::Time(info["DURATION"].toDouble());
-
     /*
+    kDebug() << "File: " << m_file << endl;
     kDebug() << "Output: " << run.output() << endl;
     kDebug() << "Aspect: " << m_aspectRatio << endl;
     kDebug() << "Frame rate: " << m_frameRate << endl;

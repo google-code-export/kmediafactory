@@ -22,6 +22,7 @@
 #define KMFLISTMODEL_H
 
 #include <kdemacros.h>
+#include <kdebug.h>
 #include <QList>
 #include <QAbstractItemView>
 
@@ -50,6 +51,7 @@ class KMFListModel : public QAbstractListModel
     void replace(int index, const T& value);
     void swap(int i1, int i2);
     void insert(int index, const T& value);
+    void insert(int index, const QList<T>& values);
     bool isValid(int index) const;
 
     void removeAt(const QModelIndex& index);
@@ -58,6 +60,7 @@ class KMFListModel : public QAbstractListModel
     void replace(const QModelIndex &index, const T& value);
     void swap(const QModelIndex &i1, const QModelIndex &i2);
     void insert(const QModelIndex &index, const T& value);
+    void insert(const QModelIndex &index, const QList<T>& values);
     bool isValid(const QModelIndex &index) const;
     QModelIndex indexOf(const T& value, int from = 0) const;
 
@@ -69,7 +72,7 @@ class KMFListModel : public QAbstractListModel
     void setList(const QList<T> &values);
     int  count() const;
 
-  private:
+  protected:
     QList<T> m_lst;
 };
 
@@ -181,6 +184,14 @@ QModelIndex KMFListModel<T>::indexOf(const T& value, int from) const
 // Index base functions
 
 template <class T>
+bool KMFListModel<T>::isValid(int index) const
+{
+  if(index >= 0 && index < m_lst.count())
+    return true;
+  return false;
+}
+
+template <class T>
 void KMFListModel<T>::removeAt(int index)
 {
   if(!isValid(index))
@@ -230,8 +241,29 @@ void KMFListModel<T>::swap(int i1, int i2)
 template <class T>
 void KMFListModel<T>::insert(int index, const T& value)
 {
+  if(!isValid(index))
+  {
+    append(value);
+    return;
+  }
   beginInsertRows(QModelIndex(), index, index);
   m_lst.insert(index, value);
+  endInsertRows();
+}
+
+template <class T>
+void KMFListModel<T>::insert(int index, const QList<T>& values)
+{
+  if(values.count() < 1)
+    return;
+  if(!isValid(index))
+  {
+    append(values);
+    return;
+  }
+  beginInsertRows(QModelIndex(), index, index + values.count() - 1);
+  foreach(T value, values)
+    m_lst.insert(index, value);
   endInsertRows();
 }
 
@@ -277,6 +309,12 @@ void KMFListModel<T>::insert(const QModelIndex &index, const T& value)
   insert(index.row(), value);
 }
 
+template <class T>
+void KMFListModel<T>::insert(const QModelIndex &index, const QList<T>& values)
+{
+  insert(index.row(), values);
+}
+
 // Others
 
 template <class T>
@@ -290,7 +328,10 @@ void KMFListModel<T>::append(const T& value)
 template <class T>
 void KMFListModel<T>::append(const QList<T>& values)
 {
-  beginInsertRows(QModelIndex(), m_lst.count(), values.count());
+  if(values.count() < 1)
+    return;
+  beginInsertRows(QModelIndex(), m_lst.count(),
+                  m_lst.count() + values.count() - 1);
   m_lst << values;
   endInsertRows();
 }
@@ -329,14 +370,6 @@ void KMFListModel<T>::setList(const QList<T> &values)
 {
   m_lst = values;
   reset();
-}
-
-template <class T>
-bool KMFListModel<T>::isValid(int index) const
-{
-  if(index >= 0 and index < m_lst.count())
-    return true;
-  return false;
 }
 
 template <class T>
