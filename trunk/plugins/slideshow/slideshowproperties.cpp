@@ -36,8 +36,7 @@
 #include <QCheckBox>
 #include <QLineEdit>
 #include <QFileInfo>
-
-#warning TODO drag & drop support
+#include <QMimeData>
 
 int SlideListModel::columnCount(const QModelIndex&) const
 {
@@ -48,9 +47,8 @@ Qt::ItemFlags SlideListModel::flags(const QModelIndex& index) const
 {
   Qt::ItemFlags flags = QAbstractItemModel::flags(index);
   if(!isValid(index))
-    return flags | Qt::ItemIsDropEnabled;
+    return flags;
 
-  flags |= Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
   if(index.column() == 0)
     flags |= Qt::ItemIsUserCheckable;
   else if(index.column() == 1)
@@ -148,9 +146,16 @@ SlideshowProperties::SlideshowProperties(QWidget *parent)
 {
   setupUi(mainWidget());
   setButtons(KDialog::Ok | KDialog::Cancel);
+  setCaption(i18n("Slideshow Properties"));
 
   slideListView->setModel(&m_model);
   slideListView->setRootIsDecorated(false);
+  slideListView->setDragEnabled(true);
+  slideListView->setAcceptDrops(true);
+  slideListView->setDragDropMode(QAbstractItemView::DragDrop);
+  slideListView->setDropIndicatorShown(true);
+  slideListView->setDragDropOverwriteMode(false);
+
   audioButton->setIcon(KIcon("arts"));
   audioButton->setIconSize(QSize(K3Icon::SizeLarge, K3Icon::SizeLarge));
   addButton->setIcon(KIcon("list-add"));

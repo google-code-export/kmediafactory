@@ -477,13 +477,6 @@ void KMediaFactory::optionsPreferences()
     KConfigDialog* dialog = new KConfigDialog(this, "KMediaFactorySettings",
                                               KMediaFactorySettings::self(),
                                               KPageDialog::List);
-#warning TODO how to do this KDE4
-/*
-    Q3SqlPropertyMap::defaultMap()->insert("KMFLanguageComboBox", "language");
-    Q3SqlPropertyMap::defaultMap()->insert("KMFLanguageListBox", "language");
-    Q3SqlPropertyMap::defaultMap()->insert("KColorCombo", "color");
-    */
-
     dialog->addPage(new KMFOptions(dialog), i18n("KMediaFactory"),
                     "kmediafactory", i18n("KMediaFactory"));
     dialog->addPage(new Tools(dialog), i18n("Tools"),

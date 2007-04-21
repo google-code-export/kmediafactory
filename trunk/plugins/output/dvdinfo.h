@@ -23,7 +23,6 @@
 
 #include "dvdinfolayout.h"
 #include "qdvdinfo.h"
-#include <q3listview.h>
 
 class DVDItem : public Q3ListViewItem
 {
