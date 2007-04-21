@@ -18,7 +18,6 @@
 
 #ifdef HAVE_LIBDVDREAD
 
-#include <klistview.h>
 #include <krun.h>
 #include <kglobal.h>
 #include <kconfig.h>
@@ -26,82 +25,87 @@
 #include <kapplication.h>
 #include <kurlrequester.h>
 #include <kiconloader.h>
-#include <kprogress.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
-#include <qpainter.h>
-#include <qslider.h>
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <q3textbrowser.h>
+#include <kprogressdialog.h>
+#include <QPainter>
+#include <QSlider>
+#include <QLabel>
+#include <QComboBox>
 
-DVDItem::DVDItem(Q3ListView* parent, const QDVD::Base* data) :
-    Q3ListViewItem(parent), m_data(data)
+int DVDModel::columnCount(const QModelIndex&) const
 {
-  initItem();
-}
+  return 2;
+};
 
-DVDItem::DVDItem(Q3ListViewItem* parent, const QDVD::Base* data) :
-    Q3ListViewItem(parent), m_data(data)
+QVariant DVDModel::data(const QModelIndex &index, int role) const
 {
-  initItem();
-}
+  if (!isValid(index))
+    return QVariant();
 
-DVDItem::DVDItem(Q3ListViewItem* parent, Q3ListViewItem* after,
-                 const QDVD::Base* data) :
-    Q3ListViewItem(parent, after), m_data(data)
+  if (role == Qt::DisplayRole)
+  {
+    switch(index.column())
+    {
+      case 0:
+        return at(index)->toString();
+      case 1:
+        return QString("%1 MB").arg(at(index)->size() / (1024 * 1024));
+    }
+  }
+  if (role == Qt::DecorationRole)
+  {
+    if(index.column() == 0)
+    {
+      QString icon;
+
+      if(at(index)->rtti() == QDVD::Base::INFO)
+        icon = "dvd_unmount";
+      else if(at(index)->rtti() == QDVD::Base::TITLE)
+        icon = "background";
+      else if(at(index)->rtti() == QDVD::Base::VIDEO)
+        icon = "video";
+      else if(at(index)->rtti() == QDVD::Base::CELL)
+        icon = "man";
+      else if(at(index)->rtti() == QDVD::Base::AUDIO)
+        icon = "sound";
+      else if(at(index)->rtti() == QDVD::Base::SUBTITLE)
+        icon = "font";
+
+      return KIcon(icon);
+    }
+  }
+  return QVariant();
+};
+
+QVariant DVDModel::headerData(int column, Qt::Orientation, int role) const
 {
-  initItem();
-}
+  if (role != Qt::DisplayRole)
+    return QVariant();
 
-void DVDItem::initItem()
-{
-  QString icon;
-
-  if(m_data->rtti() == QDVD::Base::INFO)
-    icon = "dvd_unmount";
-  else if(m_data->rtti() == QDVD::Base::TITLE)
-    icon = "background";
-  else if(m_data->rtti() == QDVD::Base::VIDEO)
-    icon = "video";
-  else if(m_data->rtti() == QDVD::Base::CELL)
-    icon = "man";
-  else if(m_data->rtti() == QDVD::Base::AUDIO)
-    icon = "sound";
-  else if(m_data->rtti() == QDVD::Base::SUBTITLE)
-    icon = "font";
-
-  setPixmap(0, KGlobal::iconLoader()->loadIcon(icon, KIcon::Small));
-}
-
-DVDItem::~DVDItem()
-{
-  //delete m_data;
-}
-
-QString DVDItem::text(int column) const
-{
   switch(column)
   {
     case 0:
-      return m_data->toString();
+      return i18n("Name");
     case 1:
-      return QString("%1 MB").arg(m_data->size() / (1024 * 1024));
-    default:
-      return "";
+      return i18n("Size");
   }
-}
+  return "";
+};
 
-DVDInfo::DVDInfo(QWidget *parent, const char *name, QString device)
- : DVDInfoLayout(parent, name)
+DVDInfo::DVDInfo(QWidget *parent, QString device)
+ : KDialog(parent)
 {
-  dvdListView->setColumnWidthMode(0, Q3ListView::Maximum);
-  dvdListView->setAllColumnsShowFocus(true);
-  dvdListView->setSorting(-1);
+  setupUi(mainWidget());
+  setButtons(KDialog::Ok | KDialog::Cancel);
+  setCaption(i18n("Slideshow Properties"));
 
-  textBrowser->setWordWrap(Q3TextEdit::NoWrap);
+  dvdListView->setModel(&m_model);
+  connect(dvdListView->selectionModel(),
+          SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
+          this, SLOT(currentChanged(const QModelIndex&, const QModelIndex&)));
 
-  url->setURL(device);
+  url->setUrl(device);
   open();
 }
 
@@ -114,19 +118,19 @@ void DVDInfo::analyze()
   KProgressDialog dlg(this);
   dlg.setMinimumDuration(0);
   connect(&m_info, SIGNAL(titles(int)),
-           dlg.progressBar(), SLOT(setTotalSteps(int)));
+          dlg.progressBar(), SLOT(setTotalSteps(int)));
   connect(&m_info, SIGNAL(title(int)),
-           dlg.progressBar(), SLOT(setValue(int)));
+          dlg.progressBar(), SLOT(setValue(int)));
   dlg.setLabel(i18n("Analyzing DVD..."));
   dlg.show();
   kapp->processEvents();
-  m_info.parseDVD(url->url());
+  m_info.parseDVD(url->url().path());
   dlg.hide();
 }
 
 bool DVDInfo::isDVD()
 {
-  QFileInfo fi(url->url());
+  QFileInfo fi(url->url().path());
   bool dvd = false;
 
   if(fi.isDir())
@@ -139,19 +143,17 @@ bool DVDInfo::isDVD()
   {
     dvd = true;
   }
-  else if(fi.extension().lower() == "iso")
+  else if(fi.suffix().toLower() == "iso")
   {
     dvd = true;
   }
   return dvd;
 }
 
-void DVDInfo::itemChanged(Q3ListViewItem* item)
+void DVDInfo::currentChanged(const QModelIndex& current, const QModelIndex&)
 {
-  if(!item)
-    return;
   QString icon;
-  const QDVD::Base* base = static_cast<const DVDItem*>(item)->data();
+  const QDVD::Base* base = m_model.at(current);
   QString text = "<table cellspacing=\"1\">\n";
   QString line = "<tr><td><b>%1:  </b></td><td>%2</td></tr>\n";
 
@@ -231,8 +233,9 @@ void DVDInfo::open()
     return;
   }
   analyze();
-  dvdListView->clear();
+  m_model.clear();
 
+  /*
   const QDVD::TitleList& titles = m_info.titles();
   DVDItem* dvd = new DVDItem(dvdListView, &m_info);
   DVDItem* title = 0;
@@ -274,14 +277,15 @@ void DVDInfo::open()
   }
   dvdListView->setSelected(dvd, true);
   itemChanged(dvd);
+  */
 }
 
-void DVDInfo::configureFileDialog(KURLRequester* url)
+void DVDInfo::configureFileDialog(KUrlRequester* Url)
 {
-  url->fileDialog()->setMode(static_cast<KFile::Mode>(KFile::File |
+  Url->fileDialog()->setMode(KFile::File |
       KFile::Directory | KFile::ExistingOnly |
-      KFile::LocalOnly));
-  url->fileDialog()->setFilter("*.mpg *.iso|" +
+      KFile::LocalOnly);
+  Url->fileDialog()->setFilter("*.mpg *.iso|" +
       i18n("DVD files and directories"));
 }
 

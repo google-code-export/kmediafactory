@@ -21,7 +21,6 @@
 #define KMFLANGUAGEWIDGETS_H
 
 #include "kmf_stddef.h"
-#include "qdvdinfo.h"
 #include <kstandarddirs.h>
 #include <QComboBox>
 #include <QListView>
@@ -31,6 +30,11 @@
 /**
 @author Petri Damsten
 */
+namespace QDVD
+{
+  class AudioTrack;
+  class Subtitle;
+};
 
 class KDE_EXPORT LanguageListModel : public QAbstractListModel
 {
@@ -44,9 +48,9 @@ class KDE_EXPORT LanguageListModel : public QAbstractListModel
                         int role = Qt::DisplayRole) const;
     void useAllLanguages();
     void setLanguages(QStringList languages);
-    void setLanguages(const QDVD::AudioList* audio)
+    void setLanguages(const QList<QDVD::AudioTrack>* audio)
       { m_audio = audio; reset(); };
-    void setLanguages(const QDVD::SubtitleList* subtitle)
+    void setLanguages(const QList<QDVD::Subtitle>* subtitle)
       { m_subtitle = subtitle; reset(); };
     QStringList* list() { return &m_languageList; };
     QString at(int i) const;
@@ -56,8 +60,8 @@ class KDE_EXPORT LanguageListModel : public QAbstractListModel
     QPixmap flag(QString languageId) const;
 
     QStringList m_languageList;
-    const QDVD::AudioList* m_audio;
-    const QDVD::SubtitleList* m_subtitle;
+    const QList<QDVD::AudioTrack>* m_audio;
+    const QList<QDVD::Subtitle>* m_subtitle;
     static QMap<QString, QString> m_dvd2l10n;
 };
 

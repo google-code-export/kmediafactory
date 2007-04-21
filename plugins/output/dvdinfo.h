@@ -21,41 +21,34 @@
 
 #ifdef HAVE_LIBDVDREAD
 
-#include "dvdinfolayout.h"
-#include "qdvdinfo.h"
+#include <kmflistmodel.h>
+#include <qdvdinfo.h>
+#include <ui_dvdinfo.h>
 
-class DVDItem : public Q3ListViewItem
+class DVDModel : public KMFListModel<QDVD::Base*>
 {
-  public:
-    DVDItem(Q3ListView* parent, const QDVD::Base* data);
-    DVDItem(Q3ListViewItem* parent, const QDVD::Base* data);
-    DVDItem(Q3ListViewItem* parent, Q3ListViewItem* after,
-            const QDVD::Base* data);
-    ~DVDItem();
-
-    virtual QString text(int column) const;
-    const QDVD::Base* data() const { return m_data; };
-    void initItem();
-
-  private:
-    const QDVD::Base* m_data;
+  virtual int columnCount(const QModelIndex&) const;
+  virtual QVariant data(const QModelIndex &index, int role) const;
+  virtual QVariant headerData(int column, Qt::Orientation, int role) const;
 };
 
-class DVDInfo : public DVDInfoLayout
+Q_DECLARE_METATYPE(QDVD::Base*);
+
+class DVDInfo : public KDialog, public Ui::DVDInfo
 {
     Q_OBJECT
   public:
-    DVDInfo(QWidget *parent = 0, const char *name = 0,
-            QString device = "/dev/dvd");
+    DVDInfo(QWidget *parent = 0, QString device = "/dev/dvd");
     ~DVDInfo();
 
   protected slots:
-    virtual void open();
-    virtual void itemChanged(Q3ListViewItem*);
-    virtual void configureFileDialog(KURLRequester*);
+    void open();
+    void currentChanged(const QModelIndex&, const QModelIndex&);
+    void configureFileDialog(KUrlRequester*);
 
   private:
     QDVD::Info m_info;
+    DVDModel m_model;
 
     void analyze();
     bool isDVD();

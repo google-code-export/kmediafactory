@@ -28,6 +28,7 @@
 #include <QList>
 
 #ifdef HAVE_LIBDVDREAD
+#undef _STDINT_H
 #define __STDC_LIMIT_MACROS
 #include <stdint.h>
 #include <dvdread/ifo_read.h>

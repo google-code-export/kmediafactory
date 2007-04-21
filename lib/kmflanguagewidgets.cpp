@@ -21,6 +21,7 @@
 #include <kdebug.h>
 #include <QPixmap>
 #include <QBitmap>
+#include "qdvdinfo.h"
 
 LanguageListModel::LanguageListModel(QObject *parent) :
     QAbstractListModel(parent), m_audio(0), m_subtitle(0)
