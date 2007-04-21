@@ -37,6 +37,16 @@ KMFMultiURLDialog::KMFMultiURLDialog(const QString& startDir,
   setButtons(KDialog::Ok | KDialog::Cancel);
   setCaption(title);
   fileListView->setModel(&m_model);
+
+  addButton->setIcon(KIcon("list-add"));
+  removeButton->setIcon(KIcon("list-remove"));
+  upButton->setIcon(KIcon("arrow-up"));
+  downButton->setIcon(KIcon("arrow-down"));
+
+  connect(downButton, SIGNAL(clicked()), this, SLOT(moveDown()));
+  connect(upButton, SIGNAL(clicked()), this, SLOT(moveUp()));
+  connect(addButton, SIGNAL(clicked()), this, SLOT(add()));
+  connect(removeButton, SIGNAL(clicked()), this, SLOT(remove()));
 }
 
 KMFMultiURLDialog::~KMFMultiURLDialog()
@@ -45,31 +55,26 @@ KMFMultiURLDialog::~KMFMultiURLDialog()
 
 void KMFMultiURLDialog::moveDown()
 {
-  QModelIndex i1 = fileListView->selectionModel()->currentIndex();
-  if(i1.row() < m_model.rowCount() - 1)
-  {
-    QModelIndex i2 = m_model.index(i1.row() + 1, 0, QModelIndex());
-    m_model.swap(i1, i2);
-    fileListView->scrollTo(i2);
-  }
+  QModelIndex item1 = fileListView->currentIndex();
+  QModelIndex item2 = m_model.index(item1.row() + 1);
+  m_model.swap(item1, item2);
+  fileListView->setCurrentIndex(item2);
+  fileListView->scrollTo(item2);
 }
 
 void KMFMultiURLDialog::moveUp()
 {
-  QModelIndex i1 = fileListView->selectionModel()->currentIndex();
-  if(i1.row() > 0)
-  {
-    QModelIndex i2 = m_model.index(i1.row() - 1, 0, QModelIndex());
-    m_model.swap(i1, i2);
-    fileListView->scrollTo(i2);
-  }
+  QModelIndex item1 = fileListView->currentIndex();
+  QModelIndex item2 = m_model.index(item1.row() - 1);
+  m_model.swap(item1, item2);
+  fileListView->setCurrentIndex(item2);
+  fileListView->scrollTo(item2);
 }
 
 void KMFMultiURLDialog::remove()
 {
-  QModelIndexList list = fileListView->selectionModel()->selectedRows();
-
-  m_model.removeAt(list);
+  QModelIndexList selected = fileListView->selectionModel()->selectedIndexes();
+  m_model.removeAt(selected);
   fileListView->setCurrentIndex(m_model.index(0));
 }
 
@@ -80,7 +85,7 @@ void KMFMultiURLDialog::add()
 
   if(files.count() > 0)
   {
-    m_model.append(files);
+    addFiles(files);
   }
 }
 

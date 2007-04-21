@@ -9,7 +9,7 @@ SCRIPTS=`dirname $0`
 
 MPLAYER=`check_executable "mplayer" "mplayer"`
 
-OUTPUT=`$MPLAYER -v -vo null -ao null -frames 0 -identify $1 2>&1`
+OUTPUT=`$MPLAYER -v -vo null -ao null -frames 0 -identify "$1" 2>&1`
 
 echo "DURATION=$(echo "$OUTPUT" | grep "ID_LENGTH" | sed "s/ID_LENGTH=//g")"
 echo "FRAME_RATE=$(echo "$OUTPUT" | grep "ID_VIDEO_FPS" | sed "s/ID_VIDEO_FPS=//g")"
