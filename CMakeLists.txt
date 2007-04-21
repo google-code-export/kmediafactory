@@ -8,6 +8,9 @@ include(MacroLibrary)
 
 find_package(Xine REQUIRED)
 find_package(Fontconfig REQUIRED)
+find_package(LibDvdread)
+
+macro_bool_to_01(LIBDVDREAD_FOUND HAVE_LIBDVDREAD)
 
 #find_package(libdv)
 #find_package(dvdread)
@@ -52,3 +55,5 @@ add_subdirectory(src)
 add_subdirectory(plugins)
 add_subdirectory(mimetypes)
 add_subdirectory(icons)
+add_subdirectory(scripts)
+add_subdirectory(media)

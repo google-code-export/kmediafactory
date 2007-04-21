@@ -52,7 +52,7 @@ void KMFFrame::paintWidget(QImage& layer, bool shdw)
   QColor rgb = (shdw && color().alpha() != 0)? shadow().color() : color();
   QColor rgbFill = (shdw && m_fillColor.alpha() != 0) ?
                     shadow().color() : m_fillColor;
-  qreal adjust = (qreal)m_lineWidth / 2.0;
+  int adjust = m_lineWidth / 2;
   //kDebug() << k_funcinfo << rgb << ":" << shdw << endl;
   p.setPen(QPen(rgb, m_lineWidth));
   p.setBrush(QBrush(rgbFill));

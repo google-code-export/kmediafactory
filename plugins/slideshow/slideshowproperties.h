@@ -34,7 +34,6 @@ class SlideshowObject;
 
 class SlideListModel : public KMFListModel<Slide>
 {
-  public:
     virtual int columnCount(const QModelIndex&) const;
     virtual QVariant data(const QModelIndex &index, int role) const;
     virtual bool setData(const QModelIndex &index, const QVariant &value,
@@ -42,6 +41,7 @@ class SlideListModel : public KMFListModel<Slide>
     virtual QVariant headerData(int column, Qt::Orientation, int role) const;
     virtual Qt::ItemFlags flags(const QModelIndex& index) const;
 
+  public:
     void setPreview(const QString& file, const QPixmap& pixmap);
 
   private:

@@ -26,9 +26,10 @@
 #include <QMap>
 #include <QObject>
 #include <QList>
-#include <stdint.h>
 
 #ifdef HAVE_LIBDVDREAD
+#define __STDC_LIMIT_MACROS
+#include <stdint.h>
 #include <dvdread/ifo_read.h>
 #endif
 
@@ -152,8 +153,8 @@ namespace QDVD
       QString file() const { return m_file; };
       void setFont(QFont font) { m_font = font; };
       QFont font() const { return m_font; };
-      void setAlignment(QFlags<Qt::AlignmentFlag> align) { m_align = align; };
-      QFlags<Qt::AlignmentFlag> alignment() const { return m_align; };
+      void setAlignment(Qt::Alignment align) { m_align = align; };
+      Qt::Alignment alignment() const { return m_align; };
       QString verticalAlign() const;
       QString horizontalAlign() const;
 
@@ -167,7 +168,7 @@ namespace QDVD
       Type    m_type;
       QString m_file;
       QFont   m_font;
-      QFlags<Qt::AlignmentFlag> m_align;
+      Qt::Alignment m_align;
   };
 
   class KDE_EXPORT AudioTrack : public Track
@@ -350,7 +351,7 @@ namespace QDVD
 #ifdef HAVE_LIBDVDREAD
     public:
       Info(const QString& device,
-           QObject* parent = 0, const char* name = 0);
+           QObject* parent = 0);
 
       bool parseDVD(const QString& device = "/dev/dvd");
 

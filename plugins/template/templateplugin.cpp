@@ -38,7 +38,6 @@
 #include <QRegExp>
 #include <QPixmap>
 #include <QImage>
-#include <Q3SqlPropertyMap>
 
 static const char description[] =
   I18N_NOOP("Template plugin for KMediaFactory.");
