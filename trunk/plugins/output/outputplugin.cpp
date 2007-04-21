@@ -66,7 +66,7 @@ OutputPlugin::OutputPlugin(QObject *parent, const QStringList&) :
   m_kaffeine = KStandardDirs::findExe("kaffeine");
 
 #ifdef HAVE_LIBDVDREAD
-  dvdInfo =new KAction(KIcon("viewmag"), i18n("DVD Info"), parent());
+  dvdInfo =new KAction(KIcon("viewmag"), i18n("DVD Info"), parent);
   dvdInfo->setShortcut(Qt::CTRL + Qt::Key_I);
   actionCollection()->addAction("dvd_info", dvdInfo);
   connect(dvdInfo, SIGNAL(triggered()), SLOT(slotDVDInfo()));
@@ -159,7 +159,7 @@ void OutputPlugin::slotDVDInfo()
 {
 #ifdef HAVE_LIBDVDREAD
   QString projectDir = projectInterface()->projectDir();
-  DVDInfo dlg(kapp->activeWindow(), "", projectDir + "/DVD/");
+  DVDInfo dlg(kapp->activeWindow(), projectDir + "/DVD/");
 
   dlg.exec();
 #endif
