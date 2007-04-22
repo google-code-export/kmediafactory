@@ -1,12 +1,12 @@
 <ui version="4.0" >
  <class>DVDInfo</class>
- <widget class="QWidget" name="DVDInfoLayout" >
+ <widget class="QWidget" name="DVDInfo" >
   <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>482</width>
-    <height>368</height>
+    <width>602</width>
+    <height>445</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -34,6 +34,12 @@
       <enum>Qt::Vertical</enum>
      </property>
      <widget class="QTreeView" name="dvdListView" >
+      <property name="minimumSize" >
+       <size>
+        <width>350</width>
+        <height>200</height>
+       </size>
+      </property>
       <property name="fullWidth" stdset="0" >
        <bool>true</bool>
       </property>
@@ -47,6 +53,12 @@
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+      <property name="minimumSize" >
+       <size>
+        <width>350</width>
+        <height>200</height>
+       </size>
       </property>
      </widget>
     </widget>
