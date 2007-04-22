@@ -43,7 +43,7 @@ class DVDInfo : public KDialog, public Ui::DVDInfo
 
     void analyze();
     bool isDVD();
-    QList<QStandardItem*> list(const QDVD::Base& item);
+    QList<QStandardItem*> list(const QDVD::Base* item);
 };
 
 #endif // HAVE_LIBDVDREAD

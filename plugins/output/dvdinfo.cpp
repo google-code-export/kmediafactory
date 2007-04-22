@@ -33,61 +33,20 @@
 #include <QLabel>
 #include <QComboBox>
 
-/*
-QVariant DVDModel::data(const QModelIndex &index, int role) const
-{
-  if (!isValid(index))
-    return QVariant();
-
-  if (role == Qt::DisplayRole)
-  {
-    switch(index.column())
-    {
-      case 0:
-        return at(index)->toString();
-      case 1:
-        return QString("%1 MB").arg(at(index)->size() / (1024 * 1024));
-    }
-  }
-  if (role == Qt::DecorationRole)
-  {
-    if(index.column() == 0)
-    {
-      QString icon;
-
-      if(at(index)->rtti() == QDVD::Base::INFO)
-        icon = "dvd_unmount";
-      else if(at(index)->rtti() == QDVD::Base::TITLE)
-        icon = "background";
-      else if(at(index)->rtti() == QDVD::Base::VIDEO)
-        icon = "video";
-      else if(at(index)->rtti() == QDVD::Base::CELL)
-        icon = "man";
-      else if(at(index)->rtti() == QDVD::Base::AUDIO)
-        icon = "sound";
-      else if(at(index)->rtti() == QDVD::Base::SUBTITLE)
-        icon = "font";
-
-      return KIcon(icon);
-    }
-  }
-  return QVariant();
-};
-
-*/
-
 DVDInfo::DVDInfo(QWidget *parent, QString device)
  : KDialog(parent), m_info(), m_model(&m_info)
 {
   setupUi(mainWidget());
-  setButtons(KDialog::Ok | KDialog::Cancel);
-  setCaption(i18n("Slideshow Properties"));
+  setButtons(KDialog::Close);
+  setCaption(i18n("DVD Info"));
 
   dvdListView->setModel(&m_model);
   connect(dvdListView->selectionModel(),
           SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
           this, SLOT(currentChanged(const QModelIndex&, const QModelIndex&)));
-
+  connect(url, SIGNAL(openFileDialog(KUrlRequester*)),
+          this, SLOT(configureFileDialog(KUrlRequester*)));
+  connect(url, SIGNAL(returnPressed()), this, SLOT(open()));
   url->setUrl(device);
   open();
 }
@@ -135,13 +94,14 @@ bool DVDInfo::isDVD()
 
 void DVDInfo::currentChanged(const QModelIndex& current, const QModelIndex&)
 {
-  /*
+  if(!current.isValid())
+    return;
+  QStandardItem* i = m_model.itemFromIndex(current);
+  const QDVD::Base* base = i->data().value<const QDVD::Base*>();
   QString icon;
-  const QDVD::Base* base = m_model.at(current);
-  */
   QString text = "<table cellspacing=\"1\">\n";
   QString line = "<tr><td><b>%1:  </b></td><td>%2</td></tr>\n";
-  /*
+
   if(base->rtti() == QDVD::Base::INFO)
   {
     const QDVD::Info* info = static_cast<const QDVD::Info*>(base);
@@ -206,20 +166,36 @@ void DVDInfo::currentChanged(const QModelIndex& current, const QModelIndex&)
     text += line.arg(i18n("Language")).arg(sub->languageString());
     text += line.arg(i18n("Type")).arg(sub->typeString());
   }
-  */
   text += "</table>";
   textBrowser->setText(text);
 }
 
-QList<QStandardItem*> DVDInfo::list(const QDVD::Base& item)
+QList<QStandardItem*> DVDInfo::list(const QDVD::Base* item)
 {
   QList<QStandardItem*> list;
 
-  QStandardItem* i1 = new QStandardItem(item.toString());
-  QStandardItem* i2 = new QStandardItem(QString("%1 MB").arg(item.size() /
+  QStandardItem* i1 = new QStandardItem(item->toString());
+  QStandardItem* i2 = new QStandardItem(QString("%1 MB").arg(item->size() /
                                         (1024 * 1024)));
   i1->setEditable(false);
   i2->setEditable(false);
+
+  QString icon;
+  if(item->rtti() == QDVD::Base::INFO)
+    icon = "dvd-unmount";
+  else if(item->rtti() == QDVD::Base::TITLE)
+    icon = "video-television";
+  else if(item->rtti() == QDVD::Base::VIDEO)
+    icon = "video";
+  else if(item->rtti() == QDVD::Base::CELL)
+    icon = "man";
+  else if(item->rtti() == QDVD::Base::AUDIO)
+    icon = "sound";
+  else if(item->rtti() == QDVD::Base::SUBTITLE)
+    icon = "font";
+  i1->setIcon(KIcon(icon));
+  i2->setIcon(KIcon());
+  i1->setData(QVariant::fromValue(item));
   list << i1 << i2;
   return list;
 }
@@ -238,34 +214,35 @@ void DVDInfo::open()
   m_model.setHeaderData(0, Qt::Horizontal, i18n("Name"));
   m_model.setHeaderData(1, Qt::Horizontal, i18n("Size"));
 
-  QList<QStandardItem*> dvd = list(m_info);
-  //dvd->setOpen(true);
+  QList<QStandardItem*> dvd = list(&m_info);
+  m_model.invisibleRootItem()->appendRow(dvd);
+  dvdListView->setExpanded(dvd[0]->index(), true);
 
-  foreach(QDVD::Title title, m_info.titles())
+  for(int i = 0; i < m_info.titles().count(); ++i)
   {
+    const QDVD::Title* title = &(m_info.titles().at(i));
     QList<QStandardItem*> titleItem = list(title);
     dvd[0]->appendRow(titleItem);
-    //title->setOpen(true);
+    dvdListView->setExpanded(titleItem[0]->index(), true);
 
-    QList<QStandardItem*> video = list(title.videoTrack());
+    QList<QStandardItem*> video = list(&(title->videoTrack()));
     titleItem[0]->appendRow(video);
-    foreach(QDVD::Cell cell, title.cells())
+    for(int j = 0; j < title->cells().count(); ++j)
     {
-      video[0]->appendRow(list(cell));
+      video[0]->appendRow(list(&(title->cells().at(j))));
     }
 
-    foreach(QDVD::AudioTrack audio, title.audioTracks())
+    for(int j = 0; j < title->audioTracks().count(); ++j)
     {
-      titleItem[0]->appendRow(list(audio));
+      titleItem[0]->appendRow(list(&(title->audioTracks().at(j))));
     }
 
-    foreach(QDVD::Subtitle sub, title.subtitles())
+    for(int j = 0; j < title->subtitles().count(); ++j)
     {
-      titleItem[0]->appendRow(list(sub));
+      titleItem[0]->appendRow(list(&(title->subtitles().at(j))));
     }
   }
-  m_model.invisibleRootItem()->appendRow(dvd);
-  //dvdListView->resizeColumnsToContents(1);
+  dvdListView->resizeColumnToContents(0);
   //dvdListView->setSelected(dvd, true);
 }
 
