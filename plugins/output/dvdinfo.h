@@ -21,18 +21,9 @@
 
 #ifdef HAVE_LIBDVDREAD
 
-#include <kmflistmodel.h>
 #include <qdvdinfo.h>
 #include <ui_dvdinfo.h>
-
-class DVDModel : public KMFListModel<QDVD::Base*>
-{
-  virtual int columnCount(const QModelIndex&) const;
-  virtual QVariant data(const QModelIndex &index, int role) const;
-  virtual QVariant headerData(int column, Qt::Orientation, int role) const;
-};
-
-Q_DECLARE_METATYPE(QDVD::Base*);
+#include <QStandardItemModel>
 
 class DVDInfo : public KDialog, public Ui::DVDInfo
 {
@@ -48,10 +39,11 @@ class DVDInfo : public KDialog, public Ui::DVDInfo
 
   private:
     QDVD::Info m_info;
-    DVDModel m_model;
+    QStandardItemModel m_model;
 
     void analyze();
     bool isDVD();
+    QList<QStandardItem*> list(const QDVD::Base& item);
 };
 
 #endif // HAVE_LIBDVDREAD

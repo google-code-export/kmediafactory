@@ -33,11 +33,7 @@
 #include <QLabel>
 #include <QComboBox>
 
-int DVDModel::columnCount(const QModelIndex&) const
-{
-  return 2;
-};
-
+/*
 QVariant DVDModel::data(const QModelIndex &index, int role) const
 {
   if (!isValid(index))
@@ -78,23 +74,10 @@ QVariant DVDModel::data(const QModelIndex &index, int role) const
   return QVariant();
 };
 
-QVariant DVDModel::headerData(int column, Qt::Orientation, int role) const
-{
-  if (role != Qt::DisplayRole)
-    return QVariant();
-
-  switch(column)
-  {
-    case 0:
-      return i18n("Name");
-    case 1:
-      return i18n("Size");
-  }
-  return "";
-};
+*/
 
 DVDInfo::DVDInfo(QWidget *parent, QString device)
- : KDialog(parent)
+ : KDialog(parent), m_info(), m_model(&m_info)
 {
   setupUi(mainWidget());
   setButtons(KDialog::Ok | KDialog::Cancel);
@@ -118,7 +101,7 @@ void DVDInfo::analyze()
   KProgressDialog dlg(this);
   dlg.setMinimumDuration(0);
   connect(&m_info, SIGNAL(titles(int)),
-          dlg.progressBar(), SLOT(setTotalSteps(int)));
+          dlg.progressBar(), SLOT(setMaximum(int)));
   connect(&m_info, SIGNAL(title(int)),
           dlg.progressBar(), SLOT(setValue(int)));
   dlg.setLabel(i18n("Analyzing DVD..."));
@@ -152,11 +135,13 @@ bool DVDInfo::isDVD()
 
 void DVDInfo::currentChanged(const QModelIndex& current, const QModelIndex&)
 {
+  /*
   QString icon;
   const QDVD::Base* base = m_model.at(current);
+  */
   QString text = "<table cellspacing=\"1\">\n";
   QString line = "<tr><td><b>%1:  </b></td><td>%2</td></tr>\n";
-
+  /*
   if(base->rtti() == QDVD::Base::INFO)
   {
     const QDVD::Info* info = static_cast<const QDVD::Info*>(base);
@@ -221,8 +206,22 @@ void DVDInfo::currentChanged(const QModelIndex& current, const QModelIndex&)
     text += line.arg(i18n("Language")).arg(sub->languageString());
     text += line.arg(i18n("Type")).arg(sub->typeString());
   }
+  */
   text += "</table>";
   textBrowser->setText(text);
+}
+
+QList<QStandardItem*> DVDInfo::list(const QDVD::Base& item)
+{
+  QList<QStandardItem*> list;
+
+  QStandardItem* i1 = new QStandardItem(item.toString());
+  QStandardItem* i2 = new QStandardItem(QString("%1 MB").arg(item.size() /
+                                        (1024 * 1024)));
+  i1->setEditable(false);
+  i2->setEditable(false);
+  list << i1 << i2;
+  return list;
 }
 
 void DVDInfo::open()
@@ -233,51 +232,41 @@ void DVDInfo::open()
     return;
   }
   analyze();
+
   m_model.clear();
+  m_model.setColumnCount(2);
+  m_model.setHeaderData(0, Qt::Horizontal, i18n("Name"));
+  m_model.setHeaderData(1, Qt::Horizontal, i18n("Size"));
 
-  /*
-  const QDVD::TitleList& titles = m_info.titles();
-  DVDItem* dvd = new DVDItem(dvdListView, &m_info);
-  DVDItem* title = 0;
-  DVDItem* track = 0;
-  DVDItem* video = 0;
-  dvd->setOpen(true);
+  QList<QStandardItem*> dvd = list(m_info);
+  //dvd->setOpen(true);
 
-  for(QDVD::TitleList::ConstIterator it = titles.begin();
-      it != titles.end(); ++it)
+  foreach(QDVD::Title title, m_info.titles())
   {
-    title = new DVDItem(dvd, title, &(*it));
-    title->setOpen(true);
+    QList<QStandardItem*> titleItem = list(title);
+    dvd[0]->appendRow(titleItem);
+    //title->setOpen(true);
 
-    const QDVD::AudioList& audios = (*it).audioTracks();
-    const QDVD::SubtitleList& subs = (*it).subtitles();
-    const QDVD::CellList& cells = (*it).cells();
-
-    video = new DVDItem(title, &(*it).videoTrack());
-
-    track = 0;
-    for(QDVD::CellList::ConstIterator jt = cells.begin();
-        jt != cells.end(); ++jt)
+    QList<QStandardItem*> video = list(title.videoTrack());
+    titleItem[0]->appendRow(video);
+    foreach(QDVD::Cell cell, title.cells())
     {
-      track = new DVDItem(video, track, &(*jt));
+      video[0]->appendRow(list(cell));
     }
 
-    track = video;
-    for(QDVD::AudioList::ConstIterator jt = audios.begin();
-        jt != audios.end(); ++jt)
+    foreach(QDVD::AudioTrack audio, title.audioTracks())
     {
-      track = new DVDItem(title, track, &(*jt));
+      titleItem[0]->appendRow(list(audio));
     }
 
-    for(QDVD::SubtitleList::ConstIterator jt = subs.begin();
-        jt != subs.end(); ++jt)
+    foreach(QDVD::Subtitle sub, title.subtitles())
     {
-      track = new DVDItem(title, track, &(*jt));
+      titleItem[0]->appendRow(list(sub));
     }
   }
-  dvdListView->setSelected(dvd, true);
-  itemChanged(dvd);
-  */
+  m_model.invisibleRootItem()->appendRow(dvd);
+  //dvdListView->resizeColumnsToContents(1);
+  //dvdListView->setSelected(dvd, true);
 }
 
 void DVDInfo::configureFileDialog(KUrlRequester* Url)

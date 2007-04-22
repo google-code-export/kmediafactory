@@ -331,7 +331,7 @@ uint64_t Cell::size() const
 
 QString Cell::toString() const
 {
-  return i18n("Cell: %1").arg(start().toString());
+  return i18n("Cell: %1", start().toString());
 }
 
 Subtitle::Subtitle(QString langCode, QString file) :
@@ -399,7 +399,7 @@ QString Subtitle::toString() const
 
   if(type() >= Large)
     s = " (" + typeString() +")";
-  return i18n("Subtitle: %1%4").arg(languageString()).arg(s);
+  return i18n("Subtitle: %1%4", languageString(), s);
 }
 
 QString Subtitle::verticalAlign() const
@@ -478,8 +478,7 @@ QString AudioTrack::toString() const
 
   if(type() >= Impaired)
     s = " (" + typeString() +")";
-  return i18n("Audio: %1, %2 channels%3")
-      .arg(languageString()).arg(channels()).arg(s);
+  return i18n("Audio: %1, %2 channels%3", languageString(), channels(), s);
 }
 
 #ifdef HAVE_LIBDVDREAD
@@ -504,9 +503,8 @@ VideoTrack::VideoTrack(pgc_t *pgc, video_attr_t *video_attr)
 
 QString VideoTrack::toString() const
 {
-  return i18n("Video: %1, %2x%3, %4")
-      .arg(formatString()).arg(width())
-      .arg(height()).arg(aspectRatioString());
+  return i18n("Video: %1, %2x%3, %4", formatString(), width(), height(),
+              aspectRatioString());
 }
 
 #ifdef HAVE_LIBDVDREAD
@@ -694,7 +692,7 @@ int Title::dvdTime2ms(dvd_time_t *dt)
 
 QString Title::toString() const
 {
-  return i18n("Title: %1, %2").arg(m_titleNbr).arg(length().toString());
+  return i18n("Title: %1, %2", m_titleNbr, length().toString());
 }
 
 Title::StreamType Title::packetType(unsigned char* buffer)
