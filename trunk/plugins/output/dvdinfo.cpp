@@ -46,7 +46,7 @@ DVDInfo::DVDInfo(QWidget *parent, QString device)
           this, SLOT(currentChanged(const QModelIndex&, const QModelIndex&)));
   connect(url, SIGNAL(openFileDialog(KUrlRequester*)),
           this, SLOT(configureFileDialog(KUrlRequester*)));
-  connect(url, SIGNAL(returnPressed()), this, SLOT(open()));
+  connect(url, SIGNAL(urlSelected(const KUrl &)), this, SLOT(open()));
   url->setUrl(device);
   open();
 }
