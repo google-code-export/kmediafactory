@@ -70,5 +70,3 @@ void KMFProgressItemDelegate::paint(QPainter* painter,
   }
   painter->restore();
 }
-
-#include "kmfprogresslistview.moc"
