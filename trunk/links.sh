@@ -33,6 +33,7 @@ FILES=(
 "share/apps/kmediafactory/scripts/tools"
 "share/apps/kmediafactory/scripts/kmf_converter.oxt"
 "share/apps/kmediafactory/scripts/oo2pdf"
+"share/apps/kmediafactory/scripts/pdf2png"
 "share/apps/kmediafactory/media/silence.mp2"
 "share/apps/kmediafactory_template/kmediafactory_templateui.rc"
 "share/apps/kmediafactory_template/simple.kmft"

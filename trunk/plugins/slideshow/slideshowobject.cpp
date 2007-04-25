@@ -73,10 +73,9 @@ SlideList SlideshowObject::slideList(QStringList list) const
 {
   SlideList result;
   KProgressDialog dlg(kapp->activeWindow());
-  int fileProgress = 10000 / list.count();
 
-  dlg.progressBar()->setRange(0, 10000);
-  dlg.setAutoClose(true);
+  dlg.progressBar()->setMinimum(0);
+  dlg.progressBar()->setMaximum(0);
   dlg.show();
 
   foreach(QString file, list)
@@ -99,7 +98,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
 
     if(type)
       mime = type->name();
-    //kdDebug() << k_funcinfo << mime << endl;
+    kDebug() << k_funcinfo << mime << endl;
     if(mime.startsWith("application/vnd.oasis.opendocument") ||
        mime.startsWith("application/vnd.sun.xml") ||
        mime == "application/msexcel" ||
@@ -111,12 +110,13 @@ SlideList SlideshowObject::slideList(QStringList list) const
       output = dir.filePath(output);
       Run run(QString("oo2pdf \"%1\" \"%2\"").arg(file).arg(output));
 
-      uiInterface()->logger()->message(run.output());
+      kDebug() << k_funcinfo << file << "->" << output << endl;
       if(run.exitCode() == 0)
       {
         mime = "application/pdf";
         minfo = KFileMetaInfo(file, QString::null,
                               KFileMetaInfo::ContentInfo);
+        file = output;
       }
     }
     if(mime == "application/pdf")
@@ -126,9 +126,8 @@ SlideList SlideshowObject::slideList(QStringList list) const
       output = dir.filePath(output);
       Run run(QString("pdf2png \"%1\" \"%2\"").arg(file).arg(output));
 
-      uiInterface()->logger()->message(run.output());
-
-      for(int i=0; true; ++i)
+      kDebug() << k_funcinfo << file << "->" << output << endl;
+      for(int i = 1; true; ++i)
       {
         Slide slide;
         QString fileNameTemplate = m_id + "_%1.png";
@@ -137,6 +136,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
 
         if(fi.exists())
         {
+          kDebug() << k_funcinfo << "Slide: " << i << endl;
           slide.comment = i18n("Page %1", i);
           slide.picture = file;
           result.append(slide);
@@ -164,12 +164,9 @@ SlideList SlideshowObject::slideList(QStringList list) const
       slide.comment = slide.comment.trimmed();
       slide.picture = file;
       result.append(slide);
-      dlg.progressBar()->setValue(dlg.progressBar()->value() + fileProgress);
       kapp->processEvents();
     }
   }
-  dlg.progressBar()->setRange(0, 10000);
-
   int chapter = ((result.count() - 1) / 12) + 1;
   int i = 0;
   for(SlideList::Iterator it = result.begin();
@@ -177,6 +174,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
   {
     (*it).chapter = (((i++) % chapter) == 0);
   }
+  dlg.close();
   return result;
 }
 
