@@ -1,8 +1,8 @@
 #!/bin/bash
-# Get video info for KMediafactory
+# Convert OOo doc to pdf for KMediafactory
 # Copyright (C) 2006 by Petri Damsten - GPL-2
 # Usage:
-# info /media/movies/movie.mpg
+# oo2pdf test.odt test.pdf
 
 SCRIPTS=`dirname $0`
 . $SCRIPTS/tools

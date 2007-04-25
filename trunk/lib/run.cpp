@@ -24,6 +24,8 @@
 #include <QStringList>
 #include <QFileInfo>
 #include <QWidget>
+#include <sys/types.h>
+#include <unistd.h>
 
 Run::Run(QString command, QString dir)
 {
@@ -38,51 +40,82 @@ Run::~Run()
 }
 void Run::setCommand(QString command)
 {
-  m_command = command;
+  bool in = false;
+  QChar previous = ' ';
+  QString arg;
+
+  m_program = "";
+  m_arguments.clear();
+  for(int i=0; i < command.length(); ++i)
+  {
+    if(command[i] == '\"')
+    {
+      if(i == 0 || command[i-1] != '\\' )
+      {
+        in = (in)?false:true;
+        continue;
+      }
+      else
+      {
+        arg[arg.length() - 1] = command[i];
+        continue;
+      }
+    }
+    if(command[i] == ' ' && !in)
+    {
+      kDebug() << k_funcinfo << "<" << arg << ">" << endl;
+      if(m_program.isEmpty())
+        m_program = arg;
+      else
+        m_arguments.append(arg);
+      arg = "";
+      continue;
+    }
+    arg += command[i];
+  }
 }
 
 bool Run::run()
 {
-  QString c = m_command.split(" ")[0];
-  if(c[0] != '/')
+  setProcessChannelMode(QProcess::MergedChannels);
+
+  if(m_program[0] != '/')
   {
     QFileInfo file;
-    file = KStandardDirs::locate("data", "kmediafactory/scripts/" + c);
+    file = KStandardDirs::locate("data", "kmediafactory/scripts/" + m_program);
     if(file.exists())
-    {
-      m_command = m_command.replace(0, c.length(), file.filePath());
-    }
+      m_program = file.filePath();
   }
-  setUseShell(true);
+  //setUseShell(true);
   //kDebug() << "Running: " << m_command << endl;
-  *this << m_command;
-  connect(this, SIGNAL(receivedStdout(K3Process*, char*, int)),
-          this, SLOT(stdout(K3Process*, char*, int)));
-  connect(this, SIGNAL(receivedStderr(K3Process*, char*, int)),
-          this, SLOT(stdout(K3Process*, char*, int)));
-  connect(this, SIGNAL(processExited(K3Process*)),
-          this, SLOT(exit(K3Process*)));
-  setEnvironment("KMF_DBUS",
-      QString("org.kde.kmediafactory_%1/KMediaFactory").arg(getpid()));
-  setEnvironment("KMF_WINID",
-      QString("%1").arg(QApplication::topLevelWidgets()[0]->winId()));
-
+  connect(this, SIGNAL(readyRead()),
+          this, SLOT(stdout()));
+  connect(this, SIGNAL(finished(int, QProcess::ExitStatus)),
+          this, SLOT(exit(int, QProcess::ExitStatus)));
+  QStringList env = QProcess::systemEnvironment();
+  env << QString("KMF_DBUS=org.kde.kmediafactory_%1/KMediaFactory")
+      .arg(getpid());
+  env << QString("KMF_WINID=%1")
+      .arg(QApplication::topLevelWidgets()[0]->winId());
+  setEnvironment(env);
   m_outputIndex = 0;
-  start(K3Process::Block, K3Process::AllOutput);
+  start(m_program, m_arguments);
+  waitForFinished(-1);
   //kDebug() << "Output: " << m_output << endl;
-  if(!normalExit() || exitStatus() != 0)
+  if(exitStatus() == QProcess::NormalExit || exitCode() == 0)
   {
-    return false;
+    return true;
   }
-  return true;
+  return false;
 }
 
-void Run::stdout(K3Process*, char* buffer, int buflen)
+void Run::stdout()
 {
   int found;
   QRegExp re("[\n\r]");
+  QByteArray ba = readAllStandardOutput();
 
-  m_output += QString::fromLocal8Bit(buffer, buflen);
+  m_output += QString::fromLocal8Bit(ba.data(), ba.count());
   while((found = m_output.indexOf(re, m_outputIndex)) != -1)
   {
     emit line(m_output.mid(m_outputIndex, found - m_outputIndex));
@@ -90,7 +123,7 @@ void Run::stdout(K3Process*, char* buffer, int buflen)
   }
 }
 
-void Run::exit(K3Process*)
+void Run::exit(int, QProcess::ExitStatus)
 {
   if(m_outputIndex < m_output.length())
     emit line(m_output.mid(m_outputIndex));
