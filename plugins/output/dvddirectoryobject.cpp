@@ -248,10 +248,10 @@ bool DvdDirectoryObject::make(QString type)
 
   m_run.setCommand("dvdauthor -x dvdauthor.xml");
   m_run.setWorkingDirectory(projectInterface()->projectDir());
-  uiInterface()->logger()->connectProcess(&m_run);
   connect(&m_run, SIGNAL(line(const QString&)),
           this, SLOT(output(const QString&)));
   m_run.run();
+  uiInterface()->logger()->message(m_run.output());
   if(!m_error)
   {
     uiInterface()->message(KMF::OK, i18n("DVD Directory ready"));

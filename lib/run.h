@@ -20,14 +20,15 @@
 #ifndef RUN_H
 #define RUN_H
 
-#include <qobject.h>
-#include <qstring.h>
-#include <k3process.h>
+#include <kdemacros.h>
+#include <QObject>
+#include <QString>
+#include <QProcess>
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
-class KDE_EXPORT Run : public K3Process
+class KDE_EXPORT Run : public QProcess
 {
     Q_OBJECT
   public:
@@ -42,11 +43,12 @@ class KDE_EXPORT Run : public K3Process
     void line(const QString& line);
 
   protected slots:
-    virtual void stdout(K3Process *proc, char *buffer, int buflen);
-    void exit(K3Process *proc);
+    virtual void stdout();
+    void exit(int exitCode, QProcess::ExitStatus exitStatus);
 
   private:
-    QString m_command;
+    QString m_program;
+    QStringList m_arguments;
     QString m_output;
     int m_outputIndex;
 };

@@ -72,8 +72,8 @@ bool KMFMediaFile::probe()
 
 bool KMFMediaFile::frame(QTime pos, QString output) const
 {
-  Run run(QString("frame %1 %2 %3").arg(m_file).arg(KMF::Time(pos).toString())
-      .arg(output));
+  Run run(QString("frame \"%1\" %2 \"%3\"").arg(m_file)
+      .arg(KMF::Time(pos).toString()).arg(output));
   return (run.exitStatus() == 0);
 }
 

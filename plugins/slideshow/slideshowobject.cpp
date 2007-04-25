@@ -21,6 +21,7 @@
 #include "slideshowplugin.h"
 #include "slideshowpluginsettings.h"
 #include "slideshowproperties.h"
+#include "run.h"
 #include <qdvdinfo.h>
 #include <kmfmediafile.h>
 #include <kio/job.h>
@@ -68,54 +69,6 @@ SlideshowObject::~SlideshowObject()
 {
 }
 
-bool SlideshowObject::oooConvert(QString* file) const
-{
-  KStandardDirs dirs;
-  QStringList list = dirs.resourceDirs("lib");
-  QString bin;
-  bool result = false;
-  QFileInfo fi(*file);
-  QString output = QString("%1.pdf").arg(m_id);
-  QDir dir(projectInterface()->projectDir("media"));
-  QStringList oodirs;
-
-  list << "/usr/lib" << "/opt";
-  list += dirs.resourceDirs("lib");
-  oodirs << "openoffice" << "openoffice2" << "openoffice.org2.0" <<
-            "openoffice.org-2.0" << "ooo-1.9" << "ooo-2.0";
-
-  output = dir.filePath(output);
-
-  list += KMF::Tools::file2List("/etc/ld.so.conf", QString::null, "/");
-
-  QStringList::ConstIterator it = oodirs.begin();
-  while(bin.isEmpty() && it != list.end())
-  {
-    bin = KMF::Tools::findExe("soffice", list, (*it) + "/program");
-    ++it;
-  }
-
-  if(!bin.isEmpty())
-  {
-    K3Process ooo;
-
-    ooo << bin << "-invisible" << "-norestore" <<
-        QString("macro:///KMediaFactory.converter.convertToPDF(%1,%2)")
-        .arg(*file).arg(output);
-
-    ooo.setWorkingDirectory(projectInterface()->projectDir("media"));
-    uiInterface()->logger()->connectProcess(&ooo);
-    ooo.start(K3Process::Block, K3Process::AllOutput);
-    if(ooo.normalExit())
-    {
-      if(ooo.exitStatus() == 0)
-        result = true;
-    }
-  }
-  *file = output;
-  return result;
-}
-
 SlideList SlideshowObject::slideList(QStringList list) const
 {
   SlideList result;
@@ -147,92 +100,52 @@ SlideList SlideshowObject::slideList(QStringList list) const
     if(type)
       mime = type->name();
     //kdDebug() << k_funcinfo << mime << endl;
-#warning TODO pdf conversion using command line tools
-#if 0
     if(mime.startsWith("application/vnd.oasis.opendocument") ||
        mime.startsWith("application/vnd.sun.xml") ||
        mime == "application/msexcel" ||
        mime == "application/msword" ||
        mime == "application/mspowerpoint")
     {
-      if(oooConvert(&file))
+      QString output = QString("%1.pdf").arg(m_id);
+      QDir dir(projectInterface()->projectDir("media"));
+      output = dir.filePath(output);
+      Run run(QString("oo2pdf \"%1\" \"%2\"").arg(file).arg(output));
+
+      uiInterface()->logger()->message(run.output());
+      if(run.exitCode() == 0)
       {
         mime = "application/pdf";
-        minfo = KFileMetaInfo(file, QString::null, KFileMetaInfo::ContentInfo);
+        minfo = KFileMetaInfo(file, QString::null,
+                              KFileMetaInfo::ContentInfo);
       }
     }
     if(mime == "application/pdf")
     {
-      QFileInfo fi(file);
-      QString fileNameTemplate = m_id + "_%1.png";
-      std::list<Magick::Image> imageList;
-      int i = 0;
-      bool landscape = true;
-      QSize pdfRes(0, 0);
-      int pageProgress = 0;
+      QString output = m_id + "_%d.png";
+      QDir dir(projectInterface()->projectDir("media"));
+      output = dir.filePath(output);
+      Run run(QString("pdf2png \"%1\" \"%2\"").arg(file).arg(output));
 
-      if(minfo.contains("Page size"))
-      {
-        QStringList res = QStringList::split(" ",
-                                             minfo.item("Page size").string());
-        if(res.count() >= 3)
-        {
-          pdfRes = QSize(res[0].toInt(), res[2].toInt());
-          //kdDebug() << k_funcinfo <<pdfRes << endl;
-          if(pdfRes.width() < pdfRes.height())
-            landscape = false;
-        }
-      }
-      try
-      {
-        readImages(&imageList, (const char*)file.local8Bit());
-      }
-      catch(...)
-      {
-        kdDebug() << "Caught magic exception." << endl;
-      }
+      uiInterface()->logger()->message(run.output());
 
-      if(imageList.size() > 0)
-        pageProgress = fileProgress / imageList.size();
-
-      while(imageList.size() > 0)
+      for(int i=0; true; ++i)
       {
         Slide slide;
-        QString file = dir.filePath(QString(fileNameTemplate).arg(++i));
+        QString fileNameTemplate = m_id + "_%1.png";
+        QString file = dir.filePath(QString(fileNameTemplate).arg(i));
+        QFileInfo fi(file);
 
-        Magick::Image img = imageList.front();
-        // In landscape mode we propably want to fill the whole screen
-        // using ! and 4:3 800x600 resolution
-        QSize imgRes(img.columns(), img.rows());
-
-        // Try to fix empty white space
-        if(pdfRes == QSize(0, 0) && imgRes == QSize(794, 842))
-          pdfRes = QSize(794, 595);
-
-        if(pdfRes != imgRes && pdfRes.width() > 0 && pdfRes.height() > 0)
+        if(fi.exists())
         {
-          img.crop(Magick::Geometry(pdfRes.width(), pdfRes.height(), 0,
-                   imgRes.height() - pdfRes.height()));
+          slide.comment = i18n("Page %1", i);
+          slide.picture = file;
+          result.append(slide);
         }
-        kdDebug() << k_funcinfo << imgRes << ", " << pdfRes << endl;
-
-        if(landscape)
-          img.zoom("!800x600");
         else
-          img.zoom("800x600");
-
-        img.write((const char*)file.local8Bit());
-        imageList.pop_front();
-
-        slide.comment = i18n("Page %1", i);
-        slide.picture = file;
-        result.append(slide);
-        dlg.progressBar()->advance(pageProgress);
-        kapp->processEvents();
+          break;
       }
     }
     else
-#endif
     {
       Slide slide;
 
