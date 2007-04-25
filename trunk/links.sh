@@ -31,6 +31,8 @@ FILES=(
 "share/apps/kmediafactory/scripts/info"
 "share/apps/kmediafactory/scripts/make_mpeg"
 "share/apps/kmediafactory/scripts/tools"
+"share/apps/kmediafactory/scripts/kmf_converter.oxt"
+"share/apps/kmediafactory/scripts/oo2pdf"
 "share/apps/kmediafactory/media/silence.mp2"
 "share/apps/kmediafactory_template/kmediafactory_templateui.rc"
 "share/apps/kmediafactory_template/simple.kmft"
@@ -45,6 +47,8 @@ FILES=(
 "*share/kde4/services/kmediafactory_template.desktop"
 "*share/kde4/services/kmediafactory_output.desktop"
 "*share/kde4/services/kmediafactory_slideshow.desktop"
+"share/config/kmediafactory.knsrc"
+"share/config/kmediafactory_template.knsrc"
 "share/config.kcfg/kmediafactory.kcfg"
 "share/config.kcfg/templateplugin.kcfg"
 "share/config.kcfg/slideshowplugin.kcfg"
@@ -71,8 +75,6 @@ FILES=(
 "include/kmediafactory/uiinterface.h"
 "include/kmediafactory/kmfobject.h"
 "bin/kmediafactory"
-"share/config/kmediafactory.knsrc"
-"share/config/kmediafactory_template.knsrc"
 )
 
 function makefilesdir()
