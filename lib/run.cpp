@@ -46,22 +46,19 @@ void Run::setCommand(QString command)
 
   m_program = "";
   m_arguments.clear();
-  for(int i=0; i < command.length(); ++i)
+  for(int i=0; i <= command.length(); ++i)
   {
-    if(command[i] == '\"')
+    bool end = (i == command.length());
+
+    if(!end && command[i] == '\"')
     {
       if(i == 0 || command[i-1] != '\\' )
-      {
         in = (in)?false:true;
-        continue;
-      }
       else
-      {
         arg[arg.length() - 1] = command[i];
-        continue;
-      }
+      continue;
     }
-    if(command[i] == ' ' && !in)
+    if(end || (command[i] == ' ' && !in))
     {
       kDebug() << k_funcinfo << "<" << arg << ">" << endl;
       if(m_program.isEmpty())
@@ -86,8 +83,7 @@ bool Run::run()
     if(file.exists())
       m_program = file.filePath();
   }
-  //setUseShell(true);
-  //kDebug() << "Running: " << m_command << endl;
+  kDebug() << "Running: " << m_program << m_arguments << endl;
   connect(this, SIGNAL(readyRead()),
           this, SLOT(stdout()));
   connect(this, SIGNAL(finished(int, QProcess::ExitStatus)),
@@ -100,8 +96,13 @@ bool Run::run()
   setEnvironment(env);
   m_outputIndex = 0;
   start(m_program, m_arguments);
-  waitForFinished(-1);
-  //kDebug() << "Output: " << m_output << endl;
+  while(!waitForFinished(250))
+  {
+    if(state() == QProcess::NotRunning)
+      break;
+    kapp->processEvents();
+  }
+  kDebug() << "Output: " << m_output << endl;
   if(exitStatus() == QProcess::NormalExit || exitCode() == 0)
   {
     return true;
