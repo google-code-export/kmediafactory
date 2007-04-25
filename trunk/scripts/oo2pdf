@@ -13,7 +13,7 @@ UNOPKG=`check_executable "unopkg" "openoffice.org-common" $SOFFICE_DIR`
 
 $UNOPKG list | grep "kmf_converter"
 if [[ $? -eq 1 ]]; then
-  $UNOPKG add --force $SCRIPTS/kmf_converter.zip
+  $UNOPKG add --force $SCRIPTS/kmf_converter.oxt
 fi
 
 $SOFFICE -invisible -norestore \
