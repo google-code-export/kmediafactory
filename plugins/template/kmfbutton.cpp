@@ -154,7 +154,6 @@ bool KMFButton::parseJump(bool addPages)
     int title = menuPage->titleStart(), chapter = menuPage->chapterStart();
     QStringList j = m_jumpS.split(":");
 
-    // TODO clean these ugly ifs
     if(j[0].indexOf(".") > -1)
     {
       parseTitleChapter(j[0], title, chapter);
@@ -172,8 +171,6 @@ bool KMFButton::parseJump(bool addPages)
       if(chapter < 1)
         chapter = 1;
       m_jump.setTitle(chapter, title);
-      //if(menuPage->isVmgm())
-        //m_jump.setCommand("g1=1;");
     }
     else
     {

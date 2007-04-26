@@ -238,34 +238,6 @@ void KMediaFactory::newStuff()
   KNS::Engine *engine = new KNS::Engine();
   KNS::Entry::List entries = engine->downloadDialogModal();
   delete engine;
-#warning TODO Fix desktop file
-  /*
-  for(QStringList::Iterator it = list.begin(); it != list.end(); ++it)
-  {
-    kdDebug() << k_funcinfo << "File: " << destinationPath << *it << endl;
-
-    if((*it).endsWith(".desktop"))
-    {
-      KDesktopFile df(destinationPath + *it);
-      QString exec = destinationPath + df.readEntry("Exec");
-      QString icon = destinationPath + df.readEntry("Icon");
-
-      if(QFile::exists(exec))
-      {
-        chmod((const char*)exec.local8Bit(),
-              S_IRUSR|S_IWRITE|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH);
-        df.writeEntry("Exec", exec);
-        kdDebug() << k_funcinfo << "Exec: " << exec << endl;
-      }
-      if(QFile::exists(icon))
-      {
-        df.writeEntry("Icon", icon);
-        kdDebug() << k_funcinfo << "Icon: " << icon << endl;
-      }
-    }
-  }
-  emit scriptInstalled();
-  */
 }
 
 void KMediaFactory::initGUI()
@@ -453,7 +425,7 @@ void KMediaFactory::execTool()
   QString error;
   QStringList envs;
 
-  envs.append(QString("KMF_DBUS=org.kde.kmediafactory_%1 /KMediaFactory")
+  envs.append(QString("KMF_DBUS=org.kde.kmediafactory_%1/KMediaFactory")
       .arg(getpid()));
   envs.append("KMF_WINID=" +
       QString("%1").arg(kmfApp->mainWindow()->winId()));
@@ -461,8 +433,8 @@ void KMediaFactory::execTool()
      QString::null, envs, &error))
   {
     KMessageBox::error(kapp->activeWindow(),
-                       i18n("Error in starting %1: %2")
-                           .arg(sender()->objectName()).arg(error));
+                       i18n("Error in starting %1: %2",
+                            sender()->objectName(), error));
   }
 }
 
