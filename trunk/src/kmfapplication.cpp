@@ -72,6 +72,15 @@ void KMFApplication::init()
 
   m_mainWin->initGUI();
 
+  QStringList tools = KGlobal::dirs()->findDirs("data", "kmediafactory/tools");
+
+  foreach(QString tooldir, tools)
+  {
+    // For icons in tool scripts
+    KGlobal::dirs()->addResourceDir("icon", tooldir);
+    // For scripts in tool scripts
+    KGlobal::dirs()->addResourceDir("exe", tooldir);
+  }
   args->clear();
 }
 
@@ -225,10 +234,12 @@ static int startServiceInternal(const char *_function,
   QDBusMessage reply = QDBusConnection::sessionBus().call(msg);
   if ( reply.type() != QDBusMessage::ReplyMessage )
   {
+    QString args;
 
+    if(reply.arguments().count() > 0)
+      args = reply.arguments().at(0).toString();
     kDebug() << i18n("KLauncher could not be reached via D-Bus, "  \
-        "error when calling %1:\n%2\n",function,
-        reply.arguments().at(0).toString()) << error << endl;
+        "error when calling %1:\n%2\n",function, args) << error << endl;
     return EINVAL;
   }
 

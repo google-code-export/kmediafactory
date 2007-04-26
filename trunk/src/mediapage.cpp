@@ -91,7 +91,7 @@ void MediaPage::calculateSizes()
 
     foreach(mob, mobs)
       size += mob->size();
-    // size += TODO: MENU SIZE
+    size += mobs.size() * 200 * 1024; // Not very good estimate...
   }
   sizeWidget->setMax(max);
   sizeWidget->setSize(size);

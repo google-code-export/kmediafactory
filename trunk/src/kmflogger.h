@@ -26,8 +26,6 @@
 /**
 */
 
-// TODO: Method to switch html on/off
-
 class KMFLogger : public KMF::Logger
 {
     Q_OBJECT
