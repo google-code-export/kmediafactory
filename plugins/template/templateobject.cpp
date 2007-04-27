@@ -226,9 +226,9 @@ void TemplateObject::slotProperties()
   m_menu.setLanguage("ui", KGlobal::locale()->language());
 
   KConfigDialog dialog(kapp->activeWindow(), "TemplateSettings",
-                       &m_customProperties, KPageDialog::Plain,
-                       KDialog::Ok | KDialog::Cancel);
-
+                       &m_customProperties);
+  dialog.setFaceType(KPageDialog::Plain);
+  dialog.setButtons(KDialog::Ok | KDialog::Cancel);
   QIODevice* di = m_menu.templateStore()->device("settings.ui");
   QUiLoader loader;
   QWidget* page = loader.load(di, &dialog);
