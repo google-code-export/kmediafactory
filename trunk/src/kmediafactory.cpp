@@ -432,7 +432,9 @@ void KMediaFactory::execTool()
   KService service(&desktopFile);
   KUrl::List lst;
   QStringList program = KRun::processDesktopExec(service, lst);
-  Run run(program);
+  enableUi(false);
+  Run run(program, desktopFile.readPath());
+  enableUi(true);
 }
 
 void KMediaFactory::optionsPreferences()
@@ -518,6 +520,11 @@ void KMediaFactory::enableUi(bool enabled)
   toolBar()->setEnabled(enabled);
   if(m_janusIconList)
     m_janusIconList->setEnabled(enabled);
+  mediaPage->mediaFiles->setEnabled(enabled);
+  mediaPage->mediaButtons->setEnabled(enabled);
+  templatePage->templates->setEnabled(enabled);
+  templatePage->previewCheckBox->setEnabled(enabled);
+  templatePage->templatePreview->setEnabled(enabled);
   outputPage->outputs->setEnabled(enabled);
   m_enabled = enabled;
 }
