@@ -28,20 +28,20 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-Run::Run(QString command, QString dir, bool wait)
+Run::Run(QString command, QString dir)
 {
   setCommand(command);
   setWorkingDirectory(dir);
   if(!command.isEmpty())
-    run(wait);
+    run();
 }
 
-Run::Run(QStringList command, QString dir, bool wait)
+Run::Run(QStringList command, QString dir)
 {
   setCommand(command);
   setWorkingDirectory(dir);
   if(!command.isEmpty())
-    run(wait);
+    run();
 }
 
 Run::~Run()
@@ -102,17 +102,14 @@ void Run::checkIfScript()
   }
 }
 
-bool Run::run(bool wait)
+bool Run::run()
 {
   setProcessChannelMode(QProcess::MergedChannels);
 
-  if(wait)
-  {
-    connect(this, SIGNAL(readyRead()),
-            this, SLOT(stdout()));
-    connect(this, SIGNAL(finished(int, QProcess::ExitStatus)),
-            this, SLOT(exit(int, QProcess::ExitStatus)));
-  }
+  connect(this, SIGNAL(readyRead()),
+          this, SLOT(stdout()));
+  connect(this, SIGNAL(finished(int, QProcess::ExitStatus)),
+          this, SLOT(exit(int, QProcess::ExitStatus)));
   QStringList env = QProcess::systemEnvironment();
   QStringList kmfPaths;
   kmfPaths << KGlobal::dirs()->findDirs("data", "kmediafactory/scripts");
@@ -135,8 +132,6 @@ bool Run::run(bool wait)
 
   m_outputIndex = 0;
   start(m_program, m_arguments);
-  if(!wait)
-    return true;
 
   while(!waitForFinished(250))
   {
