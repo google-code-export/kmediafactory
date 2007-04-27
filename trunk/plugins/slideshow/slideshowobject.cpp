@@ -108,7 +108,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
       QString output = QString("%1.pdf").arg(m_id);
       QDir dir(projectInterface()->projectDir("media"));
       output = dir.filePath(output);
-      Run run(QString("oo2pdf \"%1\" \"%2\"").arg(file).arg(output));
+      Run run(QString("kmf_oo2pdf \"%1\" \"%2\"").arg(file).arg(output));
 
       kDebug() << k_funcinfo << file << "->" << output << endl;
       if(run.exitCode() == 0)
@@ -124,7 +124,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
       QString output = m_id + "_%d.png";
       QDir dir(projectInterface()->projectDir("media"));
       output = dir.filePath(output);
-      Run run(QString("pdf2png \"%1\" \"%2\"").arg(file).arg(output));
+      Run run(QString("kmf_pdf2png \"%1\" \"%2\"").arg(file).arg(output));
 
       kDebug() << k_funcinfo << file << "->" << output << endl;
       for(int i = 1; true; ++i)

@@ -31,10 +31,13 @@
 #include "kmfoptions.h"
 #include "tools.h"
 #include "kmediafactorysettings.h"
-#include "kmfimageview.h"
-#include "kmftools.h"
+#include <kmfimageview.h>
+#include <kmftools.h>
+#include <run.h>
 #include <kmediafactory/plugin.h>
 
+#include <krun.h>
+#include <kservice.h>
 #include <kactioncollection.h>
 #include <kmainwindow.h>
 #include <kconfigdialog.h>
@@ -407,8 +410,9 @@ void KMediaFactory::updateToolsMenu()
     if (df.readName().isEmpty())
       continue;
     action = new KAction(KIcon(df.readIcon()), df.readName(), this);
-    actionCollection()->addAction((*it), action);
     connect(action, SIGNAL(triggered()), this, SLOT(execTool()));
+    action->setObjectName(*it);
+    actionCollection()->addAction((*it), action);
 
     if(group.readEntry("X-KMF-MediaMenu") == "true")
       media_actions.append(action);
@@ -424,18 +428,11 @@ void KMediaFactory::execTool()
 {
   QString error;
   QStringList envs;
-
-  envs.append(QString("KMF_DBUS=org.kde.kmediafactory_%1/KMediaFactory")
-      .arg(getpid()));
-  envs.append("KMF_WINID=" +
-      QString("%1").arg(kmfApp->mainWindow()->winId()));
-  if(kmfApp->startServiceByDesktopPath(sender()->objectName(),
-     QString::null, envs, &error))
-  {
-    KMessageBox::error(kapp->activeWindow(),
-                       i18n("Error in starting %1: %2",
-                            sender()->objectName(), error));
-  }
+  KDesktopFile desktopFile(sender()->objectName());
+  KService service(&desktopFile);
+  KUrl::List lst;
+  QStringList program = KRun::processDesktopExec(service, lst);
+  Run run(program);
 }
 
 void KMediaFactory::optionsPreferences()
@@ -447,8 +444,7 @@ void KMediaFactory::optionsPreferences()
   {
     //KConfigDialog didn't find an instance of this dialog, so lets create it :
     KConfigDialog* dialog = new KConfigDialog(this, "KMediaFactorySettings",
-                                              KMediaFactorySettings::self(),
-                                              KPageDialog::List);
+                                              KMediaFactorySettings::self());
     dialog->addPage(new KMFOptions(dialog), i18n("KMediaFactory"),
                     "kmediafactory", i18n("KMediaFactory"));
     dialog->addPage(new Tools(dialog), i18n("Tools"),

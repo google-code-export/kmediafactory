@@ -404,7 +404,7 @@ bool KMFMenuPage::runScript(QString scriptName, QString place)
     frames = (uint)(seconds.toSeconds() * 30000.0 / 1001.0);
   }
 
-  Run run(QString("make_mpeg %1 %2 %3 %4").arg(m_prjIf->type()).arg(frames)
+  Run run(QString("kmf_make_mpeg %1 %2 %3 %4").arg(m_prjIf->type()).arg(frames)
           .arg(scriptName).arg(menuSound),
           m_prjIf->projectDir(place));
 

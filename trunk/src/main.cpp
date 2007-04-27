@@ -20,6 +20,7 @@
 
 #include "kmediafactory.h"
 #include "kmfapplication.h"
+#include <kiconloader.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
 #include <klocale.h>
@@ -46,8 +47,19 @@ int main(int argc, char **argv)
   KCmdLineArgs::addCmdLineOptions(options);
   KMFApplication app;
 
+  // Add catalog for translations
   KGlobal::locale()->insertCatalog("libkmf");
-  if (qApp->isSessionRestored())
+  // Add resource dirs
+  QStringList tools = KGlobal::dirs()->findDirs("data", "kmediafactory/tools");
+  foreach(QString tooldir, tools)
+  {
+    kDebug() << k_funcinfo << "Adding resource dir: " << tooldir << endl;
+    // For icons in tool scripts
+    KGlobal::dirs()->addResourceDir("icon", tooldir);
+  }
+  KIconLoader::global()->reconfigure(about.appName(), KGlobal::dirs());
+
+  if (app.isSessionRestored())
   {
     RESTORE(KMediaFactory);
   }

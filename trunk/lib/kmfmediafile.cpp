@@ -36,7 +36,7 @@ KMFMediaFile::KMFMediaFile(const QString& file)
 
 bool KMFMediaFile::probe()
 {
-  Run run(QString("info \"%1\"").arg(m_file));
+  Run run(QString("kmf_info \"%1\"").arg(m_file));
 
   if(run.exitStatus() == 0)
   {
@@ -72,7 +72,7 @@ bool KMFMediaFile::probe()
 
 bool KMFMediaFile::frame(QTime pos, QString output) const
 {
-  Run run(QString("frame \"%1\" %2 \"%3\"").arg(m_file)
+  Run run(QString("kmf_frame \"%1\" %2 \"%3\"").arg(m_file)
       .arg(KMF::Time(pos).toString()).arg(output));
   return (run.exitStatus() == 0);
 }

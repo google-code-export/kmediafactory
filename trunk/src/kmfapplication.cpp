@@ -72,15 +72,6 @@ void KMFApplication::init()
 
   m_mainWin->initGUI();
 
-  QStringList tools = KGlobal::dirs()->findDirs("data", "kmediafactory/tools");
-
-  foreach(QString tooldir, tools)
-  {
-    // For icons in tool scripts
-    KGlobal::dirs()->addResourceDir("icon", tooldir);
-    // For scripts in tool scripts
-    KGlobal::dirs()->addResourceDir("exe", tooldir);
-  }
   args->clear();
 }
 

@@ -19,6 +19,7 @@
 //**************************************************************************
 #include "run.h"
 #include <kdebug.h>
+#include <kshell.h>
 #include <kapplication.h>
 #include <kstandarddirs.h>
 #include <QStringList>
@@ -35,65 +36,55 @@ Run::Run(QString command, QString dir)
     run();
 }
 
+Run::Run(QStringList command, QString dir)
+{
+  setCommand(command);
+  setWorkingDirectory(dir);
+  if(!command.isEmpty())
+    run();
+}
+
 Run::~Run()
 {
 }
+
 void Run::setCommand(QString command)
 {
-  bool in = false;
-  QChar previous = ' ';
-  QString arg;
+  m_arguments = KShell::splitArgs(command);
+  if(m_arguments.count() > 0)
+    m_program = m_arguments.takeFirst();
+}
 
-  m_program = "";
-  m_arguments.clear();
-  for(int i=0; i <= command.length(); ++i)
-  {
-    bool end = (i == command.length());
-
-    if(!end && command[i] == '\"')
-    {
-      if(i == 0 || command[i-1] != '\\' )
-        in = (in)?false:true;
-      else
-        arg[arg.length() - 1] = command[i];
-      continue;
-    }
-    if(end || (command[i] == ' ' && !in))
-    {
-      kDebug() << k_funcinfo << "<" << arg << ">" << endl;
-      if(m_program.isEmpty())
-        m_program = arg;
-      else
-        m_arguments.append(arg);
-      arg = "";
-      continue;
-    }
-    arg += command[i];
-  }
+void Run::setCommand(QStringList command)
+{
+  m_arguments = command;
+  if(m_arguments.count() > 0)
+    m_program = m_arguments.takeFirst();
 }
 
 bool Run::run()
 {
   setProcessChannelMode(QProcess::MergedChannels);
 
-  if(m_program[0] != '/')
-  {
-    QFileInfo file;
-    file = KStandardDirs::locate("data", "kmediafactory/scripts/" + m_program);
-    if(file.exists())
-      m_program = file.filePath();
-  }
   kDebug() << "Running: " << m_program << m_arguments << endl;
   connect(this, SIGNAL(readyRead()),
           this, SLOT(stdout()));
   connect(this, SIGNAL(finished(int, QProcess::ExitStatus)),
           this, SLOT(exit(int, QProcess::ExitStatus)));
+
   QStringList env = QProcess::systemEnvironment();
+  QStringList kmfPaths;
+  kmfPaths << KGlobal::dirs()->findDirs("apps", "kmediafactory/scripts/");
+  kmfPaths << KGlobal::dirs()->findDirs("apps", "kmediafactory/tools/");
   env << QString("KMF_DBUS=org.kde.kmediafactory_%1/KMediaFactory")
       .arg(getpid());
   env << QString("KMF_WINID=%1")
       .arg(QApplication::topLevelWidgets()[0]->winId());
+  foreach(QString path, kmfPaths)
+    env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive),
+                        QString("PATH=%1;\\1").arg(path));
   setEnvironment(env);
+
   m_outputIndex = 0;
   start(m_program, m_arguments);
   while(!waitForFinished(250))
