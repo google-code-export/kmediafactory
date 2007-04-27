@@ -28,20 +28,20 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-Run::Run(QString command, QString dir)
+Run::Run(QString command, QString dir, bool wait)
 {
   setCommand(command);
   setWorkingDirectory(dir);
   if(!command.isEmpty())
-    run();
+    run(wait);
 }
 
-Run::Run(QStringList command, QString dir)
+Run::Run(QStringList command, QString dir, bool wait)
 {
   setCommand(command);
   setWorkingDirectory(dir);
   if(!command.isEmpty())
-    run();
+    run(wait);
 }
 
 Run::~Run()
@@ -62,38 +62,89 @@ void Run::setCommand(QStringList command)
     m_program = m_arguments.takeFirst();
 }
 
-bool Run::run()
+void Run::checkIfScript()
+{
+  QStringList env = environment();
+  int n = env.indexOf(QRegExp("^PATH=.*", Qt::CaseInsensitive));
+
+  if(n > -1)
+  {
+    QStringList paths = env[n].mid(5).split(':');
+
+    foreach(QString path, paths)
+    {
+      QFileInfo fi(path + "/" + m_program);
+
+      //kDebug() << k_funcinfo << fi.filePath() << endl;
+      if(fi.exists())
+      {
+        QFile file(fi.filePath());
+
+        if(file.open(QIODevice::ReadOnly))
+        {
+          QByteArray ba = file.read(2);
+          if(ba.size() == 2 && ba[0] == '#' && ba[1] == '!')
+          {
+            char buf[1024];
+            if(file.readLine(buf, sizeof(buf)) > 0)
+            {
+              QStringList lst = QString(buf).trimmed().split(' ');
+              m_arguments.prepend(fi.filePath());
+              m_arguments = lst + m_arguments;
+              m_program = m_arguments.takeFirst();
+              break;
+            }
+          }
+          file.close();
+        }
+      }
+    }
+  }
+}
+
+bool Run::run(bool wait)
 {
   setProcessChannelMode(QProcess::MergedChannels);
 
-  kDebug() << "Running: " << m_program << m_arguments << endl;
-  connect(this, SIGNAL(readyRead()),
-          this, SLOT(stdout()));
-  connect(this, SIGNAL(finished(int, QProcess::ExitStatus)),
-          this, SLOT(exit(int, QProcess::ExitStatus)));
-
+  if(wait)
+  {
+    connect(this, SIGNAL(readyRead()),
+            this, SLOT(stdout()));
+    connect(this, SIGNAL(finished(int, QProcess::ExitStatus)),
+            this, SLOT(exit(int, QProcess::ExitStatus)));
+  }
   QStringList env = QProcess::systemEnvironment();
   QStringList kmfPaths;
-  kmfPaths << KGlobal::dirs()->findDirs("apps", "kmediafactory/scripts/");
-  kmfPaths << KGlobal::dirs()->findDirs("apps", "kmediafactory/tools/");
+  kmfPaths << KGlobal::dirs()->findDirs("data", "kmediafactory/scripts");
+  kmfPaths << KGlobal::dirs()->findDirs("data", "kmediafactory/tools");
+  //kDebug() << k_funcinfo << kmfPaths << endl;
   env << QString("KMF_DBUS=org.kde.kmediafactory_%1/KMediaFactory")
       .arg(getpid());
   env << QString("KMF_WINID=%1")
       .arg(QApplication::topLevelWidgets()[0]->winId());
   foreach(QString path, kmfPaths)
+  {
     env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive),
-                        QString("PATH=%1;\\1").arg(path));
+                         "PATH=" + path.left(path.length() - 1) + ":\\1");
+  }
+  //kDebug() << k_funcinfo << env << endl;
   setEnvironment(env);
+
+  checkIfScript();
+  //kDebug() << "Running: " << m_program << m_arguments << endl;
 
   m_outputIndex = 0;
   start(m_program, m_arguments);
+  if(!wait)
+    return true;
+
   while(!waitForFinished(250))
   {
     if(state() == QProcess::NotRunning)
       break;
     kapp->processEvents();
   }
-  kDebug() << "Output: " << m_output << endl;
+  //kDebug() << "Output: " << m_output << endl;
   if(exitStatus() == QProcess::NormalExit || exitCode() == 0)
   {
     return true;

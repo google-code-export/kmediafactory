@@ -32,14 +32,16 @@ class KDE_EXPORT Run : public QProcess
 {
     Q_OBJECT
   public:
-    Run(QString command = QString::null, QString dir = QString::null);
-    Run(QStringList command, QString dir = QString::null);
+    Run(QString command = QString::null, QString dir = QString::null,
+        bool wait = true);
+    Run(QStringList command, QString dir = QString::null, bool wait = true);
     ~Run();
 
     void setCommand(QString command);
     void setCommand(QStringList command);
-    bool run();
+    bool run(bool wait = true);
     QString output() { return m_output; };
+    void checkIfScript();
 
   signals:
     void line(const QString& line);
