@@ -63,7 +63,7 @@ void DVDInfo::analyze()
           dlg.progressBar(), SLOT(setMaximum(int)));
   connect(&m_info, SIGNAL(title(int)),
           dlg.progressBar(), SLOT(setValue(int)));
-  dlg.setLabel(i18n("Analyzing DVD..."));
+  dlg.setLabelText(i18n("Analyzing DVD..."));
   dlg.show();
   kapp->processEvents();
   m_info.parseDVD(url->url().path());
