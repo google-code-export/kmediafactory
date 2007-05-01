@@ -200,14 +200,13 @@ void SlideshowProperties::setData(const SlideshowObject& obj)
 void SlideshowProperties::addSlides(const SlideList& slides)
 {
   QModelIndex current = slideListView->currentIndex();
-  KFileItemList list;
+  QList<KFileItem> list;
 
   m_model.insert(current, slides);
 
   foreach(Slide slide, slides)
   {
-    KFileItem* item = new KFileItem(KFileItem::Unknown, KFileItem::Unknown,
-                                    slide.picture);
+    KFileItem item(KFileItem::Unknown, KFileItem::Unknown, slide.picture);
     list.append(item);
   }
   KIO::PreviewJob* job =  KIO::filePreview(list, 80, 60);
