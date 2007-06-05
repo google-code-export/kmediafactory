@@ -6,7 +6,7 @@
   <kcfgfile name="kmediafactoryrc"/>
   <include>kstandarddirs.h</include>
   <group name="project">
-      <entry name="DefaultProjectDirectory" type="Path">
+      <entry name="DefaultProjectDirectory" type="Url">
           <label>Where the projects are saved by default.</label>
           <default code="true">KStandardDirs::locateLocal("tmp", "kmf/")</default>
       </entry>

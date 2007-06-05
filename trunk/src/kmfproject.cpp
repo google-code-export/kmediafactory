@@ -54,7 +54,7 @@ KMFProject::KMFProject(QObject *parent) :
   m_type = KMediaFactorySettings::defaultProjectType();
   m_title = i18n("Untitled");
 
-  QDir dir(KMediaFactorySettings::defaultProjectDirectory());
+  QDir dir(KMediaFactorySettings::defaultProjectDirectory().path());
   int i = 1;
 
   while(1)
