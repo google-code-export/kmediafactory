@@ -6,8 +6,8 @@
   <kcfgfile name="kmediafactoryrc"/>
   <include>kstandarddirs.h</include>
   <group name="project">
-      <entry name="DefaultProjectDirectory" type="String">
-          <label>Where the projects are saved by deafult.</label>
+      <entry name="DefaultProjectDirectory" type="Path">
+          <label>Where the projects are saved by default.</label>
           <default code="true">KStandardDirs::locateLocal("tmp", "kmf/")</default>
       </entry>
       <entry name="DefaultProjectType" type="String">
@@ -15,7 +15,7 @@
           <default>DVD-PAL</default>
       </entry>
       <entry name="ShowProjectOptionsOnNew" type="Bool">
-          <label>Show project options when new project is lanuched.</label>
+          <label>Show project options when new project is launched.</label>
           <default>false</default>
       </entry>
   </group>
