@@ -22,6 +22,7 @@
 KMFOptions::KMFOptions(QWidget* parent) : QWidget(parent)
 {
   setupUi(this);
+  kcfg_DefaultProjectDirectory->setMode(KFile::Directory);
 }
 
 KMFOptions::~KMFOptions()
