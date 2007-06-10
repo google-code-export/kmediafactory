@@ -120,6 +120,20 @@ void Tools::addClicked()
   {
     ToolItem item;
     dlg.getData(&item);
+
+    int i = 0;
+    QFileInfo file;
+    QString name = KMF::Tools::simpleName(item.name);
+
+    file = KStandardDirs::locateLocal("appdata",
+                                      "tools/" + name + ".desktop");
+    while(file.exists())
+    {
+      file = KStandardDirs::locateLocal("appdata", "tools/" +
+          QString("%1_%2").arg(name).arg(++i) + ".desktop");
+    }
+    item.desktopFile = file.absoluteFilePath();
+
     m_model.append(item);
   }
   enableButtons();
@@ -160,35 +174,19 @@ void Tools::removeClicked()
 
 void Tools::save()
 {
+  kDebug() << k_funcinfo << m_remove << endl;
   if(!m_remove.isEmpty())
     KIO::del(m_remove);
 
   QList<ToolItem> items = m_model.list();
-  QFileInfo file;
-  QString name;
 
   foreach(ToolItem item, items)
   {
     if(!writableItem(&item))
       continue;
 
-    name = KMF::Tools::simpleName(item.name);
-
-    if(item.desktopFile.isEmpty())
-    {
-      int i = 0;
-
-      file = KStandardDirs::locateLocal("appdata",
-                                        "tools/" + name + ".desktop");
-      while(file.exists())
-      {
-        file = KStandardDirs::locateLocal("appdata", "tools/" +
-            QString("%1_%2").arg(name).arg(++i) + ".desktop");
-      }
-    }
-    else
-      file = item.desktopFile;
-    KDesktopFile df(file.absoluteFilePath());
+    kDebug() << k_funcinfo << item.desktopFile << endl;
+    KDesktopFile df(item.desktopFile);
     KConfigGroup group = df.group("Desktop Entry");
     group.writeEntry("Name", item.name);
     group.writeEntry("Type", "Application");
@@ -209,6 +207,7 @@ void Tools::load()
   for(QStringList::ConstIterator it = files.begin();
       it != files.end(); ++it)
   {
+    kDebug() << k_funcinfo << *it << endl;
     KDesktopFile df(*it);
 
     if(df.readType() != "Application")
@@ -233,12 +232,9 @@ bool Tools::writableItem(ToolItem* item)
 {
   if(item)
   {
-    if(!item->desktopFile.isEmpty())
-    {
-      QFileInfo fi(item->desktopFile);
-
+    QFileInfo fi(item->desktopFile);
+    if (fi.exists())
       return fi.isWritable();
-    }
     else
       return true;
   }

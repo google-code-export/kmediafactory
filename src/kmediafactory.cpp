@@ -189,6 +189,14 @@ void KMediaFactory::setupActions()
 
   createGUI("kmediafactoryui.rc");
 
+  QStringList dirs = KGlobal::dirs()->findDirs("data", "");
+  for(QStringList::ConstIterator it = dirs.begin(); it != dirs.end(); ++it)
+  {
+    kDebug() << k_funcinfo << "Watching: " <<
+        *it + "kmediafactory/tools" << endl;
+    m_toolsWatch.addDir(*it + "kmediafactory/tools", true);
+  }
+  connect(&m_toolsWatch, SIGNAL(dirty(QString)), this, SLOT(updateToolsMenu()));
   updateToolsMenu();
 }
 
@@ -393,6 +401,7 @@ void KMediaFactory::newToolbarConfig()
 
 void KMediaFactory::updateToolsMenu()
 {
+  kDebug() << k_funcinfo << endl;
   QAction* action;
   QList<QAction*> actions;
   QList<QAction*> media_actions;
@@ -465,7 +474,7 @@ void KMediaFactory::optionsPreferences()
         delete page;
       }
     }
-    connect(dialog, SIGNAL(okClicked()), this, SLOT(updateToolsMenu()));
+    //connect(dialog, SIGNAL(okClicked()), this, SLOT(updateToolsMenu()));
 
     dialog->show();
   }
