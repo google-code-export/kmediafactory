@@ -44,6 +44,7 @@ NewStuffObject::~NewStuffObject()
 bool NewStuffObject::clicked()
 {
   KNS::Engine *engine = new KNS::Engine();
+  engine->init("kmediafactory_template.knsrc");
   KNS::Entry::List entries = engine->downloadDialogModal();
   delete engine;
   return true;
