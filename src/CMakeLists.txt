@@ -43,3 +43,4 @@ target_link_libraries(kmediafactory kmf kmediafactoryinterfaces ${KDE4_KPARTS_LI
 install(TARGETS kmediafactory DESTINATION ${BIN_INSTALL_DIR})
 install(FILES kmediafactoryui.rc DESTINATION ${DATA_INSTALL_DIR}/kmediafactory)
 install(FILES kmediafactory.kcfg DESTINATION ${KCFG_INSTALL_DIR})
+install(FILES kmediafactory.knsrc DESTINATION ${CONFIG_INSTALL_DIR})

@@ -239,6 +239,7 @@ void KMediaFactory::projectOptions()
 void KMediaFactory::newStuff()
 {
   KNS::Engine *engine = new KNS::Engine();
+  engine->init("kmediafactory.knsrc");
   KNS::Entry::List entries = engine->downloadDialogModal();
   delete engine;
 }
