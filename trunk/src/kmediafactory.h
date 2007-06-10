@@ -26,6 +26,7 @@
 #endif
 
 #include <kxmlguiwindow.h>
+#include <kdirwatch.h>
 
 // Define this for the test menu item
 // #define KMF_TEST
@@ -129,6 +130,7 @@ class KMediaFactory : public KXmlGuiWindow
     KPageWidgetItem* m_mediaPageItem;
     KPageWidgetItem* m_templatePageItem;
     KPageWidgetItem* m_ouputPageItem;
+    KDirWatch m_toolsWatch;
 
     void connectProject();
     void resetGUI();

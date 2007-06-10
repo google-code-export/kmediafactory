@@ -49,6 +49,7 @@ void KMFToolBar::resizeEvent(QResizeEvent* event)
 
 void KMFToolBar::lateInit()
 {
+  m_layout.update();
   m_grid.resize(m_layout.sizeHint());
   resizeEvent(0);
 }
@@ -82,6 +83,7 @@ void KMFToolBar::removeActions(const QString& group)
 {
   foreach(QToolButton* button, m_actions[group])
   {
+    m_layout.removeWidget(button);
     m_actions[group].removeAll(button);
     delete button->defaultAction();
     delete button;
