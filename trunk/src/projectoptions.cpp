@@ -40,6 +40,7 @@ ProjectOptions::ProjectOptions(QWidget* parent) :
           this, SLOT(textChanged(const QString&)));
 
   QStringList list = kmfApp->supportedProjects();
+  directoryUrl->setMode(KFile::Directory);
 
   for(QStringList::Iterator it = list.begin(); it != list.end(); ++it)
   {
