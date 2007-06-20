@@ -47,6 +47,12 @@ class KMFDbusInterface : public QObject
     virtual void selectOutput(const QString& xml);
 
     virtual void start();
+
+    // Script helpers
+    virtual QString getOpenFileName (const QString &startDir,
+                                     const QString &filter,
+                                     const QString &caption);
+    virtual QString debug(const QString &txt);
 };
 
 #endif

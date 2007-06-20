@@ -36,5 +36,15 @@
             <arg name="xml" type="s" direction="in"/>
         </method>
         <method name="start" />
+
+        <method name="getOpenFileName">
+            <arg name="startDir" type="s" direction="in"/>
+            <arg name="filter" type="s" direction="in"/>
+            <arg name="caption" type="s" direction="in"/>
+            <arg type="s" direction="out"/>
+        </method>
+        <method name="debug">
+            <arg name="txt" type="s" direction="in"/>
+        </method>
     </interface>
 </node>
