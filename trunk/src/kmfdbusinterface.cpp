@@ -23,6 +23,7 @@
 #include "outputpage.h"
 #include <kdebug.h>
 #include <kpagewidget.h>
+#include <kfiledialog.h>
 
 KMFDbusInterface::KMFDbusInterface(QObject *parent) :
   QObject(parent)
@@ -106,4 +107,19 @@ void KMFDbusInterface::start()
 {
   kmfApp->mainWindow()->showPage(KMediaFactory::Output);
   kmfApp->mainWindow()->outputPage->start();
+}
+
+QString KMFDbusInterface::getOpenFileName(const QString &startDir,
+                                          const QString &filter,
+                                          const QString &caption)
+{
+  KUrl url = KFileDialog::getOpenFileName(
+      KUrl(QString("kfiledialog:///<%1>").arg(startDir)), filter,
+      kmfApp->mainWindow(), caption);
+  return url.path();
+}
+
+QString KMFDbusInterface::debug(const QString &txt)
+{
+  kDebug() << "SCRIPT: " << txt << endl;
 }

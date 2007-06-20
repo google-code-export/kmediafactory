@@ -115,10 +115,8 @@ bool Run::run()
   kmfPaths << KGlobal::dirs()->findDirs("data", "kmediafactory/scripts");
   kmfPaths << KGlobal::dirs()->findDirs("data", "kmediafactory/tools");
   //kDebug() << k_funcinfo << kmfPaths << endl;
-  env << QString("KMF_DBUS=org.kde.kmediafactory_%1/KMediaFactory")
+  env << QString("KMF_DBUS=org.kde.kmediafactory-%1")
       .arg(getpid());
-  env << QString("KMF_WINID=%1")
-      .arg(QApplication::topLevelWidgets()[0]->winId());
   foreach(QString path, kmfPaths)
   {
     env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive),

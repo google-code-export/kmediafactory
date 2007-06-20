@@ -444,6 +444,9 @@ void KMediaFactory::execTool()
   QStringList program = KRun::processDesktopExec(service, lst);
   enableUi(false);
   Run run(program, desktopFile.readPath());
+  QString output = run.output();
+  if(output.indexOf("Traceback") > -1)
+    kDebug() << k_funcinfo << run.output() << endl;
   enableUi(true);
 }
 
