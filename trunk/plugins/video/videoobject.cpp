@@ -140,6 +140,7 @@ void VideoObject::fromXML(const QDomElement& element)
           QDomElement e2 = m.toElement();
           if(!e2.isNull())
           {
+            kDebug() << k_funcinfo << e2.tagName() << endl;
             if(e2.tagName() == "file")
             {
               m_files.append(e2.attribute("path"));

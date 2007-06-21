@@ -82,7 +82,7 @@ QString KMFDbusInterface::projectDirectory(const QString& subdir)
 void KMFDbusInterface::addMediaObject(const QString& xml)
 {
   QDomDocument doc;
-
+  kDebug() << k_funcinfo << xml << endl;
   doc.setContent(xml);
   kmfApp->project()->mediaObjFromXML(doc.documentElement());
 }
@@ -113,13 +113,14 @@ QString KMFDbusInterface::getOpenFileName(const QString &startDir,
                                           const QString &filter,
                                           const QString &caption)
 {
-  KUrl url = KFileDialog::getOpenFileName(
-      KUrl(QString("kfiledialog:///<%1>").arg(startDir)), filter,
+  QString start = QString("kfiledialog:///<%1>").arg(startDir);
+  kDebug() << k_funcinfo << start << endl;
+  KUrl url = KFileDialog::getOpenFileName(KUrl(start), filter,
       kmfApp->mainWindow(), caption);
   return url.path();
 }
 
-QString KMFDbusInterface::debug(const QString &txt)
+void KMFDbusInterface::debug(const QString &txt)
 {
   kDebug() << "SCRIPT: " << txt << endl;
 }
