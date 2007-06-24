@@ -445,8 +445,8 @@ void KMediaFactory::execTool()
   enableUi(false);
   Run run(program, desktopFile.readPath());
   QString output = run.output();
-  if(output.indexOf("Traceback") > -1)
-    kDebug() << k_funcinfo << run.output() << endl;
+  if(output.indexOf("Traceback") > -1 || output.indexOf("Error") > -1)
+    kDebug() << k_funcinfo << "\n" + run.output() << endl;
   enableUi(true);
 }
 

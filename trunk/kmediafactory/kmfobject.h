@@ -38,7 +38,7 @@ namespace KMF
       Object(QObject* parent):
           QObject(parent), m_plg(0), m_uiIf(0), m_prjIf(0) {};
       virtual void toXML(QDomElement&) const {};
-      virtual void fromXML(const QDomElement&) {};
+      virtual bool fromXML(const QDomElement&) { return false; };
       virtual QPixmap pixmap() const = 0;
       virtual void actions(QList<QAction*>&) const {};
       virtual bool make(QString) { return false; };

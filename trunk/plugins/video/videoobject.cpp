@@ -114,7 +114,7 @@ void VideoObject::actions(QList<QAction*>& actionList) const
   actionList.append(m_videoProperties);
 }
 
-void VideoObject::fromXML(const QDomElement& element)
+bool VideoObject::fromXML(const QDomElement& element)
 {
   m_cells.clear();
   m_audioTracks.clear();
@@ -140,7 +140,6 @@ void VideoObject::fromXML(const QDomElement& element)
           QDomElement e2 = m.toElement();
           if(!e2.isNull())
           {
-            kDebug() << k_funcinfo << e2.tagName() << endl;
             if(e2.tagName() == "file")
             {
               m_files.append(e2.attribute("path"));
@@ -206,26 +205,31 @@ void VideoObject::fromXML(const QDomElement& element)
     }
     n = n.nextSibling();
   }
-  checkObjectParams();
+  return checkObjectParams();
 }
 
-void VideoObject::checkObjectParams()
+bool VideoObject::checkObjectParams()
 {
-  const KMFMediaFile& media = KMFMediaFile::mediaFile(m_files[0]);
-
-  while(m_audioTracks.count() < (int)media.audioStreams())
+  if(m_files.count() > 0)
   {
-    addAudioTrack(
-        QDVD::AudioTrack(VideoPluginSettings::defaultAudioLanguage()));
+    const KMFMediaFile& media = KMFMediaFile::mediaFile(m_files[0]);
+
+    while(m_audioTracks.count() < (int)media.audioStreams())
+    {
+      addAudioTrack(
+          QDVD::AudioTrack(VideoPluginSettings::defaultAudioLanguage()));
+    }
+    if(m_cells.count() < 1)
+      setCellSecs(900.0);
+    if(m_id.isEmpty())
+      generateId();
+    if(title().isEmpty())
+      setTitleFromFileName();
+    if(m_aspect == QDVD::VideoTrack::Aspect_Unknown)
+      m_aspect = media.aspectRatio();
+    return true;
   }
-  if(m_cells.count() < 1)
-    setCellSecs(900.0);
-  if(m_id.isEmpty())
-    generateId();
-  if(title().isEmpty())
-    setTitleFromFileName();
-  if(m_aspect == QDVD::VideoTrack::Aspect_Unknown)
-    m_aspect = media.aspectRatio();
+  return false;
 }
 
 void VideoObject::toXML(QDomElement& element) const

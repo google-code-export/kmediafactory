@@ -58,8 +58,9 @@ void DvdDirectoryObject::actions(QList<QAction*>& actionList) const
   actionList.append(dvdCleanDirectory);
 }
 
-void DvdDirectoryObject::fromXML(const QDomElement&)
+bool DvdDirectoryObject::fromXML(const QDomElement&)
 {
+  return true;
 }
 
 int DvdDirectoryObject::timeEstimate() const

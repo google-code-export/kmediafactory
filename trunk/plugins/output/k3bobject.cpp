@@ -45,8 +45,9 @@ void K3bObject::actions(QList<KAction*>&) const
 {
 }
 
-void K3bObject::fromXML(const QDomElement&)
+bool K3bObject::fromXML(const QDomElement&)
 {
+  return true;
 }
 
 int K3bObject::timeEstimate() const

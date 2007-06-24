@@ -66,7 +66,7 @@ class SlideshowObject : public KMF::MediaObject
     virtual QTime chapterTime(int chapter) const;
 
     virtual void toXML(QDomElement& element) const;
-    virtual void fromXML(const QDomElement& element);
+    virtual bool fromXML(const QDomElement& element);
 
     void addPics(QStringList list);
 

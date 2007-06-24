@@ -82,7 +82,6 @@ QString KMFDbusInterface::projectDirectory(const QString& subdir)
 void KMFDbusInterface::addMediaObject(const QString& xml)
 {
   QDomDocument doc;
-  kDebug() << k_funcinfo << xml << endl;
   doc.setContent(xml);
   kmfApp->project()->mediaObjFromXML(doc.documentElement());
 }
