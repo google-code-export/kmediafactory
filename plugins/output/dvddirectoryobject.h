@@ -36,7 +36,7 @@ class DvdDirectoryObject : public DvdAuthorObject
     DvdDirectoryObject(QObject *parent = 0);
     virtual ~DvdDirectoryObject();
     virtual void toXML(QDomElement& element) const;
-    virtual void fromXML(const QDomElement& element);
+    virtual bool fromXML(const QDomElement& element);
     virtual QPixmap pixmap() const;
     virtual void actions(QList<QAction*>& actionList) const;
     virtual int timeEstimate() const;

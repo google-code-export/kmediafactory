@@ -109,9 +109,11 @@ void TemplateObject::actions(QList<QAction*>& actionList) const
   }
 }
 
-void TemplateObject::fromXML(const QDomElement& element)
+bool TemplateObject::fromXML(const QDomElement& element)
 {
   QDomNode n = element.firstChild();
+  if(n.isNull())
+    return false;
   while(!n.isNull())
   {
     QDomElement e = n.toElement();
@@ -150,6 +152,7 @@ void TemplateObject::fromXML(const QDomElement& element)
     }
     n = n.nextSibling();
   }
+  return true;
 }
 
 void TemplateObject::toXML(QDomElement& element) const

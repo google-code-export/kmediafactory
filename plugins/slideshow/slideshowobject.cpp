@@ -222,9 +222,11 @@ void SlideshowObject::toXML(QDomElement& element) const
   element.appendChild(slideshow);
 }
 
-void SlideshowObject::fromXML(const QDomElement& element)
+bool SlideshowObject::fromXML(const QDomElement& element)
 {
   QDomNode n = element.firstChild();
+  if(n.isNull())
+    return false;
   while(!n.isNull())
   {
     QDomElement e = n.toElement();
@@ -267,6 +269,7 @@ void SlideshowObject::fromXML(const QDomElement& element)
   }
   if(m_id.isEmpty())
     generateId();
+  return true;
 }
 
 QPixmap SlideshowObject::pixmap() const

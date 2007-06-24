@@ -169,7 +169,13 @@ KMF::MediaObject* VideoPlugin::createMediaObject(const QDomElement& element)
 {
   KMF::MediaObject *mob = new VideoObject(this);
   if(mob)
-    mob->fromXML(element);
+  {
+    if(!mob->fromXML(element))
+    {
+      delete mob;
+      return 0;
+    }
+  }
   return mob;
 }
 

@@ -52,7 +52,7 @@ class TemplateObject : public KMF::TemplateObject
     virtual ~TemplateObject();
 
     virtual void toXML(QDomElement& element) const;
-    virtual void fromXML(const QDomElement& element);
+    virtual bool fromXML(const QDomElement& element);
     virtual int timeEstimate() const;
     virtual bool make(QString type);
     virtual QPixmap pixmap() const;

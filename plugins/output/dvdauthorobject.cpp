@@ -44,8 +44,9 @@ void DvdAuthorObject::actions(QList<KAction*>&) const
   //actionList.append(dvdAuthorProperties);
 }
 
-void DvdAuthorObject::fromXML(const QDomElement&)
+bool DvdAuthorObject::fromXML(const QDomElement&)
 {
+  return true;
 }
 
 int DvdAuthorObject::timeEstimate() const

@@ -60,7 +60,7 @@ class VideoObject : public KMF::MediaObject
     VideoObject(QObject* parent);
     virtual ~VideoObject();
     virtual void toXML(QDomElement& element) const;
-    virtual void fromXML(const QDomElement& element);
+    virtual bool fromXML(const QDomElement& element);
     virtual void writeDvdAuthorXml(QDomElement& element,
                                    QString preferredLanguage,
                                    QString post, QString type);
@@ -127,7 +127,7 @@ class VideoObject : public KMF::MediaObject
     QDVD::AudioList m_audioTracks;
     QDVD::SubtitleList m_subtitles;
 
-    void checkObjectParams();
+    bool checkObjectParams();
     QTime duration(QString file) const;
 
   private:
