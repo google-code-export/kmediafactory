@@ -119,6 +119,8 @@ bool VideoObject::fromXML(const QDomElement& element)
   m_cells.clear();
   m_audioTracks.clear();
   QDomNode n = element.firstChild();
+  bool parseLengths = false;
+
   while(!n.isNull())
   {
     QDomElement e = n.toElement();
@@ -152,6 +154,8 @@ bool VideoObject::fromXML(const QDomElement& element)
               QString name = e2.attribute("name");
               bool chapter = (e2.attribute("chapter") == "1");
 
+              if(!e2.hasAttribute("length"))
+                parseLengths = true;
               int file = e2.attribute("file", 0).toInt();
               if(file > 1)
               {
@@ -205,11 +209,14 @@ bool VideoObject::fromXML(const QDomElement& element)
     }
     n = n.nextSibling();
   }
+  if(parseLengths)
+    parseCellLengths();
   return checkObjectParams();
 }
 
 bool VideoObject::checkObjectParams()
 {
+  kDebug() << k_funcinfo << VideoPluginSettings::defaultAudioLanguage() << endl;
   if(m_files.count() > 0)
   {
     const KMFMediaFile& media = KMFMediaFile::mediaFile(m_files[0]);
