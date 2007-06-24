@@ -133,12 +133,27 @@ QPixmap LanguageListModel::flag(QString languageId) const
 
 QString LanguageListModel::at(int i) const
 {
-  if(m_audio)
-    return m_audio->at(i).language();
-  else if(m_subtitle)
-    return m_subtitle->at(i).language();
-  else
-    return m_languageList.at(i);
+  QString language = "en";
+
+  if(i >= 0)
+  {
+    if(m_audio)
+    {
+      if(i < m_audio->count())
+        language = m_audio->at(i).language();
+    }
+    else if(m_subtitle)
+    {
+      if(i < m_subtitle->count())
+        language = m_subtitle->at(i).language();
+    }
+    else
+    {
+      if(i < m_languageList.count())
+        language = m_languageList.at(i);
+    }
+  }
+  return language;
 }
 
 QModelIndex LanguageListModel::index(const QString& lang) const

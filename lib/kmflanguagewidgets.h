@@ -79,10 +79,7 @@ class KDE_EXPORT KMFLanguageComboBox : public QComboBox
 
     QString language() const
     {
-      if(currentIndex() >= 0)
-        return m_model.at(currentIndex());
-      else
-        return "";
+      return m_model.at(currentIndex());
     }
     void setLanguage(const QString& language)
     {
@@ -109,10 +106,10 @@ class KDE_EXPORT KMFLanguageListBox : public QListView
     QString language() const
     {
       QModelIndexList list = selectionModel()->selectedIndexes();
+      int n = -1;
       if(list.count() > 0)
-        return m_model.at(list.first().row());
-      else
-        return "";
+        n = list.first().row();
+      return m_model.at(n);
     }
     void setLanguage(const QString& language)
     {

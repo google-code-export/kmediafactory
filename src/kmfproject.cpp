@@ -420,7 +420,7 @@ bool KMFProject::save(KUrl url)
   if(KIO::NetAccess::exists(url, false, kmfApp->widget()) && saveas)
   {
     if(KMessageBox::questionYesNo(kmfApp->activeWindow(),
-        i18n("Do you want to overwrite %1").arg(url.prettyUrl()))
+        i18n("Do you want to overwrite %1", url.prettyUrl()))
       == KMessageBox::No)
     {
       return true;
