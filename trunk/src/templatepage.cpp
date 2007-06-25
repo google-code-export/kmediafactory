@@ -68,7 +68,6 @@ void TemplatePage::projectInit()
 void TemplatePage::currentChanged(const QModelIndex& index,
                                   const QModelIndex& previous)
 {
-  kDebug() << k_funcinfo << index.row() << ":" << previous.row() << endl;
   if(!m_settingPrevious && kmfApp->project())
   {
     KMF::TemplateObject* ob = kmfApp->project()->templateObjects()->at(index);
@@ -78,7 +77,7 @@ void TemplatePage::currentChanged(const QModelIndex& index,
       {
         m_menu = 0;
         kmfApp->project()->setTemplateObj(ob);
-        updatePreview();
+        updatePreview(index.row());
       }
       else
       {
@@ -112,41 +111,41 @@ void TemplatePage::currentPageChanged(KPageWidgetItem* current,
   templates->setViewMode(QListView::IconMode);
 }
 
-void TemplatePage::updatePreview()
+void TemplatePage::updatePreview(int n)
 {
-  QModelIndexList selected = templates->selectionModel()->selectedIndexes();
-
-  if(selected.count() > 0)
+  if(n < 0)
   {
-    int n = selected[0].row();
+    QModelIndexList selected = templates->selectionModel()->selectedIndexes();
+    if(selected.count() > 0)
+      n = selected[0].row();
+  }
 
-    if(n < kmfApp->project()->templateObjects()->rowCount())
+  if(n >= 0 && n < kmfApp->project()->templateObjects()->rowCount())
+  {
+    QString menu;
+
+    kmfApp->setOverrideCursor(QCursor(Qt::WaitCursor));
+    kmfApp->uiInterface()->setUseMessageBox(true);
+    kmfApp->uiInterface()->setStopped(false);
+    if(kmfApp->project()->mediaObjects()->count() > 0 &&
+      previewCheckBox->isChecked())
     {
-      QString menu;
-
-      kmfApp->setOverrideCursor(QCursor(Qt::WaitCursor));
-      kmfApp->uiInterface()->setUseMessageBox(true);
-      kmfApp->uiInterface()->setStopped(false);
-      if(kmfApp->project()->mediaObjects()->count() > 0 &&
-        previewCheckBox->isChecked())
-      {
-        KMF::TemplateObject* ob =
-            kmfApp->project()->templateObjects()->at(templates->currentIndex());
-        QStringList menus = ob->menus();
-        if(m_menu < menus.count())
-          menu = menus[m_menu];
-        else
-          menu = "Main";
-      }
-      KMF::TemplateObject* ob = kmfApp->project()->templateObjects()->at(n);
-      // Scale to real 4:3. Should get aspect ratio from template plugin?
-      QImage image = ob->preview(menu).scaled(768, 576, Qt::IgnoreAspectRatio,
-                                              Qt::SmoothTransformation);
-      templatePreview->setImage(image);
-      kmfApp->uiInterface()->setUseMessageBox(false);
-      kmfApp->restoreOverrideCursor();
-      m_lastUpdate = QDateTime::currentDateTime();
+      KMF::TemplateObject* ob =
+          kmfApp->project()->templateObjects()->at(templates->currentIndex());
+      QStringList menus = ob->menus();
+      if(m_menu < menus.count())
+        menu = menus[m_menu];
+      else
+        menu = "Main";
     }
+    KMF::TemplateObject* ob = kmfApp->project()->templateObjects()->at(n);
+    // Scale to real 4:3. Should get aspect ratio from template plugin?
+    QImage image = ob->preview(menu).scaled(768, 576, Qt::IgnoreAspectRatio,
+                                            Qt::SmoothTransformation);
+    templatePreview->setImage(image);
+    kmfApp->uiInterface()->setUseMessageBox(false);
+    kmfApp->restoreOverrideCursor();
+    m_lastUpdate = QDateTime::currentDateTime();
   }
 }
 
