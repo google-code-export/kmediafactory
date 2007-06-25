@@ -22,10 +22,12 @@
 
 #include "kmf_stddef.h"
 #include <kstandarddirs.h>
+#include "kdebug.h"
 #include <QComboBox>
 #include <QListView>
 #include <QPixmap>
 #include <QAbstractListModel>
+#include <QMetaProperty>
 
 /**
 @author Petri Damsten
