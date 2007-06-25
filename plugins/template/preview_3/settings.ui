@@ -1,206 +1,206 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>TemplateOptionsLayout</class>
-<widget class="QWidget">
-    <property name="name">
-        <cstring>TemplateOptionsLayout</cstring>
+<ui version="4.0" stdsetdef="1" >
+  <author></author>
+  <comment></comment>
+  <exportmacro></exportmacro>
+  <class>TemplateOptionsLayout</class>
+  <widget class="QWidget" name="TemplateOptionsLayout" >
+    <property name="geometry" >
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>369</width>
+        <height>512</height>
+      </rect>
     </property>
-    <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>369</width>
-            <height>512</height>
-        </rect>
+    <property name="windowTitle" >
+      <string>Template Options</string>
     </property>
-    <property name="caption">
-        <string>Template Options</string>
-    </property>
-    <vbox>
-        <property name="name">
-            <cstring>unnamed</cstring>
-        </property>
-        <property name="margin">
-            <number>0</number>
-        </property>
-        <widget class="QLabel">
-            <property name="name">
-                <cstring>backgroundImageLabel</cstring>
-            </property>
-            <property name="text">
-                <string>Bac&amp;kground Image:</string>
-            </property>
-            <property name="buddy" stdset="0">
-                <cstring>kcfg_background::url</cstring>
-            </property>
+    <layout class="QVBoxLayout" >
+      <property name="margin" >
+        <number>0</number>
+      </property>
+      <item>
+        <widget class="QLabel" name="backgroundImageLabel" >
+          <property name="text" >
+            <string>Bac&amp;kground Image:</string>
+          </property>
+          <property name="buddy" stdset="0" >
+            <cstring>kcfg_background::url</cstring>
+          </property>
+          <property name="wordWrap" >
+            <bool>false</bool>
+          </property>
         </widget>
-        <widget class="KURLRequester">
-            <property name="name">
-                <cstring>kcfg_background::url</cstring>
-            </property>
-            <property name="mode">
-                <number>9</number>
-            </property>
+      </item>
+      <item>
+        <widget class="KURLRequester" name="kcfg_background::url" >
+          <property name="mode" >
+            <number>9</number>
+          </property>
         </widget>
-        <widget class="QLabel">
-            <property name="name">
-                <cstring>textLabel1</cstring>
-            </property>
-            <property name="text">
-                <string>Back&amp;ground Sound:</string>
-            </property>
-            <property name="buddy" stdset="0">
-                <cstring>kcfg_sound</cstring>
-            </property>
+      </item>
+      <item>
+        <widget class="QLabel" name="textLabel1" >
+          <property name="text" >
+            <string>Back&amp;ground Sound:</string>
+          </property>
+          <property name="buddy" stdset="0" >
+            <cstring>kcfg_sound</cstring>
+          </property>
+          <property name="wordWrap" >
+            <bool>false</bool>
+          </property>
         </widget>
-        <widget class="KURLRequester">
-            <property name="name">
-                <cstring>kcfg_sound</cstring>
-            </property>
-            <property name="mode">
-                <number>9</number>
-            </property>
+      </item>
+      <item>
+        <widget class="KURLRequester" name="kcfg_sound" >
+          <property name="mode" >
+            <number>9</number>
+          </property>
         </widget>
-        <widget class="QLabel">
-            <property name="name">
-                <cstring>mainTitleFontLabel</cstring>
-            </property>
-            <property name="text">
-                <string>&amp;Main Title Font:</string>
-            </property>
-            <property name="buddy" stdset="0">
-                <cstring>kcfg_main::font</cstring>
-            </property>
+      </item>
+      <item>
+        <widget class="QLabel" name="mainTitleFontLabel" >
+          <property name="text" >
+            <string>&amp;Main Title Font:</string>
+          </property>
+          <property name="buddy" stdset="0" >
+            <cstring>kcfg_main::font</cstring>
+          </property>
+          <property name="wordWrap" >
+            <bool>false</bool>
+          </property>
         </widget>
-        <widget class="KMFFontChooser">
-            <property name="name">
-                <cstring>kcfg_main::font</cstring>
-            </property>
+      </item>
+      <item>
+        <widget class="KFontRequester" name="kcfg_main::font" />
+      </item>
+      <item>
+        <widget class="QLabel" name="textLabel3" >
+          <property name="text" >
+            <string>&amp;Title Font:</string>
+          </property>
+          <property name="buddy" stdset="0" >
+            <cstring>kcfg_title::font</cstring>
+          </property>
+          <property name="wordWrap" >
+            <bool>false</bool>
+          </property>
         </widget>
-        <widget class="QLabel">
-            <property name="name">
-                <cstring>textLabel3</cstring>
-            </property>
-            <property name="text">
-                <string>&amp;Title Font:</string>
-            </property>
-            <property name="buddy" stdset="0">
-                <cstring>kcfg_title::font</cstring>
-            </property>
+      </item>
+      <item>
+        <widget class="KFontRequester" name="kcfg_title::font" />
+      </item>
+      <item>
+        <widget class="QLabel" name="colorLabel" >
+          <property name="text" >
+            <string>Font C&amp;olor:</string>
+          </property>
+          <property name="buddy" stdset="0" >
+            <cstring>kcfg_label::color</cstring>
+          </property>
+          <property name="wordWrap" >
+            <bool>false</bool>
+          </property>
         </widget>
-        <widget class="KMFFontChooser">
-            <property name="name">
-                <cstring>kcfg_title::font</cstring>
+      </item>
+      <item>
+        <widget class="KColorCombo" name="kcfg_label::color" />
+      </item>
+      <item>
+        <widget class="Q3GroupBox" name="directPlayGroupBox" >
+          <property name="title" >
+            <string>Direct Play</string>
+          </property>
+          <layout class="QVBoxLayout" >
+            <property name="margin" >
+              <number>0</number>
             </property>
-        </widget>
-        <widget class="QLabel">
-            <property name="name">
-                <cstring>colorLabel</cstring>
-            </property>
-            <property name="text">
-                <string>Font C&amp;olor:</string>
-            </property>
-            <property name="buddy" stdset="0">
-                <cstring>kcfg_label::color</cstring>
-            </property>
-        </widget>
-        <widget class="KColorCombo">
-            <property name="name">
-                <cstring>kcfg_label::color</cstring>
-            </property>
-        </widget>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>directPlayGroupBox</cstring>
-            </property>
-            <property name="title">
-                <string>Direct Play</string>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>kcfg_direct_play</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>true</bool>
-                    </property>
-                    <property name="text">
-                        <string>Pla&amp;y first track when disc entered</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+Y</string>
-                    </property>
-                </widget>
-            </vbox>
-        </widget>
-        <widget class="QLabel">
-            <property name="name">
-                <cstring>jumpLabel</cstring>
-            </property>
-            <property name="text">
-                <string>After playing title:</string>
-            </property>
-        </widget>
-        <widget class="QComboBox">
             <item>
-                <property name="text">
-                    <string>Jump to main menu</string>
+              <widget class="QCheckBox" name="kcfg_direct_play" >
+                <property name="enabled" >
+                  <bool>true</bool>
                 </property>
-            </item>
-            <item>
-                <property name="text">
-                    <string>Jump to next title</string>
+                <property name="text" >
+                  <string>Pla&amp;y first track when disc entered</string>
                 </property>
+                <property name="shortcut" >
+                  <string>Alt+Y</string>
+                </property>
+              </widget>
             </item>
-            <property name="name">
-                <cstring>kcfg_continue_to_next_title</cstring>
-            </property>
-            <property name="currentItem">
-                <number>1</number>
-            </property>
+          </layout>
         </widget>
-        <widget class="QLabel">
-            <property name="name">
-                <cstring>languageLabel</cstring>
-            </property>
-            <property name="text">
-                <string>La&amp;nguage:</string>
-            </property>
-            <property name="buddy" stdset="0">
-                <cstring>kcfg_language</cstring>
-            </property>
+      </item>
+      <item>
+        <widget class="QLabel" name="jumpLabel" >
+          <property name="text" >
+            <string>After playing title:</string>
+          </property>
+          <property name="wordWrap" >
+            <bool>false</bool>
+          </property>
         </widget>
-        <widget class="KMFLanguageListBox">
-            <property name="name">
-                <cstring>kcfg_language</cstring>
+      </item>
+      <item>
+        <widget class="QComboBox" name="kcfg_continue_to_next_title" >
+          <property name="currentIndex" >
+            <number>1</number>
+          </property>
+          <item>
+            <property name="text" >
+              <string>Jump to main menu</string>
             </property>
-            <property name="autoFill">
-                <bool>true</bool>
+          </item>
+          <item>
+            <property name="text" >
+              <string>Jump to next title</string>
             </property>
+          </item>
         </widget>
-    </vbox>
-</widget>
-<customwidgets>
-</customwidgets>
-<includes>
-    <include location="global" impldecl="in implementation">kmediafactory/common.h</include>
-    <include location="global" impldecl="in implementation">kiconloader.h</include>
-</includes>
-<pixmapfunction>BTN_ICON</pixmapfunction>
-<layoutdefaults spacing="6" margin="11"/>
-<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
-<includehints>
-    <includehint>kurlrequester.h</includehint>
-    <includehint>klineedit.h</includehint>
-    <includehint>kpushbutton.h</includehint>
-    <includehint>kurlrequester.h</includehint>
-    <includehint>klineedit.h</includehint>
-    <includehint>kpushbutton.h</includehint>
-    <includehint>kmffontchooser.h</includehint>
-    <includehint>kmffontchooser.h</includehint>
-    <includehint>kcolorcombo.h</includehint>
-    <includehint>kmflanguagewidgets.h</includehint>
-</includehints>
-</UI>
+      </item>
+      <item>
+        <widget class="QLabel" name="languageLabel" >
+          <property name="text" >
+            <string>La&amp;nguage:</string>
+          </property>
+          <property name="buddy" stdset="0" >
+            <cstring>kcfg_language</cstring>
+          </property>
+          <property name="wordWrap" >
+            <bool>false</bool>
+          </property>
+        </widget>
+      </item>
+      <item>
+        <widget class="KMFLanguageListBox" name="kcfg_language" >
+          <property name="autoFill" >
+            <bool>true</bool>
+          </property>
+        </widget>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11" />
+  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
+  <pixmapfunction>BTN_ICON</pixmapfunction>
+  <customwidgets>
+    <customwidget>
+      <class>KMFLanguageListBox</class>
+      <extends>Q3ListBox</extends>
+      <header>kmflanguagelistbox.h</header>
+    </customwidget>
+  </customwidgets>
+  <includes>
+    <include location="local" >kurlrequester.h</include>
+    <include location="local" >klineedit.h</include>
+    <include location="local" >kpushbutton.h</include>
+    <include location="local" >kurlrequester.h</include>
+    <include location="local" >klineedit.h</include>
+    <include location="local" >kpushbutton.h</include>
+    <include location="local" >KFontRequester.h</include>
+    <include location="local" >KFontRequester.h</include>
+    <include location="local" >kcolorcombo.h</include>
+    <include location="local" >kmflanguagewidgets.h</include>
+  </includes>
+</ui>
