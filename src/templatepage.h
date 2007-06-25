@@ -41,7 +41,7 @@ class TemplatePage : public QWidget, public Ui::TemplatePage
     void currentChanged(const QModelIndex& index,
                         const QModelIndex& previous);
     void currentPageChanged(KPageWidgetItem*, KPageWidgetItem*);
-    void updatePreview();
+    void updatePreview(int n = -1);
     void contextMenuRequested(const QPoint &pos);
     void imageContextMenuRequested(const QPoint &pos);
     void projectInit();
