@@ -33,7 +33,7 @@
         </widget>
       </item>
       <item>
-        <widget class="KURLRequester" name="kcfg_background::url" >
+        <widget class="KUrlRequester" name="kcfg_background::url" >
           <property name="mode" >
             <number>9</number>
           </property>
@@ -53,7 +53,7 @@
         </widget>
       </item>
       <item>
-        <widget class="KURLRequester" name="kcfg_chapter_background::url" >
+        <widget class="KUrlRequester" name="kcfg_chapter_background::url" >
           <property name="mode" >
             <number>9</number>
           </property>
@@ -73,7 +73,7 @@
         </widget>
       </item>
       <item>
-        <widget class="KURLRequester" name="kcfg_sound" >
+        <widget class="KUrlRequester" name="kcfg_sound" >
           <property name="mode" >
             <number>9</number>
           </property>
@@ -212,13 +212,13 @@
     </customwidget>
   </customwidgets>
   <includes>
-    <include location="local" >kurlrequester.h</include>
+    <include location="local" >KUrlrequester.h</include>
     <include location="local" >klineedit.h</include>
     <include location="local" >kpushbutton.h</include>
-    <include location="local" >kurlrequester.h</include>
+    <include location="local" >KUrlrequester.h</include>
     <include location="local" >klineedit.h</include>
     <include location="local" >kpushbutton.h</include>
-    <include location="local" >kurlrequester.h</include>
+    <include location="local" >KUrlrequester.h</include>
     <include location="local" >klineedit.h</include>
     <include location="local" >kpushbutton.h</include>
     <include location="local" >KFontRequester.h</include>
