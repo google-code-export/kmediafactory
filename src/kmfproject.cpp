@@ -286,28 +286,15 @@ QString KMFProject::toXML()
   return doc.toString();
 }
 
-// From QtEz by Jan Prokop - GPL-2
-bool KMFProject::mkdir(const QString &path)
-{
-  QDir dir;
-  int pos = 1;
-
-  while((pos = path.indexOf(QDir::separator(), pos)) != -1)
-    dir.mkdir(path.left(pos++));
-
-  return(dir.mkdir(path));
-}
-
 QString KMFProject::directory(const QString& subDir) const
 {
   QString result = m_directory;
   if(!subDir.isEmpty())
-  {
     result = KMF::Tools::joinPaths(result, subDir);
-    QDir dir(result);
-    if(!QDir(result).exists())
-      mkdir(result);
-  }
+
+  QDir dir(result);
+  if(!QDir(result).exists())
+    dir.mkpath(result);
   return KMF::Tools::addSlash(result);
 }
 
@@ -349,7 +336,7 @@ bool KMFProject::make(QString type)
 
   QDir dir(m_directory);
   if(!dir.exists())
-    mkdir(dir.path());
+    dir.mkpath(dir.path());
 
   foreach(obj, m_list.list())
   {

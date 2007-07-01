@@ -671,6 +671,7 @@ QImage VideoObject::getFrame(QTime time, QString file) const
   for(QStringList::ConstIterator it = m_files.begin();
       it != m_files.end(); ++it)
   {
+    //kDebug() << k_funcinfo << *it << endl;
     const KMFMediaFile& media = KMFMediaFile::mediaFile(*it);
     if(t <= KMF::Time(media.duration()))
     {
