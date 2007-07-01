@@ -48,7 +48,7 @@ void SubtitleOptions::getData(QDVD::Subtitle& obj) const
   int n = languageCombo->currentIndex();
 
   obj.setLanguage(m_languageModel.at(n));
-  obj.setFile(subtitleUrl->url().prettyUrl());
+  obj.setFile(subtitleUrl->url().pathOrUrl());
   obj.setFont(subtitleFontChooser->font());
 
   align =  0x10 << verticalAlignCombo->currentIndex();

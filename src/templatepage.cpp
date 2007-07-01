@@ -178,12 +178,12 @@ void TemplatePage::contextMenuRequested(const QPoint &pos)
 void TemplatePage::imageContextMenuRequested(const QPoint& pos)
 {
   QMenu popup;
-  int i = 0;
   QAction* action;
   QAction* saveAction = new QAction(i18n("Save image"), this);
   KMF::TemplateObject* ob =
       kmfApp->project()->templateObjects()->at(templates->currentIndex().row());
   QStringList menus = ob->menus();
+  int i = 0;
 
   popup.addAction(saveAction);
   popup.insertSeparator(saveAction);
@@ -193,8 +193,7 @@ void TemplatePage::imageContextMenuRequested(const QPoint& pos)
     action = new QAction(*it, this);
     action->setCheckable(true);
     action->setData(i);
-    if(i == m_menu)
-      action->setChecked(true);
+    action->setChecked(i == m_menu);
     popup.addAction(action);
   }
   if((action = popup.exec(pos)) != 0)
