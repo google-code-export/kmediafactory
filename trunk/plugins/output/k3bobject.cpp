@@ -60,7 +60,7 @@ bool K3bObject::make(QString type)
   if(DvdDirectoryObject::make(type) == false)
     return false;
   QString app = KStandardDirs::findExe("k3b");
-  QString doc = projectInterface()->projectDir() + "/dvd.k3b";
+  QString doc = projectInterface()->projectDir() + "dvd.k3b";
   saveDocument(KUrl(doc));
   uiInterface()->message(KMF::OK, i18n("K3b project ready"));
   if(app != QString::null)
@@ -151,7 +151,7 @@ bool K3bObject::saveDocumentData(QDomElement* docElem)
   // now do the "real" work: save the entries
   // ----------------------------------------------------------------------
   QDomElement topElem = doc.createElement("files");
-  addFiles(projectInterface()->projectDir() + "/DVD", &doc, &topElem);
+  addFiles(projectInterface()->projectDir("DVD"), &doc, &topElem);
   docElem->appendChild(topElem);
   // ----------------------------------------------------------------------
 

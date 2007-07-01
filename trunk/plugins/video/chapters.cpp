@@ -198,7 +198,7 @@ void Chapters::setData(const QDVD::CellList& cells,
 
 void Chapters::updateVideo()
 {
-  QDir dir(m_obj->projectInterface()->projectDir() + "/media/");
+  QDir dir(m_obj->projectInterface()->projectDir("media"));
   QString file = dir.filePath(QString("%1_frame.pnm") \
       .arg(m_obj->id()));
   QImage img = m_obj->getFrame(m_pos, file);

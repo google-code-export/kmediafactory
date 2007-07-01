@@ -237,7 +237,7 @@ bool DvdDirectoryObject::make(QString type)
   m_lastSize = 0;
 
   KMF::DVDAuthorParser da;
-  da.setFile(projectInterface()->projectDir() +"/dvdauthor.xml");
+  da.setFile(projectInterface()->projectDir() +"dvdauthor.xml");
   int count = da.files().count();
   if(count > 0)
     m_filePoints = m_points / count;

@@ -159,7 +159,7 @@ void OutputPlugin::slotDVDInfo()
 {
 #ifdef HAVE_LIBDVDREAD
   QString projectDir = projectInterface()->projectDir();
-  DVDInfo dlg(kapp->activeWindow(), projectDir + "/DVD/");
+  DVDInfo dlg(kapp->activeWindow(), projectDir + "DVD/");
 
   dlg.exec();
 #endif
