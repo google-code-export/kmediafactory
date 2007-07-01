@@ -55,16 +55,18 @@ class KMFDbusInterface : public QObject
                                      const QString &filter,
                                      const QString &caption);
     virtual void debug(const QString &txt);
+    virtual int  message(const QString &caption, const QString &txt,
+                         int type);
 
     // Progress dialog
-    void progressDialog(const QString &caption, const QString &label,
-                        int maximum);
-    void pdlgSetMaximum(int maximum);
-    void pdlgSetValue(int value);
-    void pdlgSetLabel(const QString &label);
-    void pdlgShowCancelButton(bool show);
-    bool pdlgWasCancelled();
-    void pdlgClose();
+    virtual void progressDialog(const QString &caption, const QString &label,
+                                int maximum);
+    virtual void pdlgSetMaximum(int maximum);
+    virtual void pdlgSetValue(int value);
+    virtual void pdlgSetLabel(const QString &label);
+    virtual void pdlgShowCancelButton(bool show);
+    virtual bool pdlgWasCancelled();
+    virtual void pdlgClose();
 
   private:
     KProgressDialog* m_pdlg;

@@ -25,6 +25,7 @@
 #include <kpagewidget.h>
 #include <kfiledialog.h>
 #include <kprogressdialog.h>
+#include <kmessagebox.h>
 
 KMFDbusInterface::KMFDbusInterface(QObject *parent) :
   QObject(parent), m_pdlg(0)
@@ -175,4 +176,16 @@ void KMFDbusInterface::pdlgClose()
     delete m_pdlg;
     m_pdlg = 0;
   }
+}
+
+int KMFDbusInterface::message(const QString &caption, const QString &txt,
+                              int type)
+{
+  if(type == KMessageBox::Information)
+    KMessageBox::information(kmfApp->mainWindow(), caption, txt);
+  else if(type == KMessageBox::Sorry)
+    KMessageBox::sorry(kmfApp->mainWindow(), caption, txt);
+  else if(type == KMessageBox::Error)
+    KMessageBox::error(kmfApp->mainWindow(), caption, txt);
+  return 0;
 }

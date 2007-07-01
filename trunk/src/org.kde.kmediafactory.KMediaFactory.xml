@@ -46,6 +46,12 @@
         <method name="debug">
             <arg name="txt" type="s" direction="in"/>
         </method>
+        <method name="message">
+            <arg name="caption" type="s" direction="in"/>
+            <arg name="txt" type="s" direction="in"/>
+            <arg name="type" type="i" direction="in"/>
+            <arg name="button" type="i" direction="out"/>
+        </method>
 
         <method name="progressDialog">
           <arg type="s" name="caption" direction="in"/>
