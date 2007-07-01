@@ -24,9 +24,10 @@
 #include <kdebug.h>
 #include <kpagewidget.h>
 #include <kfiledialog.h>
+#include <kprogressdialog.h>
 
 KMFDbusInterface::KMFDbusInterface(QObject *parent) :
-  QObject(parent)
+  QObject(parent), m_pdlg(0)
 {
 }
 
@@ -122,4 +123,56 @@ QString KMFDbusInterface::getOpenFileName(const QString &startDir,
 void KMFDbusInterface::debug(const QString &txt)
 {
   kDebug() << "SCRIPT: " << txt << endl;
+}
+
+void KMFDbusInterface::progressDialog(const QString &caption,
+                                      const QString &label,
+                                      int maximum)
+{
+  if(m_pdlg)
+    delete m_pdlg;
+  m_pdlg = new KProgressDialog(kmfApp->mainWindow(), caption, label);
+  m_pdlg->progressBar()->setMaximum(maximum);
+  m_pdlg->showCancelButton(true);
+}
+
+void KMFDbusInterface::pdlgSetMaximum(int maximum)
+{
+  if(m_pdlg)
+    m_pdlg->progressBar()->setMaximum(maximum);
+}
+
+void KMFDbusInterface::pdlgSetValue(int value)
+{
+  if(m_pdlg)
+    m_pdlg->progressBar()->setValue(value);
+}
+
+void KMFDbusInterface::pdlgSetLabel(const QString &label)
+{
+  if(m_pdlg)
+    m_pdlg->setLabelText(label);
+}
+
+void KMFDbusInterface::pdlgShowCancelButton(bool show)
+{
+  if(m_pdlg)
+    m_pdlg->showCancelButton(show);
+}
+
+bool KMFDbusInterface::pdlgWasCancelled()
+{
+  if(m_pdlg)
+    return m_pdlg->wasCancelled();
+  return false;
+}
+
+void KMFDbusInterface::pdlgClose()
+{
+  if(m_pdlg)
+  {
+    m_pdlg->close();
+    delete m_pdlg;
+    m_pdlg = 0;
+  }
 }
