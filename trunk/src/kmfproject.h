@@ -66,7 +66,6 @@ class KMFProject : public QObject
     const QString& error() const { return m_error; };
     void init();
     int serial() { return ++m_serial; };
-    static bool mkdir(const QString &path);
     void mediaObjFromXML(const QDomElement& e);
     void templateFromXML(const QDomElement& e);
     void outputFromXML(const QDomElement& e);
