@@ -707,7 +707,7 @@ QImage VideoObject::preview(int chap) const
   }
 
   KMF::Time t = chapter(chap).start();
-  QDir dir(projectInterface()->projectDir() + "/media/");
+  QDir dir(projectInterface()->projectDir("media"));
   QString s;
   cacheFile = dir.filePath(s.sprintf("%s_%s.pnm",
       (const char*)m_id.toLocal8Bit(),

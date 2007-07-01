@@ -349,7 +349,7 @@ bool TemplateObject::isUpToDate(QString type)
 
   QDateTime lastModified = projectInterface()->lastModified(
       KMF::ProjectInterface::DirtyMediaOrTemplate);
-  QString file = projectInterface()->projectDir() + "/dvdauthor.xml";
+  QString file = projectInterface()->projectDir() + "dvdauthor.xml";
   QFileInfo fileInfo(file);
 
   if(fileInfo.exists() == false || lastModified > fileInfo.lastModified())
@@ -366,7 +366,7 @@ bool TemplateObject::isUpToDate(QString type)
   {
     if((*it).startsWith("./menus/"))
     {
-      fileInfo.setFile(projectInterface()->projectDir() + "/" + *it);
+      fileInfo.setFile(projectInterface()->projectDir() + *it);
 
       if(fileInfo.exists() == false || lastModified > fileInfo.lastModified())
         return false;

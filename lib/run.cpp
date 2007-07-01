@@ -126,7 +126,7 @@ bool Run::run()
   setEnvironment(env);
 
   checkIfScript();
-  //kDebug() << "Running: " << m_program << m_arguments << endl;
+  kDebug() << "Running: " << m_program << m_arguments << endl;
 
   m_outputIndex = 0;
   start(m_program, m_arguments);
@@ -137,7 +137,7 @@ bool Run::run()
       break;
     kapp->processEvents();
   }
-  //kDebug() << "Output: " << m_output << endl;
+  kDebug() << "Output: " << m_output << endl;
   if(exitStatus() == QProcess::NormalExit || exitCode() == 0)
   {
     return true;
