@@ -22,6 +22,8 @@
 
 #include <QObject>
 
+class KProgressDialog;
+
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
@@ -53,6 +55,19 @@ class KMFDbusInterface : public QObject
                                      const QString &filter,
                                      const QString &caption);
     virtual void debug(const QString &txt);
+
+    // Progress dialog
+    void progressDialog(const QString &caption, const QString &label,
+                        int maximum);
+    void pdlgSetMaximum(int maximum);
+    void pdlgSetValue(int value);
+    void pdlgSetLabel(const QString &label);
+    void pdlgShowCancelButton(bool show);
+    bool pdlgWasCancelled();
+    void pdlgClose();
+
+  private:
+    KProgressDialog* m_pdlg;
 };
 
 #endif

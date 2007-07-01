@@ -46,5 +46,28 @@
         <method name="debug">
             <arg name="txt" type="s" direction="in"/>
         </method>
+
+        <method name="progressDialog">
+          <arg type="s" name="caption" direction="in"/>
+          <arg type="s" name="label" direction="in"/>
+          <arg type="i" name="maximum" direction="in"/>
+        </method>
+        <method name="pdlgSetMaximum">
+          <arg type="i" name="maximum" direction="in"/>
+        </method>
+        <method name="pdlgSetValue">
+          <arg type="i" name="value" direction="in"/>
+        </method>
+        <method name="pdlgSetLabel">
+          <arg type="s" name="label" direction="in"/>
+        </method>
+        <method name="pdlgShowCancelButton">
+          <arg type="b" name="show" direction="in"/>
+        </method>
+        <method name="pdlgWasCancelled">
+          <arg type="b" direction="out"/>
+        </method>
+        <method name="pdlgClose"/>
+
     </interface>
 </node>
