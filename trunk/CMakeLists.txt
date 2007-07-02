@@ -1,5 +1,10 @@
 project(kmediafactory)
 
+set(KMF_MAJOR_VERSION "0")
+set(KMF_MINOR_VERSION "6")
+set(KMF_BUILD_VERSION "0-svn")
+set(VERSION "${KMF_MAJOR_VERSION}.${KMF_MINOR_VERSION}.${KMF_BUILD_VERSION}")
+
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules )
 
 find_package(KDE4 REQUIRED)
@@ -11,13 +16,6 @@ find_package(Fontconfig REQUIRED)
 find_package(LibDvdread)
 
 macro_bool_to_01(LIBDVDREAD_FOUND HAVE_LIBDVDREAD)
-
-#find_package(libdv)
-#find_package(dvdread)
-#find_package(xinerama)
-#find_package(theora)
-#find_package(ogg)
-#find_package(unopkg)
 
 check_function_exists(va_copy VA_COPY)
 
@@ -37,8 +35,6 @@ add_definitions(
     -DHAVE_CONFIG_H=1
 )
 
-#link_directories(${KDE4_LIB_DIR})
-
 include_directories(
     ${QDBUS_INCLUDE_DIRS}
     ${CMAKE_SOURCE_DIR}
@@ -57,3 +53,28 @@ add_subdirectory(mimetypes)
 add_subdirectory(icons)
 add_subdirectory(scripts)
 add_subdirectory(media)
+
+# CPack
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "KMediaFactory is easy to use template based dvd authoring tool.")
+set(CPACK_PACKAGE_VENDOR "KMediaFactory Team")
+set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "KMediaFactory ${VERSION}")
+set(CPACK_PACKAGE_EXECUTABLES "kmediafactory")
+set(CPACK_SOURCE_PACKAGE_FILE_NAME "kmediafactory-${VERSION}")
+set(CPACK_SOURCE_GENERATOR TBZ2)
+set(CPACK_SOURCE_IGNORE_FILES
+  "\\.svn/"
+  "debug/"
+  "commit.sh"
+  "dist.sh"
+  "links.sh"
+  "snapshot.sh"
+  "kmediafactory.kdevelop"
+  "kmediafactory.kdevelop.pcs"
+  "kmediafactory.kdevses"
+  "snapshot.changelog"
+  "*.tar.bz2"
+  "~$"
+)
+include(CPack)
