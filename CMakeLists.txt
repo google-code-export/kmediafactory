@@ -62,10 +62,12 @@ set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "KMediaFactory ${VERSION}")
 set(CPACK_PACKAGE_EXECUTABLES "kmediafactory")
 set(CPACK_SOURCE_PACKAGE_FILE_NAME "kmediafactory-${VERSION}")
-set(CPACK_SOURCE_GENERATOR TBZ2)
+SET(CPACK_GENERATOR "TBZ2")
+set(CPACK_SOURCE_GENERATOR "TBZ2")
 set(CPACK_SOURCE_IGNORE_FILES
-  "\\.svn/"
+  ".svn/"
   "debug/"
+  "templates/"
   "commit.sh"
   "dist.sh"
   "links.sh"
@@ -74,7 +76,7 @@ set(CPACK_SOURCE_IGNORE_FILES
   "kmediafactory.kdevelop.pcs"
   "kmediafactory.kdevses"
   "snapshot.changelog"
-  "*.tar.bz2"
+  ".*.tar.bz2"
   "~$"
 )
 include(CPack)
