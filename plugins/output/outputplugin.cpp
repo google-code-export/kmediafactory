@@ -71,6 +71,7 @@ OutputPlugin::OutputPlugin(QObject *parent, const QStringList&) :
   actionCollection()->addAction("dvd_info", dvdInfo);
   connect(dvdInfo, SIGNAL(triggered()), SLOT(slotDVDInfo()));
 #endif
+  /*
   if(!m_kmfplayer.isEmpty())
   {
     addPreviewDVD =new KAction(KIcon("viewmag"), i18n("Preview DVD"), parent);
@@ -78,6 +79,7 @@ OutputPlugin::OutputPlugin(QObject *parent, const QStringList&) :
     actionCollection()->addAction("preview_dvd", addPreviewDVD);
     connect(addPreviewDVD, SIGNAL(triggered()), SLOT(slotPreviewDVD()));
   }
+  */
   if(!m_xine.isEmpty())
   {
     addPreviewDVDXine =new KAction(KIcon("xine"),

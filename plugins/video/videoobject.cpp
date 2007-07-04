@@ -481,6 +481,10 @@ bool VideoObject::writeSpumuxXml(QDomDocument& doc,
   textsub.setAttribute("filename", subFile);
   textsub.setAttribute("vertical-alignment", subtitle.verticalAlign());
   textsub.setAttribute("horizontal-alignment", subtitle.horizontalAlign());
+  textsub.setAttribute("left-margin", 40);
+  textsub.setAttribute("right-margin", 40);
+  textsub.setAttribute("top-margin", 30);
+  textsub.setAttribute("bottom-margin", 40);
   textsub.setAttribute("movie-width", "720");
   if(projectInterface()->type() == "DVD-PAL")
   {
