@@ -146,6 +146,7 @@ bool KMFUiInterface::message(KMF::MsgType type, const QString& msg)
       dlgType = KMessageBox::Information;
       break;
   }
+  setItemTotalSteps(-1);
   QListView* lv = mainWindow->outputPage->progressListView;
   KMFProgressItemModel* model = static_cast<KMFProgressItemModel*>(lv->model());
   KMFProgressItem item;
@@ -173,9 +174,9 @@ bool KMFUiInterface::progress(int advance)
   if(advance)
   {
     /*
-    kdDebug() << k_funcinfo
-        << mainWindow->outputPage->progressBar->progress() << " + " << advance
-        << " / " << mainWindow->outputPage->progressBar->totalSteps()
+    kDebug() << k_funcinfo
+        << mainWindow->outputPage->progressBar->value() << " + " << advance
+        << " / " << mainWindow->outputPage->progressBar->maximum()
         << endl;
     */
     mainWindow->outputPage->progressBar->setValue(

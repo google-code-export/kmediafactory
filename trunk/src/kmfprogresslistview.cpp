@@ -33,8 +33,12 @@ QVariant KMFProgressItemModel::data(const QModelIndex &index, int role) const
 
   if (role == Qt::DisplayRole)
     return at(index).text;
-  if (role == Qt::DecorationRole)
+  else if (role == Qt::DecorationRole)
     return KIcon(at(index).pixmap);
+  else if (role == Qt::UserRole)
+    return at(index).value;
+  else if (role == Qt::UserRole + 1)
+    return at(index).max;
   return QVariant();
 }
 
@@ -45,13 +49,16 @@ void KMFProgressItemDelegate::paint(QPainter* painter,
                                     const QStyleOptionViewItem& option,
                                     const QModelIndex& index) const
 {
-  KMFProgressItem item = index.data().value<KMFProgressItem>();
+  int value = index.data(Qt::UserRole).toInt();
+  int max = index.data(Qt::UserRole + 1).toInt();
+  QRect rc = option.rect;
+  QStyleOptionViewItemV2 v2 = option;
 
   painter->save();
-  QItemDelegate::paint(painter, option, index);
-  QRect rc = option.rect;
+  v2.features &= ~QStyleOptionViewItemV2::WrapText;
+  QItemDelegate::paint(painter, v2, index);
 
-  if(item.value < item.max)
+  if(value < max)
   {
     // Paint gradient
     QRect rc2(rc.width() - BARW - GRADIENTW, rc.y(), GRADIENTW, rc.height());
@@ -62,8 +69,8 @@ void KMFProgressItemDelegate::paint(QPainter* painter,
     painter->fillRect(rc2, fade);
     // Paint progress bar
     QProgressBar bar;
-    bar.setRange(0, item.max);
-    bar.setValue(item.value);
+    bar.setRange(0, max);
+    bar.setValue(value);
     bar.resize(BARW, rc.height());
     QPixmap barPixmap = QPixmap::grabWidget(&bar, QRect(0, 0, BARW, rc.height()));
     painter->drawPixmap(rc.width() - BARW, rc.y(), barPixmap);
