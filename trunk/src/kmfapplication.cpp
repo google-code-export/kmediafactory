@@ -31,7 +31,6 @@
 #include <kdebug.h>
 #include <kmainwindow.h>
 #include <klocale.h>
-#include <kserviceoffer.h>
 #include <ktoolinvocation.h>
 #include <klauncher_iface.h>
 #include <QObject>

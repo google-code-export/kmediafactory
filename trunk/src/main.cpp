@@ -26,23 +26,20 @@
 #include <klocale.h>
 #include <kdebug.h>
 
-static const char description[] =
-  I18N_NOOP("Template based DVD authoring software.");
-
-static const char version[] = VERSION;
-
-static KCmdLineOptions options[] =
-{
-  { "+[URL]", I18N_NOOP( "Document to open" ), 0 },
-  KCmdLineLastOption
-};
-
 int main(int argc, char **argv)
 {
-  KAboutData about(PACKAGE, I18N_NOOP("KMediaFactory"), version,
-    description, KAboutData::License_GPL, "(C) 2005 Petri Damsten", 0,
-    0, "petri.damsten@iki.fi");
-  about.addAuthor("Petri Damsten", 0, "petri.damsten@iki.fi");
+  KAboutData about(PACKAGE, 0,
+                   ki18n("KMediaFactory"), VERSION,
+                   ki18n("Template based DVD authoring software."),
+                   KAboutData::License_GPL,
+                   ki18n(COPYRIGHT), KLocalizedString(),
+                   HOMEPAGE, BUG_EMAIL);
+  about.addAuthor(ki18n("Petri Damsten"), ki18n("Developer"),
+                  "petri.damsten@iki.fi");
+  about.setOrganizationDomain("kde.org");
+
+  KCmdLineOptions options;
+  options.add("+[URL]", ki18n("Document to open"));
   KCmdLineArgs::init(argc, argv, &about);
   KCmdLineArgs::addCmdLineOptions(options);
   KMFApplication app;
