@@ -63,6 +63,7 @@ class KMFListModel : public QAbstractListModel
     void insert(const QModelIndex &index, const QList<T>& values);
     bool isValid(const QModelIndex &index) const;
     QModelIndex indexOf(const T& value, int from = 0) const;
+    QModelIndex lastIndex() const { return index(count() - 1); };
 
     void clear();
     void append(const T& value);
