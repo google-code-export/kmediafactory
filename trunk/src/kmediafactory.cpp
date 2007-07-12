@@ -109,7 +109,7 @@ KMediaFactory::KMediaFactory()
   templatePage = new TemplatePage;
   m_templatePageItem = new KPageWidgetItem(templatePage, i18n("Template"));
   m_templatePageItem->setHeader(i18n("Template"));
-  m_templatePageItem->setIcon(KIcon("image2"));
+  m_templatePageItem->setIcon(KIcon("folder-image"));
   m_janus->addPage(m_templatePageItem);
   connect(m_janus,
           SIGNAL(currentPageChanged(KPageWidgetItem*, KPageWidgetItem*)),
@@ -118,9 +118,9 @@ KMediaFactory::KMediaFactory()
 
   // Output
   outputPage = new OutputPage;
-  m_ouputPageItem = new KPageWidgetItem(outputPage, i18n("Ouput"));
+  m_ouputPageItem = new KPageWidgetItem(outputPage, i18n("Output"));
   m_ouputPageItem->setHeader(i18n("Output"));
-  m_ouputPageItem->setIcon(KIcon("cdwriter-unmount"));
+  m_ouputPageItem->setIcon(KIcon("media-optical"));
   m_janus->addPage(m_ouputPageItem);
   connect(m_janus,
           SIGNAL(currentPageChanged(KPageWidgetItem*, KPageWidgetItem*)),
