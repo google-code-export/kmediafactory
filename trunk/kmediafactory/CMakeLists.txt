@@ -14,7 +14,6 @@ set(kmediafactoryinclude_HEADERS
   kmfobject.h
 )
 
-kde4_automoc(${kmediafactoryinterfaces_LIB_SRCS})
 kde4_add_library(kmediafactoryinterfaces SHARED ${kmediafactoryinterfaces_LIB_SRCS})
 target_link_libraries(kmediafactoryinterfaces ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS})
 set_target_properties(kmediafactoryinterfaces PROPERTIES VERSION 1.0.0 SOVERSION 1)

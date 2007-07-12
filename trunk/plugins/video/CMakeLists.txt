@@ -25,7 +25,6 @@ kde4_add_kcfg_files(kmediafactory_video_SRCS
   videopluginsettings.kcfgc
 )
 
-kde4_automoc(${kmediafactory_video_SRCS})
 kde4_add_plugin(kmediafactory_video ${kmediafactory_video_SRCS})
 target_link_libraries(kmediafactory_video ${KDE4_KDECORE_LIBS} kmediafactoryinterfaces kmf)
 

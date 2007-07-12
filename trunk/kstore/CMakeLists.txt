@@ -8,7 +8,6 @@ set(kmediafactorykstore_LIB_SRCS
    KoStoreBase.cpp
 )
 
-kde4_automoc(${kmediafactorykstore_LIB_SRCS})
 kde4_add_library(kmediafactorykstore SHARED ${kmediafactorykstore_LIB_SRCS})
 target_link_libraries(kmediafactorykstore ${KDE4_KIO_LIBS})
 set_target_properties(kmediafactorykstore PROPERTIES VERSION 1.0.0 SOVERSION 1)

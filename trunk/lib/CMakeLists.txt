@@ -42,7 +42,6 @@ kde4_add_ui_files(kmf_LIB_SRCS
   kmfmultiurldialog.ui
 )
 
-kde4_automoc(${kmf_LIB_SRCS})
 kde4_add_library(kmf SHARED ${kmf_LIB_SRCS})
 target_link_libraries(kmf ${KDE4_KDECORE_LIBS} ${QT_QTXML_LIBRARY} ${KDE4_KUTILS_LIBS} ${XINE_LIBRARY} ${FONTCONFIG_LIBRARIES})
 if(LIBDVDREAD_FOUND)

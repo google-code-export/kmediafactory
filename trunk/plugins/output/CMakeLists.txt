@@ -18,7 +18,6 @@ kde4_add_ui_files(kmediafactory_output_SRCS
   dvdinfo.ui
 )
 
-kde4_automoc(${kmediafactory_output_SRCS})
 kde4_add_plugin(kmediafactory_output ${kmediafactory_output_SRCS})
 target_link_libraries(kmediafactory_output ${KDE4_KDECORE_LIBS} kmediafactoryinterfaces kmf kmediafactorykstore)
 
