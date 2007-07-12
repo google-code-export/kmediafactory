@@ -542,7 +542,7 @@ void VideoObject::output(K3Process* process, char* buffer, int buflen)
     {
       if(m_lastUpdate.elapsed() > 250)
       {
-        if(uiInterface()->setItemProgress(bytes.cap(1).toInt() / 1024))
+        if(uiInterface()->setItemProgress(bytes.cap(1).toULongLong() / 1024))
           process->kill();
         m_lastUpdate.start();
       }
