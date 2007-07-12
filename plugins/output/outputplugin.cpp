@@ -40,14 +40,12 @@
 #include "dvdinfo.h"
 #endif
 
-static const char description[] =
-  I18N_NOOP("Output plugin for KMediaFactory.");
-static const char version[] = VERSION;
-static const KAboutData about("kmediafactory_output",
-                              I18N_NOOP("KMediaFactory Output"),
-                              version, description, KAboutData::License_GPL,
-                              "(C) 2005-2007 Petri Damsten", 0, 0,
-                              "petri.damsten@iki.fi");
+static const KAboutData about("kmediafactory_output", 0,
+                              ki18n("KMediaFactory Output"), VERSION,
+                              ki18n("Output plugin for KMediaFactory."),
+                              KAboutData::License_GPL,
+                              ki18n(COPYRIGHT), KLocalizedString(),
+                              HOMEPAGE, BUG_EMAIL);
 
 typedef KGenericFactory<OutputPlugin> OutputFactory;
 K_EXPORT_COMPONENT_FACTORY(kmediafactory_output, OutputFactory(&about))

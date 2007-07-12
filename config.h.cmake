@@ -8,6 +8,9 @@
 
 /* Name of package */
 #define PACKAGE "kmediafactory"
+#define COPYRIGHT "(C) 2005-2007 Petri Damsten"
+#define HOMEPAGE  "http://www.iki.fi/damu/software/kmediafactory/"
+#define BUG_EMAIL "petri.damsten@iki.fi"
 
 /* Define if you have libdvdread */
 #cmakedefine HAVE_LIBDVDREAD 1
