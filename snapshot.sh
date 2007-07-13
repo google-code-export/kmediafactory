@@ -11,6 +11,7 @@ WEBDIR="/httpdocs/damu/software/kmediafactory"
 CHANGELOG="snapshot.changelog"
 US_DATE=`date +%Y-%m-%d`
 SVN="https://kmediafactory.googlecode.com/svn/"
+SNAPSHOT_HTML="snapshot_kde4.html"
 
 KMF=`pwd`
 ABC="bcdefghijklmnopqrstuvxyz"
@@ -110,12 +111,12 @@ function make_html()
 {
   echo "Making html files..."
 
-  HTML="$LOCALKMFDIR/snapshot_kde4.html"
+  HTML="$LOCALKMFDIR/$SNAPSHOT_HTML"
 
   echo "HTML Changelog to web page."
 
   echo -e "<h1>KDE 4 snapshots</h1>\n" > $HTML
-  date +"<h2>%d.%m.%Y</h2>" > $HTML
+  date +"<h2>%d.%m.%Y</h2>" >> $HTML
 
   echo -e "<h3>Changelog</h3>\n" >> $HTML
   sed -e "s/-\(.*\)/<li>\1<\/li>/" \
@@ -141,12 +142,14 @@ function upload()
   PASS=`dcop kded kwalletd readPassword $ID ftp $SITE-pass`
   dcop kded kwalletd close $ID
   ftp -inv $SITE <<EOF
-user $USER $PASS
+user $USER
+pass $PASS
 binary
 cd $WEBDIR
-put $DESTINATION.md5
-put $DESTINATION
-put $HTML
+lcd $LOCALKMFDIR
+put $BZ2FILE.md5
+put $BZ2FILE
+put $SNAPSHOT_HTML
 quit
 EOF
 }
@@ -160,7 +163,7 @@ make_snapshot
 echo -n "Upload (y/N): "
 read ans
 if [ "$ans" == y -o "$ans" == Y ]; then
-  tag_svn
+#tag_svn
   make_html
   upload
 fi
