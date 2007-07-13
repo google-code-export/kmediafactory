@@ -1,0 +1,749 @@
+# translation of libkmf.po to Finnish
+# This file is put in the public domain.
+#
+# Petri Damsten <petri.damsten@iki.fi>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: libkmf\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-02-10 09:20+0200\n"
+"PO-Revision-Date: 2006-02-09 12:38+0200\n"
+"Last-Translator: Petri Damsten <petri.damsten@iki.fi>\n"
+"Language-Team: Finnish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.1\n"
+
+#: kmffontchooser.cpp:41
+msgid "Font..."
+msgstr "Kirjasin..."
+
+#: kmfmultiurldialog.cpp:109
+msgid "Cannot add directory."
+msgstr "Hakemistoa ei voi lisätä."
+
+#. i18n: file kmfmultiurldialoglayout.ui line 16
+#: kmfmultiurldialoglayout.cpp:119 rc.cpp:3
+#, no-c-format
+msgid "Title"
+msgstr "Otsake"
+
+#. i18n: file kmfmultiurldialoglayout.ui line 71
+#: kmfmultiurldialoglayout.cpp:122 rc.cpp:10
+#, no-c-format
+msgid "Alt+Ins"
+msgstr "Alt+Ins"
+
+#. i18n: file kmfmultiurldialoglayout.ui line 80
+#: kmfmultiurldialoglayout.cpp:123 rc.cpp:13
+#, no-c-format
+msgid "Add (Alt+ Insert)"
+msgstr "Lisää (Alt+ Insert)"
+
+#. i18n: file kmfmultiurldialoglayout.ui line 91
+#: kmfmultiurldialoglayout.cpp:125 rc.cpp:17
+#, no-c-format
+msgid "Alt+Del"
+msgstr "Alt+Del"
+
+#. i18n: file kmfmultiurldialoglayout.ui line 100
+#: kmfmultiurldialoglayout.cpp:126 rc.cpp:20
+#, no-c-format
+msgid "Remove (Alt + Delete)"
+msgstr "Poista (Alt + Delete)"
+
+#. i18n: file kmfmultiurldialoglayout.ui line 128
+#: kmfmultiurldialoglayout.cpp:128 rc.cpp:24
+#, no-c-format
+msgid "Alt+Up"
+msgstr "Alt+Up"
+
+#. i18n: file kmfmultiurldialoglayout.ui line 137
+#: kmfmultiurldialoglayout.cpp:129 rc.cpp:27
+#, no-c-format
+msgid "Move up (Alt + Up)"
+msgstr "Siirrä ylöspäin (Alt + Up)"
+
+#. i18n: file kmfmultiurldialoglayout.ui line 148
+#: kmfmultiurldialoglayout.cpp:131 rc.cpp:31
+#, no-c-format
+msgid "Alt+Down"
+msgstr "Alt+Down"
+
+#. i18n: file kmfmultiurldialoglayout.ui line 157
+#: kmfmultiurldialoglayout.cpp:132 rc.cpp:34
+#, no-c-format
+msgid "Move down (Alt + Down)"
+msgstr "Siirrä alaspäin (Alt + Down)"
+
+#. i18n: file kmfmultiurldialoglayout.ui line 203
+#: kmfmultiurldialoglayout.cpp:134 rc.cpp:40
+#, no-c-format
+msgid "Alt+O"
+msgstr "Alt+O"
+
+#. i18n: file kmfmultiurldialoglayout.ui line 220
+#: kmfmultiurldialoglayout.cpp:135 rc.cpp:43
+#, no-c-format
+msgid "C&ancel"
+msgstr "&Peruuta"
+
+#. i18n: file kmfmultiurldialoglayout.ui line 223
+#: kmfmultiurldialoglayout.cpp:136 rc.cpp:46
+#, no-c-format
+msgid "Alt+A"
+msgstr "Alt+A"
+
+#: qdvdinfo.cpp:52 qdvdinfo.cpp:54
+msgid "Not Specified"
+msgstr "Ei määritelty"
+
+#: qdvdinfo.cpp:53
+msgid "Unknown"
+msgstr "Tuntematon"
+
+#: qdvdinfo.cpp:55
+msgid "Abkhazian"
+msgstr "Abhaasi"
+
+#: qdvdinfo.cpp:56
+msgid "Afan (Oromo)"
+msgstr "Afan (Oromo)"
+
+#: qdvdinfo.cpp:57
+msgid "Afar"
+msgstr "Afar"
+
+#: qdvdinfo.cpp:58
+msgid "Afrikaans"
+msgstr "Afrikaans"
+
+#: qdvdinfo.cpp:59
+msgid "Albanian"
+msgstr "Albania"
+
+#: qdvdinfo.cpp:60
+msgid "Amharic"
+msgstr "Amhara"
+
+#: qdvdinfo.cpp:61
+msgid "Arabic"
+msgstr "Arabia"
+
+#: qdvdinfo.cpp:62
+msgid "Armenian"
+msgstr "Armenia"
+
+#: qdvdinfo.cpp:63
+msgid "Assamese"
+msgstr "Assami"
+
+#: qdvdinfo.cpp:64
+msgid "Aymara"
+msgstr "Aimara"
+
+#: qdvdinfo.cpp:65
+msgid "Azerbaijani"
+msgstr "Azeri"
+
+#: qdvdinfo.cpp:66
+msgid "Bashkir"
+msgstr "Baškiiri"
+
+#: qdvdinfo.cpp:67
+msgid "Basque"
+msgstr "Baski"
+
+#: qdvdinfo.cpp:68
+msgid "Bengali;Bangla"
+msgstr "Bengali"
+
+#: qdvdinfo.cpp:69
+msgid "Bhutani"
+msgstr "Bhutani"
+
+#: qdvdinfo.cpp:70
+msgid "Bihari"
+msgstr "Bihari"
+
+#: qdvdinfo.cpp:71
+msgid "Bislama"
+msgstr "Bislama"
+
+#: qdvdinfo.cpp:72
+msgid "Breton"
+msgstr "Bretoni"
+
+#: qdvdinfo.cpp:73
+msgid "Bulgarian"
+msgstr "Bulgaria"
+
+#: qdvdinfo.cpp:74
+msgid "Burmese"
+msgstr "Burma"
+
+#: qdvdinfo.cpp:75
+msgid "Byelorussian"
+msgstr "Valkovenäjä"
+
+#: qdvdinfo.cpp:76
+msgid "Cambodian"
+msgstr "Kambodža"
+
+#: qdvdinfo.cpp:77
+msgid "Catalan"
+msgstr "Katalaani"
+
+#: qdvdinfo.cpp:78
+msgid "Chinese"
+msgstr "Kiina"
+
+#: qdvdinfo.cpp:79
+msgid "Corsican"
+msgstr "Korsika"
+
+#: qdvdinfo.cpp:80
+msgid "Croatian"
+msgstr "Kroatia"
+
+#: qdvdinfo.cpp:81
+msgid "Czech"
+msgstr "Tsekki"
+
+#: qdvdinfo.cpp:82
+msgid "Danish"
+msgstr "Tanska"
+
+#: qdvdinfo.cpp:83
+msgid "Dutch"
+msgstr "Hollanti"
+
+#: qdvdinfo.cpp:84
+msgid "English"
+msgstr "Englanti"
+
+#: qdvdinfo.cpp:85
+msgid "Esperanto"
+msgstr "Esperanto"
+
+#: qdvdinfo.cpp:86
+msgid "Estonian"
+msgstr "Eesti"
+
+#: qdvdinfo.cpp:87
+msgid "Faroese"
+msgstr "Fääri"
+
+#: qdvdinfo.cpp:88
+msgid "Fiji"
+msgstr "Fiji"
+
+#: qdvdinfo.cpp:89
+msgid "Finnish"
+msgstr "Suomi"
+
+#: qdvdinfo.cpp:90
+msgid "French"
+msgstr "Ranska"
+
+#: qdvdinfo.cpp:91
+msgid "Frisian"
+msgstr "Friisi"
+
+#: qdvdinfo.cpp:92
+msgid "Galician"
+msgstr "Galicia"
+
+#: qdvdinfo.cpp:93
+msgid "Georgian"
+msgstr "Gruusia"
+
+#: qdvdinfo.cpp:94
+msgid "German"
+msgstr "Saksa"
+
+#: qdvdinfo.cpp:95
+msgid "Greek"
+msgstr "Kreikka"
+
+#: qdvdinfo.cpp:96
+msgid "Greenlandic"
+msgstr "Grönlanti"
+
+#: qdvdinfo.cpp:97
+msgid "Guarani"
+msgstr "Guarani"
+
+#: qdvdinfo.cpp:98
+msgid "Gujarati"
+msgstr "Gudžarati"
+
+#: qdvdinfo.cpp:99
+msgid "Hausa"
+msgstr "Hausa"
+
+#: qdvdinfo.cpp:100
+msgid "Hebrew"
+msgstr "Heprea"
+
+#: qdvdinfo.cpp:101
+msgid "Hindi"
+msgstr "Hindi"
+
+#: qdvdinfo.cpp:102
+msgid "Hungarian"
+msgstr "Unkari"
+
+#: qdvdinfo.cpp:103
+msgid "Icelandic"
+msgstr "Islanti"
+
+#: qdvdinfo.cpp:104
+msgid "Indonesian"
+msgstr "Indonesia"
+
+#: qdvdinfo.cpp:105
+msgid "Interlingua"
+msgstr "Interlingua"
+
+#: qdvdinfo.cpp:106
+msgid "Interlingue"
+msgstr "Interlingue"
+
+#: qdvdinfo.cpp:107
+msgid "Inupiak"
+msgstr "Inupiak"
+
+#: qdvdinfo.cpp:108
+msgid "Irish"
+msgstr "Iiri"
+
+#: qdvdinfo.cpp:109
+msgid "Italian"
+msgstr "Italia"
+
+#: qdvdinfo.cpp:110
+msgid "Japanese"
+msgstr "Japani"
+
+#: qdvdinfo.cpp:111
+msgid "Javanese"
+msgstr "Jaava"
+
+#: qdvdinfo.cpp:112
+msgid "Kannada"
+msgstr "Kannada"
+
+#: qdvdinfo.cpp:113
+msgid "Kashmiri"
+msgstr "Kašmiri"
+
+#: qdvdinfo.cpp:114
+msgid "Kazakh"
+msgstr "Kazakki"
+
+#: qdvdinfo.cpp:115
+msgid "Kinyarwanda"
+msgstr "Ruanda"
+
+#: qdvdinfo.cpp:116
+msgid "Kirghiz"
+msgstr "Kirgiisi"
+
+#: qdvdinfo.cpp:117
+msgid "Kurundi"
+msgstr "Kurundi"
+
+#: qdvdinfo.cpp:118
+msgid "Korean"
+msgstr "Korea"
+
+#: qdvdinfo.cpp:119
+msgid "Kurdish"
+msgstr "Kurdi"
+
+#: qdvdinfo.cpp:120
+msgid "Laothian"
+msgstr "Lao"
+
+#: qdvdinfo.cpp:121
+msgid "Latin"
+msgstr "Latina"
+
+#: qdvdinfo.cpp:122
+msgid "Latvian;Lettish"
+msgstr "Latvia"
+
+#: qdvdinfo.cpp:123
+msgid "Lingala"
+msgstr "Lingala"
+
+#: qdvdinfo.cpp:124
+msgid "Lithuanian"
+msgstr "Liettua"
+
+#: qdvdinfo.cpp:125
+msgid "Macedonian"
+msgstr "Makedonia"
+
+#: qdvdinfo.cpp:126
+msgid "Malagasy"
+msgstr "Malagasi"
+
+#: qdvdinfo.cpp:127
+msgid "Malay"
+msgstr "Malaiji"
+
+#: qdvdinfo.cpp:128
+msgid "Malayalam"
+msgstr "Malajalam"
+
+#: qdvdinfo.cpp:129
+msgid "Maltese"
+msgstr "Malta"
+
+#: qdvdinfo.cpp:130
+msgid "Maori"
+msgstr "Maori"
+
+#: qdvdinfo.cpp:131
+msgid "Marathi"
+msgstr "Marathi"
+
+#: qdvdinfo.cpp:132
+msgid "Moldavian"
+msgstr "Moldavia"
+
+#: qdvdinfo.cpp:133
+msgid "Mongolian"
+msgstr "Mongoli"
+
+#: qdvdinfo.cpp:134
+msgid "Nauru"
+msgstr "Nauru"
+
+#: qdvdinfo.cpp:135
+msgid "Nepali"
+msgstr "Nepali"
+
+#: qdvdinfo.cpp:136
+msgid "Norwegian"
+msgstr "Norja"
+
+#: qdvdinfo.cpp:137
+msgid "Occitan"
+msgstr "Oksitaani"
+
+#: qdvdinfo.cpp:138
+msgid "Oriya"
+msgstr "Orija"
+
+#: qdvdinfo.cpp:139
+msgid "Pashto;Pushto"
+msgstr "Pašto"
+
+#: qdvdinfo.cpp:140
+msgid "Persian (Farsi)"
+msgstr "Persia (Farsi)"
+
+#: qdvdinfo.cpp:141
+msgid "Polish"
+msgstr "Puola"
+
+#: qdvdinfo.cpp:142
+msgid "Portuguese"
+msgstr "Portugali"
+
+#: qdvdinfo.cpp:143
+msgid "Punjabi"
+msgstr "Punjabi"
+
+#: qdvdinfo.cpp:144
+msgid "Quechua"
+msgstr "Ketšua"
+
+#: qdvdinfo.cpp:145
+msgid "Rhaeto-Romance"
+msgstr "Retoromaani"
+
+#: qdvdinfo.cpp:146
+msgid "Romanian"
+msgstr "Romania"
+
+#: qdvdinfo.cpp:147
+msgid "Russian"
+msgstr "Venäjä"
+
+#: qdvdinfo.cpp:148
+msgid "Samoan"
+msgstr "Samoa"
+
+#: qdvdinfo.cpp:149
+msgid "Sangho"
+msgstr "Sango"
+
+#: qdvdinfo.cpp:150
+msgid "Sanskrit"
+msgstr "Sanskriitti"
+
+#: qdvdinfo.cpp:151
+msgid "Scots Gaelic"
+msgstr "Skotti gaeli"
+
+#: qdvdinfo.cpp:152
+msgid "Serbian"
+msgstr "Serbia"
+
+#: qdvdinfo.cpp:153
+msgid "Serbo-Croatian"
+msgstr "Serbo-Kroatia"
+
+#: qdvdinfo.cpp:154
+msgid "Sesotho"
+msgstr "Sesotho"
+
+#: qdvdinfo.cpp:155
+msgid "Setswana"
+msgstr "Tšwana, Setšwana"
+
+#: qdvdinfo.cpp:156
+msgid "Shona"
+msgstr "Shona"
+
+#: qdvdinfo.cpp:157
+msgid "Sindhi"
+msgstr "Sindhi"
+
+#: qdvdinfo.cpp:158
+msgid "Singhalese"
+msgstr "Singaleesi"
+
+#: qdvdinfo.cpp:159
+msgid "Siswati"
+msgstr "Siswati"
+
+#: qdvdinfo.cpp:160
+msgid "Slovak"
+msgstr "Slovakia"
+
+#: qdvdinfo.cpp:161
+msgid "Slovenian"
+msgstr "Slovenia"
+
+#: qdvdinfo.cpp:162
+msgid "Somali"
+msgstr "Somali"
+
+#: qdvdinfo.cpp:163
+msgid "Spanish"
+msgstr "Espanja"
+
+#: qdvdinfo.cpp:164
+msgid "Sundanese"
+msgstr "Sundaneesi"
+
+#: qdvdinfo.cpp:165
+msgid "Swahili"
+msgstr "Suahili"
+
+#: qdvdinfo.cpp:166
+msgid "Swedish"
+msgstr "Ruotsi"
+
+#: qdvdinfo.cpp:167
+msgid "Tagalog"
+msgstr "Tagalog, Pilipino"
+
+#: qdvdinfo.cpp:168
+msgid "Tajik"
+msgstr "Tadžikki"
+
+#: qdvdinfo.cpp:169
+msgid "Tamil"
+msgstr "Tamili"
+
+#: qdvdinfo.cpp:170
+msgid "Tatar"
+msgstr "Tataari"
+
+#: qdvdinfo.cpp:171
+msgid "Telugu"
+msgstr "Telugu"
+
+#: qdvdinfo.cpp:172
+msgid "Thai"
+msgstr "Thai"
+
+#: qdvdinfo.cpp:173
+msgid "Tibetan"
+msgstr "Tiibet"
+
+#: qdvdinfo.cpp:174
+msgid "Tigrinya"
+msgstr "Tigrinja"
+
+#: qdvdinfo.cpp:175
+msgid "Tonga"
+msgstr "Tonga"
+
+#: qdvdinfo.cpp:176
+msgid "Tsonga"
+msgstr "Tsonga"
+
+#: qdvdinfo.cpp:177
+msgid "Turkish"
+msgstr "Turkki"
+
+#: qdvdinfo.cpp:178
+msgid "Turkmen"
+msgstr "Turkmeeni"
+
+#: qdvdinfo.cpp:179
+msgid "Twi"
+msgstr "Twi"
+
+#: qdvdinfo.cpp:180
+msgid "Ukrainian"
+msgstr "Ukraina"
+
+#: qdvdinfo.cpp:181
+msgid "Urdu"
+msgstr "Urdu"
+
+#: qdvdinfo.cpp:182
+msgid "Uzbek"
+msgstr "Uzbekki"
+
+#: qdvdinfo.cpp:183
+msgid "Vietnamese"
+msgstr "Vietnami"
+
+#: qdvdinfo.cpp:184
+msgid "Volapuk"
+msgstr "Volapük"
+
+#: qdvdinfo.cpp:185
+msgid "Welsh"
+msgstr "Kymri, Wales"
+
+#: qdvdinfo.cpp:186
+msgid "Wolof"
+msgstr "Wolof"
+
+#: qdvdinfo.cpp:187
+msgid "Xhosa"
+msgstr "Xhosa"
+
+#: qdvdinfo.cpp:188
+msgid "Yiddish"
+msgstr "Jiddiš"
+
+#: qdvdinfo.cpp:189
+msgid "Yoruba"
+msgstr "Joruba"
+
+#: qdvdinfo.cpp:190
+msgid "Zulu"
+msgstr "Zulu"
+
+#: qdvdinfo.cpp:198 qdvdinfo.cpp:217
+msgid "Undefined"
+msgstr "Määrittelemätön"
+
+#: qdvdinfo.cpp:198 qdvdinfo.cpp:217
+msgid "Normal"
+msgstr "Normaali"
+
+#: qdvdinfo.cpp:198
+msgid "Large"
+msgstr "Iso"
+
+#: qdvdinfo.cpp:199
+msgid "Children"
+msgstr "Lapsi"
+
+#: qdvdinfo.cpp:199 qdvdinfo.cpp:201 qdvdinfo.cpp:202 qdvdinfo.cpp:203
+msgid "reserved"
+msgstr "Varattu"
+
+#: qdvdinfo.cpp:199
+msgid "Normal Captions"
+msgstr "Normaalit kirjaimet"
+
+#: qdvdinfo.cpp:200
+msgid "Large Captions"
+msgstr "Isot kirjaimet"
+
+#: qdvdinfo.cpp:200
+msgid "Children Captions"
+msgstr "Lasten kirjaimet"
+
+#: qdvdinfo.cpp:202
+msgid "Forced"
+msgstr "Pakotettu"
+
+#: qdvdinfo.cpp:203
+msgid "Director"
+msgstr "Ohjaaja"
+
+#: qdvdinfo.cpp:203
+msgid "Large Director"
+msgstr "Iso ohjaaja"
+
+#: qdvdinfo.cpp:204
+msgid "Children Director"
+msgstr "Lasten ohjaaja"
+
+#: qdvdinfo.cpp:217
+msgid "Impaired"
+msgstr "Heikentynyt"
+
+#: qdvdinfo.cpp:218
+msgid "Comments1"
+msgstr "Kommentit 1"
+
+#: qdvdinfo.cpp:218
+msgid "Comments2"
+msgstr "Kommentit 2"
+
+#: qdvdinfo.cpp:229
+msgid "P&S + Letter"
+msgstr "Täyskuva + Letterbox"
+
+#: qdvdinfo.cpp:229
+msgid "Pan&Scan"
+msgstr "Täyskuva"
+
+#: qdvdinfo.cpp:229
+msgid "Letterbox"
+msgstr "Letterbox"
+
+#: qdvdinfo.cpp:230
+msgid "?"
+msgstr "?"
+
+#: qdvdinfo.cpp:333
+#, c-format
+msgid "Cell: %1"
+msgstr "Solu: %1"
+
+#: qdvdinfo.cpp:401
+msgid "Subtitle: %1%4"
+msgstr "Tekstitys: %1%4"
+
+#: qdvdinfo.cpp:480
+msgid "Audio: %1, %2 channels%3"
+msgstr "Ääni: %1, %2 kanavaa %3"
+
+#: qdvdinfo.cpp:506
+msgid "Video: %1, %2x%3, %4"
+msgstr "Video: %1, %2x%3, %4"
+
+#: qdvdinfo.cpp:696
+msgid "Title: %1, %2"
+msgstr "Otsake: %1, %2"
+
+#: qdvdinfo.cpp:829 qdvdinfo.cpp:837 qdvdinfo.cpp:845
+msgid "unknown"
+msgstr "tuntematon"
