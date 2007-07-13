@@ -7,7 +7,7 @@ HOME=`echo ~`
 SITE="aryhma.oy.cx"
 LOCALKMFDIR="$HOME/public_html/$SITE/damu/software/kmediafactory"
 BUILDDIR="debug"
-WEBDIR="/httpdocs/damu/software/kmediafactory"
+WEBDIR="httpdocs/damu/software/kmediafactory"
 CHANGELOG="snapshot.changelog"
 US_DATE=`date +%Y-%m-%d`
 SVN="https://kmediafactory.googlecode.com/svn/"
@@ -110,6 +110,7 @@ function tag_svn()
 function make_html()
 {
   echo "Making html files..."
+  cd $KMF
 
   HTML="$LOCALKMFDIR/$SNAPSHOT_HTML"
 
@@ -136,22 +137,8 @@ function upload()
 {
   echo "Uploading files to web..."
 
-  NAME=`dcop kded kwalletd networkWallet`
-  ID=`dcop kded kwalletd open $NAME 0`
-  USER=`dcop kded kwalletd readPassword $ID ftp $SITE-user`
-  PASS=`dcop kded kwalletd readPassword $ID ftp $SITE-pass`
-  dcop kded kwalletd close $ID
-  ftp -inv $SITE <<EOF
-user $USER
-pass $PASS
-binary
-cd $WEBDIR
-lcd $LOCALKMFDIR
-put $BZ2FILE.md5
-put $BZ2FILE
-put $SNAPSHOT_HTML
-quit
-EOF
+  cd $LOCALKMFDIR
+  kfmclient copy $BZ2FILE.md5 $BZ2FILE $SNAPSHOT_HTML ftp://$SITE/$WEBDIR/
 }
 
 snapshot_name $1
@@ -163,7 +150,7 @@ make_snapshot
 echo -n "Upload (y/N): "
 read ans
 if [ "$ans" == y -o "$ans" == Y ]; then
-#tag_svn
+  tag_svn
   make_html
   upload
 fi
