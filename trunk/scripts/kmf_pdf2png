@@ -1,0 +1,13 @@
+#!/bin/bash
+# Convert pdf ton png images for KMediafactory
+# Copyright (C) 2006 by Petri Damsten - GPL-2
+# Usage:
+# pdf2png test.pdf test_%d.png
+
+SCRIPTS=`dirname $0`
+. $SCRIPTS/tools
+
+GS=`check_executable "gs" "gs-esp"`
+
+$GS -r100 -dBATCH -dNOPAUSE -sDEVICE=png16m -sOutputFile=$2 \
+    -dTextAlphaBits=4 -dGraphicsAlphaBits=2 -dMaxBitmap=10000000 $1

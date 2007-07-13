@@ -1,0 +1,21 @@
+#!/bin/bash
+# Get frame from video for KMediafactory
+# Copyright (C) 2006 by Petri Damsten - GPL-2
+# Usage:
+# frame /media/movies/movie.mpg 00:10:00 /home/user/kmf/image.pnm
+
+SCRIPTS=`dirname $0`
+. $SCRIPTS/tools
+
+MENCODER=`check_executable "mencoder" "mencoder"`
+MPLAYER=`check_executable "mplayer" "mplayer"`
+
+FILE=$1
+TIME=$2
+OUTPUT="$3"
+DIR=`dirname "$OUTPUT"`
+
+$MENCODER -ss $TIME -endpos .1 -ovc copy -nosound $FILE -o "$DIR/kmf_tmp_x.mpg"
+$MPLAYER -nosound -vo pnm:outdir="$DIR" "$DIR/kmf_tmp_x.mpg"
+rm "$DIR/kmf_tmp_x.mpg"
+mv "$DIR/00000001.ppm" "$OUTPUT"
