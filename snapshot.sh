@@ -6,6 +6,7 @@ NEXT_VERSION="0" # BUILD_VERSION
 HOME=`echo ~`
 SITE="aryhma.oy.cx"
 LOCALKMFDIR="$HOME/public_html/$SITE/damu/software/kmediafactory"
+BUILDDIR="debug"
 WEBDIR="/httpdocs/damu/software/kmediafactory"
 CHANGELOG="snapshot.changelog"
 US_DATE=`date +%Y-%m-%d`
@@ -67,9 +68,12 @@ function make_snapshot()
 {
   echo "Making snapshot..."
   cd $KMF
-  mkdir debug
-  cd debug
-  rm *.tar.bz2
+  mkdir -p $BUILDDIR
+  cd $BUILDDIR
+
+  if [ "`ls --color=none *.tar.bz2`" != "" ]; then
+    rm *.tar.bz2
+  fi
   cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/kde-debug \
       -DCMAKE_BUILD_TYPE=debugfull -G KDevelop3
   make package_source
@@ -81,7 +85,7 @@ function make_snapshot()
   fi
 
   echo "Moving $FILE to local KMF dir and distfiles."
-  cd $KMF
+  cd $KMF/debug
 
   mv $FILE $DESTINATION
 
@@ -145,7 +149,7 @@ binary
 cd $WEBDIR
 put $DESTINATION.md5
 put $DESTINATION
-put $LOCALKMFDIR/snapshot.html
+put $HTML
 quit
 EOF
 }
