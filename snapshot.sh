@@ -71,9 +71,7 @@ function make_snapshot()
   mkdir -p $BUILDDIR
   cd $BUILDDIR
 
-  if [ "`ls --color=none *.tar.bz2`" != "" ]; then
-    rm *.tar.bz2
-  fi
+  find ./ -type f -name "*.tar.bz2" -exec rm {} \;
   cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/kde-debug \
       -DCMAKE_BUILD_TYPE=debugfull -G KDevelop3
   make package_source
@@ -143,8 +141,7 @@ function upload()
   PASS=`dcop kded kwalletd readPassword $ID ftp $SITE-pass`
   dcop kded kwalletd close $ID
   ftp -inv $SITE <<EOF
-USER $USER
-PASS $PASS
+user $USER $PASS
 binary
 cd $WEBDIR
 put $DESTINATION.md5
