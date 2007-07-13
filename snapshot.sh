@@ -116,8 +116,8 @@ function make_html()
 
   echo "HTML Changelog to web page."
 
-  echo -e "<h1>Snapshots</h1>\n" > $HTML
-  date +"<h2>%d.%m.%Y</h2>" >> $HTML
+  echo -e "<h1>KDE 4 snapshots</h1>\n" > $HTML
+  date +"<h2>%d.%m.%Y</h2>" > $HTML
 
   echo -e "<h3>Changelog</h3>\n" >> $HTML
   sed -e "s/-\(.*\)/<li>\1<\/li>/" \
@@ -142,7 +142,7 @@ function upload()
   USER=`dcop kded kwalletd readPassword $ID ftp $SITE-user`
   PASS=`dcop kded kwalletd readPassword $ID ftp $SITE-pass`
   dcop kded kwalletd close $ID
-  ftp -un $hostname <<EOF
+  ftp -inv $SITE <<EOF
 USER $USER
 PASS $PASS
 binary
