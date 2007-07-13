@@ -1,16 +1,15 @@
 #/bin/bash
 
-NEXT_VERSION="0.5.3"
+VERSION_MM="0.6."
+NEXT_VERSION="0" # BUILD_VERSION
 
 HOME=`echo ~`
-LOCALKMFDIR="$HOME/public_html/software/kmediafactory"
-WEB="susku.pyhaselka.fi:/home/damu/public_html/software/kmediafactory/"
+SITE="aryhma.oy.cx"
+LOCALKMFDIR="$HOME/public_html/$SITE/damu/software/kmediafactory"
+WEBDIR="/httpdocs/damu/software/kmediafactory"
 CHANGELOG="snapshot.changelog"
-EBUILD_BASE="kmediafactory-$NEXT_VERSION.ebuild"
-NEWSMAIL="kmf-news@susku.pyhaselka.fi"
-PORTAGE_OVERLAY="/usr/local/portage"
-PORTAGE_KMF="$PORTAGE_OVERLAY/media-video/kmediafactory"
 US_DATE=`date +%Y-%m-%d`
+SVN="https://kmediafactory.googlecode.com/svn/"
 
 KMF=`pwd`
 ABC="bcdefghijklmnopqrstuvxyz"
@@ -24,7 +23,8 @@ function snapshot_name()
 
   if [ "$1" == "" ]; then
     while [ 1 ]; do
-      SNAPSHOT=`date +%Y%m%d`$VER
+      SNAPSHOT_BUILD="$NEXT_VERSION_`date +%Y%m%d`$VER"
+      SNAPSHOT="$VERSION_MM$SNAPSHOT_BUILD"
       BZ2FILE="kmediafactory-$SNAPSHOT.tar.bz2"
       DESTINATION="$LOCALKMFDIR/$BZ2FILE"
       if [ ! -e $DESTINATION ]; then
@@ -34,7 +34,8 @@ function snapshot_name()
       let "I+=1"
     done
   else
-    SNAPSHOT="$1"
+    SNAPSHOT_BUILD="$NEXT_VERSION""_$1"
+    SNAPSHOT="$VERSION_MM$SNAPSHOT_BUILD"
     BZ2FILE="kmediafactory-$SNAPSHOT.tar.bz2"
     DESTINATION="$LOCALKMFDIR/$BZ2FILE"
   fi
@@ -42,37 +43,13 @@ function snapshot_name()
   echo $DESTINATION
 }
 
-
-function make_ebuild()
-{
-  echo "Making ebuild..."
-  cd $PORTAGE_KMF
-
-  rm $PORTAGE_KMF/Manifest -f
-  svn rm $PORTAGE_KMF/kmediafactory-200*.ebuild
-  svn rm $PORTAGE_KMF/files/digest-kmediafactory-200*
-
-  cp $KMF/distros/gentoo/media-video/kmediafactory/$EBUILD_BASE $PORTAGE_KMF
-
-  EBUILD="kmediafactory-$SNAPSHOT.ebuild"
-  if [ "$SNAPSHOT" != "$NEXT_VERSION" ]; then
-    cat $EBUILD_BASE | sed 's/x86/~x86/g; s/amd64/~amd64/g' > $EBUILD
-    rm $EBUILD_BASE
-  fi
-
-  ebuild $EBUILD digest
-
-  cd $PORTAGE_OVERLAY
-  ./commit.sh --nopause "$EBUILD"
-}
-
 function fix_versions()
 {
-  echo "Fixing configure.in.in for new version: $SNAPSHOT"
+  echo "Fixing CMakeLists.txt for new version: $SNAPSHOT"
   cd $KMF
 
-  S="AM_INIT_AUTOMAKE(\"kmediafactory\","
-  sed -i -e "s/$S \".*\")/$S \"$SNAPSHOT\")/" configure.in.in
+  S="set(KMF_BUILD_VERSION"
+  sed -i -e "s/$S \".*\")/$S \"$SNAPSHOT_BUILD\")/" CMakeLists.txt
 
   echo "Fixing lsm file versions..."
   sed -i -e "s/Version:.*/Version:        $SNAPSHOT/" kmediafactory.lsm
@@ -90,11 +67,12 @@ function make_snapshot()
 {
   echo "Making snapshot..."
   cd $KMF
-
-  make -f Makefile.cvs
-  ./configure
-  make dist-bz2
-  make distclean
+  mkdir debug
+  cd debug
+  rm *.tar.bz2
+  cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/kde-debug \
+      -DCMAKE_BUILD_TYPE=debugfull -G KDevelop3
+  make package_source
   FILE=`ls --color=none *.tar.bz2`
 
   if [ "$FILE" == "" ]; then
@@ -106,7 +84,6 @@ function make_snapshot()
   cd $KMF
 
   mv $FILE $DESTINATION
-  cp $DESTINATION "/usr/portage/distfiles/$BZ2FILE"
 
   echo "Making md5."
   cd $LOCALKMFDIR
@@ -117,23 +94,21 @@ function tag_svn()
 {
   echo "Tagging svn..."
   cd $KMF
-  if [ "$SNAPSHOT" != "$NEXT_VERSION" ]; then
+  if [ "$RELEASE" != "1" ]; then
     comment="Tagging the "$SNAPSHOT" snapshot."
     tag="snapshot-$SNAPSHOT"
   else
     comment="Tagging the "$SNAPSHOT" release."
     tag="release-$SNAPSHOT"
   fi
-  svn copy https://susku.pyhaselka.fi/svn/kmediafactory/trunk \
-      https://susku.pyhaselka.fi/svn/kmediafactory/tags/$tag \
-      -m "$comment"
+  svn copy $SVN/trunk $SVN/tags/$tag -m "$comment"
 }
 
 function make_html()
 {
   echo "Making html files..."
 
-  HTML="$LOCALKMFDIR/snapshot.html"
+  HTML="$LOCALKMFDIR/snapshot_kde4.html"
 
   echo "HTML Changelog to web page."
 
@@ -151,7 +126,6 @@ function make_html()
   echo "<ul>" >> $HTML
   echo "<li>Source package: <a href=\"$BZ2FILE\">$BZ2FILE</a> "\
       "<a href=\"$BZ2FILE.md5\">MD5</a>.</li>" >> $HTML
-  echo "<li>Gentoo ebuild: <a href=\"#overlay\">See overlay</a> " >> $HTML
   echo "</ul>" >> $HTML
 }
 
@@ -159,20 +133,21 @@ function upload()
 {
   echo "Uploading files to web..."
 
-  echo -e "put $DESTINATION.md5\nput $DESTINATION\nput " \
-      "$LOCALKMFDIR/snapshot.html" | sftp -b - $WEB
-}
-
-function mail_to_news()
-{
-  echo "Sending mail to news..."
-  cd $KMF
-
-  if [ "$SNAPSHOT" != "$NEXT_VERSION" ]; then
-    mail -s "New snapshot - $SNAPSHOT" $NEWSMAIL < snapshot.changelog
-  else
-    mail -s "New release - $SNAPSHOT" $NEWSMAIL < snapshot.changelog
-  fi
+  NAME=`dcop kded kwalletd networkWallet`
+  ID=`dcop kded kwalletd open $NAME 0`
+  USER=`dcop kded kwalletd readPassword $ID ftp $SITE-user`
+  PASS=`dcop kded kwalletd readPassword $ID ftp $SITE-pass`
+  dcop kded kwalletd close $ID
+  ftp -un $hostname <<EOF
+USER $USER
+PASS $PASS
+binary
+cd $WEBDIR
+put $DESTINATION.md5
+put $DESTINATION
+put $LOCALKMFDIR/snapshot.html
+quit
+EOF
 }
 
 snapshot_name $1
@@ -181,12 +156,10 @@ edit_changelog
 ./commit.sh --nopause
 make_snapshot
 
-echo -n "Proceed with susku (y/N): "
+echo -n "Upload (y/N): "
 read ans
 if [ "$ans" == y -o "$ans" == Y ]; then
   tag_svn
   make_html
   upload
-  make_ebuild
-  mail_to_news
 fi
