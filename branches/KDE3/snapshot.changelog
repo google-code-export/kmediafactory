@@ -4,7 +4,7 @@ Features:
 - Internal ffmpeg removed
 
 Bug fixes:
-- 
+- Transparency fixed (>= ImageMagick 6.2.9)
 
 CHANGED FROM THE PREVIOUS SNAPSHOT
 ========================================
@@ -12,4 +12,4 @@ Features:
 -
 
 Bug fixes:
-- Transparency fixed (>= ImageMagick 6.2.9)
+-
