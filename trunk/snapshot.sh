@@ -12,6 +12,7 @@ CHANGELOG="snapshot.changelog"
 US_DATE=`date +%Y-%m-%d`
 SVN="https://kmediafactory.googlecode.com/svn/"
 SNAPSHOT_HTML="snapshot_kde4.html"
+NEWSMAIL="damu@iki.fi"
 
 KMF=`pwd`
 ABC="bcdefghijklmnopqrstuvxyz"
@@ -23,6 +24,7 @@ function snapshot_name()
   echo -n "Snapshot name: "
   cd $KMF
 
+  RELEASE="0"
   if [ "$1" == "" ]; then
     while [ 1 ]; do
       SNAPSHOT_BUILD="$NEXT_VERSION_`date +%Y%m%d`$VER"
@@ -36,7 +38,12 @@ function snapshot_name()
       let "I+=1"
     done
   else
-    SNAPSHOT_BUILD="$NEXT_VERSION""_$1"
+    if [ "$1" == "release" ]; then
+      SNAPSHOT_BUILD="$NEXT_VERSION"
+      RELEASE="1"
+    else
+      SNAPSHOT_BUILD="$NEXT_VERSION""_$1"
+    fi
     SNAPSHOT="$VERSION_MM$SNAPSHOT_BUILD"
     BZ2FILE="kmediafactory-$SNAPSHOT.tar.bz2"
     DESTINATION="$LOCALKMFDIR/$BZ2FILE"
@@ -141,6 +148,18 @@ function upload()
   kfmclient copy $BZ2FILE.md5 $BZ2FILE $SNAPSHOT_HTML ftp://$SITE/$WEBDIR/
 }
 
+function mail_to_news()
+{
+  echo "Sending mail to news..."
+  cd $KMF
+
+  if [ "$RELEASE" != "1" ]; then
+    mail -s "New snapshot - $SNAPSHOT" $NEWSMAIL < snapshot.changelog
+  else
+    mail -s "New release - $SNAPSHOT" $NEWSMAIL < snapshot.changelog
+  fi
+}
+
 snapshot_name $1
 fix_versions
 edit_changelog
@@ -150,6 +169,7 @@ make_snapshot
 echo -n "Upload (y/N): "
 read ans
 if [ "$ans" == y -o "$ans" == Y ]; then
+  mail_to_news
   tag_svn
   make_html
   upload
