@@ -135,6 +135,7 @@ void KMFDbusInterface::progressDialog(const QString &caption,
   m_pdlg = new KProgressDialog(kmfApp->mainWindow(), caption, label);
   m_pdlg->progressBar()->setMaximum(maximum);
   m_pdlg->showCancelButton(true);
+  m_pdlg->setAutoClose(false);
 }
 
 void KMFDbusInterface::pdlgSetMaximum(int maximum)
