@@ -1,0 +1,135 @@
+# translation of kmediafactory_dvimport.po to Finnish
+# This file is put in the public domain.
+#
+# Petri Damsten <petri.damsten@iki.fi>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmediafactory_dvimport\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-02-10 09:20+0200\n"
+"PO-Revision-Date: 2006-01-27 07:19+0200\n"
+"Last-Translator: Petri Damsten <petri.damsten@iki.fi>\n"
+"Language-Team: Finnish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11\n"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "Petri Damstén"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "petri.damsten@iki.fi"
+
+#: dvimportplugin.cpp:45
+msgid "DV Import plugin for KMediaFactory."
+msgstr "DV video liitännäinen KMediaFactoryyn."
+
+#: dvimportplugin.cpp:48
+msgid "KMediaFactory DV Import"
+msgstr "KMediaFactory DV video"
+
+#: dvimportplugin.cpp:69
+msgid "Add DV"
+msgstr "Lisää DV"
+
+#: dvimportplugin.cpp:93
+msgid "Multiple files make multiple titles."
+msgstr "Useampi tiedosto luo useamman nimikkeen."
+
+#: dvimportplugin.cpp:114
+msgid "Cannot add directory."
+msgstr "Hakemistoa ei voi lisätä."
+
+#. i18n: file progresslayout.ui line 22
+#: progresslayout.cpp:79 rc.cpp:3
+#, no-c-format
+msgid "DV Import"
+msgstr "DV video"
+
+#. i18n: file progresslayout.ui line 37
+#: progresslayout.cpp:80 rc.cpp:6
+#, no-c-format
+msgid ""
+"Importing DV video<br>\n"
+"<ul>\n"
+"<li>Generates chapters from different takes</li>\n"
+"<li>Generates subtitles from timetamps</li>\n"
+"</ul>"
+msgstr ""
+"DV video<br>\n"
+"<ul>\n"
+"<li>Tekee kappaleita eri otoksista</li>\n"
+"<li>Tekee tekstityksen aikakoodeista</li>\n"
+"</ul>"
+
+#. i18n: file progresslayout.ui line 92
+#: progresslayout.cpp:86 rc.cpp:16
+#, no-c-format
+msgid "Alt+C"
+msgstr "Alt + C"
+
+#. i18n: file dvimportplugin.kcfg line 9
+#: rc.cpp:19
+#, no-c-format
+msgid "Date & Time format for subtitles."
+msgstr "Päiväyksen & ajan muoto tekstitykseen."
+
+#. i18n: file dvimportplugin.kcfg line 13
+#: rc.cpp:22
+#, no-c-format
+msgid ""
+"\n"
+"        Date & Time format used for subtitles in dv file import.\n"
+"        Uses QDateTime format.\n"
+"      "
+msgstr ""
+"\n"
+"        Päiväyksen & ajan muoto tekstitykseen käyttää.\n"
+"        QDateTime formaattia.\n"
+"      "
+
+#. i18n: file dvimportplugin.kcfg line 17
+#: rc.cpp:28
+#, no-c-format
+msgid "Minimum chapter length."
+msgstr "Minimi kappaleen pituudelle."
+
+#. i18n: file dvimportplugin.kcfg line 20
+#: rc.cpp:31
+#, no-c-format
+msgid ""
+"\n"
+"        Minimum chapter length in seconds when importing dv file.\n"
+"      "
+msgstr ""
+"\n"
+"        Minimi kappaleen pituus sekuntteina.\n"
+"      "
+
+#. i18n: file dvimportplugin.kcfg line 24
+#: rc.cpp:36
+#, no-c-format
+msgid "Chapter Offset."
+msgstr "Kappaleen siirtymä"
+
+#. i18n: file dvimportplugin.kcfg line 28
+#: rc.cpp:39
+#, no-c-format
+msgid ""
+"\n"
+"        Number of frames chapter is forwarded. Usefull if chapter starts "
+"with\n"
+"        previous video take.\n"
+"      "
+msgstr ""
+"\n"
+"        Montako ruutua kappale siirretään eteenpäin.<br>Hyödyllinen jos "
+"kappale alkaa edellisessä otossa.\n"
+"      "
