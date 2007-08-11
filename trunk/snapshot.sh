@@ -60,8 +60,6 @@ function snapshot_name()
 
   echo -n "Snapshot name: "
   echo $DESTINATION
-
-  exit 0
 }
 
 function fix_versions()
