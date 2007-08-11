@@ -509,7 +509,7 @@ void SlideshowObject::writeDvdAuthorXml(QDomElement& element,
         start = 1.4;
       start += duration + 1.0;
     }
-    for(int i; i < chapters.count(); ++i)
+    for(int i = 0; i < chapters.count(); ++i)
     {
       QDomElement c = vob.ownerDocument().createElement("cell");
 
