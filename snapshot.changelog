@@ -1,7 +1,7 @@
 CHANGED FROM THE LATEST RELEASE (0.5.3)
 ========================================
 Features:
-- KDE4 port
+- Fix for KDE4 beta1
 
 Bug fixes:
 -
@@ -9,7 +9,7 @@ Bug fixes:
 CHANGED FROM THE PREVIOUS SNAPSHOT
 ========================================
 Features:
--
+- KDE4 port
 
 Bug fixes:
 -
