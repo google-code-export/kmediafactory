@@ -1,8 +1,8 @@
 <?xml version = '1.0'?>
 <kdevelop>
   <general>
-    <author/>
-    <email/>
+    <author></author>
+    <email></email>
     <version>$VERSION$</version>
     <projectmanagement>KDevCustomProject</projectmanagement>
     <primarylanguage>C++</primarylanguage>
@@ -12,8 +12,8 @@
     <secondaryLanguages>
       <language>C</language>
     </secondaryLanguages>
-    <description/>
-    <defaultencoding/>
+    <description></description>
+    <defaultencoding></defaultencoding>
     <projectname>kmediafactory</projectname>
   </general>
   <kdevcustomproject>
@@ -26,19 +26,19 @@
       <terminal>false</terminal>
       <autocompile>true</autocompile>
       <envvars>
-        <envvar value="/home/damu/kde4/usr/kde" name="KDEDIR" />
-        <envvar value="/home/damu/.kde4:/home/damu/kde4/usr/kde" name="KDEDIRS" />
+        <envvar value="/usr/lib/kde4" name="KDEDIR" />
+        <envvar value="/home/damu/.kde4:/usr/lib/kde4" name="KDEDIRS" />
         <envvar value="/home/damu/.kde4" name="KDEHOME" />
         <envvar value="/tmp/damu-kde4" name="KDETMP" />
         <envvar value="/var/tmp/damu-kde4" name="KDEVARTMP" />
-        <envvar value="/home/damu/.kde4/lib:/home/damu/kde4/usr/kde/lib:/home/damu/kde4/usr/qt-copy/lib:$LD_LIBRARY_PATH" name="LD_LIBRARY_PATH" />
-        <envvar value="/home/damu/.kde4/bin:/home/damu/kde4/usr/qt-copy/bin:/home/damu/kde4/usr/kde/bin:$PATH" name="PATH" />
-        <envvar value="/home/damu/kde4/usr/qt-copy/" name="QTDIR" />
-        <envvar value="/home/damu/kde4/usr/kde/lib/kde4/plugins" name="QT_PLUGIN_PATH" />
+        <envvar value="/home/damu/.kde4/lib:/usr/lib/kde4/lib:/usr/share/qt4/lib:$LD_LIBRARY_PATH" name="LD_LIBRARY_PATH" />
+        <envvar value="/home/damu/.kde4/bin:/usr/share/qt4/bin:/usr/lib/kde4/bin:$PATH" name="PATH" />
+        <envvar value="/usr/share/qt4" name="QTDIR" />
+        <envvar value="/usr/lib/kde4/lib/kde4/plugins" name="QT_PLUGIN_PATH" />
         <envvar value=" " name="XDG_CONFIG_DIRS" />
         <envvar value=" " name="XDG_DATA_DIRS" />
       </envvars>
-      <globaldebugarguments/>
+      <globaldebugarguments></globaldebugarguments>
       <globalcwd>/home/damu/files/code/linux/kmediafactory/debug</globalcwd>
       <useglobalprogram>false</useglobalprogram>
       <autoinstall>false</autoinstall>
@@ -52,14 +52,14 @@
       <abortonerror>true</abortonerror>
       <numberofjobs>2</numberofjobs>
       <dontact>false</dontact>
-      <makebin/>
+      <makebin></makebin>
       <selectedenvironment>default</selectedenvironment>
       <environments>
         <default/>
       </environments>
       <prio>0</prio>
-      <defaulttarget/>
-      <makeoptions/>
+      <defaulttarget></defaulttarget>
+      <makeoptions></makeoptions>
     </make>
     <filetypes>
       <filetype>*.java</filetype>
@@ -78,6 +78,16 @@
       <filetype>CMakeLists.txt</filetype>
     </filetypes>
     <blacklist/>
+    <other>
+      <prio>0</prio>
+      <otherbin></otherbin>
+      <defaulttarget></defaulttarget>
+      <otheroptions></otheroptions>
+      <selectedenvironment>default</selectedenvironment>
+      <environments>
+        <default/>
+      </environments>
+    </other>
   </kdevcustomproject>
   <kdevfilecreate>
     <filetypes/>
@@ -146,7 +156,7 @@
       <designerpluginpaths/>
     </qt>
     <creategettersetter>
-      <prefixGet/>
+      <prefixGet></prefixGet>
       <prefixSet>set</prefixSet>
       <prefixVariable>m_,_</prefixVariable>
       <parameterName>theValue</parameterName>
@@ -176,11 +186,11 @@
   <kdevdebugger>
     <general>
       <programargs>file:///home/damu/kmf_test/test.kmf</programargs>
-      <gdbpath/>
-      <dbgshell/>
-      <configGdbScript/>
-      <runShellScript/>
-      <runGdbScript/>
+      <gdbpath></gdbpath>
+      <dbgshell></dbgshell>
+      <configGdbScript></configGdbScript>
+      <runShellScript></runShellScript>
+      <runGdbScript></runGdbScript>
       <breakonloadinglibs>true</breakonloadinglibs>
       <separatetty>false</separatetty>
       <floatingtoolbar>false</floatingtoolbar>
