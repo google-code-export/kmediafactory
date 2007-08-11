@@ -16,40 +16,52 @@ NEWSMAIL="damu@iki.fi"
 
 KMF=`pwd`
 ABC="bcdefghijklmnopqrstuvxyz"
-VER=""
 I=0
 
 function snapshot_name()
 {
-  echo -n "Snapshot name: "
   cd $KMF
 
-  RELEASE="0"
-  if [ "$1" == "" ]; then
-    while [ 1 ]; do
-      SNAPSHOT_BUILD="$NEXT_VERSION_`date +%Y%m%d`$VER"
-      SNAPSHOT="$VERSION_MM$SNAPSHOT_BUILD"
-      BZ2FILE="kmediafactory-$SNAPSHOT.tar.bz2"
-      DESTINATION="$LOCALKMFDIR/$BZ2FILE"
-      if [ ! -e $DESTINATION ]; then
-        break
-      fi
-      VER=${ABC:$I:1}
-      let "I+=1"
-    done
-  else
-    if [ "$1" == "release" ]; then
-      SNAPSHOT_BUILD="$NEXT_VERSION"
-      RELEASE="1"
-    else
-      SNAPSHOT_BUILD="$NEXT_VERSION""_$1"
+  VER=""
+  while [ 1 ]; do
+    NEXT_FREE_SNAPSHOT="$NEXT_VERSION""_`date +%Y%m%d`$VER"
+    FILE="$LOCALKMFDIR/kmediafactory-$VERSION_MM$NEXT_FREE_SNAPSHOT.tar.bz2"
+    if [ ! -e $FILE ]; then
+      break
     fi
-    SNAPSHOT="$VERSION_MM$SNAPSHOT_BUILD"
-    BZ2FILE="kmediafactory-$SNAPSHOT.tar.bz2"
-    DESTINATION="$LOCALKMFDIR/$BZ2FILE"
+    VER=${ABC:$I:1}
+    let "I+=1"
+  done
+
+  echo "1. Release"
+  echo "2. $VERSION_MM$NEXT_FREE_SNAPSHOT"
+  echo "3. Custom"
+  echo -n "Select version: "
+  read ans
+
+  if [ "$ans" == "1" ]; then
+    SNAPSHOT_BUILD="$NEXT_VERSION"
+    RELEASE="1"
+  elif [ "$ans" == "2" ]; then
+    SNAPSHOT_BUILD="$NEXT_FREE_SNAPSHOT"
+    RELEASE="0"
+  elif [ "$ans" == "3" ]; then
+    echo -n "Version: "
+    read ans
+    SNAPSHOT_BUILD="$NEXT_VERSION""_$ans"
+    RELEASE="0"
+  else
+    exit 0
   fi
 
+  SNAPSHOT="$VERSION_MM$SNAPSHOT_BUILD"
+  BZ2FILE="kmediafactory-$SNAPSHOT.tar.bz2"
+  DESTINATION="$LOCALKMFDIR/$BZ2FILE"
+
+  echo -n "Snapshot name: "
   echo $DESTINATION
+
+  exit 0
 }
 
 function fix_versions()
