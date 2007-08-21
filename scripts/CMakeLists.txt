@@ -1,8 +1,8 @@
 set(kmediafactory_SCRIPTS
-  frame
-  info
-  make_mpeg
-  oo2pdf
+  kmf_frame
+  kmf_info
+  kmf_make_mpeg
+  kmf_oo2pdf
   tools
   kmf_converter.oxt
 )
