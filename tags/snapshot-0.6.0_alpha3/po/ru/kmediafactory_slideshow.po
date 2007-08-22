@@ -1,0 +1,264 @@
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2006-06-01 11:30+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: ENCODING\n"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr ""
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 16
+#: rc.cpp:3
+#, no-c-format
+msgid "Slideshow properties"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 35
+#: rc.cpp:6
+#, no-c-format
+msgid "&Title:"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 59
+#: rc.cpp:9
+#, no-c-format
+msgid "Ch"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 70
+#: rc.cpp:12
+#, no-c-format
+msgid "Image"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 92
+#: rc.cpp:18
+#, no-c-format
+msgid "Comment"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 130
+#: rc.cpp:22
+#, no-c-format
+msgid "Alt+Ins"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 139
+#: rc.cpp:25
+#, no-c-format
+msgid "Add (Alt+ Insert)"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 150
+#: rc.cpp:29
+#, no-c-format
+msgid "Alt+Del"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 159
+#: rc.cpp:32
+#, no-c-format
+msgid "Remove (Alt + Delete)"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 187
+#: rc.cpp:36
+#, no-c-format
+msgid "Alt+Up"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 196
+#: rc.cpp:39
+#, no-c-format
+msgid "Move up (Alt + Up)"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 207
+#: rc.cpp:43
+#, no-c-format
+msgid "Alt+Down"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 216
+#: rc.cpp:46
+#, no-c-format
+msgid "Move down (Alt + Down)"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 282
+#: rc.cpp:50
+#, no-c-format
+msgid "&Slide duration:"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 301
+#: rc.cpp:53
+#, no-c-format
+msgid "fit"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 350
+#: rc.cpp:56
+#, no-c-format
+msgid "&Add original pictures to DVD"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 353
+#: rc.cpp:59
+#, no-c-format
+msgid "Alt+A"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 372
+#: rc.cpp:62
+#, no-c-format
+msgid "&Loop slideshow"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 375
+#: rc.cpp:65
+#, no-c-format
+msgid "Alt+L"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 449
+#: rc.cpp:72
+#, no-c-format
+msgid "Alt+O"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 466
+#: rc.cpp:75
+#, no-c-format
+msgid "Ca&ncel"
+msgstr ""
+
+#. i18n: file slideshowlayout.ui line 469
+#: rc.cpp:78
+#, no-c-format
+msgid "Alt+N"
+msgstr ""
+
+#. i18n: file slideshowplugin.kcfg line 9
+#: rc.cpp:81
+#, no-c-format
+msgid "Duration to show one slide."
+msgstr ""
+
+#. i18n: file slideshowplugin.kcfg line 12
+#: rc.cpp:84
+#, no-c-format
+msgid ""
+"\n"
+"        Default duration to show one slide.\n"
+"      "
+msgstr ""
+
+#: slideshowobject.cpp:53
+msgid "&Properties"
+msgstr ""
+
+#: slideshowobject.cpp:129
+msgid "Processing slides...\n"
+msgstr ""
+
+#: slideshowobject.cpp:135
+msgid "Cannot add directory."
+msgstr ""
+
+#: slideshowobject.cpp:217
+#, c-format
+msgid "Page %1"
+msgstr ""
+
+#: slideshowobject.cpp:379
+#, c-format
+msgid "Preparing file(s) for %1"
+msgstr ""
+
+#: slideshowobject.cpp:487
+msgid "   Can't write slideshow file."
+msgstr ""
+
+#: slideshowobject.cpp:493
+msgid "   Making Slideshow"
+msgstr ""
+
+#: slideshowobject.cpp:520
+msgid "   Slideshow error."
+msgstr ""
+
+#: slideshowobject.cpp:525
+msgid "   Slideshow \"%1\" seems to be up to date"
+msgstr ""
+
+#: slideshowplugin.cpp:34
+msgid "Slideshow plugin for KMediaFactory."
+msgstr ""
+
+#: slideshowplugin.cpp:37
+msgid "KMediaFactory Slideshow"
+msgstr ""
+
+#: slideshowplugin.cpp:58
+msgid "Add Slideshow"
+msgstr ""
+
+#: slideshowplugin.cpp:103
+msgid "Slideshow"
+msgstr ""
+
+#: slideshowproperties.cpp:164
+msgid "Info: "
+msgstr ""
+
+#: slideshowproperties.cpp:175
+msgid "%1 images"
+msgstr ""
+
+#: slideshowproperties.cpp:177 slideshowproperties.cpp:181
+#, c-format
+msgid ", Duration %1"
+msgstr ""
+
+#: slideshowproperties.cpp:184
+#, c-format
+msgid ", Audio duration %1"
+msgstr ""
+
+#: slideshowproperties.cpp:214
+msgid ""
+"*.jpg *.png *.pdf *.odp *.odt *.ods *.odx *.sxw *.sxc *.sxi             "
+"*.ppt *.xls *.doc|Pictures, Presentations\n"
+"*.*|All files"
+msgstr ""
+
+#: slideshowproperties.cpp:227
+msgid "*.mp3 *.wav *.ogg|Audio Files"
+msgstr ""
+
+#: slideshowproperties.cpp:228
+msgid "Audio files"
+msgstr ""
+
+#: slideshowproperties.cpp:251
+msgid "You should have atleast one chapter."
+msgstr ""

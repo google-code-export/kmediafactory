@@ -1,0 +1,269 @@
+# translation of kmediafactory_slideshow.po to
+# This file is put in the public domain.
+#
+# Caio Begotti <caio@ueberalles.net>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmediafactory_slideshow\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-04-30 17:10-0300\n"
+"PO-Revision-Date: 2006-04-30 21:13-0300\n"
+"Last-Translator: Caio Begotti <caio@ueberalles.net>\n"
+"Language-Team:  <en@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.2\n"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "Caio Begotti"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "caio@ueberalles.net"
+
+#. i18n: file slideshowlayout.ui line 16
+#: rc.cpp:3
+#, no-c-format
+msgid "Slideshow properties"
+msgstr "Propriedades do slideshow"
+
+#. i18n: file slideshowlayout.ui line 35
+#: rc.cpp:6
+#, no-c-format
+msgid "&Title:"
+msgstr "&Título:"
+
+#. i18n: file slideshowlayout.ui line 59
+#: rc.cpp:9
+#, no-c-format
+msgid "Ch"
+msgstr "Ch"
+
+#. i18n: file slideshowlayout.ui line 70
+#: rc.cpp:12
+#, no-c-format
+msgid "Image"
+msgstr "Imagem"
+
+#. i18n: file slideshowlayout.ui line 92
+#: rc.cpp:18
+#, no-c-format
+msgid "Comment"
+msgstr "Comentário"
+
+#. i18n: file slideshowlayout.ui line 130
+#: rc.cpp:22
+#, no-c-format
+msgid "Alt+Ins"
+msgstr "Alt+Ins"
+
+#. i18n: file slideshowlayout.ui line 139
+#: rc.cpp:25
+#, no-c-format
+msgid "Add (Alt+ Insert)"
+msgstr "Adicionar (Alt+Insert)"
+
+#. i18n: file slideshowlayout.ui line 150
+#: rc.cpp:29
+#, no-c-format
+msgid "Alt+Del"
+msgstr "Alt+Del"
+
+#. i18n: file slideshowlayout.ui line 159
+#: rc.cpp:32
+#, no-c-format
+msgid "Remove (Alt + Delete)"
+msgstr "Remover (Alt+Delete)"
+
+#. i18n: file slideshowlayout.ui line 187
+#: rc.cpp:36
+#, no-c-format
+msgid "Alt+Up"
+msgstr "Alt+Up"
+
+#. i18n: file slideshowlayout.ui line 196
+#: rc.cpp:39
+#, no-c-format
+msgid "Move up (Alt + Up)"
+msgstr "Mover para cima (Alt+Up)"
+
+#. i18n: file slideshowlayout.ui line 207
+#: rc.cpp:43
+#, no-c-format
+msgid "Alt+Down"
+msgstr "Alt+Down"
+
+#. i18n: file slideshowlayout.ui line 216
+#: rc.cpp:46
+#, no-c-format
+msgid "Move down (Alt + Down)"
+msgstr "Mover para baixo (Alt+Down)"
+
+#. i18n: file slideshowlayout.ui line 282
+#: rc.cpp:50
+#, no-c-format
+msgid "&Slide duration:"
+msgstr "Duração do &Slide:"
+
+#. i18n: file slideshowlayout.ui line 301
+#: rc.cpp:53
+#, no-c-format
+msgid "fit"
+msgstr "caber"
+
+#. i18n: file slideshowlayout.ui line 350
+#: rc.cpp:56
+#, no-c-format
+msgid "&Add original pictures to DVD"
+msgstr "&Adicionar imagens originais ao DVD"
+
+#. i18n: file slideshowlayout.ui line 353
+#: rc.cpp:59
+#, no-c-format
+msgid "Alt+A"
+msgstr "Alt+A"
+
+#. i18n: file slideshowlayout.ui line 372
+#: rc.cpp:62
+#, no-c-format
+msgid "&Loop slideshow"
+msgstr "S&lideshow infinito"
+
+#. i18n: file slideshowlayout.ui line 375
+#: rc.cpp:65
+#, no-c-format
+msgid "Alt+L"
+msgstr "Alt+L"
+
+#. i18n: file slideshowlayout.ui line 449
+#: rc.cpp:72
+#, no-c-format
+msgid "Alt+O"
+msgstr "Alt+O"
+
+#. i18n: file slideshowlayout.ui line 466
+#: rc.cpp:75
+#, no-c-format
+msgid "Ca&ncel"
+msgstr "Ca&ncelar"
+
+#. i18n: file slideshowlayout.ui line 469
+#: rc.cpp:78
+#, no-c-format
+msgid "Alt+N"
+msgstr "Alt+N"
+
+#. i18n: file slideshowplugin.kcfg line 9
+#: rc.cpp:81
+#, no-c-format
+msgid "Duration to show one slide."
+msgstr "Duração da exibição de um slide."
+
+#. i18n: file slideshowplugin.kcfg line 12
+#: rc.cpp:84
+#, no-c-format
+msgid ""
+"\n"
+"        Default duration to show one slide.\n"
+"      "
+msgstr ""
+"\n"
+"        Duração padrão da exibição de um slide.\n"
+"      "
+
+#: slideshowobject.cpp:53
+msgid "&Properties"
+msgstr "&Propriedades"
+
+#: slideshowobject.cpp:129
+msgid "Processing slides...\n"
+msgstr "Processando slides...\n"
+
+#: slideshowobject.cpp:135
+msgid "Cannot add directory."
+msgstr "Não foi possível adicionar o diretório."
+
+#: slideshowobject.cpp:217
+msgid "Page %1"
+msgstr "Página %1"
+
+#: slideshowobject.cpp:379
+msgid "Preparing file(s) for %1"
+msgstr "Preparando arquivo(s) para %1"
+
+#: slideshowobject.cpp:487
+msgid "   Can't write slideshow file."
+msgstr "   Não foi possível gravar o slideshow."
+
+#: slideshowobject.cpp:493
+msgid "   Making Slideshow"
+msgstr "   Criando o slideshow"
+
+#: slideshowobject.cpp:520
+msgid "   Slideshow error."
+msgstr "   Erro no slideshow."
+
+#: slideshowobject.cpp:525
+msgid "   Slideshow \"%1\" seems to be up to date"
+msgstr "   O slideshow \"%1\" parece estar atualizado"
+
+#: slideshowplugin.cpp:34
+msgid "Slideshow plugin for KMediaFactory."
+msgstr "Plugin de slideshows do KMediaFactory"
+
+#: slideshowplugin.cpp:37
+msgid "KMediaFactory Slideshow"
+msgstr "Slideshow do KMediaFactory"
+
+#: slideshowplugin.cpp:58
+msgid "Add Slideshow"
+msgstr "Adicionar slideshow"
+
+#: slideshowplugin.cpp:103
+msgid "Slideshow"
+msgstr "Slideshow"
+
+#: slideshowproperties.cpp:164
+msgid "Info: "
+msgstr "Informações: "
+
+#: slideshowproperties.cpp:175
+msgid "%1 images"
+msgstr "%1 imagens"
+
+#: slideshowproperties.cpp:177 slideshowproperties.cpp:181
+msgid ", Duration %1"
+msgstr ", Duração %1"
+
+#: slideshowproperties.cpp:184
+msgid ", Audio duration %1"
+msgstr ", Duração do áudio %1"
+
+#: slideshowproperties.cpp:214
+msgid ""
+"*.jpg *.png *.pdf *.odp *.odt *.ods *.odx *.sxw *.sxc *.sxi             *."
+"ppt *.xls *.doc|Pictures, Presentations\n"
+"*.*|All files"
+msgstr ""
+"*.jpg *.png *.pdf *.odp *.odt *.ods *.odx *.sxw *.sxc *.sxi             *."
+"ppt *.xls *.doc|Fotografias, Apresentações\n"
+"*.*|Todos os arquivos"
+
+#: slideshowproperties.cpp:227
+msgid "*.mp3 *.wav *.ogg|Audio Files"
+msgstr "*.mp3 *.wav *.ogg|Arquivos de áudio"
+
+#: slideshowproperties.cpp:228
+msgid "Audio files"
+msgstr "Arquivos de áudio"
+
+#: slideshowproperties.cpp:251
+msgid "You should have atleast one chapter."
+msgstr "Você precisa ter pelo menos um capítulo."
+
