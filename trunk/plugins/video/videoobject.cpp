@@ -34,6 +34,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kicon.h>
+#include <krun.h>
 #include <QImage>
 #include <QColor>
 #include <QFileInfo>
@@ -833,10 +834,7 @@ void VideoObject::setTitleFromFileName()
 
 void VideoObject::slotPlayVideo()
 {
-  K3Process process;
-
-  process << m_kmfplayer << fileName();
-  process.start(K3Process::DontCare);
+  KRun::runUrl(KUrl(fileName()), "video/mpeg", qApp->activeWindow());
 }
 
 void VideoObject::printCells()
