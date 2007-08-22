@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="application/x-kmediafactory">
     <comment>KMediaFactory Project File</comment>
     <comment xml:lang="fi">KMediaFactory projekti tiedosto</comment>
@@ -12,4 +12,4 @@
     <sub-class-of type="application/zip"/>
     <glob pattern="*.kmft"/>
   </mime-type>
-</mime-info
+</mime-info>
