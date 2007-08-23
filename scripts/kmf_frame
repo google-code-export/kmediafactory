@@ -15,7 +15,8 @@ TIME=$2
 OUTPUT="$3"
 DIR=`dirname "$OUTPUT"`
 
-$MENCODER -ss $TIME -endpos .1 -ovc copy -nosound $FILE -o "$DIR/kmf_tmp_x.mpg"
+$MENCODER -ss $TIME -endpos .1 -of mpeg -ovc copy -nosound \
+    $FILE -o "$DIR/kmf_tmp_x.mpg"
 $MPLAYER -nosound -vo pnm:outdir="$DIR" "$DIR/kmf_tmp_x.mpg"
 rm "$DIR/kmf_tmp_x.mpg"
 mv "$DIR/00000001.ppm" "$OUTPUT"
