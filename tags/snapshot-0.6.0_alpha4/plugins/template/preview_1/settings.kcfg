@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile/>
+  <include>templatepluginsettings.h</include>
+  <group name="%KMFMenuPage%">
+      <entry name="sound" type="Url">
+          <label>Menu page background sound</label>
+          <default></default>
+      </entry>
+      <entry name="language" type="String">
+          <label>Menu page language</label>
+          <default code="true">
+              TemplatePluginSettings::defaultMenuLanguage()
+          </default>
+      </entry>
+      <entry name="direct_play" type="Bool">
+          <label>Play movie directly without showing menu first. Menu can be
+shown later using menu button.</label>
+          <default>false</default>
+      </entry>
+      <entry name="continue_to_next_title" type="Int">
+          <label>Continue to next title when previous finishes.</label>
+          <default>1</default>
+      </entry>
+  </group>
+  <group name="background">
+      <entry name="background::url" type="Url">
+          <label>Background url</label>
+          <default>kde://wallpaper/blue-bend.jpg</default>
+      </entry>
+  </group>
+  <group name="label_.*">
+      <entry name="label::color" type="Color">
+          <label>Background url</label>
+          <default>#cccccc</default>
+      </entry>
+  </group>
+  <group name="label_main">
+      <entry name="main::font" type="Font">
+          <label>Font for main title</label>
+          <default>Helvetica,32,-1,5,40,0,0,0,0,0</default>
+      </entry>
+  </group>
+  <group name="label_title.*">
+      <entry name="title::font" type="Font">
+          <label>Font for smaller texts</label>
+          <default>Helvetica,22,-1,5,40,0,0,0,0,0</default>
+      </entry>
+  </group>
+</kcfg>

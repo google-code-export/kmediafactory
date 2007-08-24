@@ -1,0 +1,88 @@
+# translation of ui.po to Finnish
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Petri Damsten <petri.damsten@iki.fi>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: ui\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-02-09 09:40+0200\n"
+"PO-Revision-Date: 2006-02-09 12:19+0200\n"
+"Last-Translator: Petri Damstén <petri.damsten@iki.fi>\n"
+"Language-Team: Finnish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.1\n"
+
+#: rc.cpp:3
+#, no-c-format
+msgid "Preview 1"
+msgstr "Kuvat 1"
+
+#: rc.cpp:6
+#, no-c-format
+msgid "Template Options"
+msgstr "Mallipohjan valinnat"
+
+#: rc.cpp:9
+#, no-c-format
+msgid "B&ackground Image:"
+msgstr "&Tausta kuva:"
+
+#: rc.cpp:12
+#, no-c-format
+msgid "Back&ground Sound:"
+msgstr "&Tausta musiikki:"
+
+#: rc.cpp:15
+#, no-c-format
+msgid "&Main Title Font:"
+msgstr "Pääotsakkeen kirjasin:"
+
+#: rc.cpp:18
+#, no-c-format
+msgid "&Title Font:"
+msgstr "Otsakkeen kirjasin:"
+
+#: rc.cpp:21
+#, no-c-format
+msgid "Font C&olor:"
+msgstr "Kirjasimen väri:"
+
+#: rc.cpp:24
+#, no-c-format
+msgid "Direct Play"
+msgstr "Suorasoitto"
+
+#: rc.cpp:27
+#, no-c-format
+msgid "Pla&y first track when disc entered"
+msgstr "&Soita ensimmäinen video aloitettaessa"
+
+#: rc.cpp:30
+#, no-c-format
+msgid "Alt+Y"
+msgstr "Alt+S"
+
+#: rc.cpp:33
+#, no-c-format
+msgid "After playing title:"
+msgstr "Soiton jälkeen:"
+
+#: rc.cpp:36
+#, no-c-format
+msgid "Jump to main menu"
+msgstr "hyppää päävalikkoon"
+
+#: rc.cpp:39
+#, no-c-format
+msgid "Jump to next title"
+msgstr "hyppää seuraavaan videoon"
+
+#: rc.cpp:42
+#, no-c-format
+msgid "La&nguage:"
+msgstr "&Kieli:"
+

@@ -1,0 +1,18 @@
+CHANGED FROM THE LATEST RELEASE (0.5.2)
+========================================
+Features:
+- KDE4 port
+
+Bug fixes:
+-
+
+CHANGED FROM THE PREVIOUS SNAPSHOT
+========================================
+Features:
+-
+
+Bug fixes:
+- Installation fixes
+- Mime types fixed
+- Oxygen style icons
+- Using ffmpeg to get frames
