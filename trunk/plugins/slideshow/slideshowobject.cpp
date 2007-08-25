@@ -340,15 +340,14 @@ bool SlideshowObject::writeSlideshowFile() const
 
     ts << "background:0::black\n";
     ts << "fadein:1\n";
-    for(SlideList::ConstIterator it = m_slides.begin();
-        it != m_slides.end(); ++it)
+    foreach(Slide slide, m_slides)
     {
-      QString comment = (*it).comment;
+      QString comment = slide.comment;
       comment.replace(":", "\\:");
       comment.replace("\n", " ");
-      ts << (*it).picture << ":" << QString::number(duration, 'f', 2) <<
+      ts << slide.picture << ":" << QString::number(duration, 'f', 2) <<
           ":" << comment << "\n";
-      if(it != m_slides.end())
+      if(slide.picture != m_slides.last().picture)
         ts << "crossfade:1\n";
     }
     ts << "fadeout:1\n";
@@ -419,6 +418,7 @@ bool SlideshowObject::convertToDVD() const
 
     uiInterface()->message(KMF::Info, i18n("   Making Slideshow"));
     dvdslideshow << slideshowPlugin->dvdslideshowBin() <<
+        "-mp2" <<
         "-o" << projectInterface()->projectDir("media") <<
         "-n" << m_id <<
         "-f" << dir.filePath(QString("%1.slideshow").arg(m_id));
@@ -497,10 +497,9 @@ void SlideshowObject::writeDvdAuthorXml(QDomElement& element,
     double start = 0.0;
     double duration = calculatedSlideDuration();
 
-    for(SlideList::ConstIterator it = m_slides.begin();
-        it != m_slides.end(); ++it)
+    foreach(Slide slide, m_slides)
     {
-      if((*it).chapter)
+      if(slide.chapter)
         chapters.append(start);
 
       // Forward over first fade in (0.4 is added to be sure we are out
@@ -514,11 +513,11 @@ void SlideshowObject::writeDvdAuthorXml(QDomElement& element,
       QDomElement c = vob.ownerDocument().createElement("cell");
 
       c.setAttribute("start", KMF::Time(chapters[i]).toString());
-      if(i == chapters.count())
+      if(i == chapters.count() - 1)
         c.setAttribute("end", "-1");
       else
       {
-        c.setAttribute("end", KMF::Time(chapters[i+1]).toString());
+        c.setAttribute("end", KMF::Time(chapters[i]).toString());
       }
       c.setAttribute("chapter", 1);
       vob.appendChild(c);
