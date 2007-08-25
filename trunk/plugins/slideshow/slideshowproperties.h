@@ -62,7 +62,7 @@ class SlideshowProperties : public KDialog, public Ui::SlideshowProperties
     void addSlides(const SlideList& slides);
 
   public slots:
-    void gotPreview(const KFileItem* item, const QPixmap& pixmap);
+    void gotPreview(const KFileItem& item, const QPixmap& pixmap);
 
   protected slots:
     virtual void moveUp();
