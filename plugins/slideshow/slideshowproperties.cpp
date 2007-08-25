@@ -156,8 +156,7 @@ SlideshowProperties::SlideshowProperties(QWidget *parent)
   slideListView->setDropIndicatorShown(true);
   slideListView->setDragDropOverwriteMode(false);
 
-  audioButton->setIcon(KIcon("arts"));
-  audioButton->setIconSize(QSize(K3Icon::SizeLarge, K3Icon::SizeLarge));
+  audioButton->setIcon(KIcon("speaker"));
   addButton->setIcon(KIcon("list-add"));
   removeButton->setIcon(KIcon("list-remove"));
   upButton->setIcon(KIcon("arrow-up"));
