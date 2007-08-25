@@ -209,15 +209,16 @@ void SlideshowProperties::addSlides(const SlideList& slides)
     list.append(item);
   }
   KIO::PreviewJob* job =  KIO::filePreview(list, 80, 60);
-  connect(job, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-          this, SLOT(gotPreview(const KFileItem*, const QPixmap&)));
+  connect(job, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
+          this, SLOT(gotPreview(const KFileItem&, const QPixmap&)));
   updateInfo();
 }
 
-void SlideshowProperties::gotPreview(const KFileItem* item,
+void SlideshowProperties::gotPreview(const KFileItem& item,
                                      const QPixmap& pixmap)
 {
-  m_model.setPreview(item->url().path(), pixmap);
+  kDebug() << k_funcinfo << endl;
+  m_model.setPreview(item.url().path(), pixmap);
 }
 
 void SlideshowProperties::moveDown()
