@@ -12,7 +12,5 @@ Features:
 -
 
 Bug fixes:
-- Installation fixes
-- Mime types fixed
-- Oxygen style icons
-- Using ffmpeg to get frames
+- Slideshow fixes
+
