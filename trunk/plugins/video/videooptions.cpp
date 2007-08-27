@@ -130,10 +130,9 @@ void VideoOptions::audioPropertiesClicked()
 
 void VideoOptions::subtitleAddClicked()
 {
-  QDVD::Subtitle subtitle;
+  QDVD::Subtitle subtitle(VideoPluginSettings::defaultSubtitleLanguage());
   SubtitleOptions dlg(this);
 
-  subtitle.setLanguage(VideoPluginSettings::defaultSubtitleLanguage());
   dlg.setData(subtitle);
   if (dlg.exec())
   {
