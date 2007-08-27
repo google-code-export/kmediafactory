@@ -517,7 +517,7 @@ void SlideshowObject::writeDvdAuthorXml(QDomElement& element,
         c.setAttribute("end", "-1");
       else
       {
-        c.setAttribute("end", KMF::Time(chapters[i]).toString());
+        c.setAttribute("end", KMF::Time(chapters[i+1]).toString());
       }
       c.setAttribute("chapter", 1);
       vob.appendChild(c);
@@ -549,36 +549,13 @@ void SlideshowObject::writeDvdAuthorXml(QDomElement& element,
   element.appendChild(titles);
 }
 
-bool SlideshowObject::lastChapter(SlideList::ConstIterator& iter)
-{
-  SlideList::ConstIterator it = iter;
-
-  for(++it; it != m_slides.end(); ++it)
-  {
-    if((*it).chapter)
-      return false;
-  }
-  return true;
-}
-
 QImage SlideshowObject::preview(int chap) const
 {
-  int n = 0;
-  for(SlideList::ConstIterator it = m_slides.begin();
-      it != m_slides.end(); ++it)
-  {
-    if((*it).chapter == true)
-      ++n;
-    if(n >= chap)
-    {
-      QImage img((*it).picture);
-      QSize res = KMF::Tools::resolution(img.size(), img.size(),
-          KMF::Tools::maxResolution(projectInterface()->type()), QSize(4,3));
-      img = img.scaled(res, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-      return img;
-    }
-  }
-  return QImage();
+  QImage img(chapter(chap).picture);
+  QSize res = KMF::Tools::resolution(img.size(), img.size(),
+      KMF::Tools::maxResolution(projectInterface()->type()), QSize(4,3));
+  img = img.scaled(res, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+  return img;
 }
 
 QString SlideshowObject::text(int chap) const
@@ -595,12 +572,12 @@ int SlideshowObject::chapters() const
 {
   int i = 0;
 
-  for(SlideList::ConstIterator it = m_slides.begin();
-      it != m_slides.end(); ++it)
+  foreach(Slide slide, m_slides)
   {
-    if((*it).chapter)
+    if(slide.chapter)
       ++i;
   }
+  kDebug() << k_funcinfo << i << endl;
   return i;
 }
 
@@ -608,13 +585,12 @@ const Slide& SlideshowObject::chapter(int chap) const
 {
   int i = 0;
 
-  for(SlideList::ConstIterator it = m_slides.begin();
-      it != m_slides.end(); ++it)
+  foreach(const Slide& slide, m_slides)
   {
-    if((*it).chapter)
+    if(slide.chapter)
       ++i;
     if(i == chap)
-      return *it;
+      return slide;
   }
   return m_slides.first();
 }
@@ -674,10 +650,9 @@ QTime SlideshowObject::chapterTime(int chap) const
   KMF::Time total;
   int i = 0, n = 0;
 
-  for(SlideList::ConstIterator it = m_slides.begin();
-      it != m_slides.end(); ++it)
+  foreach(const Slide& slide, m_slides)
   {
-    if((*it).chapter)
+    if(slide.chapter)
       ++i;
     ++n;
     if(chap == i)
