@@ -46,14 +46,15 @@ void SubtitleOptions::getData(QDVD::Subtitle& obj) const
 {
   int align;
   int n = languageCombo->currentIndex();
+  int hor[] = { 0, Qt::AlignLeft, Qt::AlignRight, Qt::AlignHCenter };
+  int ver[] = { Qt::AlignTop, Qt::AlignBottom, Qt::AlignVCenter };
 
   obj.setLanguage(m_languageModel.at(n));
   obj.setFile(subtitleUrl->url().pathOrUrl());
   obj.setFont(subtitleFontChooser->font());
 
-  align =  0x10 << verticalAlignCombo->currentIndex();
-  n = horizontalAlignCombo->currentIndex();
-  align |= (n == 0) ? 0 : 0x01 << (n - 1);
+  align =  ver[verticalAlignCombo->currentIndex()];
+  align |= hor[horizontalAlignCombo->currentIndex()];
   obj.setAlignment(QFlags<Qt::AlignmentFlag>(align));
 }
 
@@ -70,10 +71,36 @@ void SubtitleOptions::setData(const QDVD::Subtitle& obj)
   subtitleUrl->setUrl(obj.file());
   subtitleFontChooser->setFont(obj.font());
 
-  n = (obj.alignment() & Qt::AlignVertical_Mask) >> 4;
-  verticalAlignCombo->setCurrentIndex((n > 2) ? 2 : n-1);
-  n = obj.alignment() & Qt::AlignHorizontal_Mask;
-  horizontalAlignCombo->setCurrentIndex((n > 2)?3:n);
+  switch(obj.alignment() & Qt::AlignVertical_Mask)
+  {
+    case Qt::AlignTop:
+      n = 0;
+      break;
+    case Qt::AlignVCenter:
+        n = 2;
+        break;
+    case Qt::AlignBottom:
+    default:
+        n = 1;
+        break;
+  }
+  verticalAlignCombo->setCurrentIndex(n);
+
+  switch(obj.alignment() & Qt::AlignHorizontal_Mask)
+  {
+    case Qt::AlignLeft:
+      n = 1;
+      break;
+    case Qt::AlignRight:
+      n = 2;
+      break;
+    case Qt::AlignHCenter:
+      n = 3;
+      break;
+    default:
+      n = 0;
+  }
+  horizontalAlignCombo->setCurrentIndex(n);
 }
 
 void SubtitleOptions::accept()

@@ -336,7 +336,7 @@ QString Cell::toString() const
 
 Subtitle::Subtitle(QString langCode, QString file) :
     m_langCode(langCode), m_file(file),
-    m_align(Qt::AlignLeft | Qt::AlignBottom)
+    m_align(Qt::AlignCenter | Qt::AlignBottom)
 {
   m_font.setPointSize(28);
 }
@@ -404,14 +404,43 @@ QString Subtitle::toString() const
 
 QString Subtitle::verticalAlign() const
 {
-  int n = (m_align & Qt::AlignVertical_Mask) >> 4;
-  return vAlign[(n > 2)?3:n];
+  int n = 0;
+
+  switch(alignment() & Qt::AlignVertical_Mask)
+  {
+    case Qt::AlignTop:
+      n = 1;
+      break;
+    case Qt::AlignVCenter:
+        n = 3;
+        break;
+    case Qt::AlignBottom:
+    default:
+        n = 2;
+        break;
+  }
+  return vAlign[n];
 }
 
 QString Subtitle::horizontalAlign() const
 {
-  int n = m_align & Qt::AlignHorizontal_Mask;
-  return hAlign[(n > 2)?3:n];
+  int n = 0;
+
+  switch(alignment() & Qt::AlignHorizontal_Mask)
+  {
+    case Qt::AlignLeft:
+      n = 1;
+      break;
+    case Qt::AlignRight:
+      n = 2;
+      break;
+    case Qt::AlignHCenter:
+      n = 3;
+      break;
+    default:
+      n = 0;
+  }
+  return hAlign[n];
 }
 
 AudioTrack::AudioTrack(QString langCode) :
