@@ -502,11 +502,11 @@ void SlideshowObject::writeDvdAuthorXml(QDomElement& element,
       if(slide.chapter)
         chapters.append(start);
 
-      // Forward over first fade in (0.4 is added to be sure we are out
+      // Forward over first fade in (0.520 is added to be sure we are out
       // of fade)
       if(start == 0.0)
-        start = 1.4;
-      start += duration + 1.0;
+        start = 0.520;
+      start += duration;
     }
     for(int i = 0; i < chapters.count(); ++i)
     {
@@ -577,7 +577,6 @@ int SlideshowObject::chapters() const
     if(slide.chapter)
       ++i;
   }
-  kDebug() << k_funcinfo << i << endl;
   return i;
 }
 
@@ -641,7 +640,7 @@ QTime SlideshowObject::duration() const
   if(m_duration < 1.0)
     total = audioDuration();
   else
-    total = (1.0 + m_duration) * m_slides.count() + 1.0;
+    total = m_duration * m_slides.count();
   return total;
 }
 
@@ -658,7 +657,7 @@ QTime SlideshowObject::chapterTime(int chap) const
     if(chap == i)
       break;
   }
-  total += (1.0 + calculatedSlideDuration()) * n + 1.0;
+  total += calculatedSlideDuration() * n;
   return total;
 }
 
