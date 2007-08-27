@@ -1,0 +1,11 @@
+Begin4
+Title:          kmediafactory
+Version:        0.6.0_alpha5
+Entered-date:   2007-08-27
+Description:    Easy to use template based dvd authoring tool
+Keywords:       KDE X11 desktop Qt dvd
+Author:         Petri Damsten <damu@iki.fi>
+Primary-site:   http://www.iki.fi/damu/software/kmediafactory/
+Platforms:      Unix, Qt, KDE
+Copying-policy: GPL
+End

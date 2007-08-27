@@ -1,0 +1,27 @@
+Patches and bug fixes:
+- Neal Becker - gcc 4.1/typo fixes
+
+Code/Icons in KMediaFactory:
+- kostore: from http://www.koffice.org/ GPL-2
+- Plugin based on 'Building a Plugin Structure for a KDE application'
+  example by Jesper K. Pedersen GPL-2
+- PLugin error handling from libkdepim/pluginmanager.cpp GPL-2
+- mime type icon backgrounds from oxygen icon set
+- dopr.c: modified from http://www.samba.org snprintf.c GPL-2
+- kmfintl.cpp: gettext code from kdecore GPL-2
+- Travel theme map from http://www.lib.utexas.edu/maps/ Public Domain
+- mkdir in KMF::Project from QtEz by Jan Prokop GPL-2
+- kmf*.png in lib/pics/ from Qt icons
+- qdvdinfo.* based on
+  - lsdvd.c from lsdvd GPL-2
+  - streamanalyze.c from streamdvd/streamanalyze GPL-2
+  - dvdread.c from DvdRead input module for vlc GPL-2
+- lrintf.m4 from http://mega-nerd.com/FPcast/lrintf.m4
+- removeDuplicates in KMF::Tools
+  from kdelibs/kded/kbuildimageiofactory.cpp GPL-2
+- appIcon function in tools.cpp from kmenuedit - treeview.cpp
+- desktop file starting from kdecore - kapplication.cpp
+- Most of the Finnish language name translations from here
+  http://elonen.iki.fi/code/misc-notes/RFC-3066-SQL-fi/index.html
+
+Hopefully not forgetting anybody...
