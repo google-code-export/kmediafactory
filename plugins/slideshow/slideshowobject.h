@@ -99,7 +99,6 @@ class SlideshowObject : public KMF::MediaObject
     bool oooConvert(QString* file) const;
     QTime audioDuration() const;
     double calculatedSlideDuration() const;
-    bool lastChapter(SlideList::ConstIterator& iter);
 
   private:
     QAction* m_slideshowProperties;
