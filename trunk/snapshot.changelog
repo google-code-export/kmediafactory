@@ -15,5 +15,5 @@ Features:
 -
 
 Bug fixes:
-- Slideshow fixes
-
+- subtitle font linking fixed
+- libxine check removed (not needed)
