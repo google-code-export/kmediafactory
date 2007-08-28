@@ -1,0 +1,20 @@
+#!/bin/bash
+# Convert OOo doc to pdf for KMediafactory
+# Copyright (C) 2006 by Petri Damsten - GPL-2
+# Usage:
+# oo2pdf test.odt test.pdf
+
+SCRIPTS=`dirname $0`
+. $SCRIPTS/tools
+
+SOFFICE=`check_executable "soffice" "openoffice.org-common"`
+SOFFICE_DIR=$(dirname $(link_target $SOFFICE))
+UNOPKG=`check_executable "unopkg" "openoffice.org-common" $SOFFICE_DIR`
+
+$UNOPKG list | grep "kmf_converter"
+if [[ $? -eq 1 ]]; then
+  $UNOPKG add --force $SCRIPTS/kmf_converter.oxt
+fi
+
+$SOFFICE -invisible -norestore \
+    "macro:///KMediaFactory.converter.convertToPDF($1,$2)"
