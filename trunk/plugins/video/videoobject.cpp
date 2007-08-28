@@ -464,7 +464,7 @@ QString VideoObject::checkFontFile(const QString& file)
 
   if(!dir.exists())
     dir.mkdir(dir.path());
-  //kdDebug() << k_funcinfo << link.filePath() << " -> " << file << endl;
+  kDebug() << k_funcinfo << link.filePath() << " -> " << file << endl;
   if(!link.exists())
     if(symlink(file.toLocal8Bit(), link.filePath().toLocal8Bit()) < 0)
       kDebug() << k_funcinfo << strerror(errno) << endl;

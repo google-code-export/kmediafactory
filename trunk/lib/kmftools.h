@@ -71,6 +71,7 @@ namespace KMF
       static void fontToXML(const QFont& font, QDomElement* element);
       static QFont fontFromXML(const QDomElement& element);
       static QString fontFile(const QFont& font);
+      static QFont realFont(const QFont& font);
       static QString longFontName(const QFont& font);
       static int fcWeight2QtWeight(int fcWeight);
       static void printChilds(QObject* obj, int level = 0);
