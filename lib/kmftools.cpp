@@ -347,9 +347,21 @@ QString KMF::Tools::longFontName(const QFont& font)
   return result;
 }
 
+QFont KMF::Tools::realFont(const QFont& font)
+{
+  QFont result(font);
+  QFontInfo fi(font);
+
+  result.setFamily(fi.family());
+  result.setWeight(fi.weight());
+  result.setItalic(fi.italic());
+  result.setPointSize(fi.pointSize());
+  return result;
+}
+
 QString KMF::Tools::fontFile(const QFont& font)
 {
-  QString name = longFontName(font);
+  QString name = longFontName(realFont(font));
   static QMap<QString, QString> fileMap;
 
   if(fileMap.count() == 0)
@@ -406,6 +418,23 @@ QString KMF::Tools::fontFile(const QFont& font)
     }
     FcFontSetDestroy (fontset);
   }
+  /*
+  // Write font list for debugging
+  QFile file(QDir::homePath() + "/.spumux/fonts.txt");
+  if(file.open(QIODevice::WriteOnly | QIODevice::Text))
+  {
+    QTextStream out(&file);
+    QMap<QString, QString>::const_iterator i = fileMap.constBegin();
+
+    out << name << endl << endl;
+    while (i != fileMap.constEnd())
+    {
+      out << i.key() << ": " << i.value() << endl;
+      ++i;
+    }
+  }
+  // End of font list
+  */
   return fileMap[name];
 }
 
