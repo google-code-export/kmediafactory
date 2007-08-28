@@ -2,6 +2,9 @@ CHANGED FROM THE LATEST RELEASE (0.5.2)
 ========================================
 Features:
 - KDE4 port
+- video conversion removed
+- dv import removed
+- own video player removed
 
 Bug fixes:
 -

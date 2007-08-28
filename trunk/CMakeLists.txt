@@ -11,7 +11,6 @@ find_package(KDE4 REQUIRED)
 include(KDE4Defaults)
 include(MacroLibrary)
 
-find_package(Xine REQUIRED)
 find_package(Fontconfig REQUIRED)
 find_package(LibDvdread)
 
