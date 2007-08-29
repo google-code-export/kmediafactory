@@ -14,5 +14,5 @@ TIME=$2
 OUTPUT="$3"
 
 rm -f "$OUTPUT"
-$FFMPEG -itsoffset -$TIME -i "$FILE" -vcodec ppm -vframes 1 -an -f rawvideo \
+$FFMPEG -ss $TIME -i "$FILE" -vcodec ppm -vframes 1 -an -f rawvideo \
     "$OUTPUT"

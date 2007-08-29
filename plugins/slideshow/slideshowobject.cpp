@@ -564,6 +564,7 @@ QImage SlideshowObject::preview(int chap) const
   QImage img(chapter(chap).picture);
   QSize res = KMF::Tools::resolution(img.size(), img.size(),
       KMF::Tools::maxResolution(projectInterface()->type()), QSize(4,3));
+  kDebug() << k_funcinfo << res << endl;
   img = img.scaled(res, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
   return img;
 }
