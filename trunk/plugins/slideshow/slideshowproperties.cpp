@@ -95,6 +95,7 @@ QVariant SlideListModel::data(const QModelIndex &index, int role) const
 bool SlideListModel::setData(const QModelIndex &index, const QVariant &value,
                              int role)
 {
+  kDebug() << k_funcinfo << endl;
   if(!isValid(index))
     return false;
 
@@ -102,8 +103,10 @@ bool SlideListModel::setData(const QModelIndex &index, const QVariant &value,
 
   if (role == Qt::EditRole)
   {
-    if(index.column() == 2)
+    if(index.column() == 1)
+    {
       slide.comment = value.toString();
+    }
   }
   else if (role == Qt::CheckStateRole)
   {
@@ -217,7 +220,6 @@ void SlideshowProperties::addSlides(const SlideList& slides)
 void SlideshowProperties::gotPreview(const KFileItem& item,
                                      const QPixmap& pixmap)
 {
-  kDebug() << k_funcinfo << endl;
   m_model.setPreview(item.url().path(), pixmap);
 }
 
