@@ -1,8 +1,8 @@
 #!/bin/bash
 # Get frame from video for KMediafactory
-# Copyright (C) 2006 by Petri Damsten - GPL-2
+# Copyright (C) 2007 by Petri Damsten - GPL-2
 # Usage:
-# frame /media/movies/movie.mpg 00:10:00 /home/user/kmf/image.pnm
+# kmf_frame /media/movies/movie.mpg 00:10:00 /home/user/kmf/image.pnm
 
 SCRIPTS=`dirname $0`
 . $SCRIPTS/tools
