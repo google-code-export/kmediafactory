@@ -1,8 +1,8 @@
 #!/bin/bash
 # Convert pdf ton png images for KMediafactory
-# Copyright (C) 2006 by Petri Damsten - GPL-2
+# Copyright (C) 2007 by Petri Damsten - GPL-2
 # Usage:
-# pdf2png test.pdf test_%d.png
+# kmf_pdf2png test.pdf test_%d.png
 
 SCRIPTS=`dirname $0`
 . $SCRIPTS/tools

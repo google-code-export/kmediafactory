@@ -149,6 +149,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
     {
       Slide slide;
 
+      kDebug() << k_funcinfo << minfo.keys() << endl;
       if(minfo.keys().contains("Comment") &&
          !minfo.item("Comment").value().toString().isEmpty())
       {
@@ -160,6 +161,15 @@ SlideList SlideshowObject::slideList(QStringList list) const
           slide.comment = minfo.item("CreationDate").value().toString();
         if(minfo.keys().contains("CreationTime"))
           slide.comment += " " + minfo.item("CreationTime").value().toString();
+      }
+      if(slide.comment.isEmpty())
+      {
+        Run run(QString("kmf_comment \"%1\"").arg(file));
+
+        if(run.exitStatus() == 0)
+        {
+          slide.comment = run.output();
+        }
       }
       slide.comment = slide.comment.trimmed();
       slide.picture = file;

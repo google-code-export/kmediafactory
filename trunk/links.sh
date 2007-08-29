@@ -27,6 +27,7 @@ FILES=(
 "share/apps/kmfwidgets/pics/kmflanguagecombobox.png"
 "share/apps/kmfwidgets/pics/kmfimageview.png"
 "share/apps/kmediafactory/kmediafactoryui.rc"
+"share/apps/kmediafactory/scripts/kmf_comment"
 "share/apps/kmediafactory/scripts/kmf_frame"
 "share/apps/kmediafactory/scripts/kmf_info"
 "share/apps/kmediafactory/scripts/kmf_make_mpeg"
