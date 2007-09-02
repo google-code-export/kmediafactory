@@ -12,8 +12,8 @@ Bug fixes:
 CHANGED FROM THE PREVIOUS SNAPSHOT
 ========================================
 Features:
--
+- AC3/MP2 option for slideshow
+- Scale template preview menu option
 
 Bug fixes:
-- subtitle font linking fixed
-- libxine check removed (not needed)
+- ffmpeg frame script fixed
