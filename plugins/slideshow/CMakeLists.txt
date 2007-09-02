@@ -12,6 +12,7 @@ set(kmediafactory_slideshow_SRCS
 
 kde4_add_ui_files(kmediafactory_slideshow_SRCS
   slideshowproperties.ui
+  slideshowconfig.ui
 )
 
 kde4_add_kcfg_files(kmediafactory_slideshow_SRCS
