@@ -55,6 +55,7 @@ class TemplatePage : public QWidget, public Ui::TemplatePage
     QDateTime m_lastUpdate;
     QModelIndex m_previous;
     bool m_settingPrevious;
+    bool m_scaled;
 };
 
 #endif
