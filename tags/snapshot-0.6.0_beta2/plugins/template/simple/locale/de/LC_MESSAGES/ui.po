@@ -1,0 +1,76 @@
+# translation of ui.po to German
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Christoph Lumme <lummi@in-4-matik.de>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: ui\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-05 17:42+0300\n"
+"PO-Revision-Date: 2006-03-24 10:45+0100\n"
+"Last-Translator: Christoph Lumme <lummi@in-4-matik.de>\n"
+"Language-Team: German <de@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.1\n"
+
+#: rc.cpp:3
+msgid "Simple"
+msgstr ""
+
+#: rc.cpp:6
+msgid "Template Options"
+msgstr "Templateoptionen"
+
+#: rc.cpp:9
+msgid "B&ackground Image:"
+msgstr "H&intergrundbild"
+
+#: rc.cpp:12
+msgid "Chapter page &background:"
+msgstr "Kapitelmenü &Hintergrund:"
+
+#: rc.cpp:15
+msgid "Back&ground Sound:"
+msgstr "Hin&tergrundmusik"
+
+#: rc.cpp:18
+msgid "&Main Title Font:"
+msgstr "&Schriftart Hauptüberschrift"
+
+#: rc.cpp:21
+msgid "&Title Font:"
+msgstr "S&chriftart Überschrift"
+
+#: rc.cpp:24
+msgid "Font C&olor:"
+msgstr "Schriftf&arbe"
+
+#: rc.cpp:27
+msgid "Direct Play"
+msgstr "direkt abspielen"
+
+#: rc.cpp:30
+msgid "Pla&y first track when disc entered"
+msgstr "Disc so&fort abspielen"
+
+#: rc.cpp:33
+msgid "Alt+Y"
+msgstr ""
+
+#: rc.cpp:36
+msgid "After playing title:"
+msgstr "Nach Titelwiedergabe:"
+
+#: rc.cpp:39
+msgid "Jump to main menu"
+msgstr "Zu Hauptmenü springen"
+
+#: rc.cpp:42
+msgid "Jump to next title"
+msgstr "Zu nächsten Titel springen"
+
+#: rc.cpp:45
+msgid "La&nguage:"
+msgstr "Sprac&he:"
