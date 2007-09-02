@@ -36,7 +36,7 @@
 #include <QMenu>
 
 TemplatePage::TemplatePage(QWidget *parent) :
-  QWidget(parent), m_menu(0), m_settingPrevious(false)
+  QWidget(parent), m_menu(0), m_settingPrevious(false), m_scaled(false)
 {
   setupUi(this);
   templates->setSpacing(5);
@@ -180,13 +180,18 @@ void TemplatePage::imageContextMenuRequested(const QPoint& pos)
   QMenu popup;
   QAction* action;
   QAction* saveAction = new QAction(i18n("Save image"), this);
+  QAction* scaledAction = new QAction(i18n("Scaled"), this);
   KMF::TemplateObject* ob =
       kmfApp->project()->templateObjects()->at(templates->currentIndex().row());
   QStringList menus = ob->menus();
   int i = 0;
 
+  scaledAction->setCheckable(true);
+  scaledAction->setChecked(m_scaled);
+
+  popup.addAction(scaledAction);
   popup.addAction(saveAction);
-  popup.insertSeparator(saveAction);
+  popup.addSeparator();
   for(QStringList::Iterator it = menus.begin();
       it != menus.end(); ++it, ++i)
   {
@@ -198,7 +203,12 @@ void TemplatePage::imageContextMenuRequested(const QPoint& pos)
   }
   if((action = popup.exec(pos)) != 0)
   {
-    if(action == saveAction)
+    if(action == scaledAction)
+    {
+      m_scaled = (m_scaled)?false:true;
+      templatePreview->setScaled(m_scaled);
+    }
+    else if(action == saveAction)
     {
       KUrl url = KFileDialog::getSaveUrl(KUrl("kfiledialog:///<KMFPreview>"),
                                          i18n("*.png|PNG Graphics file"));
