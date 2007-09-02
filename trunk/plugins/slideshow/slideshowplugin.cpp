@@ -19,6 +19,7 @@
 //**************************************************************************
 #include "config.h"
 #include "slideshowplugin.h"
+#include "ui_slideshowconfig.h"
 #include "slideshowpluginsettings.h"
 #include "slideshowobject.h"
 #include <kmftools.h>
@@ -41,6 +42,15 @@ static const KAboutData about("kmediafactory_slideshow", 0,
 
 typedef KGenericFactory<SlideshowPlugin> SlideshowFactory;
 K_EXPORT_COMPONENT_FACTORY(kmediafactory_slideshow, SlideshowFactory(&about))
+
+class SlideshowConfig : public QWidget, public Ui::SlideshowConfig
+{
+  public:
+    SlideshowConfig(QWidget* parent = 0) : QWidget(parent)
+    {
+      setupUi(this);
+    };
+};
 
 SlideshowPlugin::SlideshowPlugin(QObject *parent, const QStringList&) :
   KMF::Plugin(parent)
@@ -136,6 +146,16 @@ QStringList SlideshowPlugin::supportedProjectTypes()
   QStringList result;
   result << "DVD-PAL" << "DVD-NTSC";
   return result;
+}
+
+const KMF::ConfigPage* SlideshowPlugin::configPage() const
+{
+  KMF::ConfigPage* configPage = new KMF::ConfigPage;
+  configPage->page = new SlideshowConfig;
+  configPage->config = SlideshowPluginSettings::self();
+  configPage->itemName = i18n("Slideshow plugin");
+  configPage->pixmapName = "kuickshow";
+  return configPage;
 }
 
 #include "slideshowplugin.moc"

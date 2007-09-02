@@ -427,9 +427,10 @@ bool SlideshowObject::convertToDVD() const
     K3Process dvdslideshow;
 
     uiInterface()->message(KMF::Info, i18n("   Making Slideshow"));
-    dvdslideshow << slideshowPlugin->dvdslideshowBin() <<
-        "-mp2" <<
-        "-o" << projectInterface()->projectDir("media") <<
+    dvdslideshow << slideshowPlugin->dvdslideshowBin();
+    if(SlideshowPluginSettings::audioType() == 0)
+      dvdslideshow << "-mp2";
+    dvdslideshow << "-o" << projectInterface()->projectDir("media") <<
         "-n" << m_id <<
         "-f" << dir.filePath(QString("%1.slideshow").arg(m_id));
     if(projectInterface()->type() == "DVD-PAL")

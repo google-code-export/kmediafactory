@@ -33,6 +33,7 @@ class SlideshowPlugin : public KMF::Plugin
 
     KMF::MediaObject* createMediaObject(const QDomElement& element);
     QString dvdslideshowBin() { return m_dvdslideshow; };
+    virtual const KMF::ConfigPage* configPage() const;
 
   public slots:
     virtual void init(const QString &type);
