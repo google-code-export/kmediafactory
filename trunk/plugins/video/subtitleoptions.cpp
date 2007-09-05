@@ -105,11 +105,16 @@ void SubtitleOptions::setData(const QDVD::Subtitle& obj)
 
 void SubtitleOptions::accept()
 {
-  if(KIO::NetAccess::exists(subtitleUrl->url(), true, kapp->activeWindow()))
+  if(KIO::NetAccess::exists(subtitleUrl->url(), KIO::NetAccess::SourceSide,
+     kapp->activeWindow()))
+  {
     KDialog::accept();
+  }
   else
+  {
     KMessageBox::sorry(kapp->activeWindow(),
                        i18n("Subtitle file does not exists."));
+  }
 }
 
 #include "subtitleoptions.moc"

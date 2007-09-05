@@ -46,8 +46,8 @@ static const KAboutData about("kmediafactory_video", 0,
                               ki18n(COPYRIGHT), KLocalizedString(),
                               HOMEPAGE, BUG_EMAIL);
 
-typedef KGenericFactory<VideoPlugin> VideoFactory;
-K_EXPORT_COMPONENT_FACTORY(kmediafactory_video, VideoFactory(&about));
+K_PLUGIN_FACTORY(VideoFactory, registerPlugin<VideoPlugin>();)
+K_EXPORT_PLUGIN(VideoFactory("kmediafactory_video"))
 
 class VideoConfig : public QWidget, public Ui::VideoConfig
 {
@@ -58,7 +58,7 @@ class VideoConfig : public QWidget, public Ui::VideoConfig
     };
 };
 
-VideoPlugin::VideoPlugin(QObject *parent, const QStringList&) :
+VideoPlugin::VideoPlugin(QObject *parent, const QVariantList&) :
   KMF::Plugin(parent)
 {
   setObjectName("KMFImportVideo");

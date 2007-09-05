@@ -29,7 +29,7 @@ class OutputPlugin : public KMF::Plugin
 {
     Q_OBJECT
   public:
-    OutputPlugin(QObject *parent, const QStringList&);
+    OutputPlugin(QObject *parent, const QVariantList&);
 
     void play(const QString& player = QString::null);
 

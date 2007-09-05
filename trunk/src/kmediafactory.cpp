@@ -194,7 +194,7 @@ void KMediaFactory::setupActions()
   {
     kDebug() << k_funcinfo << "Watching: " <<
         *it + "kmediafactory/tools" << endl;
-    m_toolsWatch.addDir(*it + "kmediafactory/tools", true);
+    m_toolsWatch.addDir(*it + "kmediafactory/tools");
   }
   connect(&m_toolsWatch, SIGNAL(dirty(QString)), this, SLOT(updateToolsMenu()));
   updateToolsMenu();
@@ -262,7 +262,7 @@ void KMediaFactory::initGUI()
       guiFactory()->addClient((KMF::Plugin*)l[i]);
 
   if(!kmfApp->url().isEmpty() &&
-      KIO::NetAccess::exists(kmfApp->url(), true, this))
+      KIO::NetAccess::exists(kmfApp->url(), KIO::NetAccess::SourceSide, this))
     load(kmfApp->url());
   else
     fileNew();

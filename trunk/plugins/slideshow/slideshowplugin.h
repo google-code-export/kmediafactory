@@ -29,7 +29,7 @@ class SlideshowPlugin : public KMF::Plugin
 {
     Q_OBJECT
   public:
-    SlideshowPlugin(QObject *parent, const QStringList&);
+    SlideshowPlugin(QObject *parent, const QVariantList&);
 
     KMF::MediaObject* createMediaObject(const QDomElement& element);
     QString dvdslideshowBin() { return m_dvdslideshow; };

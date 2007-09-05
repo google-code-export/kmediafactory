@@ -47,10 +47,10 @@ static const KAboutData about("kmediafactory_output", 0,
                               ki18n(COPYRIGHT), KLocalizedString(),
                               HOMEPAGE, BUG_EMAIL);
 
-typedef KGenericFactory<OutputPlugin> OutputFactory;
-K_EXPORT_COMPONENT_FACTORY(kmediafactory_output, OutputFactory(&about))
+K_PLUGIN_FACTORY(OutputFactory, registerPlugin<OutputPlugin>();)
+K_EXPORT_PLUGIN(OutputFactory("kmediafactory_output"))
 
-OutputPlugin::OutputPlugin(QObject *parent, const QStringList&) :
+OutputPlugin::OutputPlugin(QObject *parent, const QVariantList&) :
   KMF::Plugin(parent), addPreviewDVD(0),
   addPreviewDVDXine(0), addPreviewDVDKaffeine(0)
 {

@@ -26,12 +26,13 @@
 #include <kactioncollection.h>
 #include <klocale.h>
 #include <kaboutdata.h>
-#include <kgenericfactory.h>
+#include <kpluginfactory.h>
 #include <kdeversion.h>
 #include <kstandarddirs.h>
 #include <kapplication.h>
 #include <kfiledialog.h>
 #include <kicon.h>
+#include <KPluginLoader>
 
 static const KAboutData about("kmediafactory_slideshow", 0,
                               ki18n("KMediaFactory Slideshow"), VERSION,
@@ -40,8 +41,8 @@ static const KAboutData about("kmediafactory_slideshow", 0,
                               ki18n(COPYRIGHT), KLocalizedString(),
                               HOMEPAGE, BUG_EMAIL);
 
-typedef KGenericFactory<SlideshowPlugin> SlideshowFactory;
-K_EXPORT_COMPONENT_FACTORY(kmediafactory_slideshow, SlideshowFactory(&about))
+K_PLUGIN_FACTORY(SlideshowFactory, registerPlugin<SlideshowPlugin>();)
+K_EXPORT_PLUGIN(SlideshowFactory("kmediafactory_slideshow"))
 
 class SlideshowConfig : public QWidget, public Ui::SlideshowConfig
 {
@@ -52,7 +53,7 @@ class SlideshowConfig : public QWidget, public Ui::SlideshowConfig
     };
 };
 
-SlideshowPlugin::SlideshowPlugin(QObject *parent, const QStringList&) :
+SlideshowPlugin::SlideshowPlugin(QObject *parent, const QVariantList&) :
   KMF::Plugin(parent)
 {
   setObjectName("KMFSlideshow");

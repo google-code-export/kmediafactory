@@ -95,12 +95,12 @@ void KMFApplication::loadPlugins()
   const KService::List offers =
       KServiceTypeTrader::self()->query("KMediaFactory/Plugin");
 
-  foreach(const KService::Ptr &service, offers)
+  foreach(KService::Ptr service, offers)
   {
-    int error = 0;
+    QString error;
     KMF::Plugin* plugin =
         KService::createInstance<KMF::Plugin>
-        (service, m_pluginInterface, QStringList(), &error);
+        (service, m_pluginInterface, QVariantList(), &error);
     if (plugin)
     {
       m_supportedProjects += plugin->supportedProjectTypes();
@@ -108,36 +108,7 @@ void KMFApplication::loadPlugins()
     }
     else
     {
-      switch (error)
-      {
-        case KLibLoader::ErrNoServiceFound:
-          kDebug() << "No service implementing the given "
-                    << "mimetype and fullfilling the given constraint "
-                    << "expression can be found."
-                    << endl;
-          break;
-
-        case KLibLoader::ErrServiceProvidesNoLibrary:
-          kDebug() << "the specified service provides no shared library."
-                    << endl;
-          break;
-
-        case KLibLoader::ErrNoLibrary:
-          kDebug() << "the specified library could not be loaded." << endl;
-          break;
-
-        case KLibLoader::ErrNoFactory:
-          kDebug() << "the library does not export a factory for creating "
-                    << "components."
-                    << endl;
-          break;
-
-        case KLibLoader::ErrNoComponent:
-          kDebug() << "the factory does not support creating components of "
-                    << "the specified type."
-                    << endl;
-          break;
-      }
+      kDebug() << error << endl;
       kDebug() << "Loading plugin '" << service->name()
                 << "' failed, KLibLoader reported error: '" << endl
                 << KLibLoader::self()->lastErrorMessage()

@@ -35,6 +35,7 @@
 #include <kiconloader.h>
 #include <kaboutdata.h>
 #include <kdebug.h>
+#include <KPluginLoader>
 #include <QRegExp>
 #include <QPixmap>
 #include <QImage>
@@ -46,8 +47,8 @@ static const KAboutData about("kmediafactory_template", 0,
                               ki18n(COPYRIGHT), KLocalizedString(),
                               HOMEPAGE, BUG_EMAIL);
 
-typedef KGenericFactory<TemplatePlugin> templateFactory;
-K_EXPORT_COMPONENT_FACTORY(kmediafactory_template, templateFactory(&about))
+K_PLUGIN_FACTORY(TemplateFactory, registerPlugin<TemplatePlugin>();)
+K_EXPORT_PLUGIN(TemplateFactory("kmediafactory_template"))
 
 class TemplateConfig : public QWidget, public Ui::ConfigureTemplatePlugin
 {
@@ -58,12 +59,12 @@ class TemplateConfig : public QWidget, public Ui::ConfigureTemplatePlugin
     };
 };
 
-TemplatePlugin::TemplatePlugin(QObject *parent, const QStringList&) :
+TemplatePlugin::TemplatePlugin(QObject *parent, const QVariantList&) :
   KMF::Plugin(parent)
 {
   setObjectName("KMFTemplateEngine");
   // Initialize GUI
-  setComponentData(templateFactory::componentData());
+  setComponentData(TemplateFactory::componentData());
   setXMLFile("kmediafactory_templateui.rc");
 }
 
