@@ -26,7 +26,7 @@ class TemplatePlugin :public KMF::Plugin
 {
     Q_OBJECT
   public:
-    TemplatePlugin(QObject *parent, const QStringList&);
+    TemplatePlugin(QObject *parent, const QVariantList&);
 
     virtual const KMF::ConfigPage* configPage() const;
 

@@ -29,7 +29,7 @@ class VideoPlugin :public KMF::Plugin
 {
     Q_OBJECT
   public:
-    VideoPlugin(QObject *parent, const QStringList&);
+    VideoPlugin(QObject *parent, const QVariantList&);
     virtual ~VideoPlugin();
 
     virtual KMF::MediaObject* createMediaObject(const QDomElement& element);
