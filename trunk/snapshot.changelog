@@ -5,6 +5,8 @@ Features:
 - video conversion removed
 - dv import removed
 - own video player removed
+- AC3/MP2 option for slideshow
+- Scale template preview menu option
 
 Bug fixes:
 -
@@ -12,8 +14,7 @@ Bug fixes:
 CHANGED FROM THE PREVIOUS SNAPSHOT
 ========================================
 Features:
-- AC3/MP2 option for slideshow
-- Scale template preview menu option
 
 Bug fixes:
-- ffmpeg frame script fixed
+- Updated code to compile with KDE4 beta2
+
