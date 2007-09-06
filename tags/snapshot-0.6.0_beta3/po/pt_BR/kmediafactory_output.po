@@ -1,0 +1,245 @@
+# translation of kmediafactory_output.po to
+# This file is put in the public domain.
+#
+# Caio Begotti <caio@ueberalles.net>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmediafactory_output\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-04-30 17:10-0300\n"
+"PO-Revision-Date: 2006-04-30 17:49-0300\n"
+"Last-Translator: Caio Begotti <caio@ueberalles.net>\n"
+"Language-Team:  <en@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.2\n"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "Caio Begotti"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "caio@ueberalles.net"
+
+#: dvdauthorobject.cpp:31
+msgid "DVDAuthor project"
+msgstr "Projeto do DVDAuthor"
+
+#: dvdauthorobject.cpp:57
+msgid "DVDAuthor project ready"
+msgstr "Projeto do DVDAuthor pronto"
+
+#: dvddirectoryobject.cpp:42
+msgid "DVD Directory"
+msgstr "Diretório do DVD"
+
+#: dvddirectoryobject.cpp:43
+msgid "&Clean directory"
+msgstr "Limpar diretório"
+
+#: dvddirectoryobject.cpp:106 dvddirectoryobject.cpp:124
+msgid "  Processing: %1"
+msgstr "  Processando: %1"
+
+#: dvddirectoryobject.cpp:148
+msgid "  Fixing: %1"
+msgstr "  Corrigindo: %1"
+
+#: dvddirectoryobject.cpp:228
+msgid "DVD Directory is up to date"
+msgstr "Diretório do DVD está atualizado"
+
+#: dvddirectoryobject.cpp:251
+msgid "Making DVD Directory"
+msgstr "Criando o diretório do DVD"
+
+#: dvddirectoryobject.cpp:262
+msgid "DVD Directory ready"
+msgstr "Diretório do DVD pronto"
+
+#: dvdinfo.cpp:120
+msgid "Analyzing DVD..."
+msgstr "Analizando DVD..."
+
+#: dvdinfo.cpp:161
+msgid "DVD"
+msgstr "DVD"
+
+#: dvdinfo.cpp:162
+msgid "Titles"
+msgstr "Títulos"
+
+#: dvdinfo.cpp:163
+msgid "Longest title"
+msgstr "Maior título"
+
+#. i18n: file dvdinfolayout.ui line 40
+#: dvdinfo.cpp:166 rc.cpp:6
+#, no-c-format
+msgid "Name"
+msgstr "Nome"
+
+#: dvdinfo.cpp:167
+msgid "VMG Identifier"
+msgstr "Identificação VMG"
+
+#: dvdinfo.cpp:168
+msgid "Provider indentifier"
+msgstr "Identificação do provedor"
+
+#: dvdinfo.cpp:174 dvdinfo.cpp:196
+msgid "Index"
+msgstr "Índice"
+
+#: dvdinfo.cpp:175 dvdinfo.cpp:198
+msgid "Length"
+msgstr "Tamanho"
+
+#: dvdinfo.cpp:176
+msgid "VTS ID"
+msgstr "Identificação VTS"
+
+#: dvdinfo.cpp:177
+msgid "VTS"
+msgstr "VTS"
+
+#: dvdinfo.cpp:178
+msgid "TTN"
+msgstr "TTN"
+
+#: dvdinfo.cpp:179
+msgid "PGC"
+msgstr "PGC"
+
+#: dvdinfo.cpp:180 dvdinfo.cpp:199
+msgid "Start sector"
+msgstr "Iniciar setor"
+
+#: dvdinfo.cpp:181 dvdinfo.cpp:200
+msgid "End sector"
+msgstr "Finalizar setor"
+
+#: dvdinfo.cpp:188 dvdinfo.cpp:208
+msgid "Format"
+msgstr "Formato"
+
+#: dvdinfo.cpp:189
+msgid "Aspect ratio"
+msgstr "Proporção visual"
+
+#: dvdinfo.cpp:190
+msgid "Frames per second"
+msgstr "Quadros por segundo"
+
+#: dvdinfo.cpp:191
+msgid "Permitted DF"
+msgstr "DF permitido"
+
+#: dvdinfo.cpp:197
+msgid "Start"
+msgstr "Iniciar"
+
+#: dvdinfo.cpp:201
+msgid "Is chapter"
+msgstr "É um capítulo"
+
+#: dvdinfo.cpp:202
+msgid "yes"
+msgstr "sim"
+
+#: dvdinfo.cpp:202
+msgid "no"
+msgstr "não"
+
+#: dvdinfo.cpp:207 dvdinfo.cpp:219
+msgid "Language"
+msgstr "Língua"
+
+#: dvdinfo.cpp:209
+msgid "Channels"
+msgstr "Canais"
+
+#: dvdinfo.cpp:210
+msgid "Sample frequency"
+msgstr "Frequência exemplo"
+
+#: dvdinfo.cpp:211
+msgid "Bitrate"
+msgstr "Bitrate"
+
+#: dvdinfo.cpp:212
+msgid "Quantization"
+msgstr "Quantização"
+
+#: dvdinfo.cpp:213
+msgid "AP Mode"
+msgstr "Modo AP"
+
+#: dvdinfo.cpp:214 dvdinfo.cpp:220
+msgid "Type"
+msgstr "Tipo"
+
+#: dvdinfo.cpp:230
+msgid "Not a DVD."
+msgstr "Não é um DVD."
+
+#: dvdinfo.cpp:285
+msgid "DVD files and directories"
+msgstr "Arquivos e diretórios do DVD"
+
+#: k3bobject.cpp:35
+msgid "K3b Project"
+msgstr "Projeto K3B"
+
+#: k3bobject.cpp:62
+msgid "K3b project ready"
+msgstr "Projeto K3B pronto"
+
+#: k3bobject.cpp:374
+msgid "%1 - Version %2"
+msgstr "%1 - Versão %2"
+
+#: outputplugin.cpp:41
+msgid "Output plugin for KMediaFactory."
+msgstr "Plugin de saída de comando do KMediaFacotry."
+
+#: outputplugin.cpp:44
+msgid "KMediaFactory Output"
+msgstr "Saída de comando do KMediaFactory"
+
+#. i18n: file dvdinfolayout.ui line 16
+#: outputplugin.cpp:70 rc.cpp:3
+#, no-c-format
+msgid "DVD Info"
+msgstr "Informação do DVD"
+
+#: outputplugin.cpp:77
+msgid "Preview DVD"
+msgstr "Preview do DVD"
+
+#: outputplugin.cpp:83
+msgid "Preview DVD in Xine"
+msgstr "Preview do DVD no Xine"
+
+#: outputplugin.cpp:89
+msgid "Preview DVD in Kaffeine"
+msgstr "Preview do DVD no Kaffeine"
+
+#. i18n: file dvdinfolayout.ui line 51
+#: rc.cpp:9
+#, no-c-format
+msgid "Size"
+msgstr "Tamanho"
+
+#. i18n: file dvdinfolayout.ui line 117
+#: rc.cpp:15
+#, no-c-format
+msgid "Alt+C"
+msgstr "Alt+C"
+

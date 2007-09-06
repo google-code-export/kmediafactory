@@ -1,0 +1,53 @@
+#!/bin/bash
+# Make menu mpegs for KMediafactory
+# Copyright (C) 2007 by Petri Damsten - GPL-2
+# Usage:
+# kmf_make_mpeg DVD-PAL/DVD-NTSC frames name sound
+
+# Import tools
+SCRIPTS=`dirname $0`
+. $SCRIPTS/tools
+
+#check_executable "pelle" "miljoona"
+MPLEX=`check_executable "mplex" "mjpegtools"`
+PPMTOY4M=`check_executable "ppmtoy4m" "mjpegtools"`
+MPEG2ENC=`check_executable "mpeg2enc" "mjpegtools"`
+SPUMUX=`check_executable "spumux" "dvdauthor"`
+
+MPLEX_VERS=`$MPLEX 2>&1 | grep "version" | sed 's/.*version //' | \
+    sed 's/\([\.0-9]\) .*/\1/'`
+if [[ $MPLEX_VERS > "1.6.2" ]]; then
+  CHROMA="420mpeg2"
+else
+  CHROMA="420_mpeg2"
+fi
+
+if [[ $1 == "DVD-PAL" ]]; then
+  VIDEONORM="p"
+  FRAMERATE="25:1"
+  FRAMERATEMPLEX="3"
+  ASPECTRATIO="59:54"
+else
+  VIDEONORM="n"
+  FRAMERATE="30000:1001"
+  FRAMERATEMPLEX="4"
+  ASPECTRATIO="10:11"
+fi
+FRAMES=$2
+NAME=$3
+SOUND=$4
+SUB="$NAME.xml"
+
+$PPMTOY4M -S $CHROMA -n 1 -r -I p -F $FRAMERATE -A $ASPECTRATIO $NAME.pnm | \
+$MPEG2ENC -a 2 -f 8 -n $VIDEONORM -F $FRAMERATEMPLEX -o $NAME.m2v
+
+if [[ $? == 0 ]]; then
+  if [ -e $SUB ]; then
+    $MPLEX -f 8 -o ${NAME}_bg.mpg $NAME.m2v "$SOUND" && \
+    $SPUMUX $SUB < ${NAME}_bg.mpg > $NAME.mpg && \
+    rm $NAME.m2v ${NAME}_bg.mpg
+  else
+    $MPLEX -f 8 -o $NAME.mpg $NAME.m2v "$SOUND" && \
+    rm $NAME.m2v
+  fi
+fi

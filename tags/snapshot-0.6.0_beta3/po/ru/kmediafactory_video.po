@@ -1,0 +1,507 @@
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2006-06-01 11:30+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: ENCODING\n"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr ""
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr ""
+
+#: chapters.cpp:221
+msgid "&Delete all"
+msgstr ""
+
+#: chapters.cpp:222
+msgid "&Rename all"
+msgstr ""
+
+#: chapters.cpp:223
+msgid "&Auto chapters"
+msgstr ""
+
+#: chapters.cpp:224
+msgid ""
+"_: Import chapter file\n"
+"&Import"
+msgstr ""
+
+#: chapters.cpp:328
+msgid "You should have atleast one chapter."
+msgstr ""
+
+#: kmfchapterlistview.cpp:84
+msgid "Name"
+msgstr ""
+
+#. i18n: file chapterslayout.ui line 220
+#: kmfchapterlistview.cpp:85 rc.cpp:70
+#, no-c-format
+msgid "Start"
+msgstr ""
+
+#: kmfchapterlistview.cpp:86
+msgid "Length"
+msgstr ""
+
+#. i18n: file addchapterlayout.ui line 16
+#: rc.cpp:3 rc.cpp:25
+#, no-c-format
+msgid "KMediaFactory"
+msgstr ""
+
+#. i18n: file addchapterlayout.ui line 27
+#: rc.cpp:6
+#, no-c-format
+msgid "&Name:"
+msgstr ""
+
+#. i18n: file addchapterlayout.ui line 46
+#: rc.cpp:10
+#, no-c-format
+msgid "&Position:"
+msgstr ""
+
+#. i18n: file addchapterlayout.ui line 126
+#: rc.cpp:16 rc.cpp:40 rc.cpp:99 rc.cpp:150 rc.cpp:168 rc.cpp:219 rc.cpp:300
+#, no-c-format
+msgid "Alt+O"
+msgstr ""
+
+#. i18n: file addchapterlayout.ui line 146
+#: rc.cpp:22 rc.cpp:156 rc.cpp:174 rc.cpp:225 rc.cpp:306
+#, no-c-format
+msgid "Alt+C"
+msgstr ""
+
+#. i18n: file autochapterslayout.ui line 27
+#: rc.cpp:28
+#, no-c-format
+msgid "&Name (Use %1 for digit):"
+msgstr ""
+
+#. i18n: file autochapterslayout.ui line 38
+#: rc.cpp:31 videoobject.cpp:870
+#, no-c-format
+msgid "Chapter %1"
+msgstr ""
+
+#. i18n: file autochapterslayout.ui line 46
+#: rc.cpp:34
+#, no-c-format
+msgid "&Interval:"
+msgstr ""
+
+#. i18n: file autochapterslayout.ui line 143
+#: rc.cpp:43
+#, no-c-format
+msgid "C&ancel"
+msgstr ""
+
+#. i18n: file autochapterslayout.ui line 146
+#: rc.cpp:46
+#, no-c-format
+msgid "Alt+A"
+msgstr ""
+
+#. i18n: file chapterslayout.ui line 22
+#: rc.cpp:49
+#, no-c-format
+msgid "Chapters"
+msgstr ""
+
+#. i18n: file chapterslayout.ui line 41
+#: rc.cpp:52
+#, no-c-format
+msgid "&Chapters:"
+msgstr ""
+
+#. i18n: file chapterslayout.ui line 184
+#: rc.cpp:63
+#, no-c-format
+msgid "&Use as Custom Preview"
+msgstr ""
+
+#. i18n: file chapterslayout.ui line 187
+#: rc.cpp:66 rc.cpp:240
+#, no-c-format
+msgid "Alt+U"
+msgstr ""
+
+#. i18n: file chapterslayout.ui line 237
+#: rc.cpp:74
+#, no-c-format
+msgid "Rewind"
+msgstr ""
+
+#. i18n: file chapterslayout.ui line 254
+#: rc.cpp:78
+#, no-c-format
+msgid "Previous frame"
+msgstr ""
+
+#. i18n: file chapterslayout.ui line 271
+#: rc.cpp:82
+#, no-c-format
+msgid "Next frame"
+msgstr ""
+
+#. i18n: file chapterslayout.ui line 288
+#: rc.cpp:86
+#, no-c-format
+msgid "Forward"
+msgstr ""
+
+#. i18n: file chapterslayout.ui line 305
+#: rc.cpp:90
+#, no-c-format
+msgid "End"
+msgstr ""
+
+#. i18n: file chapterslayout.ui line 315
+#: rc.cpp:93
+#, no-c-format
+msgid "00:00"
+msgstr ""
+
+#. i18n: file chapterslayout.ui line 387
+#: rc.cpp:102
+#, no-c-format
+msgid "Ca&ncel"
+msgstr ""
+
+#. i18n: file chapterslayout.ui line 390
+#: rc.cpp:105
+#, no-c-format
+msgid "Alt+N"
+msgstr ""
+
+#. i18n: file conversionlayout.ui line 16
+#: rc.cpp:108
+#, no-c-format
+msgid "Conversion Params"
+msgstr ""
+
+#. i18n: file conversionlayout.ui line 27
+#: rc.cpp:111
+#, no-c-format
+msgid "Higher qualit&y encoding (Two pass)"
+msgstr ""
+
+#. i18n: file conversionlayout.ui line 30
+#: rc.cpp:114
+#, no-c-format
+msgid "Alt+Y"
+msgstr ""
+
+#. i18n: file conversionlayout.ui line 46
+#: rc.cpp:117
+#, no-c-format
+msgid "Video &bitrate:"
+msgstr ""
+
+#. i18n: file conversionlayout.ui line 74
+#: rc.cpp:120 rc.cpp:141
+#, no-c-format
+msgid "0"
+msgstr ""
+
+#. i18n: file conversionlayout.ui line 82
+#: rc.cpp:123 rc.cpp:144
+#, no-c-format
+msgid "kb/s"
+msgstr ""
+
+#. i18n: file conversionlayout.ui line 100
+#: rc.cpp:126
+#, no-c-format
+msgid "Audio &type:"
+msgstr ""
+
+#. i18n: file conversionlayout.ui line 109
+#: rc.cpp:129
+#, no-c-format
+msgid "AC3"
+msgstr ""
+
+#. i18n: file conversionlayout.ui line 114
+#: rc.cpp:132
+#, no-c-format
+msgid "MP2"
+msgstr ""
+
+#. i18n: file conversionlayout.ui line 119
+#: rc.cpp:135
+#, no-c-format
+msgid "PCM"
+msgstr ""
+
+#. i18n: file conversionlayout.ui line 139
+#: rc.cpp:138
+#, no-c-format
+msgid "&Audio bitrate:"
+msgstr ""
+
+#. i18n: file languageselectionlayout.ui line 16
+#: rc.cpp:159
+#, no-c-format
+msgid "Select language"
+msgstr ""
+
+#. i18n: file languageselectionlayout.ui line 27
+#: rc.cpp:162
+#, no-c-format
+msgid "La&nguages:"
+msgstr ""
+
+#. i18n: file subtitleoptionslayout.ui line 16
+#: rc.cpp:177
+#, no-c-format
+msgid "Subtitle options"
+msgstr ""
+
+#. i18n: file subtitleoptionslayout.ui line 27
+#: rc.cpp:180
+#, no-c-format
+msgid "La&nguage:"
+msgstr ""
+
+#. i18n: file subtitleoptionslayout.ui line 43
+#: rc.cpp:183
+#, no-c-format
+msgid "Su&btitle File:"
+msgstr ""
+
+#. i18n: file subtitleoptionslayout.ui line 59
+#: rc.cpp:186
+#, no-c-format
+msgid "Subtitle Font:"
+msgstr ""
+
+#. i18n: file subtitleoptionslayout.ui line 75
+#: rc.cpp:189
+#, no-c-format
+msgid "Hori&zontal Alignment:"
+msgstr ""
+
+#. i18n: file subtitleoptionslayout.ui line 114
+#: rc.cpp:204
+#, no-c-format
+msgid "Vertical &Alignment"
+msgstr ""
+
+#. i18n: file videoconfiglayout.ui line 16
+#: rc.cpp:228
+#, no-c-format
+msgid "Configure Video Plugin"
+msgstr ""
+
+#. i18n: file videoconfiglayout.ui line 27
+#: rc.cpp:231
+#, no-c-format
+msgid "Default &Audio Language:"
+msgstr ""
+
+#. i18n: file videoconfiglayout.ui line 43
+#: rc.cpp:234
+#, no-c-format
+msgid "Default Subtitle Lan&guage:"
+msgstr ""
+
+#. i18n: file videoconfiglayout.ui line 59
+#: rc.cpp:237
+#, no-c-format
+msgid "&Use Image Cache"
+msgstr ""
+
+#. i18n: file videooptionslayout.ui line 16
+#: rc.cpp:243
+#, no-c-format
+msgid "Video Options"
+msgstr ""
+
+#. i18n: file videooptionslayout.ui line 27
+#: rc.cpp:246
+#, no-c-format
+msgid "Tit&le:"
+msgstr ""
+
+#. i18n: file videooptionslayout.ui line 43
+#: rc.cpp:249
+#, no-c-format
+msgid "Custom &preview:"
+msgstr ""
+
+#. i18n: file videooptionslayout.ui line 62
+#: rc.cpp:252
+#, no-c-format
+msgid "&Aspect ratio:"
+msgstr ""
+
+#. i18n: file videooptionslayout.ui line 71
+#: rc.cpp:255
+#, no-c-format
+msgid "4:3"
+msgstr ""
+
+#. i18n: file videooptionslayout.ui line 76
+#: rc.cpp:258
+#, no-c-format
+msgid "16:9"
+msgstr ""
+
+#. i18n: file videooptionslayout.ui line 88
+#: rc.cpp:261
+#, no-c-format
+msgid "Audio Trac&ks:"
+msgstr ""
+
+#. i18n: file videooptionslayout.ui line 155
+#: rc.cpp:268
+#, no-c-format
+msgid "Subtitles:"
+msgstr ""
+
+#. i18n: file videooptionslayout.ui line 263
+#: rc.cpp:283 rc.cpp:290
+#, no-c-format
+msgid "xx"
+msgstr ""
+
+#. i18n: file videoplugin.kcfg line 10
+#: rc.cpp:309
+#, no-c-format
+msgid ""
+"Save preview pictures in menu dir. Usefull when making\n"
+"same DVD multiple times (testing)."
+msgstr ""
+
+#. i18n: file videoplugin.kcfg line 14
+#: rc.cpp:313
+#, no-c-format
+msgid "Black frame detection offset"
+msgstr ""
+
+#. i18n: file videoplugin.kcfg line 18
+#: rc.cpp:316
+#, no-c-format
+msgid "Use this as a default audio language for new files."
+msgstr ""
+
+#. i18n: file videoplugin.kcfg line 23
+#: rc.cpp:319
+#, no-c-format
+msgid ""
+"Use this as a default subtitle language for new\n"
+"                 subtitles."
+msgstr ""
+
+#: subtitleoptions.cpp:59
+msgid "Subtitle files"
+msgstr ""
+
+#: subtitleoptions.cpp:60
+msgid "All files"
+msgstr ""
+
+#: subtitleoptions.cpp:80
+msgid "Subtitle file does not exists."
+msgstr ""
+
+#: videoobject.cpp:52
+msgid "&Properties"
+msgstr ""
+
+#: videoobject.cpp:57
+msgid "Play video"
+msgstr ""
+
+#: videoobject.cpp:503
+msgid "   Converting %1 to DVD format%2"
+msgstr ""
+
+#: videoobject.cpp:533 videoobject.cpp:690
+msgid "   Conversion error."
+msgstr ""
+
+#: videoobject.cpp:549
+msgid "   Conversion of %1 seems to be up to date"
+msgstr ""
+
+#: videoobject.cpp:669
+#, c-format
+msgid "   Adding subtitles to %1"
+msgstr ""
+
+#: videoobject.cpp:697
+msgid "   Subtitle conversion seems to be up to date"
+msgstr ""
+
+#: videoobject.cpp:706
+#, c-format
+msgid "Preparing file(s) for %1"
+msgstr ""
+
+#: videoobject.cpp:1008
+msgid "Make DVD"
+msgstr ""
+
+#: videoobject.cpp:1009
+msgid "Make preview DVD with dummy videos"
+msgstr ""
+
+#: videooptions.cpp:197
+msgid ""
+"_n: Video has %1 chapter\n"
+"Video has %1 chapters"
+msgstr ""
+
+#: videooptions.cpp:199
+msgid "Video %1kb/s, Audio %2kb/s"
+msgstr ""
+
+#: videoplugin.cpp:41
+msgid "Video plugin for KMediaFactory."
+msgstr ""
+
+#: videoplugin.cpp:44
+msgid "KMediaFactory Video"
+msgstr ""
+
+#: videoplugin.cpp:64
+msgid "Add Video"
+msgstr ""
+
+#: videoplugin.cpp:78
+msgid "Video plugin"
+msgstr ""
+
+#: videoplugin.cpp:103
+msgid "Multiple files make multiple titles."
+msgstr ""
+
+#: videoplugin.cpp:124
+msgid "Cannot add directory."
+msgstr ""
+
+#: videoplugin.cpp:132
+#, c-format
+msgid "Couldn't add file: %1"
+msgstr ""
