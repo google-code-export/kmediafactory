@@ -43,7 +43,7 @@ MACRO(ADD_TRANSLATIONS _lang)
       COMMAND ${MSGFMT_EXECUTABLE} -o ${_out} ${_in}
       DEPENDS ${_in} )
     INSTALL(FILES ${_out}
-      DESTINATION ${LOCALE_INSTALL_DIR}/l10n/${_lang}/ )
+      DESTINATION ${LOCALE_INSTALL_DIR}/${_lang}/LC_MESSAGES )
     SET(_outputs ${_outputs} ${_out})
   ENDFOREACH(_file)
   ADD_CUSTOM_TARGET(translations ALL DEPENDS ${_outputs})
