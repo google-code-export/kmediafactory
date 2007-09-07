@@ -12,6 +12,7 @@ include(KDE4Defaults)
 include(MacroLibrary)
 
 find_package(Fontconfig REQUIRED)
+find_package(MSGFMT REQUIRED)
 find_package(LibDvdread)
 
 macro_bool_to_01(LIBDVDREAD_FOUND HAVE_LIBDVDREAD)
@@ -52,6 +53,7 @@ add_subdirectory(mimetypes)
 add_subdirectory(icons)
 add_subdirectory(scripts)
 add_subdirectory(media)
+add_subdirectory(po)
 
 # CPack
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "KMediaFactory is easy to use template based dvd authoring tool.")

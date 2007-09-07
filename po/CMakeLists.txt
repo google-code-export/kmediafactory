@@ -1,12 +1,8 @@
-MESSAGE(STATUS "${CMAKE_CURRENT_SOURCE_DIR}: skipped subdir $(AUTODIRS)")
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}  )
-
-
-########### install files ###############
-
-
-KDE_PLACEHOLDER()
-
+add_subdirectory(de)
+add_subdirectory(fi)
+add_subdirectory(pl)
+add_subdirectory(pt_BR)
+add_subdirectory(ru)
 
 
 #original Makefile.am contents follow:

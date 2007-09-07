@@ -5,6 +5,8 @@ Features:
 - video conversion removed
 - dv import removed
 - own video player removed
+- ImageMagick dependency removed
+- Uses command line FFMpeg (instead of linking to library)
 - AC3/MP2 option for slideshow
 - Scale template preview menu option
 
