@@ -61,6 +61,8 @@ void TemplatePage::projectInit()
   templates->blockSignals(true);
   KMF::TemplateObject* obj = kmfApp->project()->templateObj();
   QModelIndex i = kmfApp->project()->templateObjects()->indexOf(obj);
+  if(i == QModelIndex())
+    i = kmfApp->project()->templateObjects()->index(0);
   templates->setCurrentIndex(i);
   templates->blockSignals(false);
 }

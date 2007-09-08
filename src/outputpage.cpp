@@ -63,6 +63,8 @@ void OutputPage::projectInit()
   outputs->blockSignals(true);
   KMF::OutputObject* obj = kmfApp->project()->output();
   QModelIndex i = kmfApp->project()->outputObjects()->indexOf(obj);
+  if(i == QModelIndex())
+    i = kmfApp->project()->outputObjects()->index(0);
   outputs->setCurrentIndex(i);
   outputs->blockSignals(false);
 }
