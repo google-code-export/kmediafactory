@@ -55,12 +55,10 @@ void SizeWidget::update()
   sizeLeft->setPalette(palette2);
 
   int n = 0;
-  Q3ValueList<int> sizes = sizeSplitter->sizes();
-  Q3ValueList<int>::Iterator it = sizes.begin();
-  while(it != sizes.end())
+  QList<int> sizes = sizeSplitter->sizes();
+  foreach(int size, sizes)
   {
-    n += *it;
-    ++it;
+    n += size;
   }
   if(m_size < m_max)
     sizes[0] = (int)((double)n * ((double)m_size / (double)m_max));
