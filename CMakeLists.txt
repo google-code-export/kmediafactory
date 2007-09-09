@@ -54,6 +54,7 @@ add_subdirectory(icons)
 add_subdirectory(scripts)
 add_subdirectory(media)
 add_subdirectory(po)
+add_subdirectory(doc)
 
 # CPack
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "KMediaFactory is easy to use template based dvd authoring tool.")

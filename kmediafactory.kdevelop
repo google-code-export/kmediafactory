@@ -29,7 +29,7 @@
         <envvar value="/usr/lib/kde4" name="KDEDIR" />
         <envvar value="/home/damu/.kde4:/usr/lib/kde4" name="KDEDIRS" />
         <envvar value="/home/damu/.kde4" name="KDEHOME" />
-        <envvar value="fi" name="KDE_LANG" />
+        <envvar value="en" name="KDE_LANG" />
         <envvar value="/tmp/damu-kde4" name="KDETMP" />
         <envvar value="/var/tmp/damu-kde4" name="KDEVARTMP" />
         <envvar value="/home/damu/.kde4/lib:/usr/lib/kde4/lib:/usr/share/qt4/lib:$LD_LIBRARY_PATH" name="LD_LIBRARY_PATH" />
