@@ -1,14 +1,1 @@
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}  )
-
-
-########### install files ###############
-
-
-KDE_PLACEHOLDER()
-
-
-
-#original Makefile.am contents follow:
-
-#KDE_DOCS = kmediafactory
-#KDE_LANG = en
+kde4_create_handbook(index.docbook INSTALL_DESTINATION ${HTML_INSTALL_DIR}/en SUBDIR kmediafactory)
