@@ -12,7 +12,7 @@ CHANGELOG="snapshot.changelog"
 US_DATE=`date +%Y-%m-%d`
 SVN="https://kmediafactory.googlecode.com/svn/"
 SNAPSHOT_HTML="snapshot_kde4.html"
-NEWSMAIL="damu@iki.fi"
+NEWSMAIL=`cat $HOME/.kmf_mailinglist`
 
 KMF=`pwd`
 ABC="bcdefghijklmnopqrstuvxyz"
