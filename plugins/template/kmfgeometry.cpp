@@ -275,7 +275,7 @@ void KMFGeometry::setMargin(QString margin)
     m_left.setMargin(marginList[3].toInt());
   }
   /*
-  kDebug() << k_funcinfo
+  kDebug()
       << m_top.margin() << ", "
       << m_width.margin() << ", "
       << m_height.margin() << ", "

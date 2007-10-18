@@ -115,7 +115,7 @@ QString KMFDbusInterface::getOpenFileName(const QString &startDir,
                                           const QString &caption)
 {
   QString start = QString("kfiledialog:///<%1>").arg(startDir);
-  kDebug() << k_funcinfo << start;
+  kDebug() << start;
   KUrl url = KFileDialog::getOpenFileName(KUrl(start), filter,
       kmfApp->mainWindow(), caption);
   return url.path();

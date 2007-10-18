@@ -175,7 +175,7 @@ bool KMFUiInterface::progress(int advance)
   if(advance)
   {
     /*
-    kDebug() << k_funcinfo
+    kDebug()
         << mainWindow->outputPage->progressBar->value() << " + " << advance
         << " / " << mainWindow->outputPage->progressBar->maximum()
        ;

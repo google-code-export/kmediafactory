@@ -100,7 +100,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
 
     if(type)
       mime = type->name();
-    kDebug() << k_funcinfo << mime;
+    kDebug() << mime;
     if(mime.startsWith("application/vnd.oasis.opendocument") ||
        mime.startsWith("application/vnd.sun.xml") ||
        mime == "application/msexcel" ||
@@ -112,7 +112,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
       output = dir.filePath(output);
       Run run(QString("kmf_oo2pdf \"%1\" \"%2\"").arg(file).arg(output));
 
-      kDebug() << k_funcinfo << file << "->" << output;
+      kDebug() << file << "->" << output;
       if(run.exitCode() == 0)
       {
         mime = "application/pdf";
@@ -128,7 +128,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
       output = dir.filePath(output);
       Run run(QString("kmf_pdf2png \"%1\" \"%2\"").arg(file).arg(output));
 
-      kDebug() << k_funcinfo << file << "->" << output;
+      kDebug() << file << "->" << output;
       for(int i = 1; true; ++i)
       {
         Slide slide;
@@ -138,7 +138,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
 
         if(fi.exists())
         {
-          kDebug() << k_funcinfo << "Slide: " << i;
+          kDebug() << "Slide: " << i;
           slide.comment = i18n("Page %1", i);
           slide.picture = file;
           result.append(slide);
@@ -151,7 +151,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
     {
       Slide slide;
 
-      kDebug() << k_funcinfo << minfo.keys();
+      kDebug() << minfo.keys();
       if(minfo.keys().contains("Comment") &&
          !minfo.item("Comment").value().toString().isEmpty())
       {
@@ -555,7 +555,7 @@ QImage SlideshowObject::preview(int chap) const
   QImage img(chapter(chap).picture);
   QSize res = KMF::Tools::resolution(img.size(), img.size(),
       KMF::Tools::maxResolution(projectInterface()->type()), QSize(4,3));
-  kDebug() << k_funcinfo << res;
+  kDebug() << res;
   img = img.scaled(res, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
   return img;
 }

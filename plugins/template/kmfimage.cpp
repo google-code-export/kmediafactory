@@ -49,7 +49,7 @@ KMFImage::~KMFImage()
 
 int KMFImage::paintWidth() const
 {
-  //kDebug() << k_funcinfo << paintRect().width();
+  //kDebug() << paintRect().width();
   return paintRect().width();
 }
 
@@ -87,7 +87,7 @@ QRect KMFImage::paintRect(const QPoint offset) const
     rc.align(KMFWidget::paintRect(), halign(), valign());
   }
   rc.translate(offset.x(), offset.y());
-  //kDebug() << k_funcinfo << rc;
+  //kDebug() << rc;
   return rc;
 }
 
@@ -96,7 +96,7 @@ QImage KMFImage::mask(const QImage& img, const QRgb& maskColor, bool oneBitMask)
   QImage result(img.width(), img.height(), QImage::Format_ARGB32);
   double alphaScale = qAlpha(maskColor) / 255.0;
 
-  //kDebug() << k_funcinfo << maskColor << alphaScale;
+  //kDebug() << maskColor << alphaScale;
   for (int y = 0; y < img.height(); y++)
   {
     for (int x = 0; x < img.width(); x++)
@@ -144,7 +144,7 @@ void KMFImage::paintWidget(QImage& layer, bool shdw)
     image = image.scaled(rc.width(), rc.height(),
                          mode, Qt::SmoothTransformation);
   }
-  //kDebug() << k_funcinfo << m_url << ": " <<  shdw;
+  //kDebug() << m_url << ": " <<  shdw;
   p.drawImage(QPoint(rc.left(), rc.top()), image);
 }
 
@@ -153,7 +153,7 @@ void KMFImage::setImage(KUrl url)
   bool ok = false;
 
   m_url = url;
-  //kDebug() << k_funcinfo << url;
+  //kDebug() << url;
   if(url.protocol() == "project")
   {
     QList<KMF::MediaObject*> mobs = m_prjIf->mediaObjects();
@@ -238,7 +238,7 @@ int KMFImage::minimumPaintWidth() const
       result = (int)((double)geometry().h() * m_aspectRatio);
     }
   }
-  //kDebug() << k_funcinfo << result;
+  //kDebug() << result;
   return result;
 }
 
@@ -261,7 +261,7 @@ int KMFImage::minimumPaintHeight() const
       result = (int)((double)geometry().w() / m_aspectRatio);
     }
   }
-  //kDebug() << k_funcinfo << result;
+  //kDebug() << result;
   return result;
 }
 

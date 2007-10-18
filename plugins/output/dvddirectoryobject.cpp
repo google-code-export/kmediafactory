@@ -70,7 +70,7 @@ int DvdDirectoryObject::timeEstimate() const
 
 void DvdDirectoryObject::output(const QString& line)
 {
-  //kDebug() << k_funcinfo << line;
+  //kDebug() << line;
   bool stopped = false;
 
   if(line.startsWith("\t") &&
@@ -211,7 +211,7 @@ void DvdDirectoryObject::progress(int points)
   if(points > m_points)
     points = m_points;
   m_points -= points;
-  //kDebug() << k_funcinfo << m_points;
+  //kDebug() << m_points;
   uiInterface()->progress(points);
 }
 

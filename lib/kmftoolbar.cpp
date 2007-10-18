@@ -56,7 +56,7 @@ void KMFToolBar::lateInit()
 
 void KMFToolBar::add(QAction* action, const QString& group)
 {
-  kDebug() << k_funcinfo << group << ": " << action->text();
+  kDebug() << group << ": " << action->text();
   QToolButton* button = new QToolButton;
   button->setDefaultAction(action);
   button->setText(action->text());
