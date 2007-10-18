@@ -432,10 +432,8 @@ bool SlideshowObject::convertToDVD()
     dvdslideshow->setWorkingDirectory(projectInterface()->projectDir("media"));
     uiInterface()->logger()->connectProcess(dvdslideshow,
                                             "INFO: \\d+ bytes of data written");
-    connect(dvdslideshow, SIGNAL(readyReadStandardOutput()),
-             this, SLOT(output()));
-    connect(dvdslideshow, SIGNAL(readyReadStandardError()),
-             this, SLOT(output()));
+    connect(uiInterface()->logger(), SIGNAL(line(QString)),
+             this, SLOT(output(QString)));
     dvdslideshow->execute();
     if(dvdslideshow->exitCode() == QProcess::NormalExit)
     {
