@@ -26,6 +26,7 @@
 #include <kstandarddirs.h>
 #include <kiconloader.h>
 #include <kurl.h>
+#include <kprocess.h>
 #include <QDir>
 #include <QPixmap>
 #include <QTextStream>
@@ -65,10 +66,10 @@ bool K3bObject::make(QString type)
   uiInterface()->message(KMF::OK, i18n("K3b project ready"));
   if(app != QString::null)
   {
-    K3Process burn;
+    KProcess burn;
 
     burn << app << doc;
-    burn.start(K3Process::DontCare);
+    burn.start();
   }
   uiInterface()->progress(TotalPoints);
   return true;

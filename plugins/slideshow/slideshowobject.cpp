@@ -40,6 +40,7 @@
 #include <kicon.h>
 #include <kprogressdialog.h>
 #include <kio/copyjob.h>
+#include <kprocess.h>
 #include <QImage>
 #include <QDir>
 #include <QRegExp>
@@ -379,7 +380,7 @@ void SlideshowObject::clean()
   plugin()->projectInterface()->cleanFiles("media", list);
 }
 
-void SlideshowObject::output(K3Process* process, char* buffer, int buflen)
+void SlideshowObject::output(KProcess* process, char* buffer, int buflen)
 {
   bool stopped = false;
   int find = 0, start = 0;
@@ -424,7 +425,7 @@ bool SlideshowObject::convertToDVD() const
       return false;
     }
 
-    K3Process dvdslideshow;
+    KProcess dvdslideshow;
 
     uiInterface()->message(KMF::Info, i18n("   Making Slideshow"));
     dvdslideshow << slideshowPlugin->dvdslideshowBin();
@@ -443,13 +444,12 @@ bool SlideshowObject::convertToDVD() const
     dvdslideshow.setWorkingDirectory(projectInterface()->projectDir("media"));
     uiInterface()->logger()->connectProcess(&dvdslideshow,
                                             "INFO: \\d+ bytes of data written");
-    connect(&dvdslideshow, SIGNAL(receivedStdout(K3Process*, char*, int)),
-             this, SLOT(output(K3Process*, char*, int)));
-    connect(&dvdslideshow, SIGNAL(receivedStderr(K3Process*, char*, int)),
-             this, SLOT(output(K3Process*, char*, int)));
-    kDebug() << k_funcinfo << dvdslideshow.args();
-    dvdslideshow.start(K3Process::Block, K3Process::AllOutput);
-    if(dvdslideshow.normalExit())
+    connect(&dvdslideshow, SIGNAL(receivedStdout(KProcess*, char*, int)),
+             this, SLOT(output(KProcess*, char*, int)));
+    connect(&dvdslideshow, SIGNAL(receivedStderr(KProcess*, char*, int)),
+             this, SLOT(output(KProcess*, char*, int)));
+    dvdslideshow.execute();
+    if(dvdslideshow.exitCode() == QProcess::NormalExit)
     {
       if(dvdslideshow.exitStatus() == 0)
         result = true;

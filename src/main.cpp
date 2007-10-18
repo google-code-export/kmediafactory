@@ -54,7 +54,7 @@ int main(int argc, char **argv)
     // For icons in tool scripts
     KGlobal::dirs()->addResourceDir("icon", tooldir);
   }
-  KIconLoader::global()->reconfigure(about.appName(), KGlobal::dirs());
+  //KIconLoader::global()->reconfigure(about.appName(), KGlobal::dirs());
 
   if (app.isSessionRestored())
   {

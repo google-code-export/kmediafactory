@@ -39,7 +39,7 @@ void KMFLogger::stop()
   m_log += "</pre></html>";
 }
 
-void KMFLogger::stdout(K3Process*, char* buffer, int buflen)
+void KMFLogger::stdout(KProcess*, char* buffer, int buflen)
 {
   int n;
   QRegExp re("[\n\r]");
@@ -55,7 +55,7 @@ void KMFLogger::stdout(K3Process*, char* buffer, int buflen)
   kmfApp->processEvents(QEventLoop::AllEvents);
 }
 
-void KMFLogger::stderr(K3Process* proc, char* buffer, int buflen)
+void KMFLogger::stderr(KProcess* proc, char* buffer, int buflen)
 {
   stdout(proc, buffer, buflen);
 }
