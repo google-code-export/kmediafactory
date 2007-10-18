@@ -129,8 +129,8 @@ uint64_t KMF::Tools::fileSize(QString file)
   {
     // 2 = No such file or directory
     if (errno != 2)
-      kdDebug () << QString("stat(%1) error: %2").arg(file).arg(strerror(errno))
-          << endl;
+      kDebug () << QString("stat(%1) error: %2").arg(file).arg(strerror(errno))
+         ;
     return 0;
   }
   return buf.st_size;
@@ -321,7 +321,7 @@ QFont KMF::Tools::fontFromXML(const QDomElement& element)
   //m_color = element.attribute("color", "0").toLong();
   f.setPointSize(element.attribute("size", "22").toInt());
   f.setWeight(element.attribute("weight", "400").toInt() / 10);
-  //kdDebug() << k_funcinfo << family() << pointSize() << weight() << endl;
+  //kDebug() << k_funcinfo << family() << pointSize() << weight();
   return f;
 }
 
@@ -400,9 +400,9 @@ QString KMF::Tools::fontFile(const QFont& font)
       font.setStretch(width);
       /*
       if(QString((const char*)family).startsWith("Bit"))
-      kdDebug() << k_funcinfo << (const char*)family << ", " << weight << ", "
+      kDebug() << k_funcinfo << (const char*)family << ", " << weight << ", "
       << slant << ", " << width << ", " << (const char*)file
-      << font.longName() << endl;
+      << font.longName();
       */
       fileMap[longFontName(font)] = (const char*)file;
 
@@ -412,7 +412,7 @@ QString KMF::Tools::fontFile(const QFont& font)
       if(s != (const char*)family)
       {
         font.setFamily(s);
-        //kdDebug() << k_funcinfo << font.longName() << endl;
+        //kDebug() << k_funcinfo << font.longName();
         fileMap[longFontName(font)] = (const char*)file;
       }
     }
@@ -446,7 +446,7 @@ void KMF::Tools::printChilds(QObject* obj, int level)
   {
     kDebug() << k_funcinfo << s.leftJustified(level, '-')
         << child->metaObject()->className() << ": "
-        << child->objectName() << endl;
+        << child->objectName();
     printChilds(child, level + 1);
   }
 }

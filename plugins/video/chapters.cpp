@@ -371,7 +371,7 @@ void Chapters::autoChapters()
       else
         s = time.toString("h:mm:ss");
       m_cells << QDVD::Cell(time, interval, s);
-      kDebug() << k_funcinfo << m_cells.count() << endl;
+      kDebug() << k_funcinfo << m_cells.count();
       time += interval;
       ++i;
     }
@@ -392,7 +392,7 @@ void Chapters::import()
     {
       QString number = QString::number(i).rightJustified(2, '0');
       QString entry = chapters.value(QString("CHAPTER%1").arg(number), "");
-      kDebug() << k_funcinfo << chapters << entry << endl;
+      kDebug() << k_funcinfo << chapters << entry;
       if(entry.isEmpty())
         break;
       KMF::Time time(entry);

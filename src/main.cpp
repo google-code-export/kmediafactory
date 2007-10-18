@@ -50,7 +50,7 @@ int main(int argc, char **argv)
   QStringList tools = KGlobal::dirs()->findDirs("data", "kmediafactory/tools");
   foreach(QString tooldir, tools)
   {
-    kDebug() << k_funcinfo << "Adding resource dir: " << tooldir << endl;
+    kDebug() << k_funcinfo << "Adding resource dir: " << tooldir;
     // For icons in tool scripts
     KGlobal::dirs()->addResourceDir("icon", tooldir);
   }

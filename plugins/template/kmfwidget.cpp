@@ -328,7 +328,7 @@ void KMFWidget::fromXML(const QDomElement& element)
     }
     n = n.nextSibling();
   }
-  //kdDebug() << name() << " rect: " << m_geometry.rect() << endl;
+  //kDebug() << name() << " rect: " << m_geometry.rect();
 }
 
 int KMFWidget::toInt(const QString& s, int offset)
@@ -357,7 +357,7 @@ void KMFWidget::setProperty(const QString& name, QVariant value)
 {
   if(name == "color")
   {
-    //kDebug() << k_funcinfo << value.value<QColor>() << endl;
+    //kDebug() << k_funcinfo << value.value<QColor>();
     setColor(value.value<QColor>());
   }
 }

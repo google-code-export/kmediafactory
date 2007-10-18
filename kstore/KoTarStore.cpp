@@ -32,7 +32,7 @@
 KoTarStore::KoTarStore( const QString & _filename, Mode _mode, const QByteArray & appIdentification )
 {
     kDebug(s_area) << "KoTarStore Constructor filename = " << _filename
-                    << " mode = " << int(_mode) << endl;
+                    << " mode = " << int(_mode);
 
     m_pTar = new KTar( _filename, "application/x-gzip" );
 
@@ -56,7 +56,7 @@ KoTarStore::KoTarStore( QWidget* window, const KUrl& _url, const QString & _file
 {
     kDebug(s_area) << "KoTarStore Constructor url= " << _url.pathOrUrl()
                     << " filename = " << _filename
-                    << " mode = " << int(_mode) << endl;
+                    << " mode = " << int(_mode);
 
     m_url = _url;
     m_window = window;
@@ -144,13 +144,13 @@ bool KoTarStore::openRead( const QString& name )
     const KArchiveEntry * entry = m_pTar->directory()->entry( name );
     if ( entry == 0L )
     {
-        //kWarning(s_area) << "Unknown filename " << name << endl;
+        //kWarning(s_area) << "Unknown filename " << name;
         //return KIO::ERR_DOES_NOT_EXIST;
         return false;
     }
     if ( entry->isDirectory() )
     {
-        kWarning(s_area) << name << " is a directory !" << endl;
+        kWarning(s_area) << name << " is a directory !";
         //return KIO::ERR_IS_DIRECTORY;
         return false;
     }
@@ -167,9 +167,9 @@ bool KoTarStore::closeWrite()
     // write the whole bytearray at once into the tar file
 
     kDebug(s_area) << "Writing file " << m_sName << " into TAR archive. size "
-                    << m_iSize << endl;
+                    << m_iSize;
     if ( !m_pTar->writeFile( m_sName , "user", "group", m_byteArray.data(),m_iSize ) )
-        kWarning( s_area ) << "Failed to write " << m_sName << endl;
+        kWarning( s_area ) << "Failed to write " << m_sName;
     m_byteArray.resize( 0 ); // save memory
     return true;
 }

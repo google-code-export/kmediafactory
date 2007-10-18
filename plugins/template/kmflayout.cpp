@@ -39,15 +39,15 @@ int KMFGrid::childY(const KMFWidget* child) const
   foreach(QObject* ob, children())
   {
     KMFWidget* widget = static_cast<KMFWidget*>(ob);
-    //kdDebug() << k_funcinfo << child->className()
-    //    << " (" << child->name() << "): " << result << endl;
+    //kDebug() << k_funcinfo << child->className()
+    //    << " (" << child->name() << "): " << result;
     if(widget == child)
       return result;
     if(child->column() == widget->column())
     {
       result += widget->height();
-      //kdDebug() << k_funcinfo << widget->className()
-      //    << " (" << widget->name() << "): " << widget->height() << endl;
+      //kDebug() << k_funcinfo << widget->className()
+      //    << " (" << widget->name() << "): " << widget->height();
     }
   }
   return result;
@@ -194,8 +194,8 @@ int KMFHBox::minimumPaintHeight() const
   foreach(QObject* ob, children())
   {
     KMFWidget* widget = static_cast<KMFWidget*>(ob);
-    //kdDebug() << widget->className() << ": "
-    //    << widget->minimumHeight() << endl;
+    //kDebug() << widget->className() << ": "
+    //    << widget->minimumHeight();
     if(!widget->isHidden())
       result = qMax(widget->minimumHeight(), result);
   }

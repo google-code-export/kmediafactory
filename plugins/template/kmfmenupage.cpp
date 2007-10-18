@@ -136,7 +136,7 @@ bool KMFMenuPage::writeSpumuxXml(QDomDocument& doc)
     QDomElement button = doc.createElement("button");
     button.setAttribute("name", btn->objectName());
     QRect rc = btn->paintRect();
-    //kdDebug() << rc << endl;
+    //kDebug() << rc;
     button.setAttribute("x0", rc.left());
     button.setAttribute("y0", rc.top());
     button.setAttribute("x1", rc.right());
@@ -159,7 +159,7 @@ bool KMFMenuPage::writeSpumuxXml(QDomDocument& doc)
 
 bool KMFMenuPage::parseButtons(bool addPages)
 {
-  //kdDebug() << k_funcinfo << endl;
+  //kDebug() << k_funcinfo;
   foreach(KMFButton* btn, *m_buttons)
     if(btn->parseJump(addPages) == false)
       return false;
@@ -478,7 +478,7 @@ bool KMFMenuPage::paintChildWidgets(QObject* parent)
 
         if(TemplatePluginSettings::widgetDebugInfo())
           kDebug() << type << " (" << widget->objectName() << "): " << rc
-              << " - " << paintRC << endl;
+              << " - " << paintRC;
 
         if(type == "KMFImage" &&
             TemplatePluginSettings::widgetDebugImage())
@@ -555,7 +555,7 @@ void KMFMenuPage::setProperty(const QString& name, QVariant value)
   KMFWidget::setProperty(name, value);
   if(name == "language")
   {
-    //kdDebug() << k_funcinfo << "Setting language" << endl;
+    //kDebug() << k_funcinfo << "Setting language";
     m_language = value.toString();
     menu()->setLanguage("template", m_language);
   }

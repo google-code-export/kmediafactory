@@ -163,8 +163,8 @@ bool VideoObject::fromXML(const QDomElement& element)
                 for(int i= 0; i < file - 1 && i < m_files.count(); ++i)
                   start += duration(m_files[i]);
               }
-              //kdDebug() << k_funcinfo << file  << ", " << start
-              //    << ", " << chapter << endl;
+              //kDebug() << k_funcinfo << file  << ", " << start
+              //    << ", " << chapter;
               if(e2.hasAttribute("name"))
                 name = e2.attribute("name");
               else
@@ -217,7 +217,7 @@ bool VideoObject::fromXML(const QDomElement& element)
 
 bool VideoObject::checkObjectParams()
 {
-  kDebug() << k_funcinfo << VideoPluginSettings::defaultAudioLanguage() << endl;
+  kDebug() << k_funcinfo << VideoPluginSettings::defaultAudioLanguage();
   if(m_files.count() > 0)
   {
     const KMFMediaFile& media = KMFMediaFile::mediaFile(m_files[0]);
@@ -405,7 +405,7 @@ void VideoObject::writeDvdAuthorXml(QDomElement& element,
     }
     c.setAttribute("chapter", cell.isChapter());
     vob.appendChild(c);
-    kDebug() << k_funcinfo << "Cell: " << start << ", " << end << endl;
+    kDebug() << k_funcinfo << "Cell: " << start << ", " << end;
   }
   QDomElement postElem = doc.createElement("post");
   QDomText text2 = doc.createTextNode(post);
@@ -426,9 +426,9 @@ QString VideoObject::videoFileName(int index, VideoFilePrefix prefix)
   QString file = QFileInfo(m_files[index]).fileName();
 
   /*
-  kdDebug() << k_funcinfo << dir.filePath(QString("%1_%2")
+  kDebug() << k_funcinfo << dir.filePath(QString("%1_%2")
       .arg(QString::number(index+1).rightJustify(3, '0'))
-      .arg(file) + m_prefixes[prefix]) << endl;
+      .arg(file) + m_prefixes[prefix]);
   */
   return dir.filePath(QString("%1_%2")
       .arg(QString::number(index+1).rightJustified(3, '0'))
@@ -448,11 +448,11 @@ QString VideoObject::videoFileFind(int index, VideoFilePrefix prefixStart) const
     QFileInfo fi(s);
     if(fi.exists())
     {
-      //kdDebug() << k_funcinfo << s << endl;
+      //kDebug() << k_funcinfo << s;
       return s;
     }
   }
-  //kdDebug() << k_funcinfo << m_files()[index].fileName() << endl;
+  //kDebug() << k_funcinfo << m_files()[index].fileName();
   return m_files[index];
 }
 
@@ -464,10 +464,10 @@ QString VideoObject::checkFontFile(const QString& file)
 
   if(!dir.exists())
     dir.mkdir(dir.path());
-  kDebug() << k_funcinfo << link.filePath() << " -> " << file << endl;
+  kDebug() << k_funcinfo << link.filePath() << " -> " << file;
   if(!link.exists())
     if(symlink(file.toLocal8Bit(), link.filePath().toLocal8Bit()) < 0)
-      kDebug() << k_funcinfo << strerror(errno) << endl;
+      kDebug() << k_funcinfo << strerror(errno);
   return fi.fileName();
 }
 
@@ -576,7 +576,7 @@ bool VideoObject::convertSubtitles(const QDVD::Subtitle& subtitle)
           i18n("   Adding subtitles to %1", fii.fileName()));
 
       K3ShellProcess m_spumux("bash");
-      //kdDebug() << k_funcinfo << fiXml.filePath() << endl;
+      //kDebug() << k_funcinfo << fiXml.filePath();
       writeSpumuxXml(fiXml.filePath(), fiSub.filePath(), subtitle);
       m_spumux << "spumux -P "
           + K3ShellProcess::quote(fiXml.filePath())
@@ -676,7 +676,7 @@ QImage VideoObject::getFrame(QTime time, QString file) const
   for(QStringList::ConstIterator it = m_files.begin();
       it != m_files.end(); ++it)
   {
-    //kDebug() << k_funcinfo << *it << endl;
+    //kDebug() << k_funcinfo << *it;
     const KMFMediaFile& media = KMFMediaFile::mediaFile(*it);
     if(t <= KMF::Time(media.duration()))
     {
@@ -726,7 +726,7 @@ QImage VideoObject::preview(int chap) const
     img = getFrame(t, cacheFile);
     black = isBlack(img);
     if(black)
-      kDebug() << "Black frame: " << t.toString() << endl;
+      kDebug() << "Black frame: " << t.toString();
     t += VideoPluginSettings::blackFrameJump();
     ++counter;
   }
@@ -742,12 +742,12 @@ QImage VideoObject::preview(int chap) const
 
   img = img.scaled(res, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
   /*
-  kdDebug() << k_funcinfo << "Template size: " << templateSize << endl;
-  kdDebug() << k_funcinfo << "Template ratio:" << templateRatio << endl;
-  kdDebug() << k_funcinfo << "Video ratio:" << videoRatio << endl;
-  kdDebug() << k_funcinfo << "Image size:" << imageSize << endl;
-  kdDebug() << k_funcinfo << "Image ratio:" << imageRatio << endl;
-  kdDebug() << k_funcinfo << "Final resolution:" << res << endl;
+  kDebug() << k_funcinfo << "Template size: " << templateSize;
+  kDebug() << k_funcinfo << "Template ratio:" << templateRatio;
+  kDebug() << k_funcinfo << "Video ratio:" << videoRatio;
+  kDebug() << k_funcinfo << "Image size:" << imageSize;
+  kDebug() << k_funcinfo << "Image ratio:" << imageRatio;
+  kDebug() << k_funcinfo << "Final resolution:" << res;
   */
   if(!VideoPluginSettings::usePreviewCache())
     QFile::remove(cacheFile);
@@ -846,7 +846,7 @@ void VideoObject::printCells()
       it != m_cells.end(); ++it, ++i)
   {
     kDebug() << k_funcinfo << i << ": " << (*it).start()
-        << " / " << (*it).length() << endl;
+        << " / " << (*it).length();
   }
 }
 
@@ -857,7 +857,7 @@ void VideoObject::parseCellLengths()
   for(QDVD::CellList::Iterator it = m_cells.begin();
       it != m_cells.end(); ++it)
   {
-    //kdDebug() << k_funcinfo << (*it).start() << endl;
+    //kDebug() << k_funcinfo << (*it).start();
     ++it;
     if(it != m_cells.end())
       next = (*it).start();

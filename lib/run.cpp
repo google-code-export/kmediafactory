@@ -75,7 +75,7 @@ void Run::checkIfScript()
     {
       QFileInfo fi(path + "/" + m_program);
 
-      //kDebug() << k_funcinfo << fi.filePath() << endl;
+      //kDebug() << k_funcinfo << fi.filePath();
       if(fi.exists())
       {
         QFile file(fi.filePath());
@@ -114,7 +114,7 @@ bool Run::run()
   QStringList kmfPaths;
   kmfPaths << KGlobal::dirs()->findDirs("data", "kmediafactory/scripts");
   kmfPaths << KGlobal::dirs()->findDirs("data", "kmediafactory/tools");
-  //kDebug() << k_funcinfo << kmfPaths << endl;
+  //kDebug() << k_funcinfo << kmfPaths;
   env << QString("KMF_DBUS=org.kde.kmediafactory-%1")
       .arg(getpid());
   foreach(QString path, kmfPaths)
@@ -122,11 +122,11 @@ bool Run::run()
     env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive),
                          "PATH=" + path.left(path.length() - 1) + ":\\1");
   }
-  //kDebug() << k_funcinfo << env << endl;
+  //kDebug() << k_funcinfo << env;
   setEnvironment(env);
 
   checkIfScript();
-  //kDebug() << "Running: " << m_program << m_arguments << endl;
+  //kDebug() << "Running: " << m_program << m_arguments;
 
   m_outputIndex = 0;
   start(m_program, m_arguments);
@@ -137,7 +137,7 @@ bool Run::run()
       break;
     kapp->processEvents();
   }
-  //kDebug() << "Output: " << m_output << endl;
+  //kDebug() << "Output: " << m_output;
   if(exitStatus() == QProcess::NormalExit || exitCode() == 0)
   {
     return true;

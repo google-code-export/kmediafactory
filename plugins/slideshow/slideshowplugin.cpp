@@ -80,7 +80,7 @@ QAction* SlideshowPlugin::setupActions()
 
 void SlideshowPlugin::init(const QString &type)
 {
-  kDebug() << k_funcinfo << type << endl;
+  kDebug() << k_funcinfo << type;
   deleteChildren();
 
   QAction* action = actionCollection()->action("slideshow");

@@ -98,7 +98,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
 
     if(type)
       mime = type->name();
-    kDebug() << k_funcinfo << mime << endl;
+    kDebug() << k_funcinfo << mime;
     if(mime.startsWith("application/vnd.oasis.opendocument") ||
        mime.startsWith("application/vnd.sun.xml") ||
        mime == "application/msexcel" ||
@@ -110,7 +110,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
       output = dir.filePath(output);
       Run run(QString("kmf_oo2pdf \"%1\" \"%2\"").arg(file).arg(output));
 
-      kDebug() << k_funcinfo << file << "->" << output << endl;
+      kDebug() << k_funcinfo << file << "->" << output;
       if(run.exitCode() == 0)
       {
         mime = "application/pdf";
@@ -126,7 +126,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
       output = dir.filePath(output);
       Run run(QString("kmf_pdf2png \"%1\" \"%2\"").arg(file).arg(output));
 
-      kDebug() << k_funcinfo << file << "->" << output << endl;
+      kDebug() << k_funcinfo << file << "->" << output;
       for(int i = 1; true; ++i)
       {
         Slide slide;
@@ -136,7 +136,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
 
         if(fi.exists())
         {
-          kDebug() << k_funcinfo << "Slide: " << i << endl;
+          kDebug() << k_funcinfo << "Slide: " << i;
           slide.comment = i18n("Page %1", i);
           slide.picture = file;
           result.append(slide);
@@ -149,7 +149,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
     {
       Slide slide;
 
-      kDebug() << k_funcinfo << minfo.keys() << endl;
+      kDebug() << k_funcinfo << minfo.keys();
       if(minfo.keys().contains("Comment") &&
          !minfo.item("Comment").value().toString().isEmpty())
       {
@@ -390,7 +390,7 @@ void SlideshowObject::output(K3Process* process, char* buffer, int buflen)
   {
     QString line = m_buffer.mid(start, find - start);
 
-    //kdDebug() << k_funcinfo << line << endl;
+    //kDebug() << k_funcinfo << line;
     QRegExp re2(" (\\d+)\\/(\\d+) ");
     int pos = re2.indexIn(line);
     if(pos > -1)
@@ -447,7 +447,7 @@ bool SlideshowObject::convertToDVD() const
              this, SLOT(output(K3Process*, char*, int)));
     connect(&dvdslideshow, SIGNAL(receivedStderr(K3Process*, char*, int)),
              this, SLOT(output(K3Process*, char*, int)));
-    kDebug() << k_funcinfo << dvdslideshow.args() << endl;
+    kDebug() << k_funcinfo << dvdslideshow.args();
     dvdslideshow.start(K3Process::Block, K3Process::AllOutput);
     if(dvdslideshow.normalExit())
     {
@@ -565,7 +565,7 @@ QImage SlideshowObject::preview(int chap) const
   QImage img(chapter(chap).picture);
   QSize res = KMF::Tools::resolution(img.size(), img.size(),
       KMF::Tools::maxResolution(projectInterface()->type()), QSize(4,3));
-  kDebug() << k_funcinfo << res << endl;
+  kDebug() << k_funcinfo << res;
   img = img.scaled(res, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
   return img;
 }
