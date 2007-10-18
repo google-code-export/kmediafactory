@@ -67,8 +67,8 @@ void DvdAuthorObject::toXML(QDomElement&) const
 
 QPixmap DvdAuthorObject::pixmap() const
 {
-  return KIconLoader::global()->loadIcon("media-optical", K3Icon::NoGroup,
-                                                          K3Icon::SizeLarge);
+  return KIconLoader::global()->loadIcon("media-optical", KIconLoader::NoGroup,
+                                         KIconLoader::SizeLarge);
 }
 
 #include "dvdauthorobject.moc"

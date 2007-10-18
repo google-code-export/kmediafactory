@@ -80,8 +80,8 @@ void K3bObject::toXML(QDomElement&) const
 
 QPixmap K3bObject::pixmap() const
 {
-  return KIconLoader::global()->loadIcon("k3b", K3Icon::NoGroup,
-                                         K3Icon::SizeLarge);
+  return KIconLoader::global()->loadIcon("k3b", KIconLoader::NoGroup,
+                                         KIconLoader::SizeLarge);
 }
 
 // All the following are taken from k3b project
