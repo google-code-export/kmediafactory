@@ -19,4 +19,4 @@
 //**************************************************************************
 
 #include "kiconloader.h"
-#define BTN_ICON(x) KGlobal::iconLoader()->loadIconSet((x), K3Icon::Small)
+#define BTN_ICON(x) KGlobal::iconLoader()->loadIconSet((x), KIconLoader::Small)
