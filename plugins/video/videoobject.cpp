@@ -538,11 +538,12 @@ void VideoObject::output(QString line)
 
   if(bytes.indexIn(line) > -1)
   {
-    if(m_lastUpdate.elapsed() > 250)
+    qulonglong temp = bytes.cap(1).toULongLong();
+    if(temp - m_lastUpdate > m_half)
     {
-      if(uiInterface()->setItemProgress(bytes.cap(1).toULongLong() / 1024))
+      if(uiInterface()->setItemProgress(temp / 1024))
         m_spumux->kill();
-      m_lastUpdate.start();
+      m_lastUpdate = temp;
     }
   }
 }
@@ -582,8 +583,14 @@ bool VideoObject::convertSubtitles(const QDVD::Subtitle& subtitle)
       connect(uiInterface()->logger(), SIGNAL(line(QString)),
               this, SLOT(output(QString)));
       uiInterface()->setItemTotalSteps(fii.size()/1024);
-      m_spumux->execute();
-      kDebug();
+      m_lastUpdate = 0;
+      m_half = fii.size() / 200;
+      m_spumux->start();
+      while(!m_spumux->waitForFinished(500))
+      {
+        if(m_spumux->state() == QProcess::NotRunning)
+          break;
+      }
       if(m_spumux->exitCode() == QProcess::NormalExit &&
          m_spumux->exitStatus() == 0)
       {

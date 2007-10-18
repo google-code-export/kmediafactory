@@ -25,7 +25,6 @@
 #include "kmfapplication.h"
 #include "kmfproject.h"
 #include <kdebug.h>
-#include <Q3PtrList>
 
 KMFProjectInterface::KMFProjectInterface(QObject *parent) :
   KMF::ProjectInterface(parent)

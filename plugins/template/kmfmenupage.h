@@ -30,8 +30,6 @@
 class KMFButton;
 class TemplateObject;
 class KMFMenuPage;
-class QFFMpeg;
-class K3ProcIO;
 
 class KMFMenuPage : public KMFWidget
 {
@@ -108,8 +106,6 @@ class KMFMenuPage : public KMFWidget
     bool writeSpumuxXml(QDomDocument& doc);
     bool writeSpumuxXml();
     bool runScript(QString scriptName, QString place = "menus");
-    static int mjpegtoolsVersion();
-    static int makeVersion(K3ProcIO& proc);
 };
 
 #endif
