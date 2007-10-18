@@ -52,8 +52,8 @@ bool NewStuffObject::clicked()
 
 QPixmap NewStuffObject::pixmap() const
 {
-  return KIconLoader::global()->loadIcon("get-hot-new-stuff", K3Icon::NoGroup,
-      K3Icon::SizeLarge);
+  return KIconLoader::global()->loadIcon("get-hot-new-stuff",
+      KIconLoader::NoGroup, KIconLoader::SizeLarge);
 }
 
 #include "newstuffobject.moc"
