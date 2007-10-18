@@ -22,7 +22,7 @@
 
 #include "kmfobject.h"
 #include <kaction.h>
-#include <k3process.h>
+#include <kprocess.h>
 #include <QString>
 #include <QObject>
 #include <QImage>
@@ -84,13 +84,14 @@ namespace KMF
       virtual void setFilter(const QString& filter) = 0;
       virtual QString filter() const = 0;
       virtual bool save(QString file) const = 0;
-      void connectProcess(K3Process* proc,
+      void connectProcess(KProcess* proc,
                           const QString& filter = "",
-                          K3Process::Communication comm = K3Process::All);
+                          KProcess::OutputChannelMode mode =
+                              KProcess::SeparateChannels);
 
     public slots:
-      virtual void stdout(K3Process* proc, char* buffer, int buflen) = 0;
-      virtual void stderr(K3Process* proc, char* buffer, int buflen) = 0;
+      virtual void stdout(KProcess* proc, char* buffer, int buflen) = 0;
+      virtual void stderr(KProcess* proc, char* buffer, int buflen) = 0;
       void message(const QString& msg) { message(msg, QColor("black")); };
   };
 

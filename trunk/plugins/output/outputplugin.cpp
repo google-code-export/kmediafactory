@@ -33,6 +33,7 @@
 #include <kaboutdata.h>
 #include <kstandarddirs.h>
 #include <kicon.h>
+#include <kprocess.h>
 #include <QRegExp>
 #include <QPixmap>
 
@@ -121,7 +122,7 @@ void OutputPlugin::play(const QString& player)
 {
   QString bin;
   QString projectDir = projectInterface()->projectDir();
-  K3Process process;
+  KProcess process;
 
   if(player.isEmpty())
   {
@@ -137,7 +138,7 @@ void OutputPlugin::play(const QString& player)
   else
     bin = player;
   process << bin << "dvd:/" + projectDir + "DVD/VIDEO_TS";
-  process.start(K3Process::DontCare);
+  process.start();
 }
 
 void OutputPlugin::slotPreviewDVDXine()

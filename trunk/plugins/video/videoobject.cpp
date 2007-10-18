@@ -35,6 +35,8 @@
 #include <kdebug.h>
 #include <kicon.h>
 #include <krun.h>
+#include <kprocess.h>
+#include <kshell.h>
 #include <QImage>
 #include <QColor>
 #include <QFileInfo>
@@ -530,7 +532,7 @@ bool VideoObject::writeSpumuxXml(const QString& fileName,
   return true;
 }
 
-void VideoObject::output(K3Process* process, char* buffer, int buflen)
+void VideoObject::output(KProcess* process, char* buffer, int buflen)
 {
   QRegExp re("[\n\r]");
   QRegExp bytes("INFO: (\\d+) bytes of data written");
@@ -575,22 +577,25 @@ bool VideoObject::convertSubtitles(const QDVD::Subtitle& subtitle)
       uiInterface()->message(KMF::Info,
           i18n("   Adding subtitles to %1", fii.fileName()));
 
-      K3ShellProcess m_spumux("bash");
+      KProcess m_spumux;
       //kDebug() << k_funcinfo << fiXml.filePath();
       writeSpumuxXml(fiXml.filePath(), fiSub.filePath(), subtitle);
-      m_spumux << "spumux -P "
-          + K3ShellProcess::quote(fiXml.filePath())
-          + " < " + K3ShellProcess::quote(fii.filePath())
-          + " > " + K3ShellProcess::quote(fio.filePath());
+      m_spumux.setShellCommand("spumux -P "
+          + KShell::quoteArg(fiXml.filePath())
+          + " < " + KShell::quoteArg(fii.filePath())
+          + " > " + KShell::quoteArg(fio.filePath()));
       m_spumux.setWorkingDirectory(projectInterface()->projectDir("media"));
       uiInterface()->logger()->connectProcess(&m_spumux,
-          "INFO: \\d+ bytes of data written", K3Process::Stderr);
-      connect(&m_spumux, SIGNAL(receivedStderr(K3Process*, char*, int)),
-              this, SLOT(output(K3Process*, char*, int)));
+          "INFO: \\d+ bytes of data written", KProcess::OnlyStderrChannel);
+      connect(&m_spumux, SIGNAL(receivedStderr(KProcess*, char*, int)),
+              this, SLOT(output(KProcess*, char*, int)));
       uiInterface()->setItemTotalSteps(fii.size()/1024);
-      m_spumux.start(K3Process::Block, K3Process::Stderr);
-      if(m_spumux.normalExit() && m_spumux.exitStatus() == 0)
+      m_spumux.execute();
+      if(m_spumux.exitCode() == QProcess::NormalExit &&
+         m_spumux.exitStatus() == 0)
+      {
         uiInterface()->setItemProgress(fii.size()/1024);
+      }
       else
       {
         QFile::remove(fio.filePath());
