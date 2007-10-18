@@ -90,9 +90,12 @@ namespace KMF
                               KProcess::SeparateChannels);
 
     public slots:
-      virtual void stdout(KProcess* proc, char* buffer, int buflen) = 0;
-      virtual void stderr(KProcess* proc, char* buffer, int buflen) = 0;
+      virtual void stdout() = 0;
+      virtual void stderr() = 0;
       void message(const QString& msg) { message(msg, QColor("black")); };
+
+    protected:
+      KProcess* currentProcess;
   };
 
   class KDE_EXPORT UiInterface :public QObject

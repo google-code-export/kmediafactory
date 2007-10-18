@@ -39,11 +39,16 @@ class KMFLogger : public KMF::Logger
     virtual QString filter() const { return m_filter.pattern(); };
     virtual bool save(QString file) const;
 
+  signals:
+    void line(QString line);
+
   public slots:
-    virtual void stdout(KProcess *proc, char *buffer, int buflen);
-    virtual void stderr(KProcess *proc, char *buffer, int buflen);
+    virtual void stdout();
+    virtual void stderr();
 
   private:
+    virtual void out();
+
     QString m_log;
     QString m_buffer;
     QRegExp m_filter;

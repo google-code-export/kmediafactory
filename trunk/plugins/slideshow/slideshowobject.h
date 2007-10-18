@@ -87,14 +87,14 @@ class SlideshowObject : public KMF::MediaObject
 
   public slots:
     virtual void slotProperties();
-    void output(KProcess* process, char* buffer, int buflen);
+    void output(QString line);
     virtual void clean();
 
   protected:
     void generateId();
     const Slide& chapter(int chap) const;
     bool writeSlideshowFile() const;
-    bool convertToDVD() const;
+    bool convertToDVD();
     bool copyOriginals() const;
     bool oooConvert(QString* file) const;
     QTime audioDuration() const;
@@ -109,6 +109,7 @@ class SlideshowObject : public KMF::MediaObject
     bool m_includeOriginals;
     QStringList m_audioFiles;
     QString m_buffer;
+    KProcess* dvdslideshow;
 };
 
 #endif // SLIDESHOWOBJECT_H

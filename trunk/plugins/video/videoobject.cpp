@@ -51,7 +51,7 @@ const char* VideoObject::m_prefixes[] =
 
 VideoObject::VideoObject(QObject* parent)
   : MediaObject(parent), m_videoPlay(0),
-    m_aspect(QDVD::VideoTrack::Aspect_Unknown)
+    m_aspect(QDVD::VideoTrack::Aspect_Unknown), m_spumux(0)
 {
   setObjectName("video");
   m_videoProperties = new KAction(KIcon("pencil"), i18n("&Properties"),this);
@@ -532,26 +532,18 @@ bool VideoObject::writeSpumuxXml(const QString& fileName,
   return true;
 }
 
-void VideoObject::output(KProcess* process, char* buffer, int buflen)
+void VideoObject::output(QString line)
 {
-  QRegExp re("[\n\r]");
   QRegExp bytes("INFO: (\\d+) bytes of data written");
-  int n;
 
-  m_buffer += QString::fromLatin1(buffer, buflen);
-  while((n = m_buffer.indexOf(re)) >= 0)
+  if(bytes.indexIn(line) > -1)
   {
-    if(bytes.indexIn(m_buffer.left(n)) > -1)
+    if(m_lastUpdate.elapsed() > 250)
     {
-      if(m_lastUpdate.elapsed() > 250)
-      {
-        if(uiInterface()->setItemProgress(bytes.cap(1).toULongLong() / 1024))
-          process->kill();
-        m_lastUpdate.start();
-      }
+      if(uiInterface()->setItemProgress(bytes.cap(1).toULongLong() / 1024))
+        m_spumux->kill();
+      m_lastUpdate.start();
     }
-    ++n;
-    m_buffer.remove(0, n);
   }
 }
 
@@ -560,6 +552,7 @@ bool VideoObject::convertSubtitles(const QDVD::Subtitle& subtitle)
   int i = 0;
   QDir dir(projectInterface()->projectDir("media"));
   QStringList subtitleFiles = subtitle.file().split(";");
+  bool result = true;
 
   for(i = 0; i < m_files.count(); ++i)
   {
@@ -577,22 +570,22 @@ bool VideoObject::convertSubtitles(const QDVD::Subtitle& subtitle)
       uiInterface()->message(KMF::Info,
           i18n("   Adding subtitles to %1", fii.fileName()));
 
-      KProcess m_spumux;
       //kDebug() << k_funcinfo << fiXml.filePath();
+      m_spumux = new KProcess();
       writeSpumuxXml(fiXml.filePath(), fiSub.filePath(), subtitle);
-      m_spumux.setShellCommand("spumux -P "
-          + KShell::quoteArg(fiXml.filePath())
-          + " < " + KShell::quoteArg(fii.filePath())
-          + " > " + KShell::quoteArg(fio.filePath()));
-      m_spumux.setWorkingDirectory(projectInterface()->projectDir("media"));
-      uiInterface()->logger()->connectProcess(&m_spumux,
+      *m_spumux << "spumux" << "-P" << fiXml.filePath();
+      m_spumux->setStandardInputFile(fii.filePath());
+      m_spumux->setStandardOutputFile(fio.filePath());
+      m_spumux->setWorkingDirectory(projectInterface()->projectDir("media"));
+      uiInterface()->logger()->connectProcess(m_spumux,
           "INFO: \\d+ bytes of data written", KProcess::OnlyStderrChannel);
-      connect(&m_spumux, SIGNAL(receivedStderr(KProcess*, char*, int)),
-              this, SLOT(output(KProcess*, char*, int)));
+      connect(uiInterface()->logger(), SIGNAL(line(QString)),
+              this, SLOT(output(QString)));
       uiInterface()->setItemTotalSteps(fii.size()/1024);
-      m_spumux.execute();
-      if(m_spumux.exitCode() == QProcess::NormalExit &&
-         m_spumux.exitStatus() == 0)
+      m_spumux->execute();
+      kDebug();
+      if(m_spumux->exitCode() == QProcess::NormalExit &&
+         m_spumux->exitStatus() == 0)
       {
         uiInterface()->setItemProgress(fii.size()/1024);
       }
@@ -600,8 +593,10 @@ bool VideoObject::convertSubtitles(const QDVD::Subtitle& subtitle)
       {
         QFile::remove(fio.filePath());
         uiInterface()->message(KMF::Error, i18n("   Conversion error."));
-        return false;
+        result = false;
       }
+      delete m_spumux;
+      m_spumux = 0;
     }
     else
     {
@@ -609,7 +604,7 @@ bool VideoObject::convertSubtitles(const QDVD::Subtitle& subtitle)
           i18n("   Subtitle conversion seems to be up to date"));
     }
   }
-  return true;
+  return result;
 }
 
 bool VideoObject::make(QString type)

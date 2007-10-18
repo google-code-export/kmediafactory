@@ -45,12 +45,16 @@ KMF::UiInterface::UiInterface(QObject* parent) :
 void KMF::Logger::connectProcess(KProcess *proc, const QString& filter,
                                  KProcess::OutputChannelMode mode)
 {
+  proc->setOutputChannelMode(KProcess::SeparateChannels);
   if(mode != KProcess::OnlyStderrChannel)
-    connect(proc, SIGNAL(receivedStdout(KProcess*, char*, int)),
-            this, SLOT(stdout(KProcess*, char*, int)));
+  {
+    connect(proc, SIGNAL(readyReadStandardOutput()), this, SLOT(stdout()));
+  }
   if(mode != KProcess::OnlyStdoutChannel)
-    connect(proc, SIGNAL(receivedStderr(KProcess*, char*, int)),
-            this, SLOT(stderr(KProcess*, char*, int)));
+  {
+    connect(proc, SIGNAL(readyReadStandardError()), this, SLOT(stderr()));
+  }
+  currentProcess = proc;
   setFilter(filter);
 }
 
