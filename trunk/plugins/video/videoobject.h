@@ -136,7 +136,8 @@ class VideoObject : public KMF::MediaObject
     KUrl m_previewUrl;
     QDVD::VideoTrack::AspectRatio m_aspect;
     QString m_id;
-    QTime m_lastUpdate;
+    qulonglong m_lastUpdate;
+    qulonglong m_half;
     bool m_stopped;
     QString m_kmfplayer;
     static const char* m_prefixes[];

@@ -22,7 +22,6 @@
 #include <kdebug.h>
 #include <QLabel>
 #include <QSplitter>
-#include <Q3ValueList>
 
 SizeWidget::SizeWidget(QWidget* parent)
   : QWidget(parent), m_max(0), m_size(0)

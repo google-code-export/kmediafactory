@@ -65,7 +65,7 @@ class StopWatch
     };
 
   private:
-    Q3TextStream m_stream;
+    QTextStream m_stream;
     QTime m_time;
 };
 
