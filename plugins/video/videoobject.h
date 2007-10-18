@@ -120,7 +120,7 @@ class VideoObject : public KMF::MediaObject
     virtual void clean() { };
 
   private slots:
-    void output(KProcess* proc, char* buffer, int buflen);
+    void output(QString line);
 
   protected:
     mutable QDVD::CellList m_cells;
@@ -136,13 +136,13 @@ class VideoObject : public KMF::MediaObject
     KUrl m_previewUrl;
     QDVD::VideoTrack::AspectRatio m_aspect;
     QString m_id;
-    QString m_buffer;
     QTime m_lastUpdate;
     bool m_stopped;
     QString m_kmfplayer;
     static const char* m_prefixes[];
     ConversionParams m_conversion;
     QStringList m_files;
+    KProcess* m_spumux;
 
     void generateId();
     void setCellSecs(double secs);

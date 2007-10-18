@@ -36,28 +36,36 @@ void KMFLogger::start()
 void KMFLogger::stop()
 {
   KMF::Logger::message(m_buffer);
+  emit line(m_buffer);
   m_log += "</pre></html>";
 }
 
-void KMFLogger::stdout(KProcess*, char* buffer, int buflen)
+void KMFLogger::out()
 {
   int n;
   QRegExp re("[\n\r]");
 
-  m_buffer += QString::fromLatin1(buffer, buflen);
   while((n = m_buffer.indexOf(re)) >= 0)
   {
     if(!m_filter.exactMatch(m_buffer.left(n)))
       KMF::Logger::message(m_buffer.left(n));
+    emit line(m_buffer.left(n));
     ++n;
     m_buffer.remove(0, n);
   }
   kmfApp->processEvents(QEventLoop::AllEvents);
 }
 
-void KMFLogger::stderr(KProcess* proc, char* buffer, int buflen)
+void KMFLogger::stdout()
 {
-  stdout(proc, buffer, buflen);
+  m_buffer += currentProcess->readAllStandardOutput();
+  out();
+}
+
+void KMFLogger::stderr()
+{
+  m_buffer += currentProcess->readAllStandardError();
+  out();
 }
 
 void KMFLogger::message(const QString& msg, const QColor& color)

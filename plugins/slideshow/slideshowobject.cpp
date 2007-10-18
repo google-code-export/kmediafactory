@@ -54,7 +54,8 @@ Slide::Slide() : chapter(true)
 }
 
 SlideshowObject::SlideshowObject(QObject* parent)
-  : MediaObject(parent), m_loop(false), m_includeOriginals(true)
+  : MediaObject(parent), m_loop(false), m_includeOriginals(true),
+    dvdslideshow(0)
 {
   setObjectName("slideshow");
   m_slideshowProperties = new KAction(KIcon("pencil"),
@@ -380,35 +381,23 @@ void SlideshowObject::clean()
   plugin()->projectInterface()->cleanFiles("media", list);
 }
 
-void SlideshowObject::output(KProcess* process, char* buffer, int buflen)
+void SlideshowObject::output(QString line)
 {
   bool stopped = false;
-  int find = 0, start = 0;
-  QRegExp re("[\n\r]");
-  m_buffer += QString::fromLatin1(buffer, buflen);
 
-  while((find = m_buffer.indexOf(re, find)) > -1)
+  QRegExp re2(" (\\d+)\\/(\\d+) ");
+  int pos = re2.indexIn(line);
+  if(pos > -1)
   {
-    QString line = m_buffer.mid(start, find - start);
-
-    //kDebug() << k_funcinfo << line;
-    QRegExp re2(" (\\d+)\\/(\\d+) ");
-    int pos = re2.indexIn(line);
-    if(pos > -1)
-    {
-      // Maximu is eg. 6/5
-      uiInterface()->setItemTotalSteps(re2.cap(2).toInt() + 1);
-      stopped = uiInterface()->setItemProgress(re2.cap(1).toInt() - 1);
-    }
-    ++find;
-    start = find;
-    if(stopped)
-      process->kill();
+    // Maximu is eg. 6/5
+    uiInterface()->setItemTotalSteps(re2.cap(2).toInt() + 1);
+    stopped = uiInterface()->setItemProgress(re2.cap(1).toInt() - 1);
   }
-  m_buffer.remove(0, start);
+  if(stopped)
+    dvdslideshow->kill();
 }
 
-bool SlideshowObject::convertToDVD() const
+bool SlideshowObject::convertToDVD()
 {
   QDir dir(projectInterface()->projectDir("media"));
   QString output = dir.filePath(QString("%1.vob").arg(m_id));
@@ -425,33 +414,32 @@ bool SlideshowObject::convertToDVD() const
       return false;
     }
 
-    KProcess dvdslideshow;
-
     uiInterface()->message(KMF::Info, i18n("   Making Slideshow"));
-    dvdslideshow << slideshowPlugin->dvdslideshowBin();
+    dvdslideshow = new KProcess();
+    *dvdslideshow << slideshowPlugin->dvdslideshowBin();
     if(SlideshowPluginSettings::audioType() == 0)
-      dvdslideshow << "-mp2";
-    dvdslideshow << "-o" << projectInterface()->projectDir("media") <<
+      *dvdslideshow << "-mp2";
+    *dvdslideshow << "-o" << projectInterface()->projectDir("media") <<
         "-n" << m_id <<
         "-f" << dir.filePath(QString("%1.slideshow").arg(m_id));
     if(projectInterface()->type() == "DVD-PAL")
-      dvdslideshow << "-p";
+      *dvdslideshow << "-p";
     for(QStringList::ConstIterator it = m_audioFiles.begin();
         it != m_audioFiles.end(); ++it)
     {
-      dvdslideshow << "-a" << *it;
+      *dvdslideshow << "-a" << *it;
     }
-    dvdslideshow.setWorkingDirectory(projectInterface()->projectDir("media"));
-    uiInterface()->logger()->connectProcess(&dvdslideshow,
+    dvdslideshow->setWorkingDirectory(projectInterface()->projectDir("media"));
+    uiInterface()->logger()->connectProcess(dvdslideshow,
                                             "INFO: \\d+ bytes of data written");
-    connect(&dvdslideshow, SIGNAL(receivedStdout(KProcess*, char*, int)),
-             this, SLOT(output(KProcess*, char*, int)));
-    connect(&dvdslideshow, SIGNAL(receivedStderr(KProcess*, char*, int)),
-             this, SLOT(output(KProcess*, char*, int)));
-    dvdslideshow.execute();
-    if(dvdslideshow.exitCode() == QProcess::NormalExit)
+    connect(dvdslideshow, SIGNAL(readyReadStandardOutput()),
+             this, SLOT(output()));
+    connect(dvdslideshow, SIGNAL(readyReadStandardError()),
+             this, SLOT(output()));
+    dvdslideshow->execute();
+    if(dvdslideshow->exitCode() == QProcess::NormalExit)
     {
-      if(dvdslideshow.exitStatus() == 0)
+      if(dvdslideshow->exitStatus() == 0)
         result = true;
     }
     if(!result)
@@ -463,6 +451,8 @@ bool SlideshowObject::convertToDVD() const
         i18n("   Slideshow \"%1\" seems to be up to date", title()));
     result = true;
   }
+  delete dvdslideshow;
+  dvdslideshow = 0;
   return result;
 }
 
