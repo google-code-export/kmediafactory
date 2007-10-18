@@ -99,7 +99,7 @@ QAction* VideoPlugin::setupActions()
 
 void VideoPlugin::init(const QString &type)
 {
-  kDebug() << k_funcinfo << type;
+  kDebug() << type;
   deleteChildren();
 
   QAction* action = actionCollection()->action("video");
@@ -133,7 +133,7 @@ void VideoPlugin::slotAddVideo()
   QStringList filenames = dlg.selectedFiles();
   KMF::UiInterface *m = uiInterface();
 
-  kDebug() << k_funcinfo << m << filenames;
+  kDebug() << m << filenames;
   if(m && filenames.count() > 0)
   {
     VideoObject *vob = 0;

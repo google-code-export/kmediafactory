@@ -101,7 +101,7 @@ OutputPlugin::OutputPlugin(QObject *parent, const QVariantList&) :
 
 void OutputPlugin::init(const QString &type)
 {
-  kDebug() << k_funcinfo << type;
+  kDebug() << type;
   deleteChildren();
   if (type.left(3) == "DVD")
   {

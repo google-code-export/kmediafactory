@@ -39,14 +39,14 @@ int KMFGrid::childY(const KMFWidget* child) const
   foreach(QObject* ob, children())
   {
     KMFWidget* widget = static_cast<KMFWidget*>(ob);
-    //kDebug() << k_funcinfo << child->className()
+    //kDebug() << child->className()
     //    << " (" << child->name() << "): " << result;
     if(widget == child)
       return result;
     if(child->column() == widget->column())
     {
       result += widget->height();
-      //kDebug() << k_funcinfo << widget->className()
+      //kDebug() << widget->className()
       //    << " (" << widget->name() << "): " << widget->height();
     }
   }

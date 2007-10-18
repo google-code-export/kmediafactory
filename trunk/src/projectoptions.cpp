@@ -81,7 +81,7 @@ void ProjectOptions::setData(const KMFProject& project)
 
 void ProjectOptions::textChanged(const QString& title)
 {
-  kDebug() << k_funcinfo;
+  kDebug();
   if(titleChangesPath)
   {
     QDir dir(directoryUrl->url().prettyUrl());

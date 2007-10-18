@@ -357,7 +357,7 @@ void KMFWidget::setProperty(const QString& name, QVariant value)
 {
   if(name == "color")
   {
-    //kDebug() << k_funcinfo << value.value<QColor>();
+    //kDebug() << value.value<QColor>();
     setColor(value.value<QColor>());
   }
 }

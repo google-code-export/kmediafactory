@@ -159,7 +159,7 @@ bool KMFMenuPage::writeSpumuxXml(QDomDocument& doc)
 
 bool KMFMenuPage::parseButtons(bool addPages)
 {
-  //kDebug() << k_funcinfo;
+  //kDebug();
   foreach(KMFButton* btn, *m_buttons)
     if(btn->parseJump(addPages) == false)
       return false;
@@ -555,7 +555,7 @@ void KMFMenuPage::setProperty(const QString& name, QVariant value)
   KMFWidget::setProperty(name, value);
   if(name == "language")
   {
-    //kDebug() << k_funcinfo << "Setting language";
+    //kDebug() << "Setting language";
     m_language = value.toString();
     menu()->setLanguage("template", m_language);
   }

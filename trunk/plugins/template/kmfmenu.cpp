@@ -394,7 +394,7 @@ int KMFMenu::mediaObjChapterCount(int title)
   KMF::Time chapter = mob->chapterTime(result);
 
   // Don't put chapter selection for chapter really close to end
-  //kDebug() << k_funcinfo << mob->duration() << ", " << chapter;
+  //kDebug() << mob->duration() << ", " << chapter;
   if(chapter + 3.0 > mob->duration() && result > 1)
     --result;
   return result;

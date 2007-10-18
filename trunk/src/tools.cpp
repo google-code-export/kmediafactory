@@ -174,7 +174,7 @@ void Tools::removeClicked()
 
 void Tools::save()
 {
-  kDebug() << k_funcinfo << m_remove;
+  kDebug() << m_remove;
   if(!m_remove.isEmpty())
     KIO::del(m_remove);
 
@@ -185,7 +185,7 @@ void Tools::save()
     if(!writableItem(&item))
       continue;
 
-    kDebug() << k_funcinfo << item.desktopFile;
+    kDebug() << item.desktopFile;
     KDesktopFile df(item.desktopFile);
     KConfigGroup group = df.group("Desktop Entry");
     group.writeEntry("Name", item.name);
@@ -207,7 +207,7 @@ void Tools::load()
   for(QStringList::ConstIterator it = files.begin();
       it != files.end(); ++it)
   {
-    kDebug() << k_funcinfo << *it;
+    kDebug() << *it;
     KDesktopFile df(*it);
 
     if(df.readType() != "Application")

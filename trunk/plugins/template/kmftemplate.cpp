@@ -109,7 +109,7 @@ void KMFTemplate::setLanguage(const QString& file, const QString& lang)
       m_file = file;
     }
   }
-  //kDebug() << k_funcinfo << m_language << ", " <<  file << ", "
+  //kDebug() << m_language << ", " <<  file << ", "
   //    << zfile;
 }
 
@@ -144,9 +144,9 @@ QStringList KMFTemplate::languages() const
 
 QString KMFTemplate::translate(const char* text) const
 {
-  //kDebug() << k_funcinfo << text;
+  //kDebug() << text;
   QString result = QString::fromUtf8(kmf_nl_find_msg(&m_domain, text));
-  //kDebug() << k_funcinfo << text << "=" << result;
+  //kDebug() << text << "=" << result;
   if(result.isEmpty())
     return text;
   else

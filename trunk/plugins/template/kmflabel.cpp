@@ -49,7 +49,7 @@ int KMFLabel::minimumPaintWidth() const
 
 int KMFLabel::minimumPaintHeight() const
 {
-  //kDebug() << k_funcinfo << m_font.pixelHeight(m_text, m_descent);
+  //kDebug() << m_font.pixelHeight(m_text, m_descent);
   QImage img(1, 1, QImage::Format_ARGB32);
   img.setDotsPerMeterX(DPM);
   img.setDotsPerMeterY(DPM);
@@ -117,7 +117,7 @@ void KMFLabel::paintWidget(QImage& layer, bool shdw)
   QPainter p(&layer);
   QFontMetrics fm(m_font, &layer);
 
-  //kDebug() << k_funcinfo << m_font.family() << m_font.pointSize() <<
+  //kDebug() << m_font.family() << m_font.pointSize() <<
   //    m_font.weight();
   Layer lt = page()->layerType(layer);
   QRect rc = (shdw)? paintRect(shadow().offset()) : paintRect();
@@ -141,7 +141,7 @@ void KMFLabel::setProperty(const QString& name, QVariant value)
   if(name == "font" && !value.toString().isEmpty())
   {
     m_font = value.value<QFont>();
-    //kDebug() << k_funcinfo << m_font.family() << m_font.pointSize() <<
+    //kDebug() << m_font.family() << m_font.pointSize() <<
     //    m_font.weight();
   }
 }
@@ -177,7 +177,7 @@ QString KMFLabel::fitText(QString txt, int width)
         s = s.left(s.length() - 1);
     }
   }
-  //kDebug() << k_funcinfo << "return: " << s;
+  //kDebug() << "return: " << s;
   return s;
 }
 

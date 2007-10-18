@@ -55,7 +55,7 @@ class KMFTranslator : public QTranslator
                               const char* sourceText,
                               const char*) const
     {
-      //kDebug() << k_funcinfo << context;
+      //kDebug() << context;
       return m_tmpl.translate(sourceText);
     }
 
@@ -205,7 +205,7 @@ bool TemplateObject::make(QString type)
 
 QStringList TemplateObject::menus()
 {
-  //kDebug() << k_funcinfo << m_menu.menus();
+  //kDebug() << m_menu.menus();
   return m_menu.menus();
 }
 
@@ -225,7 +225,7 @@ void TemplateObject::slotProperties()
   LanguageListModel model;
 
   kapp->installTranslator(&kmftr);
-  //kDebug() << k_funcinfo << KGlobal::locale()->language();
+  //kDebug() << KGlobal::locale()->language();
   m_menu.setLanguage("ui", KGlobal::locale()->language());
 
   KConfigDialog dialog(kapp->activeWindow(), "TemplateSettings",
@@ -237,13 +237,13 @@ void TemplateObject::slotProperties()
   QWidget* page = loader.load(di, &dialog);
   m_menu.templateStore()->close();
   //KMF::Tools::printChilds(page);
-  //kDebug() << k_funcinfo << loader.availableWidgets();
+  //kDebug() << loader.availableWidgets();
   /*
-  kDebug() << k_funcinfo << &m_customProperties;
+  kDebug() << &m_customProperties;
   KConfigSkeletonItem::List list = m_customProperties.items();
   KConfigSkeletonItem::List::iterator it;
   for(it = list.begin(); it != list.end(); ++it)
-    kDebug() << k_funcinfo << (*it)->group() << " / " <<
+    kDebug() << (*it)->group() << " / " <<
         (*it)->key() << " = " << (*it)->property();
   */
   if(page)
@@ -266,11 +266,11 @@ void TemplateObject::slotProperties()
   dialog.exec();
 
   /*
-  kDebug() << k_funcinfo << &m_customProperties;
+  kDebug() << &m_customProperties;
   KConfigSkeletonItem::List list = m_customProperties.items();
   KConfigSkeletonItem::List::iterator it;
   for(it = list.begin(); it != list.end(); ++it)
-    kDebug() << k_funcinfo << (*it)->group() << " / " <<
+    kDebug() << (*it)->group() << " / " <<
         (*it)->key() << " = " << (*it)->property();
   */
 
@@ -303,7 +303,7 @@ QVariant TemplateObject::property(const QString& widget,
     if((*it)->group() == widget && (*it)->name() == name)
     {
       /*
-      kDebug() << k_funcinfo
+      kDebug()
           << "Widget: " << widget
           << "\nName  : " << name
           << "\nValue : " << (*it)->property()
@@ -323,7 +323,7 @@ void TemplateObject::setProperty(const QString& widget,
   QString group;
   QDomElement e;
   /*
-  kDebug() << k_funcinfo
+  kDebug()
       << "Widget: " << widget
       << "\nName  : " << name
       << "\nValue : " << value

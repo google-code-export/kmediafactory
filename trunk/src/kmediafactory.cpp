@@ -151,7 +151,7 @@ KMediaFactory::~KMediaFactory()
 
 void KMediaFactory::setupActions()
 {
-  kDebug() << k_funcinfo;
+  kDebug();
   QAction* action;
 
   // File
@@ -192,7 +192,7 @@ void KMediaFactory::setupActions()
   QStringList dirs = KGlobal::dirs()->findDirs("data", "");
   for(QStringList::ConstIterator it = dirs.begin(); it != dirs.end(); ++it)
   {
-    kDebug() << k_funcinfo << "Watching: " <<
+    kDebug() << "Watching: " <<
         *it + "kmediafactory/tools";
     m_toolsWatch.addDir(*it + "kmediafactory/tools");
   }
@@ -202,7 +202,7 @@ void KMediaFactory::setupActions()
 
 void KMediaFactory::connectProject()
 {
-  kDebug() << k_funcinfo;
+  kDebug();
   kmfApp->project()->disconnect();
 
   const KMF::PluginList list = kmfApp->plugins();
@@ -237,7 +237,7 @@ void KMediaFactory::itemDelete()
 
 void KMediaFactory::projectOptions()
 {
-  //kDebug() << k_funcinfo;
+  //kDebug();
   ProjectOptions dlg(this);
   dlg.setData(*kmfApp->project());
   if (dlg.exec())
@@ -254,7 +254,7 @@ void KMediaFactory::newStuff()
 
 void KMediaFactory::initGUI()
 {
-  kDebug() << k_funcinfo;
+  kDebug();
 
   const QObjectList& l = kmfApp->pluginInterface()->children();
   for(int i = 0; i < l.size(); ++i)
@@ -281,7 +281,7 @@ void KMediaFactory::resetGUI()
 
 void KMediaFactory::fileNew()
 {
-  kDebug() << k_funcinfo;
+  kDebug();
   if(checkSaveProject())
   {
     resetGUI();
@@ -401,7 +401,7 @@ void KMediaFactory::newToolbarConfig()
 
 void KMediaFactory::updateToolsMenu()
 {
-  kDebug() << k_funcinfo;
+  kDebug();
   QAction* action;
   QList<QAction*> actions;
   QList<QAction*> media_actions;
@@ -446,7 +446,7 @@ void KMediaFactory::execTool()
   Run run(program, desktopFile.readPath());
   QString output = run.output();
   if(run.output().trimmed() != "")
-    kDebug() << k_funcinfo << "\n" + run.output();
+    kDebug() << "\n" + run.output();
   enableUi(true);
 }
 

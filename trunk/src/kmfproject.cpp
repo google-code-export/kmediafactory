@@ -148,9 +148,9 @@ void KMFProject::setOutput(KMF::OutputObject* output)
 void KMFProject::init()
 {
   m_initializing = true;
-  kDebug() << k_funcinfo << "preinit";
+  kDebug() << "preinit";
   emit preinit(m_type);
-  kDebug() << k_funcinfo << "init";
+  kDebug() << "init";
   emit init(m_type);
   m_initializing = false;
   setDirty(KMF::ProjectInterface::DirtyAny, false);
@@ -468,7 +468,7 @@ void KMFProject::setDirty(KMF::ProjectInterface::DirtyType type, bool dirty)
   {
     if(type & KMF::ProjectInterface::DirtyMedia)
     {
-      kDebug() << k_funcinfo << "media modified";
+      kDebug() << "media modified";
       emit mediaModified();
     }
     if(type & KMF::ProjectInterface::DirtyTemplate)
