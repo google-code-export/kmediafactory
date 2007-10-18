@@ -97,22 +97,25 @@ void KMFApplication::loadPlugins()
 
   foreach(KService::Ptr service, offers)
   {
-    QString error;
-    KMF::Plugin* plugin =
-        KService::createInstance<KMF::Plugin>
-        (service, m_pluginInterface, QVariantList(), &error);
-    if (plugin)
+    KPluginLoader loader(*service);
+    KPluginFactory* factory = loader.factory();
+    if (!factory)
     {
-      m_supportedProjects += plugin->supportedProjectTypes();
-      kDebug() << "Loaded plugin " << plugin->objectName();
+       kDebug() << "Loading factory failed:" << loader.errorString();
     }
     else
     {
-      kDebug() << error;
-      kDebug() << "Loading plugin '" << service->name()
-                << "' failed, KLibLoader reported error: '" << endl
-                << KLibLoader::self()->lastErrorMessage()
-                << "'";
+      KMF::Plugin* plugin = factory->create<KMF::Plugin>(m_pluginInterface,
+          QVariantList());
+      if (plugin)
+      {
+        m_supportedProjects += plugin->supportedProjectTypes();
+        kDebug() << "Loaded plugin " << plugin->objectName();
+      }
+      else
+      {
+        kDebug() << "Loading plugin failed:" << service->name();
+      }
     }
   }
   KMF::Tools::removeDuplicates(&m_supportedProjects);
