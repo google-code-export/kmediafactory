@@ -95,7 +95,7 @@ QVariant SlideListModel::data(const QModelIndex &index, int role) const
 bool SlideListModel::setData(const QModelIndex &index, const QVariant &value,
                              int role)
 {
-  kDebug() << k_funcinfo << endl;
+  kDebug() << k_funcinfo;
   if(!isValid(index))
     return false;
 

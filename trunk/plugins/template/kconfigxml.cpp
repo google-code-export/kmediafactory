@@ -100,7 +100,7 @@ bool KConfigXML::parse(QString kcfgFile)
     file.close();
     return true;
   }
-  kError() << "Unable to open file: " << kcfgFile << endl;
+  kError() << "Unable to open file: " << kcfgFile;
   return false;
 }
 
@@ -109,7 +109,7 @@ bool KConfigXML::parse(QIODevice* kcfgFile)
   QDomDocument doc("kcfg");
   if(!doc.setContent(kcfgFile))
   {
-    kError() << "Unable to load document." << endl;
+    kError() << "Unable to load document.";
     return false;
   }
   return parse(doc);
@@ -120,7 +120,7 @@ bool KConfigXML::parse(QByteArray* kcfgFile)
   QDomDocument doc("kcfg");
   if(!doc.setContent(*kcfgFile))
   {
-    kError() << "Unable to load document." << endl;
+    kError() << "Unable to load document.";
     return false;
   }
   return parse(doc);
@@ -132,7 +132,7 @@ bool KConfigXML::parse(QDomDocument& doc)
   QDomElement el = doc.documentElement();
   if(el.isNull())
   {
-    kError() << "No document in cfg file" << endl;
+    kError() << "No document in cfg file";
     return false;
   }
 
@@ -156,7 +156,7 @@ bool KConfigXML::parse(QDomDocument& doc)
       QString group = e.attribute("name");
       if(group.isEmpty())
       {
-        kError() << "Group without name" << endl;
+        kError() << "Group without name";
         continue;
       }
 
@@ -252,7 +252,7 @@ void KConfigXML::parseKCFGXMLEntry(const QDomElement& element)
     type = "String";
   /*
   kDebug() << k_funcinfo << type << ": " << name << ", " << defaultValue
-      << endl;
+     ;
   */
 
   if(type == "String")

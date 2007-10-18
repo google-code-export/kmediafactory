@@ -80,15 +80,15 @@ const KMF::ConfigPage* TemplatePlugin::configPage() const
 
 void TemplatePlugin::init(const QString &type)
 {
-  kDebug() << k_funcinfo << type << endl;
+  kDebug() << k_funcinfo << type;
   deleteChildren();
   if (type.left(3) == "DVD")
   {
     kDebug() << "Trying to find templates from: "
-        << KGlobal::dirs()->resourceDirs("data") << endl;
+        << KGlobal::dirs()->resourceDirs("data");
     QStringList list =
         KMF::Tools::findAllResources("data", "kmediafactory_template/*.kmft");
-    kDebug() << "Found templates: " << list << endl;
+    kDebug() << "Found templates: " << list;
 
     for(QStringList::Iterator it = list.begin(); it != list.end(); ++it)
       new TemplateObject(*it, this);

@@ -55,7 +55,7 @@ class KMFTranslator : public QTranslator
                               const char* sourceText,
                               const char*) const
     {
-      //kdDebug() << k_funcinfo << context << endl;
+      //kDebug() << k_funcinfo << context;
       return m_tmpl.translate(sourceText);
     }
 
@@ -205,7 +205,7 @@ bool TemplateObject::make(QString type)
 
 QStringList TemplateObject::menus()
 {
-  //kDebug() << k_funcinfo << m_menu.menus() << endl;
+  //kDebug() << k_funcinfo << m_menu.menus();
   return m_menu.menus();
 }
 
@@ -225,7 +225,7 @@ void TemplateObject::slotProperties()
   LanguageListModel model;
 
   kapp->installTranslator(&kmftr);
-  //kDebug() << k_funcinfo << KGlobal::locale()->language() << endl;
+  //kDebug() << k_funcinfo << KGlobal::locale()->language();
   m_menu.setLanguage("ui", KGlobal::locale()->language());
 
   KConfigDialog dialog(kapp->activeWindow(), "TemplateSettings",
@@ -237,14 +237,14 @@ void TemplateObject::slotProperties()
   QWidget* page = loader.load(di, &dialog);
   m_menu.templateStore()->close();
   //KMF::Tools::printChilds(page);
-  //kDebug() << k_funcinfo << loader.availableWidgets() << endl;
+  //kDebug() << k_funcinfo << loader.availableWidgets();
   /*
-  kDebug() << k_funcinfo << &m_customProperties << endl;
+  kDebug() << k_funcinfo << &m_customProperties;
   KConfigSkeletonItem::List list = m_customProperties.items();
   KConfigSkeletonItem::List::iterator it;
   for(it = list.begin(); it != list.end(); ++it)
     kDebug() << k_funcinfo << (*it)->group() << " / " <<
-        (*it)->key() << " = " << (*it)->property() << endl;
+        (*it)->key() << " = " << (*it)->property();
   */
   if(page)
   {
@@ -266,12 +266,12 @@ void TemplateObject::slotProperties()
   dialog.exec();
 
   /*
-  kDebug() << k_funcinfo << &m_customProperties << endl;
+  kDebug() << k_funcinfo << &m_customProperties;
   KConfigSkeletonItem::List list = m_customProperties.items();
   KConfigSkeletonItem::List::iterator it;
   for(it = list.begin(); it != list.end(); ++it)
     kDebug() << k_funcinfo << (*it)->group() << " / " <<
-        (*it)->key() << " = " << (*it)->property() << endl;
+        (*it)->key() << " = " << (*it)->property();
   */
 
   if(dialog.result() == QDialog::Accepted)
@@ -303,11 +303,11 @@ QVariant TemplateObject::property(const QString& widget,
     if((*it)->group() == widget && (*it)->name() == name)
     {
       /*
-      kdDebug() << k_funcinfo
+      kDebug() << k_funcinfo
           << "Widget: " << widget
           << "\nName  : " << name
           << "\nValue : " << (*it)->property()
-          << endl;
+         ;
       */
       return (*it)->property();
     }
@@ -327,7 +327,7 @@ void TemplateObject::setProperty(const QString& widget,
       << "Widget: " << widget
       << "\nName  : " << name
       << "\nValue : " << value
-      << endl;
+     ;
   */
   for(it = items.begin(); it != items.end(); ++it)
   {

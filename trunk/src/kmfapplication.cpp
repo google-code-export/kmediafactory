@@ -84,7 +84,7 @@ KMFProject *KMFApplication::newProject()
 
 void KMFApplication::loadPlugins()
 {
-  kDebug() << k_funcinfo << endl;
+  kDebug() << k_funcinfo;
   m_pluginInterface = new QObject(this);
   m_pluginInterface->setObjectName("pluginInterface");
   m_uiInterface = new KMFUiInterface(m_pluginInterface);
@@ -104,15 +104,15 @@ void KMFApplication::loadPlugins()
     if (plugin)
     {
       m_supportedProjects += plugin->supportedProjectTypes();
-      kDebug() << "Loaded plugin " << plugin->objectName() << endl;
+      kDebug() << "Loaded plugin " << plugin->objectName();
     }
     else
     {
-      kDebug() << error << endl;
+      kDebug() << error;
       kDebug() << "Loading plugin '" << service->name()
                 << "' failed, KLibLoader reported error: '" << endl
                 << KLibLoader::self()->lastErrorMessage()
-                << "'" << endl;
+                << "'";
     }
   }
   KMF::Tools::removeDuplicates(&m_supportedProjects);
@@ -200,7 +200,7 @@ static int startServiceInternal(const char *_function,
     if(reply.arguments().count() > 0)
       args = reply.arguments().at(0).toString();
     kDebug() << i18n("KLauncher could not be reached via D-Bus, "  \
-        "error when calling %1:\n%2\n",function, args) << error << endl;
+        "error when calling %1:\n%2\n",function, args) << error;
     return EINVAL;
   }
 

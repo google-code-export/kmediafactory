@@ -51,7 +51,7 @@ void KMF::Rect::set(const QRect& maxRect)
 
 void KMF::Rect::set(const QRect& maxRect, double aspectRatio)
 {
-  //kdDebug() << k_funcinfo << maxRect << endl;
+  //kDebug() << k_funcinfo << maxRect;
   if(maxRect.height() * aspectRatio > maxRect.width())
   {
     setWidth(maxRect.width());
@@ -62,7 +62,7 @@ void KMF::Rect::set(const QRect& maxRect, double aspectRatio)
     setWidth((int)(maxRect.height() * aspectRatio));
     setHeight(maxRect.height());
   }
-  //kdDebug() << k_funcinfo << *this << endl;
+  //kDebug() << k_funcinfo << *this;
 }
 
 void KMF::Rect::align(const QRect& parentRect, HAlign halign, VAlign valign)
@@ -96,7 +96,7 @@ void KMF::Rect::align(const QRect& parentRect, HAlign halign, VAlign valign)
       break;
   }
   translate(x, y);
-  //kdDebug() << k_funcinfo << *this << endl;
+  //kDebug() << k_funcinfo << *this;
 }
 
 

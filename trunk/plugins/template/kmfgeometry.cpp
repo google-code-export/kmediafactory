@@ -30,8 +30,8 @@ void KMFUnit::set(int value, Type type)
 {
   m_value = value; m_type = type;
 /*
-  kdDebug() << m_geometry->owner()->name() << " S: " << m_edge <<  " S: " <<
-               m_value << endl;
+  kDebug() << m_geometry->owner()->name() << " S: " << m_edge <<  " S: " <<
+               m_value;
 */
 }
 
@@ -73,8 +73,8 @@ void KMFUnit::set(const QString& value)
   if(list.count() > 1)
     m_margin = list[1].toInt();
   /*
-  kdDebug() << m_geometry->owner()->name() << " s: " << m_edge <<  " s: " <<
-               m_value << endl;
+  kDebug() << m_geometry->owner()->name() << " s: " << m_edge <<  " s: " <<
+               m_value;
   */
 }
 
@@ -117,13 +117,13 @@ int KMFUnit::absoluteValue() const
     }
     /*
     if(tmp != m_save)
-      kdDebug() << m_geometry->owner()->name() << " : " << tmp <<  " -> " <<
-          m_save << " : " << m_maxSize << ", " << m_edge << endl;
+      kDebug() << m_geometry->owner()->name() << " : " << tmp <<  " -> " <<
+          m_save << " : " << m_maxSize << ", " << m_edge;
     */
   }
   /*
-  kdDebug() << m_geometry->owner()->name() << " a: " << m_edge <<  " a: " <<
-               m_save << endl;
+  kDebug() << m_geometry->owner()->name() << " a: " << m_edge <<  " a: " <<
+               m_save;
   */
   return m_save;
 }
@@ -275,10 +275,10 @@ void KMFGeometry::setMargin(QString margin)
     m_left.setMargin(marginList[3].toInt());
   }
   /*
-  kdDebug() << k_funcinfo
+  kDebug() << k_funcinfo
       << m_top.margin() << ", "
       << m_width.margin() << ", "
       << m_height.margin() << ", "
-      << m_left.margin() << endl;
+      << m_left.margin();
   */
 }

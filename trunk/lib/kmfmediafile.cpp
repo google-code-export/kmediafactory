@@ -57,13 +57,13 @@ bool KMFMediaFile::probe()
     m_dvdCompatible = (info["DVD_COMPATIBLE"] == "1");
     m_duration = KMF::Time(info["DURATION"].toDouble());
     /*
-    kDebug() << "File: " << m_file << endl;
-    kDebug() << "Output: " << run.output() << endl;
-    kDebug() << "Aspect: " << m_aspectRatio << endl;
-    kDebug() << "Frame rate: " << m_frameRate << endl;
-    kDebug() << "Audio: " << m_audioStreams << endl;
-    kDebug() << "Compatible: " << m_dvdCompatible << endl;
-    kDebug() << "Duration: " << m_duration << endl;
+    kDebug() << "File: " << m_file;
+    kDebug() << "Output: " << run.output();
+    kDebug() << "Aspect: " << m_aspectRatio;
+    kDebug() << "Frame rate: " << m_frameRate;
+    kDebug() << "Audio: " << m_audioStreams;
+    kDebug() << "Compatible: " << m_dvdCompatible;
+    kDebug() << "Duration: " << m_duration;
     */
     return true;
   }
