@@ -6,7 +6,7 @@ NEXT_VERSION="0" # BUILD_VERSION
 HOME=`echo ~`
 SITE="aryhma.oy.cx"
 LOCALKMFDIR="$HOME/public_html/$SITE/damu/software/kmediafactory"
-BUILDDIR="debug"
+BUILDDIR="package"
 WEBDIR="httpdocs/damu/software/kmediafactory"
 CHANGELOG="snapshot.changelog"
 US_DATE=`date +%Y-%m-%d`
@@ -90,9 +90,13 @@ function make_snapshot()
   cd $BUILDDIR
 
   find ./ -type f -name "*.tar.bz2" -exec rm {} \;
-  cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/kde-debug \
-      -DCMAKE_BUILD_TYPE=debugfull -G KDevelop3
-  make package_source
+
+  (
+    source kde4_env.sh
+    cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/kde-debug \
+        -DCMAKE_BUILD_TYPE=debugfull -G KDevelop3
+    make package_source
+  )
   FILE=`ls --color=none *.tar.bz2`
 
   if [ "$FILE" == "" ]; then
@@ -101,9 +105,10 @@ function make_snapshot()
   fi
 
   echo "Moving $FILE to local KMF dir and distfiles."
-  cd $KMF/debug
-
   mv $FILE $DESTINATION
+
+  cd ..
+  rm $BUILDDIR -fR
 
   echo "Making md5."
   cd $LOCALKMFDIR
