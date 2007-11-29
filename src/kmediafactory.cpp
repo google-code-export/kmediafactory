@@ -341,17 +341,17 @@ void KMediaFactory::fileSaveAs()
   }
 }
 
-void KMediaFactory::saveProperties(KConfigGroup* config)
+void KMediaFactory::saveProperties(KConfigGroup& config)
 {
   if (!kmfApp->url().isEmpty())
   {
-    config->writePathEntry("lastUrl", kmfApp->url().prettyUrl());
+    config.writePathEntry("lastUrl", kmfApp->url().prettyUrl());
   }
 }
 
-void KMediaFactory::readProperties(KConfigGroup* config)
+void KMediaFactory::readProperties(const KConfigGroup& config)
 {
-  QString url = config->readPathEntry("lastUrl");
+  QString url = config.readPathEntry("lastUrl", "");
 
   if (!url.isEmpty())
     load(KUrl(url));

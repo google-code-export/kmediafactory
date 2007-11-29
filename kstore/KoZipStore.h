@@ -42,6 +42,7 @@ public:
 
     virtual qint64 write( const char* _data, qint64 _len );
 protected:
+    virtual bool init( Mode ) { return false; };
     virtual bool init( Mode _mode, const QByteArray& appIdentification );
     virtual bool doFinalize();
     virtual bool openWrite( const QString& name );

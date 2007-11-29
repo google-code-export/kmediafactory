@@ -35,7 +35,7 @@ class DvdAuthorObject : public KMF::OutputObject
     virtual void toXML(QDomElement& element) const;
     virtual bool fromXML(const QDomElement& element);
     virtual QPixmap pixmap() const;
-    virtual void actions(QList<KAction*>& actionList) const;
+    virtual void actions(QList<QAction*>& actionList) const;
     virtual int timeEstimate() const;
     virtual bool make(QString type);
 

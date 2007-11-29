@@ -39,7 +39,7 @@ DvdAuthorObject::~DvdAuthorObject()
     ui->removeOutputObject(this);
 }
 
-void DvdAuthorObject::actions(QList<KAction*>&) const
+void DvdAuthorObject::actions(QList<QAction*>&) const
 {
   //actionList.append(dvdAuthorProperties);
 }

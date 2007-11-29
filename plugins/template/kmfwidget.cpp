@@ -22,7 +22,6 @@
 #include "kmfmenupage.h"
 #include <kmftools.h>
 #include <kdebug.h>
-#include <kimageeffect.h>
 #include <QObject>
 #include <QVariant>
 #include <QRegExp>
