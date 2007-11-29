@@ -2,7 +2,7 @@ project(kmediafactory)
 
 set(KMF_MAJOR_VERSION "0")
 set(KMF_MINOR_VERSION "6")
-set(KMF_BUILD_VERSION "0_beta5")
+set(KMF_BUILD_VERSION "0_beta6")
 set(VERSION "${KMF_MAJOR_VERSION}.${KMF_MINOR_VERSION}.${KMF_BUILD_VERSION}")
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules )
