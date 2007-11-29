@@ -7,10 +7,13 @@ if [[ "$1" == "--remove" ]]; then
   REMOVE="1"
 fi
 
-TARGET=`pwd`
+TARGETS=(
+"$HOME/Development/build/kmediafactory"
+"$HOME/Development/src/kmediafactory"
+)
 LINKS="$HOME/.kde4"
 
-echo "Target: $TARGET"
+echo "Targets: $TARGETS"
 echo "Links : $LINKS"
 
 FILES=(
@@ -35,12 +38,18 @@ FILES=(
 "share/icons/oxygen/scalable/apps/kmediafactory.svgz"
 "share/icons/oxygen/scalable/mimetypes/application-x-kmediafactory.svgz"
 "share/icons/oxygen/scalable/mimetypes/application-x-kmediafactory-template.svgz"
-"lib/libkmf.so.1.0.0"
 "*lib/kde4/plugins/designer/kmfwidgets.so"
 "lib/kde4/kmediafactory_template.so"
 "lib/kde4/kmediafactory_output.so"
 "lib/kde4/kmediafactory_slideshow.so"
 "lib/kde4/kmediafactory_video.so"
+"lib/libkmf.so"
+"lib/libkmediafactorykstore.so"
+"lib/libkmediafactoryinterfaces.so"
+"lib/libkmf.so.1"
+"lib/libkmediafactorykstore.so.1"
+"lib/libkmediafactoryinterfaces.so.1"
+"lib/libkmf.so.1.0.0"
 "lib/libkmediafactorykstore.so.1.0.0"
 "lib/libkmediafactoryinterfaces.so.1.0.0"
 "share/apps/kmfwidgets/pics/kmffontchooser.png"
@@ -132,35 +141,39 @@ function copy()
   fi
 }
 
-for FILE in "${FILES[@]}"
+for TARGET in "${TARGETS[@]}"
 do
-  if [[ "${FILE:0:1}" == "*" ]]; then
-    COPY="1"
-    FILE=${FILE:1}
-  else
-    COPY="0"
-  fi
-  NAME=`basename $FILE`
-  FOUND=`find . -type f -name "$NAME" -printf "%P"`
-  if [[ "$FOUND" == "" ]]; then
-    # ICONS
-    END=`echo $FILE | sed -e 's/.*\/oxygen\/\(.*\)/\1/'`
-    if [ "${END:0:2}" == "sc" ]; then
-      END="sc-$(echo $END | sed -e 's/scalable\/\(.*\)/\1/')"
+  cd $TARGET
+  for FILE in "${FILES[@]}"
+  do
+    if [[ "${FILE:0:1}" == "*" ]]; then
+      COPY="1"
+      FILE=${FILE:1}
     else
-      END=`echo $END | sed -e 's/.*x\([0-9].*\)/\1/'`
+      COPY="0"
     fi
-    END=`echo $END | sed -e 's/\//-/g'`
-    FOUND=`find . -type f -name "*$END" -printf "%P"`
-  fi
-  if [[ "$FOUND" != "" ]]; then
-    if [[ "$COPY" == "1" ]]; then
-      copy "$TARGET/$FOUND" "$LINKS/$FILE"
-    else
-      softlink "$TARGET/$FOUND" "$LINKS/$FILE"
+    NAME=`basename $FILE`
+    FOUND=`find . -type f -name "$NAME" -printf "%P"`
+    if [[ "$FOUND" == "" ]]; then
+      FOUND=`find . -type l -name "$NAME" -printf "%P"`
     fi
-  else
-    echo "NOT FOUND: $FILE"
-  fi
+    if [[ "$FOUND" == "" ]]; then
+      # ICONS
+      END=`echo $FILE | sed -e 's/.*\/oxygen\/\(.*\)/\1/'`
+      if [ "${END:0:2}" == "sc" ]; then
+        END="sc-$(echo $END | sed -e 's/scalable\/\(.*\)/\1/')"
+      else
+        END=`echo $END | sed -e 's/.*x\([0-9].*\)/\1/'`
+      fi
+      END=`echo $END | sed -e 's/\//-/g'`
+      FOUND=`find . -type f -name "*$END" -printf "%P"`
+    fi
+    if [[ "$FOUND" != "" ]]; then
+      if [[ "$COPY" == "1" ]]; then
+        copy "$TARGET/$FOUND" "$LINKS/$FILE"
+      else
+        softlink "$TARGET/$FOUND" "$LINKS/$FILE"
+      fi
+    fi
+  done
 done
-

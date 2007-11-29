@@ -56,6 +56,9 @@ class KDE_EXPORT LanguageListModel : public QAbstractListModel
       { m_subtitle = subtitle; reset(); };
     QStringList* list() { return &m_languageList; };
     QString at(int i) const;
+    QModelIndex index(int row, int column = 0,
+                      const QModelIndex &parent = QModelIndex()) const
+      { return QAbstractListModel::index(row, column, parent); };
     QModelIndex index(const QString& lang) const;
 
   private:

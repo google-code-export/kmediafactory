@@ -7,8 +7,8 @@
     <projectmanagement>KDevCustomProject</projectmanagement>
     <primarylanguage>C++</primarylanguage>
     <ignoreparts/>
-    <projectdirectory>/home/damu/files/code/linux/kmediafactory</projectdirectory>
-    <absoluteprojectpath>true</absoluteprojectpath>
+    <projectdirectory>.</projectdirectory>
+    <absoluteprojectpath>false</absoluteprojectpath>
     <secondaryLanguages>
       <language>C</language>
     </secondaryLanguages>
@@ -19,7 +19,7 @@
   <kdevcustomproject>
     <filelistdirectory>/home/damu/files/code/linux/kmediafactory/debug</filelistdirectory>
     <run>
-      <mainprogram>/home/damu/files/code/linux/kmediafactory/debug/src/kmediafactory</mainprogram>
+      <mainprogram>/home/damu/Development/build/kmediafactory/src/kmediafactory</mainprogram>
       <directoryradio>build</directoryradio>
       <customdirectory>/</customdirectory>
       <programargs>file:///home/damu/files/kmf_test/test.kmf</programargs>
@@ -40,14 +40,14 @@
         <envvar value=" " name="XDG_DATA_DIRS" />
       </envvars>
       <globaldebugarguments></globaldebugarguments>
-      <globalcwd>/home/damu/files/code/linux/kmediafactory/debug</globalcwd>
+      <globalcwd>/home/damu/Development/src/kmediafactory</globalcwd>
       <useglobalprogram>false</useglobalprogram>
       <autoinstall>false</autoinstall>
       <autokdesu>false</autokdesu>
     </run>
     <build>
       <buildtool>make</buildtool>
-      <builddir>/home/damu/files/code/linux/kmediafactory/debug</builddir>
+      <builddir>/home/damu/Development/build/kmediafactory</builddir>
     </build>
     <make>
       <abortonerror>true</abortonerror>

@@ -42,7 +42,7 @@ K3bObject::~K3bObject()
 {
 }
 
-void K3bObject::actions(QList<KAction*>&) const
+void K3bObject::actions(QList<QAction*>&) const
 {
 }
 

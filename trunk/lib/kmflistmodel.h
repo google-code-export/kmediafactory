@@ -39,6 +39,10 @@ class KMFListModel : public QAbstractListModel
     virtual QVariant data(const QModelIndex &index, int role) const;
     virtual bool setData(const QModelIndex &index, const QVariant &value,
                          int role = Qt::EditRole);
+    virtual bool insertRows(int row, int count,
+                            const QModelIndex &parent = QModelIndex());
+    virtual bool removeRows(int row, int count,
+                            const QModelIndex &parent = QModelIndex());
     bool insertRows(const QModelIndex &index, int count,
                     const QModelIndex &parent = QModelIndex());
     bool removeRows(const QModelIndex &index, int count,
@@ -128,13 +132,19 @@ template <class T>
 bool KMFListModel<T>::insertRows(const QModelIndex& index, int count,
                                  const QModelIndex& parent)
 {
-  int row = index.row();
+  return insertRows(index.row(), count, parent);
+}
+
+template <class T>
+bool KMFListModel<T>::insertRows(int row, int count,
+                                 const QModelIndex& parent)
+{
   if (count < 1 || row < 0 || row > rowCount(parent))
     return false;
 
   beginInsertRows(QModelIndex(), row, row + count - 1);
   for (int r = 0; r < count; ++r)
-      m_lst.insert(row, QString());
+      m_lst.insert(row, T());
   endInsertRows();
   return true;
 }
@@ -143,7 +153,13 @@ template <class T>
 bool KMFListModel<T>::removeRows(const QModelIndex& index, int count,
                                  const QModelIndex& parent)
 {
-  int row = index.row();
+  return removeRows(index.row(), count, parent);
+}
+
+template <class T>
+bool KMFListModel<T>::removeRows(int row, int count,
+                                 const QModelIndex& parent)
+{
   if(count <= 0 || row < 0 || (row + count) > rowCount(parent))
     return false;
 
