@@ -71,8 +71,8 @@ QString KMF::Tools::simple2Title(QString s)
 {
   int i;
 
-  s.replace('-', ' ');
-  s.replace('_', ' ');
+  s.replace('-', QChar::Nbsp);
+  s.replace('_', QChar::Nbsp);
   i = s.lastIndexOf('.');
   if(i > 0)
     s = s.left(i);
