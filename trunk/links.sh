@@ -11,7 +11,7 @@ TARGETS=(
 "$HOME/Development/build/kmediafactory"
 "$HOME/Development/src/kmediafactory"
 )
-LINKS="$HOME/.kde4"
+LINKS="$HOME/.kde"
 
 echo "Targets: $TARGETS"
 echo "Links : $LINKS"
