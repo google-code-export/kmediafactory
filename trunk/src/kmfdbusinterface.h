@@ -51,9 +51,9 @@ class KMFDbusInterface : public QObject
     virtual void start();
 
     // Script helpers
-    virtual QString getOpenFileName (const QString &startDir,
-                                     const QString &filter,
-                                     const QString &caption);
+    virtual QStringList getOpenFileNames(const QString &startDir,
+                                         const QString &filter,
+                                         const QString &caption);
     virtual void debug(const QString &txt);
     virtual int  message(const QString &caption, const QString &txt,
                          int type);
