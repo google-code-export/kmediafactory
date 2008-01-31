@@ -51,6 +51,6 @@ namespace KMF
       virtual QDateTime lastModified(DirtyType type) = 0;
       virtual int serial() = 0;
   };
-};
+}
 
 #endif
