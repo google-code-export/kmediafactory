@@ -21,7 +21,6 @@
 #define NEWSTUFFOBJECT_H
 
 #include <kmediafactory/plugin.h>
-//Added by qt3to4:
 #include <QPixmap>
 
 class TemplateNewStuff;

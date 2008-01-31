@@ -74,7 +74,7 @@ QString KMFConfigXML::parseCode(QString code)
 
 TemplateObject::TemplateObject(const QString& templateFile, QObject* parent):
   KMF::TemplateObject(parent), m_templateProperties(0),
-  m_menu(templateFile, this)
+  m_menu(templateFile, this), m_file(templateFile)
 {
   setObjectName(m_menu.id());
   if(m_menu.templateStore()->hasFile("settings.kcfg") &&
@@ -373,6 +373,11 @@ bool TemplateObject::isUpToDate(QString type)
     }
   }
   return true;
+}
+
+bool TemplateObject::fileExists()
+{
+    return QFileInfo(m_file).exists();
 }
 
 #include "templateobject.moc"

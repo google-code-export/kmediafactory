@@ -63,6 +63,7 @@ class TemplateObject : public KMF::TemplateObject
     QVariant property(const QString& widget, const QString& name) const;
     void setProperty(const QString& widget, const QString& name,
                      const QVariant& value);
+    bool fileExists();
 
   public slots:
     virtual void slotProperties();
@@ -75,6 +76,7 @@ class TemplateObject : public KMF::TemplateObject
     KAction* m_templateProperties;
     KMFConfigXML m_customProperties;
     KMFMenu m_menu;
+    QString m_file;
 
     QString propertyString(KConfigSkeletonItem* item) const;
     bool isUpToDate(QString type);

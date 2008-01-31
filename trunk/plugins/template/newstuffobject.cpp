@@ -19,6 +19,7 @@
 //**************************************************************************
 
 #include "newstuffobject.h"
+#include "templateobject.h"
 #include "templateplugin.h"
 #include "templatepluginsettings.h"
 #include <klocale.h>
@@ -46,6 +47,22 @@ bool NewStuffObject::clicked()
   KNS::Engine *engine = new KNS::Engine();
   engine->init("kmediafactory_template.knsrc");
   KNS::Entry::List entries = engine->downloadDialogModal();
+  // Remove uninstalled
+  QList< ::TemplateObject* > templates =
+      parent()->findChildren< ::TemplateObject* >();
+  foreach (::TemplateObject* temp, templates)
+  {
+    if (!temp->fileExists())
+      delete temp;
+  }
+  // Add installed
+  foreach (KNS::Entry* entry, entries)
+  {
+    foreach (QString file, entry->installedFiles())
+    {
+      new ::TemplateObject(file, parent());
+    }
+  }
   delete engine;
   return true;
 }

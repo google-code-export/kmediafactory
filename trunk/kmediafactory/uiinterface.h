@@ -118,7 +118,7 @@ namespace KMF
       virtual bool setItemProgress(int progress) = 0;
       virtual Logger* logger() = 0;
   };
-};
+}
 
 Q_DECLARE_METATYPE(KMF::OutputObject*);
 Q_DECLARE_METATYPE(KMF::TemplateObject*);
