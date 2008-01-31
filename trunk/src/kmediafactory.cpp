@@ -167,7 +167,7 @@ void KMediaFactory::setupActions()
   connect(action, SIGNAL(triggered()), SLOT(projectOptions()));
 
   // KNewStuff
-  action = new KAction(KIcon("bookmark"), i18n("&Get new tools"),this);
+  action = new KAction(KIcon("get-hot-new-stuff"), i18n("&Get new tools"),this);
   actionCollection()->addAction("newstuff", action);
   connect(action, SIGNAL(triggered()), SLOT(newStuff()));
 
