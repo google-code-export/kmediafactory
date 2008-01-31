@@ -110,15 +110,14 @@ void KMFDbusInterface::start()
   kmfApp->mainWindow()->outputPage->start();
 }
 
-QString KMFDbusInterface::getOpenFileName(const QString &startDir,
-                                          const QString &filter,
-                                          const QString &caption)
+QStringList KMFDbusInterface::getOpenFileNames(const QString &startDir,
+                                               const QString &filter,
+                                               const QString &caption)
 {
   QString start = QString("kfiledialog:///<%1>").arg(startDir);
   kDebug() << start;
-  KUrl url = KFileDialog::getOpenFileName(KUrl(start), filter,
-      kmfApp->mainWindow(), caption);
-  return url.path();
+  return KFileDialog::getOpenFileNames(KUrl(start), filter,
+                                       kmfApp->mainWindow(), caption);
 }
 
 void KMFDbusInterface::debug(const QString &txt)
