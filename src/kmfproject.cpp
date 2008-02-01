@@ -286,14 +286,14 @@ QString KMFProject::toXML()
   return doc.toString();
 }
 
-QString KMFProject::directory(const QString& subDir) const
+QString KMFProject::directory(const QString& subDir, bool create) const
 {
   QString result = m_directory;
   if(!subDir.isEmpty())
     result = KMF::Tools::joinPaths(result, subDir);
 
   QDir dir(result);
-  if(!QDir(result).exists())
+  if(create && !QDir(result).exists())
     dir.mkpath(result);
   return KMF::Tools::addSlash(result);
 }

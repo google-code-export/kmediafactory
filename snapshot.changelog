@@ -19,7 +19,7 @@ Features:
 
 Bug fixes:
 - default_blue.jpg as a default background
-
+- set tool working directory to project dir if empty
 
 
 Dependencies (ubuntu package naming):
