@@ -33,9 +33,9 @@ function snapshot_name()
     let "I+=1"
   done
 
-  echo "1. Release"
+  echo "1. $VERSION_MM$NEXT_VERSION (Release)"
   echo "2. $VERSION_MM$NEXT_FREE_SNAPSHOT"
-  echo "3. Custom"
+  echo "3. $VERSION_MM$NEXT_VERSION""_[Custom]"
   echo -n "Select version: "
   read ans
 

@@ -14,9 +14,23 @@ Bug fixes:
 -
 
 CHANGED FROM THE PREVIOUS SNAPSHOT
-========================================
+===================================
 Features:
 
 Bug fixes:
-- compile with latest KDE4 svn
+- GHNS fixed
+- Whitespace fix from Scott Newton
 
+
+
+Dependencies (ubuntu package naming):
+======================================
+Build:                  Runtime:                 Optional:
+------------------------------------------------------------------------------
+g++                     kdelibs5                 k3b
+make                    ffmpeg                   libdvdread3(-dev)
+cmake                   mplayer                  dvd-slideshow
+zip                     mjpegtools               openoffice.org
+gettext                 dvdauthor                kaffeine
+kdelibs5-dev                                     xine-ui
+------------------------------------------------------------------------------
