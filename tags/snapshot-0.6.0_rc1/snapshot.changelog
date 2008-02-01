@@ -1,0 +1,36 @@
+CHANGED FROM THE LATEST RELEASE (0.5.2)
+========================================
+Features:
+- KDE4 port
+- video conversion removed
+- dv import removed
+- own video player removed
+- ImageMagick dependency removed
+- Uses command line FFMpeg (instead of linking to library)
+- AC3/MP2 option for slideshow
+- Scale template preview menu option
+
+Bug fixes:
+-
+
+CHANGED FROM THE PREVIOUS SNAPSHOT
+===================================
+Features:
+
+Bug fixes:
+- GHNS fixed
+- Whitespace fix from Scott Newton
+
+
+
+Dependencies (ubuntu package naming):
+======================================
+Build:                  Runtime:                 Optional:
+------------------------------------------------------------------------------
+g++                     kdelibs5                 k3b
+make                    ffmpeg                   libdvdread3(-dev)
+cmake                   mplayer                  dvd-slideshow
+zip                     mjpegtools               openoffice.org
+gettext                 dvdauthor                kaffeine
+kdelibs5-dev                                     xine-ui
+------------------------------------------------------------------------------

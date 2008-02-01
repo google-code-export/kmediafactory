@@ -1,0 +1,4 @@
+add_subdirectory(template)
+add_subdirectory(output)
+add_subdirectory(slideshow)
+add_subdirectory(video)
