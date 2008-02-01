@@ -442,6 +442,9 @@ void KMediaFactory::execTool()
   KService service(&desktopFile);
   KUrl::List lst;
   QStringList program = KRun::processDesktopExec(service, lst);
+  QString workingDir = desktopFile.readPath();
+  if (workingDir.isEmpty())
+    workingDir = kmfApp->project()->directory();
   enableUi(false);
   Run run(program, desktopFile.readPath());
   QString output = run.output();
