@@ -115,7 +115,7 @@ QStringList KMFDbusInterface::getOpenFileNames(const QString &startDir,
                                                const QString &caption)
 {
   QString start = QString("kfiledialog:///<%1>").arg(startDir);
-  kDebug() << start;
+  //kDebug() << start;
   return KFileDialog::getOpenFileNames(KUrl(start), filter,
                                        kmfApp->mainWindow(), caption);
 }
@@ -131,6 +131,7 @@ void KMFDbusInterface::progressDialog(const QString &caption,
 {
   if(m_pdlg)
     delete m_pdlg;
+  kDebug();
   m_pdlg = new KProgressDialog(kmfApp->mainWindow(), caption, label);
   m_pdlg->progressBar()->setMaximum(maximum);
   m_pdlg->showCancelButton(true);
@@ -181,11 +182,12 @@ void KMFDbusInterface::pdlgClose()
 int KMFDbusInterface::message(const QString &caption, const QString &txt,
                               int type)
 {
+  kDebug() << caption << txt << type <<KMessageBox::Error ;
   if(type == KMessageBox::Information)
-    KMessageBox::information(kmfApp->mainWindow(), caption, txt);
+    KMessageBox::information(kmfApp->mainWindow(), txt, caption);
   else if(type == KMessageBox::Sorry)
-    KMessageBox::sorry(kmfApp->mainWindow(), caption, txt);
+    KMessageBox::sorry(kmfApp->mainWindow(), txt, caption);
   else if(type == KMessageBox::Error)
-    KMessageBox::error(kmfApp->mainWindow(), caption, txt);
+    KMessageBox::error(kmfApp->mainWindow(), txt, caption);
   return 0;
 }
