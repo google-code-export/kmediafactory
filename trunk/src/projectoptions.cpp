@@ -61,7 +61,7 @@ void ProjectOptions::getData(KMFProject& project) const
 
 void ProjectOptions::setData(const KMFProject& project)
 {
-  directoryUrl->setUrl(project.directory());
+  directoryUrl->setUrl(project.directory("", false));
   titleEdit->setText(project.title());
   typeComboBox->setCurrentIndex(0);
   for (int i=0; i < typeComboBox->count(); ++i)
