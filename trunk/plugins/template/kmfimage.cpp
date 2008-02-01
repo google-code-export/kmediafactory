@@ -181,6 +181,7 @@ void KMFImage::setImage(KUrl url)
   {
     QString tmpFile = KStandardDirs::locate(url.host().toLocal8Bit(),
                                             url.path().mid(1));
+    kDebug() << url.host().toLocal8Bit() << url.path().mid(1) << tmpFile;
     if(!tmpFile.isEmpty())
     {
       ok = true;

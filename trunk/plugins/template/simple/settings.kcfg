@@ -29,13 +29,13 @@ shown later using menu button.</label>
   <group name="background">
       <entry name="background::url" type="Url">
           <label>Background url</label>
-          <default>kde://wallpaper/blue-bend.jpg</default>
+          <default>kde://wallpaper/default_blue.jpg</default>
       </entry>
   </group>
   <group name="chapter_background">
       <entry name="chapter_background::url" type="Url">
           <label>Background url</label>
-          <default>kde://wallpaper/blue-bend.jpg</default>
+          <default>kde://wallpaper/default_blue.jpg</default>
       </entry>
   </group>
   <group name="label_.*">
