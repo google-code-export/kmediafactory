@@ -19,8 +19,9 @@ Features:
 
 Bug fixes:
 - default_blue.jpg as a default background
-- set tool working directory to project dir if empty
+- Set tool working directory to project dir if empty
 - Don't create bogus project directories
+- Dbus interface fixes
 
 
 Dependencies (ubuntu package naming):

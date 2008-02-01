@@ -17,7 +17,12 @@ fi
 
 cd build
 
-KDE4_PREFIX=`kde4-config --prefix`
+CONFIG=`which kde4-config`
+if [ "$CONFIG" == "" ]; then
+  CONFIG="/usr/lib/kde4/bin/kde4-config"
+fi
+
+KDE4_PREFIX=`$CONFIG --prefix`
 if [ "$KDE4_PREFIX" == "" ]; then   # We don't handle any parameters
   echo "Cannot find KDE4."
   exit 1
