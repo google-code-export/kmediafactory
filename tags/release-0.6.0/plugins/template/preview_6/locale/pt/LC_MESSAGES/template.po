@@ -1,0 +1,84 @@
+# translation of template.po to Finnish
+# Copyright (C) 2006 Free Software Foundation, Inc.
+#
+# Petri Damsten <petri.damsten@iki.fi>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: template\n"
+"POT-Creation-Date: 2006-05-07 12:15+0300\n"
+"PO-Revision-Date: 2006-06-17 10:02+0300\n"
+"Last-Translator: Petri Damsten <petri.damsten@iki.fi>\n"
+"Language-Team: Finnish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.2\n"
+
+#: rc.cpp:3
+msgid "%$0.$0%"
+msgstr "%$0.$0%"
+
+#: rc.cpp:6
+msgid "%1.0%"
+msgstr "%1.0%"
+
+#: rc.cpp:9
+msgid "%2.0%"
+msgstr "%2.0%"
+
+#: rc.cpp:12
+msgid "%3.0%"
+msgstr "%3.0%"
+
+#: rc.cpp:15
+msgid "%4.0%"
+msgstr "%4.0%"
+
+#: rc.cpp:18
+msgid "%5.0%"
+msgstr "%5.0%"
+
+#: rc.cpp:21
+msgid "%6.0%"
+msgstr "%6.0%"
+
+#: rc.cpp:24 rc.cpp:51
+msgid "PREV"
+msgstr "ANTE"
+
+#: rc.cpp:27 rc.cpp:57
+msgid "NEXT"
+msgstr "PRÓX"
+
+#: rc.cpp:30
+msgid "%1.$0%"
+msgstr "%1.$0%"
+
+#: rc.cpp:33
+msgid "%1.1%"
+msgstr "%1.1%"
+
+#: rc.cpp:36
+msgid "%1.2%"
+msgstr "%1.2%"
+
+#: rc.cpp:39
+msgid "%1.3%"
+msgstr "%1.3%"
+
+#: rc.cpp:42
+msgid "%1.4%"
+msgstr "%1.4%"
+
+#: rc.cpp:45
+msgid "%1.5%"
+msgstr "%1.5%"
+
+#: rc.cpp:48
+msgid "%1.6%"
+msgstr "%1.6%"
+
+#: rc.cpp:54
+msgid "BACK"
+msgstr "POST"
+

@@ -1,0 +1,23 @@
+#!/bin/bash
+# Get video info for KMediafactory
+# Copyright (C) 2007 by Petri Damsten - GPL-2
+# Usage:
+# kmf_info /media/movies/movie.mpg
+
+SCRIPTS=`dirname $0`
+. $SCRIPTS/tools
+
+MPLAYER=`check_executable "mplayer" "mplayer"`
+
+OUTPUT=`$MPLAYER -v -vo null -ao null -frames 0 -identify "$1" 2>&1`
+
+echo "DURATION=$(echo "$OUTPUT" | grep "ID_LENGTH" | sed "s/ID_LENGTH=//g")"
+echo "FRAME_RATE=$(echo "$OUTPUT" | grep "ID_VIDEO_FPS" | sed "s/ID_VIDEO_FPS=//g")"
+echo "AUDIO_STREAMS=$(echo "$OUTPUT" | grep "audio stream" | wc -l)"
+echo "ASPECT_RATIO=$(($(echo "$OUTPUT" | grep "aspect" | sed "s/.*aspect //g" | sed "s/).*//g")-2))"
+DEMUXER=$(echo "$OUTPUT" | grep "ID_DEMUXER" | sed "s/ID_DEMUXER=//g")
+if [ "$DEMUXER" = "mpegps" ]; then
+    echo "DVD_COMPATIBLE=1"
+else
+    echo "DVD_COMPATIBLE=0"
+fi
