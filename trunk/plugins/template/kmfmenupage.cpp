@@ -240,7 +240,7 @@ void KMFMenuPage::writeDvdAuthorXml(QDomElement& element, QString type)
     if(isFirst())
       for(int i = 2; i <= m_count; ++i)
         s += QString("      if (g6 eq %1)\n"
-                     "        jump menu %1;\n").arg(i).arg(i);
+                     "        jump menu %2;\n").arg(i).arg(i);
 
     // Highlight saved button
     s += "      if (g4 lt 1024)\n"

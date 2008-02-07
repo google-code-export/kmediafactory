@@ -18,10 +18,7 @@ CHANGED FROM THE PREVIOUS SNAPSHOT
 Features:
 
 Bug fixes:
-- default_blue.jpg as a default background
-- Set tool working directory to project dir if empty
-- Don't create bogus project directories
-- Dbus interface fixes
+- missing argument in jump
 
 
 Dependencies (ubuntu package naming):
