@@ -26,7 +26,7 @@
 #include <kstandarddirs.h>
 #include <kiconloader.h>
 #include <kurl.h>
-#include <kprocess.h>
+#include <krun.h>
 #include <QDir>
 #include <QPixmap>
 #include <QTextStream>
@@ -60,18 +60,16 @@ bool K3bObject::make(QString type)
 {
   if(DvdDirectoryObject::make(type) == false)
     return false;
-  QString app = KStandardDirs::findExe("k3b");
+  QString cmd = KStandardDirs::findExe("k3b");
   QString doc = projectInterface()->projectDir() + "dvd.k3b";
   saveDocument(KUrl(doc));
   uiInterface()->message(KMF::OK, i18n("K3b project ready"));
-  if(app != QString::null)
+  if (!cmd.isEmpty())
   {
-    KProcess burn;
-
-    burn << app << doc;
-    burn.start();
+    cmd += " " + doc;
+    KRun::runCommand(cmd, kapp->activeWindow());
   }
-  uiInterface()->progress(TotalPoints);
+uiInterface()->progress(TotalPoints);
   return true;
 }
 

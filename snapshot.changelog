@@ -19,6 +19,8 @@ Features:
 
 Bug fixes:
 - missing argument in jump
+- KMFToolButton arrow fixed
+- Running external programs fixed
 
 
 Dependencies (ubuntu package naming):
