@@ -36,17 +36,14 @@ class OutputPlugin : public KMF::Plugin
   public slots:
     virtual void init(const QString &type);
     virtual QStringList supportedProjectTypes();
-    void slotPreviewDVD();
     void slotPreviewDVDXine();
     void slotPreviewDVDKaffeine();
     void slotDVDInfo();
 
   private:
     QAction* dvdInfo;
-    QAction* addPreviewDVD;
     QAction* addPreviewDVDXine;
     QAction* addPreviewDVDKaffeine;
-    QString m_kmfplayer;
     QString m_xine;
     QString m_kaffeine;
 };

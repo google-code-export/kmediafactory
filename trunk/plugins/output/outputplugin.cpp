@@ -33,7 +33,7 @@
 #include <kaboutdata.h>
 #include <kstandarddirs.h>
 #include <kicon.h>
-#include <kprocess.h>
+#include <krun.h>
 #include <QRegExp>
 #include <QPixmap>
 
@@ -52,15 +52,13 @@ K_PLUGIN_FACTORY(OutputFactory, registerPlugin<OutputPlugin>();)
 K_EXPORT_PLUGIN(OutputFactory("kmediafactory_output"))
 
 OutputPlugin::OutputPlugin(QObject *parent, const QVariantList&) :
-  KMF::Plugin(parent), addPreviewDVD(0),
-  addPreviewDVDXine(0), addPreviewDVDKaffeine(0)
+  KMF::Plugin(parent), addPreviewDVDXine(0), addPreviewDVDKaffeine(0)
 {
   setObjectName("KMFOutput");
   // Initialize GUI
   setComponentData(OutputFactory::componentData());
   setXMLFile("kmediafactory_outputui.rc");
 
-  m_kmfplayer = KStandardDirs::findExe("kmediafactoryplayer");
   m_xine = KStandardDirs::findExe("xine");
   m_kaffeine = KStandardDirs::findExe("kaffeine");
 
@@ -70,15 +68,6 @@ OutputPlugin::OutputPlugin(QObject *parent, const QVariantList&) :
   actionCollection()->addAction("dvd_info", dvdInfo);
   connect(dvdInfo, SIGNAL(triggered()), SLOT(slotDVDInfo()));
 #endif
-  /*
-  if(!m_kmfplayer.isEmpty())
-  {
-    addPreviewDVD =new KAction(KIcon("viewmag"), i18n("Preview DVD"), parent);
-    addPreviewDVD->setShortcut(Qt::CTRL + Qt::Key_P);
-    actionCollection()->addAction("preview_dvd", addPreviewDVD);
-    connect(addPreviewDVD, SIGNAL(triggered()), SLOT(slotPreviewDVD()));
-  }
-  */
   if(!m_xine.isEmpty())
   {
     addPreviewDVDXine =new KAction(KIcon("xine"),
@@ -120,25 +109,22 @@ void OutputPlugin::init(const QString &type)
 
 void OutputPlugin::play(const QString& player)
 {
-  QString bin;
+  QString cmd;
   QString projectDir = projectInterface()->projectDir();
-  KProcess process;
 
   if(player.isEmpty())
   {
-    if(!m_kmfplayer.isEmpty())
-      bin = m_kmfplayer;
-    else if(!m_xine.isEmpty())
-      bin = m_xine;
+    if(!m_xine.isEmpty())
+      cmd = m_xine;
     else if(!m_kaffeine.isEmpty())
-      bin = m_kaffeine;
+      cmd = m_kaffeine;
     else
       return;
   }
   else
-    bin = player;
-  process << bin << "dvd:/" + projectDir + "DVD/VIDEO_TS";
-  process.start();
+    cmd = player;
+  cmd +=  " dvd:/" + projectDir + "DVD/VIDEO_TS";
+  KRun::runCommand(cmd, kapp->activeWindow());
 }
 
 void OutputPlugin::slotPreviewDVDXine()
@@ -149,11 +135,6 @@ void OutputPlugin::slotPreviewDVDXine()
 void OutputPlugin::slotPreviewDVDKaffeine()
 {
   play(m_kaffeine);
-}
-
-void OutputPlugin::slotPreviewDVD()
-{
-  play(m_kmfplayer);
 }
 
 void OutputPlugin::slotDVDInfo()
