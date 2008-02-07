@@ -219,7 +219,7 @@ bool VideoObject::fromXML(const QDomElement& element)
 
 bool VideoObject::checkObjectParams()
 {
-  kDebug() << VideoPluginSettings::defaultAudioLanguage();
+  //kDebug() << VideoPluginSettings::defaultAudioLanguage();
   if(m_files.count() > 0)
   {
     const KMFMediaFile& media = KMFMediaFile::mediaFile(m_files[0]);
@@ -407,7 +407,7 @@ void VideoObject::writeDvdAuthorXml(QDomElement& element,
     }
     c.setAttribute("chapter", cell.isChapter());
     vob.appendChild(c);
-    kDebug() << "Cell: " << start << ", " << end;
+    //kDebug() << "Cell: " << start << ", " << end;
   }
   QDomElement postElem = doc.createElement("post");
   QDomText text2 = doc.createTextNode(post);
@@ -466,7 +466,7 @@ QString VideoObject::checkFontFile(const QString& file)
 
   if(!dir.exists())
     dir.mkdir(dir.path());
-  kDebug() << link.filePath() << " -> " << file;
+  //kDebug() << link.filePath() << " -> " << file;
   if(!link.exists())
     if(symlink(file.toLocal8Bit(), link.filePath().toLocal8Bit()) < 0)
       kDebug() << strerror(errno);
