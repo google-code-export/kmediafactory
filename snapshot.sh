@@ -142,10 +142,11 @@ function make_html()
   date +"<h2>%d.%m.%Y</h2>" >> $HTML
 
   echo -e "<h3>Changelog</h3>\n" >> $HTML
-  sed -e "s/-\(.*\)/<li>\1<\/li>/" \
-      -e "s/\(.*\):/\1:\n<ul>/" \
-      -e "s/=\(.*\)=/\n<br\/>/" \
-      -e "s/^$/<\/ul>/" $CHANGELOG >> $HTML
+  grep -v "^#" $CHANGELOG | \
+        sed -e "s/-\(.*\)/<li>\1<\/li>/" \
+            -e "s/\(.*\):/\1:\n<ul>/" \
+            -e "s/=\(.*\)=/\n<br\/>/" \
+            -e "s/^$/<\/ul>/" >> $HTML
   echo "</ul>" >> $HTML
 
   echo -e "<h3>Packages</h3>\n" >> $HTML
@@ -160,7 +161,7 @@ function upload()
   echo "Uploading files to web..."
 
   cd $LOCALKMFDIR
-  kfmclient copy $BZ2FILE.md5 $BZ2FILE $SNAPSHOT_HTML ftp://$SITE/$WEBDIR/
+  kioclient copy $BZ2FILE.md5 $BZ2FILE $SNAPSHOT_HTML ftp://$SITE/$WEBDIR/
 }
 
 function mail_to_news()

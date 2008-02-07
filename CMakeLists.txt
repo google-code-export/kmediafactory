@@ -71,6 +71,7 @@ set(CPACK_SOURCE_IGNORE_FILES
   "debug/"
   "templates/"
   "distros/"
+  "package/"
   "commit.sh"
   "links.sh"
   "snapshot.sh"

@@ -23,14 +23,14 @@ Bug fixes:
 - Running external programs fixed
 
 
-Dependencies (ubuntu package naming):
-======================================
-Build:                  Runtime:                 Optional:
-------------------------------------------------------------------------------
-g++                     kdelibs5                 k3b
-make                    ffmpeg                   libdvdread3(-dev)
-cmake                   mplayer                  dvd-slideshow
-zip                     mjpegtools               openoffice.org
-gettext                 dvdauthor                kaffeine
-kdelibs5-dev                                     xine-ui
-------------------------------------------------------------------------------
+# Dependencies (ubuntu package naming):                                       #
+# =========================================================================== #
+# Build:                  Runtime:                 Optional:                  #
+# --------------------------------------------------------------------------- #
+# g++                     kdelibs5                 k3b                        #
+# make                    ffmpeg                   libdvdread3(-dev)          #
+# cmake                   mplayer                  dvd-slideshow              #
+# zip                     mjpegtools               openoffice.org             #
+# gettext                 dvdauthor                kaffeine                   #
+# kdelibs5-dev                                     xine-ui                    #
+# --------------------------------------------------------------------------- #
