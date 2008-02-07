@@ -44,7 +44,7 @@ void KMFToolButton::paintEvent(QPaintEvent* event)
     QStyleOption option;
 
     option.initFrom(this);
-    option.rect = QRect(width()-10, height()-10, 7, 7);
+    option.rect = QRect(width()-15, height()-13, 7, 7);
     option.state |= QStyle::State_None;
     if (isDown())
       option.state |= QStyle::State_DownArrow;
