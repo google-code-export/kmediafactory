@@ -7,12 +7,15 @@ include_directories(
 )
 
 set(kmediafactory_output_SRCS
-  dvdinfo.cpp
   outputplugin.cpp
   dvddirectoryobject.cpp
   dvdauthorobject.cpp
   k3bobject.cpp
 )
+
+if(LIBDVDREAD_FOUND)
+  set(kmediafactory_output_SRCS ${kmediafactory_output_SRCS} dvdinfo.cpp)
+endif(LIBDVDREAD_FOUND)
 
 kde4_add_ui_files(kmediafactory_output_SRCS
   dvdinfo.ui
