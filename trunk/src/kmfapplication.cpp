@@ -105,8 +105,10 @@ void KMFApplication::loadPlugins()
     }
     else
     {
+      QVariant arg = qVariantFromValue(service);
+
       KMF::Plugin* plugin = factory->create<KMF::Plugin>(m_pluginInterface,
-          QVariantList());
+          QVariantList() << arg);
       if (plugin)
       {
         m_supportedProjects += plugin->supportedProjectTypes();

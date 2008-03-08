@@ -43,6 +43,7 @@ FILES=(
 "lib/kde4/kmediafactory_output.so"
 "lib/kde4/kmediafactory_slideshow.so"
 "lib/kde4/kmediafactory_video.so"
+"lib/kde4/kmediafactory_plugin_kross.so"
 "lib/libkmf.so"
 "lib/libkmediafactorykstore.so"
 "lib/libkmediafactoryinterfaces.so"

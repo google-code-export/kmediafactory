@@ -22,7 +22,9 @@
 
 #include "uiinterface.h"
 #include "projectinterface.h"
+#include <kservice.h>
 #include <kxmlguiclient.h>
+#include <kpluginfactory.h>
 #include <QObject>
 
 class QDomElement;
@@ -64,6 +66,12 @@ namespace KMF
   };
 
   typedef QList<Plugin*> PluginList;
-};
+} // KMF namespace
+
+Q_DECLARE_METATYPE(KService::Ptr)
+
+#define K_EXPORT_KMEDIAFACTORY_PLUGIN(libname, classname) \
+K_PLUGIN_FACTORY(factory, registerPlugin<classname>();)   \
+K_EXPORT_PLUGIN(factory("kmediafactory_plugin_" #libname))
 
 #endif // KMEDIAFACTORY_PLUGIN_H
