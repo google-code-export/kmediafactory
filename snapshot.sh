@@ -1,7 +1,7 @@
 #/bin/bash
 
 VERSION_MM="0.6."
-NEXT_VERSION="0" # BUILD_VERSION
+NEXT_VERSION="1" # BUILD_VERSION
 
 HOME=`echo ~`
 SITE="aryhma.oy.cx"
