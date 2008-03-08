@@ -79,7 +79,7 @@ KMediaFactory::KMediaFactory()
   // set the shell's ui resource file
   setXMLFile("kmediafactoryui.rc");
 
-  // Centra widget
+  // Central widget
   QWidget* main = new QWidget;
   QVBoxLayout* vbox = new QVBoxLayout;
   m_janus = new KPageWidget;
@@ -92,7 +92,7 @@ KMediaFactory::KMediaFactory()
   for(int i = 0; i < list.size(); ++i)
   {
     QWidget* w = static_cast<QWidget*>(list[i]);
-    if(w->metaObject()->className() == "QWidget")
+    if (qstrcmp(w->metaObject()->className(), "QWidget") == 0)
       m_janusIconList = w;
   }
 
