@@ -150,7 +150,7 @@
       <includestyle>4</includestyle>
       <root>/usr/share/qt3</root>
       <designerintegration>EmbeddedKDevDesigner</designerintegration>
-      <qmake>/usr/bin/qmake-qt3</qmake>
+      <qmake>/usr/share/qt4/bin/qmake</qmake>
       <designer>/usr/bin/designer-qt3</designer>
       <designerpluginpaths/>
     </qt>

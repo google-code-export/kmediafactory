@@ -27,10 +27,11 @@
 #include <QObject>
 #include <QList>
 
-#ifdef HAVE_LIBDVDREAD
 #undef _STDINT_H
 #define __STDC_LIMIT_MACROS
 #include <stdint.h>
+
+#ifdef HAVE_LIBDVDREAD
 #include <dvdread/ifo_read.h>
 #endif
 
