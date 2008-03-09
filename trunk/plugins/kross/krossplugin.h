@@ -33,6 +33,7 @@ class KrossPlugin : public KMF::Plugin
   public slots:
     virtual void init(const QString &type);
     virtual QStringList supportedProjectTypes();
+    virtual void test(QVariant v);
 };
 
 K_EXPORT_KMEDIAFACTORY_PLUGIN(kross, KrossPlugin);

@@ -20,6 +20,9 @@
 
 #include <KDebug>
 #include "krossplugin.h"
+#include <kross/core/action.h>
+#include <kross/core/interpreter.h>
+#include <kross/core/manager.h>
 
 KrossPlugin::KrossPlugin(QObject *parent, const QVariantList &args) :
   KMF::Plugin(parent)
@@ -32,6 +35,8 @@ KrossPlugin::KrossPlugin(QObject *parent, const QVariantList &args) :
   // Initialize GUI
   //setComponentData(KrossFactory::componentData());
   //setXMLFile("kmediafactory_krossui.rc");
+
+
 }
     
 KrossPlugin::~KrossPlugin()
@@ -42,6 +47,13 @@ void KrossPlugin::init(const QString &type)
 {
   kDebug() << type;
   deleteChildren();
+
+  Kross::Action *action = new Kross::Action(this, "test");
+  action->setFile("/home/damu/test.py");
+  action->addObject(this, "plugin");
+  action->trigger();
+  kDebug() << action->functionNames();
+  action->callFunction("test3", QVariantList());
 }
 
 QStringList KrossPlugin::supportedProjectTypes()
@@ -49,6 +61,11 @@ QStringList KrossPlugin::supportedProjectTypes()
   kDebug();
   QStringList result;
   return result;
+}
+
+void KrossPlugin::test(QVariant v)
+{
+  kDebug() << v;
 }
 
 #include "krossplugin.moc"
