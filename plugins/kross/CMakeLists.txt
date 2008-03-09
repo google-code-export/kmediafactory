@@ -12,6 +12,7 @@ set(kmediafactory_plugin_kross_SRCS
 kde4_add_plugin(kmediafactory_plugin_kross ${kmediafactory_plugin_kross_SRCS})
 target_link_libraries(kmediafactory_plugin_kross
     ${KDE4_KDECORE_LIBS}
+    ${KDE4_KROSSCORE_LIBS}
     kmediafactoryinterfaces
     kmf
 )
