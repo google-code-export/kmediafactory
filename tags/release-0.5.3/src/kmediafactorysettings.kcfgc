@@ -1,4 +1,0 @@
-File=kmediafactory.kcfg
-ClassName=KMediaFactorySettings
-Singleton=true
-Mutators=true

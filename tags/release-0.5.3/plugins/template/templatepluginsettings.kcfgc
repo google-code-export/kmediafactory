@@ -1,4 +1,0 @@
-File=templateplugin.kcfg
-ClassName=TemplatePluginSettings
-Singleton=true
-Mutators=true

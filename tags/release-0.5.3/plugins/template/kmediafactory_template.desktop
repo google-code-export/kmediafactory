@@ -1,6 +1,0 @@
-[Desktop Entry]
-Name=KMFTemplateEngine
-Comment=TemplateEngine plugin for KMediaFactory
-ServiceTypes=KMediaFactory/Plugin
-Type=Service
-X-KDE-Library=kmediafactory_template

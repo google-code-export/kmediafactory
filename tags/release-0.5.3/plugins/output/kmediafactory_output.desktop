@@ -1,6 +1,0 @@
-[Desktop Entry]
-Name=KMFOutput
-Comment=Output plugin for KMediaFactory
-ServiceTypes=KMediaFactory/Plugin
-Type=Service
-X-KDE-Library=kmediafactory_output
