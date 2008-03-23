@@ -133,7 +133,8 @@ void KMFWidget::paint(KMFMenuPage* page)
   if(m_shadow.type() != KMFShadow::None && layer() == Background)
   {
     Magick::Image& temp = page->layer(Temp);
-    temp.read(QString("xc:%1FF").arg(QColor(m_shadow.color()).name()));
+    temp.read(QString("xc:%1").arg(QColor(m_shadow.color()).name()));
+    temp.opacity(TransparentOpacity);
     paintWidget(temp, true);
     if(m_shadow.type() == KMFShadow::Blur)
     {

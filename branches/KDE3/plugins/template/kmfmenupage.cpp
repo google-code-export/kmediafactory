@@ -90,13 +90,13 @@ void KMFMenuPage::setResolution(QSize resolution)
   QString size =
       QString("%1x%2").arg(resolution.width()).arg(resolution.height());
   m_background.size((const char*)size.local8Bit());
-  m_background.read("xc:#44444400");
+  m_background.read("xc:#444444");
   m_sub.size((const char*)size.local8Bit());
-  m_sub.read("xc:#000000FF");
+  m_sub.read("xc:transparent");
   m_subHighlight.size((const char*)size.local8Bit());
-  m_subHighlight.read("xc:#000000FF");
+  m_subHighlight.read("xc:transparent");
   m_subSelect.size((const char*)size.local8Bit());
-  m_subSelect.read("xc:#000000FF");
+  m_subSelect.read("xc:transparent");
   m_temp.size((const char*)size.local8Bit());
   geometry().left().set(0, KMFUnit::Absolute);
   geometry().top().set(0, KMFUnit::Absolute);
@@ -288,7 +288,7 @@ void KMFMenuPage::checkDummyVideo()
       temp.size("720x576");
     else
       temp.size("720x480");
-    temp.read("xc:#00000000");
+    temp.read("xc:black");
     temp.depth(8);
     temp.type(Magick::TrueColorType);
     saveImage(temp, m_prjIf->projectDir("media") + "dummy.pnm");
