@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004, 2005 by Petri Damstï¿½
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -18,8 +18,8 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 #include "qffmpeglogger.h"
-#include "ffmpeg/avformat.h"
-#include "ffmpeg/avcodec.h"
+#include "libavformat/avformat.h"
+#include "libavcodec/avcodec.h"
 #include "dopr.h"
 #include <kdebug.h>
 

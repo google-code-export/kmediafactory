@@ -25,8 +25,8 @@
 #include "qffmpeg.h"
 #include "qffmpegconverter.h"
 #include "qffmpeglogger.h"
-#include "ffmpeg/avformat.h"
-#include "ffmpeg/avcodec.h"
+#include "libavformat/avformat.h"
+#include "libavcodec/avcodec.h"
 #include <qfileinfo.h>
 #include <qregexp.h>
 #include <kdebug.h>
@@ -165,7 +165,7 @@ bool QFFMpegFile::open(const QString& filename)
   // Open video file
   //file_iformat = av_find_input_format(filename);
   //if(av_open_input_file(&m_pFormatCtx, filename, file_iformat, 0, &params)!=0)
-  if(av_open_input_file(&m_pFormatCtx, (const char*)filename.local8Bit(),
+  if(av_open_input_file(&m_pFormatCtx, (const char*)filename.local8Bit(), 
      NULL, 0, NULL) != 0)
   {
     kdDebug() << "Couldn't open file." << endl;
