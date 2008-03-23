@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004 by Petri Damstï¿½
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -29,12 +29,25 @@
 #include <qdatetime.h>
 #include <qptrlist.h>
 #include <qdatetime.h>
-#include <qmediafile.h>
+#include <qdvdinfo.h>
 
+class QFFMpeg;
 class QDir;
 
 namespace QDVD { class Subtitle; class Cell; };
 namespace KMF { class Time; };
+
+class ConversionParams
+{
+  public:
+    ConversionParams() : m_pass(1), m_videoBitrate(8000),
+    m_audioBitrate(192), m_audioType(0) {};
+
+    int m_pass;
+    int m_videoBitrate;
+    int m_audioBitrate;
+    int m_audioType;
+};
 
 /**
 */
@@ -87,11 +100,11 @@ class VideoObject : public KMF::MediaObject
     void setTitleFromFileName();
     const KURL& previewURL() const { return m_previewURL; };
     void setPreviewURL(const KURL& previewURL) { m_previewURL = previewURL; };
+    QImage getFrame(double time) const;
     const QString& id() const { return m_id; };
 
     double frameRate() const;
     virtual QTime duration() const;
-    virtual QTime duration(QString file) const;
     virtual QTime chapterTime(int chapter) const;
     virtual QStringList files() const;
     QString fileName() const;
@@ -99,11 +112,14 @@ class VideoObject : public KMF::MediaObject
     QString videoFileName(int index, VideoFilePrefix prefix);
     void printCells();
     bool isDVDCompatible() const;
-    QImage getFrame(QTime time, QString file) const;
+    ConversionParams conversion() const { return m_conversion; };
+    void setConversion(const ConversionParams& conversion)
+        { m_conversion = conversion; };
 
   public slots:
     virtual void slotProperties();
     virtual void slotPlayVideo();
+    virtual void slotProgress(int);
     virtual void clean() { };
 
   private slots:
@@ -115,10 +131,9 @@ class VideoObject : public KMF::MediaObject
     QDVD::SubtitleList m_subtitles;
 
     void checkObjectParams();
-    const QMediaFile& mediaFile(const QString& file) const;
 
   private:
-    QStringList m_files;
+    mutable QFFMpeg* m_decoder;
     KAction* m_videoProperties;
     KAction* m_videoPlay;
     KURL m_previewURL;
@@ -129,7 +144,7 @@ class VideoObject : public KMF::MediaObject
     bool m_stopped;
     QString m_kmfplayer;
     static char* m_prefixes[];
-    static QMap<QString, QMediaFile> m_cache;
+    ConversionParams m_conversion;
 
     void generateId();
     void setCellSecs(double secs);

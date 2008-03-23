@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,35 +17,32 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
-#ifndef RUN_H
-#define RUN_H
+#ifndef QFFMPEGCONVERTER_H
+#define QFFMPEGCONVERTER_H
 
 #include <qobject.h>
-#include <qstring.h>
-#include <kprocess.h>
 
-/**
-	@author Petri Damsten <petri.damsten@iki.fi>
-*/
-class Run : QObject
+class QFFMpegConverter : public QObject
 {
-    Q_OBJECT
+  Q_OBJECT
   public:
-    Run(QString command = QString::null);
-    ~Run();
+    QFFMpegConverter(int frames);
+    virtual ~QFFMpegConverter();
 
-    bool run();
-    QString output() { return m_output; };
-    int result() { return m_result; };
+    void transcodeProgress(int frame);
+    void stop(int stp);
+    int transcode();
+    void set(const char* option, const char* value);
+    void set_output(const char *filename);
+    static void staticProgress(int frame);
 
-  public slots:
-    virtual void stdout(KProcess *proc, char *buffer, int buflen);
-    virtual void stderr(KProcess *proc, char *buffer, int buflen);
+  signals:
+    void progress(int);
 
   private:
-    QString m_command;
-    QString m_output;
-    int m_result;
+    int m_frames;
+    int m_stopped;
+    static QFFMpegConverter* ffmpeg_instance;
 };
 
 #endif

@@ -502,15 +502,6 @@ VideoTrack::VideoTrack(pgc_t *pgc, video_attr_t *video_attr)
 
 #endif
 
-VideoTrack::AspectRatio VideoTrack::aspectRatio(QString aspect)
-{
-  if(aspect == AspectRatioString[0])
-     return Aspect_4_3;
-  else if(aspect == AspectRatioString[1])
-     return Aspect_16_9;
-  return Aspect_Unknown;
-}
-
 QString VideoTrack::toString() const
 {
   return i18n("Video: %1, %2x%3, %4")

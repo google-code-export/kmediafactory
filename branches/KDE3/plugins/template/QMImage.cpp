@@ -21,17 +21,13 @@
 #include "QMImage.h"
 #include <qimage.h>
 #include <iostream>
-#include <kdebug.h>
-#include <qbuffer.h>
-
-using namespace Magick;
 
 QImage QMImage::image()
 {
   //std::cout << " QMImage::image()" << columns()
   //          << " " << rows() << std::endl;
   QImage img(columns(), rows(), 32);
-  const PixelPacket *pixels;
+  const Magick::PixelPacket *pixels;
 
   img.setAlphaBuffer(true);
   for (int y = 0; y < img.height(); y++)
@@ -39,7 +35,7 @@ QImage QMImage::image()
     pixels = getConstPixels(0, y, img.width(), 1);
     for (int x = 0; x < img.width(); x++)
     {
-      ColorRGB rgb(*(pixels + x));
+      Magick::ColorRGB rgb(*(pixels + x));
 
       img.setPixel(x, y, qRgba((int)(255 * rgb.red()) ,
                                (int)(255 * rgb.green()) ,
@@ -51,51 +47,63 @@ QImage QMImage::image()
 }
 
 QMImage::QMImage() :
-    Image(Geometry(1,1), ColorRGB(0,0,0))
+    Image(Magick::Geometry(1,1), Magick::ColorRGB(0,0,0))
 {
-}
-
-QImage QMImage::mask(const QImage& img, const QRgb& maskColor, bool oneBitMask)
-{
-  QImage result(img.width(), img.height(), 32);
-  double alphaScale = qAlpha(maskColor) / 255.0;
-
-  result.setAlphaBuffer(true);
-  for (int y = 0; y < img.height(); y++)
-  {
-    for (int x = 0; x < img.width(); x++)
-    {
-      QRgb pix = img.pixel(x, y);
-      if(oneBitMask)
-      {
-        if(qAlpha(pix) > 128)
-          pix = qRgba(qRed(maskColor), qGreen(maskColor),
-                      qBlue(maskColor), 255);
-        else
-          pix = qRgba(qRed(maskColor), qGreen(maskColor), qBlue(maskColor), 0);
-      }
-      else
-      {
-        pix = qRgba(qRed(maskColor), qGreen(maskColor), qBlue(maskColor),
-                    (int)(alphaScale * qAlpha(pix)));
-      }
-      result.setPixel(x, y, pix);
-    }
-  }
-  static int i = 0;
-  result.save(QString("/home/damu/tmp/img/koe%1.png").arg(i++), "PNG");
-  return result;
 }
 
 QMImage::QMImage(const QImage& img) :
-    Image()
+    Image(Magick::Geometry(img.width(), img.height()),
+          Magick::ColorRGB(0.5, 0.2, 0.3))
 {
-  read(img.width(), img.height(), "BGRA", CharPixel, img.bits());
+  double scale = 1 / 256.0;
+  Magick::PixelPacket *pixels;
+
+  modifyImage();
+  for (int y = 0; y < img.height(); y++)
+  {
+    pixels = setPixels(0, y, columns(), 1);
+    for (int x = 0; x < img.width(); x++)
+    {
+      QRgb pix = img.pixel(x, y);
+      Magick::ColorRGB rgb(scale * qRed(pix), scale * qGreen(pix),
+                           scale * qBlue(pix));
+      rgb.alpha(1.0 - (scale * qAlpha(pix)));
+      *pixels++ = rgb;
+    }
+    syncPixels();
+  }
 }
 
 QMImage::QMImage(const QImage& img, const QRgb& maskColor, bool oneBitMask) :
-    Image()
+    Image(Magick::Geometry(img.width(), img.height()),
+          Magick::ColorRGB(qRed(maskColor)/256.0, qGreen(maskColor)/256.0,
+                           qBlue(maskColor)/256.0))
 {
-  QImage tmp = mask(img, maskColor, oneBitMask);
-  read(tmp.width(), tmp.height(), "BGRA", CharPixel, tmp.bits());
+  double alphaScale = qAlpha(maskColor) / (256.0 * 256.0);
+  Magick::PixelPacket *pixels;
+
+  modifyImage();
+  for (int y = 0; y < img.height(); y++)
+  {
+    pixels = setPixels(0, y, columns(), 1);
+    for (int x = 0; x < img.width(); x++)
+    {
+      QRgb pix = img.pixel(x, y);
+      Magick::ColorRGB rgb(*pixels);
+      if(oneBitMask)
+      {
+        if(qAlpha(pix) > 128)
+          rgb.alpha(0.0);
+        else
+          rgb.alpha(1.0);
+      }
+      else
+      {
+        //rgb.alpha(1.0);
+        rgb.alpha(1.0 - (alphaScale * qAlpha(pix)));
+      }
+      *pixels++ = rgb;
+    }
+    syncPixels();
+  }
 }

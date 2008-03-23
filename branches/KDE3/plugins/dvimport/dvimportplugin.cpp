@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004 by Petri Damstï¿½
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -23,6 +23,7 @@
 #include "progresslayout.h"
 #include <videoobject.h>
 #include <videopluginsettings.h>
+#include <qffmpeg.h>
 #include <kmftime.h>
 #include <kgenericfactory.h>
 #include <kdeversion.h>
@@ -186,9 +187,9 @@ bool DVImportPlugin::parseDV(VideoObject* vob, QString fileName)
   int minChapLength = DVImportPluginSettings::minChapterLength();
   int chapterOffset = DVImportPluginSettings::chapterOffset();
   ProgressLayout progressDlg;
-  //KMF::Time duration = KMF::Time(script.output());
-#warning TODO
-  int frames = 0; //(int)(duration.toSeconds() * input.frameRate());
+  QFFMpeg input(fileName);
+  KMF::Time duration = input.duration();
+  int frames = (int)(duration.toSeconds() * input.frameRate());
   QDVD::AudioList audioTracks;
   QDVD::CellList cells;
 
@@ -235,10 +236,9 @@ bool DVImportPlugin::parseDV(VideoObject* vob, QString fileName)
             QDVD::Cell c;
             if(framenum > 1)
             {
-#warning TODO /*
               KMF::Time start((double)(framenum + chapterOffset) /
                   input.frameRate());
-              c.setStart(start + offset);*/
+              c.setStart(start + offset);
             }
             else
               c.setStart(offset);

@@ -18,18 +18,6 @@
 #define QDVDINFO_H
 
 #include "config.h"
-
-#ifdef HAVE_LIBDVDREAD
-#if !defined __cplusplus
-#define __cplusplus
-#endif
-#if !defined __STDC_LIMIT_MACROS
-#define __STDC_LIMIT_MACROS
-#endif
-#include <stdint.h>
-#include <dvdread/ifo_read.h>
-#endif
-
 #include <klocale.h>
 #include <qdatetime.h>
 #include <qptrlist.h>
@@ -38,6 +26,9 @@
 #include <qfont.h>
 #include <qmap.h>
 #include <qobject.h>
+#ifdef HAVE_LIBDVDREAD
+#include <dvdread/ifo_read.h>
+#endif
 
 namespace QDVD
 {
@@ -248,9 +239,9 @@ namespace QDVD
       QString permittedDfString() const
           { return i18n(PermittedDf[m_permittedDf]); };
       virtual QString toString() const;
+      QString aspectRatioString() { return AspectRatioString[m_aspect]; };
       static QString aspectRatioString(AspectRatio aspect)
           { return AspectRatioString[aspect]; };
-      static AspectRatio aspectRatio(QString aspect);
       virtual uint rtti() const { return VIDEO; };
 
     protected:

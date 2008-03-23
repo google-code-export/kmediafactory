@@ -17,8 +17,6 @@
     <absoluteprojectpath>false</absoluteprojectpath>
     <description/>
     <secondaryLanguages/>
-    <projectname>kmediafactory</projectname>
-    <defaultencoding/>
   </general>
   <kdevautoproject>
     <general>
@@ -27,7 +25,7 @@
       <useactivetarget>true</useactivetarget>
     </general>
     <run>
-      <mainprogram>/home/damu/files/code/linux/kmediafactory.kde3/debug/src/kmediafactory</mainprogram>
+      <mainprogram>src/kmediafactory</mainprogram>
       <directoryradio>executable</directoryradio>
       <runarguments>
         <kmediafactory/>
@@ -44,11 +42,6 @@
         <envvar value="fi_FI" name="LC_NUMERIC" />
         <envvar value="/home/damu/.kde/lib/kde3/:$LD_LIBRARY_PATH" name="LD_LIBRARY_PATH" />
       </envvars>
-      <globaldebugarguments/>
-      <globalcwd>/home/damu/files/code/linux/kmediafactory.kde3/debug</globalcwd>
-      <useglobalprogram>true</useglobalprogram>
-      <autoinstall>false</autoinstall>
-      <autokdesu>false</autokdesu>
     </run>
     <configurations>
       <optimized>
@@ -212,21 +205,6 @@
       <codeCompletionDelay>250</codeCompletionDelay>
       <argumentsHintDelay>400</argumentsHintDelay>
       <headerCompletionDelay>250</headerCompletionDelay>
-      <showOnlyAccessibleItems>false</showOnlyAccessibleItems>
-      <completionBoxItemOrder>0</completionBoxItemOrder>
-      <howEvaluationContextMenu>true</howEvaluationContextMenu>
-      <showCommentWithArgumentHint>true</showCommentWithArgumentHint>
-      <statusBarTypeEvaluation>false</statusBarTypeEvaluation>
-      <namespaceAliases>std=_GLIBCXX_STD</namespaceAliases>
-      <processPrimaryTypes>true</processPrimaryTypes>
-      <processFunctionArguments>false</processFunctionArguments>
-      <preProcessAllHeaders>false</preProcessAllHeaders>
-      <parseMissingHeaders>false</parseMissingHeaders>
-      <resolveIncludePaths>true</resolveIncludePaths>
-      <alwaysParseInBackground>true</alwaysParseInBackground>
-      <usePermanentCaching>true</usePermanentCaching>
-      <alwaysIncludeNamespaces>false</alwaysIncludeNamespaces>
-      <includePaths>.;</includePaths>
     </codecompletion>
     <references/>
     <creategettersetter>
@@ -245,18 +223,8 @@
     <qt>
       <used>false</used>
       <version>3</version>
-      <root>/usr/share/qt3</root>
-      <includestyle>3</includestyle>
-      <designerintegration>EmbeddedKDevDesigner</designerintegration>
-      <qmake>/usr/bin/qmake-qt3</qmake>
-      <designer>/usr/bin/designer-qt3</designer>
-      <designerpluginpaths/>
+      <root>/usr/qt/3</root>
     </qt>
-    <splitheadersource>
-      <enabled>false</enabled>
-      <synchronize>true</synchronize>
-      <orientation>Vertical</orientation>
-    </splitheadersource>
   </kdevcppsupport>
   <dist>
     <custom>false</custom>

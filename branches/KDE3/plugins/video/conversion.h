@@ -1,7 +1,6 @@
 //**************************************************************************
-//   Copyright (C) 2003-2004 by Erik Kaffehr
-//
-//   Convert to and from QImage using ImageMagick
+//   Copyright (C) 2004, 2005 by Petri Damstén
+//   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License as published by
@@ -18,27 +17,26 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
-#ifndef QIMAGEH
-#define QIMAGEH
+#ifndef CONVERSION_H
+#define CONVERSION_H
 
-#include <qcolor.h>
-#include <Magick++.h>
+#include <kmf_stddef.h>
+#include <conversionlayout.h>
 
-class QImage;
+/**
+	@author Petri Damsten <petri.damsten@iki.fi>
+*/
 
-class QMImage: public Magick::Image
+class ConversionParams;
+
+class Conversion : public ConversionLayout
 {
   public:
-    QMImage();
-    QMImage(const QImage&);
-    QMImage(const QImage& img, const QRgb& maskColor, bool oneBitMask = false);
-    QMImage(const Image& img):Image(img){}
-    ~QMImage(){}
-    QImage image();
-    void image(const QImage&);
-  private:
-    QMImage(const QMImage&);
+    Conversion(QWidget *parent = 0, const char *name = 0);
+    ~Conversion();
+
+    void getData(ConversionParams& params) const;
+    void setData(const ConversionParams& params);
 };
 
 #endif
-

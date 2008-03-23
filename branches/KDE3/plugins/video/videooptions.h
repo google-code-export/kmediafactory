@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004 by Petri Damstï¿½
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -45,12 +45,14 @@ class VideoOptions : public VideoOptionsLayout
     virtual void subtitlePropertiesClicked();
     virtual void enableButtons();
     virtual void updateTexts();
+    virtual void conversionPropertiesClicked();
 
   private:
     const VideoObject* m_obj;
     QDVD::CellList m_cells;
     QDVD::SubtitleList m_subtitles;
     QDVD::AudioList m_audioTracks;
+    ConversionParams m_conversionParams;
 
     bool isSelectedSubtitleInVideo();
 };

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004, 2005 by Petri Damstï¿½
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -24,6 +24,7 @@
 #include "kmftime.h"
 #include "autochapterslayout.h"
 #include "addchapterlayout.h"
+#include <qffmpeg.h>
 #include "kmfimageview.h"
 #include <kmediafactory/plugin.h>
 #include <kapplication.h>
@@ -100,10 +101,7 @@ void Chapters::setData(const QDVD::CellList& cells,
 
 void Chapters::updateVideo()
 {
-  QDir dir(m_obj->projectInterface()->projectDir() + "/media/");
-  QString file = dir.filePath(QString("%s_frame.pnm") \
-      .arg(m_obj->id().local8Bit()));
-  QImage img = m_obj->getFrame(m_pos, file);
+  QImage img = m_obj->getFrame(m_pos);
   video->setImage(img);
 
   QString s = QString("%1: %2 / %3").
