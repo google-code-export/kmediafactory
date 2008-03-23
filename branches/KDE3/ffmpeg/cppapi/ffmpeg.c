@@ -27,26 +27,12 @@
 #else
 
 #include "ffmpeg.h"
-/*#include "libavformat/framehook.h"*/
-#include "ffmpeg/avformat.h"
-#include <limits.h>
-#include <math.h>
-#include <errno.h>
+#include "libavformat/framehook.h"
+#include "libavformat/avformat.h"
 
 #define exit(v) return
 #define fprintf(fh, args...) av_log(NULL, AV_LOG_INFO, args)
 #define printf(args...) av_log(NULL, AV_LOG_INFO, args)
-#define av_abort() return
-#define ABS(a) ((a) >= 0 ? (a) : (-(a)))
-#define FFMAX(a,b) ((a) > (b) ? (a) : (b))
-#define FFMIN(a,b) ((a) > (b) ? (b) : (a))
-
-static inline int clip(int a, int amin, int amax)
-{
-  if (a < amin)      return amin;
-  else if (a > amax) return amax;
-  else               return a;
-}
 
 static Progress* av_progress = 0;
 
@@ -4611,13 +4597,13 @@ void av_reset()
   nb_frames_dup = 0;
   nb_frames_drop = 0;
   input_sync = 0;
-  limit_filesize = 0;
+  limit_filesize = 0; 
   pgmyuv_compatibility_hack=0;
   dts_delta_threshold = 10;
   opt_names=NULL;
   opt_name_count=0;
   avctx_opts = 0;
-
+  
   padcolor[0] = 16; /* default to black */
   padcolor[1] = 128; /* default to black */
   padcolor[2] = 128; /* default to black */

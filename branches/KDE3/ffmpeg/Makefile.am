@@ -1,1 +1,1 @@
-SUBDIRS = cppapi
+SUBDIRS = libavutil libavcodec libavformat cppapi

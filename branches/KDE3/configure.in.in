@@ -1,5 +1,5 @@
 #MIN_CONFIG(3.0.0)
-AM_INIT_AUTOMAKE("kmediafactory", "0.5.2")
+AM_INIT_AUTOMAKE("kmediafactory", "0.5.2.1")
 AC_C_BIGENDIAN
 AC_CHECK_KDEMAXPATHLEN
 
@@ -42,9 +42,6 @@ AC_LIB_FONTCONFIG()
 
 sinclude(admin/dv.m4)
 AC_LIB_DV()
-
-sinclude(admin/ffmpeg.m4)
-AC_LIB_FFMPEG()
 
 sinclude(admin/dvdread.m4)
 AC_LIB_DVDREAD()
@@ -333,14 +330,6 @@ echo "Mandatory" >> $srcdir/config.summary
 
 echo -n "- FontConfig ..................... " >> $srcdir/config.summary
 if test "$ac_have_libfontconfig" = "yes"; then
-  echo "Yes" >> $srcdir/config.summary
-else
-  echo "No" >> $srcdir/config.summary
-  stop="yes"
-fi
-
-echo -n "- FFMpeg ......................... " >> $srcdir/config.summary
-if test "$ac_have_libffmpeg" = "yes"; then
   echo "Yes" >> $srcdir/config.summary
 else
   echo "No" >> $srcdir/config.summary

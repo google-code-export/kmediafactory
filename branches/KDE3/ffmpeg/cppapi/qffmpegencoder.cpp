@@ -32,7 +32,6 @@
 #include "qffmpegencoder.h"
 
 #define STREAM_PIX_FMT PIX_FMT_YUV420P /* default pix_fmt */
-#define FFMAX(a,b) ((a) > (b) ? (a) : (b))
 
 void QFFmpegEncoder::reset()
 {

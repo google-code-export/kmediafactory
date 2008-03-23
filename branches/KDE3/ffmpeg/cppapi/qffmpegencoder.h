@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004, 2005 by Petri Damstï¿½
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   Heavily based on:
@@ -27,7 +27,7 @@
 #ifndef QFFMPEGENCODER_H
 #define QFFMPEGENCODER_H
 
-#include "ffmpeg/avformat.h"
+#include "libavformat/avformat.h"
 #include <qstring.h>
 #include <qdatetime.h>
 #include <qsize.h>

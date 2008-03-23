@@ -38,6 +38,7 @@ class QMImage: public Magick::Image
     void image(const QImage&);
   private:
     QMImage(const QMImage&);
+    QImage mask(const QImage& img, const QRgb& maskColor, bool oneBitMask);
 };
 
 #endif
