@@ -82,8 +82,8 @@ QImage QMImage::mask(const QImage& img, const QRgb& maskColor, bool oneBitMask)
       result.setPixel(x, y, pix);
     }
   }
-  static int i = 0;
-  result.save(QString("/home/damu/tmp/img/koe%1.png").arg(i++), "PNG");
+  //static int i = 0;
+  //result.save(QString("/home/damu/tmp/img/koe%1.png").arg(i++), "PNG");
   return result;
 }
 

@@ -262,7 +262,7 @@
                                         <string></string>
                                     </property>
                                     <property name="iconSet">
-                                        <iconset>"next"</iconset>
+                                        <iconset>"forward"</iconset>
                                     </property>
                                     <property name="flat">
                                         <bool>true</bool>
