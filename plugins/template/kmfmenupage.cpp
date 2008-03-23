@@ -43,6 +43,8 @@
 #include "QMImage.h"
 #include "templateobject.h"
 #include "templatepluginsettings.h"
+#include "qffmpeg.h"
+#include "qffmpegencoder.h"
 #include <kmediafactory/projectinterface.h>
 
 int KMFMenuPage::m_mjpegtoolsVersion = -1;
@@ -476,8 +478,6 @@ bool KMFMenuPage::runScript(QString scriptName, QString place)
 
   if(!m_sound.isEmpty())
   {
-#warning TODO
-    /*
     m_converter = new QFFMpeg;
 
     m_converter->addFile(m_sound);
@@ -516,7 +516,6 @@ bool KMFMenuPage::runScript(QString scriptName, QString place)
     else
       menuSound = m_sound;
     delete m_converter;
-    */
   }
   else
   {
@@ -524,13 +523,10 @@ bool KMFMenuPage::runScript(QString scriptName, QString place)
 
     if(!fi.exists())
     {
-      #warning TODO
-/*
       QFFmpegEncoder encoder;
 
       encoder.setOutput(QF_MP2);
       encoder.write(fi.filePath());
-      */
     }
   }
 
@@ -617,6 +613,15 @@ bool KMFMenuPage::runScript(QString scriptName, QString place)
     return false;
   }
   return true;
+}
+
+void KMFMenuPage::slotProgress(int progress)
+{
+  if(m_uiIf->setItemProgress(progress))
+  {
+    m_stopped = true;
+    m_converter->stop();
+  }
 }
 
 bool KMFMenuPage::makeMpeg()

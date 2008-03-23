@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004, 2005 by Petri Damstï¿½
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,11 +17,11 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
-#include <qmediafile.h>
 #include "slideshowproperties.h"
 #include "slideshowobject.h"
 #include <kmftime.h>
 #include <kmfmultiurldialog.h>
+#include <qffmpeg.h>
 #include <kurlrequester.h>
 #include <kmessagebox.h>
 #include <kio/previewjob.h>
@@ -169,8 +169,8 @@ void SlideshowProperties::updateInfo()
   for(QStringList::ConstIterator it = m_audioFiles.begin();
       it != m_audioFiles.end(); ++it)
   {
-    QMediaFile file(*it);
-    audioDuration += KMF::Time(file.duration());
+    QFFMpeg audio(*it);
+    audioDuration += audio.duration();
   }
   info += i18n("%1 images").arg(count);
   if(duration < KMF::Time(1.0))

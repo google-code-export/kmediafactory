@@ -21,7 +21,8 @@
 #include "slideshowplugin.h"
 #include "slideshowpluginsettings.h"
 #include "slideshowproperties.h"
-#include <qmediafile.h>
+#include <qdvdinfo.h>
+#include <qffmpeg.h>
 #include <kio/job.h>
 #include <kfileitem.h>
 #include <kstandarddirs.h>
@@ -730,8 +731,8 @@ QTime SlideshowObject::audioDuration() const
   for(QStringList::ConstIterator it = m_audioFiles.begin();
       it != m_audioFiles.end(); ++it)
   {
-    QMediaFile file(*it);
-    audioDuration += KMF::Time(file.duration());
+    QFFMpeg audio(*it);
+    audioDuration += audio.duration();
   }
   return audioDuration;
 }

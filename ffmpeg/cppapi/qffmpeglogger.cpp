@@ -17,41 +17,44 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
-#ifndef QMEDIAFILE_H
-#define QMEDIAFILE_H
+#include "qffmpeglogger.h"
+#include "ffmpeg/avformat.h"
+#include "ffmpeg/avcodec.h"
+#include "dopr.h"
+#include <kdebug.h>
 
-#include "qdvdinfo.h"
+#undef sprintf
 
-/**
-	@author Petri Damsten <petri.damsten@iki.fi>
-*/
-class QMediaFile
+QFFMpegLogger* QFFMpegLogger::m_logger = 0;
+
+QFFMpegLogger::QFFMpegLogger()
 {
-  public:
-    QMediaFile(const QString& file = QString::null);
-    ~QMediaFile();
+  av_log_set_callback(QFFMpegLogger::ffmpeg_av_log_callback);
+}
 
-    bool probe();
+QFFMpegLogger* QFFMpegLogger::self()
+{
+  if(!m_logger)
+    m_logger = new QFFMpegLogger;
+  return m_logger;
+}
 
-    const QTime& duration() const { return m_duration; };
-    double frameRate() const { return m_frameRate; };
-    uint audioStreams() const { return m_audioStreams; };
-    uint subtitles() const { return m_subtitles; };
-    QDVD::VideoTrack::AspectRatio aspectRatio() const { return m_aspectRatio; };
-    bool dvdCompatible() const { return m_dvdCompatible; };
-    bool frame(QTime pos, QString output) const;
+void QFFMpegLogger::ffmpeg_av_log_callback(void *ptr, int level,
+                                           const char *fmt, va_list vl)
+{
+  if(level > av_log_get_level())
+    return;
 
-  private:
-    QString m_file;
-    QTime m_duration;
-    double m_frameRate;
-    uint m_audioStreams;
-    uint m_subtitles;
-    uint m_width;
-    uint m_height;
-    QString m_type;
-    QDVD::VideoTrack::AspectRatio m_aspectRatio;
-    bool m_dvdCompatible;
-};
+  QString prefix;
+  char buffer[1024];
 
-#endif
+  dopr(buffer, 1023, fmt, vl);
+  if(ptr)
+  {
+    AVClass* avc= *(AVClass**)ptr;
+    prefix.sprintf("[%s @ %p] ", avc->item_name((char*)ptr), avc);
+  }
+  emit self()->message(prefix + buffer);
+}
+
+#include "qffmpeglogger.moc"

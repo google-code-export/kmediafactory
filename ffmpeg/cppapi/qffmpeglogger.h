@@ -1,7 +1,6 @@
 //**************************************************************************
-//   Copyright (C) 2003-2004 by Erik Kaffehr
-//
-//   Convert to and from QImage using ImageMagick
+//   Copyright (C) 2004, 2005 by Petri Damstén
+//   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License as published by
@@ -18,27 +17,30 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
-#ifndef QIMAGEH
-#define QIMAGEH
+#ifndef QFFMPEGLOGGER_H
+#define QFFMPEGLOGGER_H
 
-#include <qcolor.h>
-#include <Magick++.h>
+#include <qobject.h>
 
-class QImage;
+#undef sprintf
 
-class QMImage: public Magick::Image
+class QFFMpegLogger : public QObject
 {
+  Q_OBJECT
   public:
-    QMImage();
-    QMImage(const QImage&);
-    QMImage(const QImage& img, const QRgb& maskColor, bool oneBitMask = false);
-    QMImage(const Image& img):Image(img){}
-    ~QMImage(){}
-    QImage image();
-    void image(const QImage&);
+    virtual ~QFFMpegLogger() {};
+
+    static QFFMpegLogger* self();
+
+  signals:
+    void message(const QString&);
+
   private:
-    QMImage(const QMImage&);
+    QFFMpegLogger();
+    static void ffmpeg_av_log_callback(void *ptr, int level,
+        const char *fmt, va_list vl);
+
+    static QFFMpegLogger* m_logger;
 };
 
 #endif
-
