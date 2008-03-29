@@ -69,7 +69,7 @@ find_program(OO_EXECUTABLE soffice)
 macro_log_feature(OO_EXECUTABLE "openoffice.org" "For converting OpenOffice docs to slideshow" "http://www.openoffice.org/" FALSE "" "also needs ghostscript")
 
 find_program(GS_EXECUTABLE gs)
-macro_log_feature(GS_EXECUTABLE "ghostscript" "For converting pdf to slideshow" "" FALSE "" "")
+macro_log_feature(GS_EXECUTABLE "ghostscript" "For converting pdf to slideshow" "http://pages.cs.wisc.edu/~ghost/" FALSE "" "")
 
 # Are we using this?
 find_program(EXTRACTRC_EXECUTABLE extractrc)
