@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,12 +20,13 @@
 #ifndef KMFMENU_H
 #define KMFMENU_H
 
+#include <kmediafactory/uiinterface.h>
 #include "kmfmenupage.h"
 #include "kmftemplatebase.h"
 #include "kmftemplate.h"
-#include <kmediafactory/uiinterface.h>
-#include <QImage>
-#include <QObject>
+#include <qimage.h>
+#include <qobject.h>
+#include <qptrvector.h>
 
 /**
 */
@@ -34,17 +35,17 @@ class KMFMenu : public KMFTemplateBase
     Q_OBJECT
   public:
     enum { TotalPoints = 1000 };
-    KMFMenu(const QString& tmplate, QObject *parent = 0);
+    KMFMenu(const QString& tmplate, QObject *parent = 0, const char *name = 0);
     ~KMFMenu();
 
     bool makeMenu(QString type);
     QImage makeMenuPreview(QString page = "");
     QImage icon() const { return templateImage("icon.png"); };
-    bool addPage(const QString& name, int title, int chapter);
+    bool addPage(const QString& name, uint title, uint chapter);
     bool writeDvdAuthorXml(QDomDocument& doc, QString type);
     bool writeDvdAuthorXml(const QString& file, QString type);
     bool makeMenuMpegs();
-    KMFTemplate* templateStore() { return &m_template; };
+    const KMFTemplate& templateStore() const { return m_template; };
     const QStringList& menus() const { return m_menus; };
     const QString& title() { return m_title; };
     const QString& id() { return m_id; };
@@ -57,16 +58,16 @@ class KMFMenu : public KMFTemplateBase
 
   protected:
     QImage templateImage(const QString& image) const;
-    QList<KMFMenuPage*>* titlePages(int title);
+    QPtrList<KMFMenuPage>* titlePages(uint title);
     QDomElement getPage(const QDomNode& node, const QString& name);
-    bool addPage(const QDomElement& element, int pageSet,
-                int title, int chapter);
+    bool addPage(const QDomElement& element, uint pageSet,
+                uint title, uint chapter);
 
   private:
     void progress(int points);
     int pages();
 
-    QList< QList<KMFMenuPage*> > m_pages;
+    QPtrVector< QPtrList<KMFMenuPage> > m_pages;
     KMFTemplate m_template;
     QDomDocument m_templateXML;
     QStringList m_menus;

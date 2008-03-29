@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,47 +20,58 @@
 #ifndef KMFTEMPLATEICONVIEW_H
 #define KMFTEMPLATEICONVIEW_H
 
-#include <kmediafactory/kmfobject.h>
-#include "kmflistmodel.h"
-#include <klocale.h>
-#include <QItemDelegate>
+#include <kmediafactory/projectinterface.h>
+#include <kiconview.h>
 
-class KMFItemDelegate : public QItemDelegate
+/**
+*/
+class KMFIconViewItem : public KIconViewItem
+{
+  public:
+    KMFIconViewItem(QIconView* parent, const QString& text,
+                    const QPixmap& icon):
+        KIconViewItem(parent, text, icon) { calcRect(); };
+    KMFIconViewItem(QIconView* parent, QIconViewItem* after,
+                    const QString& text, const QPixmap& icon):
+        KIconViewItem(parent, after, text, icon) { calcRect(); };
+    virtual ~KMFIconViewItem() {};
+
+    KMF::Object* ob() { return m_ob; };
+    void setOb(KMF::Object* ob) { m_ob = ob; };
+
+  protected:
+    virtual void paintItem(QPainter* p, const QColorGroup& cg);
+    virtual void paintFocus(QPainter* p, const QColorGroup& cg);
+    virtual void calcRect(const QString& text_ = QString::null);
+
+  private:
+    KMF::Object* m_ob;
+};
+
+/**
+*/
+class KMFIconView : public KIconView
 {
     Q_OBJECT
   public:
-    virtual void paint(QPainter* painter, const QStyleOptionViewItem& option,
-                       const QModelIndex& index) const;
-    virtual QSize sizeHint(const QStyleOptionViewItem& option,
-                           const QModelIndex& index) const;
-  protected:
-    QString replaceNewLine(QString text) const;
-    QRect textLayoutBounds(const QStyleOptionViewItemV2 &option) const;
-};
+    KMFIconView(QWidget *parent = 0, const char *name = 0);
+    ~KMFIconView();
 
-template <class T>
-class KMFObjectListModel : public KMFListModel<T>
-{
-  public:
-    QVariant data(const QModelIndex &index, int role) const
-    {
-      if(!KMFListModel<T>::isValid(index))
-        return QVariant();
+    virtual void setCurrentItem(QIconViewItem* item)
+        { QIconView::setCurrentItem(item); };
+    void setAfter(QIconViewItem* after) { m_after = after; };
 
-      if (role == Qt::DisplayRole)
-        return KMFListModel<T>::at(index)->title();
-      else if (role == Qt::DecorationRole)
-        return KMFListModel<T>::at(index)->pixmap();
-      return QVariant();
-    }
+  public slots:
+    void init(const QString &project_type);
+    KMFIconViewItem* newItem(KMF::Object* ob);
+    void itemRemoved(KMF::Object* ob);
+    void setCurrentItem(KMF::Object* ob);
+    void setSelected(KMF::Object* ob, bool s, bool cb = false);
+    virtual void clear();
 
-    QVariant headerData(int, Qt::Orientation, int role) const
-    {
-      if (role != Qt::DisplayRole)
-        return QVariant();
-
-      return ::i18n("Title");
-    }
+  private:
+    QMap<KMF::Object*, KMFIconViewItem*> m_obs;
+    QIconViewItem* m_after;
 };
 
 #endif // KMFTEMPLATEICONVIEW_H

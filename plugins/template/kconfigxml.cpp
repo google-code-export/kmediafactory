@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -21,16 +21,17 @@
 #include <kdebug.h>
 #include <qfile.h>
 #include <qdom.h>
-#include <ktemporaryfile.h>
+#include <ktempfile.h>
 
 class TempFileStore
 {
   public:
-    static KTemporaryFile* tempFile(KConfigXML* config)
+    static KTempFile* tempFile(KConfigXML* config)
     {
       if(!m_tempFiles.contains(config))
       {
-        m_tempFiles[config] = new KTemporaryFile();
+        m_tempFiles[config] = new KTempFile();
+        m_tempFiles[config]->setAutoDelete(true);
       }
       return m_tempFiles[config];
     }
@@ -38,69 +39,59 @@ class TempFileStore
     {
       if(m_tempFiles.contains(config))
       {
-        KTemporaryFile* tmp = m_tempFiles[config];
-        m_tempFiles.remove(config);
+        KTempFile* tmp = m_tempFiles[config];
+        m_tempFiles.erase(config);
         delete tmp;
       }
     }
   private:
-    static QMap<KConfigXML*, KTemporaryFile*> m_tempFiles;
+    static QMap<KConfigXML*, KTempFile*> m_tempFiles;
 };
 
-QMap<KConfigXML*, KTemporaryFile*> TempFileStore::m_tempFiles;
+QMap<KConfigXML*, KTempFile*> TempFileStore::m_tempFiles;
 
 KConfigXML::KConfigXML()
-  : KConfigSkeleton(TempFileStore::tempFile(this)->fileName())
+  : KConfigSkeleton(TempFileStore::tempFile(this)->name())
 {
 }
 
 KConfigXML::KConfigXML(QString kcfgFile)
-  : KConfigSkeleton(TempFileStore::tempFile(this)->fileName())
+  : KConfigSkeleton(TempFileStore::tempFile(this)->name())
 {
   parse(kcfgFile);
 }
 
 KConfigXML::KConfigXML(QIODevice* kcfgFile)
-  : KConfigSkeleton(TempFileStore::tempFile(this)->fileName())
+  : KConfigSkeleton(TempFileStore::tempFile(this)->name())
 {
   parse(kcfgFile);
 }
 
 KConfigXML::KConfigXML(QByteArray* kcfgFile)
-  : KConfigSkeleton(TempFileStore::tempFile(this)->fileName())
+  : KConfigSkeleton(TempFileStore::tempFile(this)->name())
 {
   parse(kcfgFile);
 }
 
 KConfigXML::~KConfigXML()
 {
+  QVariant* ptr;
+  for(ptr = m_delete.first(); ptr; ptr = m_delete.next())
+    delete ptr;
   TempFileStore::removeTempFile(this);
-
-  while(!m_strings.isEmpty())
-    delete m_strings.takeFirst();
-  while(!m_bools.isEmpty())
-    delete m_bools.takeFirst();
-  while(!m_colors.isEmpty())
-    delete m_colors.takeFirst();
-  while(!m_fonts.isEmpty())
-    delete m_fonts.takeFirst();
-  while(!m_ints.isEmpty())
-    delete m_ints.takeFirst();
-  while(!m_urls.isEmpty())
-    delete m_urls.takeFirst();
 }
 
 bool KConfigXML::parse(QString kcfgFile)
 {
   QFile file(kcfgFile);
 
-  if(file.open(QIODevice::ReadOnly))
+  if(file.open(IO_ReadOnly))
   {
     parse(&file);
     file.close();
     return true;
   }
-  kError() << "Unable to open file: " << kcfgFile;
+  kdError() << "Unable to open file: " << kcfgFile << endl;
   return false;
 }
 
@@ -109,7 +100,7 @@ bool KConfigXML::parse(QIODevice* kcfgFile)
   QDomDocument doc("kcfg");
   if(!doc.setContent(kcfgFile))
   {
-    kError() << "Unable to load document.";
+    kdError() << "Unable to load document." << endl;
     return false;
   }
   return parse(doc);
@@ -120,7 +111,7 @@ bool KConfigXML::parse(QByteArray* kcfgFile)
   QDomDocument doc("kcfg");
   if(!doc.setContent(*kcfgFile))
   {
-    kError() << "Unable to load document.";
+    kdError() << "Unable to load document." << endl;
     return false;
   }
   return parse(doc);
@@ -132,7 +123,7 @@ bool KConfigXML::parse(QDomDocument& doc)
   QDomElement el = doc.documentElement();
   if(el.isNull())
   {
-    kError() << "No document in cfg file";
+    kdError() << "No document in cfg file" << endl;
     return false;
   }
 
@@ -156,7 +147,7 @@ bool KConfigXML::parse(QDomDocument& doc)
       QString group = e.attribute("name");
       if(group.isEmpty())
       {
-        kError() << "Group without name";
+        kdError() << "Group without name" << endl;
         continue;
       }
 
@@ -251,50 +242,42 @@ void KConfigXML::parseKCFGXMLEntry(const QDomElement& element)
   if(type.isEmpty())
     type = "String";
   /*
-  kDebug() << type << ": " << name << ", " << defaultValue
-     ;
+  kdDebug() << k_funcinfo << type << ": " << name << ", " << defaultValue
+      << endl;
   */
 
   if(type == "String")
   {
-    QString* s = new QString("");
-    addItemString(name, *s, defaultValue);
-    m_strings.append(s);
+    QVariant* v = new QVariant(QString::null);
+    addItemString(name, v->asString(), defaultValue);
+    m_delete.append(v);
   }
   else if(type == "Bool")
   {
-    bool* b = new bool(false);
-    addItemBool(name, *b, (defaultValue == "true"));
-    m_bools.append(b);
+    QVariant* v = new QVariant(false);
+    addItemBool(name, v->asBool(), (defaultValue == "true"));
+    m_delete.append(v);
   }
   else if(type == "Color")
   {
-    QColor* c = new QColor(192, 192, 192);
-    addItemColor(name, *c, QColor(defaultValue));
-    m_colors.append(c);
+    QVariant* v = new QVariant(QColor(192, 192, 192));
+    addItemColor(name, v->asColor(), QColor(defaultValue));
+    m_delete.append(v);
   }
   else if(type == "Font")
   {
-    QFont* f = new QFont();
-    QFont def;
+    QVariant* v = new QVariant(QFont());
+    QFont f;
 
-    def.fromString(defaultValue);
-    addItemFont(name, *f, def);
-    m_fonts.append(f);
+    f.fromString(defaultValue);
+    addItemFont(name, v->asFont(), f);
+    m_delete.append(v);
   }
   else if(type == "Int")
   {
-    qint32* i = new qint32(0);
-    addItemInt(name, *i, defaultValue.toInt());
-    m_ints.append(i);
-  }
-  else if(type == "Url")
-  {
-    KUrl* url = new KUrl();
-    KConfigSkeleton::ItemUrl *item;
-    item = new KConfigSkeleton::ItemUrl(currentGroup(), name, *url,
-                                        KUrl(defaultValue));
-    addItem(item, name);
-    m_urls.append(url);
+    QVariant* v = new QVariant(false);
+    addItemInt(name, v->asInt(), defaultValue.toInt());
+    m_delete.append(v);
   }
 }
+

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -37,8 +37,6 @@ class KMFTemplate
 
     bool setStore(const QString& store);
     QByteArray readFile(const QString& file) const;
-    QIODevice* device(const QString& file);
-    void close();
     bool hasFile(const QString& file) const;
     void setLanguage(const QString& file, const QString& lang);
     const QString& language() const { return m_language; };

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,29 +20,28 @@
 #include "kmfuiinterface.h"
 #include "kmfapplication.h"
 #include "kmfproject.h"
+#include "kmfprogressitem.h"
 #include "kmfprogresslistview.h"
 #include "kmediafactory.h"
 #include "mediapage.h"
 #include "templatepage.h"
 #include "kmficonview.h"
-#include "kmftools.h"
 #include "outputpage.h"
+#include <kprogress.h>
 #include <kdebug.h>
+#include <klistbox.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
-#include <QToolButton>
-#include <QEventLoop>
-#include <QPixmap>
-#include <QStandardItemModel>
-#include <QStringListModel>
-#include <QTextStream>
+#include <qtoolbutton.h>
+#include <qframe.h>
+#include <qeventloop.h>
 
 #if RECORD_TIMINGS
   StopWatch stopWatch;
 #endif
 
-KMFUiInterface::KMFUiInterface(QObject *parent) :
-  KMF::UiInterface(parent), m_useMessageBox(false)
+KMFUiInterface::KMFUiInterface(QObject *parent, const char *name) :
+  KMF::UiInterface(parent, name), m_useMessageBox(false)
 {
 }
 
@@ -50,71 +49,57 @@ KMFUiInterface::~KMFUiInterface()
 {
 }
 
-bool KMFUiInterface::addMediaAction(QAction* action,
-                                    const QString& group) const
-{
-  kmfApp->mainWindow()->mediaPage->mediaButtons->add(action, group);
-  return true;
-}
-
 bool KMFUiInterface::addMediaObject(KMF::MediaObject *media) const
 {
-  KMFProject* project = kmfApp->project();
-
-  if(project)
-    project->addItem(media);
+  kmfApp->project()->addItem(media);
   return true;
 }
 
 bool KMFUiInterface::addTemplateObject(KMF::TemplateObject* tob)
 {
-  KMFProject* project = kmfApp->project();
-
-  if(project)
-    project->templateObjects()->append(tob);
+  KMediaFactory* mainWindow =
+      static_cast<KMediaFactory*>(kmfApp->mainWidget());
+  mainWindow->templatePage->templates->newItem(tob);
   return true;
 }
 
 bool KMFUiInterface::addOutputObject(KMF::OutputObject* oob)
 {
-  KMFProject* project = kmfApp->project();
-
-  if(project)
-    project->outputObjects()->append(oob);
+  KMediaFactory* mainWindow =
+      static_cast<KMediaFactory*>(kmfApp->mainWidget());
+  mainWindow->outputPage->outputs->newItem(oob);
   return true;
 }
 
 bool KMFUiInterface::removeMediaObject(KMF::MediaObject *media) const
 {
-  KMFProject* project = kmfApp->project();
-
-  if(project)
-    project->removeItem(media);
+  kmfApp->project()->removeItem(media);
   return true;
 }
 
 bool KMFUiInterface::removeTemplateObject(KMF::TemplateObject* tob)
 {
-  KMFProject* project = kmfApp->project();
-
-  if(project)
-    project->templateObjects()->removeAll(tob);
+  KMediaFactory* mainWindow =
+      static_cast<KMediaFactory*>(kmfApp->mainWidget());
+  if(mainWindow)
+    mainWindow->templatePage->templates->itemRemoved(tob);
   return true;
 }
 
 bool KMFUiInterface::removeOutputObject(KMF::OutputObject* oob)
 {
-  KMFProject* project = kmfApp->project();
-
-  if(project)
-    project->outputObjects()->removeAll(oob);
+  KMediaFactory* mainWindow =
+      static_cast<KMediaFactory*>(kmfApp->mainWidget());
+  if(mainWindow)
+    mainWindow->outputPage->outputs->itemRemoved(oob);
   return true;
 }
 
 bool KMFUiInterface::message(KMF::MsgType type, const QString& msg)
 {
-  KMediaFactory* mainWindow = kmfApp->mainWindow();
-  QString pixmap;
+  KMediaFactory* mainWindow =
+      static_cast<KMediaFactory*>(kmfApp->mainWidget());
+  QPixmap pixmap;
   QColor color;
   KMessageBox::DialogType dlgType = KMessageBox::Information;
 
@@ -126,39 +111,33 @@ bool KMFUiInterface::message(KMF::MsgType type, const QString& msg)
   {
     case KMF::None:
     case KMF::Info:
-      pixmap = "dialog-information";
+      pixmap = KGlobal::iconLoader()->loadIcon("info", KIcon::Small);
       color = QColor("darkGreen");
       dlgType = KMessageBox::Information;
       break;
     case KMF::Warning:
-      pixmap = "dialog-warning";
+      pixmap = KGlobal::iconLoader()->loadIcon("flag", KIcon::Small);
       color = QColor(211, 183, 98);
       dlgType = KMessageBox::Sorry;
       break;
     case KMF::Error:
-      pixmap = "dialog-error";
+      pixmap = KGlobal::iconLoader()->loadIcon("cancel", KIcon::Small);
       color = QColor("red");
       dlgType = KMessageBox::Error;
       break;
     case KMF::OK:
-      pixmap = "dialog-ok";
+      pixmap = KGlobal::iconLoader()->loadIcon("ok", KIcon::Small);
       color = QColor("darkGreen");
       dlgType = KMessageBox::Information;
       break;
   }
-  setItemTotalSteps(0);
-  QListView* lv = mainWindow->outputPage->progressListView;
-  KMFProgressItemModel* model = static_cast<KMFProgressItemModel*>(lv->model());
-  KMFProgressItem item;
-  item.text = msg;
-  item.pixmap = pixmap;
-  model->append(item);
-  lv->scrollTo(model->lastIndex());
-
+  KMFProgressListView* lv = mainWindow->outputPage->progressListView;
+  lv->insertItem(pixmap, msg);
   kmfApp->logger().message(msg, color);
   if(m_useMessageBox)
     KMessageBox::messageBox(mainWindow, dlgType, msg);
-  kmfApp->processEvents(QEventLoop::AllEvents);
+  //mainWindow->outputPage->progressListbox->repaint();
+  kmfApp->eventLoop()->processEvents(QEventLoop::AllEvents);
   return m_stopped;
 }
 
@@ -170,51 +149,42 @@ KMF::Logger* KMFUiInterface::logger()
 bool KMFUiInterface::progress(int advance)
 {
   KMediaFactory* mainWindow =
-      kmfApp->mainWindow();
+      static_cast<KMediaFactory*>(kmfApp->mainWidget());
 
   if(advance)
   {
     /*
-    kDebug()
-        << mainWindow->outputPage->progressBar->value() << " + " << advance
-        << " / " << mainWindow->outputPage->progressBar->maximum()
-       ;
+    kdDebug() << k_funcinfo
+        << mainWindow->outputPage->progressBar->progress() << " + " << advance
+        << " / " << mainWindow->outputPage->progressBar->totalSteps()
+        << endl;
     */
-    mainWindow->outputPage->progressBar->setValue(
-        mainWindow->outputPage->progressBar->value()+advance);
+    mainWindow->outputPage->progressBar->advance(advance);
   }
 #if RECORD_TIMINGS
   stopWatch.progress(advance);
 #endif
-  kmfApp->processEvents(QEventLoop::AllEvents);
+  kmfApp->eventLoop()->processEvents(QEventLoop::AllEvents);
   return m_stopped;
 }
 
 bool KMFUiInterface::setItemTotalSteps(int totalSteps)
 {
-  QListView* lv = kmfApp->mainWindow()->outputPage->progressListView;
-  KMFProgressItemModel* model = static_cast<KMFProgressItemModel*>(lv->model());
-  int last = model->rowCount() - 1;
-  KMFProgressItem item = model->at(last);
-  if(item.max != totalSteps)
-  {
-    item.max = totalSteps;
-    model->replace(last, item);
-  }
+  KMediaFactory* mainWindow =
+      static_cast<KMediaFactory*>(kmfApp->mainWidget());
+  KMFProgressListView* lv = mainWindow->outputPage->progressListView;
+  lv->setTotalSteps(totalSteps);
+  kmfApp->eventLoop()->processEvents(QEventLoop::AllEvents);
   return m_stopped;
 }
 
 bool KMFUiInterface::setItemProgress(int progress)
 {
-  QListView* lv = kmfApp->mainWindow()->outputPage->progressListView;
-  KMFProgressItemModel* model = static_cast<KMFProgressItemModel*>(lv->model());
-  int last = model->rowCount() - 1;
-  KMFProgressItem item = model->at(last);
-  if(item.value != progress)
-  {
-    item.value = progress;
-    model->replace(last, item);
-  }
+  KMediaFactory* mainWindow =
+      static_cast<KMediaFactory*>(kmfApp->mainWidget());
+  KMFProgressListView* lv = mainWindow->outputPage->progressListView;
+  lv->setProgress(progress);
+  kmfApp->eventLoop()->processEvents(QEventLoop::AllEvents);
   return m_stopped;
 }
 

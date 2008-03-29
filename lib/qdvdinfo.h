@@ -19,25 +19,20 @@
 
 #include "config.h"
 #include <klocale.h>
-#include <QDateTime>
-#include <QString>
-#include <QStringList>
-#include <QFont>
-#include <QMap>
-#include <QObject>
-#include <QList>
-
-#undef _STDINT_H
-#define __STDC_LIMIT_MACROS
-#include <stdint.h>
-
+#include <qdatetime.h>
+#include <qptrlist.h>
+#include <qstring.h>
+#include <qstringlist.h>
+#include <qfont.h>
+#include <qmap.h>
+#include <qobject.h>
 #ifdef HAVE_LIBDVDREAD
 #include <dvdread/ifo_read.h>
 #endif
 
 namespace QDVD
 {
-  class KDE_EXPORT Languages
+  class Languages
   {
     public:
       Languages() {};
@@ -53,7 +48,7 @@ namespace QDVD
       static const char* LanguageStrings[][2];
   };
 
-  class KDE_EXPORT Base
+  class Base
   {
     public:
       enum { CELL, AUDIO, SUBTITLE, VIDEO, TITLE, INFO };
@@ -66,7 +61,7 @@ namespace QDVD
       virtual uint rtti() const = 0;
   };
 
-  class KDE_EXPORT Cell : public Base
+  class Cell : public Base
   {
     public:
       Cell() : m_cell(0), m_chapter(true), m_startSector(0),
@@ -105,9 +100,9 @@ namespace QDVD
       QString m_name;
   };
 
-  typedef QList< Cell > CellList;
+  typedef QValueList< Cell > CellList;
 
-  class KDE_EXPORT Track : public Base
+  class Track : public Base
   {
     public:
       Track() : m_trackId(-1), m_position(-1), m_size(0) {};
@@ -128,7 +123,7 @@ namespace QDVD
       uint64_t m_size;
   };
 
-  class KDE_EXPORT Subtitle : public Track
+  class Subtitle : public Track
   {
     public:
       enum Type { Undefined = 0, Normal, Large, Children, Reserved1,
@@ -155,8 +150,8 @@ namespace QDVD
       QString file() const { return m_file; };
       void setFont(QFont font) { m_font = font; };
       QFont font() const { return m_font; };
-      void setAlignment(Qt::Alignment align) { m_align = align; };
-      Qt::Alignment alignment() const { return m_align; };
+      void setAlignment(Qt::AlignmentFlags align) { m_align = align; };
+      Qt::AlignmentFlags alignment() const { return m_align; };
       QString verticalAlign() const;
       QString horizontalAlign() const;
 
@@ -170,10 +165,10 @@ namespace QDVD
       Type    m_type;
       QString m_file;
       QFont   m_font;
-      Qt::Alignment m_align;
+      Qt::AlignmentFlags m_align;
   };
 
-  class KDE_EXPORT AudioTrack : public Track
+  class AudioTrack : public Track
   {
     public:
       enum Type { Undefined = 0, Normal, Impaired, Comments1, Comments2 };
@@ -219,7 +214,7 @@ namespace QDVD
       int m_bitrate;
   };
 
-  class KDE_EXPORT VideoTrack : public Track
+  class VideoTrack : public Track
   {
     friend class Title;
 
@@ -266,10 +261,10 @@ namespace QDVD
       int m_permittedDf;
   };
 
-  typedef QList< AudioTrack > AudioList;
-  typedef QList< Subtitle > SubtitleList;
+  typedef QValueList< AudioTrack > AudioList;
+  typedef QValueList< Subtitle > SubtitleList;
 
-  class KDE_EXPORT Title : public Base
+  class Title : public Base
   {
     friend class Info;
 
@@ -345,15 +340,15 @@ namespace QDVD
       CellList m_cells;
   };
 
-  typedef QList< Title > TitleList;
+  typedef QValueList< Title > TitleList;
 
-  class KDE_EXPORT Info : public QObject, public Base
+  class Info : public QObject, public Base
   {
     Q_OBJECT
 #ifdef HAVE_LIBDVDREAD
     public:
       Info(const QString& device,
-           QObject* parent = 0);
+           QObject* parent = 0, const char* name = 0);
 
       bool parseDVD(const QString& device = "/dev/dvd");
 
@@ -362,8 +357,8 @@ namespace QDVD
 #endif
 
     public:
-      Info(QObject* parent = 0)
-          : QObject(parent) {};
+      Info(QObject* parent = 0, const char* name = 0)
+          : QObject(parent, name) {};
       ~Info();
 
       void addTitle(const Title& title) { m_titles.append(title); };
@@ -393,8 +388,6 @@ namespace QDVD
       TitleList m_titles;
   };
 }
-
-Q_DECLARE_METATYPE(const QDVD::Base*);
 
 #endif
 

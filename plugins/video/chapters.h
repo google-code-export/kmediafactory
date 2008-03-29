@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -21,20 +21,20 @@
 #define CHAPTERS_H
 
 #include <kmf_stddef.h>
-#include <ui_chapters.h>
+#include <chapterslayout.h>
 #include <videooptions.h>
 #include <kmftime.h>
+
+class QListView;
 
 /**
 @author Petri Damsten
 */
-class CellListModel;
-
-class Chapters : public KDialog, public Ui::Chapters
+class Chapters : public ChaptersLayout
 {
     Q_OBJECT
   public:
-    Chapters(QWidget *parent = 0);
+    Chapters(QWidget *parent = 0, const char *name = 0);
     ~Chapters();
 
     void getData(QDVD::CellList& cells, QString* preview) const;
@@ -51,25 +51,23 @@ class Chapters : public KDialog, public Ui::Chapters
     virtual void slotAdd();
     virtual void slotSelectionChanged();
     virtual void slotSliderMoved(int value);
-    virtual void slotContextMenu(const QPoint& p);
+    virtual void slotContextMenu(KListView*, QListViewItem*, const QPoint& p);
     virtual void renameAll();
     virtual void deleteAll();
     virtual void autoChapters();
     virtual void import();
     virtual void saveCustomPreview();
-    virtual void accept();
+    virtual void okClicked();
 
   private:
     const VideoObject* m_obj;
     KMF::Time m_pos;
     QString m_duration;
     QString m_preview;
-    QDVD::CellList m_cells;
-    CellListModel* m_model;
 
+    int selectedItemIndex(QListView* lv);
     void moveFrames(int direction);
     void updateVideo();
-    void checkLengths();
 };
 
 #endif

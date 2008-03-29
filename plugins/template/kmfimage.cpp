@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damst�
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,13 +20,14 @@
 #include "kmfimage.h"
 #include "kmfmenu.h"
 #include "kmfmenupage.h"
-#include <kstore/KoStore.h>
+#include <kstore/koStore.h>
+#include "QMImage.h"
 #include <kio/netaccess.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
-#include <QVariant>
-#include <QApplication>
-#include <QPainter>
+#include <qvariant.h>
+#include <qdom.h>
+#include <qapplication.h>
 
 const char * transparent_xpm[] =
 {
@@ -37,10 +38,11 @@ const char * transparent_xpm[] =
 
 QImage KMFImage::m_empty(transparent_xpm);
 
-KMFImage::KMFImage(QObject *parent)
-  : KMFWidget(parent), m_scale(true), m_proportional(true)
+KMFImage::KMFImage(QObject *parent, const char *name)
+  : KMFWidget(parent, name), m_scale(true), m_proportional(true)
 {
-  setColor(QColor());
+  // set color to transparent, otherwise image will be drawn with one color.
+  setColor(KMF::Color::null);
 }
 
 KMFImage::~KMFImage()
@@ -49,7 +51,7 @@ KMFImage::~KMFImage()
 
 int KMFImage::paintWidth() const
 {
-  //kDebug() << paintRect().width();
+  //kdDebug() << k_funcinfo << paintRect().width() << endl;
   return paintRect().width();
 }
 
@@ -86,102 +88,70 @@ QRect KMFImage::paintRect(const QPoint offset) const
     rc = QRect(0, 0, m_image.width(), m_image.height());
     rc.align(KMFWidget::paintRect(), halign(), valign());
   }
-  rc.translate(offset.x(), offset.y());
-  //kDebug() << rc;
+  rc.moveBy(offset.x(), offset.y());
+  //kdDebug() << k_funcinfo << rc << endl;
   return rc;
 }
 
-QImage KMFImage::mask(const QImage& img, const QRgb& maskColor, bool oneBitMask)
-{
-  QImage result(img.width(), img.height(), QImage::Format_ARGB32);
-  double alphaScale = qAlpha(maskColor) / 255.0;
-
-  //kDebug() << maskColor << alphaScale;
-  for (int y = 0; y < img.height(); y++)
-  {
-    for (int x = 0; x < img.width(); x++)
-    {
-      QRgb pix = img.pixel(x, y);
-      if(oneBitMask)
-      {
-        if(qAlpha(pix) > 128)
-          pix = qRgba(qRed(maskColor), qGreen(maskColor),
-                      qBlue(maskColor), 255);
-        else
-          pix = qRgba(qRed(maskColor), qGreen(maskColor), qBlue(maskColor), 0);
-      }
-      else
-      {
-        pix = qRgba(qRed(maskColor), qGreen(maskColor), qBlue(maskColor),
-                    (int)(alphaScale * qAlpha(pix)));
-      }
-      result.setPixel(x, y, pix);
-    }
-  }
-  return result;
-}
-
-void KMFImage::paintWidget(QImage& layer, bool shdw)
+void KMFImage::paintWidget(Magick::Image& layer, bool shdw)
 {
   QPoint off = (shdw) ? shadow().offset() : QPoint();
-  QColor clr = (shdw) ? shadow().color() : color();
+  KMF::Color clr = (shdw) ? shadow().color() : color();
   QRect rc = paintRect(off);
-  QPainter p(&layer);
-  QImage image;
+  QMImage image;
 
-  if(clr.isValid())
-    image = mask(m_image, clr.rgba(), !shdw);
+  if(!clr.isNull())
+  {
+    QMImage img(m_image, clr.rgb(), !shdw);
+    image = img;
+  }
   else
-    image = m_image;
+  {
+    QMImage img(m_image);
+    image = img;
+  }
 
-  if(image.width() == 0 || image.height() == 0)
+  if(image.columns() == 0 || image.rows() == 0)
     return;
 
   if(m_scale)
   {
-    Qt::AspectRatioMode mode = (m_proportional)?
-        Qt::KeepAspectRatio:Qt::IgnoreAspectRatio;
-    image = image.scaled(rc.width(), rc.height(),
-                         mode, Qt::SmoothTransformation);
+    Magick::Geometry g(rc.width(), rc.height());
+    g.aspect(!m_proportional);
+    image.scale(g);
   }
-  //kDebug() << m_url << ": " <<  shdw;
-  p.drawImage(QPoint(rc.left(), rc.top()), image);
+  //kdDebug() << k_funcinfo << name() << rc << endl;
+  layer.composite(image, rc.left(), rc.top(), Magick::OverCompositeOp);
 }
 
-void KMFImage::setImage(KUrl url)
+void KMFImage::setImage(KURL url)
 {
   bool ok = false;
 
-  m_url = url;
-  //kDebug() << url;
   if(url.protocol() == "project")
   {
-    QList<KMF::MediaObject*> mobs = m_prjIf->mediaObjects();
+    QPtrList<KMF::MediaObject>* mobs = m_prjIf->mediaObjects();
     int title;
     int chapter;
 
     parseTitleChapter(url.path().mid(1), title, chapter);
-    if(title > 0 && title <= (int)mobs.count()
-       && chapter <= (int)mobs.at(title-1)->chapters())
+    if(title > 0 && title <= (int)mobs->count()
+       && chapter <= (int)mobs->at(title-1)->chapters())
     {
-      setImage(mobs.at(title-1)->preview(chapter));
+      setImage(mobs->at(title-1)->preview(chapter));
       ok = true;
     }
   }
   else if(url.protocol() == "template")
   {
-    const KMFTemplate* tmplate = menu()->templateStore();
-    QImage img;
+    const KMFTemplate& tmplate = menu()->templateStore();
 
-    img.loadFromData(tmplate->readFile(url.path().mid(1)));
-    setImage(img);
+    setImage(QImage(tmplate.readFile(url.path().mid(1))));
     ok = true;
   }
   else if(url.protocol() == "kde")
   {
-    QString tmpFile = KStandardDirs::locate(url.host().toLocal8Bit(),
-                                            url.path().mid(1));
-    //kDebug() << url.host().toLocal8Bit() << url.path().mid(1) << tmpFile;
+    QString tmpFile = ::locate(url.host(), url.path().mid(1));
     if(!tmpFile.isEmpty())
     {
       ok = true;
@@ -191,7 +161,7 @@ void KMFImage::setImage(KUrl url)
   else
   {
     QString tmpFile;
-    if(KIO::NetAccess::download(url, tmpFile, qApp->activeWindow()))
+    if(KIO::NetAccess::download(url, tmpFile, qApp->mainWidget()))
     {
       setImage(QImage(tmpFile));
       KIO::NetAccess::removeTempFile(tmpFile);
@@ -217,13 +187,13 @@ void KMFImage::fromXML(const QDomElement& element)
   KMFWidget::fromXML(element);
   m_scale = element.attribute("scale", "1").toInt();
   m_proportional = element.attribute("proportional", "1").toInt();
-  setImage(KUrl(element.attribute("url", "")));
+  setImage(KURL(element.attribute("url", "")));
 }
 
 int KMFImage::minimumPaintWidth() const
 {
   int result = m_image.width();
-
+  
   if(geometry().width().type() == KMFUnit::Absolute)
   {
     result = geometry().width().value();
@@ -239,7 +209,7 @@ int KMFImage::minimumPaintWidth() const
       result = (int)((double)geometry().h() * m_aspectRatio);
     }
   }
-  //kDebug() << result;
+  //kdDebug() << k_funcinfo << result << endl;
   return result;
 }
 
@@ -262,15 +232,15 @@ int KMFImage::minimumPaintHeight() const
       result = (int)((double)geometry().w() / m_aspectRatio);
     }
   }
-  //kDebug() << result;
+  //kdDebug() << k_funcinfo << result << endl;
   return result;
 }
 
 void KMFImage::setProperty(const QString& name, QVariant value)
 {
   KMFWidget::setProperty(name, value);
-  if(name == "url")
-    setImage(value.value<KUrl>());
+  if(name == "url" && !value.toString().isEmpty())
+    setImage(KURL(value.toString()));
 }
 
 #include "kmfimage.moc"

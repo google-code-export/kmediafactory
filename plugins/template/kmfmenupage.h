@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -22,23 +22,30 @@
 
 #include "kmfwidget.h"
 #include <kmediafactory/plugin.h>
-#include <QObject>
-#include <QSize>
-
-#define DPM 2700
+#include <qobject.h>
+#include <qsize.h>
+#include <qptrlist.h>
+#include <qdom.h>
+#include <Magick++.h>
 
 class KMFButton;
 class TemplateObject;
 class KMFMenuPage;
+class QFFMpeg;
+class KProcIO;
 
+typedef QPtrListIterator<KMFMenuPage> KMFMenuPageIterator;
+
+/**
+*/
 class KMFMenuPage : public KMFWidget
 {
     Q_OBJECT
   public:
-    KMFMenuPage(QObject *parent = 0);
+    KMFMenuPage(QObject *parent = 0, const char *name = 0);
     ~KMFMenuPage();
 
-    QImage* getLayer(Layer layer);
+    Magick::Image* getLayer(Layer layer);
     void addButton(KMFButton* button) { m_buttons->append(button); };
     int buttonCount() { return m_buttons->count(); };
     KMFButton* button(int n) { return m_buttons->at(n); };
@@ -71,19 +78,23 @@ class KMFMenuPage : public KMFWidget
           m_index = index; m_count = count; };
     bool directChapterPlay() { return m_directChapterPlay; };
     bool directPlay() { return m_directPlay; };
-    QImage& layer(Layer layer);
-    Layer layerType(const QImage& img);
+    Magick::Image& layer(Layer layer);
+    Layer layerType(const Magick::Image& img);
+
+  protected slots:
+    void slotProgress(int progress);
 
   private:
-    QImage m_background;
-    QImage m_sub;
-    QImage m_subHighlight;
-    QImage m_subSelect;
-    QImage m_temp;
-    QList<KMFButton*>* m_buttons;
+    Magick::Image m_background;
+    Magick::Image m_sub;
+    Magick::Image m_subHighlight;
+    Magick::Image m_subSelect;
+    Magick::Image m_temp;
+    QPtrList<KMFButton>* m_buttons;
     QSize m_resolution;
     QString m_language;
     QString m_sound;
+    QFFMpeg* m_converter;
     int m_modifiedLayers;
     int m_titles;
     int m_chapters;
@@ -105,7 +116,11 @@ class KMFMenuPage : public KMFWidget
     bool saveImages();
     bool writeSpumuxXml(QDomDocument& doc);
     bool writeSpumuxXml();
+    void magickReport(Magick::Exception &e, QString s = QString::null);
     bool runScript(QString scriptName, QString place = "menus");
+    bool saveImage(Magick::Image& image, const QString& file);
+    static int mjpegtoolsVersion();
+    static int makeVersion(KProcIO& proc);
 };
 
 #endif

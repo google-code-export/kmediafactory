@@ -1,0 +1,63 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>ConfigureTemplatePluginLayout</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>ConfigureTemplatePluginLayout</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>288</width>
+            <height>185</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Configure Template Plugin</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>defaultMenuLanguageLabel</cstring>
+            </property>
+            <property name="text">
+                <string>Default &amp;Menu Language:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>kcfg_DefaultMenuLanguage</cstring>
+            </property>
+        </widget>
+        <widget class="KMFLanguageComboBox">
+            <property name="name">
+                <cstring>kcfg_DefaultMenuLanguage</cstring>
+            </property>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer1</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>40</height>
+                </size>
+            </property>
+        </spacer>
+    </vbox>
+</widget>
+<customwidgets>
+</customwidgets>
+<includes>
+    <include location="local" impldecl="in implementation">kmflanguagewidgets.h</include>
+</includes>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

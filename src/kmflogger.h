@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -26,6 +26,8 @@
 /**
 */
 
+// TODO: Method to switch html on/off
+
 class KMFLogger : public KMF::Logger
 {
     Q_OBJECT
@@ -39,16 +41,11 @@ class KMFLogger : public KMF::Logger
     virtual QString filter() const { return m_filter.pattern(); };
     virtual bool save(QString file) const;
 
-  signals:
-    void line(QString line);
-
   public slots:
-    virtual void stdout();
-    virtual void stderr();
+    virtual void stdout(KProcess *proc, char *buffer, int buflen);
+    virtual void stderr(KProcess *proc, char *buffer, int buflen);
 
   private:
-    virtual void out();
-
     QString m_log;
     QString m_buffer;
     QRegExp m_filter;

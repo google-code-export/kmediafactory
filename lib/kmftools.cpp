@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damst?
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -21,20 +21,11 @@
 #include <kstringhandler.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
-#include <QFileInfo>
-#include <QDir>
-#include <QSet>
-#include <QStringList>
-#include <QTextStream>
-#include <QFont>
-#include <QDomElement>
-#include <QAbstractItemView>
-#include <QItemSelection>
-#include <QStringListModel>
-#include <QPainter>
+#include <qfileinfo.h>
+#include <qdir.h>
+#include <qstringlist.h>
 #include <sys/stat.h>
 #include <errno.h>
-#include <fontconfig/fontconfig.h>
 
 KMF::Tools::Tools()
 {
@@ -49,14 +40,16 @@ QString KMF::Tools::toAscii(QString text)
 {
   QString s = text;
 
-  s.replace(QString::fromUtf8("\xc3\x85"), "A");
-  s.replace(QString::fromUtf8("\xc3\x84"), "A");
-  s.replace(QString::fromUtf8("\xc3\x96"), "O");
-  s.replace(QString::fromUtf8("\xc3\x9c"), "U");
-  s.replace(QString::fromUtf8("\xc3\xa5"), "a");
-  s.replace(QString::fromUtf8("\xc3\xa4"), "a");
-  s.replace(QString::fromUtf8("\xc3\xb6"), "o");
-  s.replace(QString::fromUtf8("\xc3\xbc"), "u");
+  s.replace('Å', "A");
+  s.replace('Ä', "A");
+  s.replace('Ö', "O");
+  s.replace('Õ', "O");
+  s.replace('Ü', "U");
+  s.replace('å', "a");
+  s.replace('ä', "a");
+  s.replace('ö', "o");
+  s.replace('õ', "o");
+  s.replace('ü', "u");
   return s;
 }
 
@@ -64,16 +57,16 @@ QString KMF::Tools::simpleName(QString s)
 {
   s.replace(' ', "_");
   s = toAscii(s);
-  return s.toLower();
+  return s.lower();
 }
 
 QString KMF::Tools::simple2Title(QString s)
 {
   int i;
 
-  s.replace('-', QChar::Nbsp);
-  s.replace('_', QChar::Nbsp);
-  i = s.lastIndexOf('.');
+  s.replace('-', ' ');
+  s.replace('_', ' ');
+  i = s.findRev('.');
   if(i > 0)
     s = s.left(i);
   s = KStringHandler::capwords(s);
@@ -92,7 +85,22 @@ QString KMF::Tools::simpleBaseName(QString file)
 
 void KMF::Tools::removeDuplicates(QStringList* list)
 {
-  *list = list->toSet().toList();
+  QString last;
+
+  list->sort();
+  for(QStringList::Iterator it = list->begin(); it != list->end(); )
+  {
+    QStringList::Iterator it2 = it++;
+    if (*it2 == last)
+    {
+      // remove duplicate
+      list->remove(it2);
+    }
+    else
+    {
+      last = *it2;
+    }
+  }
 }
 
 QString KMF::Tools::sizeString(uint64_t size)
@@ -129,17 +137,17 @@ uint64_t KMF::Tools::fileSize(QString file)
   {
     // 2 = No such file or directory
     if (errno != 2)
-      kDebug () << QString("stat(%1) error: %2").arg(file).arg(strerror(errno))
-         ;
+      kdDebug () << QString("stat(%1) error: %2").arg(file).arg(strerror(errno))
+          << endl;
     return 0;
   }
   return buf.st_size;
 }
 */
 
-void KMF::Tools::stripExisting(KUrl::List* src, const KUrl& dest)
+void KMF::Tools::stripExisting(KURL::List* src, const KURL& dest)
 {
-  KUrl::List::iterator it = src->begin();
+  KURL::List::iterator it = src->begin();
   QDir dir(dest.path());
 
   while(it != src->end())
@@ -148,7 +156,7 @@ void KMF::Tools::stripExisting(KUrl::List* src, const KUrl& dest)
     QFileInfo fiDest(dir.filePath(fi.fileName()));
 
     if(fiDest.exists())
-      it = src->erase(it);
+      it = src->remove(it);
     else
       ++it;
   }
@@ -202,7 +210,7 @@ QStringList KMF::Tools::file2List(const QString& file,
   QFile f(file);
   QString line;
 
-  if(f.open(QIODevice::ReadOnly))
+  if(f.open(IO_ReadOnly))
   {
     QTextStream stream(&f);
     while(!stream.atEnd())
@@ -224,7 +232,7 @@ QStringList KMF::Tools::findAllResources(const char* type,
 {
   QStringList dirs = KGlobal::dirs()->resourceDirs(type);
   QStringList result, files;
-  int n = filter.lastIndexOf(QDir::separator());
+  int n = filter.findRev(QDir::separator());
   QString d = filter.left(n + 1);
   QString f = filter.mid(n + 1);
 
@@ -232,7 +240,7 @@ QStringList KMF::Tools::findAllResources(const char* type,
   {
     QDir dir(*it + d);
 
-    files = dir.entryList(QStringList(f));
+    files = dir.entryList(f);
     for(QStringList::ConstIterator jt = files.begin(); jt != files.end(); ++jt)
       result.append(dir.filePath(*jt));
   }
@@ -243,7 +251,7 @@ QSize KMF::Tools::resolution(const QSize& original,
                              const QSize& originalRatio,
                              const QSize& dest,
                              const QSize& destRatio,
-                             Qt::AspectRatioMode mode)
+                             QSize::ScaleMode mode)
 {
   double sourceRatio = ((double)originalRatio.width() /
                         (double)originalRatio.height()) /
@@ -302,234 +310,4 @@ QSize KMF::Tools::guessRatio(const QSize& image, const QSize& video)
   }
   // Square pixels
   return image;
-}
-
-void KMF::Tools::fontToXML(const QFont& font, QDomElement* element)
-{
-  element->setAttribute("name", font.family());
-  //element.setAttribute("color", m_color);
-  element->setAttribute("size", font.pointSize());
-  element->setAttribute("weight", font.weight() * 10);
-}
-
-QFont KMF::Tools::fontFromXML(const QDomElement& element)
-{
-  QFont f;
-
-  f.setFamily(element.attribute("name", "Helvetica"));
-  // Widget has color attribute
-  //m_color = element.attribute("color", "0").toLong();
-  f.setPointSize(element.attribute("size", "22").toInt());
-  f.setWeight(element.attribute("weight", "400").toInt() / 10);
-  //kDebug() << family() << pointSize() << weight();
-  return f;
-}
-
-int KMF::Tools::fcWeight2QtWeight(int fcWeight)
-{
-  if(fcWeight <= FC_WEIGHT_LIGHT)
-    return QFont::Light;
-  else if(fcWeight >= FC_WEIGHT_BLACK)
-    return QFont::Black;
-  else if(fcWeight >= FC_WEIGHT_BOLD)
-    return QFont::Bold;
-  else if(fcWeight >= FC_WEIGHT_DEMIBOLD)
-    return QFont::DemiBold;
-  else
-    return QFont::Normal;
-}
-
-QString KMF::Tools::longFontName(const QFont& font)
-{
-  QString result = QString("%1-%2-%3-%4")
-      .arg(font.family()).arg(font.stretch())
-      .arg(font.weight()).arg(font.italic());
-  return result;
-}
-
-QFont KMF::Tools::realFont(const QFont& font)
-{
-  QFont result(font);
-  QFontInfo fi(font);
-
-  result.setFamily(fi.family());
-  result.setWeight(fi.weight());
-  result.setItalic(fi.italic());
-  result.setPointSize(fi.pointSize());
-  return result;
-}
-
-QString KMF::Tools::fontFile(const QFont& font)
-{
-  QString name = longFontName(realFont(font));
-  static QMap<QString, QString> fileMap;
-
-  if(fileMap.count() == 0)
-  {
-    FcObjectSet* os;
-    FcPattern* pat;
-    FcFontSet* fontset;
-    int i;
-
-    os = FcObjectSetBuild(FC_FAMILY, FC_FILE, FC_WEIGHT, FC_SLANT,
-                          FC_WIDTH, NULL);
-    pat = FcPatternCreate();
-    fontset = FcFontList(NULL, pat, os);
-    FcPatternDestroy(pat);
-    FcObjectSetDestroy(os);
-
-    for(i=0; i<fontset->nfont; i++)
-    {
-      QFont font;
-      FcChar8* family;
-      FcChar8* file;
-      int weight;
-      int slant;
-      int width;
-
-      FcPatternGetString(fontset->fonts[i], FC_FAMILY, 0, &family);
-      FcPatternGetString(fontset->fonts[i], FC_FILE, 0, &file);
-      FcPatternGetInteger(fontset->fonts[i], FC_WEIGHT, 0, &weight);
-      FcPatternGetInteger(fontset->fonts[i], FC_SLANT, 0, &slant);
-      FcPatternGetInteger(fontset->fonts[i], FC_WIDTH, 0, &width);
-      font.setFamily((const char*)family);
-      font.setWeight(fcWeight2QtWeight(weight));
-      font.setItalic(slant >= FC_SLANT_ITALIC);
-      if(width < QFont::UltraCondensed || width > QFont::UltraExpanded)
-        width = QFont::Unstretched;
-      font.setStretch(width);
-      /*
-      if(QString((const char*)family).startsWith("Bit"))
-      kDebug() << (const char*)family << ", " << weight << ", "
-      << slant << ", " << width << ", " << (const char*)file
-      << font.longName();
-      */
-      fileMap[longFontName(font)] = (const char*)file;
-
-      // Font names with '-' cause mapping problems. Qt mangles them?
-      QString s = (const char*)family;
-      s.replace('-', " ");
-      if(s != (const char*)family)
-      {
-        font.setFamily(s);
-        //kDebug() << font.longName();
-        fileMap[longFontName(font)] = (const char*)file;
-      }
-    }
-    FcFontSetDestroy (fontset);
-  }
-  /*
-  // Write font list for debugging
-  QFile file(QDir::homePath() + "/.spumux/fonts.txt");
-  if(file.open(QIODevice::WriteOnly | QIODevice::Text))
-  {
-    QTextStream out(&file);
-    QMap<QString, QString>::const_iterator i = fileMap.constBegin();
-
-    out << name << endl << endl;
-    while (i != fileMap.constEnd())
-    {
-      out << i.key() << ": " << i.value() << endl;
-      ++i;
-    }
-  }
-  // End of font list
-  */
-  return fileMap[name];
-}
-
-void KMF::Tools::printChilds(QObject* obj, int level)
-{
-  static QString s;
-
-  foreach(QObject* child, obj->children())
-  {
-    kDebug() << s.leftJustified(level, '-')
-        << child->metaObject()->className() << ": "
-        << child->objectName();
-    printChilds(child, level + 1);
-  }
-}
-
-// This function is from qcolor.cpp
-int KMF::Tools::hex2int(QChar hexchar)
-{
-  int v;
-  if ( hexchar.isDigit() )
-    v = hexchar.digitValue();
-  else if ( hexchar >= 'A' && hexchar <= 'F' )
-    v = hexchar.cell() - 'A' + 10;
-  else if ( hexchar >= 'a' && hexchar <= 'f' )
-    v = hexchar.cell() - 'a' + 10;
-  else
-    v = 0;
-  return v;
-}
-
-
-QColor KMF::Tools::toColor(const QString& s)
-{
-  QColor result;
-
-  if(s.isEmpty())
-  {
-    result.setRgb(0);
-  }
-  else if (s[0].isDigit()) // Color as integer
-  {
-    result.setRgb(s.toLong());
-  }
-  else if (s[0] == '#' && s.length() == 9) // Special alpha channel case
-  {
-    result.setRgba(qRgba((hex2int(s[1]) << 4) + hex2int(s[2]),
-                         (hex2int(s[3]) << 4) + hex2int(s[4]),
-                         (hex2int(s[5]) << 4) + hex2int(s[6]),
-                         (hex2int(s[7]) << 4) + hex2int(s[8])));
-  }
-  else
-  {
-    result.setNamedColor(s);
-  }
-  return result;
-}
-
-QMap<QString, QString> KMF::Tools::readIniFile(const QString& ini)
-{
-  QMap<QString, QString> info;
-  QFile f(ini);
-
-  if(f.open(QIODevice::ReadOnly))
-  {
-    QStringList lines = QString(f.readAll()).split("\n");
-
-    for(QStringList::Iterator it = lines.begin(); it != lines.end(); ++it)
-    {
-      QStringList keyAndValue = it->split("=");
-      if(keyAndValue.count() == 2)
-        info[keyAndValue[0]] = keyAndValue[1];
-    }
-    f.close();
-  }
-  return info;
-}
-
-// From Qt4 examples painting/painterpaths/window.cpp GPL-2
-void KMF::Tools::drawRoundRect(QPainter* painter, const QRect& rect,
-                               int radius)
-{
-  int dr = radius * 2;
-  QPainterPath roundRectPath;
-
-  roundRectPath.moveTo(rect.right(), rect.top() + radius);
-  roundRectPath.arcTo(rect.right() - dr, rect.top(), dr, dr, 0.0, 90.0);
-  roundRectPath.lineTo(rect.left() + radius, rect.top());
-  roundRectPath.arcTo(rect.left(), rect.top(), dr, dr, 90.0, 90.0);
-  roundRectPath.lineTo(rect.left(), rect.bottom() - radius);
-  roundRectPath.arcTo(rect.left(), rect.bottom() - dr, dr, dr, 180.0, 90.0);
-  roundRectPath.lineTo(rect.right() - radius, rect.bottom());
-  roundRectPath.arcTo(rect.right() - dr, rect.bottom() -dr, dr, dr,
-                      270.0, 90.0);
-  roundRectPath.closeSubpath();
-
-  painter->drawPath(roundRectPath);
 }

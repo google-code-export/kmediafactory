@@ -1,0 +1,199 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>ProjectOptionsLayout</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>ProjectOptionsLayout</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>311</width>
+            <height>223</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Project Options</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>titleLabel</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Title:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>titleEdit</cstring>
+            </property>
+        </widget>
+        <widget class="QLineEdit">
+            <property name="name">
+                <cstring>titleEdit</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>typeLabel</cstring>
+            </property>
+            <property name="text">
+                <string>T&amp;ype:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>typeComboBox</cstring>
+            </property>
+        </widget>
+        <widget class="QComboBox">
+            <property name="name">
+                <cstring>typeComboBox</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>directoryLabel</cstring>
+            </property>
+            <property name="text">
+                <string>Direct&amp;ory:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>directoryURL</cstring>
+            </property>
+        </widget>
+        <widget class="KURLRequester">
+            <property name="name">
+                <cstring>directoryURL</cstring>
+            </property>
+            <property name="mode">
+                <number>10</number>
+            </property>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer3</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>32</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout2</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>75</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>okButton</cstring>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>100</width>
+                            <height>0</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string>&amp;OK</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+O</string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>1</number>
+                    </property>
+                </widget>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>cancelButton</cstring>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>100</width>
+                            <height>0</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string>C&amp;ancel</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+A</string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>2</number>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </vbox>
+</widget>
+<customwidgets>
+</customwidgets>
+<connections>
+    <connection>
+        <sender>cancelButton</sender>
+        <signal>clicked()</signal>
+        <receiver>ProjectOptionsLayout</receiver>
+        <slot>reject()</slot>
+    </connection>
+    <connection>
+        <sender>okButton</sender>
+        <signal>clicked()</signal>
+        <receiver>ProjectOptionsLayout</receiver>
+        <slot>okClicked()</slot>
+    </connection>
+    <connection>
+        <sender>titleEdit</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>ProjectOptionsLayout</receiver>
+        <slot>titleChanged(const QString&amp;)</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="global" impldecl="in implementation">kiconloader.h</include>
+    <include location="local" impldecl="in implementation">common.h</include>
+</includes>
+<slots>
+    <slot access="protected">titleChanged(const QString&amp;)</slot>
+    <slot access="protected">okClicked()</slot>
+</slots>
+<pixmapfunction>BTN_ICON</pixmapfunction>
+<layoutdefaults spacing="6" margin="11"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<includehints>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+</includehints>
+</UI>

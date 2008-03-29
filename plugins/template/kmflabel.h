@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,8 +20,8 @@
 #ifndef KMFLABEL_H
 #define KMFLABEL_H
 
+#include "font.h"
 #include "kmfwidget.h"
-#include <QFont>
 
 /**
 @author Petri Damsten
@@ -30,25 +30,25 @@ class KMFLabel : public KMFWidget
 {
     Q_OBJECT
   public:
-    KMFLabel(QObject *parent = 0);
+    KMFLabel(QObject *parent = 0, const char *name = 0);
     ~KMFLabel();
 
     const QString& text() const { return m_text; };
     void setText(const QString& text);
-    const QFont& font() const { return m_font; };
-    void setFont(const QFont& font) { m_font = font; };
+    const KMF::Font& font() const { return m_font; };
+    void setFont(const KMF::Font& font) { m_font = font; };
     virtual void fromXML(const QDomElement& element);
     virtual int minimumPaintWidth() const;
     virtual int minimumPaintHeight() const;
     virtual void setProperty(const QString& name, QVariant value);
 
   protected:
-    virtual void paintWidget(QImage& layer, bool shdw = false);
+    virtual void paintWidget(Magick::Image& layer, bool shdw = false);
     QString fitText(QString txt, int width);
 
   private:
     QString m_text;
-    QFont m_font;
+    KMF::Font m_font;
 };
 
 #endif

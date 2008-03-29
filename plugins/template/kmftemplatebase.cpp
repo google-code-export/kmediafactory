@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -25,8 +25,8 @@
 #include <kmediafactory/plugin.h>
 #include <qregexp.h>
 
-KMFTemplateBase::KMFTemplateBase(QObject *parent) :
-  QObject(parent), m_uiIf(0), m_prjIf(0)
+KMFTemplateBase::KMFTemplateBase(QObject *parent, const char *name) :
+  QObject(parent, name), m_uiIf(0), m_prjIf(0)
 {
   KMF::Plugin* p = plugin();
   if(p)
@@ -97,13 +97,12 @@ QString KMFTemplateBase::uiText(QString string)
   int i = 0;
   QString s = string.replace("_", " ");
   QRegExp rx("\\b\\w");
-
-  s = s.trimmed().toLower();
+      
+  s = s.simplifyWhiteSpace().lower();
   while(i!=-1)
   {
-    QChar ch = s.at(i);
-    s[i] = ch.toUpper();
-    i = s.indexOf(rx, i+1);
+    s.at(i) = s.at(i).upper();
+    i = s.find(rx, i+1);
   }
   return s;
 }

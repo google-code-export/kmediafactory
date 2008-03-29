@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,37 +20,34 @@
 #ifndef OUTPUTPAGE_H
 #define OUTPUTPAGE_H
 
-#include <ui_outputpage.h>
-#include "kmfuiinterface.h"
-#include "kmficonview.h"
-#include <QMenu>
+#include <outputpagelayout.h>
+#include <qpopupmenu.h>
 
-class KPageWidgetItem;
+class QIconViewItem;
 
 /**
 */
-class OutputPage : public QWidget, public Ui::OutputPage
+class OutputPage : public OutputPageLayout
 {
     Q_OBJECT
   public:
-    OutputPage(QWidget *parent = 0);
-    virtual ~OutputPage();
+    OutputPage(QWidget *parent = 0, const char *name = 0);
+    ~OutputPage();
 
   public slots:
-    void currentPageChanged(KPageWidgetItem*, KPageWidgetItem*);
+    void aboutToShowPage(QWidget* page);
     void start();
-    void projectInit();
 
   protected slots:
-    void currentChanged(const QModelIndex& index, const QModelIndex&);
-    void contextMenuRequested(const QPoint &pos);
+    void currentChanged(QIconViewItem* item);
+    void contextMenuRequested(QIconViewItem *item, const QPoint &pos);
     void stop();
     void showLog();
-    void start(QAction* type);
+    void start(int type);
 
   private:
-    QMenu m_startPopup;
-    QMap<QAction*, QString> m_types;
+    QPopupMenu m_startPopup;
+    QMap<int, QString> m_types;
     QString m_type;
 };
 

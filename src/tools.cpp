@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -28,84 +28,29 @@
 #include <kstandarddirs.h>
 #include <kdesktopfile.h>
 #include <kpushbutton.h>
-#include <kio/deletejob.h>
-#include <QImage>
-#include <QFileInfo>
-#include <QPixmap>
+#include <qimage.h>
+#include <qfileinfo.h>
 
 // From kmenuedit - treeview.cpp
 static QPixmap appIcon(const QString &iconName)
 {
-  QPixmap normal = KIconLoader::global()->loadIcon(iconName, KIconLoader::Small,
-      0, KIconLoader::DefaultState, QStringList(), 0L, true);
+  QPixmap normal = KGlobal::iconLoader()->loadIcon(iconName, KIcon::Small, 0,
+  KIcon::DefaultState, 0L, true);
     // make sure they are not larger than 20x20
   if (normal.width() > 20 || normal.height() > 20)
   {
-    QImage tmp = normal.toImage();
-    tmp = tmp.scaled(20, 20, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    normal.fromImage(tmp);
+    QImage tmp = normal.convertToImage();
+    tmp = tmp.smoothScale(20, 20);
+    normal.convertFromImage(tmp);
   }
   return normal;
 }
 
-int ToolListModel::columnCount(const QModelIndex&) const
+Tools::Tools(QWidget* parent, const char* name, WFlags fl) :
+  ToolsLayout(parent, name, fl)
 {
-  return 2;
-};
-
-QVariant ToolListModel::data(const QModelIndex &index, int role) const
-{
-  int i = index.row();
-
-  if (!isValid(i))
-    return QVariant();
-
-  if (role == Qt::DisplayRole)
-  {
-    switch(index.column())
-    {
-      case 0:
-        return at(i).name;
-      case 1:
-        return at(i).description;
-    }
-  }
-  if (role == Qt::DecorationRole)
-  {
-    switch(index.column())
-    {
-      case 0:
-        return appIcon(at(i).icon);
-    }
-  }
-  return QVariant();
-};
-
-QVariant ToolListModel::headerData(int column, Qt::Orientation, int role) const
-{
-  if (role != Qt::DisplayRole)
-    return QVariant();
-
-  switch(column)
-  {
-    case 0:
-      return i18n("Name");
-    case 1:
-      return i18n("Description");
-  }
-  return "";
-};
-
-Tools::Tools(QWidget* parent) :
-    QWidget(parent)
-{
-  setupUi(this);
   connect(parent, SIGNAL(okClicked()), this, SLOT(save()));
-  toolsListView->setModel(&m_model);
   load();
-  connect(toolsListView->selectionModel(),
-      SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
-      this, SLOT(enableButtons()));
 }
 
 Tools::~Tools()
@@ -118,84 +63,88 @@ void Tools::addClicked()
 
   if (dlg.exec())
   {
-    ToolItem item;
-    dlg.getData(&item);
-
-    int i = 0;
-    QFileInfo file;
-    QString name = KMF::Tools::simpleName(item.name);
-
-    file = KStandardDirs::locateLocal("appdata",
-                                      "tools/" + name + ".desktop");
-    while(file.exists())
-    {
-      file = KStandardDirs::locateLocal("appdata", "tools/" +
-          QString("%1_%2").arg(name).arg(++i) + ".desktop");
-    }
-    item.desktopFile = file.absoluteFilePath();
-
-    m_model.append(item);
+    QToolListItem* item = new QToolListItem(toolsListView);
+    dlg.getData(item);
+    item->setText(0, item->name);
+    item->setText(1, item->description);
+    item->setPixmap(0, appIcon(item->icon));
   }
   enableButtons();
 }
 
 void Tools::propertiesClicked()
 {
-  QModelIndexList list = toolsListView->selectionModel()->selectedIndexes();
+  QToolListItem* item =
+      static_cast<QToolListItem*>(toolsListView->selectedItem());
 
-  if(list.size() > 0)
+  if(item)
   {
-    ToolItem item = m_model.at(list.first());
     ToolProperties dlg(kapp->activeWindow());
-    dlg.setData(item);
-    dlg.setReadOnly(!writableItem(&item));
+    dlg.setData(*item);
+    dlg.setReadOnly(!writableItem(item));
     if (dlg.exec())
     {
-      dlg.getData(&item);
-      m_model.replace(list.first(), item);
+      dlg.getData(item);
+      item->setText(0, item->name);
+      item->setText(1, item->description);
+      item->setPixmap(0, appIcon(item->icon));
     }
   }
 }
 
 void Tools::removeClicked()
 {
-  QModelIndexList list = toolsListView->selectionModel()->selectedIndexes();
+  QToolListItem* item =
+      static_cast<QToolListItem*>(toolsListView->selectedItem());
 
-  if(list.size() > 0)
+  if(item)
   {
-    ToolItem item = m_model.at(list.first());
-
-    if(!item.desktopFile.isEmpty())
-      m_remove.append(item.desktopFile);
-    m_model.removeAt(list.first());
-    enableButtons();
+    if(!item->desktopFile.isEmpty())
+      m_remove.append(item->desktopFile);
+    delete item;
   }
+  enableButtons();
 }
 
 void Tools::save()
 {
-  kDebug() << m_remove;
   if(!m_remove.isEmpty())
     KIO::del(m_remove);
 
-  QList<ToolItem> items = m_model.list();
+  QToolListItem* item;
+  QFileInfo file;
+  QString name;
 
-  foreach(ToolItem item, items)
+  for(QListViewItemIterator it(toolsListView); *it != 0; ++it)
   {
-    if(!writableItem(&item))
+    item = static_cast<QToolListItem*>(*it);
+    if(!writableItem(item))
       continue;
 
-    kDebug() << item.desktopFile;
-    KDesktopFile df(item.desktopFile);
-    KConfigGroup group = df.group("Desktop Entry");
-    group.writeEntry("Name", item.name);
-    group.writeEntry("Type", "Application");
-    group.writeEntry("Icon", item.icon);
-    group.writeEntry("GenericName", item.description);
-    group.writeEntry("Exec", item.command);
-    group.writeEntry("Path", item.workPath);
-    group.writeEntry("Terminal", item.runInTerminal);
-    group.writeEntry("X-KMF-MediaMenu", item.mediaMenu);
+    name = KMF::Tools::simpleName(item->name);
+
+    if(item->desktopFile.isEmpty())
+    {
+      int i = 0;
+
+      file = locateLocal("appdata", "tools/" + name + ".desktop");
+      while(file.exists())
+      {
+        file = locateLocal("appdata", "tools/" +
+            QString("%1_%2").arg(name).arg(++i) + ".desktop");
+      }
+    }
+    else
+      file = item->desktopFile;
+    KDesktopFile df(file.absFilePath());
+    df.writeEntry("Name", item->name);
+    df.writeEntry("Type", "Application");
+    df.writeEntry("Icon", item->icon);
+    df.writeEntry("GenericName", item->description);
+    df.writeEntry("Exec", item->command);
+    df.writeEntry("Path", item->workPath);
+    df.writeEntry("Terminal", item->runInTerminal);
+    df.writeEntry("X-KMF-MediaMenu", item->mediaMenu);
   }
 }
 
@@ -203,38 +152,43 @@ void Tools::load()
 {
   QStringList files =
       KGlobal::dirs()->findAllResources("appdata", "tools/*.desktop");
+  QToolListItem* item;
 
   for(QStringList::ConstIterator it = files.begin();
       it != files.end(); ++it)
   {
-    kDebug() << *it;
     KDesktopFile df(*it);
 
     if(df.readType() != "Application")
       continue;
 
-    ToolItem item;
-    item.name = df.readName();
-    item.icon = df.readIcon();
-    item.description = df.readGenericName();
-    item.workPath = df.readPath();
-    KConfigGroup group = df.group("Desktop Entry");
-    item.command = group.readEntry("Exec");
-    item.mediaMenu = (group.readEntry("X-KMF-MediaMenu") == "true");
-    item.runInTerminal = (group.readEntry("Terminal") == "true");
-    item.desktopFile = *it;
-    m_model.append(item);
+    item = new QToolListItem(toolsListView);
+    item->name = df.readName();
+    item->icon = df.readIcon();
+    item->description = df.readGenericName();
+    item->command = df.readEntry("Exec");
+    item->workPath = df.readPath();
+    item->mediaMenu = (df.readEntry("X-KMF-MediaMenu") == "true");
+    item->runInTerminal = (df.readEntry("Terminal") == "true");
+    item->desktopFile = *it;
+
+    item->setText(0, item->name);
+    item->setText(1, item->description);
+    item->setPixmap(0, appIcon(item->icon));
   }
   enableButtons();
 }
 
-bool Tools::writableItem(ToolItem* item)
+bool Tools::writableItem(QToolListItem* item)
 {
   if(item)
   {
-    QFileInfo fi(item->desktopFile);
-    if (fi.exists())
+    if(!item->desktopFile.isEmpty())
+    {
+      QFileInfo fi(item->desktopFile);
+
       return fi.isWritable();
+    }
     else
       return true;
   }
@@ -243,16 +197,12 @@ bool Tools::writableItem(ToolItem* item)
 
 void Tools::enableButtons()
 {
-  QModelIndexList list = toolsListView->selectionModel()->selectedIndexes();
-  bool writable = false;
+  QToolListItem* item =
+      static_cast<QToolListItem*>(toolsListView->selectedItem());
+  bool writable = writableItem(item);
 
-  if(list.size() > 0)
-  {
-    ToolItem item = m_model.at(list.first());
-    writable = writableItem(&item);
-  }
-  propertiesButton->setEnabled(list.size() > 0);
-  removeButton->setEnabled(list.size() > 0 && writable);
+  propertiesButton->setEnabled(item != 0L);
+  removeButton->setEnabled(item != 0L & writable);
 }
 
 #include "tools.moc"

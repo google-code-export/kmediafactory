@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -24,6 +24,8 @@
 
 class QDomText;
 
+/**
+*/
 class KMFJump
 {
   public:
@@ -60,7 +62,7 @@ class KMFButton : public KMFWidget
   public:
     enum Direction { Up = 0, Right, Down, Left };
 
-    KMFButton(QObject *parent = 0);
+    KMFButton(QObject *parent = 0, const char *name = 0);
     ~KMFButton();
 
     KMFButton* up() { return m_buttons[Up]; };

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damst�
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -30,14 +30,14 @@ void KMFUnit::set(int value, Type type)
 {
   m_value = value; m_type = type;
 /*
-  kDebug() << m_geometry->owner()->name() << " S: " << m_edge <<  " S: " <<
-               m_value;
+  kdDebug() << m_geometry->owner()->name() << " S: " << m_edge <<  " S: " <<
+               m_value << endl;
 */
 }
 
 void KMFUnit::set(const QString& value)
 {
-  QString temp = value.toLower();
+  QString temp = value.lower();
 
   QRegExp rx("[^0-9+\\-\\.%:min]");
   temp.remove(rx);
@@ -48,7 +48,7 @@ void KMFUnit::set(const QString& value)
     m_value = 0;
   }
 
-  QStringList list = temp.split(":");
+  QStringList list = QStringList::split(":", temp);
   temp = list[0];
   if(temp == "min")
   {
@@ -73,8 +73,8 @@ void KMFUnit::set(const QString& value)
   if(list.count() > 1)
     m_margin = list[1].toInt();
   /*
-  kDebug() << m_geometry->owner()->name() << " s: " << m_edge <<  " s: " <<
-               m_value;
+  kdDebug() << m_geometry->owner()->name() << " s: " << m_edge <<  " s: " <<
+               m_value << endl;
   */
 }
 
@@ -108,22 +108,22 @@ int KMFUnit::absoluteValue() const
     {
       case KMFUnit::Top:
       case KMFUnit::Height:
-        m_save = qMin(qMax(m_save, 0), m_maxSize.height());
+        m_save = QMIN(QMAX(m_save, 0), m_maxSize.height());
         break;
       case KMFUnit::Left:
       case KMFUnit::Width:
-        m_save = qMin(qMax(m_save, 0), m_maxSize.width());
+        m_save = QMIN(QMAX(m_save, 0), m_maxSize.width());
         break;
     }
     /*
     if(tmp != m_save)
-      kDebug() << m_geometry->owner()->name() << " : " << tmp <<  " -> " <<
-          m_save << " : " << m_maxSize << ", " << m_edge;
+      kdDebug() << m_geometry->owner()->name() << " : " << tmp <<  " -> " <<
+          m_save << " : " << m_maxSize << ", " << m_edge << endl;
     */
   }
   /*
-  kDebug() << m_geometry->owner()->name() << " a: " << m_edge <<  " a: " <<
-               m_save;
+  kdDebug() << m_geometry->owner()->name() << " a: " << m_edge <<  " a: " <<
+               m_save << endl;
   */
   return m_save;
 }
@@ -254,7 +254,8 @@ void KMFGeometry::setMargin(int margin)
 
 void KMFGeometry::setMargin(QString margin)
 {
-  QStringList marginList = margin.split(QRegExp("[|, ]"));
+  QStringList marginList =
+      QStringList::split(QRegExp("[|, ]"), margin);
 
   if(marginList.count() == 1)
   {
@@ -275,10 +276,10 @@ void KMFGeometry::setMargin(QString margin)
     m_left.setMargin(marginList[3].toInt());
   }
   /*
-  kDebug()
+  kdDebug() << k_funcinfo
       << m_top.margin() << ", "
       << m_width.margin() << ", "
       << m_height.margin() << ", "
-      << m_left.margin();
+      << m_left.margin() << endl;
   */
 }

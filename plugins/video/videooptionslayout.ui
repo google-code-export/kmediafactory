@@ -1,0 +1,477 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>VideoOptionsLayout</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>VideoOptionsLayout</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>366</width>
+            <height>528</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Video Options</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>titleLabel</cstring>
+            </property>
+            <property name="text">
+                <string>Tit&amp;le:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>titleEdit</cstring>
+            </property>
+        </widget>
+        <widget class="QLineEdit">
+            <property name="name">
+                <cstring>titleEdit</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>directoryLabel</cstring>
+            </property>
+            <property name="text">
+                <string>Custom &amp;preview:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>previewURL</cstring>
+            </property>
+        </widget>
+        <widget class="KURLRequester">
+            <property name="name">
+                <cstring>previewURL</cstring>
+            </property>
+            <property name="mode">
+                <number>9</number>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>aspectLabel</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Aspect ratio:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>aspectComboBox</cstring>
+            </property>
+        </widget>
+        <widget class="QComboBox">
+            <item>
+                <property name="text">
+                    <string>4:3</string>
+                </property>
+            </item>
+            <item>
+                <property name="text">
+                    <string>16:9</string>
+                </property>
+            </item>
+            <property name="name">
+                <cstring>aspectComboBox</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>audioLabel</cstring>
+            </property>
+            <property name="text">
+                <string>Audio Trac&amp;ks:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>audioListBox</cstring>
+            </property>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout7</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="KMFLanguageListBox">
+                    <property name="name">
+                        <cstring>audioListBox</cstring>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout7</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>audioPropertiesButton</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Properties</string>
+                            </property>
+                            <property name="accel">
+                                <string></string>
+                            </property>
+                            <property name="stdItem" stdset="0">
+                                <number>30</number>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer4</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>40</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </vbox>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>subtitleLabel</cstring>
+            </property>
+            <property name="text">
+                <string>Subtitles:</string>
+            </property>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout6</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="KMFLanguageListBox">
+                    <property name="name">
+                        <cstring>subtitleListBox</cstring>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout5</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>subtitleAddButton</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Add</string>
+                            </property>
+                            <property name="accel">
+                                <string></string>
+                            </property>
+                            <property name="stdItem" stdset="0">
+                                <number>27</number>
+                            </property>
+                        </widget>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>subtitleRemoveButton</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Remove</string>
+                            </property>
+                            <property name="accel">
+                                <string></string>
+                            </property>
+                            <property name="stdItem" stdset="0">
+                                <number>28</number>
+                            </property>
+                        </widget>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>subtitlePropertiesButton</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Properties</string>
+                            </property>
+                            <property name="accel">
+                                <string></string>
+                            </property>
+                            <property name="stdItem" stdset="0">
+                                <number>30</number>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer3</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>40</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </vbox>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout21</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>chapterLabel</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>7</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string>xx</string>
+                    </property>
+                </widget>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>chapterPropertiesButton</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Properties</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>30</number>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout22</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>conversionLabel</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>7</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string>xx</string>
+                    </property>
+                </widget>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>conversionPropertiesButton</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Properties</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>30</number>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout20</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer11</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>40</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>okButton</cstring>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>100</width>
+                            <height>0</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string>&amp;OK</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+O</string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>1</number>
+                    </property>
+                </widget>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>cancelButton</cstring>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>100</width>
+                            <height>0</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Cancel</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+C</string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>2</number>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </vbox>
+</widget>
+<customwidgets>
+</customwidgets>
+<connections>
+    <connection>
+        <sender>cancelButton</sender>
+        <signal>clicked()</signal>
+        <receiver>VideoOptionsLayout</receiver>
+        <slot>reject()</slot>
+    </connection>
+    <connection>
+        <sender>okButton</sender>
+        <signal>clicked()</signal>
+        <receiver>VideoOptionsLayout</receiver>
+        <slot>accept()</slot>
+    </connection>
+    <connection>
+        <sender>subtitleAddButton</sender>
+        <signal>clicked()</signal>
+        <receiver>VideoOptionsLayout</receiver>
+        <slot>subtitleAddClicked()</slot>
+    </connection>
+    <connection>
+        <sender>subtitlePropertiesButton</sender>
+        <signal>clicked()</signal>
+        <receiver>VideoOptionsLayout</receiver>
+        <slot>subtitlePropertiesClicked()</slot>
+    </connection>
+    <connection>
+        <sender>subtitleRemoveButton</sender>
+        <signal>clicked()</signal>
+        <receiver>VideoOptionsLayout</receiver>
+        <slot>subtitleRemoveClicked()</slot>
+    </connection>
+    <connection>
+        <sender>audioPropertiesButton</sender>
+        <signal>clicked()</signal>
+        <receiver>VideoOptionsLayout</receiver>
+        <slot>audioPropertiesClicked()</slot>
+    </connection>
+    <connection>
+        <sender>subtitleListBox</sender>
+        <signal>selectionChanged()</signal>
+        <receiver>VideoOptionsLayout</receiver>
+        <slot>enableButtons()</slot>
+    </connection>
+    <connection>
+        <sender>chapterPropertiesButton</sender>
+        <signal>clicked()</signal>
+        <receiver>VideoOptionsLayout</receiver>
+        <slot>chaptersClicked()</slot>
+    </connection>
+    <connection>
+        <sender>conversionPropertiesButton</sender>
+        <signal>clicked()</signal>
+        <receiver>VideoOptionsLayout</receiver>
+        <slot>conversionPropertiesClicked()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>titleEdit</tabstop>
+    <tabstop>previewURL</tabstop>
+    <tabstop>aspectComboBox</tabstop>
+    <tabstop>audioListBox</tabstop>
+    <tabstop>audioPropertiesButton</tabstop>
+    <tabstop>subtitleListBox</tabstop>
+    <tabstop>subtitleAddButton</tabstop>
+    <tabstop>subtitleRemoveButton</tabstop>
+    <tabstop>subtitlePropertiesButton</tabstop>
+    <tabstop>okButton</tabstop>
+    <tabstop>cancelButton</tabstop>
+</tabstops>
+<includes>
+    <include location="local" impldecl="in implementation">kmflanguagewidgets.h</include>
+</includes>
+<slots>
+    <slot access="protected">chaptersClicked()</slot>
+    <slot access="protected">audioPropertiesClicked()</slot>
+    <slot access="protected">subtitleAddClicked()</slot>
+    <slot access="protected">subtitleRemoveClicked()</slot>
+    <slot access="protected">subtitlePropertiesClicked()</slot>
+    <slot access="protected">enableButtons()</slot>
+    <slot access="protected">conversionPropertiesClicked()</slot>
+</slots>
+<pixmapfunction>BTN_ICON</pixmapfunction>
+<layoutdefaults spacing="6" margin="11"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+</UI>

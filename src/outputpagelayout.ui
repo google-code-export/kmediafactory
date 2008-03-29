@@ -1,0 +1,295 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>OutputPageLayout</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>OutputPageLayout</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>446</width>
+            <height>433</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Output</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>outputTypeLabel</cstring>
+            </property>
+            <property name="text">
+                <string>Select output t&amp;ype:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>outputs</cstring>
+            </property>
+        </widget>
+        <widget class="KMFIconView">
+            <property name="name">
+                <cstring>outputs</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="minimumSize">
+                <size>
+                    <width>0</width>
+                    <height>110</height>
+                </size>
+            </property>
+            <property name="maximumSize">
+                <size>
+                    <width>32767</width>
+                    <height>110</height>
+                </size>
+            </property>
+            <property name="focusPolicy">
+                <enum>StrongFocus</enum>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>progressLabel</cstring>
+            </property>
+            <property name="text">
+                <string>Progress:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>progressListbox</cstring>
+            </property>
+        </widget>
+        <widget class="KMFProgressListView">
+            <property name="name">
+                <cstring>progressListView</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>7</hsizetype>
+                    <vsizetype>7</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+        </widget>
+        <widget class="KProgress">
+            <property name="name">
+                <cstring>progressBar</cstring>
+            </property>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout10</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>104</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>showLogPushBtn</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>1</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>100</width>
+                            <height>0</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string>Show &amp;Log</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+L</string>
+                    </property>
+                </widget>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>stopPushBtn</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>1</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>100</width>
+                            <height>0</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string>S&amp;top</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+T</string>
+                    </property>
+                </widget>
+                <widget class="KMFToolButton">
+                    <property name="name">
+                        <cstring>startButton</cstring>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>100</width>
+                            <height>0</height>
+                        </size>
+                    </property>
+                    <property name="accel" stdset="0">
+                        <string>Alt+S</string>
+                    </property>
+                    <property name="text" stdset="0">
+                        <string>S&amp;tart</string>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </vbox>
+</widget>
+<customwidgets>
+    <customwidget>
+        <class>KMFIconView</class>
+        <header location="local">kmficonview.h</header>
+        <sizehint>
+            <width>-1</width>
+            <height>-1</height>
+        </sizehint>
+        <container>0</container>
+        <sizepolicy>
+            <hordata>5</hordata>
+            <verdata>5</verdata>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+        <pixmap>image0</pixmap>
+    </customwidget>
+    <customwidget>
+        <class>KMFProgressListView</class>
+        <header location="local">kmfprogresslistview.h</header>
+        <sizehint>
+            <width>30</width>
+            <height>60</height>
+        </sizehint>
+        <container>0</container>
+        <sizepolicy>
+            <hordata>5</hordata>
+            <verdata>5</verdata>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+        <pixmap>image0</pixmap>
+    </customwidget>
+    <customwidget>
+        <class>KMFToolButton</class>
+        <header location="local">kmftoolbutton.h</header>
+        <sizehint>
+            <width>-1</width>
+            <height>-1</height>
+        </sizehint>
+        <container>0</container>
+        <sizepolicy>
+            <hordata>5</hordata>
+            <verdata>5</verdata>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+        <pixmap>image0</pixmap>
+        <signal>clicked()</signal>
+        <property type="String">text</property>
+        <property type="String">accel</property>
+    </customwidget>
+</customwidgets>
+<images>
+    <image name="image0">
+        <data format="XBM.GZ" length="79">789c534e494dcbcc4b554829cdcdad8c2fcf4c29c95030e0524611cd48cd4ccf28010a1797249664262b2467241641a592324b8aa363156c15aab914146aadb90067111b1f</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>showLogPushBtn</sender>
+        <signal>clicked()</signal>
+        <receiver>OutputPageLayout</receiver>
+        <slot>showLog()</slot>
+    </connection>
+    <connection>
+        <sender>stopPushBtn</sender>
+        <signal>clicked()</signal>
+        <receiver>OutputPageLayout</receiver>
+        <slot>stop()</slot>
+    </connection>
+    <connection>
+        <sender>startButton</sender>
+        <signal>clicked()</signal>
+        <receiver>OutputPageLayout</receiver>
+        <slot>start()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>outputs</tabstop>
+    <tabstop>showLogPushBtn</tabstop>
+    <tabstop>stopPushBtn</tabstop>
+</tabstops>
+<includes>
+    <include location="local" impldecl="in implementation">kmftoolbutton.h</include>
+</includes>
+<slots>
+    <slot access="protected">start(QString type)</slot>
+    <slot access="protected">showLog()</slot>
+    <slot access="protected">stop()</slot>
+    <slot>start()</slot>
+    <slot access="protected">start(int)</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<includehints>
+    <includehint>kmficonview.h</includehint>
+    <includehint>kmfprogresslistview.h</includehint>
+    <includehint>kprogress.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kmftoolbutton.h</includehint>
+</includehints>
+</UI>

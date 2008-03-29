@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005, 2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -22,110 +22,64 @@
 
 #include "kmf_stddef.h"
 #include <kstandarddirs.h>
-#include "kdebug.h"
-#include <QComboBox>
-#include <QListView>
-#include <QPixmap>
-#include <QAbstractListModel>
-#include <QMetaProperty>
+#include <qcombobox.h>
+#include <qlistbox.h>
 
 /**
 @author Petri Damsten
 */
-namespace QDVD
+class KMFLanguageItem : public QListBoxPixmap
 {
-  class AudioTrack;
-  class Subtitle;
-};
-
-class KDE_EXPORT LanguageListModel : public QAbstractListModel
-{
-  Q_OBJECT
   public:
-    LanguageListModel(QObject *parent = 0);
+    KMFLanguageItem(QListBox* listbox,
+                    const QString& languageId = QString::null);
+    KMFLanguageItem(QListBox* listbox,
+                    const QString& languageId,
+                    QListBoxItem* after);
+    ~KMFLanguageItem() {};
 
-    int rowCount(const QModelIndex&) const;
-    virtual QVariant data(const QModelIndex &index, int role) const;
-    QVariant headerData(int section, Qt::Orientation orientation,
-                        int role = Qt::DisplayRole) const;
-    void useAllLanguages();
-    void setLanguages(QStringList languages);
-    void setLanguages(const QList<QDVD::AudioTrack>* audio)
-      { m_audio = audio; reset(); };
-    void setLanguages(const QList<QDVD::Subtitle>* subtitle)
-      { m_subtitle = subtitle; reset(); };
-    QStringList* list() { return &m_languageList; };
-    QString at(int i) const;
-    QModelIndex index(int row, int column = 0,
-                      const QModelIndex &parent = QModelIndex()) const
-      { return QAbstractListModel::index(row, column, parent); };
-    QModelIndex index(const QString& lang) const;
+    const QString& languageId() const { return m_languageId; };
+    //void  setLanguageId(const QString& languageId);
+    QPixmap flag(QString languageId);
 
   private:
-    QPixmap flag(QString languageId) const;
-
-    QStringList m_languageList;
-    const QList<QDVD::AudioTrack>* m_audio;
-    const QList<QDVD::Subtitle>* m_subtitle;
+    QString m_languageId;
     static QMap<QString, QString> m_dvd2l10n;
 };
 
-class KDE_EXPORT KMFLanguageComboBox : public QComboBox
+class KMFLanguageComboBox : public QComboBox
 {
     Q_OBJECT
-    Q_PROPERTY(QString language READ language WRITE setLanguage USER true)
+    Q_PROPERTY(QString language READ language WRITE setLanguage)
   public:
-    KMFLanguageComboBox(QWidget *parent = 0) : QComboBox(parent)
-    {
-      m_model.useAllLanguages();
-      setModel(&m_model);
-    }
-    ~KMFLanguageComboBox() {};
+    KMFLanguageComboBox(QWidget *parent = 0, const char *name = 0);
+    ~KMFLanguageComboBox();
 
-    QString language() const
-    {
-      return m_model.at(currentIndex());
-    }
-    void setLanguage(const QString& language)
-    {
-      setCurrentIndex(m_model.index(language).row());
-    }
-
-    LanguageListModel* model() { return &m_model; };
-
-  private:
-    LanguageListModel m_model;
+    QString language() const;
+    void setLanguage(QString language);
 };
 
-class KDE_EXPORT KMFLanguageListBox : public QListView
+class KMFLanguageListBox : public QListBox
 {
     Q_OBJECT
-    Q_PROPERTY(QString language READ language WRITE setLanguage USER true)
+    Q_PROPERTY(QString language READ language WRITE setLanguage)
+    Q_PROPERTY(bool autoFill READ autoFill WRITE setAutoFill)
   public:
-    KMFLanguageListBox(QWidget *parent = 0) : QListView(parent)
-    {
-      setModel(&m_model);
-    }
-    ~KMFLanguageListBox() {};
+    KMFLanguageListBox(QWidget *parent = 0, const char *name = 0);
+    ~KMFLanguageListBox();
 
-    QString language() const
-    {
-      QModelIndexList list = selectionModel()->selectedIndexes();
-      int n = -1;
-      if(list.count() > 0)
-        n = list.first().row();
-      return m_model.at(n);
-    }
-    void setLanguage(const QString& language)
-    {
-      selectionModel()->select(m_model.index(language),
-                               QItemSelectionModel::ClearAndSelect);
-    }
+    QString language() const;
+    void setLanguage(QString language);
+    void setItemLanguage(QString language, int index = -1);
+    bool autoFill() const { return m_autoFill; };
+    void setAutoFill(bool autoFill);
 
-    LanguageListModel* model() { return &m_model; };
+    void fill();
+    void filter(const QStringList& list);
 
   private:
-    LanguageListModel m_model;
+    bool m_autoFill;
+
 };
 
 #endif

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -21,42 +21,43 @@
 #define KMFIMAGEVIEW_H
 
 #include "rect.h"
-#include <kdemacros.h>
-#include <QImage>
-#include <QGraphicsView>
-#include <QGraphicsScene>
-#include <QGraphicsPixmapItem>
+#include <qscrollview.h>
+#include <qimage.h>
+
+class QLabel;
+class QVBox;
 
 /**
 @author Petri Damsten
 */
-
-class KDE_EXPORT KMFImageView : public QGraphicsView
+class KMFImageView : public QScrollView
 {
     Q_OBJECT
   public:
-    KMFImageView(QWidget *parent = 0);
-    virtual ~KMFImageView();
+    KMFImageView(QWidget *parent = 0, const char *name = 0);
+    ~KMFImageView();
 
     void setImage(const QImage& image);
     const QImage& image() { return m_image; };
     void clear();
     bool scaled() { return m_scaled; };
-    void setScaled(bool scaled);
+    void setScaled(bool scaled) { m_scaled = scaled; };
 
   protected:
     void newImage();
-    void scale();
-    virtual void contextMenuEvent(QContextMenuEvent* e);
-    virtual void resizeEvent(QResizeEvent* e);
+    virtual void resizeEvent (QResizeEvent*);
+    void contentsContextMenuEvent(QContextMenuEvent* e);
+
+  protected slots:
+    void updateImage();
 
   signals:
     void contextMenuRequested(const QPoint &pos);
 
   private:
     QImage m_image;
-    QGraphicsPixmapItem* m_imageItem;
-    QGraphicsScene m_scene;
+    QLabel* m_label;
+    QVBox* m_box;
     bool m_scaled;
 };
 

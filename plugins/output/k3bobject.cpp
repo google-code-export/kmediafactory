@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damst�
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -18,23 +18,20 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 #include "k3bobject.h"
-#include <kstore/KoStore.h>
-#include <kstore/KoStoreDevice.h>
+#include <kstore/koStore.h>
+#include <kstore/koStoreDevice.h>
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kiconloader.h>
 #include <kurl.h>
-#include <krun.h>
-#include <QDir>
-#include <QPixmap>
-#include <QTextStream>
+#include <qdir.h>
 
-K3bObject::K3bObject(QObject *parent)
- : DvdDirectoryObject(parent)
+K3bObject::K3bObject(QObject *parent, const char *name)
+ : DvdDirectoryObject(parent, name)
 {
-  setObjectName("k3b");
+  setName("k3b");
   setTitle(i18n("K3b Project"));
 }
 
@@ -42,13 +39,12 @@ K3bObject::~K3bObject()
 {
 }
 
-void K3bObject::actions(QList<QAction*>&) const
+void K3bObject::actions(QPtrList<KAction>&) const
 {
 }
 
-bool K3bObject::fromXML(const QDomElement&)
+void K3bObject::fromXML(const QDomElement&)
 {
-  return true;
 }
 
 int K3bObject::timeEstimate() const
@@ -60,16 +56,18 @@ bool K3bObject::make(QString type)
 {
   if(DvdDirectoryObject::make(type) == false)
     return false;
-  QString cmd = KStandardDirs::findExe("k3b");
-  QString doc = projectInterface()->projectDir() + "dvd.k3b";
-  saveDocument(KUrl(doc));
+  QString app = KStandardDirs::findExe("k3b");
+  QString doc = projectInterface()->projectDir() + "/dvd.k3b";
+  saveDocument(KURL(doc));
   uiInterface()->message(KMF::OK, i18n("K3b project ready"));
-  if (!cmd.isEmpty())
+  if(app != QString::null)
   {
-    cmd += " " + doc;
-    KRun::runCommand(cmd, kapp->activeWindow());
+    KProcess burn;
+
+    burn << app << doc;
+    burn.start(KProcess::DontCare);
   }
-uiInterface()->progress(TotalPoints);
+  uiInterface()->progress(TotalPoints);
   return true;
 }
 
@@ -79,13 +77,13 @@ void K3bObject::toXML(QDomElement&) const
 
 QPixmap K3bObject::pixmap() const
 {
-  return KIconLoader::global()->loadIcon("k3b", KIconLoader::NoGroup,
-                                         KIconLoader::SizeLarge);
+  return KGlobal::iconLoader()->loadIcon("k3b", KIcon::NoGroup,
+                                         KIcon::SizeLarge);
 }
 
 // All the following are taken from k3b project
 
-bool K3bObject::saveDocument(const KUrl& url)
+bool K3bObject::saveDocument(const KURL& url)
 {
   // create the store
   KoStore* store = KoStore::createStore(url.path(), KoStore::Write,
@@ -114,9 +112,9 @@ bool K3bObject::saveDocument(const KUrl& url)
   if(success)
   {
     KoStoreDevice dev(store);
-    dev.open(QIODevice::WriteOnly);
+    dev.open(IO_WriteOnly);
     QTextStream xmlStream(&dev);
-    xmlStream.setCodec("UTF-8");
+    xmlStream.setEncoding(QTextStream::UnicodeUTF8);
     xmlDoc.save(xmlStream, 0);
   }
 
@@ -150,7 +148,7 @@ bool K3bObject::saveDocumentData(QDomElement* docElem)
   // now do the "real" work: save the entries
   // ----------------------------------------------------------------------
   QDomElement topElem = doc.createElement("files");
-  addFiles(projectInterface()->projectDir("DVD"), &doc, &topElem);
+  addFiles(projectInterface()->projectDir() + "/DVD", &doc, &topElem);
   docElem->appendChild(topElem);
   // ----------------------------------------------------------------------
 
@@ -372,9 +370,10 @@ void K3bObject::saveDocumentDataOptions(QDomElement&)
 
 void K3bObject::saveDocumentDataHeader(QDomElement& headerElem)
 {
-  QString app = i18n("%1 - Version %2"
-      , KGlobal::mainComponent().aboutData()->programName()
-      , KGlobal::mainComponent().aboutData()->version());
+  KApplication* kApp = KApplication::kApplication();
+  QString app = QString(i18n("%1 - Version %2"))
+      .arg(kApp->aboutData()->productName())
+      .arg(kApp->aboutData()->version());
 
   QDomDocument doc = headerElem.ownerDocument();
   QDomElement topElem = doc.createElement("volume_id");
@@ -416,17 +415,18 @@ void K3bObject::saveDocumentDataHeader(QDomElement& headerElem)
 void K3bObject::addFiles(const QString& directory, QDomDocument* doc,
                          QDomElement* parent)
 {
+  const QFileInfoList* files;
   QDir dir(directory);
 
   if(!dir.exists())
     return;
-  const QFileInfoList& files = dir.entryInfoList();
-  foreach(QFileInfo file, files)
+  files = dir.entryInfoList();
+  for(QFileInfoListIterator it(*files); *it != 0; ++it)
   {
-    if(file.fileName() == "." || file.fileName() == "..")
+    if((*it)->fileName() == "." || (*it)->fileName() == "..")
       continue;
 
-    saveDataItem(&file, doc, parent);
+    saveDataItem(*it, doc, parent);
   }
 }
 
@@ -435,9 +435,9 @@ void K3bObject::saveDataItem(const QFileInfo* fi, QDomDocument* doc,
 {
   if(fi->isFile())
   {
-    QString file = fi->absoluteFilePath();
+    QString file = fi->absFilePath();
     // K3b can't handle relative paths ?
-    //KUrl::relativePath(projectInterface()->projectDir(), fi->absFilePath());
+    //KURL::relativePath(projectInterface()->projectDir(), fi->absFilePath());
     QDomElement topElem = doc->createElement("file");
     topElem.setAttribute("name", fi->fileName());
     QDomElement subElem = doc->createElement("url");
@@ -449,7 +449,7 @@ void K3bObject::saveDataItem(const QFileInfo* fi, QDomDocument* doc,
   {
     QDomElement topElem = doc->createElement( "directory" );
     topElem.setAttribute("name", fi->fileName());
-    addFiles(fi->absoluteFilePath(), doc, &topElem);
+    addFiles(fi->absFilePath(), doc, &topElem);
     parent->appendChild(topElem);
   }
 }

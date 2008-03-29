@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damst�
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -19,47 +19,45 @@
 //**************************************************************************
 #include "kmfmenu.h"
 #include "kmfwidgetfactory.h"
+#include "QMImage.h"
 #include "kmftime.h"
 #include "kaboutdata.h"
-#include <kstore/KoStore.h>
+#include <kstore/koStore.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kcomponentdata.h>
-#include <QImage>
-#include <QFile>
-#include <QFileInfo>
-#include <QTextStream>
+#include <qimage.h>
+#include <qfile.h>
+#include <qfileinfo.h>
 
-KMFMenu::KMFMenu(const QString& tmplate, QObject *parent)
-  : KMFTemplateBase(parent),
+KMFMenu::KMFMenu(const QString& tmplate, QObject *parent, const char *name)
+  : KMFTemplateBase(parent, name),
     m_template(tmplate), m_templateXML("kmf_project")
 {
+  m_pages.setAutoDelete(true);
   m_templateXML.setContent(m_template.readFile("template.xml"));
   QDomElement element = m_templateXML.documentElement();
   m_id = element.attribute("id");
   m_title = element.attribute("name");
 
   QDomNodeList list = m_templateXML.elementsByTagName("page");
-  for(int i=0; i < list.count(); ++i)
+  for(uint i=0; i < list.count(); ++i)
     m_menus.append(list.item(i).toElement().attribute("name"));
 }
 
 KMFMenu::~KMFMenu()
 {
-  foreach(QList<KMFMenuPage*> pages, m_pages)
-    qDeleteAll(pages);
 }
 
 bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
 {
   QDomElement root = doc.createElement("dvdauthor");
-  int i, j;
-  QString tmp;
-  QString header = "\n"
+  uint i, j;
+  QString header = QString(i18n("\n"
     " *********************************************************************\n"
     " %1\n"
-    " *********************************************************************\n";
-  QString comment = i18n("\n"
+    " *********************************************************************\n "
+    ));
+  QString comment = QString(i18n("\n"
     "**********************************************************************\n"
     "\n"
     "This file was made with %1 - %2\n"
@@ -80,8 +78,8 @@ bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
     "g7: temporary variable\n"
     "\n"
     "**********************************************************************\n"
-    , KGlobal::mainComponent().aboutData()->programName()
-    , KGlobal::mainComponent().aboutData()->version());
+    )).arg(KGlobal::instance()->aboutData()->programName())
+      .arg(KGlobal::instance()->aboutData()->version());
 
   doc.appendChild(doc.createComment(comment));
   doc.appendChild(doc.createTextNode("\n"));
@@ -90,8 +88,8 @@ bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
   doc.appendChild(root);
 
   root.appendChild(doc.createTextNode("\n "));
-  tmp = i18n("Main menu for %1", m_prjIf->title());
-  root.appendChild(doc.createComment(header.arg(tmp)));
+  root.appendChild(doc.createComment(
+      header.arg(i18n("Main menu for %1").arg(m_prjIf->title()))));
   root.appendChild(doc.createTextNode("\n "));
 
   QDomElement elem = doc.createElement("vmgm");
@@ -111,21 +109,19 @@ bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
   if(pages() > 0)
   {
     KMF::MediaObject *mob;
-    QList<KMF::MediaObject*> mobs = m_prjIf->mediaObjects();
+    QPtrList<KMF::MediaObject>* mobs = m_prjIf->mediaObjects();
 
     j=1;
-    foreach(KMFMenuPage* ob, m_pages[0])
+    for(KMFMenuPageIterator it(*m_pages[0]); *it != 0; ++it, ++j)
     {
-      ob->setIndex(0, mobs.count(), j, m_pages[0].count());
-      ob->writeDvdAuthorXml(menus, type);
-      j++;
+      (*it)->setIndex(0, mobs->count(), j, (*m_pages[0]).count());
+      (*it)->writeDvdAuthorXml(menus, type);
     }
     if(menus.hasChildNodes())
       elem.appendChild(menus);
     root.appendChild(elem);
 
-    i=1;
-    foreach(mob, mobs)
+    for (i=1, mob = mobs->first(); mob; mob = mobs->next(), ++i)
     {
       root.appendChild(doc.createTextNode("\n "));
       root.appendChild(doc.createComment(header.arg(mob->text())));
@@ -133,14 +129,13 @@ bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
 
       QDomElement elem = doc.createElement("titleset");
       QDomElement menus = doc.createElement("menus");
-      if(i < m_pages.count() && m_pages[i].count() != 0)
+      if(i < m_pages.count() && m_pages[i] != 0)
       {
         j=1;
-        foreach(KMFMenuPage* ob, m_pages[i])
+        for(KMFMenuPageIterator it(*m_pages[i]); *it != 0; ++it, ++j)
         {
-          ob->setIndex(i, mobs.count(), j, m_pages[i].count());
-          ob->writeDvdAuthorXml(menus, type);
-          ++j;
+          (*it)->setIndex(i, mobs->count(), j, (*m_pages[i]).count());
+          (*it)->writeDvdAuthorXml(menus, type);
         }
       }
       if(!menus.hasChildNodes())
@@ -152,7 +147,7 @@ bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
 
       QString post;
 
-      if(i < mobs.count() && templateObject()->property("%KMFMenuPage%",
+      if(i < mobs->count() && templateObject()->property("%KMFMenuPage%",
                                  "continue_to_next_title").toInt() == 1)
       {
         post = QString(" g3 = %1 ; ").arg(i+1);
@@ -160,10 +155,9 @@ bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
       post += " call vmgm menu 1 ; ";
       mob->writeDvdAuthorXml(elem, m_template.language(), post, type);
       root.appendChild(elem);
-      ++i;
     }
     return true;
-    //kDebug() << doc.toString();
+    //kdDebug() << doc.toString() << endl;
   }
   else
   {
@@ -180,10 +174,10 @@ bool KMFMenu::writeDvdAuthorXml(const QString& fileName, QString type)
   if(writeDvdAuthorXml(doc, type))
   {
     QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly))
+    if (!file.open(IO_WriteOnly))
       return false;
     QTextStream stream(&file);
-    stream.setCodec("UTF-8");
+    stream.setEncoding(QTextStream::UnicodeUTF8);
     stream << doc.toString();
     file.close();
     return true;
@@ -193,18 +187,18 @@ bool KMFMenu::writeDvdAuthorXml(const QString& fileName, QString type)
 
 bool KMFMenu::makeMenuMpegs()
 {
-  for(int i=0; i < m_pages.count(); ++i)
+  for(uint i=0; i < m_pages.count(); ++i)
   {
-    if(m_pages[i].count() > 0)
+    if(m_pages[i])
     {
-      foreach(KMFMenuPage* ob,  m_pages[i])
+      for(KMFMenuPageIterator it(*m_pages[i]); *it != 0; ++it)
       {
         progress(m_pagePoints);
         if(m_uiIf->message(KMF::Info,
-           i18n("   Menu: %1", uiText(ob->objectName()))))
+           QString(i18n("   Menu: %1")).arg(uiText((*it)->name()))))
           return false;
 
-        if(!ob->makeMpeg())
+        if(!(*it)->makeMpeg())
           return false;
       }
     }
@@ -212,15 +206,20 @@ bool KMFMenu::makeMenuMpegs()
   return true;
 }
 
-QList<KMFMenuPage*>* KMFMenu::titlePages(int title)
+QPtrList<KMFMenuPage>* KMFMenu::titlePages(uint title)
 {
-  while(m_pages.count() <= title)
-    m_pages.append(QList<KMFMenuPage*>());
-  return &m_pages[title];
+  if(m_pages.count() <= title)
+    m_pages.resize(title + 1);
+  if(m_pages[title] == 0)
+  {
+    m_pages.insert(title, new QPtrList<KMFMenuPage>);
+    m_pages[title]->setAutoDelete(true);
+  }
+  return m_pages[title];
 }
 
-bool KMFMenu::addPage(const QDomElement& element, int pageSet,
-                      int title, int chapter)
+bool KMFMenu::addPage(const QDomElement& element, uint pageSet,
+                     uint title, uint chapter)
 {
   KMFMenuPage* menuPage = static_cast<KMFMenuPage*>
       (KMFWidgetFactory::createPage(element, this, title, chapter));
@@ -228,7 +227,7 @@ bool KMFMenu::addPage(const QDomElement& element, int pageSet,
   if(menuPage)
   {
     if(m_uiIf->message(KMF::Info,
-       i18n("   Menu: %1", uiText(menuPage->objectName()))))
+       QString(i18n("   Menu: %1")).arg(uiText(menuPage->name()))))
       return false;
     if(pageSet == 0)
       menuPage->setVmgm(true);
@@ -238,18 +237,18 @@ bool KMFMenu::addPage(const QDomElement& element, int pageSet,
   return false;
 }
 
-bool KMFMenu::addPage(const QString& name, int title, int chapter)
+bool KMFMenu::addPage(const QString& name, uint title, uint chapter)
 {
   QDomElement element = m_templateXML.documentElement();
   QDomElement pageElement = getPage(element.firstChild(), name);
-  QList<KMF::MediaObject*> mobs = m_prjIf->mediaObjects();
+  QPtrList<KMF::MediaObject>* mobs = m_prjIf->mediaObjects();
   KMFMenuPage temp(this);
 
   temp.fromXML(pageElement);
 
   if(temp.titles() > 0)
   {
-    for(int i = 0; i < ((mobs.count() - 1) / temp.titles()) + 1; ++i)
+    for(uint i = 0; i < ((mobs->count() - 1) / temp.titles()) + 1; ++i)
     {
       if(addPage(pageElement, title, i * temp.titles(), chapter) == false)
         return false;
@@ -257,7 +256,7 @@ bool KMFMenu::addPage(const QString& name, int title, int chapter)
   }
   else if(temp.chapters() > 0)
   {
-    if(title <= mobs.count())
+    if(title <= mobs->count())
     {
       for(int i = 0;
           i < ((mediaObjChapterCount(title-1) - 1) / temp.chapters()) + 1;
@@ -291,15 +290,13 @@ QDomElement KMFMenu::getPage(const QDomNode& node, const QString& name)
     n = n.nextSibling();
   }
   m_uiIf->message(KMF::Error,
-                  i18n("Cannot find page %1 from template.", name));
+                  i18n("Cannot find page %1 from template.").arg(name));
   return QDomElement();
 }
 
 QImage KMFMenu::templateImage(const QString& image) const
 {
-  QImage img;
-  img.loadFromData(m_template.readFile(image));
-  return img;
+  return QImage(m_template.readFile(image));
 }
 
 QImage KMFMenu::makeMenuPreview(QString page)
@@ -319,7 +316,7 @@ QImage KMFMenu::makeMenuPreview(QString page)
     {
       p->parseButtons(false);
       p->paint();
-      return p->layer(KMFMenuPage::Background);
+      return QMImage(p->layer(KMFMenuPage::Background)).image();
     }
   }
   return QImage();
@@ -329,11 +326,14 @@ int KMFMenu::pages()
 {
   int result = 0;
 
-  for(int i=0; i < m_pages.count(); ++i)
+  for(uint i=0; i < m_pages.count(); ++i)
   {
-    for(int j=0; j < m_pages[i].count(); ++j)
+    if(m_pages[i])
     {
-      ++result;
+      for(KMFMenuPageIterator it(*m_pages[i]); *it != 0; ++it)
+      {
+        ++result;
+      }
     }
   }
   return result;
@@ -351,7 +351,7 @@ bool KMFMenu::makeMenu(QString type)
 {
   clear();
   m_points = TotalPoints / 4;
-  m_pagePoints = m_points / ((m_prjIf->mediaObjects().count() * 2) + 1);
+  m_pagePoints = m_points / ((m_prjIf->mediaObjects()->count() * 2) + 1);
   QDomElement element = m_templateXML.documentElement();
   QString page = element.attribute("first_page");
 
@@ -383,18 +383,18 @@ bool KMFMenu::makeMenu(QString type)
 
 int KMFMenu::mediaObjCount()
 {
-  return m_prjIf->mediaObjects().count();
+  return m_prjIf->mediaObjects()->count();
 }
 
 int KMFMenu::mediaObjChapterCount(int title)
 {
-  QList<KMF::MediaObject*> mobs = m_prjIf->mediaObjects();
-  KMF::MediaObject* mob = mobs.at(title);
+  QPtrList<KMF::MediaObject>* mobs = m_prjIf->mediaObjects();
+  KMF::MediaObject* mob = mobs->at(title);
   int result = mob->chapters();
   KMF::Time chapter = mob->chapterTime(result);
 
   // Don't put chapter selection for chapter really close to end
-  //kDebug() << mob->duration() << ", " << chapter;
+  //kdDebug() << k_funcinfo << mob->duration() << ", " << chapter << endl;
   if(chapter + 3.0 > mob->duration() && result > 1)
     --result;
   return result;

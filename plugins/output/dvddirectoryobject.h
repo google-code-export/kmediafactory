@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -21,10 +21,12 @@
 #define DVDDIRECTORYOBJECT_H
 
 #include "dvdauthorobject.h"
-#include <run.h>
-#include <QFileInfo>
-#include <QPixmap>
+#include <kprocess.h>
+#include <qfileinfo.h>
+#include <qdict.h>
 
+/**
+*/
 class DvdDirectoryObject : public DvdAuthorObject
 {
   Q_OBJECT
@@ -33,17 +35,17 @@ class DvdDirectoryObject : public DvdAuthorObject
     enum LastLine { Warning = KMF::Warning, Error = KMF::Error,
       Processing, Vobu, FixingVobu, None };
 
-    DvdDirectoryObject(QObject *parent = 0);
+    DvdDirectoryObject(QObject *parent = 0, const char *name = 0);
     virtual ~DvdDirectoryObject();
     virtual void toXML(QDomElement& element) const;
-    virtual bool fromXML(const QDomElement& element);
+    virtual void fromXML(const QDomElement& element);
     virtual QPixmap pixmap() const;
-    virtual void actions(QList<QAction*>& actionList) const;
+    virtual void actions(QPtrList<KAction>& actionList) const;
     virtual int timeEstimate() const;
     virtual bool make(QString type);
 
   private slots:
-    void output(const QString& line);
+    void output(KProcess* proc, char* buffer, int buflen);
     virtual void clean();
 
   private:
@@ -52,7 +54,7 @@ class DvdDirectoryObject : public DvdAuthorObject
     LastLine m_lastLine;
     QString m_warning;
     KAction* dvdCleanDirectory;
-    Run m_run;
+    KProcess dvdauthor;
     QFileInfo m_currentFile;
     int m_points;
     int m_filePoints;

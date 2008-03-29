@@ -316,10 +316,10 @@ Cell::Cell(int cell, pgc_t *pgc) : m_cell(cell)
     }
   }
 
-  kDebug() << "  Cell " << m_cell
+  kdDebug() << "  Cell " << m_cell
       << ": " << start() << " " << length()
       << ", " << startSector() << " - " << endSector() << ", Chapter: "
-      << m_chapter;
+      << m_chapter << endl;
 }
 
 #endif
@@ -331,12 +331,12 @@ uint64_t Cell::size() const
 
 QString Cell::toString() const
 {
-  return i18n("Cell: %1", start().toString());
+  return i18n("Cell: %1").arg(start().toString());
 }
 
 Subtitle::Subtitle(QString langCode, QString file) :
     m_langCode(langCode), m_file(file),
-    m_align(Qt::AlignCenter | Qt::AlignBottom)
+    m_align(Qt::AlignmentFlags(Qt::AlignAuto | Qt::AlignBottom))
 {
   m_font.setPointSize(28);
 }
@@ -385,10 +385,10 @@ Subtitle::Subtitle(int pos, subp_attr_t* subp_attr, uint16_t subp_control,
     setPosition(pos);
   }
   setTrackId(0x20 + position());
-  m_align = Qt::AlignLeft | Qt::AlignBottom;
+  m_align = Qt::AlignmentFlags(Qt::AlignAuto | Qt::AlignBottom);
 
-  kDebug() << "Subtitle: " << languageString() << ", " << typeString()
-      << ", " << trackId() << ", " << position();
+  kdDebug() << "Subtitle: " << languageString() << ", " << typeString()
+      << ", " << trackId() << ", " << position() << endl;
 }
 
 #endif
@@ -399,48 +399,19 @@ QString Subtitle::toString() const
 
   if(type() >= Large)
     s = " (" + typeString() +")";
-  return i18n("Subtitle: %1%4", languageString(), s);
+  return i18n("Subtitle: %1%4").arg(languageString()).arg(s);
 }
 
 QString Subtitle::verticalAlign() const
 {
-  int n = 0;
-
-  switch(alignment() & Qt::AlignVertical_Mask)
-  {
-    case Qt::AlignTop:
-      n = 1;
-      break;
-    case Qt::AlignVCenter:
-        n = 3;
-        break;
-    case Qt::AlignBottom:
-    default:
-        n = 2;
-        break;
-  }
-  return vAlign[n];
+  int n = (m_align & Qt::AlignVertical_Mask) >> 4;
+  return vAlign[(n > 2)?3:n];
 }
 
 QString Subtitle::horizontalAlign() const
 {
-  int n = 0;
-
-  switch(alignment() & Qt::AlignHorizontal_Mask)
-  {
-    case Qt::AlignLeft:
-      n = 1;
-      break;
-    case Qt::AlignRight:
-      n = 2;
-      break;
-    case Qt::AlignHCenter:
-      n = 3;
-      break;
-    default:
-      n = 0;
-  }
-  return hAlign[n];
+  int n = m_align & Qt::AlignHorizontal_Mask;
+  return hAlign[(n > 2)?3:n];
 }
 
 AudioTrack::AudioTrack(QString langCode) :
@@ -488,15 +459,15 @@ AudioTrack::AudioTrack(audio_attr_t *audio_attr, uint16_t audio_control)
         break;
       default:
         setTrackId(-1);
-        kDebug() << "Unknown audio: " << m_format;
+        kdDebug() << "Unknown audio: " << m_format << endl;
         break;
     }
   }
 
-  kDebug() << "Audio: " << languageString() << ", " << formatString()
+  kdDebug() << "Audio: " << languageString() << ", " << formatString()
       << ", " << sampleFreq() << ", " << quantizationString() << ", "
       << channels() << ", " << apMode() << ", " << typeString() << ", "
-      << QString("%1").arg(trackId(), 0, 16) << ", " << position();
+      << QString("%1").arg(trackId(), 0, 16) << ", " << position() << endl;
 }
 
 #endif
@@ -507,7 +478,8 @@ QString AudioTrack::toString() const
 
   if(type() >= Impaired)
     s = " (" + typeString() +")";
-  return i18n("Audio: %1, %2 channels%3", languageString(), channels(), s);
+  return i18n("Audio: %1, %2 channels%3")
+      .arg(languageString()).arg(channels()).arg(s);
 }
 
 #ifdef HAVE_LIBDVDREAD
@@ -523,17 +495,18 @@ VideoTrack::VideoTrack(pgc_t *pgc, video_attr_t *video_attr)
   setPosition(0);
   setTrackId(0xe0);
 
-  kDebug() << "Video: " << fps() << ", " << formatString() << ", " <<
+  kdDebug() << "Video: " << fps() << ", " << formatString() << ", " <<
       aspectRatioString() << ", " << width() << ", " << height() << ", " <<
-      permittedDfString();
+      permittedDfString() << endl;
 }
 
 #endif
 
 QString VideoTrack::toString() const
 {
-  return i18n("Video: %1, %2x%3, %4", formatString(), width(), height(),
-              aspectRatioString());
+  return i18n("Video: %1, %2x%3, %4")
+      .arg(formatString()).arg(width())
+      .arg(height()).arg(aspectRatioString());
 }
 
 #ifdef HAVE_LIBDVDREAD
@@ -548,8 +521,8 @@ Title::Title(int titleNbr, pgc_t* pgc, int pgcNbr, title_info_t* title,
   m_ttn = title->vts_ttn;
   m_angles = title->nr_of_angles;
 
-  kDebug() << "Title: " << length() << ", " << vtsId() << ", " <<
-      vts() << ", " << ttn() << ", " << angles();
+  kdDebug() << "Title: " << length() << ", " << vtsId() << ", " <<
+      vts() << ", " << ttn() << ", " << angles() << endl;
 }
 
 bool Title::parseAudioBitrates(dvd_reader_t* dvd)
@@ -559,7 +532,7 @@ bool Title::parseAudioBitrates(dvd_reader_t* dvd)
   uint32_t maxblocks = endSector();
   uint32_t i;
   dvd_file_t *vob;
-  QList<int> handledStreams;
+  QValueList<int> handledStreams;
   int id;
   int bitrate;
   int audioTracks = m_audios.count();
@@ -568,7 +541,7 @@ bool Title::parseAudioBitrates(dvd_reader_t* dvd)
   vob = DVDOpenFile(dvd, m_vts, DVD_READ_TITLE_VOBS);
   if( !vob )
   {
-    kDebug() << "ERROR: opening vobs for title " << m_vts << "failed";
+    kdDebug() << "ERROR: opening vobs for title " << m_vts << "failed" << endl;
     DVDClose(dvd);
     return false;
   }
@@ -583,14 +556,14 @@ bool Title::parseAudioBitrates(dvd_reader_t* dvd)
     // read 10mb from dvd
     if(!DVDReadBlocks(vob, i, 1, buffer))
     {
-      kDebug() << "ERROR probing for streams";
+      kdDebug() << "ERROR probing for streams" << endl;
       return false;
     }
 
     type = packetType(buffer);
     if(type == UNKNOWN)
       continue;
-    if(handledStreams.indexOf(type) >= 0)
+    if(handledStreams.find(type) != handledStreams.end())
       continue; // Already handled
 
     id = buffer[23+buffer[22]];
@@ -618,8 +591,8 @@ bool Title::parseAudioBitrates(dvd_reader_t* dvd)
     }
     if(bitrate > 0)
     {
-      kDebug() << "Bitrate: " << QString("%1").arg(id, 0, 16 ) << " = "
-          << bitrate;
+      kdDebug() << "Bitrate: " << QString("%1").arg(id, 0, 16 ) << " = "
+          << bitrate << endl;
       AudioTrack* track = audioById(id);
       if(track)
       {
@@ -657,7 +630,7 @@ bool Title::parseTrackLengths(dvd_reader_t* dvd)
     size = (int64_t)((double)(lastBlock - firstBlock) * 2048.0 / 1450.0);
     (*it).setSize(size);
     total += size;
-    kDebug() << "Subtitle size: " << size;
+    kdDebug() << "Subtitle size: " << size << endl;
   }
   for(AudioList::Iterator it = m_audios.begin();
       it != m_audios.end(); ++it)
@@ -665,7 +638,7 @@ bool Title::parseTrackLengths(dvd_reader_t* dvd)
     size = (uint64_t)((double)(*it).bitrate() / 8.0 * runtime);
     (*it).setSize(size);
     total += size;
-    kDebug() << "Audio size: " << size;
+    kdDebug() << "Audio size: " << size << endl;
   }
   overhead_size = overheadSize();
   // sum of all non video stuff
@@ -676,7 +649,7 @@ bool Title::parseTrackLengths(dvd_reader_t* dvd)
     m_video.setSize(0);
   else
     m_video.setSize(size - total);
-  kDebug() << "Video size: " << m_video.size();
+  kdDebug() << "Video size: " << m_video.size() << endl;
   return true;
 }
 
@@ -721,7 +694,7 @@ int Title::dvdTime2ms(dvd_time_t *dt)
 
 QString Title::toString() const
 {
-  return i18n("Title: %1, %2", m_titleNbr, length().toString());
+  return i18n("Title: %1, %2").arg(m_titleNbr).arg(length().toString());
 }
 
 Title::StreamType Title::packetType(unsigned char* buffer)
@@ -828,8 +801,8 @@ uint64_t Title::size() const
 
 #ifdef HAVE_LIBDVDREAD
 
-Info::Info(const QString& device, QObject *parent)
- : QObject(parent)
+Info::Info(const QString& device, QObject *parent, const char *name)
+ : QObject(parent, name)
 {
   if(!device.isEmpty())
     parseDVD(device);
@@ -841,7 +814,7 @@ bool Info::getTitleName(const char* dvd_device, QString& title)
   int  i;
   char t[33];
   QString path = dvd_device;
-  if(path.startsWith("/"))
+  if(path.right(1) = "/")
     path = path.left(path.length() - 1);
   QFileInfo fi(path);
 
@@ -853,7 +826,7 @@ bool Info::getTitleName(const char* dvd_device, QString& title)
 
   if(!(filehandle = fopen(dvd_device, "r")))
   {
-    kDebug() << "Couldn't open %s for title";
+    kdDebug() << "Couldn't open %s for title" << endl;
     title = i18n("unknown");
     return false;
   }
@@ -861,7 +834,7 @@ bool Info::getTitleName(const char* dvd_device, QString& title)
   if(fseek(filehandle, 32808, SEEK_SET))
   {
     fclose(filehandle);
-    kDebug() << "Couldn't seek in %s for title";
+    kdDebug() << "Couldn't seek in %s for title" << endl;
     title = i18n("unknown");
     return false;
   }
@@ -869,7 +842,7 @@ bool Info::getTitleName(const char* dvd_device, QString& title)
   if(32 != (i = fread(t, 1, 32, filehandle)))
   {
     fclose(filehandle);
-    kDebug() << "Couldn't read enough bytes for title.";
+    kdDebug() << "Couldn't read enough bytes for title." << endl;
     title = i18n("unknown");
     return false;
   }
@@ -904,21 +877,21 @@ bool Info::parseDVD(const QString& device)
   clear();
   if(!fi.exists())
   {
-    kDebug() << "Can't find device " <<  device;
+    kdDebug() << "Can't find device " <<  device << endl;
     return false;
   }
 
-  dvd = DVDOpen((const char*)device.toLocal8Bit());
+  dvd = DVDOpen((const char*)device.local8Bit());
   if(!dvd)
   {
-    kDebug() << "Can't open disc " << device;
+    kdDebug() << "Can't open disc " << device << endl;
     return false;
   }
 
   ifo_zero = ifoOpen(dvd, 0);
   if(!ifo_zero)
   {
-    kDebug() << "Can't open main ifo!";
+    kdDebug() << "Can't open main ifo!" << endl;
     return false;
   }
 
@@ -930,7 +903,7 @@ bool Info::parseDVD(const QString& device)
     ifo[i] = ifoOpen(dvd, i);
     if (!ifo[i])
     {
-      kDebug() << "Can't open ifo " << i;
+      kdDebug() << "Can't open ifo " << i << endl;
       return false;
     }
   }
@@ -941,10 +914,10 @@ bool Info::parseDVD(const QString& device)
   kapp->processEvents();
 
   m_device = device;
-  getTitleName(device.toLocal8Bit(), m_title);
+  getTitleName(device, m_title);
   m_vmgIdentifier.sprintf("%.12s", vmgi_mat->vmg_identifier);
   m_providerIdentifier.sprintf("%.32s", vmgi_mat->provider_identifier);
-  kDebug() << m_title;
+  kdDebug() << m_title << endl;
 
   for(j=0; j < dvdTitles; j++)
   {
@@ -1035,5 +1008,4 @@ void Info::clear()
 }
 
 }
-
 #include "qdvdinfo.moc"

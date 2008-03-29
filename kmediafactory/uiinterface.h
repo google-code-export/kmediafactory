@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damst�
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,10 @@
 #include "kmfobject.h"
 #include <kaction.h>
 #include <kprocess.h>
-#include <QString>
-#include <QObject>
-#include <QImage>
+#include <qptrlist.h>
+#include <qstring.h>
+#include <qobject.h>
+#include <qimage.h>
 #include <stdint.h>
 
 class QToolButton;
@@ -36,14 +37,14 @@ namespace KMF
   enum MsgType { None = -1, Info, Warning, Error, OK };
   enum AspectRatio { ASPECT_4_3 = 0 , ASPECT_16_9, ASPECT_LAST };
 
-  class KDE_EXPORT MediaObject :public Object
+  class MediaObject :public Object
   {
       Q_OBJECT
     public:
       enum { MainPreview = 0 };
       enum { MainTitle = 0 };
 
-      MediaObject(QObject* parent);
+      MediaObject(QObject* parent, const char* name = 0);
       virtual void writeDvdAuthorXml(QDomElement& element,
                                      QString preferredLanguage,
                                      QString post, QString type) = 0;
@@ -55,25 +56,25 @@ namespace KMF
       virtual QTime chapterTime(int chapter) const = 0;
   };
 
-  class KDE_EXPORT OutputObject :public Object
+  class OutputObject :public Object
   {
       Q_OBJECT
     public:
-      OutputObject(QObject* parent);
+      OutputObject(QObject* parent, const char* name = 0);
   };
 
-  class KDE_EXPORT TemplateObject :public Object
+  class TemplateObject :public Object
   {
       Q_OBJECT
     public:
-      TemplateObject(QObject* parent);
-      virtual QImage preview(const QString& = "")
+      TemplateObject(QObject* parent, const char* name = 0);
+      virtual QImage preview(const QString& = "") 
           { return QImage(); };
       virtual QStringList menus() { return QStringList(); };
       virtual bool clicked() { return false; };
   };
 
-  class KDE_EXPORT Logger :public QObject
+  class Logger :public QObject
   {
       Q_OBJECT
     public:
@@ -86,25 +87,19 @@ namespace KMF
       virtual bool save(QString file) const = 0;
       void connectProcess(KProcess* proc,
                           const QString& filter = "",
-                          KProcess::OutputChannelMode mode =
-                              KProcess::SeparateChannels);
+                          KProcess::Communication comm = KProcess::All);
 
     public slots:
-      virtual void stdout() = 0;
-      virtual void stderr() = 0;
+      virtual void stdout(KProcess* proc, char* buffer, int buflen) = 0;
+      virtual void stderr(KProcess* proc, char* buffer, int buflen) = 0;
       void message(const QString& msg) { message(msg, QColor("black")); };
-
-    protected:
-      KProcess* currentProcess;
   };
 
-  class KDE_EXPORT UiInterface :public QObject
+  class UiInterface :public QObject
   {
       Q_OBJECT
     public:
-      UiInterface(QObject* parent);
-      virtual bool addMediaAction(QAction* action,
-                                  const QString& group = "") const = 0;
+      UiInterface(QObject* parent, const char* name = 0);
       virtual bool addMediaObject(MediaObject* media) const = 0;
       virtual bool addTemplateObject(TemplateObject* tob) = 0;
       virtual bool addOutputObject(OutputObject* oob) = 0;
@@ -119,10 +114,6 @@ namespace KMF
       virtual Logger* logger() = 0;
   };
 }
-
-Q_DECLARE_METATYPE(KMF::OutputObject*);
-Q_DECLARE_METATYPE(KMF::TemplateObject*);
-Q_DECLARE_METATYPE(KMF::MediaObject*);
 
 #endif // UIINTERFACE_H
 

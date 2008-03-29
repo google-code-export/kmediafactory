@@ -1,0 +1,568 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>ChaptersLayout</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>ChaptersLayout</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>600</width>
+            <height>425</height>
+        </rect>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>600</width>
+            <height>400</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Chapters</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget" row="0" column="0">
+            <property name="name">
+                <cstring>layout11</cstring>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>chaptersLabel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Chapters:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>chaptersListView</cstring>
+                    </property>
+                </widget>
+                <widget class="KMFChapterListView">
+                    <property name="name">
+                        <cstring>chaptersListView</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>5</hsizetype>
+                            <vsizetype>7</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>275</width>
+                            <height>0</height>
+                        </size>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout10</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer3</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>addButton</cstring>
+                            </property>
+                            <property name="minimumSize">
+                                <size>
+                                    <width>100</width>
+                                    <height>0</height>
+                                </size>
+                            </property>
+                            <property name="text">
+                                <string>Add</string>
+                            </property>
+                            <property name="accel">
+                                <string></string>
+                            </property>
+                            <property name="stdItem" stdset="0">
+                                <number>27</number>
+                            </property>
+                        </widget>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>removeButton</cstring>
+                            </property>
+                            <property name="minimumSize">
+                                <size>
+                                    <width>100</width>
+                                    <height>0</height>
+                                </size>
+                            </property>
+                            <property name="text">
+                                <string>Remove</string>
+                            </property>
+                            <property name="accel">
+                                <string></string>
+                            </property>
+                            <property name="stdItem" stdset="0">
+                                <number>28</number>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QLayoutWidget" row="0" column="1">
+            <property name="name">
+                <cstring>layout8</cstring>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="KMFImageView">
+                    <property name="name">
+                        <cstring>video</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>7</hsizetype>
+                            <vsizetype>7</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>100</width>
+                            <height>75</height>
+                        </size>
+                    </property>
+                </widget>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>customPreviewButton</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Use as Custom Preview</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+U</string>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout20</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>layout19</cstring>
+                            </property>
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="KPushButton">
+                                    <property name="name">
+                                        <cstring>startButton</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string></string>
+                                    </property>
+                                    <property name="iconSet">
+                                        <iconset>"player_start"</iconset>
+                                    </property>
+                                    <property name="flat">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Start</string>
+                                    </property>
+                                </widget>
+                                <widget class="KPushButton">
+                                    <property name="name">
+                                        <cstring>rewButton</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string></string>
+                                    </property>
+                                    <property name="iconSet">
+                                        <iconset>"player_rew"</iconset>
+                                    </property>
+                                    <property name="flat">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Rewind</string>
+                                    </property>
+                                </widget>
+                                <widget class="KPushButton">
+                                    <property name="name">
+                                        <cstring>prevButton</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string></string>
+                                    </property>
+                                    <property name="iconSet">
+                                        <iconset>"back"</iconset>
+                                    </property>
+                                    <property name="flat">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Previous frame</string>
+                                    </property>
+                                </widget>
+                                <widget class="KPushButton">
+                                    <property name="name">
+                                        <cstring>nextButton</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string></string>
+                                    </property>
+                                    <property name="iconSet">
+                                        <iconset>"forward"</iconset>
+                                    </property>
+                                    <property name="flat">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Next frame</string>
+                                    </property>
+                                </widget>
+                                <widget class="KPushButton">
+                                    <property name="name">
+                                        <cstring>fwdButton</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string></string>
+                                    </property>
+                                    <property name="iconSet">
+                                        <iconset>"player_fwd"</iconset>
+                                    </property>
+                                    <property name="flat">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Forward</string>
+                                    </property>
+                                </widget>
+                                <widget class="KPushButton">
+                                    <property name="name">
+                                        <cstring>endButton</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string></string>
+                                    </property>
+                                    <property name="iconSet">
+                                        <iconset>"player_end"</iconset>
+                                    </property>
+                                    <property name="flat">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>End</string>
+                                    </property>
+                                </widget>
+                            </hbox>
+                        </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>timeLabel</cstring>
+                            </property>
+                            <property name="text">
+                                <string>00:00</string>
+                            </property>
+                        </widget>
+                        <widget class="QSlider">
+                            <property name="name">
+                                <cstring>timeSlider</cstring>
+                            </property>
+                            <property name="maxValue">
+                                <number>65534</number>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout8</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer1</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>okButton</cstring>
+                            </property>
+                            <property name="minimumSize">
+                                <size>
+                                    <width>100</width>
+                                    <height>0</height>
+                                </size>
+                            </property>
+                            <property name="text">
+                                <string>&amp;OK</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+O</string>
+                            </property>
+                            <property name="stdItem" stdset="0">
+                                <number>1</number>
+                            </property>
+                        </widget>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>cancelButton</cstring>
+                            </property>
+                            <property name="minimumSize">
+                                <size>
+                                    <width>100</width>
+                                    <height>0</height>
+                                </size>
+                            </property>
+                            <property name="text">
+                                <string>Ca&amp;ncel</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+N</string>
+                            </property>
+                            <property name="stdItem" stdset="0">
+                                <number>2</number>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+    </grid>
+</widget>
+<customwidgets>
+    <customwidget>
+        <class>KMFChapterListView</class>
+        <header location="local">kmfchapterlistview.h</header>
+        <sizehint>
+            <width>25</width>
+            <height>25</height>
+        </sizehint>
+        <container>0</container>
+        <sizepolicy>
+            <hordata>5</hordata>
+            <verdata>5</verdata>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+        <pixmap>image0</pixmap>
+        <signal>selectionChanged()</signal>
+        <signal>contextMenu(KListView*, QListViewItem*, const QPoint&amp;)</signal>
+    </customwidget>
+</customwidgets>
+<images>
+    <image name="image0">
+        <data format="XBM.GZ" length="79">789c534e494dcbcc4b554829cdcdad8c2fcf4c29c95030e0524611cd48cd4ccf28010a1797249664262b2467241641a592324b8aa363156c15aab914146aadb90067111b1f</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>okButton</sender>
+        <signal>clicked()</signal>
+        <receiver>ChaptersLayout</receiver>
+        <slot>okClicked()</slot>
+    </connection>
+    <connection>
+        <sender>cancelButton</sender>
+        <signal>clicked()</signal>
+        <receiver>ChaptersLayout</receiver>
+        <slot>reject()</slot>
+    </connection>
+    <connection>
+        <sender>startButton</sender>
+        <signal>clicked()</signal>
+        <receiver>ChaptersLayout</receiver>
+        <slot>slotStart()</slot>
+    </connection>
+    <connection>
+        <sender>endButton</sender>
+        <signal>clicked()</signal>
+        <receiver>ChaptersLayout</receiver>
+        <slot>slotEnd()</slot>
+    </connection>
+    <connection>
+        <sender>addButton</sender>
+        <signal>clicked()</signal>
+        <receiver>ChaptersLayout</receiver>
+        <slot>slotAdd()</slot>
+    </connection>
+    <connection>
+        <sender>removeButton</sender>
+        <signal>clicked()</signal>
+        <receiver>ChaptersLayout</receiver>
+        <slot>slotRemove()</slot>
+    </connection>
+    <connection>
+        <sender>chaptersListView</sender>
+        <signal>selectionChanged()</signal>
+        <receiver>ChaptersLayout</receiver>
+        <slot>slotSelectionChanged()</slot>
+    </connection>
+    <connection>
+        <sender>timeSlider</sender>
+        <signal>sliderMoved(int)</signal>
+        <receiver>ChaptersLayout</receiver>
+        <slot>slotSliderMoved(int)</slot>
+    </connection>
+    <connection>
+        <sender>fwdButton</sender>
+        <signal>clicked()</signal>
+        <receiver>ChaptersLayout</receiver>
+        <slot>slotForward()</slot>
+    </connection>
+    <connection>
+        <sender>rewButton</sender>
+        <signal>clicked()</signal>
+        <receiver>ChaptersLayout</receiver>
+        <slot>slotRewind()</slot>
+    </connection>
+    <connection>
+        <sender>nextButton</sender>
+        <signal>clicked()</signal>
+        <receiver>ChaptersLayout</receiver>
+        <slot>slotNextFrame()</slot>
+    </connection>
+    <connection>
+        <sender>prevButton</sender>
+        <signal>clicked()</signal>
+        <receiver>ChaptersLayout</receiver>
+        <slot>slotPrevFrame()</slot>
+    </connection>
+    <connection>
+        <sender>chaptersListView</sender>
+        <signal>contextMenu(KListView*,QListViewItem*,const QPoint&amp;)</signal>
+        <receiver>ChaptersLayout</receiver>
+        <slot>slotContextMenu(KListView*,QListViewItem*,const QPoint&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>customPreviewButton</sender>
+        <signal>clicked()</signal>
+        <receiver>ChaptersLayout</receiver>
+        <slot>saveCustomPreview()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>addButton</tabstop>
+    <tabstop>removeButton</tabstop>
+    <tabstop>startButton</tabstop>
+    <tabstop>rewButton</tabstop>
+    <tabstop>prevButton</tabstop>
+    <tabstop>nextButton</tabstop>
+    <tabstop>fwdButton</tabstop>
+    <tabstop>endButton</tabstop>
+    <tabstop>timeSlider</tabstop>
+    <tabstop>okButton</tabstop>
+    <tabstop>cancelButton</tabstop>
+    <tabstop>chaptersListView</tabstop>
+</tabstops>
+<includes>
+    <include location="global" impldecl="in declaration">klistview.h</include>
+    <include location="global" impldecl="in declaration">qlistview.h</include>
+    <include location="global" impldecl="in implementation">kiconloader.h</include>
+    <include location="local" impldecl="in implementation">common.h</include>
+    <include location="local" impldecl="in implementation">kmfimageview.h</include>
+    <include location="local" impldecl="in implementation">kmfchapterlistview.h</include>
+</includes>
+<slots>
+    <slot access="protected">slotNextFrame()</slot>
+    <slot access="protected">slotPrevFrame()</slot>
+    <slot access="protected">slotRemove()</slot>
+    <slot access="protected">slotAdd()</slot>
+    <slot access="protected">slotSelectionChanged()</slot>
+    <slot access="protected">slotSliderMoved(int)</slot>
+    <slot access="protected">slotStart()</slot>
+    <slot access="protected">slotEnd()</slot>
+    <slot access="protected">slotForward()</slot>
+    <slot access="protected">slotRewind()</slot>
+    <slot access="protected">slotContextMenu(KListView*, QListViewItem*, const QPoint&amp;)</slot>
+    <slot access="protected">saveCustomPreview()</slot>
+    <slot access="protected">okClicked()</slot>
+</slots>
+<pixmapfunction>BTN_ICON</pixmapfunction>
+<layoutdefaults spacing="6" margin="11"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<includehints>
+    <includehint>kmfchapterlistview.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kmfimageview.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+</includehints>
+</UI>

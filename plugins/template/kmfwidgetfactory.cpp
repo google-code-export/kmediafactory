@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damst�
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -27,11 +27,11 @@
 #include "kmflayout.h"
 #include "templateobject.h"
 #include <kdebug.h>
-#include <QRegExp>
-#include <QVariant>
+#include <qregexp.h>
+#include <qvariant.h>
 
-KMFWidgetFactory::KMFWidgetFactory(QObject *parent)
-  : KMFTemplateBase(parent), m_title(0), m_chapter(0),
+KMFWidgetFactory::KMFWidgetFactory(QObject *parent, const char *name)
+  : KMFTemplateBase(parent, name), m_title(0), m_chapter(0),
     m_customProperties(0)
 {
   m_customProperties = &templateObject()->customProperties();
@@ -89,6 +89,7 @@ KMFWidget* KMFWidgetFactory::create(const QDomElement& element,
                                     QObject* parent)
 {
   KMFWidget* result = newWidget(element.tagName(), parent);
+  //kdDebug() << element.tagName() << ": " << result << "/" << parent << endl;
   if (!result && !parent)
     return 0;
 
@@ -99,29 +100,29 @@ KMFWidget* KMFWidgetFactory::create(const QDomElement& element,
     result->fromXML(element);
 
     KConfigSkeletonItem::List items = m_customProperties->items();
+    KConfigSkeletonItem::List::ConstIterator it;
 
-    foreach(KConfigSkeletonItem* item, items)
+    for(it = items.begin(); it != items.end(); ++it)
     {
-      if(item->group().startsWith("%"))
+      if((*it)->group().startsWith("%"))
       {
-        QString className = result->metaObject()->className();
-        set = (item->group().remove('%') == className);
-        //if(set) kDebug() << className;
+        set = ((*it)->group().remove('%') == result->className());
+        //if(set) kdDebug() << k_funcinfo << result->className() << endl;
       }
       else
       {
-        set = QRegExp(item->group()).exactMatch(result->objectName());
-        //if(set) kDebug() << result->objectName();
+        set = QRegExp((*it)->group()).exactMatch(result->name());
+        //if(set) kdDebug() << k_funcinfo << result->name() << endl;
       }
 
       if(set)
       {
-        QString name = item->name();
-        int n = name.indexOf("::");
+        QString name = (*it)->name();
+        int n = name.find("::");
         if(n >= 0)
           name = name.mid(n+2);
-        //kDebug() << name << " : " << item->property();
-        result->setProperty(name, item->property());
+        result->setProperty(name, (*it)->property());
+        //kdDebug() << k_funcinfo << name << " : " << (*it)->property() << endl;
       }
     }
   }

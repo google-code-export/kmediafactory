@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damst�
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,11 +20,10 @@
 #ifndef KMFOBJECT_H
 #define KMFOBJECT_H
 
-#include <kdemacros.h>
-#include <QAction>
-#include <QObject>
-#include <QPixmap>
-#include <QDomElement>
+#include <kaction.h>
+#include <qobject.h>
+#include <qdom.h>
+#include <qptrlist.h>
 
 namespace KMF
 {
@@ -32,15 +31,15 @@ namespace KMF
   class ProjectInterface;
   class Plugin;
 
-  class KDE_EXPORT Object : public QObject
+  class Object : public QObject
   {
     public:
-      Object(QObject* parent):
-          QObject(parent), m_plg(0), m_uiIf(0), m_prjIf(0) {};
+      Object(QObject* parent, const char* name = 0):
+          QObject(parent, name), m_plg(0), m_uiIf(0), m_prjIf(0) {};
       virtual void toXML(QDomElement&) const {};
-      virtual bool fromXML(const QDomElement&) { return false; };
+      virtual void fromXML(const QDomElement&) {};
       virtual QPixmap pixmap() const = 0;
-      virtual void actions(QList<QAction*>&) const {};
+      virtual void actions(QPtrList<KAction>&) const {};
       virtual bool make(QString) { return false; };
       virtual QMap<QString, QString> subTypes() const
           { return QMap<QString, QString>(); };

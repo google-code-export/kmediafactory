@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -22,21 +22,20 @@
 
 #include "kmfproject.h"
 #include "kmflogger.h"
-#include "kmediafactorysettings.h"
 #include <kapplication.h>
 #include <kurl.h>
-#include <QMap>
+#include <qmap.h>
 
 class KMediaFactory;
 class QObject;
 class KMFUiInterface;
 class KMFProjectInterface;
 class KCmdLineArgs;
-class KMFDbusInterface;
+class KMFDcopInterface;
 
 /**
  * @short KMediaFactory application class
- * @author Petri Damsten <petri.damsten@iki.fi>
+ * @author Petri Damstén <petri.damsten@iki.fi>
  */
 
 #define kmfApp ((KMFApplication*)qApp)
@@ -55,20 +54,15 @@ class KMFApplication : public KApplication
     QObject *pluginInterface() { return m_pluginInterface; };
     KMFUiInterface* uiInterface() { return m_uiInterface; };
     KMediaFactory* mainWindow() { return m_mainWin; };
-    QWidget* widget() { return (QWidget*)m_mainWin; };
-    const KUrl& url() { return m_url; };
+    const KURL& url() { return m_url; };
     KMFLogger& logger() { return m_logger; };
     KMF::PluginList plugins();
     void finalize();
-    KConfigBase* config() { return KMediaFactorySettings::self()->config(); };
     const QStringList& supportedProjects() { return m_supportedProjects; };
-    int startServiceByDesktopPath(const QString& _name,
-                                  const QString &URL,
-                                  QStringList& envs,
-                                  QString* error = 0,
-                                  QString* serviceName = 0,
-                                  int* pid = 0,
-                                  const QByteArray& startup_id = "",
+    int startServiceByDesktopPath(const QString& _name, const QString &URL,
+                                  QValueList<QCString> &envs, QString *error=0,
+                                  QCString *dcopService=0, int *pid = 0,
+                                  const QCString &startup_id = "",
                                   bool noWait = false);
 
   private:
@@ -77,10 +71,10 @@ class KMFApplication : public KApplication
     QObject* m_pluginInterface;
     KMFUiInterface* m_uiInterface;
     KMFProjectInterface* m_projectInterface;
-    KUrl m_url;
+    KURL m_url;
     KMFLogger m_logger;
     QStringList m_supportedProjects;
-    KMFDbusInterface* iface;
+    KMFDcopInterface* iface;
 };
 
 #endif // KMFAPPLICATION_H

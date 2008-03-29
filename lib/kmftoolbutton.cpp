@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -21,10 +21,9 @@
 #include "kglobalsettings.h"
 #include <qpainter.h>
 #include <qstyle.h>
-#include <QStyleOption>
 
-KMFToolButton::KMFToolButton(QWidget* parent)
-    : QToolButton(parent)
+KMFToolButton::KMFToolButton(QWidget* parent, const char* name)
+    : QToolButton(parent, name)
 {
 }
 
@@ -34,27 +33,23 @@ KMFToolButton::~KMFToolButton()
 }
 
 // from KToolBarButton
-void KMFToolButton::paintEvent(QPaintEvent* event)
+void KMFToolButton::drawButton(QPainter* _painter)
 {
-  QToolButton::paintEvent(event);
+  QToolButton::drawButton(_painter);
 
-  if(QToolButton::menu())
+  if (QToolButton::popup())
   {
-    QPainter painter(this);
-    QStyleOption option;
+    QStyle::SFlags arrowFlags = QStyle::Style_Default;
 
-    option.initFrom(this);
-    option.rect = QRect(width()-15, height()-13, 7, 7);
-    option.state |= QStyle::State_None;
     if (isDown())
-      option.state |= QStyle::State_DownArrow;
+      arrowFlags |= QStyle::Style_Down;
     if (isEnabled())
-      option.state |= QStyle::State_Enabled;
+      arrowFlags |= QStyle::Style_Enabled;
 
-    style()->drawPrimitive(QStyle::PE_IndicatorArrowDown,
-        &option, &painter, this);
+    style().drawPrimitive(QStyle::PE_ArrowDown, _painter,
+        QRect(width()-10, height()-10, 7, 7), colorGroup(),
+        arrowFlags, QStyleOption() );
   }
 }
-
 
 #include "kmftoolbutton.moc"

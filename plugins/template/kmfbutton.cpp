@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -22,8 +22,8 @@
 #include "kmfmenupage.h"
 #include <qdom.h>
 
-KMFButton::KMFButton(QObject *parent)
- : KMFWidget(parent)
+KMFButton::KMFButton(QObject *parent, const char *name)
+ : KMFWidget(parent, name)
 {
   page()->addButton(this);
 }
@@ -39,7 +39,7 @@ void KMFButton::fromXML(const QDomElement& element)
   m_directions[Down] = element.attribute("down");
   m_directions[Left] = element.attribute("left");
   m_directions[Right] = element.attribute("right");
-  m_jumpS = element.attribute("jump").toUpper();
+  m_jumpS = element.attribute("jump").upper();
 }
 
 void KMFButton::writeDvdAuthorXml(QDomText& element, QString type)
@@ -102,7 +102,7 @@ void KMFButton::writeDvdAuthorXml(QDomText& element, QString type)
     }
   }
 
-  s = " { " + s.trimmed() + "; } ";
+  s = " { " + s.stripWhiteSpace() + "; } ";
   element.setData(s);
 }
 
@@ -152,9 +152,10 @@ bool KMFButton::parseJump(bool addPages)
   else
   {
     int title = menuPage->titleStart(), chapter = menuPage->chapterStart();
-    QStringList j = m_jumpS.split(":");
+    QStringList j = QStringList::split(":", m_jumpS);
 
-    if(j[0].indexOf(".") > -1)
+    // TODO clean these ugly ifs
+    if(j[0].find(".") > -1)
     {
       parseTitleChapter(j[0], title, chapter);
       if(menuPage->titles() != 0 && title > dvdMenu->mediaObjCount())
@@ -171,6 +172,8 @@ bool KMFButton::parseJump(bool addPages)
       if(chapter < 1)
         chapter = 1;
       m_jump.setTitle(chapter, title);
+      //if(menuPage->isVmgm())
+        //m_jump.setCommand("g1=1;");
     }
     else
     {
@@ -200,7 +203,7 @@ bool KMFButton::parseJump(bool addPages)
 
 KMFButton* KMFButton::parseDirection(const QString& dir)
 {
-  QStringList d = dir.split(",");
+  QStringList d = QStringList::split(",", dir);
   KMFMenuPage* p = page();
   KMFButton* btn = 0;
 

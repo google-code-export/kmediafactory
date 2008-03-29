@@ -1,1 +1,32 @@
-Keep KDE4 version working.
+After that
+===========
+General
+--------
+-Support for VCD, SVCD, (What's the DVD in CD-ROM format), etc...
+-Splashscreen
+-When opening files check if files exist
+-i18n
+-Better error handling
+
+Import
+-------
+-Import jpg slideshow (Digikam integration?)
+-Multiple files in one titleset
+
+Templates
+----------
+-'Text menu' main page support
+-ffmpeg to output menu mpgs (remove script)
+-Make nice templates for weddings, xmas, etc.
+-folders for templates?
+-Support for audio in menus.
+-Support for video backgrounds. (after ffmpeg works)
+-Colorizable buttons (gray buttons colorized to match background)
+-Save customized template as new template
+-Text buttons (i18n)
+-'if jumps'
+-easy template download from website
+
+Output
+-------
+
