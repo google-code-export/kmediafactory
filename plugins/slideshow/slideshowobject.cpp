@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damst�
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -21,15 +21,14 @@
 #include "slideshowplugin.h"
 #include "slideshowpluginsettings.h"
 #include "slideshowproperties.h"
-#include "run.h"
 #include <qdvdinfo.h>
-#include <kmfmediafile.h>
+#include <qffmpeg.h>
 #include <kio/job.h>
 #include <kfileitem.h>
 #include <kstandarddirs.h>
+#include <kprogress.h>
 #include <kfilemetainfo.h>
 #include <kapplication.h>
-#include <kactioncollection.h>
 #include <kaboutdata.h>
 #include <kmftools.h>
 #include <kmftime.h>
@@ -37,33 +36,22 @@
 #include <kmimetype.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
-#include <kicon.h>
-#include <kprogressdialog.h>
-#include <kio/copyjob.h>
-#include <kprocess.h>
-#include <QImage>
-#include <QDir>
-#include <QRegExp>
-#include <QPixmap>
-#include <QTextStream>
+#include <qimage.h>
+#include <qdir.h>
+#include <qregexp.h>
+#include <Magick++.h>
 #include <list>
-#include <kio/copyjob.h>
 
 Slide::Slide() : chapter(true)
 {
 }
 
 SlideshowObject::SlideshowObject(QObject* parent)
-  : MediaObject(parent), m_loop(false), m_includeOriginals(true),
-    dvdslideshow(0)
+  : MediaObject(parent, "slideshow"), m_loop(false), m_includeOriginals(true)
 {
-  setObjectName("slideshow");
-  m_slideshowProperties = new KAction(KIcon("pencil"),
-                                      i18n("&Properties"),this);
-  m_slideshowProperties->setShortcut(Qt::CTRL + Qt::Key_W);
-  plugin()->actionCollection()->addAction("mob_properties",
-                                          m_slideshowProperties);
-  connect(m_slideshowProperties, SIGNAL(triggered()), SLOT(slotProperties()));
+  m_slideshowProperties = new KAction(
+      i18n("&Properties"), "pencil", 0, this,
+      SLOT(slotProperties()),plugin()->actionCollection(),"mob_properties");
   m_duration = SlideshowPluginSettings::slideDuration();
 }
 
@@ -71,24 +59,74 @@ SlideshowObject::~SlideshowObject()
 {
 }
 
+bool SlideshowObject::oooConvert(QString* file) const
+{
+  KStandardDirs dirs;
+  QStringList list = dirs.resourceDirs("lib");
+  QString bin;
+  bool result = false;
+  QFileInfo fi(*file);
+  QString output = QString("%1.pdf").arg(m_id);
+  QDir dir(projectInterface()->projectDir("media"));
+  QStringList oodirs;
+
+  list << "/usr/lib" << "/opt";
+  list += dirs.resourceDirs("lib");
+  oodirs << "openoffice" << "openoffice2" << "openoffice.org2.0" <<
+            "openoffice.org-2.0" << "ooo-1.9" << "ooo-2.0";
+
+  output = dir.filePath(output);
+
+  list += KMF::Tools::file2List("/etc/ld.so.conf", QString::null, "/");
+
+  QStringList::ConstIterator it = oodirs.begin();
+  while(bin.isEmpty() && it != list.end())
+  {
+    bin = KMF::Tools::findExe("soffice", list, (*it) + "/program");
+    ++it;
+  }
+
+  if(!bin.isEmpty())
+  {
+    KProcess ooo;
+
+    ooo << bin << "-invisible" << "-norestore" <<
+        QString("macro:///KMediaFactory.converter.convertToPDF(%1,%2)")
+        .arg(*file).arg(output);
+
+    ooo.setWorkingDirectory(projectInterface()->projectDir("media"));
+    uiInterface()->logger()->connectProcess(&ooo);
+    ooo.start(KProcess::Block, KProcess::AllOutput);
+    if(ooo.normalExit())
+    {
+      if(ooo.exitStatus() == 0)
+        result = true;
+    }
+  }
+  *file = output;
+  return result;
+}
+
 SlideList SlideshowObject::slideList(QStringList list) const
 {
   SlideList result;
   KProgressDialog dlg(kapp->activeWindow());
+  int fileProgress = 10000 / list.count();
 
-  dlg.progressBar()->setMinimum(0);
-  dlg.progressBar()->setMaximum(0);
+  dlg.progressBar()->setTotalSteps(10000);
+  dlg.setAutoClose(true);
   dlg.show();
 
-  foreach(QString file, list)
+  for(QStringList::ConstIterator it = list.begin(); it != list.end(); ++it)
   {
-    KFileMetaInfo minfo(file, QString::null, KFileMetaInfo::ContentInfo);
+    KFileMetaInfo minfo(*it, QString::null, KFileMetaInfo::ContentInfo);
     QString mime;
+    QString file = *it;
     QFileInfo fi(file);
     QDir dir(projectInterface()->projectDir("media"));
-    KMimeType::Ptr type = KMimeType::findByUrl(file);
+    KMimeType::Ptr type = KMimeType::findByURL(file);
 
-    dlg.setLabelText(i18n("Processing slides...\n") + (file));
+    dlg.setLabel(i18n("Processing slides...\n") + (file));
     kapp->processEvents();
 
     if(fi.isDir())
@@ -100,85 +138,111 @@ SlideList SlideshowObject::slideList(QStringList list) const
 
     if(type)
       mime = type->name();
-    kDebug() << mime;
+    //kdDebug() << k_funcinfo << mime << endl;
+
     if(mime.startsWith("application/vnd.oasis.opendocument") ||
        mime.startsWith("application/vnd.sun.xml") ||
        mime == "application/msexcel" ||
        mime == "application/msword" ||
        mime == "application/mspowerpoint")
     {
-      QString output = QString("%1.pdf").arg(m_id);
-      QDir dir(projectInterface()->projectDir("media"));
-      output = dir.filePath(output);
-      Run run(QString("kmf_oo2pdf \"%1\" \"%2\"").arg(file).arg(output));
-
-      kDebug() << file << "->" << output;
-      if(run.exitCode() == 0)
+      if(oooConvert(&file))
       {
         mime = "application/pdf";
-        minfo = KFileMetaInfo(file, QString::null,
-                              KFileMetaInfo::ContentInfo);
-        file = output;
+        minfo = KFileMetaInfo(file, QString::null, KFileMetaInfo::ContentInfo);
       }
     }
     if(mime == "application/pdf")
     {
-      QString output = m_id + "_%d.png";
-      QDir dir(projectInterface()->projectDir("media"));
-      output = dir.filePath(output);
-      Run run(QString("kmf_pdf2png \"%1\" \"%2\"").arg(file).arg(output));
+      QFileInfo fi(file);
+      QString fileNameTemplate = m_id + "_%1.png";
+      std::list<Magick::Image> imageList;
+      int i = 0;
+      bool landscape = true;
+      QSize pdfRes(0, 0);
+      int pageProgress = 0;
 
-      kDebug() << file << "->" << output;
-      for(int i = 1; true; ++i)
+      if(minfo.contains("Page size"))
+      {
+        QStringList res = QStringList::split(" ",
+                                             minfo.item("Page size").string());
+        if(res.count() >= 3)
+        {
+          pdfRes = QSize(res[0].toInt(), res[2].toInt());
+          //kdDebug() << k_funcinfo <<pdfRes << endl;
+          if(pdfRes.width() < pdfRes.height())
+            landscape = false;
+        }
+      }
+      try
+      {
+        readImages(&imageList, (const char*)file.local8Bit());
+      }
+      catch(...)
+      {
+        kdDebug() << "Caught magic exception." << endl;
+      }
+      if(imageList.size() > 0)
+        pageProgress = fileProgress / imageList.size();
+
+      while(imageList.size() > 0)
       {
         Slide slide;
-        QString fileNameTemplate = m_id + "_%1.png";
-        QString file = dir.filePath(QString(fileNameTemplate).arg(i));
-        QFileInfo fi(file);
+        QString file = dir.filePath(QString(fileNameTemplate).arg(++i));
 
-        if(fi.exists())
+        Magick::Image img = imageList.front();
+        // In landscape mode we propably want to fill the whole screen
+        // using ! and 4:3 800x600 resolution
+        QSize imgRes(img.columns(), img.rows());
+
+        // Try to fix empty white space
+        if(pdfRes == QSize(0, 0) && imgRes == QSize(794, 842))
+          pdfRes = QSize(794, 595);
+
+        if(pdfRes != imgRes && pdfRes.width() > 0 && pdfRes.height() > 0)
         {
-          kDebug() << "Slide: " << i;
-          slide.comment = i18n("Page %1", i);
-          slide.picture = file;
-          result.append(slide);
+          img.crop(Magick::Geometry(pdfRes.width(), pdfRes.height(), 0,
+                   imgRes.height() - pdfRes.height()));
         }
+        kdDebug() << k_funcinfo << imgRes << ", " << pdfRes << endl;
+
+        if(landscape)
+          img.zoom("!800x600");
         else
-          break;
+          img.zoom("800x600");
+
+        img.write((const char*)file.local8Bit());
+        imageList.pop_front();
+
+        slide.comment = i18n("Page %1").arg(i);
+        slide.picture = file;
+        result.append(slide);
+        dlg.progressBar()->advance(pageProgress);
+        kapp->processEvents();
       }
     }
     else
     {
       Slide slide;
 
-      kDebug() << minfo.keys();
-      if(minfo.keys().contains("Comment") &&
-         !minfo.item("Comment").value().toString().isEmpty())
-      {
-        slide.comment = minfo.item("Comment").value().toString();
-      }
+      if(minfo.contains("Comment") && !minfo.item("Comment").string().isEmpty())
+        slide.comment = minfo.item("Comment").string();
       else
       {
-        if(minfo.keys().contains("CreationDate"))
-          slide.comment = minfo.item("CreationDate").value().toString();
-        if(minfo.keys().contains("CreationTime"))
-          slide.comment += " " + minfo.item("CreationTime").value().toString();
+        if(minfo.contains("CreationDate"))
+          slide.comment = minfo.item("CreationDate").string();
+        if(minfo.contains("CreationTime"))
+          slide.comment += " " + minfo.item("CreationTime").string();
       }
-      if(slide.comment.isEmpty())
-      {
-        Run run(QString("kmf_comment \"%1\"").arg(file));
-
-        if(run.exitStatus() == 0)
-        {
-          slide.comment = run.output();
-        }
-      }
-      slide.comment = slide.comment.trimmed();
+      slide.comment = slide.comment.stripWhiteSpace();
       slide.picture = file;
       result.append(slide);
+      dlg.progressBar()->advance(fileProgress);
       kapp->processEvents();
     }
   }
+  dlg.progressBar()->setProgress(10000);
+
   int chapter = ((result.count() - 1) / 12) + 1;
   int i = 0;
   for(SlideList::Iterator it = result.begin();
@@ -186,7 +250,6 @@ SlideList SlideshowObject::slideList(QStringList list) const
   {
     (*it).chapter = (((i++) % chapter) == 0);
   }
-  dlg.close();
   return result;
 }
 
@@ -201,7 +264,7 @@ void SlideshowObject::generateId()
 {
   int serial = projectInterface()->serial();
   QString name = KMF::Tools::simpleName(title());
-  m_id.sprintf("%3.3d_%s", serial, (const char*)name.toLocal8Bit());
+  m_id.sprintf("%3.3d_%s", serial, (const char*)name.local8Bit());
 }
 
 void SlideshowObject::toXML(QDomElement& element) const
@@ -234,11 +297,9 @@ void SlideshowObject::toXML(QDomElement& element) const
   element.appendChild(slideshow);
 }
 
-bool SlideshowObject::fromXML(const QDomElement& element)
+void SlideshowObject::fromXML(const QDomElement& element)
 {
   QDomNode n = element.firstChild();
-  if(n.isNull())
-    return false;
   while(!n.isNull())
   {
     QDomElement e = n.toElement();
@@ -281,25 +342,24 @@ bool SlideshowObject::fromXML(const QDomElement& element)
   }
   if(m_id.isEmpty())
     generateId();
-  return true;
 }
 
 QPixmap SlideshowObject::pixmap() const
 {
   if(m_slides.count() > 0)
-    return KIO::pixmapForUrl(m_slides[0].picture);
+    return KMimeType::pixmapForURL(m_slides[0].picture);
   else
-    return KIO::pixmapForUrl(KUrl(""));
+    return KMimeType::pixmapForURL("");
 }
 
-void SlideshowObject::actions(QList<QAction*>& actionList) const
+void SlideshowObject::actions(QPtrList<KAction>& actionList) const
 {
   actionList.append(m_slideshowProperties);
 }
 
 bool SlideshowObject::copyOriginals() const
 {
-  KUrl::List files;
+  KURL::List files;
 
   for(SlideList::ConstIterator it = m_slides.begin();
       it != m_slides.end(); ++it)
@@ -315,7 +375,8 @@ bool SlideshowObject::copyOriginals() const
 
 bool SlideshowObject::make(QString type)
 {
-  uiInterface()->message(KMF::Info, i18n("Preparing file(s) for %1", title()));
+  uiInterface()->message(KMF::Info,
+      i18n("Preparing file(s) for %1").arg(title()));
   if(type != "dummy")
   {
     if(m_includeOriginals)
@@ -337,7 +398,7 @@ bool SlideshowObject::writeSlideshowFile() const
   QFile file(output);
   double duration = calculatedSlideDuration();
 
-   if(file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+   if(file.open(IO_WriteOnly | IO_Truncate))
   {
     QTextStream ts(&file);
     ts << QString(
@@ -347,19 +408,20 @@ bool SlideshowObject::writeSlideshowFile() const
         "# http://www.iki.fi/damu/software/kmediafactory/\n"
         "# \n"
         "#**************************************************************\n")
-        .arg(KGlobal::mainComponent().aboutData()->programName())
-        .arg(KGlobal::mainComponent().aboutData()->version());
+        .arg(KGlobal::instance()->aboutData()->programName())
+        .arg(KGlobal::instance()->aboutData()->version());
 
     ts << "background:0::black\n";
     ts << "fadein:1\n";
-    foreach(Slide slide, m_slides)
+    for(SlideList::ConstIterator it = m_slides.begin();
+        it != m_slides.end(); ++it)
     {
-      QString comment = slide.comment;
+      QString comment = (*it).comment;
       comment.replace(":", "\\:");
       comment.replace("\n", " ");
-      ts << slide.picture << ":" << QString::number(duration, 'f', 2) <<
+      ts << (*it).picture << ":" << QString::number(duration, 'f', 2) <<
           ":" << comment << "\n";
-      if(slide.picture != m_slides.last().picture)
+      if(it != m_slides.fromLast())
         ts << "crossfade:1\n";
     }
     ts << "fadeout:1\n";
@@ -381,23 +443,35 @@ void SlideshowObject::clean()
   plugin()->projectInterface()->cleanFiles("media", list);
 }
 
-void SlideshowObject::output(QString line)
+void SlideshowObject::output(KProcess* process, char* buffer, int buflen)
 {
   bool stopped = false;
+  int find = 0, start = 0;
+  QRegExp re("[\n\r]");
+  m_buffer += QString::fromLatin1(buffer, buflen);
 
-  QRegExp re2(" (\\d+)\\/(\\d+) ");
-  int pos = re2.indexIn(line);
-  if(pos > -1)
+  while((find = m_buffer.find(re, find)) > -1)
   {
-    // Maximu is eg. 6/5
-    uiInterface()->setItemTotalSteps(re2.cap(2).toInt() + 1);
-    stopped = uiInterface()->setItemProgress(re2.cap(1).toInt() - 1);
+    QString line = m_buffer.mid(start, find - start);
+
+    //kdDebug() << k_funcinfo << line << endl;
+    QRegExp re2(" (\\d+)\\/(\\d+) ");
+    int pos = re2.search(line);
+    if(pos > -1)
+    {
+      // Maximu is eg. 6/5
+      uiInterface()->setItemTotalSteps(re2.cap(2).toInt() + 1);
+      stopped = uiInterface()->setItemProgress(re2.cap(1).toInt() - 1);
+    }
+    ++find;
+    start = find;
+    if(stopped)
+      process->kill();
   }
-  if(stopped)
-    dvdslideshow->kill();
+  m_buffer.remove(0, start);
 }
 
-bool SlideshowObject::convertToDVD()
+bool SlideshowObject::convertToDVD() const
 {
   QDir dir(projectInterface()->projectDir("media"));
   QString output = dir.filePath(QString("%1.vob").arg(m_id));
@@ -414,30 +488,32 @@ bool SlideshowObject::convertToDVD()
       return false;
     }
 
+    KProcess dvdslideshow;
+
     uiInterface()->message(KMF::Info, i18n("   Making Slideshow"));
-    dvdslideshow = new KProcess();
-    *dvdslideshow << slideshowPlugin->dvdslideshowBin();
-    if(SlideshowPluginSettings::audioType() == 0)
-      *dvdslideshow << "-mp2";
-    *dvdslideshow << "-o" << projectInterface()->projectDir("media") <<
+    dvdslideshow << slideshowPlugin->dvdslideshowBin() <<
+        "-o" << projectInterface()->projectDir("media") <<
         "-n" << m_id <<
         "-f" << dir.filePath(QString("%1.slideshow").arg(m_id));
     if(projectInterface()->type() == "DVD-PAL")
-      *dvdslideshow << "-p";
+      dvdslideshow << "-p";
     for(QStringList::ConstIterator it = m_audioFiles.begin();
         it != m_audioFiles.end(); ++it)
     {
-      *dvdslideshow << "-a" << *it;
+      dvdslideshow << "-a" << *it;
     }
-    dvdslideshow->setWorkingDirectory(projectInterface()->projectDir("media"));
-    uiInterface()->logger()->connectProcess(dvdslideshow,
+    dvdslideshow.setWorkingDirectory(projectInterface()->projectDir("media"));
+    uiInterface()->logger()->connectProcess(&dvdslideshow,
                                             "INFO: \\d+ bytes of data written");
-    connect(uiInterface()->logger(), SIGNAL(line(QString)),
-             this, SLOT(output(QString)));
-    dvdslideshow->execute();
-    if(dvdslideshow->exitCode() == QProcess::NormalExit)
+    connect(&dvdslideshow, SIGNAL(receivedStdout(KProcess*, char*, int)),
+             this, SLOT(output(KProcess*, char*, int)));
+    connect(&dvdslideshow, SIGNAL(receivedStderr(KProcess*, char*, int)),
+             this, SLOT(output(KProcess*, char*, int)));
+    kdDebug() << k_funcinfo << dvdslideshow.args() << endl;
+    dvdslideshow.start(KProcess::Block, KProcess::AllOutput);
+    if(dvdslideshow.normalExit())
     {
-      if(dvdslideshow->exitStatus() == 0)
+      if(dvdslideshow.exitStatus() == 0)
         result = true;
     }
     if(!result)
@@ -446,11 +522,10 @@ bool SlideshowObject::convertToDVD()
   else
   {
     uiInterface()->message(KMF::Info,
-        i18n("   Slideshow \"%1\" seems to be up to date", title()));
+        i18n("   Slideshow \"%1\" seems to be up to date")
+            .arg(title()));
     result = true;
   }
-  delete dvdslideshow;
-  dvdslideshow = 0;
   return result;
 }
 
@@ -492,32 +567,36 @@ void SlideshowObject::writeDvdAuthorXml(QDomElement& element,
   {
     vob.setAttribute("file", dir.filePath(QString("%1.vob").arg(m_id)));
 
-    QList<double> chapters;
+    QValueList<double> chapters;
     double start = 0.0;
     double duration = calculatedSlideDuration();
 
-    foreach(Slide slide, m_slides)
+    for(SlideList::ConstIterator it = m_slides.begin();
+        it != m_slides.end(); ++it)
     {
-      if(slide.chapter)
+      if((*it).chapter)
         chapters.append(start);
 
-      // Forward over first fade in (0.520 is added to be sure we are out
+      // Forward over first fade in (0.4 is added to be sure we are out
       // of fade)
       if(start == 0.0)
-        start = 0.520;
-      start += duration;
+        start = 1.4;
+      start += duration + 1.0;
     }
-    for(int i = 0; i < chapters.count(); ++i)
+    for(QValueList<double>::ConstIterator it = chapters.begin();
+        it != chapters.end(); ++it)
     {
       QDomElement c = vob.ownerDocument().createElement("cell");
 
-      c.setAttribute("start", KMF::Time(chapters[i]).toString());
-      if(i == chapters.count() - 1)
+      c.setAttribute("start", KMF::Time(*it).toString());
+      ++it;
+      if(it == chapters.end())
         c.setAttribute("end", "-1");
       else
       {
-        c.setAttribute("end", KMF::Time(chapters[i+1]).toString());
+        c.setAttribute("end", KMF::Time(*it).toString());
       }
+      --it;
       c.setAttribute("chapter", 1);
       vob.appendChild(c);
     }
@@ -548,14 +627,36 @@ void SlideshowObject::writeDvdAuthorXml(QDomElement& element,
   element.appendChild(titles);
 }
 
+bool SlideshowObject::lastChapter(SlideList::ConstIterator& iter)
+{
+  SlideList::ConstIterator it = iter;
+
+  for(++it; it != m_slides.end(); ++it)
+  {
+    if((*it).chapter)
+      return false;
+  }
+  return true;
+}
+
 QImage SlideshowObject::preview(int chap) const
 {
-  QImage img(chapter(chap).picture);
-  QSize res = KMF::Tools::resolution(img.size(), img.size(),
-      KMF::Tools::maxResolution(projectInterface()->type()), QSize(4,3));
-  kDebug() << res;
-  img = img.scaled(res, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-  return img;
+  int n = 0;
+  for(SlideList::ConstIterator it = m_slides.begin();
+      it != m_slides.end(); ++it)
+  {
+    if((*it).chapter == true)
+      ++n;
+    if(n >= chap)
+    {
+      QImage img((*it).picture);
+      QSize res = KMF::Tools::resolution(img.size(), img.size(),
+          KMF::Tools::maxResolution(projectInterface()->type()), QSize(4,3));
+      img = img.smoothScale(res, QImage::ScaleFree);
+      return img;
+    }
+  }
+  return QImage();
 }
 
 QString SlideshowObject::text(int chap) const
@@ -572,9 +673,10 @@ int SlideshowObject::chapters() const
 {
   int i = 0;
 
-  foreach(Slide slide, m_slides)
+  for(SlideList::ConstIterator it = m_slides.begin();
+      it != m_slides.end(); ++it)
   {
-    if(slide.chapter)
+    if((*it).chapter)
       ++i;
   }
   return i;
@@ -584,12 +686,13 @@ const Slide& SlideshowObject::chapter(int chap) const
 {
   int i = 0;
 
-  foreach(const Slide& slide, m_slides)
+  for(SlideList::ConstIterator it = m_slides.begin();
+      it != m_slides.end(); ++it)
   {
-    if(slide.chapter)
+    if((*it).chapter)
       ++i;
     if(i == chap)
-      return slide;
+      return *it;
   }
   return m_slides.first();
 }
@@ -598,7 +701,7 @@ uint64_t SlideshowObject::size() const
 {
   QDir dir(projectInterface()->projectDir("media"));
   QString output = dir.filePath(QString("%1.vob").arg(m_id));
-  KFileItem finfo(KFileItem::Unknown, KFileItem::Unknown, KUrl(output));
+  KFileItem finfo(KFileItem::Unknown, KFileItem::Unknown, KURL(output));
   uint64_t size = finfo.size();
 
   if(size == 0)
@@ -625,9 +728,10 @@ QTime SlideshowObject::audioDuration() const
 {
   KMF::Time audioDuration = 0.0;
 
-  foreach(QString file, m_audioFiles)
+  for(QStringList::ConstIterator it = m_audioFiles.begin();
+      it != m_audioFiles.end(); ++it)
   {
-    KMFMediaFile audio = KMFMediaFile::mediaFile(file);
+    QFFMpeg audio(*it);
     audioDuration += audio.duration();
   }
   return audioDuration;
@@ -640,7 +744,7 @@ QTime SlideshowObject::duration() const
   if(m_duration < 1.0)
     total = audioDuration();
   else
-    total = m_duration * m_slides.count();
+    total = (1.0 + m_duration) * m_slides.count() + 1.0;
   return total;
 }
 
@@ -649,15 +753,16 @@ QTime SlideshowObject::chapterTime(int chap) const
   KMF::Time total;
   int i = 0, n = 0;
 
-  foreach(const Slide& slide, m_slides)
+  for(SlideList::ConstIterator it = m_slides.begin();
+      it != m_slides.end(); ++it)
   {
-    if(slide.chapter)
+    if((*it).chapter)
       ++i;
     ++n;
     if(chap == i)
       break;
   }
-  total += calculatedSlideDuration() * n;
+  total += (1.0 + calculatedSlideDuration()) * n + 1.0;
   return total;
 }
 

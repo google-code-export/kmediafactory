@@ -1,17 +1,16 @@
 #/bin/bash
 
-VERSION_MM="0.6."
-NEXT_VERSION="1" # BUILD_VERSION
+VERSION_MM="0.5.2."
+NEXT_VERSION="3" # BUILD_VERSION
 
 HOME=`echo ~`
 SITE="aryhma.oy.cx"
 LOCALKMFDIR="$HOME/public_html/$SITE/damu/software/kmediafactory"
-BUILDDIR="package"
 WEBDIR="httpdocs/damu/software/kmediafactory"
 CHANGELOG="snapshot.changelog"
 US_DATE=`date +%Y-%m-%d`
 SVN="https://kmediafactory.googlecode.com/svn/"
-SNAPSHOT_HTML="snapshot_kde4.html"
+SNAPSHOT_HTML="snapshot.html"
 NEWSMAIL=`cat $HOME/.kmf_mailinglist`
 
 KMF=`pwd`
@@ -64,11 +63,11 @@ function snapshot_name()
 
 function fix_versions()
 {
-  echo "Fixing CMakeLists.txt for new version: $SNAPSHOT"
+  echo "Fixing configure.in.in for new version: $SNAPSHOT"
   cd $KMF
 
-  S="set(KMF_BUILD_VERSION"
-  sed -i -e "s/$S \".*\")/$S \"$SNAPSHOT_BUILD\")/" CMakeLists.txt
+  S="AM_INIT_AUTOMAKE(\"kmediafactory\","
+  sed -i -e "s/$S \".*\")/$S \"$SNAPSHOT\")/" configure.in.in
 
   echo "Fixing lsm file versions..."
   sed -i -e "s/Version:.*/Version:        $SNAPSHOT/" kmediafactory.lsm
@@ -86,17 +85,11 @@ function make_snapshot()
 {
   echo "Making snapshot..."
   cd $KMF
-  mkdir -p $BUILDDIR
-  cd $BUILDDIR
 
-  find ./ -type f -name "*.tar.bz2" -exec rm {} \;
-
-  (
-    source kde4_env.sh
-    cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/kde-debug \
-        -DCMAKE_BUILD_TYPE=debugfull -G KDevelop3
-    make package_source
-  )
+  make -f Makefile.cvs
+  ./configure
+  make dist-bz2
+  make distclean
   FILE=`ls --color=none *.tar.bz2`
 
   if [ "$FILE" == "" ]; then
@@ -104,11 +97,10 @@ function make_snapshot()
     exit
   fi
 
-  echo "Moving $FILE to local KMF dir and distfiles."
-  mv $FILE $DESTINATION
+  echo "Moving $FILE to local KMF dir."
+  cd $KMF
 
-  cd ..
-  rm $BUILDDIR -fR
+  mv $FILE $DESTINATION
 
   echo "Making md5."
   cd $LOCALKMFDIR
@@ -126,7 +118,7 @@ function tag_svn()
     comment="Tagging the "$SNAPSHOT" release."
     tag="release-$SNAPSHOT"
   fi
-  svn copy $SVN/trunk $SVN/tags/$tag -m "$comment"
+  svn copy $SVN/branches/KDE3 $SVN/tags/$tag -m "$comment"
 }
 
 function make_html()
@@ -138,7 +130,7 @@ function make_html()
 
   echo "HTML Changelog to web page."
 
-  echo -e "<h1>KDE 4 snapshots</h1>\n" > $HTML
+  echo -e "<h1>KDE 3 snapshots</h1>\n" > $HTML
   date +"<h2>%d.%m.%Y</h2>" >> $HTML
 
   echo -e "<h3>Changelog</h3>\n" >> $HTML
@@ -176,17 +168,27 @@ function mail_to_news()
   fi
 }
 
-snapshot_name $1
+snapshot_name
 fix_versions
 edit_changelog
-./commit.sh --nopause
+./commit.sh --nopause $SNAPSHOT
 make_snapshot
+
+echo -n "Tag SVN (y/N): "
+read ans
+if [ "$ans" == y -o "$ans" == Y ]; then
+  tag_svn
+fi
 
 echo -n "Upload (y/N): "
 read ans
 if [ "$ans" == y -o "$ans" == Y ]; then
-  mail_to_news
-  tag_svn
   make_html
   upload
+fi
+
+echo -n "Send release email (y/N): "
+read ans
+if [ "$ans" == y -o "$ans" == Y ]; then
+  mail_to_news
 fi

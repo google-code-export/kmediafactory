@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,13 +20,12 @@
 #include "sizewidget.h"
 #include "kmftools.h"
 #include <kdebug.h>
-#include <QLabel>
-#include <QSplitter>
+#include <qlabel.h>
+#include <qsplitter.h>
 
-SizeWidget::SizeWidget(QWidget* parent)
-  : QWidget(parent), m_max(0), m_size(0)
+SizeWidget::SizeWidget(QWidget* parent, const char* name, WFlags fl)
+  : SizeWidgetLayout(parent, name, fl), m_max(0), m_size(0)
 {
-  setupUi(this);
 }
 
 SizeWidget::~SizeWidget()
@@ -40,24 +39,18 @@ void SizeWidget::update()
     sizeLeftLabel->setText(KMF::Tools::sizeString(m_max - m_size));
   else
     sizeLeftLabel->setText(KMF::Tools::sizeString(m_size - m_max));
-
-  QPalette palette1;
-  palette1.setColor(sizeLeftLabel->foregroundRole(),
-                   (m_max > m_size) ? QColor(QPalette::Text) : QColor(Qt::red));
-  sizeLeftLabel->setPalette(palette1);
-
-  QPalette palette2;
-  palette2.setColor(sizeLeft->backgroundRole(),
-      (m_max > m_size)
-      ? sizeTakenLabel->palette().color(sizeLeft->backgroundRole())
-      : QColor(Qt::red));
-  sizeLeft->setPalette(palette2);
+  sizeLeftLabel->setPaletteForegroundColor(
+      (m_max > m_size) ? QColorGroup::Text : Qt::red);
+  sizeLeft->setPaletteBackgroundColor(
+      (m_max > m_size) ? sizeTakenLabel->paletteBackgroundColor() : Qt::red);
 
   int n = 0;
-  QList<int> sizes = sizeSplitter->sizes();
-  foreach(int size, sizes)
+  QValueList<int> sizes = sizeSplitter->sizes();
+  QValueList<int>::Iterator it = sizes.begin();
+  while(it != sizes.end())
   {
-    n += size;
+    n += *it;
+    ++it;
   }
   if(m_size < m_max)
     sizes[0] = (int)((double)n * ((double)m_size / (double)m_max));

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -30,10 +30,10 @@ class KMFProjectInterface : public KMF::ProjectInterface
 {
     Q_OBJECT
   public:
-    KMFProjectInterface(QObject *parent = 0);
-    virtual ~KMFProjectInterface();
+    KMFProjectInterface(QObject *parent = 0, const char *name = 0);
+    ~KMFProjectInterface();
 
-    virtual QList<KMF::MediaObject*> mediaObjects();
+    virtual QPtrList<KMF::MediaObject>* mediaObjects();
     virtual QString title();
     virtual void setTitle(QString title);
     virtual QString projectDir(const QString& subDir = "");

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,6 @@
 #define DVDAUTHOROBJECT_H
 
 #include <kmediafactory/plugin.h>
-#include <QPixmap>
 
 /**
 */
@@ -30,12 +29,12 @@ class DvdAuthorObject : public KMF::OutputObject
     Q_OBJECT
   public:
     enum { TotalPoints = 10 };
-    DvdAuthorObject(QObject *parent = 0);
+    DvdAuthorObject(QObject *parent = 0, const char* name = 0);
     virtual ~DvdAuthorObject();
     virtual void toXML(QDomElement& element) const;
-    virtual bool fromXML(const QDomElement& element);
+    virtual void fromXML(const QDomElement& element);
     virtual QPixmap pixmap() const;
-    virtual void actions(QList<QAction*>& actionList) const;
+    virtual void actions(QPtrList<KAction>& actionList) const;
     virtual int timeEstimate() const;
     virtual bool make(QString type);
 

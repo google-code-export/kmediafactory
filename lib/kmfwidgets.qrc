@@ -1,8 +1,0 @@
-<!DOCTYPE RCC><RCC version="1.0">
-<qresource>
-    <file>pics/kmffontchooser.png</file>
-    <file>pics/kmfimageview.png</file>
-    <file>pics/kmflanguagecombobox.png</file>
-    <file>pics/kmflanguagelistbox.png</file>
-</qresource>
-</RCC>

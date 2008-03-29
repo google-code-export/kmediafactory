@@ -12,9 +12,5 @@
       </whatsthis>
       <default>3</default>
     </entry>
-    <entry name="AudioType" type="Int">
-       <label>Audio type for slideshow.</label>
-       <default>0</default>
-    </entry>
   </group>
 </kcfg>

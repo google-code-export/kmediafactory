@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damst�
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -21,10 +21,10 @@
 #include "templateobject.h"
 #include "templateplugin.h"
 #include "kmfmenu.h"
-#include "kmftools.h"
 #include "kmftemplate.h"
 #include "kmflanguagewidgets.h"
 #include "templatepluginsettings.h"
+#include "QMImage.h"
 #include "dvdauthorparser.h"
 #include <kmimetype.h>
 #include <kapplication.h>
@@ -35,28 +35,28 @@
 #include <kdebug.h>
 #include <kstandarddirs.h>
 #include <kiconloader.h>
-#include <kicon.h>
-#include <kactioncollection.h>
-#include <kconfigdialogmanager.h>
-#include <QFile>
-#include <QFileInfo>
-#include <QImage>
-#include <QBuffer>
-#include <QUiLoader>
-#include <QPixmap>
-#include <QTranslator>
+#include <qptrlist.h>
+#include <qdom.h>
+#include <qfile.h>
+#include <qfileinfo.h>
+#include <qimage.h>
+#include <qbuffer.h>
+#include <qwidgetfactory.h>
+#include <qsqlpropertymap.h>
 
 class KMFTranslator : public QTranslator
 {
   public:
     KMFTranslator(QObject *parent, const KMFTemplate& tmpl) :
-      QTranslator(parent), m_tmpl(tmpl) {};
-    virtual QString translate(const char*,
-                              const char* sourceText,
-                              const char*) const
+      QTranslator(parent, "kmftranslator"), m_tmpl(tmpl) {};
+    virtual QTranslatorMessage findMessage(const char*,
+                                           const char* sourceText,
+                                           const char*) const
     {
-      //kDebug() << context;
-      return m_tmpl.translate(sourceText);
+      //kdDebug() << k_funcinfo << context << endl;
+      QTranslatorMessage res;
+      res.setTranslation(m_tmpl.translate(sourceText));
+      return res;
     }
 
   private:
@@ -65,7 +65,7 @@ class KMFTranslator : public QTranslator
 
 QString KMFConfigXML::parseCode(QString code)
 {
-  if(code.indexOf("TemplatePluginSettings::defaultMenuLanguage()"))
+  if(code.find("TemplatePluginSettings::defaultMenuLanguage()"))
   {
     return TemplatePluginSettings::defaultMenuLanguage();
   }
@@ -74,23 +74,19 @@ QString KMFConfigXML::parseCode(QString code)
 
 TemplateObject::TemplateObject(const QString& templateFile, QObject* parent):
   KMF::TemplateObject(parent), m_templateProperties(0),
-  m_menu(templateFile, this), m_file(templateFile)
+  m_menu(templateFile, this)
 {
-  setObjectName(m_menu.id());
-  if(m_menu.templateStore()->hasFile("settings.kcfg") &&
-     m_menu.templateStore()->hasFile("settings.ui"))
+  setName(m_menu.id().local8Bit());
+  if(m_menu.templateStore().hasFile("settings.kcfg") &&
+     m_menu.templateStore().hasFile("settings.ui"))
   {
-    m_templateProperties = new KAction(KIcon("pencil"),
-                                       i18n("&Properties"),this);
-    plugin()->actionCollection()->addAction("tob_properties",
-           m_templateProperties);
-    connect(m_templateProperties, SIGNAL(triggered()), SLOT(slotProperties()));
-
-    QByteArray ba = m_menu.templateStore()->readFile("settings.kcfg");
+    m_templateProperties = new KAction(i18n("&Properties"), "pencil", 0, this,
+        SLOT(slotProperties()), plugin()->actionCollection(), "tob_properties");
+    QByteArray ba = m_menu.templateStore().readFile("settings.kcfg");
     m_customProperties.parse(&ba);
   }
   m_menu.setLanguage("ui", KGlobal::locale()->language());
-  setTitle(m_menu.templateStore()->translate(m_menu.title().toLocal8Bit()));
+  setTitle(m_menu.templateStore().translate(m_menu.title()));
   uiInterface()->addTemplateObject(this);
 }
 
@@ -101,19 +97,15 @@ TemplateObject::~TemplateObject()
     uiInterface()->removeTemplateObject(this);
 }
 
-void TemplateObject::actions(QList<QAction*>& actionList) const
+void TemplateObject::actions(QPtrList<KAction>& actionList) const
 {
   if(m_templateProperties)
-  {
     actionList.append(m_templateProperties);
-  }
 }
 
-bool TemplateObject::fromXML(const QDomElement& element)
+void TemplateObject::fromXML(const QDomElement& element)
 {
   QDomNode n = element.firstChild();
-  if(n.isNull())
-    return false;
   while(!n.isNull())
   {
     QDomElement e = n.toElement();
@@ -152,7 +144,6 @@ bool TemplateObject::fromXML(const QDomElement& element)
     }
     n = n.nextSibling();
   }
-  return true;
 }
 
 void TemplateObject::toXML(QDomElement& element) const
@@ -177,7 +168,7 @@ void TemplateObject::toXML(QDomElement& element) const
     }
     QDomElement e2 = doc.createElement("property");
     e2.setAttribute("name", (*it)->name());
-    e2.setAttribute("value", propertyString(*it));
+    e2.setAttribute("value", (*it)->property().toString());
     e.appendChild(e2);
   }
   if(!group.isEmpty())
@@ -205,7 +196,6 @@ bool TemplateObject::make(QString type)
 
 QStringList TemplateObject::menus()
 {
-  //kDebug() << m_menu.menus();
   return m_menu.menus();
 }
 
@@ -216,46 +206,55 @@ QImage TemplateObject::preview(const QString& menu)
 
 QPixmap TemplateObject::pixmap() const
 {
-  return QPixmap::fromImage(m_menu.icon());
+  return m_menu.icon();
 }
 
 void TemplateObject::slotProperties()
 {
-  KMFTranslator kmftr(kapp, *m_menu.templateStore());
-  LanguageListModel model;
-
+  KMFTranslator kmftr(kapp, m_menu.templateStore());
   kapp->installTranslator(&kmftr);
-  //kDebug() << KGlobal::locale()->language();
+  kdDebug() << k_funcinfo << KGlobal::locale()->language() << endl;
   m_menu.setLanguage("ui", KGlobal::locale()->language());
 
-  KConfigDialog dialog(kapp->activeWindow(), "TemplateSettings",
-                       &m_customProperties);
-  dialog.setFaceType(KPageDialog::Plain);
-  dialog.setButtons(KDialog::Ok | KDialog::Cancel);
-  QIODevice* di = m_menu.templateStore()->device("settings.ui");
-  QUiLoader loader;
-  QWidget* page = loader.load(di, &dialog);
-  m_menu.templateStore()->close();
-  //KMF::Tools::printChilds(page);
-  //kDebug() << loader.availableWidgets();
+  KConfigDialog dialog(kapp->activeWindow(),
+                       0,
+                       &m_customProperties,
+                       KDialogBase::Plain,
+                       KDialogBase::Ok|
+                       KDialogBase::Cancel,
+                       KDialogBase::Ok,
+                       true);
+  QBuffer buffer(m_menu.templateStore().readFile("settings.ui"));
+  buffer.open(IO_ReadOnly);
+  QWidget* page = QWidgetFactory::create(&buffer, dialog.plainPage());
+  buffer.close();
+
+  // Give special treatment to widget named kcfg_language so we can show only
+  // languages actually found from template
+  QObject* w = page->child("kcfg_language");
+  if(w->isA("KMFLanguageListBox"))
+  {
+    KMFLanguageListBox* lbox = static_cast<KMFLanguageListBox*>(w);
+    lbox->filter(m_menu.templateStore().languages());
+  }
+
   /*
-  kDebug() << &m_customProperties;
+  kdDebug() << k_funcinfo << &m_customProperties << endl;
   KConfigSkeletonItem::List list = m_customProperties.items();
   KConfigSkeletonItem::List::iterator it;
   for(it = list.begin(); it != list.end(); ++it)
-    kDebug() << (*it)->group() << " / " <<
-        (*it)->key() << " = " << (*it)->property();
+    kdDebug() << k_funcinfo << (*it)->group() << " / " <<
+        (*it)->key() << " = " << (*it)->property() << endl;
   */
   if(page)
   {
-    // Give special treatment to widget named kcfg_language so we can show only
-    // languages actually found from template
-    QObject* w = page->findChild<QObject*>("kcfg_language");
-    if(w && QString(w->metaObject()->className()) == "KMFLanguageListBox")
-    {
-      KMFLanguageListBox* lbox = static_cast<KMFLanguageListBox*>(w);
-      lbox->model()->setLanguages(m_menu.templateStore()->languages());
-    }
+    // This didn't work in TemplatePlugin constructor so we do it here.
+    // It should not be a problem to insert them more than once since
+    // it's a QMap.
+    QSqlPropertyMap::defaultMap()->insert("KMFLanguageComboBox", "language");
+    QSqlPropertyMap::defaultMap()->insert("KMFLanguageListBox", "language");
+    QSqlPropertyMap::defaultMap()->insert("KMFFontChooser", "font");
+    QSqlPropertyMap::defaultMap()->insert("KColorCombo", "color");
 
     //QWidget* w = (QWidget*)page->child("kcfg_language");
     //QSqlPropertyMap::defaultMap()->setProperty(w, "en");
@@ -265,29 +264,10 @@ void TemplateObject::slotProperties()
 
   dialog.exec();
 
-  /*
-  kDebug() << &m_customProperties;
-  KConfigSkeletonItem::List list = m_customProperties.items();
-  KConfigSkeletonItem::List::iterator it;
-  for(it = list.begin(); it != list.end(); ++it)
-    kDebug() << (*it)->group() << " / " <<
-        (*it)->key() << " = " << (*it)->property();
-  */
-
   if(dialog.result() == QDialog::Accepted)
     projectInterface()->setDirty(KMF::ProjectInterface::DirtyTemplate);
 
   kapp->removeTranslator(&kmftr);
-}
-
-QString TemplateObject::propertyString(KConfigSkeletonItem* item) const
-{
-  QVariant value = item->property();
-
-  if(QString(value.typeName()) != "KUrl")
-    return value.toString();
-  else
-    return value.value<KUrl>().prettyUrl();
 }
 
 QVariant TemplateObject::property(const QString& widget,
@@ -303,11 +283,11 @@ QVariant TemplateObject::property(const QString& widget,
     if((*it)->group() == widget && (*it)->name() == name)
     {
       /*
-      kDebug()
+      kdDebug() << k_funcinfo
           << "Widget: " << widget
           << "\nName  : " << name
           << "\nValue : " << (*it)->property()
-         ;
+          << endl;
       */
       return (*it)->property();
     }
@@ -323,20 +303,17 @@ void TemplateObject::setProperty(const QString& widget,
   QString group;
   QDomElement e;
   /*
-  kDebug()
+  kdDebug() << k_funcinfo
       << "Widget: " << widget
       << "\nName  : " << name
       << "\nValue : " << value
-     ;
+      << endl;
   */
   for(it = items.begin(); it != items.end(); ++it)
   {
     if((*it)->group() == widget && (*it)->name() == name)
     {
-      if(QString((*it)->property().typeName()) == "KUrl")
-        (*it)->setProperty(KUrl(value.toString()));
-      else
-        (*it)->setProperty(value);
+      (*it)->setProperty(value);
       return;
     }
   }
@@ -349,7 +326,7 @@ bool TemplateObject::isUpToDate(QString type)
 
   QDateTime lastModified = projectInterface()->lastModified(
       KMF::ProjectInterface::DirtyMediaOrTemplate);
-  QString file = projectInterface()->projectDir() + "dvdauthor.xml";
+  QString file = projectInterface()->projectDir() + "/dvdauthor.xml";
   QFileInfo fileInfo(file);
 
   if(fileInfo.exists() == false || lastModified > fileInfo.lastModified())
@@ -366,18 +343,13 @@ bool TemplateObject::isUpToDate(QString type)
   {
     if((*it).startsWith("./menus/"))
     {
-      fileInfo.setFile(projectInterface()->projectDir() + *it);
+      fileInfo.setFile(projectInterface()->projectDir() + "/" + *it);
 
       if(fileInfo.exists() == false || lastModified > fileInfo.lastModified())
         return false;
     }
   }
   return true;
-}
-
-bool TemplateObject::fileExists()
-{
-    return QFileInfo(m_file).exists();
 }
 
 #include "templateobject.moc"

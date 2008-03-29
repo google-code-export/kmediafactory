@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,7 +20,6 @@
 #ifndef KMEDIAFACTORY_DVDAUTHORPARSER_H
 #define KMEDIAFACTORY_DVDAUTHORPARSER_H
 
-#include <kdemacros.h>
 #include <qobject.h>
 #include <qstring.h>
 #include <qstringlist.h>
@@ -28,7 +27,7 @@
 
 namespace KMF
 {
-  class KDE_EXPORT DVDAuthorParser
+  class DVDAuthorParser
   {
     public:
       DVDAuthorParser() {};

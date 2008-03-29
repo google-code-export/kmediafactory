@@ -6,7 +6,7 @@
   <kcfgfile/>
   <include>templatepluginsettings.h</include>
   <group name="%KMFMenuPage%">
-      <entry name="sound" type="Url">
+      <entry name="sound" type="String">
           <label>Menu page background sound</label>
           <default></default>
       </entry>
@@ -27,9 +27,9 @@ shown later using menu button.</label>
       </entry>
   </group>
   <group name="background">
-      <entry name="background::url" type="Url">
+      <entry name="background::url" type="String">
           <label>Background url</label>
-          <default>kde://wallpaper/default_blue.jpg</default>
+          <default>kde://wallpaper/blue-bend.jpg</default>
       </entry>
   </group>
   <group name="label_.*">

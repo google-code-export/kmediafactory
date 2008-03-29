@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damst�
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,42 +20,39 @@
 #ifndef TEMPLATEPAGE_H
 #define TEMPLATEPAGE_H
 
-#include <ui_templatepage.h>
+#include <templatepagelayout.h>
 #include <qdatetime.h>
-#include "kmfuiinterface.h"
-#include <kmficonview.h>
 
-class KPageWidgetItem;
+class QIconViewItem;
 
 /**
 @author Petri Damsten
 */
-class TemplatePage : public QWidget, public Ui::TemplatePage
+class TemplatePage : public TemplatePageLayout
 {
     Q_OBJECT
   public:
-    TemplatePage(QWidget *parent = 0);
-    virtual ~TemplatePage();
+    TemplatePage(QWidget *parent = 0, const char *name = 0);
+    ~TemplatePage();
+
+    void loadingFinished();
 
   public slots:
-    void currentChanged(const QModelIndex& index,
-                        const QModelIndex& previous);
-    void currentPageChanged(KPageWidgetItem*, KPageWidgetItem*);
-    void updatePreview(int n = -1);
-    void contextMenuRequested(const QPoint &pos);
+    void currentChanged(QIconViewItem* item);
+    void aboutToShowPage(QWidget* page);
+    void updatePreview();
+    void contextMenuRequested(QIconViewItem *item, const QPoint &pos);
     void imageContextMenuRequested(const QPoint &pos);
-    void projectInit();
 
   protected slots:
     virtual void previewClicked();
-    void cancelSelection();
 
   private:
-    int m_menu;
+    uint m_menu;
+    QStringList m_menus;
     QDateTime m_lastUpdate;
-    QModelIndex m_previous;
+    QIconViewItem* m_previous;
     bool m_settingPrevious;
-    bool m_scaled;
 };
 
 #endif

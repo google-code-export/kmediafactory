@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Christoph Lumme <lummi@in-4-matik.de>, 2006.
+# Michael Kreuzer <michael-kreuzer@gmx.de>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: template\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-20 15:37+0200\n"
-"PO-Revision-Date: 2006-03-24 10:31+0100\n"
-"Last-Translator: Christoph Lumme <lummi@in-4-matik.de>\n"
+"PO-Revision-Date: 2008-03-05 00:36+0100\n"
+"Last-Translator: Michael Kreuzer <michael-kreuzer@gmx.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,12 +50,12 @@ msgstr "Kapitel"
 #: rc.cpp:33 rc.cpp:60
 #, no-c-format
 msgid "PREV"
-msgstr "vorheriger"
+msgstr "vor"
 
 #: rc.cpp:36 rc.cpp:66
 #, no-c-format
 msgid "NEXT"
-msgstr "nächster"
+msgstr "weiter"
 
 #: rc.cpp:39
 #, no-c-format

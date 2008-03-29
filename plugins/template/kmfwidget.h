@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -23,10 +23,11 @@
 #include "kmfgeometry.h"
 #include "kmftemplatebase.h"
 #include "rect.h"
-#include <QObject>
-#include <QColor>
+#include "color.h"
+#include <qobject.h>
+#include <qcolor.h>
+#include <Magick++.h>
 
-class QImage;
 class QColor;
 class QDomElement;
 class KMFMenuPage;
@@ -40,8 +41,8 @@ class KMFShadow
       m_offset(0,0), m_color(qRgba(0, 0, 0, 128)), m_type(None),
       m_radius(10.0), m_sigma(5.0) {};
 
-    const QColor& color() const { return m_color; };
-    void setColor(const QColor& color) { m_color = color; };
+    const KMF::Color& color() const { return m_color; };
+    void setColor(const KMF::Color& color) { m_color = color; };
     const QPoint& offset() const { return m_offset; };
     void setOffset(const QPoint& offset) { m_offset = offset; };
     const Type& type() const { return m_type; };
@@ -56,7 +57,7 @@ class KMFShadow
 
   private:
     QPoint m_offset;
-    QColor m_color;
+    KMF::Color m_color;
     Type m_type;
     double m_radius;
     double m_sigma;
@@ -71,7 +72,7 @@ class KMFWidget : public KMFTemplateBase
     enum Layer { None = 0, Background = 1, Sub = 2, Highlight = 4,
                  Select = 8, Temp = 16 };
 
-    KMFWidget(QObject *parent = 0);
+    KMFWidget(QObject *parent = 0, const char *name = 0);
     ~KMFWidget();
 
     int x() const { return m_geometry.left().absoluteValue(); };
@@ -114,14 +115,14 @@ class KMFWidget : public KMFTemplateBase
     int column() const { return m_column; };
     void hide() { m_hidden = true; };
     void show() { m_hidden = false; };
-    const QColor& color() const { return m_color; };
-    void setColor(const QColor& color) { m_color = color; };
+    const KMF::Color& color() const { return m_color; };
+    void setColor(const KMF::Color& color) { m_color = color; };
     void setColor(const QString& s);
 
     virtual void fromXML(const QDomElement& element);
 
   protected:
-    virtual void paintWidget(QImage&, bool = false) { };
+    virtual void paintWidget(Magick::Image&, bool = false) { };
     int parse(const QString& coordinate,
 	      KMFUnit::Type& type);
     void parseTitleChapter(const QString& s, int& title, int& chapter);
@@ -133,7 +134,7 @@ class KMFWidget : public KMFTemplateBase
     KMF::Rect::VAlign m_valign;
     KMF::Rect::HAlign m_halign;
     bool m_hidden;
-    QColor m_color;
+    KMF::Color m_color;
     bool m_takeSpace;
     int m_row;
     int m_column;

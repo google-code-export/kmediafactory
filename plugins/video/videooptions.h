@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -21,17 +21,17 @@
 #define VIDEOOPTIONS_H
 
 #include <kmf_stddef.h>
-#include "ui_videooptions.h"
+#include "videooptionslayout.h"
 #include "videoobject.h"
-#include "kmflanguagewidgets.h"
+#include <qdict.h>
 
 /**
 */
-class VideoOptions : public KDialog, public Ui::VideoOptions
+class VideoOptions : public VideoOptionsLayout
 {
     Q_OBJECT
   public:
-    VideoOptions(QWidget *parent = 0);
+    VideoOptions(QWidget *parent = 0, const char *name = 0);
     ~VideoOptions();
 
     void getData(VideoObject& obj) const;
@@ -45,14 +45,13 @@ class VideoOptions : public KDialog, public Ui::VideoOptions
     virtual void subtitlePropertiesClicked();
     virtual void enableButtons();
     virtual void updateTexts();
+    virtual void conversionPropertiesClicked();
 
   private:
     const VideoObject* m_obj;
     QDVD::CellList m_cells;
     QDVD::SubtitleList m_subtitles;
-    LanguageListModel m_subtitleModel;
     QDVD::AudioList m_audioTracks;
-    LanguageListModel m_audioModel;
     ConversionParams m_conversionParams;
 
     bool isSelectedSubtitleInVideo();

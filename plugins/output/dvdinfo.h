@@ -21,29 +21,45 @@
 
 #ifdef HAVE_LIBDVDREAD
 
-#include <qdvdinfo.h>
-#include <ui_dvdinfo.h>
-#include <QStandardItemModel>
+#include "dvdinfolayout.h"
+#include "qdvdinfo.h"
+#include <qlistview.h>
 
-class DVDInfo : public KDialog, public Ui::DVDInfo
+class DVDItem : public QListViewItem
+{
+  public:
+    DVDItem(QListView* parent, const QDVD::Base* data);
+    DVDItem(QListViewItem* parent, const QDVD::Base* data);
+    DVDItem(QListViewItem* parent, QListViewItem* after,
+            const QDVD::Base* data);
+    ~DVDItem();
+
+    virtual QString text(int column) const;
+    const QDVD::Base* data() const { return m_data; };
+    void initItem();
+
+  private:
+    const QDVD::Base* m_data;
+};
+
+class DVDInfo : public DVDInfoLayout
 {
     Q_OBJECT
   public:
-    DVDInfo(QWidget *parent = 0, QString device = "/dev/dvd");
+    DVDInfo(QWidget *parent = 0, const char *name = 0,
+            QString device = "/dev/dvd");
     ~DVDInfo();
 
   protected slots:
-    void open();
-    void currentChanged(const QModelIndex&, const QModelIndex&);
-    void configureFileDialog(KUrlRequester*);
+    virtual void open();
+    virtual void itemChanged(QListViewItem*);
+    virtual void configureFileDialog(KURLRequester*);
 
   private:
     QDVD::Info m_info;
-    QStandardItemModel m_model;
 
     void analyze();
     bool isDVD();
-    QList<QStandardItem*> list(const QDVD::Base* item);
 };
 
 #endif // HAVE_LIBDVDREAD

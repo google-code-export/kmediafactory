@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -23,14 +23,16 @@
 #include <kmf_stddef.h>
 #include <kmediafactory/plugin.h>
 #include "rect.h"
+#include "font.h"
 #include <kurl.h>
 #include <kprocess.h>
+#include <qdatetime.h>
+#include <qptrlist.h>
+#include <qdatetime.h>
 #include <qdvdinfo.h>
-#include <QPixmap>
-#include <QDateTime>
 
+class QFFMpeg;
 class QDir;
-class QMediaFile;
 
 namespace QDVD { class Subtitle; class Cell; };
 namespace KMF { class Time; };
@@ -60,7 +62,7 @@ class VideoObject : public KMF::MediaObject
     VideoObject(QObject* parent);
     virtual ~VideoObject();
     virtual void toXML(QDomElement& element) const;
-    virtual bool fromXML(const QDomElement& element);
+    virtual void fromXML(const QDomElement& element);
     virtual void writeDvdAuthorXml(QDomElement& element,
                                    QString preferredLanguage,
                                    QString post, QString type);
@@ -93,12 +95,12 @@ class VideoObject : public KMF::MediaObject
     virtual QDVD::VideoTrack::AspectRatio aspect() const { return m_aspect; };
     void setAspect(QDVD::VideoTrack::AspectRatio aspect) { m_aspect = aspect; };
 
-    virtual void actions(QList<QAction*>& actionList) const;
+    virtual void actions(QPtrList<KAction>& actionList) const;
     virtual bool addFile(QString fileName);
     void setTitleFromFileName();
-    const KUrl& previewUrl() const { return m_previewUrl; };
-    void setPreviewUrl(const KUrl& previewUrl) { m_previewUrl = previewUrl; };
-    QImage getFrame(QTime time, QString file) const;
+    const KURL& previewURL() const { return m_previewURL; };
+    void setPreviewURL(const KURL& previewURL) { m_previewURL = previewURL; };
+    QImage getFrame(double time) const;
     const QString& id() const { return m_id; };
 
     double frameRate() const;
@@ -117,37 +119,37 @@ class VideoObject : public KMF::MediaObject
   public slots:
     virtual void slotProperties();
     virtual void slotPlayVideo();
+    virtual void slotProgress(int);
     virtual void clean() { };
 
   private slots:
-    void output(QString line);
+    void output(KProcess* proc, char* buffer, int buflen);
 
   protected:
     mutable QDVD::CellList m_cells;
     QDVD::AudioList m_audioTracks;
     QDVD::SubtitleList m_subtitles;
 
-    bool checkObjectParams();
-    QTime duration(QString file) const;
+    void checkObjectParams();
 
   private:
-    QAction* m_videoProperties;
-    QAction* m_videoPlay;
-    KUrl m_previewUrl;
+    mutable QFFMpeg* m_decoder;
+    KAction* m_videoProperties;
+    KAction* m_videoPlay;
+    KURL m_previewURL;
     QDVD::VideoTrack::AspectRatio m_aspect;
     QString m_id;
-    qulonglong m_lastUpdate;
-    qulonglong m_half;
+    QString m_buffer;
+    QTime m_lastUpdate;
     bool m_stopped;
     QString m_kmfplayer;
-    static const char* m_prefixes[];
+    static char* m_prefixes[];
     ConversionParams m_conversion;
-    QStringList m_files;
-    KProcess* m_spumux;
 
     void generateId();
     void setCellSecs(double secs);
     bool isBlack(const QImage& img) const;
+    bool convertToDVD();
     bool convertSubtitles(const QDVD::Subtitle& subtitle);
     bool writeSpumuxXml(QDomDocument& doc, const QString& subFile,
                         const QDVD::Subtitle& subtitle);

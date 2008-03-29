@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -22,47 +22,48 @@
 #include "videoplugin.h"
 #include "videoobject.h"
 #include "videopluginsettings.h"
-#include "ui_videoconfig.h"
-#include <kstandarddirs.h>
+#include "videoconfiglayout.h"
+//#include <avcodec.h>
 #include <kgenericfactory.h>
-#include <kactioncollection.h>
 #include <kdeversion.h>
 #include <kaction.h>
 #include <kfiledialog.h>
 #include <kglobal.h>
 #include <kiconloader.h>
-#include <kicon.h>
 #include <kaboutdata.h>
 #include <kapplication.h>
+#include <qregexp.h>
+#include <qpixmap.h>
+#include <qcheckbox.h>
 #include <kmessagebox.h>
-#include <QRegExp>
-#include <QPixmap>
-#include <QCheckBox>
 
-static const KAboutData about("kmediafactory_video", 0,
-                              ki18n("KMediaFactory Video"), VERSION,
-                              ki18n("Video plugin for KMediaFactory."),
-                              KAboutData::License_GPL,
-                              ki18n(COPYRIGHT), KLocalizedString(),
-                              HOMEPAGE, BUG_EMAIL);
+static const char description[] =
+  I18N_NOOP("Video plugin for KMediaFactory.");
+static const char version[] = VERSION;
+static const KAboutData about("kmediafactory_video",
+                              I18N_NOOP("KMediaFactory Video"),
+                              version, description, KAboutData::License_GPL,
+                              "(C) 2005 Petri Damsten", 0, 0,
+                              "petri.damsten@iki.fi");
 
-K_PLUGIN_FACTORY(VideoFactory, registerPlugin<VideoPlugin>();)
-K_EXPORT_PLUGIN(VideoFactory("kmediafactory_video"))
+typedef KGenericFactory<VideoPlugin> videoFactory;
+#if KDE_IS_VERSION(3, 3, 0)
+K_EXPORT_COMPONENT_FACTORY(kmediafactory_video, videoFactory(&about))
+#else
+K_EXPORT_COMPONENT_FACTORY(kmediafactory_video, videoFactory(about.appName()))
+#endif
 
-class VideoConfig : public QWidget, public Ui::VideoConfig
+VideoPlugin::VideoPlugin(QObject *parent,
+                         const char* name, const QStringList&) :
+  KMF::Plugin(parent, name )
 {
-  public:
-    VideoConfig(QWidget* parent = 0) : QWidget(parent)
-    {
-      setupUi(this);
-    };
-};
-
-VideoPlugin::VideoPlugin(QObject *parent, const QVariantList&) :
-  KMF::Plugin(parent)
-{
-  setObjectName("KMFImportVideo");
-  setupActions();
+  // Initialize GUI
+  setInstance(KGenericFactory<VideoPlugin>::instance());
+  setXMLFile("kmediafactory_videoui.rc");
+  // Add action for menu item
+  addVideoAction = new KAction(i18n("Add Video"), "video", CTRL+Key_V,
+                               this, SLOT(slotAddVideo()), actionCollection(),
+                               "video");
 }
 
 VideoPlugin::~VideoPlugin()
@@ -72,56 +73,32 @@ VideoPlugin::~VideoPlugin()
 const KMF::ConfigPage* VideoPlugin::configPage() const
 {
   KMF::ConfigPage* configPage = new KMF::ConfigPage;
-  configPage->page = new VideoConfig;
+  configPage->page = new ConfigureVideoPluginLayout;
   configPage->config = VideoPluginSettings::self();
   configPage->itemName = i18n("Video plugin");
-  configPage->pixmapName = "video-mpeg";
+  configPage->pixmapName = "video";
   return configPage;
-}
-
-QAction* VideoPlugin::setupActions()
-{
-  setComponentData(VideoFactory::componentData());
-
-  // Add action for menu item
-  QAction* addVideoAction = new KAction(KIcon("video-mpeg"), i18n("Add Video"),
-                                        parent());
-  addVideoAction->setShortcut(Qt::CTRL + Qt::Key_V);
-  actionCollection()->addAction("video", addVideoAction);
-  connect(addVideoAction, SIGNAL(triggered()), SLOT(slotAddVideo()));
-
-  setXMLFile("kmediafactory_videoui.rc");
-
-  uiInterface()->addMediaAction(addVideoAction);
-
-  return addVideoAction;
 }
 
 void VideoPlugin::init(const QString &type)
 {
-  kDebug() << type;
   deleteChildren();
-
-  QAction* action = actionCollection()->action("video");
-  if(!action)
-    return;
-
   if (type.left(3) == "DVD")
   {
-    action->setEnabled(true);
+    addVideoAction->setEnabled(true);
   }
   else
   {
-    action->setEnabled(false);
+    addVideoAction->setEnabled(false);
   }
 }
 
 void VideoPlugin::slotAddVideo()
 {
-  QCheckBox* multipleFiles = new QCheckBox(0);
-  KFileDialog dlg(KUrl("kfiledialog:///<AddVideo>"),
+  QCheckBox* multipleFiles = new QCheckBox(0, "multipleFiles");
+  KFileDialog dlg(":AddVideo",
                   "*.mpg *.mpeg *.vob *.avi *.mov|Video files\n*.*|All files",
-                  0, multipleFiles);
+                  kapp->mainWidget(), "filedialog", true, multipleFiles);
 
   multipleFiles->setText(i18n("Multiple files make multiple titles."));
   multipleFiles->setChecked(true);
@@ -133,7 +110,6 @@ void VideoPlugin::slotAddVideo()
   QStringList filenames = dlg.selectedFiles();
   KMF::UiInterface *m = uiInterface();
 
-  kDebug() << m << filenames;
   if(m && filenames.count() > 0)
   {
     VideoObject *vob = 0;
@@ -157,7 +133,7 @@ void VideoPlugin::slotAddVideo()
         break;
       }
       vob->setTitleFromFileName();
-      if(multipleFiles->isChecked() || filename == filenames.end())
+      if(multipleFiles->isChecked() || filename == filenames.fromLast())
         m->addMediaObject(vob);
     }
   }
@@ -167,13 +143,7 @@ KMF::MediaObject* VideoPlugin::createMediaObject(const QDomElement& element)
 {
   KMF::MediaObject *mob = new VideoObject(this);
   if(mob)
-  {
-    if(!mob->fromXML(element))
-    {
-      delete mob;
-      return 0;
-    }
-  }
+    mob->fromXML(element);
   return mob;
 }
 

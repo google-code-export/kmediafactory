@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -22,92 +22,77 @@
 #include "kmediafactory.h"
 #include "kmfapplication.h"
 #include "kmfprogresslistview.h"
+#include "kmfprogressitem.h"
 #include "kmfuiinterface.h"
 #include "kmftoolbutton.h"
 #include "logview.h"
-#include <kmftools.h>
 #include <kcursor.h>
 #include <kpushbutton.h>
+#include <kprogress.h>
+#include <klistview.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <kxmlguifactory.h>
-#include <kpagedialog.h>
-#include <QToolButton>
-#include <QTimer>
-#include <QStringListModel>
+#include <qpopupmenu.h>
+#include <qheader.h>
+#include <qtoolbutton.h>
+#include <qtimer.h>
 
-OutputPage::OutputPage(QWidget *parent) :
-  QWidget(parent)
+OutputPage::OutputPage(QWidget *parent, const char *name) :
+  OutputPageLayout(parent, name)
 {
-  setupUi(this);
-  outputs->setSpacing(5);
-  outputs->setItemDelegate(new KMFItemDelegate());
-  connect(outputs, SIGNAL(customContextMenuRequested(const QPoint&)),
-          this, SLOT(contextMenuRequested(const QPoint&)));
-  connect(&m_startPopup, SIGNAL(triggered(QAction*)),
-           this, SLOT(start(QAction*)));
-  progressListView->setModel(new KMFProgressItemModel());
-  progressListView->setItemDelegate(new KMFProgressItemDelegate());
+  connect(outputs, SIGNAL(currentChanged(QIconViewItem*)),
+          this, SLOT(currentChanged(QIconViewItem*)));
+  connect(outputs,
+          SIGNAL(contextMenuRequested(QIconViewItem*, const QPoint&)),
+          this, SLOT(contextMenuRequested(QIconViewItem*, const QPoint&)));
+
+  startButton->setPopupDelay(QApplication::startDragTime());
+  connect(&m_startPopup, SIGNAL(activated(int)), this, SLOT(start(int)));
 }
 
 OutputPage::~OutputPage()
 {
 }
 
-void OutputPage::projectInit()
+void OutputPage::currentChanged(QIconViewItem* item)
 {
-  outputs->setModel(kmfApp->project()->outputObjects());
-  connect(outputs->selectionModel(),
-          SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
-          this, SLOT(currentChanged(const QModelIndex&, const QModelIndex&)));
-  outputs->blockSignals(true);
-  KMF::OutputObject* obj = kmfApp->project()->output();
-  QModelIndex i = kmfApp->project()->outputObjects()->indexOf(obj);
-  if(i == QModelIndex())
-    i = kmfApp->project()->outputObjects()->index(0);
-  outputs->setCurrentIndex(i);
-  outputs->blockSignals(false);
-}
-
-void OutputPage::currentChanged(const QModelIndex& index, const QModelIndex&)
-{
-  if(kmfApp->project())
+  if(item && kmfApp->project())
   {
-    KMF::OutputObject* ob =
-        kmfApp->project()->outputObjects()->at(index);
+    KMFIconViewItem* it = static_cast<KMFIconViewItem*>(item);
+    KMF::OutputObject* ob = static_cast<KMF::OutputObject*>(it->ob());
+
     kmfApp->project()->setOutput(ob);
   }
 }
 
-void OutputPage::contextMenuRequested(const QPoint &pos)
+void OutputPage::contextMenuRequested(QIconViewItem *item, const QPoint &pos)
 {
-  QModelIndex i = outputs->indexAt(pos);
-
-  if(i.row() < 0 || i.row() > kmfApp->project()->outputObjects()->count())
-    return;
-
-  KMF::OutputObject* ob = kmfApp->project()->outputObjects()->at(i.row());
-  KMediaFactory* mainWindow = kmfApp->mainWindow();
-  KXMLGUIFactory* factory = mainWindow->factory();
-
-  QList<QAction*> actions;
-  ob->actions(actions);
-  factory->plugActionList(mainWindow,
-      QString::fromLatin1("output_actionlist"), actions);
-  QWidget *w = factory->container("output_popup", mainWindow);
-  if(w)
+  if(item)
   {
-    QMenu* popup = static_cast<QMenu*>(w);
-    if(popup->actions().count() > 0)
-      popup->exec(pos);
+    KMediaFactory* mainWindow =
+        static_cast<KMediaFactory*>(kmfApp->mainWidget());
+    KXMLGUIFactory* factory = mainWindow->factory();
+    KMF::Object* ob = (static_cast<KMFIconViewItem*>(item))->ob();
+
+    QPtrList<KAction> actions;
+    ob->actions(actions);
+    factory->plugActionList(mainWindow,
+        QString::fromLatin1("output_actionlist"), actions);
+    QWidget *w = factory->container("output_popup", mainWindow);
+    if(w)
+    {
+      QPopupMenu *popup = static_cast<QPopupMenu*>(w);
+      if(popup->count() > 0)
+        popup->exec(pos);
+    }
+    factory->unplugActionList(mainWindow, "output_actionlist");
   }
-  factory->unplugActionList(mainWindow, "output_actionlist");
 }
 
 void OutputPage::showLog()
 {
   LogView dlg(this);
-  KUrl url = kmfApp->project()->directory() + "kmf_log.html";
+  KURL url = "file://" + kmfApp->project()->directory() + "kmf_log.html";
   dlg.setData(url);
   dlg.exec();
 }
@@ -120,7 +105,7 @@ void OutputPage::stop()
   kmfApp->uiInterface()->setItemProgress(-1);
 }
 
-void OutputPage::start(QAction* type)
+void OutputPage::start(int type)
 {
   if(m_types.contains(type))
   {
@@ -138,12 +123,12 @@ void OutputPage::start()
   showLogPushBtn->setEnabled(false);
   stopPushBtn->setEnabled(true);
   startButton->setEnabled(false);
+  //kmfApp->setOverrideCursor(KCursor::waitCursor());
   kmfApp->uiInterface()->setUseMessageBox(false);
   kmfApp->uiInterface()->setStopped(false);
-  progressBar->setRange(0, kmfApp->project()->timeEstimate());
+  progressBar->setTotalSteps(kmfApp->project()->timeEstimate());
   progressBar->setValue(0);
-  static_cast<QStringListModel*>(progressListView->model())->
-      setStringList(QStringList());
+  progressListView->clear();
   kmfApp->logger().start();
   if(kmfApp->project()->make(m_type) == false)
     if(!kmfApp->project()->error().isEmpty())
@@ -151,6 +136,7 @@ void OutputPage::start()
   m_type = "";
   kmfApp->logger().stop();
   kmfApp->logger().save(kmfApp->project()->directory() + "kmf_log.html");
+  //kmfApp->restoreOverrideCursor();
   showLogPushBtn->setEnabled(true);
   stopPushBtn->setEnabled(false);
   startButton->setEnabled(true);
@@ -160,10 +146,9 @@ void OutputPage::start()
 #endif
 }
 
-void OutputPage::currentPageChanged(KPageWidgetItem* current, KPageWidgetItem*)
+void OutputPage::aboutToShowPage(QWidget* page)
 {
   QMap<QString, QString> types = kmfApp->project()->subTypes();
-
   m_startPopup.clear();
   m_types.clear();
   if(types.count() > 0)
@@ -171,22 +156,18 @@ void OutputPage::currentPageChanged(KPageWidgetItem* current, KPageWidgetItem*)
     for (QMap<QString, QString>::ConstIterator it = types.begin();
          it != types.end(); ++it)
     {
-      QAction* action = new QAction(it.value(), this);
-      m_types[action] = it.key();
-      m_startPopup.addAction(action);
+      m_types[m_startPopup.insertItem(it.data())] = it.key();
     }
-    startButton->setMenu(&m_startPopup);
+    startButton->setPopup(&m_startPopup);
   }
   else
-    startButton->setMenu(0);
+    startButton->setPopup(0);
 
-  if (current->parent() == this)
+  if (parent() == page)
   {
     startButton->setEnabled(kmfApp->project()->mediaObjects()->count() > 0);
     progressBar->setValue(0);
   }
-  // Arranges icon in a nice row. Otherwise icons are arranged in one column
-  outputs->setViewMode(QListView::IconMode);
 }
 
 #include "outputpage.moc"

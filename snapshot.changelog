@@ -1,28 +1,12 @@
-CHANGED FROM THE LATEST RELEASE (0.6.0)
+CHANGED FROM THE LATEST RELEASE (0.5.2.2)
+==========================================
+Bug fixes:
+- Fix version hasles
+
+CHANGED FROM THE PREVIOUS SNAPSHOT
 ========================================
 Features:
 -
 
 Bug fixes:
 -
-
-CHANGED FROM THE PREVIOUS SNAPSHOT
-===================================
-Features:
--
-
-Bug fixes:
--
-
-
-# Dependencies (ubuntu package naming):                                       #
-# =========================================================================== #
-# Build:                  Runtime:                 Optional:                  #
-# --------------------------------------------------------------------------- #
-# g++                     kdelibs5                 k3b                        #
-# make                    ffmpeg                   libdvdread3(-dev)          #
-# cmake                   mplayer                  dvd-slideshow              #
-# zip                     mjpegtools               openoffice.org             #
-# gettext                 dvdauthor                kaffeine                   #
-# kdelibs5-dev                                     xine-ui                    #
-# --------------------------------------------------------------------------- #

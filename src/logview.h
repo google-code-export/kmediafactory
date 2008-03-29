@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,9 +20,8 @@
 #ifndef LOGVIEW_H
 #define LOGVIEW_H
 
-#include "ui_logview.h"
+#include "logviewlayout.h"
 #include <kmflogger.h>
-#include <QVBoxLayout>
 
 class QVBoxLayout;
 class KHTMLPart;
@@ -30,16 +29,13 @@ class KHTMLPart;
 /**
 @author Petri Damsten
 */
-class LogView : public KDialog, public Ui::LogView
+class LogView : public LogViewLayout
 {
     Q_OBJECT
   public:
-    LogView(QWidget *parent = 0);
-    virtual ~LogView();
-    void setData(const KUrl& log);
-
-protected:
-    void closeEvent(QCloseEvent *);
+    LogView(QWidget *parent = 0, const char *name = 0);
+    ~LogView();
+    void setData(const KURL& log);
 
   private:
     QVBoxLayout* m_layout;

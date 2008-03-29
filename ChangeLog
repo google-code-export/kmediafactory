@@ -1,99 +1,4 @@
-2007-07-15 Petri Damst√©n <petri.damsten@iki.fi>
-
-  * Version 0.5.3 released
-  * Internal ffmpeg removed
-  * Transparency fixed (>= ImageMagick 6.2.9)
-
-2006-06-19 Petri Damst√©n <petri.damsten@iki.fi>
-
-  * Version 0.5.2 released
-  * pl translation
-  * Get Hot New Stuff framework
-  * GHNS from kde-files.org
-  * Travel theme moved from distribution to kde-files.org
-  * dvb/ProjectX script moved from distribution to kde-files.org
-  * Russian translation to templates
-  * Show only languages actually found from templates
-  * Lots of UTF-8 fixes
-  * Portrait pictures fixed in templates
-  * KMFPlayer icons fixed
-  * Project dir name auto generation fixed
-  * Fixed DVD info to work with non-ascii paths
-  * ffmpeg updated
-  * Compile with Qt 3.3.6
-  * Some portuguese texts to templates
-  * de translation fixes
-
-2006-04-07 Petri Damst√©n <petri.damsten@iki.fi>
-
-  * Version 0.5.1 released
-  * de translation
-  * fi translation
-  * Log is saved to disk
-  * libsuffix fixes
-  * gcc 4.1 compability /typo fixes
-  * Auto detect more resolutions (de fi DVB)
-  * Updated kxinewidget
-  * Compile with libdvdread-0.9.5
-  * --enable-final fixed
-  * reset sound before dummy video
-  * language set bug fix
-  * Log viewer fixed
-  * i386 mmx optimizations for ffmpeg updated from xine cvs
-  * Restructuring libraries to avoid ffmpeg crash
-  * override CFLAGS in libavcodec/i386 to disable optimizations
-  * ookmf install forced
-  * Do not link libgs to libkmf (Causes crash on fedora)
-  * Compile on Slackware (malloc.h)
-  * dvb script fixes
-  * slideshow \n comments fixed
-  * ffmpeg updated
-  * use utf8 in lo
-
-2006-01-24 Petri Damst√©n <petri.damsten@iki.fi>
-
-  * Version 0.5.0 released
-  * Conversion parameters dialog.
-  * Project size widget
-  * option to disable mmx optimizations in configure
-  * Slideshow plugin
-  * dcop interface
-  * scripting interface
-  * DVB mpeg import & edit (using ProjectX) as an example script
-  * Templates can be used directly from directory
-  * "Continue to next title / jump to main menu" option
-  * 'Use as custom preview' button to chapters dialog
-  * dvd preview with dummy videos added (start button menu)
-  * Possibilty to change time manually when adding chapter.
-  * Import chapters from text file (dvdxchap format
-    http://www.bunkus.org/videotools/ogmtools/dvdxchap.1.html)
-  * dv subtitle generation fix
-  * theora configure test should test for ogg too
-  * mjpegtools version check fixed
-  * Subtitle properties dialog fixed.
-  * x86 compile fixes
-  * ffmpeg updated
-  * kde 3.5 compatible
-  * make sure that video object has good defaults
-  * subtitle font fixes
-  * Fix label so it can be used in all layers
-  * Slideshow progress fixes
-  * Chapter dialog slider fixed
-  * Right position for the added chapter
-  * Don't crash on saving when project type changes
-  * Project path slash fixes
-  * Aspect ratio fixes
-  * Better project modification handling
-  * ffmpeg updated
-  * check for libogg
-  * desktop files fixed
-  * better spumux xml file
-  * Don't let user delete all the chapters
-  * update preview if media changes
-  * Aspect ratio calculations
-  * Prevent user from adding dir as a media
-
-2005-10-03 Petri Damst√©n <petri.damsten@iki.fi>
+2005-10-03 Petri DamstÈn <petri.damsten@iki.fi>
 
   * Version 0.4.1 released
   * jumppad free dvdauthor.xml. Reported to work better with some dvd players.
@@ -109,7 +14,7 @@
   * Can add multiple video files at once now
   * Bug fixes
 
-2005-08-16 Petri Damst√©n <petri.damsten@iki.fi>
+2005-08-16 Petri DamstÈn <petri.damsten@iki.fi>
 
   * Version 0.4.0 released
   * sox+mp2enc can be used instead of toolame
@@ -125,7 +30,7 @@
   * Better subtitle handling
   * Bug fixes
 
-2005-06-15 Petri Damst√©n <petri.damsten@iki.fi>
+2005-06-15 Petri DamstÈn <petri.damsten@iki.fi>
 
   * Version 0.3.0 released
   * Import DV file and generate chapters and subtitles from timecodes.
@@ -136,23 +41,23 @@
   * aspect & audio language selection
   * Bug fixes
 
-2005-04-19 Petri Damst√©n <petri.damsten@iki.fi>
+2005-04-19 Petri DamstÈn <petri.damsten@iki.fi>
 
   * Version 0.2.2 released
   * Chapter editor
   * Bug fixes
 
-2005-04-11 Petri Damst√©n <petri.damsten@iki.fi>
+2005-04-11 Petri DamstÈn <petri.damsten@iki.fi>
 
   * Version 0.2.1 released
   * GUI fixes
   * K3b output
 
-2005-03-28 Petri Damst√©n <petri.damsten@iki.fi>
+2005-03-28 Petri DamstÈn <petri.damsten@iki.fi>
 
   * Version 0.2.0 released
   * XML based template engine added
 
-2005-01-28 Petri Damst√©n <petri.damsten@iki.fi>
+2005-01-28 Petri DamstÈn <petri.damsten@iki.fi>
 
   * Initial Release v 0.1.0

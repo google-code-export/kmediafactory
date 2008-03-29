@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,43 +20,34 @@
 
 #include "kmediafactory.h"
 #include "kmfapplication.h"
-#include <kiconloader.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
 #include <klocale.h>
 #include <kdebug.h>
 
+static const char description[] =
+  I18N_NOOP("Template based DVD authoring software.");
+
+static const char version[] = VERSION;
+
+static KCmdLineOptions options[] =
+{
+  { "+[URL]", I18N_NOOP( "Document to open" ), 0 },
+  KCmdLineLastOption
+};
+
 int main(int argc, char **argv)
 {
-  KAboutData about(PACKAGE, 0,
-                   ki18n("KMediaFactory"), VERSION,
-                   ki18n("Template based DVD authoring software."),
-                   KAboutData::License_GPL,
-                   ki18n(COPYRIGHT), KLocalizedString(),
-                   HOMEPAGE, BUG_EMAIL);
-  about.addAuthor(ki18n("Petri Damsten"), ki18n("Developer"),
-                  "petri.damsten@iki.fi");
-  about.setOrganizationDomain("kde.org");
-
-  KCmdLineOptions options;
-  options.add("+[URL]", ki18n("Document to open"));
+  KAboutData about(PACKAGE, I18N_NOOP("KMediaFactory"), version,
+    description, KAboutData::License_GPL, "(C) 2005 Petri Damsten", 0,
+    0, "petri.damsten@iki.fi");
+  about.addAuthor("Petri Damsten", 0, "petri.damsten@iki.fi");
   KCmdLineArgs::init(argc, argv, &about);
   KCmdLineArgs::addCmdLineOptions(options);
   KMFApplication app;
 
-  // Add catalog for translations
-  KGlobal::locale()->insertCatalog("libkmf");
-  // Add resource dirs
-  QStringList tools = KGlobal::dirs()->findDirs("data", "kmediafactory/tools");
-  foreach(QString tooldir, tools)
-  {
-    kDebug() << "Adding resource dir: " << tooldir;
-    // For icons in tool scripts
-    KGlobal::dirs()->addResourceDir("icon", tooldir);
-  }
-  //KIconLoader::global()->reconfigure(about.appName(), KGlobal::dirs());
-
-  if (app.isSessionRestored())
+  KGlobal::locale()->insertCatalogue("libkmf");
+  if (app.isRestored())
   {
     RESTORE(KMediaFactory);
   }

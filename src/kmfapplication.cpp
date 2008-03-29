@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -22,22 +22,17 @@
 #include "kmfprojectinterface.h"
 #include "kmediafactory.h"
 #include "kmftools.h"
-#include "kmfdbusinterface.h"
-#include "kmediafactoryadaptor.h"
+#include "kmfdcopinterface.h"
+#include <qobjectlist.h>
+#include <qfileinfo.h>
 #include <kcmdlineargs.h>
-#include <kservicetypetrader.h>
+#include <ktrader.h>
 #include <kstandarddirs.h>
 #include <kparts/componentfactory.h>
 #include <kdebug.h>
 #include <kmainwindow.h>
 #include <klocale.h>
-#include <ktoolinvocation.h>
-#include <klauncher_iface.h>
-#include <QObject>
-#include <QFileInfo>
-#include <QtDBus>
-#include <errno.h>
-
+#include <dcopclient.h>
 #if defined Q_WS_X11
 #include <kstartupinfo.h>
 #include <X11/Xlib.h>
@@ -47,8 +42,7 @@ KMFApplication::KMFApplication()
   : KApplication(), m_mainWin(0), m_project(0), m_pluginInterface(0),
     m_uiInterface(0), m_projectInterface(0)
 {
-  iface = new KMFDbusInterface(this);
-  new KMediaFactoryAdaptor(iface);
+  iface = new KMFDcopInterface();
 }
 
 KMFApplication::~KMFApplication()
@@ -59,18 +53,20 @@ KMFApplication::~KMFApplication()
 void KMFApplication::init()
 {
   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-  QDBusConnection::sessionBus().registerObject("/KMediaFactory", iface);
 
+  if(dcopClient()->isRegistered())
+  {
+    dcopClient()->registerAs(name());
+    dcopClient()->setDefaultObject(iface->objId());
+  }
+
+  loadPlugins();
   if(args->count() > 0)
     m_url = args->url(0);
 
   m_mainWin = new KMediaFactory();
+  setMainWidget(m_mainWin);
   m_mainWin->show();
-
-  loadPlugins();
-
-  m_mainWin->initGUI();
-
   args->clear();
 }
 
@@ -84,40 +80,63 @@ KMFProject *KMFApplication::newProject()
 
 void KMFApplication::loadPlugins()
 {
-  kDebug();
-  m_pluginInterface = new QObject(this);
-  m_pluginInterface->setObjectName("pluginInterface");
-  m_uiInterface = new KMFUiInterface(m_pluginInterface);
-  m_projectInterface = new KMFProjectInterface(m_pluginInterface);
+  m_pluginInterface = new QObject(this, "pluginInterface");
+  m_uiInterface = new KMFUiInterface(m_pluginInterface,
+                                     "ui interface");
+  m_projectInterface = new KMFProjectInterface(m_pluginInterface,
+                                               "project interface");
 
-  //KMF::Tools::printChilds(m_pluginInterface);
+  KTrader::OfferList offers = KTrader::self()->query("KMediaFactory/Plugin");
+  KTrader::OfferList::ConstIterator iter;
 
-  const KService::List offers =
-      KServiceTypeTrader::self()->query("KMediaFactory/Plugin");
-
-  foreach(KService::Ptr service, offers)
+  for(iter = offers.begin(); iter != offers.end(); ++iter)
   {
-    KPluginLoader loader(*service);
-    KPluginFactory* factory = loader.factory();
-    if (!factory)
+    int error = 0;
+    KService::Ptr service = *iter;
+    KMF::Plugin* plugin =
+        KParts::ComponentFactory::createInstanceFromService<KMF::Plugin>
+        (service, m_pluginInterface, service->name(), QStringList(), &error);
+    if (plugin)
     {
-       kDebug() << "Loading factory failed:" << loader.errorString();
+      m_supportedProjects += plugin->supportedProjectTypes();
+      kdDebug() << "Loaded plugin " << plugin->name() << endl;
     }
     else
     {
-      QVariant arg = qVariantFromValue(service);
+      switch (error)
+      {
+        case KParts::ComponentFactory::ErrNoServiceFound:
+          kdDebug() << "No service implementing the given "
+                    << "mimetype and fullfilling the given constraint "
+                    << "expression can be found."
+                    << endl;
+          break;
 
-      KMF::Plugin* plugin = factory->create<KMF::Plugin>(m_pluginInterface,
-          QVariantList() << arg);
-      if (plugin)
-      {
-        m_supportedProjects += plugin->supportedProjectTypes();
-        kDebug() << "Loaded plugin " << plugin->objectName();
+        case KParts::ComponentFactory::ErrServiceProvidesNoLibrary:
+          kdDebug() << "the specified service provides no shared library."
+                    << endl;
+          break;
+
+        case KParts::ComponentFactory::ErrNoLibrary:
+          kdDebug() << "the specified library could not be loaded." << endl;
+          break;
+
+        case KParts::ComponentFactory::ErrNoFactory:
+          kdDebug() << "the library does not export a factory for creating "
+                    << "components."
+                    << endl;
+          break;
+
+        case KParts::ComponentFactory::ErrNoComponent:
+          kdDebug() << "the factory does not support creating components of "
+                    << "the specified type."
+                    << endl;
+          break;
       }
-      else
-      {
-        kDebug() << "Loading plugin failed:" << service->name();
-      }
+      kdDebug() << "Loading plugin '" << service->name()
+                << "' failed, KLibLoader reported error: '" << endl
+                << KLibLoader::self()->lastErrorMessage()
+                << "'" << endl;
     }
   }
   KMF::Tools::removeDuplicates(&m_supportedProjects);
@@ -126,12 +145,13 @@ void KMFApplication::loadPlugins()
 KMF::PluginList KMFApplication::plugins()
 {
   KMF::PluginList plugins;
-  const QObjectList& list = kmfApp->pluginInterface()->children();
+  const QObjectList *list = kmfApp->pluginInterface()->children();
+  QObject *obj;
 
-  for(int i = 0; i < list.size(); ++i)
+  for(QObjectListIt it(*list); (obj=it.current())!= 0; ++it)
   {
-    if(list[i]->inherits("KMF::Plugin"))
-      plugins.append((KMF::Plugin*)list[i]);
+    if(obj->inherits("KMF::Plugin"))
+      plugins.append((KMF::Plugin*)obj);
   }
   return plugins;
 }
@@ -160,75 +180,103 @@ void KMFApplication::finalize()
   m_pluginInterface = 0;
 }
 
-// From kapplication.cpp - modified to accept env variables
-static int startServiceInternal(const char *_function,
-                                const QString& _name, const QStringList &URLs,
-                                QStringList& envs,
-                                QString *error, QString *serviceName, int *pid,
-                                const QByteArray& startup_id, bool noWait)
+// From kapplication.cpp - modifies to accept env variables
+
+static int startServiceInternal(const QCString &function,
+                                const QString& _name,
+                                const QStringList &URLs,
+                                QValueList<QCString> &envs,
+                                QString *error,
+                                QCString *dcopService,
+                                int *pid,
+                                const QCString& startup_id,
+                                bool noWait)
 {
-  QString function = QLatin1String(_function);
-  org::kde::KLauncher *launcher = KToolInvocation::klauncher();
-  QDBusMessage msg = QDBusMessage::createMethodCall(launcher->service(),
-      launcher->path(),
-      launcher->interface(),
-      function);
-  msg << _name << URLs;
+  struct serviceResult
+  {
+    int result;
+    QCString dcopName;
+    QString error;
+    pid_t pid;
+  };
+
+  // Register app as able to send DCOP messages
+  DCOPClient *dcopClient;
+  if (kapp)
+    dcopClient = kapp->dcopClient();
+  else
+    dcopClient = new DCOPClient;
+
+  if (!dcopClient->isAttached())
+  {
+    if (!dcopClient->attach())
+    {
+      if (error)
+        *error = i18n("Could not register with DCOP.\n");
+      return -1;
+    }
+  }
+  QByteArray params;
+  QDataStream stream(params, IO_WriteOnly);
+  stream << _name << URLs;
+  QCString replyType;
+  QByteArray replyData;
+  QCString _launcher = KApplication::launcher();
 #ifdef Q_WS_X11
-  if (QX11Info::display())
+  if (qt_xdisplay())
   {
-    QByteArray dpystring(XDisplayString(QX11Info::display()));
-    envs << QString::fromLatin1( QByteArray("DISPLAY=") + dpystring );
-  }
-  else if( getenv( "DISPLAY" ))
-  {
-    QByteArray dpystring( getenv( "DISPLAY" ));
-    envs << QString::fromLatin1( QByteArray("DISPLAY=") + dpystring );
-  }
+    QCString dpystring(XDisplayString(qt_xdisplay()));
+    envs.append( QCString("DISPLAY=") + dpystring );
+   }
+   else if( getenv( "DISPLAY" ))
+   {
+     QCString dpystring( getenv( "DISPLAY" ));
+     envs.append( QCString("DISPLAY=") + dpystring );
+   }
 #endif
-  msg << envs;
+   stream << envs;
 #if defined Q_WS_X11
-  // make sure there is id, so that user timestamp exists
-  msg << QString( startup_id.isEmpty() ? KStartupInfo::createNewStartupId()
-      : startup_id );
-#else
-  msg << QString();
+   // make sure there is id, so that user timestamp exists
+   stream << ( startup_id.isEmpty() ?
+      KStartupInfo::createNewStartupId() : startup_id );
 #endif
-  if( !function.startsWith( QLatin1String("kdeinit_exec") ) )
-      msg << noWait;
+   if( function.left( 12 ) != "kdeinit_exec" )
+       stream << noWait;
 
-  QDBusMessage reply = QDBusConnection::sessionBus().call(msg);
-  if ( reply.type() != QDBusMessage::ReplyMessage )
-  {
-    QString args;
+   if (!dcopClient->call(_launcher, _launcher,
+        function, params, replyType, replyData))
+   {
+     if (error)
+       *error = i18n("KLauncher could not be reached via DCOP.\n");
+     if (!kapp)
+       delete dcopClient;
+     return -1;
+   }
+   if (!kapp)
+     delete dcopClient;
 
-    if(reply.arguments().count() > 0)
-      args = reply.arguments().at(0).toString();
-    kDebug() << i18n("KLauncher could not be reached via D-Bus, "  \
-        "error when calling %1:\n%2\n",function, args) << error;
-    return EINVAL;
-  }
+   if (noWait)
+     return 0;
 
-  if (noWait)
-    return 0;
-
-  Q_ASSERT(reply.arguments().count() == 4);
-  if (serviceName)
-    *serviceName = reply.arguments().at(1).toString();
-  if (error)
-    *error = reply.arguments().at(2).toString();
-  if (pid)
-    *pid = reply.arguments().at(3).toInt();
-  return reply.arguments().at(0).toInt();
+   QDataStream stream2(replyData, IO_ReadOnly);
+   serviceResult result;
+   stream2 >> result.result >> result.dcopName >> result.error >> result.pid;
+   if (dcopService)
+     *dcopService = result.dcopName;
+   if (error)
+     *error = result.error;
+   if (pid)
+     *pid = result.pid;
+   return result.result;
 }
 
 int KMFApplication::startServiceByDesktopPath(const QString& _name,
                                               const QString &URL,
-                                              QStringList& envs,
+                                              QValueList<QCString> &envs,
                                               QString *error,
-                                              QString *serviceName,
+                                              QCString *dcopService,
                                               int *pid,
-                                              const QByteArray& startup_id,
+                                              const QCString& startup_id,
                                               bool noWait)
 {
   QStringList URLs;
@@ -236,5 +284,5 @@ int KMFApplication::startServiceByDesktopPath(const QString& _name,
     URLs.append(URL);
   return startServiceInternal("start_service_by_desktop_path"
       "(QString,QStringList,QValueList<QCString>,QCString ,bool)",
-      _name, URLs, envs, error, serviceName, pid, startup_id, noWait);
+      _name, URLs, envs, error, dcopService, pid, startup_id, noWait);
 }

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -18,5 +18,4 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 
-#include "kiconloader.h"
-#define BTN_ICON(x) KGlobal::iconLoader()->loadIconSet((x), KIconLoader::Small)
+#define BTN_ICON(x) KGlobal::iconLoader()->loadIconSet((x), KIcon::Small)

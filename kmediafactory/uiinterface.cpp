@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -21,40 +21,35 @@
 #include <kdebug.h>
 #include <kprocess.h>
 
-KMF::MediaObject::MediaObject(QObject* parent) :
-  Object(parent)
+KMF::MediaObject::MediaObject(QObject* parent, const char* name) :
+  Object(parent, name)
 {
 }
 
-KMF::TemplateObject::TemplateObject(QObject *parent) :
-  Object(parent)
+KMF::TemplateObject::TemplateObject(QObject *parent, const char *name) :
+  Object(parent, name)
 {
 }
 
-KMF::OutputObject::OutputObject(QObject *parent) :
-  Object(parent)
+KMF::OutputObject::OutputObject(QObject *parent, const char *name) :
+  Object(parent, name)
 {
 }
 
-KMF::UiInterface::UiInterface(QObject* parent) :
-  QObject(parent)
+KMF::UiInterface::UiInterface(QObject* parent, const char* name) :
+  QObject(parent, name)
 {
-  setObjectName("KMF::UiInterface");
 }
 
 void KMF::Logger::connectProcess(KProcess *proc, const QString& filter,
-                                 KProcess::OutputChannelMode mode)
+                                 KProcess::Communication comm)
 {
-  proc->setOutputChannelMode(KProcess::SeparateChannels);
-  if(mode != KProcess::OnlyStderrChannel)
-  {
-    connect(proc, SIGNAL(readyReadStandardOutput()), this, SLOT(stdout()));
-  }
-  if(mode != KProcess::OnlyStdoutChannel)
-  {
-    connect(proc, SIGNAL(readyReadStandardError()), this, SLOT(stderr()));
-  }
-  currentProcess = proc;
+  if(comm && KProcess::Stdout)
+    connect(proc, SIGNAL(receivedStdout(KProcess*, char*, int)),
+            this, SLOT(stdout(KProcess*, char*, int)));
+  if(comm && KProcess::Stderr)
+    connect(proc, SIGNAL(receivedStderr(KProcess*, char*, int)),
+            this, SLOT(stderr(KProcess*, char*, int)));
   setFilter(filter);
 }
 

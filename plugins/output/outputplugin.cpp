@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -19,10 +19,12 @@
 //**************************************************************************
 #include "config.h"
 #include "outputplugin.h"
-#include "dvddirectoryobject.h"
 #include "dvdauthorobject.h"
+#include "dvddirectoryobject.h"
+#ifdef HAVE_LIBDVDREAD
+#include "dvdinfo.h"
+#endif
 #include "k3bobject.h"
-#include <kactioncollection.h>
 #include <kdeversion.h>
 #include <kapplication.h>
 #include <kgenericfactory.h>
@@ -32,65 +34,68 @@
 #include <kiconloader.h>
 #include <kaboutdata.h>
 #include <kstandarddirs.h>
-#include <kicon.h>
-#include <krun.h>
-#include <QRegExp>
-#include <QPixmap>
+#include <qregexp.h>
+#include <qpixmap.h>
 
-#ifdef HAVE_LIBDVDREAD
-#include "dvdinfo.h"
+static const char description[] =
+  I18N_NOOP("Output plugin for KMediaFactory.");
+static const char version[] = VERSION;
+static const KAboutData about("kmediafactory_output",
+                              I18N_NOOP("KMediaFactory Output"),
+                              version, description, KAboutData::License_GPL,
+                              "(C) 2005 Petri Damsten", 0, 0,
+                              "petri.damsten@iki.fi");
+
+typedef KGenericFactory<OutputPlugin> outputFactory;
+#if KDE_IS_VERSION(3, 3, 0)
+K_EXPORT_COMPONENT_FACTORY(kmediafactory_output, outputFactory(&about))
+#else
+K_EXPORT_COMPONENT_FACTORY(kmediafactory_output, outputFactory(about.appName()))
 #endif
 
-static const KAboutData about("kmediafactory_output", 0,
-                              ki18n("KMediaFactory Output"), VERSION,
-                              ki18n("Output plugin for KMediaFactory."),
-                              KAboutData::License_GPL,
-                              ki18n(COPYRIGHT), KLocalizedString(),
-                              HOMEPAGE, BUG_EMAIL);
-
-K_PLUGIN_FACTORY(OutputFactory, registerPlugin<OutputPlugin>();)
-K_EXPORT_PLUGIN(OutputFactory("kmediafactory_output"))
-
-OutputPlugin::OutputPlugin(QObject *parent, const QVariantList&) :
-  KMF::Plugin(parent), addPreviewDVDXine(0), addPreviewDVDKaffeine(0)
+OutputPlugin::OutputPlugin(QObject *parent,
+                           const char* name, const QStringList&) :
+  KMF::Plugin(parent, name ), addPreviewDVD(0),
+  addPreviewDVDXine(0), addPreviewDVDKaffeine(0)
 {
-  setObjectName("KMFOutput");
   // Initialize GUI
-  setComponentData(OutputFactory::componentData());
+  setInstance(KGenericFactory<OutputPlugin>::instance());
   setXMLFile("kmediafactory_outputui.rc");
 
+  m_kmfplayer = KStandardDirs::findExe("kmediafactoryplayer");
   m_xine = KStandardDirs::findExe("xine");
   m_kaffeine = KStandardDirs::findExe("kaffeine");
 
 #ifdef HAVE_LIBDVDREAD
-  dvdInfo =new KAction(KIcon("zoom-original"), i18n("DVD Info"), parent);
-  dvdInfo->setShortcut(Qt::CTRL + Qt::Key_I);
-  actionCollection()->addAction("dvd_info", dvdInfo);
-  connect(dvdInfo, SIGNAL(triggered()), SLOT(slotDVDInfo()));
+  dvdInfo = new KAction(i18n("DVD Info"), "viewmag",
+                        CTRL+Key_I,
+                        this, SLOT(slotDVDInfo()),
+                        actionCollection(),
+                        "dvd_info");
 #endif
+  if(!m_kmfplayer.isEmpty())
+    addPreviewDVD = new KAction(i18n("Preview DVD"), "viewmag",
+                                CTRL+Key_P,
+                                this, SLOT(slotPreviewDVD()),
+                                actionCollection(),
+                                "preview_dvd");
   if(!m_xine.isEmpty())
-  {
-    addPreviewDVDXine =new KAction(KIcon("xine"),
-                                   i18n("Preview DVD in Xine"), parent);
-    addPreviewDVDXine->setShortcut(Qt::CTRL + Qt::Key_X);
-    actionCollection()->addAction("preview_dvd_xine", addPreviewDVDXine);
-    connect(addPreviewDVDXine, SIGNAL(triggered()), SLOT(slotPreviewDVDXine()));
-  }
+    addPreviewDVDXine = new KAction(i18n("Preview DVD in Xine"), "xine",
+                                    CTRL+Key_X,
+                                    this, SLOT(slotPreviewDVDXine()),
+                                    actionCollection(),
+                                    "preview_dvd_xine");
   if(!m_kaffeine.isEmpty())
-  {
-    addPreviewDVDKaffeine =new KAction(KIcon("xine"),
-                                   i18n("Preview DVD in Kaffeine"), parent);
-    addPreviewDVDKaffeine->setShortcut(Qt::CTRL + Qt::Key_K);
-    actionCollection()->addAction("preview_dvd_kaffeine",
-                                  addPreviewDVDKaffeine);
-    connect(addPreviewDVDKaffeine, SIGNAL(triggered()),
-            SLOT(slotPreviewDVDKaffeine()));
-  }
+    addPreviewDVDKaffeine = new KAction(i18n("Preview DVD in Kaffeine"),
+                                        "kaffeine",
+                                        CTRL+Key_K,
+                                        this, SLOT(slotPreviewDVDKaffeine()),
+                                        actionCollection(),
+                                        "preview_dvd_kaffeine");
 }
 
 void OutputPlugin::init(const QString &type)
 {
-  kDebug() << type;
   deleteChildren();
   if (type.left(3) == "DVD")
   {
@@ -109,22 +114,25 @@ void OutputPlugin::init(const QString &type)
 
 void OutputPlugin::play(const QString& player)
 {
-  QString cmd;
+  QString bin;
   QString projectDir = projectInterface()->projectDir();
+  KProcess process;
 
   if(player.isEmpty())
   {
-    if(!m_xine.isEmpty())
-      cmd = m_xine;
+    if(!m_kmfplayer.isEmpty())
+      bin = m_kmfplayer;
+    else if(!m_xine.isEmpty())
+      bin = m_xine;
     else if(!m_kaffeine.isEmpty())
-      cmd = m_kaffeine;
+      bin = m_kaffeine;
     else
       return;
   }
   else
-    cmd = player;
-  cmd +=  " dvd:/" + projectDir + "DVD/VIDEO_TS";
-  KRun::runCommand(cmd, kapp->activeWindow());
+    bin = player;
+  process << bin << "dvd:/" + projectDir + "DVD/VIDEO_TS";
+  process.start(KProcess::DontCare);
 }
 
 void OutputPlugin::slotPreviewDVDXine()
@@ -137,11 +145,16 @@ void OutputPlugin::slotPreviewDVDKaffeine()
   play(m_kaffeine);
 }
 
+void OutputPlugin::slotPreviewDVD()
+{
+  play(m_kmfplayer);
+}
+
 void OutputPlugin::slotDVDInfo()
 {
 #ifdef HAVE_LIBDVDREAD
   QString projectDir = projectInterface()->projectDir();
-  DVDInfo dlg(kapp->activeWindow(), projectDir + "DVD/");
+  DVDInfo dlg(kapp->activeWindow(), "", projectDir + "/DVD/");
 
   dlg.exec();
 #endif

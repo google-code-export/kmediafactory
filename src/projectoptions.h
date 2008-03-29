@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damst�
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,24 +20,24 @@
 #ifndef PROJECTOPTIONS_H
 #define PROJECTOPTIONS_H
 
-#include <ui_projectoptions.h>
+#include <projectoptionslayout.h>
 #include "kmfproject.h"
 
 /**
 */
-class ProjectOptions : public KDialog, public Ui::ProjectOptions
+class ProjectOptions : public ProjectOptionsLayout
 {
     Q_OBJECT
   public:
-    ProjectOptions(QWidget* parent = 0);
+    ProjectOptions(QWidget* parent = 0, const char* name = 0,
+                   bool modal = FALSE, WFlags fl = 0);
     ~ProjectOptions();
     void getData(KMFProject& project) const;
     void setData(const KMFProject& project);
 
   protected slots:
-    void textChanged(const QString&);
-    void slotOk();
-    virtual void slotButtonClicked(int button);
+    void titleChanged(const QString&);
+    void okClicked();
 
   private:
     bool titleChangesPath;

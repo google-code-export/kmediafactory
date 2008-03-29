@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -51,7 +51,7 @@ void KMF::Rect::set(const QRect& maxRect)
 
 void KMF::Rect::set(const QRect& maxRect, double aspectRatio)
 {
-  //kDebug() << maxRect;
+  //kdDebug() << k_funcinfo << maxRect << endl;
   if(maxRect.height() * aspectRatio > maxRect.width())
   {
     setWidth(maxRect.width());
@@ -62,7 +62,7 @@ void KMF::Rect::set(const QRect& maxRect, double aspectRatio)
     setWidth((int)(maxRect.height() * aspectRatio));
     setHeight(maxRect.height());
   }
-  //kDebug() << *this;
+  //kdDebug() << k_funcinfo << *this << endl;
 }
 
 void KMF::Rect::align(const QRect& parentRect, HAlign halign, VAlign valign)
@@ -95,8 +95,8 @@ void KMF::Rect::align(const QRect& parentRect, HAlign halign, VAlign valign)
       y = parentRect.y() + (parentRect.height() - height());
       break;
   }
-  translate(x, y);
-  //kDebug() << *this;
+  moveBy(x, y);
+  //kdDebug() << k_funcinfo << *this << endl;
 }
 
 

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -31,12 +31,12 @@ class KMFImage : public KMFWidget
 {
     Q_OBJECT
   public:
-    KMFImage(QObject *parent = 0);
+    KMFImage(QObject *parent = 0, const char *name = 0);
     ~KMFImage();
 
     const QImage& image() { return m_image; };
     void setImage(const QImage& image);
-    void setImage(KUrl url);
+    void setImage(KURL url);
     virtual void fromXML(const QDomElement& element);
     virtual int minimumPaintWidth() const;
     virtual int minimumPaintHeight() const;
@@ -48,12 +48,10 @@ class KMFImage : public KMFWidget
     virtual int paintY() const;
 
   protected:
-    virtual void paintWidget(QImage& layer, bool shdw = false);
-    QImage mask(const QImage& img, const QRgb& maskColor, bool oneBitMask);
+    virtual void paintWidget(Magick::Image& layer, bool shdw = false);
 
   private:
     QImage m_image;
-    KUrl m_url;
     bool m_scale;
     bool m_proportional;
     float m_aspectRatio;

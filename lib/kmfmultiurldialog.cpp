@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,7 +17,6 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
-#include <QColorGroup>
 
 #include "kmfmultiurldialog.h"
 #include <kfiledialog.h>
@@ -25,28 +24,20 @@
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <QStringList>
+#include <qlistview.h>
+#include <qstringlist.h>
+#include <qheader.h>
 
 KMFMultiURLDialog::KMFMultiURLDialog(const QString& startDir,
                                      const QString& filter,
                                      QWidget* parent,
                                      const QString& title)
-  : KDialog(parent), m_dir(startDir), m_filter(filter)
+  : KMFMultiURLDialogLayout(parent), m_dir(startDir), m_filter(filter)
 {
-  setupUi(mainWidget());
-  setButtons(KDialog::Ok | KDialog::Cancel);
   setCaption(title);
-  fileListView->setModel(&m_model);
-
-  addButton->setIcon(KIcon("list-add"));
-  removeButton->setIcon(KIcon("list-remove"));
-  upButton->setIcon(KIcon("arrow-up"));
-  downButton->setIcon(KIcon("arrow-down"));
-
-  connect(downButton, SIGNAL(clicked()), this, SLOT(moveDown()));
-  connect(upButton, SIGNAL(clicked()), this, SLOT(moveUp()));
-  connect(addButton, SIGNAL(clicked()), this, SLOT(add()));
-  connect(removeButton, SIGNAL(clicked()), this, SLOT(remove()));
+  fileListView->header()->hide();
+  // User sorting
+  fileListView->setSorting(1000);
 }
 
 KMFMultiURLDialog::~KMFMultiURLDialog()
@@ -55,33 +46,46 @@ KMFMultiURLDialog::~KMFMultiURLDialog()
 
 void KMFMultiURLDialog::moveDown()
 {
-  QModelIndex item1 = fileListView->currentIndex();
-  QModelIndex item2 = m_model.index(item1.row() + 1);
-  m_model.swap(item1, item2);
-  fileListView->setCurrentIndex(item2);
-  fileListView->scrollTo(item2);
+  QListViewItem* item = fileListView->currentItem();
+  if(item->itemBelow())
+    item->moveItem(item->itemBelow());
+  fileListView->ensureItemVisible(item);
 }
 
 void KMFMultiURLDialog::moveUp()
 {
-  QModelIndex item1 = fileListView->currentIndex();
-  QModelIndex item2 = m_model.index(item1.row() - 1);
-  m_model.swap(item1, item2);
-  fileListView->setCurrentIndex(item2);
-  fileListView->scrollTo(item2);
+  QListViewItem* item = fileListView->currentItem();
+  if(item->itemAbove())
+    item->itemAbove()->moveItem(item);
+  fileListView->ensureItemVisible(item);
 }
 
 void KMFMultiURLDialog::remove()
 {
-  QModelIndexList selected = fileListView->selectionModel()->selectedIndexes();
-  m_model.removeAt(selected);
-  fileListView->setCurrentIndex(m_model.index(0));
+  QListViewItemIterator it(fileListView);
+  QListViewItem* first = 0;
+
+  while(*it != 0)
+  {
+    if((*it)->isSelected())
+    {
+      if(!first)
+        first = (*it)->itemAbove();
+      delete *it;
+    }
+    else
+      ++it;
+  }
+  if(!first)
+    first = fileListView->firstChild();
+  select(first);
 }
 
 void KMFMultiURLDialog::add()
 {
   QStringList files = KFileDialog::getOpenFileNames(m_dir,
-      m_filter + "\n*.*|All files", this);
+      m_filter + "\n*.*|All files",
+      kapp->mainWidget());
 
   if(files.count() > 0)
   {
@@ -91,6 +95,9 @@ void KMFMultiURLDialog::add()
 
 void KMFMultiURLDialog::addFiles(const QStringList& files)
 {
+  QListViewItem* prev = fileListView->currentItem();
+  QListViewItem* first = 0;
+
   for(QStringList::ConstIterator it = files.begin();
       it != files.end(); ++it)
   {
@@ -102,14 +109,39 @@ void KMFMultiURLDialog::addFiles(const QStringList& files)
                          i18n("Cannot add directory."));
       continue;
     }
-    m_model.append(*it);
+    prev = new QListViewItem(fileListView, prev, *it);
+    if(!first)
+      first = prev;
   }
-  fileListView->setCurrentIndex(m_model.index(0));
+  /*
+  KIO::PreviewJob* job =  KIO::filePreview(list, 80, 60);
+  connect(job, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+          this, SLOT(gotPreview(const KFileItem*, const QPixmap&)));
+  */
+  select(first);
+}
+
+void KMFMultiURLDialog::select(QListViewItem* item)
+{
+  for(QListViewItemIterator it(fileListView); *it != 0; ++it)
+    (*it)->setSelected(false);
+  if(item)
+  {
+    fileListView->setSelected(item, true);
+    fileListView->setCurrentItem(item);
+    fileListView->ensureItemVisible(item);
+  }
 }
 
 QStringList KMFMultiURLDialog::files()
 {
-  return m_model.list();
+  QStringList list;
+
+  for(QListViewItemIterator it(fileListView); *it != 0; ++it)
+  {
+    list.append((*it)->text(0));
+  }
+  return list;
 }
 
 #include "kmfmultiurldialog.moc"

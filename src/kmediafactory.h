@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damst�
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -25,8 +25,14 @@
 #include <config.h>
 #endif
 
-#include <kxmlguiwindow.h>
-#include <kdirwatch.h>
+#include <kmainwindow.h>
+
+// Include these Qt headers here, so they get included before any X11 headers.
+// This enables build with --enable-final
+#include <qdir.h>
+//#include <qvariant.h>
+//#include <qslider.h>
+// End of pre include
 
 // Define this for the test menu item
 // #define KMF_TEST
@@ -35,21 +41,19 @@ class MediaPage;
 class TemplatePage;
 class OutputPage;
 class KMFMediaInterface;
-class KUrl;
+class KURL;
 class KToggleAction;
-class KPageWidget;
+class KJanusWidget;
 class KMFNewStuff;
-class KPageWidgetItem;
 
 /**
  * @short Application Main Window
- * @author Petri Damsten <petri.damsten@iki.fi>
+ * @author Petri Damst� <petri.damsten@iki.fi>
  * @version 0.1
  */
-class KMediaFactory : public KXmlGuiWindow
+class KMediaFactory : public KMainWindow
 {
     Q_OBJECT
-    friend class KMFApplication;
   public:
     enum Page { Media = 0 , Template, Output };
 
@@ -86,22 +90,19 @@ class KMediaFactory : public KXmlGuiWindow
      * This function is called when it is time for the app to save its
      * properties for session management purposes.
      */
-    void saveProperties(KConfigGroup&);
+    void saveProperties(KConfig *);
 
     /**
      * This function is called when this app is restored.  The KConfig
      * object points to the session management config file that was saved
      * with @ref saveProperties
      */
-    void readProperties(const KConfigGroup&);
+    void readProperties(KConfig *);
 
   public slots:
     void fileNew();
     void quit();
-    void load(const KUrl&);
-
-  protected slots:
-    void initGUI();
+    void load(const KURL&);
 
   private slots:
     void fileOpen();
@@ -110,6 +111,7 @@ class KMediaFactory : public KXmlGuiWindow
     void fileSave();
     void fileSaveAs();
     void itemDelete();
+    void initGUI();
     void execTool();
     void optionsConfigureKeys();
     void optionsConfigureToolbars();
@@ -123,14 +125,10 @@ class KMediaFactory : public KXmlGuiWindow
 
   private:
     KToggleAction* m_toolbarAction;
-    KPageWidget* m_janus;
+    KJanusWidget* m_janus;
     QWidget* m_janusIconList;
     bool m_enabled;
     KMFNewStuff* m_newStuffDlg;
-    KPageWidgetItem* m_mediaPageItem;
-    KPageWidgetItem* m_templatePageItem;
-    KPageWidgetItem* m_ouputPageItem;
-    KDirWatch m_toolsWatch;
 
     void connectProject();
     void resetGUI();
