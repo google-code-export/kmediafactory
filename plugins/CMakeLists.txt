@@ -2,7 +2,7 @@ add_subdirectory(template)
 add_subdirectory(output)
 add_subdirectory(slideshow)
 add_subdirectory(video)
-is_version(v ${KDE_VERSION_MAJOR} ${KDE_VERSION_MINOR} ${KDE_VERSION_RELEASE} 4 0 66) # >= 4.1.0
+is_version(v ${KDE_VERSION_MAJOR} ${KDE_VERSION_MINOR} ${KDE_VERSION_RELEASE} 4 0 67) # >= 4.1.0
 if (v)
 add_subdirectory(kross)
 else (v)

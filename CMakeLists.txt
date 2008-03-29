@@ -21,13 +21,17 @@ find_package(KDE4 REQUIRED)
 include(KDE4Defaults)
 include(MacroLibrary)
 
-find_package(Fontconfig REQUIRED)
-find_package(MSGFMT REQUIRED)
-find_package(LibDvdread)
-
-macro_bool_to_01(LIBDVDREAD_FOUND HAVE_LIBDVDREAD)
-
 check_function_exists(va_copy VA_COPY)
+
+find_package(Fontconfig REQUIRED)
+macro_log_feature(FONTCONFIG_FOUND "fontconfig" "Get font information" "http://www.fontconfig.org/" TRUE "" "")
+
+find_package(MSGFMT REQUIRED)
+macro_log_feature(MSGFMT_FOUND "gettext" "For translations" "http://www.gnu.org/software/gettext/" TRUE "" "")
+
+find_package(LibDvdread)
+macro_log_feature(LIBDVDREAD_FOUND "libdvdread" "For reading dvd info" "http://www.dtek.chalmers.se/groups/dvd/downloads.shtml" FALSE "" "")
+macro_bool_to_01(LIBDVDREAD_FOUND HAVE_LIBDVDREAD)
 
 find_program(EXTRACTRC_EXECUTABLE extractrc)
 find_program(MSGFMT_EXECUTABLE msgfmt)
@@ -65,6 +69,8 @@ add_subdirectory(scripts)
 add_subdirectory(media)
 add_subdirectory(po)
 add_subdirectory(doc)
+
+macro_display_feature_log()
 
 # CPack
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "KMediaFactory is easy to use template based dvd authoring tool.")
