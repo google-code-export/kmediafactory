@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile name="kmediafactory_dvimportpluginrc"/>
+  <group name="dvimport">
+    <entry name="subtitleFormat" type="String">
+      <label>Date &amp; Time format for subtitles.</label>
+      <whatsthis>
+        Date &amp; Time format used for subtitles in dv file import.
+        Uses QDateTime format.
+      </whatsthis>
+      <default>d.M.yyyy h:mm</default>
+    </entry>
+    <entry name="minChapterLength" type="Int">
+      <label>Minimum chapter length.</label>
+      <whatsthis>
+        Minimum chapter length in seconds when importing dv file.
+      </whatsthis>
+      <default>120</default>
+    </entry>
+    <entry name="chapterOffset" type="Int">
+      <label>Chapter Offset.</label>
+      <whatsthis>
+        Number of frames chapter is forwarded. Usefull if chapter starts with
+        previous video take.
+      </whatsthis>
+      <default>20</default>
+    </entry>
+  </group>
+</kcfg>
