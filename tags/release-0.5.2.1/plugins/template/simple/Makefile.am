@@ -1,0 +1,32 @@
+SUBDIRS = images locale
+kmediafactorytemplatedir = $(kde_datadir)/kmediafactory_template
+kmediafactorytemplate_DATA = simple.kmft
+kmediafactorytemplate_files = mimetype\ntemplate.xml\nsettings.kcfg\nsettings.ui\nicon.png\npreview.jpg\nimages/button.png\nimages/prev.png\nimages/back.png\nimages/next.png
+
+simple.kmft:
+	export builddir=`pwd` && cd $(srcdir) && \
+	echo -e "$(kmediafactorytemplate_files)" | $(ZIP) -X $$builddir/simple.kmft -@
+	$(ZIP) -X simple.kmft -r locale -x \*Makefile
+
+kmft-messages:
+	$(EXTRACTRC) --tag=text --tag-group=none $(srcdir)/template.xml > rc.cpp
+	$(XGETTEXT) --keyword=i18n rc.cpp -o template.pot
+	echo "//i18n: file ./template.xml" > rc.cpp
+	echo "//xgettext: no-c-format" >> rc.cpp
+	(tmp=`grep "<template" template.xml | sed -e 's/^.*name="//' | \
+	     sed -e 's/".*//'`; echo "i18n(\"$$tmp\");") >> rc.cpp
+	$(EXTRACTRC) $(srcdir)/settings.ui >> rc.cpp
+	$(XGETTEXT) --keyword=i18n rc.cpp -o ui.pot
+
+kmft-merge:
+	@for f in locale/*; do \
+		if test -d "$$f"; then \
+			for pot in "template" "ui"; do \
+				if test -e "$$pot.pot"; then \
+					msgmerge -U "$$f/LC_MESSAGES/$$pot.po" "$$pot.pot"; \
+				fi \
+			done \
+		fi \
+	done
+
+CLEANFILES = simple.kmft

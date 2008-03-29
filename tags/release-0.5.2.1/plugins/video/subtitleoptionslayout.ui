@@ -1,0 +1,265 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>SubtitleOptionsLayout</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>SubtitleOptionsLayout</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>357</width>
+            <height>345</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Subtitle options</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>languageLabel</cstring>
+            </property>
+            <property name="text">
+                <string>La&amp;nguage:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>languageCombo</cstring>
+            </property>
+        </widget>
+        <widget class="KMFLanguageComboBox">
+            <property name="name">
+                <cstring>languageCombo</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>subtitleFileLabel</cstring>
+            </property>
+            <property name="text">
+                <string>Su&amp;btitle File:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>subtitleURL</cstring>
+            </property>
+        </widget>
+        <widget class="KURLRequester">
+            <property name="name">
+                <cstring>subtitleURL</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>subtitleFontLabel</cstring>
+            </property>
+            <property name="text">
+                <string>Subtitle Font:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>subtitleFontCombo</cstring>
+            </property>
+        </widget>
+        <widget class="KMFFontChooser">
+            <property name="name">
+                <cstring>subtitleFontChooser</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>horizontalLabel</cstring>
+            </property>
+            <property name="text">
+                <string>Hori&amp;zontal Alignment:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>horizontalAlignCombo</cstring>
+            </property>
+        </widget>
+        <widget class="QComboBox">
+            <item>
+                <property name="text">
+                    <string>Default</string>
+                </property>
+            </item>
+            <item>
+                <property name="text">
+                    <string>Left</string>
+                </property>
+            </item>
+            <item>
+                <property name="text">
+                    <string>Right</string>
+                </property>
+            </item>
+            <item>
+                <property name="text">
+                    <string>Center</string>
+                </property>
+            </item>
+            <property name="name">
+                <cstring>horizontalAlignCombo</cstring>
+            </property>
+            <property name="currentItem">
+                <number>3</number>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>verticalLabel</cstring>
+            </property>
+            <property name="text">
+                <string>Vertical &amp;Alignment</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>verticalAlignCombo</cstring>
+            </property>
+        </widget>
+        <widget class="QComboBox">
+            <item>
+                <property name="text">
+                    <string>Top</string>
+                </property>
+            </item>
+            <item>
+                <property name="text">
+                    <string>Bottom</string>
+                </property>
+            </item>
+            <item>
+                <property name="text">
+                    <string>Center</string>
+                </property>
+            </item>
+            <property name="name">
+                <cstring>verticalAlignCombo</cstring>
+            </property>
+            <property name="currentItem">
+                <number>1</number>
+            </property>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer2</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>16</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout4</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer3_2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>40</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>okButton</cstring>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>100</width>
+                            <height>0</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string>&amp;OK</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+O</string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>1</number>
+                    </property>
+                </widget>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>cancelButton</cstring>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>100</width>
+                            <height>0</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Cancel</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+C</string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>2</number>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </vbox>
+</widget>
+<customwidgets>
+</customwidgets>
+<connections>
+    <connection>
+        <sender>cancelButton</sender>
+        <signal>clicked()</signal>
+        <receiver>SubtitleOptionsLayout</receiver>
+        <slot>reject()</slot>
+    </connection>
+    <connection>
+        <sender>okButton</sender>
+        <signal>clicked()</signal>
+        <receiver>SubtitleOptionsLayout</receiver>
+        <slot>okClicked()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>languageCombo</tabstop>
+    <tabstop>subtitleURL</tabstop>
+    <tabstop>horizontalAlignCombo</tabstop>
+    <tabstop>verticalAlignCombo</tabstop>
+    <tabstop>okButton</tabstop>
+    <tabstop>cancelButton</tabstop>
+</tabstops>
+<includes>
+    <include location="global" impldecl="in implementation">kiconloader.h</include>
+    <include location="global" impldecl="in implementation">kmflanguagewidgets.h</include>
+    <include location="global" impldecl="in implementation">kmffontchooser.h</include>
+</includes>
+<slots>
+    <slot access="protected">fontClicked()</slot>
+    <slot access="protected">okClicked()</slot>
+</slots>
+<pixmapfunction>BTN_ICON</pixmapfunction>
+<layoutdefaults spacing="6" margin="11"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+</UI>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="converter" script:language="StarBasic">REM  Macro to convert office documents to PDF. Used by KMediaFactory to 
+REM  further convert those to DVD-slideshow
+REM  Modified from: http://blog.vojta.name/archives/cat_1-page3.html
+
+Sub convertToPDF(source, destination)
+  Dim propertiesIn(1) as new com.sun.star.beans.PropertyValue
+  propertiesIn(0).Name = &quot;Hidden&quot;
+  propertiesIn(0).Value = True
+  propertiesIn(1).Name = &quot;UpdateDocMode&quot; 
+  propertiesIn(1).Value = com.sun.star.document.UpdateDocMode.QUIET_UPDATE
+  document = StarDesktop.loadComponentFromURL(convertToURL(source), &quot;_blank&quot;, 0, propertiesIn())
+        
+  If document.SupportsService(&quot;com.sun.star.text.TextDocument&quot;) Then
+    filter = &quot;writer_pdf_Export&quot;
+  ElseIf document.SupportsService(&quot;com.sun.star.sheet.SpreadsheetDocument&quot;) Then
+    filter = &quot;calc_pdf_Export&quot;
+  ElseIf document.SupportsService(&quot;com.sun.star.presentation.PresentationDocument&quot;) Then
+    filter = &quot;impress_pdf_Export&quot;
+  ElseIf document.SupportsService(&quot;com.sun.star.draw.DrawDocument&quot;) Then
+    filter = &quot;draw_pdf_Export&quot;
+  ElseIf document.SupportsService(&quot;com.sun.star.text.WebDocument&quot;) Then
+    filter = &quot;writer_pdf_Export&quot;
+  Else
+    filter = &quot;&quot;
+  EndIf
+  
+  if filter &lt;&gt; &quot;&quot; Then      
+    Dim propertiesOut(0) as new com.sun.star.beans.PropertyValue
+	propertiesOut(0).Name = &quot;FilterName&quot;
+	propertiesOut(0).Value = filter
+	document.storeToURL(ConvertToURL(destination), propertiesOut())
+  Endif
+  
+  document.dispose()
+End Sub
+
+
+</script:module>

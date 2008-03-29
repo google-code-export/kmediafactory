@@ -1,0 +1,137 @@
+# translation of kmediafactory_dvimport.po to
+# This file is put in the public domain.
+#
+# Caio Begotti <caio@ueberalles.net>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmediafactory_dvimport\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-04-30 17:10-0300\n"
+"PO-Revision-Date: 2006-04-30 17:42-0300\n"
+"Last-Translator: Caio Begotti <caio@ueberalles.net>\n"
+"Language-Team:  <en@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.2\n"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "Caio Begotti"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "caio@ueberalles.net"
+
+#: dvimportplugin.cpp:45
+msgid "DV Import plugin for KMediaFactory."
+msgstr "Plugin de importação de DV para o KMediaFactory"
+
+#: dvimportplugin.cpp:48
+msgid "KMediaFactory DV Import"
+msgstr "Importação de DVD do KMediaFactory"
+
+#: dvimportplugin.cpp:69
+msgid "Add DV"
+msgstr "Adicionar DV"
+
+#: dvimportplugin.cpp:93
+msgid "Multiple files make multiple titles."
+msgstr "Múltiplos arquivos geram múltiplos títulos."
+
+#: dvimportplugin.cpp:114
+msgid "Cannot add directory."
+msgstr "Não foi possível adicionar este diretório."
+
+#. i18n: file progresslayout.ui line 22
+#: rc.cpp:3
+#, no-c-format
+msgid "DV Import"
+msgstr "Importação de DV"
+
+#. i18n: file progresslayout.ui line 37
+#: rc.cpp:6
+#, no-c-format
+msgid ""
+"Importing DV video<br>\n"
+"<ul>\n"
+"<li>Generates chapters from different takes</li>\n"
+"<li>Generates subtitles from timetamps</li>\n"
+"</ul>"
+msgstr ""
+"Importando um vídeo DV<br>\n"
+"<ul>\n"
+"<li>Gera capítulos a partir de diferentes tomadas</li>\n"
+"<li>Gera legendas a partir de estampas de data/hora</li>\n"
+"</ul>"
+
+#. i18n: file progresslayout.ui line 92
+#: rc.cpp:16
+#, no-c-format
+msgid "Alt+C"
+msgstr "Alt+C"
+
+#. i18n: file dvimportplugin.kcfg line 9
+#: rc.cpp:19
+#, no-c-format
+msgid "Date & Time format for subtitles."
+msgstr "Formato de data e hora para as legendas."
+
+#. i18n: file dvimportplugin.kcfg line 13
+#: rc.cpp:22
+#, no-c-format
+msgid ""
+"\n"
+"        Date & Time format used for subtitles in dv file import.\n"
+"        Uses QDateTime format.\n"
+"      "
+msgstr ""
+"\n"
+"        Formato de data & hora usado nas legendas da importção de arquivo DV.\n"
+"        Usar formato do QDateTime .\n"
+"      "
+
+#. i18n: file dvimportplugin.kcfg line 17
+#: rc.cpp:28
+#, no-c-format
+msgid "Minimum chapter length."
+msgstr "Tamanho mínimo do capítulo."
+
+#. i18n: file dvimportplugin.kcfg line 20
+#: rc.cpp:31
+#, no-c-format
+msgid ""
+"\n"
+"        Minimum chapter length in seconds when importing dv file.\n"
+"      "
+msgstr ""
+"\n"
+"        Tamanho mínimo dos capítulos (em segundos) ao importar um DV.\n"
+"      "
+
+#. i18n: file dvimportplugin.kcfg line 24
+#: rc.cpp:36
+#, no-c-format
+msgid "Chapter Offset."
+msgstr "Offset de capítulos."
+
+#. i18n: file dvimportplugin.kcfg line 28
+#: rc.cpp:39
+#, no-c-format
+msgid ""
+"\n"
+"        Number of frames chapter is forwarded. Usefull if chapter starts "
+"with\n"
+"        previous video take.\n"
+"      "
+msgstr ""
+"\n"
+"        Número de quadros para adiantar. Útil se o capítulo iniciar "
+"com\n"
+"        uma tomada de vídeo anterior.\n"
+"      "
+

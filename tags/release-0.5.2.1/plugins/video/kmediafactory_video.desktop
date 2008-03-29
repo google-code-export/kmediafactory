@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=KMFImportVideo
+Comment=Import Video plugin for KMediaFactory
+ServiceTypes=KMediaFactory/Plugin
+Type=Service
+X-KDE-Library=kmediafactory_video

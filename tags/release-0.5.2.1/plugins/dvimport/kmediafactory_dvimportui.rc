@@ -1,0 +1,11 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="kmediafactory-dvimport" version="1">
+  <MenuBar>
+    <Menu name="media">
+      <Action name="dv" />
+    </Menu>
+  </MenuBar>
+  <ToolBar name="mediaButtons">
+    <Action name="dv"/>
+  </ToolBar>
+</kpartgui>
