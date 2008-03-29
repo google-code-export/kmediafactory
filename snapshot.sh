@@ -6,7 +6,6 @@ NEXT_VERSION="1" # BUILD_VERSION
 HOME=`echo ~`
 SITE="aryhma.oy.cx"
 LOCALKMFDIR="$HOME/public_html/$SITE/damu/software/kmediafactory"
-BUILDDIR="package"
 WEBDIR="httpdocs/damu/software/kmediafactory"
 CHANGELOG="snapshot.changelog"
 US_DATE=`date +%Y-%m-%d`
@@ -104,7 +103,7 @@ function make_snapshot()
     exit
   fi
 
-  echo "Moving $FILE to local KMF dir and distfiles."
+  echo "Moving $FILE to local KMF dir."
   mv $FILE $DESTINATION
 
   cd ..
@@ -176,17 +175,27 @@ function mail_to_news()
   fi
 }
 
-snapshot_name $1
+snapshot_name
 fix_versions
 edit_changelog
-./commit.sh --nopause
+./commit.sh --nopause $SNAPSHOT
 make_snapshot
+
+echo -n "Tag SVN (y/N): "
+read ans
+if [ "$ans" == y -o "$ans" == Y ]; then
+  tag_svn
+fi
 
 echo -n "Upload (y/N): "
 read ans
 if [ "$ans" == y -o "$ans" == Y ]; then
-  mail_to_news
-  tag_svn
   make_html
   upload
+fi
+
+echo -n "Send release email (y/N): "
+read ans
+if [ "$ans" == y -o "$ans" == Y ]; then
+  mail_to_news
 fi

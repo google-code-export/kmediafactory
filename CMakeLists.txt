@@ -1,5 +1,15 @@
 project(kmediafactory)
 
+macro(IS_VERSION version)
+  math(EXPR V1 "(((${ARGV1}) << 16) | ((${ARGV2}) << 8) | (${ARGV3}))")
+  math(EXPR V2 "(((${ARGV4}) << 16) | ((${ARGV5}) << 8) | (${ARGV6}))")
+  if (${V2} GREATER ${V1} OR ${V2} EQUAL ${V1})
+     set(${version} TRUE)
+  else (${V2} GREATER ${V1} OR ${V2} EQUAL ${V1})
+     set(${version} FALSE)
+  endif (${V2} GREATER ${V1} OR ${V2} EQUAL ${V1})
+endmacro(IS_VERSION)
+
 set(KMF_MAJOR_VERSION "0")
 set(KMF_MINOR_VERSION "6")
 set(KMF_BUILD_VERSION "0")

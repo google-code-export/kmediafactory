@@ -18,9 +18,12 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 
+#include <ksharedptr.h>
 #include <KDebug>
+#include <QTimer>
 #include "krossplugin.h"
 #include <kross/core/action.h>
+#include <kross/core/object.h>
 #include <kross/core/interpreter.h>
 #include <kross/core/manager.h>
 
@@ -48,12 +51,13 @@ void KrossPlugin::init(const QString &type)
   kDebug() << type;
   deleteChildren();
 
-  Kross::Action *action = new Kross::Action(this, "test");
-  action->setFile("/home/damu/test.py");
-  action->addObject(this, "plugin");
-  action->trigger();
-  kDebug() << action->functionNames();
-  action->callFunction("test3", QVariantList());
+  if (type == "DVD-PAL") {
+    m_action = new Kross::Action(this, "test");
+    m_action->setFile("/home/damu/test.py");
+    m_action->addObject(this, "plugin");
+    m_action->trigger();
+    QTimer::singleShot(500, this, SLOT(test2()));
+  }
 }
 
 QStringList KrossPlugin::supportedProjectTypes()
@@ -63,9 +67,22 @@ QStringList KrossPlugin::supportedProjectTypes()
   return result;
 }
 
-void KrossPlugin::test(QVariant v)
+void KrossPlugin::test2()
 {
-  kDebug() << v;
+  kDebug() << m_action->functionNames();
+  m_action->callFunction("test3", QVariantList());
+}
+
+void KrossPlugin::ddtest(QVariant v)
+{
+  kDebug() << v << v.data();
+  Kross::Object::Ptr obj = v.value<Kross::Object::Ptr>();
+  kDebug() << obj;
+
+  if (obj) {
+    kDebug() << obj->methodNames();
+    obj->callMethod("test1", QVariantList() << "heippaXX");
+  }
 }
 
 #include "krossplugin.moc"
