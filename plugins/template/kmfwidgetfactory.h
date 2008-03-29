@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 
 #include <kmftemplatebase.h>
 #include <templateobject.h>
+#include <qdict.h>
 
 class QDomElement;
 class KMFWidget;
@@ -34,7 +35,7 @@ class KMFWidgetFactory : public KMFTemplateBase
 {
     Q_OBJECT
   public:
-    KMFWidgetFactory(QObject *parent = 0);
+    KMFWidgetFactory(QObject *parent = 0, const char *name = 0);
     ~KMFWidgetFactory();
 
     KMFWidget* create(const QDomElement& element, QObject* parent = 0);
@@ -43,7 +44,8 @@ class KMFWidgetFactory : public KMFTemplateBase
                                  int title = 0, int chapter = 0);
 
   private:
-    KMFWidget* newWidget(QString type, QObject* parent = 0);
+    KMFWidget* newWidget(QString type,
+                                           QObject* parent = 0);
     int m_title;
     int m_chapter;
     const KConfigXML* m_customProperties;

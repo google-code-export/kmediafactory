@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -40,7 +40,7 @@ void KMF::Time::set(double seconds)
   setHMS(s / (60*60), (s / 60) % 60, s % 60, ms);
 }
 
-int KMF::Time::toMSec() const
+int KMF::Time::toMsec() const
 {
   int s = hour() * (60*60) + minute() * 60 + second();
   return (s * 1000 + msec());
@@ -68,24 +68,24 @@ KMF::Time& KMF::Time::operator+=(double seconds)
 
 KMF::Time& KMF::Time::operator-=(const KMF::Time& t)
 {
-  *this = addMSecs(-1 * t.toMSec());
+  *this = addMSecs(-1 * t.toMsec());
   return *this;
 }
 
 KMF::Time& KMF::Time::operator+=(const KMF::Time& t)
 {
-  *this = addMSecs(t.toMSec());
+  *this = addMSecs(t.toMsec());
   return *this;
 }
 
 KMF::Time KMF::Time::operator+(const KMF::Time& t)
 {
-  return addMSecs(t.toMSec());
+  return addMSecs(t.toMsec());
 }
 
 KMF::Time KMF::Time::operator-(const KMF::Time& t)
 {
-  return addMSecs(-1 * t.toMSec());
+  return addMSecs(-1 * t.toMsec());
 }
 
 KMF::Time KMF::Time::operator+(double seconds)
@@ -98,16 +98,11 @@ QString KMF::Time::toString() const
   return QTime::toString("h:mm:ss.zzz");
 }
 
-bool KMF::Time::operator<(const QTime& b)
-{
-  return (toMSec() < KMF::Time(b).toMSec());
-}
-
 void KMF::Time::set(const QString& time)
 {
-  if(time.indexOf(':') >= 0)
+  if(time.find(':') >= 0)
   {
-    QStringList list = time.split(QRegExp("[:.]"));
+    QStringList list = QStringList::split(QRegExp("[:.]"), time);
     int h = 0, m = 0, s = 0, z = 0;
     h = list[0].toInt();
     if(list.count() > 1)

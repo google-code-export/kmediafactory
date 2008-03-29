@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -19,11 +19,11 @@
 //**************************************************************************
 #include "kmftemplate.h"
 #include "kmftools.h"
-#include <kstore/KoStore.h>
+#include <kstore/koStore.h>
 #include <kzip.h>
 #include <kdebug.h>
-#include <QFileInfo>
-#include <QDir>
+#include <qfileinfo.h>
+#include <qdir.h>
 
 KMFTemplate::KMFTemplate(const QString file) : m_store(0), m_language("en")
 {
@@ -79,7 +79,7 @@ QByteArray KMFTemplate::readFile(const QString& file) const
     {
       QIODevice* device = m_store->device();
 
-      if(device->isOpen() || device->open(QIODevice::ReadOnly))
+      if(device->isOpen() || device->open(IO_ReadOnly))
       {
         result = device->readAll();
         device->close();
@@ -109,8 +109,8 @@ void KMFTemplate::setLanguage(const QString& file, const QString& lang)
       m_file = file;
     }
   }
-  //kDebug() << m_language << ", " <<  file << ", "
-  //    << zfile;
+  //kdDebug() << k_funcinfo << m_language << ", " <<  file << ", "
+  //    << zfile << endl;
 }
 
 QStringList KMFTemplate::languages() const
@@ -127,7 +127,7 @@ QStringList KMFTemplate::languages() const
   {
     KZip zip(m_storeName);
 
-    if(zip.open(QIODevice::ReadOnly))
+    if(zip.open(IO_ReadOnly))
     {
       const KArchiveEntry* entry = zip.directory()->entry("locale");
       if(entry && entry->isDirectory())
@@ -144,22 +144,9 @@ QStringList KMFTemplate::languages() const
 
 QString KMFTemplate::translate(const char* text) const
 {
-  //kDebug() << text;
   QString result = QString::fromUtf8(kmf_nl_find_msg(&m_domain, text));
-  //kDebug() << text << "=" << result;
   if(result.isEmpty())
     return text;
   else
     return result;
-}
-
-QIODevice* KMFTemplate::device(const QString& file)
-{
-  m_store->open(file);
-  return m_store->device();
-}
-
-void KMFTemplate::close()
-{
-  m_store->close();
 }

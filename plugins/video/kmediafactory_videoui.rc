@@ -5,9 +5,7 @@
       <Action name="video" />
     </Menu>
   </MenuBar>
-  <!--
   <ToolBar name="mediaButtons">
     <Action name="video"/>
   </ToolBar>
-  -->
 </kpartgui>

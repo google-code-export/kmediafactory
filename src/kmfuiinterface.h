@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -37,7 +37,7 @@ class StopWatch
       if(!m_stream.device())
       {
         QFile* file = new QFile("/tmp/timings.txt");
-        file->open(QIODevice::WriteOnly);
+        file->open(IO_WriteOnly);
         m_stream.setDevice(file);
         m_time.start();
       }
@@ -84,10 +84,8 @@ class KMFUiInterface : public KMF::UiInterface
 {
     Q_OBJECT
   public:
-    KMFUiInterface(QObject *parent = 0);
-    virtual ~KMFUiInterface();
-    virtual bool addMediaAction(QAction* action,
-                                const QString& group = "") const;
+    KMFUiInterface(QObject *parent = 0, const char *name = 0);
+    ~KMFUiInterface();
     virtual bool addMediaObject(KMF::MediaObject* media) const;
     virtual bool addTemplateObject(KMF::TemplateObject* tob);
     virtual bool addOutputObject(KMF::OutputObject* oob);

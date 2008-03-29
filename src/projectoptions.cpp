@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damst�
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -27,24 +27,18 @@
 #include <klocale.h>
 #include <kurlrequester.h>
 #include <kmessagebox.h>
-#include <QComboBox>
-#include <QLineEdit>
+#include <qcombobox.h>
+#include <qlineedit.h>
 
-ProjectOptions::ProjectOptions(QWidget* parent) :
-  KDialog(parent), titleChangesPath(false)
+ProjectOptions::ProjectOptions(QWidget* parent, const char* name,
+                               bool modal, WFlags fl) :
+  ProjectOptionsLayout(parent, name, modal, fl), titleChangesPath(false)
 {
-  setupUi(mainWidget());
-  setButtons(KDialog::Ok | KDialog::Cancel);
-
-  connect(titleEdit, SIGNAL(textChanged(const QString&)),
-          this, SLOT(textChanged(const QString&)));
-
   QStringList list = kmfApp->supportedProjects();
-  directoryUrl->setMode(KFile::Directory);
 
   for(QStringList::Iterator it = list.begin(); it != list.end(); ++it)
   {
-    typeComboBox->addItem(*it);
+    typeComboBox->insertItem(*it);
   }
 }
 
@@ -54,54 +48,53 @@ ProjectOptions::~ProjectOptions()
 
 void ProjectOptions::getData(KMFProject& project) const
 {
-  project.setDirectory(directoryUrl->url().prettyUrl());
+  project.setDirectory(directoryURL->url());
   project.setTitle(titleEdit->text());
   project.setType(typeComboBox->currentText());
 }
 
 void ProjectOptions::setData(const KMFProject& project)
 {
-  directoryUrl->setUrl(project.directory("", false));
+  directoryURL->setURL(project.directory());
   titleEdit->setText(project.title());
-  typeComboBox->setCurrentIndex(0);
+  typeComboBox->setCurrentItem(0);
   for (int i=0; i < typeComboBox->count(); ++i)
   {
-    if (typeComboBox->itemText(i) == project.type())
+    if (typeComboBox->text(i) == project.type())
     {
-      typeComboBox->setCurrentIndex(i);
+      typeComboBox->setCurrentItem(i);
       break;
     }
   }
-  QDir dir(directoryUrl->url().prettyUrl());
+  QDir dir(directoryURL->url());
   titleChangesPath = dir.dirName().startsWith(i18n("Project"));
   m_saved = dir.dirName();
   m_type = project.type();
-  m_count = project.mediaObjects().count();
+  m_count = project.mediaCount();
 }
 
-void ProjectOptions::textChanged(const QString& title)
+void ProjectOptions::titleChanged(const QString& title)
 {
-  kDebug();
   if(titleChangesPath)
   {
-    QDir dir(directoryUrl->url().prettyUrl());
+    QDir dir(directoryURL->url());
     if(title != i18n("Untitled"))
     {
-      int n = dir.path().lastIndexOf(dir.dirName());
+      int n = dir.path().findRev(dir.dirName());
       QString mainDir = dir.path().left(n);
       QString projectDir;
-
+      
       if(!title.isEmpty())
         projectDir = KMF::Tools::simpleName(title);
       else
         projectDir = m_saved;
 
-      directoryUrl->setUrl(mainDir + projectDir);
+      directoryURL->setURL(mainDir + projectDir);
     }
   }
 }
 
-void ProjectOptions::slotOk()
+void ProjectOptions::okClicked()
 {
   if(m_count == 0 || m_type == typeComboBox->currentText())
     accept();
@@ -120,14 +113,6 @@ void ProjectOptions::slotOk()
         break;
     }
   }
-}
-
-void ProjectOptions::slotButtonClicked(int button)
-{
-  if(button == KDialog::Ok)
-    slotOk();
-  else
-    KDialog::slotButtonClicked(button);
 }
 
 #include "projectoptions.moc"

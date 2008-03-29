@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ui\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-05 17:42+0300\n"
+"POT-Creation-Date: 2006-02-09 09:40+0200\n"
 "PO-Revision-Date: 2006-02-09 12:17+0200\n"
 "Last-Translator: Petri Damsten <petri.damsten@iki.fi>\n"
 "Language-Team: Finnish\n"
@@ -17,61 +17,77 @@ msgstr ""
 "X-Generator: KBabel 1.11.1\n"
 
 #: rc.cpp:3
+#, no-c-format
 msgid "Simple"
 msgstr "Yksinkertainen"
 
 #: rc.cpp:6
+#, no-c-format
 msgid "Template Options"
 msgstr "Mallipohjan valinnat"
 
 #: rc.cpp:9
+#, no-c-format
 msgid "B&ackground Image:"
 msgstr "&Tausta kuva:"
 
 #: rc.cpp:12
+#, no-c-format
 msgid "Chapter page &background:"
 msgstr "Kappale sivun taustakuva:"
 
 #: rc.cpp:15
+#, no-c-format
 msgid "Back&ground Sound:"
 msgstr "Tausta musiikki:"
 
 #: rc.cpp:18
+#, no-c-format
 msgid "&Main Title Font:"
 msgstr "Pääotsakkeen kirjasin:"
 
 #: rc.cpp:21
+#, no-c-format
 msgid "&Title Font:"
 msgstr "Otsakkeen kirjasin:"
 
 #: rc.cpp:24
+#, no-c-format
 msgid "Font C&olor:"
 msgstr "Kirjasimen väri:"
 
 #: rc.cpp:27
+#, no-c-format
 msgid "Direct Play"
 msgstr "Suorasoitto"
 
 #: rc.cpp:30
+#, no-c-format
 msgid "Pla&y first track when disc entered"
 msgstr "&Soita ensimmäinen video aloitettaessa"
 
 #: rc.cpp:33
+#, no-c-format
 msgid "Alt+Y"
 msgstr "Alt+S"
 
 #: rc.cpp:36
+#, no-c-format
 msgid "After playing title:"
 msgstr "Soiton jälkeen:"
 
 #: rc.cpp:39
+#, no-c-format
 msgid "Jump to main menu"
 msgstr "hyppää päävalikkoon"
 
 #: rc.cpp:42
+#, no-c-format
 msgid "Jump to next title"
 msgstr "hyppää seuraavaan videoon"
 
 #: rc.cpp:45
+#, no-c-format
 msgid "La&nguage:"
 msgstr "&Kieli:"
+

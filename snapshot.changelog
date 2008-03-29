@@ -1,28 +1,28 @@
-CHANGED FROM THE LATEST RELEASE (0.6.0)
+CHANGED FROM THE LATEST RELEASE (0.5.1)
+========================================
+Features:
+- pl translation
+- Get Hot New Stuff framework
+- GHNS from kde-files.org
+- Travel theme moved from distribution to kde-files.org
+- dvb/ProjectX script moved from distribution to kde-files.org
+- Russian translation to templates
+- Show only languages actually found from templates
+
+Bug fixes:
+- Lots of UTF-8 fixes
+- Portrait pictures fixed in templates
+- KMFPlayer icons fixed
+- Project dir name auto generation fixed
+- Fixed DVD info to work with non-ascii paths
+- ffmpeg updated
+- Compile with Qt 3.3.6
+- Some portuguese texts to templates
+
+CHANGED FROM THE PREVIOUS SNAPSHOT
 ========================================
 Features:
 -
 
 Bug fixes:
--
-
-CHANGED FROM THE PREVIOUS SNAPSHOT
-===================================
-Features:
--
-
-Bug fixes:
--
-
-
-# Dependencies (ubuntu package naming):                                       #
-# =========================================================================== #
-# Build:                  Runtime:                 Optional:                  #
-# --------------------------------------------------------------------------- #
-# g++                     kdelibs5                 k3b                        #
-# make                    ffmpeg                   libdvdread3(-dev)          #
-# cmake                   mplayer                  dvd-slideshow              #
-# zip                     mjpegtools               openoffice.org             #
-# gettext                 dvdauthor                kaffeine                   #
-# kdelibs5-dev                                     xine-ui                    #
-# --------------------------------------------------------------------------- #
+- de translation fixes

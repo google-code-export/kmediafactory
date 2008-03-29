@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -26,8 +26,8 @@ class KMFGrid : public KMFWidget
 {
   Q_OBJECT
   public:
-    KMFGrid(QObject *parent = 0)
-        : KMFWidget(parent) {};
+    KMFGrid(QObject *parent = 0, const char *name = 0)
+        : KMFWidget(parent, name) {};
     ~KMFGrid() {};
     virtual bool isHidden() const;
     virtual int childY(const KMFWidget* child) const;
@@ -44,7 +44,7 @@ class KMFVBox : public KMFGrid
 {
     Q_OBJECT
   public:
-    KMFVBox(QObject *parent = 0);
+    KMFVBox(QObject *parent = 0, const char *name = 0);
     ~KMFVBox();
     virtual int minimumPaintWidth() const;
     virtual int childX(const KMFWidget*) const { return paintX(); };
@@ -56,7 +56,7 @@ class KMFHBox : public KMFGrid
 {
     Q_OBJECT
   public:
-    KMFHBox(QObject *parent = 0);
+    KMFHBox(QObject *parent = 0, const char *name = 0);
     ~KMFHBox();
     virtual int minimumPaintHeight() const;
     virtual int childY(const KMFWidget*) const { return paintY(); };

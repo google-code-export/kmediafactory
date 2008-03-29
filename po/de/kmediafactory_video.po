@@ -1,18 +1,17 @@
-# translation of kmediafactory_video.po to German
+# translation of kmediafactory_video.po to Finnish
 # This file is put in the public domain.
 #
 # FIRST AUTHOR <lummi@in-4-matik.de>, YEAR.
 # Christoph Lumme <lummi@in-4-matik.de>, 2006.
 # Petri Damsten <petri.damsten@iki.fi>, 2006.
-# Michael Kreuzer <michael-kreuzer@gmx.de>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmediafactory_video\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-02-10 09:20+0200\n"
-"PO-Revision-Date: 2007-08-01 00:11+0200\n"
-"Last-Translator: Michael Kreuzer <michael-kreuzer@gmx.de>\n"
-"Language-Team: German\n"
+"PO-Revision-Date: 2006-04-19 09:16+0300\n"
+"Last-Translator: Petri Damsten <petri.damsten@iki.fi>\n"
+"Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -112,7 +111,7 @@ msgid ""
 "_: Import chapter file\n"
 "&Import"
 msgstr ""
-"_: Kapiteldatei &importieren\n"
+"_: Kapiteldatei importieren\n"
 "&Import"
 
 #: chapters.cpp:328

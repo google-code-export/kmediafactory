@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,32 +20,25 @@
 #ifndef KMFPROGRESSLISTVIEW_H
 #define KMFPROGRESSLISTVIEW_H
 
-#include <kmflistmodel.h>
-#include <QItemDelegate>
+#include <klistview.h>
 
-class KMFProgressItem
+/**
+@author Petri Damsten
+*/
+class KMFProgressListView : public KListView
 {
   public:
-    KMFProgressItem() : max(0), value(0) {};
-    QString pixmap;
-    QString text;
-    int max;
-    int value;
+    KMFProgressListView(QWidget *parent = 0, const char *name = 0);
+    ~KMFProgressListView();
 
-    bool operator <(const KMFProgressItem &t) const { return (text < t.text); }
-};
-
-Q_DECLARE_METATYPE(KMFProgressItem);
-
-class KMFProgressItemModel : public KMFListModel<KMFProgressItem>
-{
-  virtual QVariant data(const QModelIndex &index, int role) const;
-};
-
-class KMFProgressItemDelegate : public QItemDelegate
-{
-    virtual void paint(QPainter* painter, const QStyleOptionViewItem& option,
-                       const QModelIndex& index) const;
+    void insertItem(const QPixmap &pixmap, const QString &text);
+    
+  public slots:
+    void setTotalSteps(int totalSteps);
+    void setProgress(int progress);
+    
+  protected:
+    virtual void viewportResizeEvent(QResizeEvent* e);
 };
 
 #endif

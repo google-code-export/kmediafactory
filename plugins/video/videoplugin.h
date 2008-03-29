@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -29,19 +29,22 @@ class VideoPlugin :public KMF::Plugin
 {
     Q_OBJECT
   public:
-    VideoPlugin(QObject *parent, const QVariantList&);
+    VideoPlugin(QObject *parent, const char* name, const QStringList&);
     virtual ~VideoPlugin();
 
     virtual KMF::MediaObject* createMediaObject(const QDomElement& element);
     virtual const KMF::ConfigPage* configPage() const;
 
-  protected:
-    QAction* setupActions();
-
   public slots:
     virtual void init(const QString &type);
     virtual QStringList supportedProjectTypes();
     void slotAddVideo();
+
+  private:
+    KAction* addVideoAction;
+
+    static void ffmpeg_av_log_callback(void *ptr, int level,
+                                       const char *fmt, va_list vl);
 };
 
 #endif /* VIDEOPLUGIN_H */

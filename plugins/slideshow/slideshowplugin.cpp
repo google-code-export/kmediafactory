@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -19,99 +19,72 @@
 //**************************************************************************
 #include "config.h"
 #include "slideshowplugin.h"
-#include "ui_slideshowconfig.h"
 #include "slideshowpluginsettings.h"
 #include "slideshowobject.h"
 #include <kmftools.h>
-#include <kactioncollection.h>
 #include <klocale.h>
 #include <kaboutdata.h>
-#include <kpluginfactory.h>
+#include <kgenericfactory.h>
 #include <kdeversion.h>
 #include <kstandarddirs.h>
 #include <kapplication.h>
 #include <kfiledialog.h>
-#include <kicon.h>
-#include <KPluginLoader>
 
-static const KAboutData about("kmediafactory_slideshow", 0,
-                              ki18n("KMediaFactory Slideshow"), VERSION,
-                              ki18n("Slideshow plugin for KMediaFactory."),
-                              KAboutData::License_GPL,
-                              ki18n(COPYRIGHT), KLocalizedString(),
-                              HOMEPAGE, BUG_EMAIL);
+static const char description[] =
+  I18N_NOOP("Slideshow plugin for KMediaFactory.");
+static const char version[] = VERSION;
+static const KAboutData about("kmediafactory_slideshow",
+                              I18N_NOOP("KMediaFactory Slideshow"),
+                              version, description, KAboutData::License_GPL,
+                              "(C) 2005 Petri Damsten", 0, 0,
+                              "petri.damsten@iki.fi");
 
-K_PLUGIN_FACTORY(SlideshowFactory, registerPlugin<SlideshowPlugin>();)
-K_EXPORT_PLUGIN(SlideshowFactory("kmediafactory_slideshow"))
+typedef KGenericFactory<SlideshowPlugin> slideshowFactory;
+#if KDE_IS_VERSION(3, 3, 0)
+K_EXPORT_COMPONENT_FACTORY(kmediafactory_slideshow, slideshowFactory(&about))
+#else
+K_EXPORT_COMPONENT_FACTORY(kmediafactory_slideshow,
+    slideshowFactory(about.appName()))
+#endif
 
-class SlideshowConfig : public QWidget, public Ui::SlideshowConfig
-{
-  public:
-    SlideshowConfig(QWidget* parent = 0) : QWidget(parent)
-    {
-      setupUi(this);
-    };
-};
-
-SlideshowPlugin::SlideshowPlugin(QObject *parent, const QVariantList&) :
-  KMF::Plugin(parent)
-{
-  setObjectName("KMFSlideshow");
-  setupActions();
-}
-
-QAction* SlideshowPlugin::setupActions()
+SlideshowPlugin::SlideshowPlugin(QObject *parent,
+                         const char* name, const QStringList&) :
+  KMF::Plugin(parent, name )
 {
   // Initialize GUI
-  setComponentData(SlideshowFactory::componentData());
-  // Add action for menu item
-  QAction* addSlideshowAction = new KAction(KIcon("kuickshow"),
-                                     i18n("Add Slideshow"), parent());
-  addSlideshowAction->setShortcut(Qt::CTRL + Qt::Key_W);
-  actionCollection()->addAction("slideshow", addSlideshowAction);
-  connect(addSlideshowAction, SIGNAL(triggered()), SLOT(slotAddSlideshow()));
-
+  setInstance(KGenericFactory<SlideshowPlugin>::instance());
   setXMLFile("kmediafactory_slideshowui.rc");
-
-  uiInterface()->addMediaAction(addSlideshowAction);
-
-  return addSlideshowAction;
+  // Add action for menu item
+  addSlideshowAction = new KAction(i18n("Add Slideshow"), "icons",
+                                   CTRL+Key_W,
+                                   this, SLOT(slotAddSlideshow()),
+                                   actionCollection(),
+                                   "slideshow");
 }
 
 void SlideshowPlugin::init(const QString &type)
 {
-  kDebug() << type;
   deleteChildren();
-
-  QAction* action = actionCollection()->action("slideshow");
-  if(!action)
-    return;
-
   if (type.left(3) == "DVD")
   {
-
     m_dvdslideshow = KStandardDirs::findExe("dvd-slideshow");
     if(m_dvdslideshow.isEmpty())
-    {
-      action->setEnabled(false);
-    }
+      addSlideshowAction->setEnabled(false);
     else
-    {
-      action->setEnabled(true);
-    }
+      addSlideshowAction->setEnabled(true);
   }
   else
   {
-    action->setEnabled(false);
+    addSlideshowAction->setEnabled(false);
   }
 }
 
 void SlideshowPlugin::slotAddSlideshow()
 {
-  QStringList pics = KFileDialog::getOpenFileNames(
-      KUrl("kfiledialog:///<AddSlideshow>"),
+  QStringList pics = KFileDialog::getOpenFileNames(":AddSlideshow",
       "*.jpg *.png *.pdf *.odp *.odt *.ods *.odx *.sxw *.sxc *.sxi \
-       *.ppt *.xls *.doc|Pictures, Presentations\n*.*|All files");
+       *.ppt *.xls *.doc|Pictures, Presentations\n*.*|All files",
+      kapp->mainWidget());
 
   if(pics.count() > 0)
   {
@@ -120,7 +93,7 @@ void SlideshowPlugin::slotAddSlideshow()
 
     sob = new SlideshowObject(this);
     QFileInfo fi(pics[0]);
-    QDir dir(fi.absolutePath());
+    QDir dir(fi.dirPath());
 
     if(pics.count() == 1)
       sob->setTitle(KMF::Tools::simple2Title(fi.baseName()));
@@ -147,16 +120,6 @@ QStringList SlideshowPlugin::supportedProjectTypes()
   QStringList result;
   result << "DVD-PAL" << "DVD-NTSC";
   return result;
-}
-
-const KMF::ConfigPage* SlideshowPlugin::configPage() const
-{
-  KMF::ConfigPage* configPage = new KMF::ConfigPage;
-  configPage->page = new SlideshowConfig;
-  configPage->config = SlideshowPluginSettings::self();
-  configPage->itemName = i18n("Slideshow plugin");
-  configPage->pixmapName = "kuickshow";
-  return configPage;
 }
 
 #include "slideshowplugin.moc"

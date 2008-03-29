@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -38,7 +38,7 @@ class KMFTemplateBase : public QObject
 {
     Q_OBJECT
   public:
-    KMFTemplateBase(QObject *parent = 0);
+    KMFTemplateBase(QObject *parent = 0, const char *name = 0);
     ~KMFTemplateBase();
   protected:
     KMF::UiInterface* m_uiIf;

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -24,14 +24,8 @@
 #include <qsize.h>
 #include <stdint.h>
 #include <kurl.h>
-#include <QModelIndex>
 
 class QStringList;
-class QFont;
-class QDomElement;
-class QAbstractItemView;
-class QStringListModel;
-class QPainter;
 
 namespace KMF
 {
@@ -39,7 +33,7 @@ namespace KMF
   /**
     @author Petri Damsten <petri.damsten@iki.fi>
   */
-  class KDE_EXPORT Tools
+  class Tools
   {
     public:
       Tools();
@@ -52,7 +46,7 @@ namespace KMF
       static void removeDuplicates(QStringList* list);
       static QString sizeString(uint64_t size);
       //static uint64_t fileSize(QString file);
-      static void stripExisting(KUrl::List* src, const KUrl& dest);
+      static void stripExisting(KURL::List* src, const KURL& dest);
       static QString addSlash(QString path);
       static QString joinPaths(QString path1, QString path2);
       static QStringList file2List(const QString& file,
@@ -64,22 +58,9 @@ namespace KMF
                                           const QString& filter=QString::null);
       static QSize resolution(const QSize& original, const QSize& originalRatio,
                               const QSize& dest, const QSize& destRatio,
-                              Qt::AspectRatioMode mode =
-                                  Qt::KeepAspectRatioByExpanding);
+                              QSize::ScaleMode mode = QSize::ScaleMax);
       static QSize maxResolution(const QString &type);
       static QSize guessRatio(const QSize& image, const QSize& video);
-      static void fontToXML(const QFont& font, QDomElement* element);
-      static QFont fontFromXML(const QDomElement& element);
-      static QString fontFile(const QFont& font);
-      static QFont realFont(const QFont& font);
-      static QString longFontName(const QFont& font);
-      static int fcWeight2QtWeight(int fcWeight);
-      static void printChilds(QObject* obj, int level = 0);
-      static int hex2int(QChar hexchar);
-      static QColor toColor(const QString& s);
-      static QMap<QString, QString> readIniFile(const QString& ini);
-      static void drawRoundRect(QPainter* painter, const QRect& rect,
-                                int radius);
   };
 }
 

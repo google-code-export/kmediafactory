@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damst�
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,11 +20,10 @@
 #include "kmflogger.h"
 #include "kmfapplication.h"
 #include <kdebug.h>
-#include <QEventLoop>
-#include <QRegExp>
-#include <QFile>
-#include <QTextStream>
-#include <QTextDocument>
+#include <qstylesheet.h>
+#include <qeventloop.h>
+#include <qregexp.h>
+#include <qfile.h>
 
 void KMFLogger::start()
 {
@@ -36,48 +35,40 @@ void KMFLogger::start()
 void KMFLogger::stop()
 {
   KMF::Logger::message(m_buffer);
-  emit line(m_buffer);
   m_log += "</pre></html>";
 }
 
-void KMFLogger::out()
+void KMFLogger::stdout(KProcess*, char* buffer, int buflen)
 {
   int n;
   QRegExp re("[\n\r]");
 
-  while((n = m_buffer.indexOf(re)) >= 0)
+  m_buffer += QString::fromLatin1(buffer, buflen);
+  while((n = m_buffer.find(re)) >= 0)
   {
     if(!m_filter.exactMatch(m_buffer.left(n)))
       KMF::Logger::message(m_buffer.left(n));
-    emit line(m_buffer.left(n));
     ++n;
     m_buffer.remove(0, n);
   }
-  kmfApp->processEvents(QEventLoop::AllEvents);
+  kmfApp->eventLoop()->processEvents(QEventLoop::AllEvents);
 }
 
-void KMFLogger::stdout()
+void KMFLogger::stderr(KProcess* proc, char* buffer, int buflen)
 {
-  m_buffer += currentProcess->readAllStandardOutput();
-  out();
-}
-
-void KMFLogger::stderr()
-{
-  m_buffer += currentProcess->readAllStandardError();
-  out();
+  stdout(proc, buffer, buflen);
 }
 
 void KMFLogger::message(const QString& msg, const QColor& color)
 {
-  QString s = msg.trimmed();
+  QString s = msg.stripWhiteSpace();
   if(s.isEmpty())
     return;
   if(color != QColor("black"))
     m_log += QString("<font color=%1>").arg(color.name());
   //m_log += "         1         2         3         4         5         6"
   //         "         7         8\n";
-  m_log += Qt::escape(s) + "\n";
+  m_log += QStyleSheet::escape(s) + "\n";
   if(color != QColor("black"))
     m_log += "</font>";
 }
@@ -86,10 +77,10 @@ bool KMFLogger::save(QString file) const
 {
   QFile f(file);
 
-  if(f.open(QIODevice::WriteOnly | QIODevice::Truncate))
+  if(f.open(IO_WriteOnly | IO_Truncate))
   {
     QTextStream t(&f);
-    t.setCodec("UTF-8");
+    t.setEncoding(QTextStream::UnicodeUTF8);
     t << m_log;
     f.close();
     return true;

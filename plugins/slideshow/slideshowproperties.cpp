@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 #include "slideshowobject.h"
 #include <kmftime.h>
 #include <kmfmultiurldialog.h>
-#include <kmfmediafile.h>
+#include <qffmpeg.h>
 #include <kurlrequester.h>
 #include <kmessagebox.h>
 #include <kio/previewjob.h>
@@ -30,147 +30,21 @@
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <QPixmap>
-#include <QSpinBox>
-#include <QLabel>
-#include <QCheckBox>
-#include <QLineEdit>
-#include <QFileInfo>
-#include <QMimeData>
+#include <qspinbox.h>
+#include <qlabel.h>
+#include <qcheckbox.h>
+#include <qlistview.h>
+#include <qlineedit.h>
 
-int SlideListModel::columnCount(const QModelIndex&) const
+SlideshowProperties::SlideshowProperties(QWidget *parent, const char *name)
+  : SlideshowPropertiesLayout(parent, name)
 {
-  return 2;
-};
-
-Qt::ItemFlags SlideListModel::flags(const QModelIndex& index) const
-{
-  Qt::ItemFlags flags = QAbstractItemModel::flags(index);
-  if(!isValid(index))
-    return flags;
-
-  if(index.column() == 0)
-    flags |= Qt::ItemIsUserCheckable;
-  else if(index.column() == 1)
-    flags |= Qt::ItemIsEditable;
-  return flags;
-}
-
-QVariant SlideListModel::data(const QModelIndex &index, int role) const
-{
-  if (!isValid(index))
-    return QVariant();
-
-  if (role == Qt::DisplayRole)
-  {
-    switch(index.column())
-    {
-      case 0:
-      {
-        QFileInfo fi(at(index).picture);
-        return fi.fileName();
-      }
-      case 1:
-        return at(index).comment;
-    }
-  }
-  if (role == Qt::DecorationRole)
-  {
-    if(index.column() == 0)
-    {
-      if(m_previews.keys().indexOf(at(index).picture) >= 0)
-        return m_previews[at(index).picture];
-      else
-        return QPixmap();
-    }
-  }
-  if (role == Qt::CheckStateRole)
-  {
-    if(index.column() == 0)
-      return ((at(index).chapter) ? Qt::Checked : Qt::Unchecked);
-  }
-  return QVariant();
-};
-
-bool SlideListModel::setData(const QModelIndex &index, const QVariant &value,
-                             int role)
-{
-  kDebug();
-  if(!isValid(index))
-    return false;
-
-  Slide slide = at(index);
-
-  if (role == Qt::EditRole)
-  {
-    if(index.column() == 1)
-    {
-      slide.comment = value.toString();
-    }
-  }
-  else if (role == Qt::CheckStateRole)
-  {
-    slide.chapter = value.toBool();
-  }
-  replace(index, slide);
-  return true;
-}
-
-QVariant SlideListModel::headerData(int column, Qt::Orientation, int role) const
-{
-  if (role != Qt::DisplayRole)
-    return QVariant();
-
-  switch(column)
-  {
-    case 0:
-      return i18n("Picture");
-    case 1:
-      return i18n("Comment");
-  }
-  return "";
-};
-
-void SlideListModel::setPreview(const QString& file, const QPixmap& pixmap)
-{
-  int i;
-
-  for(i = 0; i < m_lst.count(); ++i)
-  {
-    if(m_lst[i].picture == file)
-      break;
-  }
-  m_previews[file] = pixmap;
-  emit dataChanged(index(i), index(i));
-}
-
-SlideshowProperties::SlideshowProperties(QWidget *parent)
-  : KDialog(parent)
-{
-  setupUi(mainWidget());
-  setButtons(KDialog::Ok | KDialog::Cancel);
-  setCaption(i18n("Slideshow Properties"));
-
-  slideListView->setModel(&m_model);
-  slideListView->setRootIsDecorated(false);
-  slideListView->setDragEnabled(true);
-  slideListView->setAcceptDrops(true);
-  slideListView->setDragDropMode(QAbstractItemView::DragDrop);
-  slideListView->setDropIndicatorShown(true);
-  slideListView->setDragDropOverwriteMode(false);
-
-  audioButton->setIcon(KIcon("speaker"));
-  addButton->setIcon(KIcon("list-add"));
-  removeButton->setIcon(KIcon("list-remove"));
-  upButton->setIcon(KIcon("arrow-up"));
-  downButton->setIcon(KIcon("arrow-down"));
-
-  connect(downButton, SIGNAL(clicked()), this, SLOT(moveDown()));
-  connect(upButton, SIGNAL(clicked()), this, SLOT(moveUp()));
-  connect(addButton, SIGNAL(clicked()), this, SLOT(add()));
-  connect(removeButton, SIGNAL(clicked()), this, SLOT(remove()));
-  connect(audioButton, SIGNAL(clicked()), this, SLOT(audioClicked()));
-  connect(durationSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateInfo()));
+  slideListView->setDefaultRenameAction(QListView::Accept);
+  // User sorting
+  slideListView->setSorting(1000);
+  audioButton->setIconSet(
+      KGlobal::iconLoader()->loadIconSet(("arts"), KIcon::Small,
+      KIcon::SizeMedium));
 }
 
 SlideshowProperties::~SlideshowProperties()
@@ -184,7 +58,19 @@ void SlideshowProperties::getData(SlideshowObject& obj) const
   obj.setLoop(loopCheckBox->isChecked());
   obj.setTitle(titleEdit->text());
   obj.setAudioFile(m_audioFiles);
-  obj.setSlides(m_model.list());
+
+  SlideList list;
+  for(QListViewItemIterator it(slideListView); *it != 0; ++it)
+  {
+    QCheckListItem* litem = static_cast<QCheckListItem*>(*it);
+    Slide slide;
+
+    slide.chapter = litem->isOn();
+    slide.picture = litem->text(4);
+    slide.comment = litem->text(3);
+    list.append(slide);
+  }
+  obj.setSlides(list);
 }
 
 void SlideshowProperties::setData(const SlideshowObject& obj)
@@ -201,83 +87,130 @@ void SlideshowProperties::setData(const SlideshowObject& obj)
 
 void SlideshowProperties::addSlides(const SlideList& slides)
 {
-  QModelIndex current = slideListView->currentIndex();
-  QList<KFileItem> list;
+  QCheckListItem* prev =
+      static_cast<QCheckListItem*>(slideListView->currentItem());
+  QCheckListItem* first = 0;
+  KFileItemList list;
 
-  m_model.insert(current, slides);
-
-  foreach(Slide slide, slides)
+  for(SlideList::ConstIterator it = slides.begin();
+      it != slides.end(); ++it)
   {
-    KFileItem item(KFileItem::Unknown, KFileItem::Unknown, slide.picture);
+    KFileItem* item = new KFileItem(KFileItem::Unknown, KFileItem::Unknown,
+                                    (*it).picture);
+    prev = new QCheckListItem(slideListView, prev, "",
+                              QCheckListItem::CheckBox);
+    if(!first)
+      first = prev;
+    QFileInfo fi((*it).picture);
+    prev->setText(2, fi.fileName());
+    prev->setText(3, (*it).comment);
+    prev->setText(4, (*it).picture);
+    prev->setRenameEnabled(3, true);
+    prev->setState(((*it).chapter) ? QCheckListItem::On : QCheckListItem::Off);
     list.append(item);
   }
   KIO::PreviewJob* job =  KIO::filePreview(list, 80, 60);
-  connect(job, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
-          this, SLOT(gotPreview(const KFileItem&, const QPixmap&)));
+  connect(job, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+          this, SLOT(gotPreview(const KFileItem*, const QPixmap&)));
+  select(first);
   updateInfo();
 }
 
-void SlideshowProperties::gotPreview(const KFileItem& item,
+void SlideshowProperties::select(QListViewItem* item)
+{
+  for(QListViewItemIterator it(slideListView); *it != 0; ++it)
+    (*it)->setSelected(false);
+  if(item)
+  {
+    slideListView->setSelected(item, true);
+    slideListView->setCurrentItem(item);
+    slideListView->ensureItemVisible(item);
+  }
+}
+
+void SlideshowProperties::gotPreview(const KFileItem* item,
                                      const QPixmap& pixmap)
 {
-  m_model.setPreview(item.url().path(), pixmap);
+
+  for(QListViewItemIterator it(slideListView); *it != 0; ++it)
+  {
+    QCheckListItem* litem = static_cast<QCheckListItem*>(*it);
+    if(item->url() == litem->text(4))
+    {
+      litem->setPixmap(1, pixmap);
+      break;
+    }
+  }
 }
 
 void SlideshowProperties::moveDown()
 {
-  QModelIndex item1 = slideListView->currentIndex();
-  QModelIndex item2 = m_model.index(item1.row() + 1);
-  m_model.swap(item1, item2);
-  slideListView->setCurrentIndex(item2);
-  slideListView->scrollTo(item2);
+  QListViewItem* item = slideListView->currentItem();
+  if(item->itemBelow())
+    item->moveItem(item->itemBelow());
+  slideListView->ensureItemVisible(item);
 }
 
 void SlideshowProperties::moveUp()
 {
-  QModelIndex item1 = slideListView->currentIndex();
-  QModelIndex item2 = m_model.index(item1.row() - 1);
-  m_model.swap(item1, item2);
-  slideListView->setCurrentIndex(item2);
-  slideListView->scrollTo(item2);
+  QListViewItem* item = slideListView->currentItem();
+  if(item->itemAbove())
+    item->itemAbove()->moveItem(item);
+  slideListView->ensureItemVisible(item);
 }
 
 void SlideshowProperties::updateInfo()
 {
   QString info(i18n("Info: "));
-  int count = m_model.count();
+  int count = slideListView->childCount();
   KMF::Time duration = (double)durationSpinBox->value();
   KMF::Time audioDuration = 0.0;
 
-  foreach(QString file, m_audioFiles)
+  for(QStringList::ConstIterator it = m_audioFiles.begin();
+      it != m_audioFiles.end(); ++it)
   {
-    KMFMediaFile audio = KMFMediaFile::mediaFile(file);
+    QFFMpeg audio(*it);
     audioDuration += audio.duration();
   }
-  info += i18n("%1 images", count);
+  info += i18n("%1 images").arg(count);
   if(duration < KMF::Time(1.0))
-    info += i18n(", Duration %1", audioDuration.toString("h:mm:ss"));
+    info += i18n(", Duration %1").arg(audioDuration.toString("h:mm:ss"));
   else
   {
     duration = (1.0 + duration.toSeconds()) * count + 1.0;
-    info += i18n(", Duration %1", duration.toString("h:mm:ss"));
+    info += i18n(", Duration %1").arg(duration.toString("h:mm:ss"));
   }
   if(!audioDuration.isNull())
-    info += i18n(", Audio duration %1", audioDuration.toString("h:mm:ss"));
+    info += i18n(", Audio duration %1").arg(audioDuration.toString("h:mm:ss"));
 
   infoLabel->setText(info);
 }
 
 void SlideshowProperties::remove()
 {
-  QModelIndexList selected = slideListView->selectionModel()->selectedIndexes();
-  m_model.removeAt(selected);
+  QListViewItemIterator it(slideListView);
+  QListViewItem* first = 0;
+
+  while(*it != 0)
+  {
+    if((*it)->isSelected())
+    {
+      if(!first)
+        first = (*it)->itemAbove();
+      delete *it;
+    }
+    else
+      ++it;
+  }
+  if(!first)
+    first = slideListView->firstChild();
+  select(first);
   updateInfo();
 }
 
 void SlideshowProperties::add()
 {
-  QStringList pics = KFileDialog::getOpenFileNames(
-      KUrl("kfiledialog:///<AddSlideshow>"),
+  QStringList pics = KFileDialog::getOpenFileNames(":AddSlideshow",
       i18n("*.jpg *.png *.pdf *.odp *.odt *.ods *.odx *.sxw *.sxc *.sxi \
             *.ppt *.xls *.doc|Pictures, Presentations\n*.*|All files"),
       this);
@@ -290,7 +223,7 @@ void SlideshowProperties::add()
 
 void SlideshowProperties::audioClicked()
 {
-  KMFMultiURLDialog dlg("kfiledialog:///<SlideshowAudioFiles>",
+  KMFMultiURLDialog dlg(":SlideshowAudioFiles",
                         i18n("*.mp3 *.wav *.ogg|Audio Files"),
                         this, i18n("Audio files"));
 
@@ -304,11 +237,11 @@ void SlideshowProperties::audioClicked()
 
 void SlideshowProperties::okClicked()
 {
-  SlideList slides = m_model.list();
-
-  foreach(Slide slide, slides)
+  for(QListViewItemIterator it(slideListView); *it != 0; ++it)
   {
-    if(slide.chapter)
+    QCheckListItem* litem = static_cast<QCheckListItem*>(*it);
+
+    if(litem->isOn())
     {
       accept();
       return;

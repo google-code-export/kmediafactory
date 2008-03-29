@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ui\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-05 17:42+0300\n"
+"POT-Creation-Date: 2006-04-17 12:00+0200\n"
 "PO-Revision-Date: 2006-04-17 12:03+0200\n"
 "Last-Translator: Tomil Grabowski <tomig@tomig.com>\n"
 "Language-Team: Polish\n"
@@ -17,61 +17,77 @@ msgstr ""
 "X-Generator: KBabel 1.11.1\n"
 
 #: rc.cpp:3
+#, no-c-format
 msgid "Simple"
 msgstr "Prosty"
 
 #: rc.cpp:6
+#, no-c-format
 msgid "Template Options"
 msgstr "Opcje szablonu"
 
 #: rc.cpp:9
+#, no-c-format
 msgid "B&ackground Image:"
 msgstr "Obr&az tła:"
 
 #: rc.cpp:12
+#, no-c-format
 msgid "Chapter page &background:"
 msgstr "Obraz tła &rozdziału:"
 
 #: rc.cpp:15
+#, no-c-format
 msgid "Back&ground Sound:"
 msgstr "&Podkład muzyczny:"
 
 #: rc.cpp:18
+#, no-c-format
 msgid "&Main Title Font:"
 msgstr "&Czcionka głównego tytułu:"
 
 #: rc.cpp:21
+#, no-c-format
 msgid "&Title Font:"
 msgstr "Czcionka &tytułów:"
 
 #: rc.cpp:24
+#, no-c-format
 msgid "Font C&olor:"
 msgstr "K&olor czcionki:"
 
 #: rc.cpp:27
+#, no-c-format
 msgid "Direct Play"
 msgstr "Bezpośrednie odtwarzanie"
 
 #: rc.cpp:30
+#, no-c-format
 msgid "Pla&y first track when disc entered"
 msgstr "Po &włożeniu dysku odtwarzaj pierwszą ścieżkę"
 
 #: rc.cpp:33
+#, no-c-format
 msgid "Alt+Y"
 msgstr "Alt+W"
 
 #: rc.cpp:36
+#, no-c-format
 msgid "After playing title:"
 msgstr "Po odtworzeniu tytułu:"
 
 #: rc.cpp:39
+#, no-c-format
 msgid "Jump to main menu"
 msgstr "skocz do głównego menu"
 
 #: rc.cpp:42
+#, no-c-format
 msgid "Jump to next title"
 msgstr "hyppää seuraavaan videoon"
 
 #: rc.cpp:45
+#, no-c-format
 msgid "La&nguage:"
 msgstr "&Język:"
+

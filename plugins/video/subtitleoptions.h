@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -21,28 +21,24 @@
 #define SUBTITLEOPTIONS_H
 
 #include <kmf_stddef.h>
+#include "subtitleoptionslayout.h"
 #include <qdvdinfo.h>
-#include <kmflanguagewidgets.h>
-#include "ui_subtitleoptions.h"
 
 /**
 @author Petri Damsten
 */
-class SubtitleOptions : public KDialog, public Ui::SubtitleOptions
+class SubtitleOptions : public SubtitleOptionsLayout
 {
     Q_OBJECT
   public:
-    SubtitleOptions(QWidget *parent = 0);
+    SubtitleOptions(QWidget *parent = 0, const char *name = 0);
     ~SubtitleOptions();
 
     void getData(QDVD::Subtitle& obj) const;
     void setData(const QDVD::Subtitle& obj);
 
   protected slots:
-    virtual void accept();
-
-  private:
-    LanguageListModel m_languageModel;
+    void okClicked();
 };
 
 #endif

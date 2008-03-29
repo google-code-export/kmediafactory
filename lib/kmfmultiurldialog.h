@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,8 +20,7 @@
 #ifndef KMFMULTIURLDIALOG_H
 #define KMFMULTIURLDIALOG_H
 
-#include "ui_kmfmultiurldialog.h"
-#include <kmflistmodel.h>
+#include <kmfmultiurldialoglayout.h>
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
@@ -29,8 +28,7 @@
 
 class QStringList;
 
-class KDE_EXPORT KMFMultiURLDialog : public KDialog,
-                                     public Ui::KMFMultiURLDialog
+class KMFMultiURLDialog : public KMFMultiURLDialogLayout
 {
     Q_OBJECT
   public:
@@ -48,10 +46,12 @@ class KDE_EXPORT KMFMultiURLDialog : public KDialog,
     virtual void add();
     virtual void remove();
 
+  protected:
+    void select(QListViewItem* item);
+
   private:
     QString m_dir;
     QString m_filter;
-    KMFListModel<QString> m_model;
 };
 
 #endif

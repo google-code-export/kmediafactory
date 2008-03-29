@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,20 +20,20 @@
 #ifndef TOOLS_H
 #define TOOLS_H
 
-#include "ui_tools.h"
-#include "kmflistmodel.h"
+#include "toolslayout.h"
 #include <kurl.h>
-#include <QObject>
+#include <qlistview.h>
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
 
-class ToolItem
+class QToolListItem : public QListViewItem
 {
   public:
-    ToolItem() :
-      mediaMenu(false), runInTerminal(false) {};
+    QToolListItem(QListView* listbox) :
+      QListViewItem(listbox), mediaMenu(false), runInTerminal(false) {};
+
     QString name;
     QString description;
     QString command;
@@ -42,24 +42,13 @@ class ToolItem
     QString workPath;
     bool mediaMenu;
     bool runInTerminal;
-
-    bool operator <(const ToolItem &t) const { return (name < t.name); }
 };
 
-Q_DECLARE_METATYPE(ToolItem);
-
-class ToolListModel : public KMFListModel<ToolItem>
-{
-  virtual int columnCount(const QModelIndex&) const;
-  virtual QVariant data(const QModelIndex &index, int role) const;
-  virtual QVariant headerData(int column, Qt::Orientation, int role) const;
-};
-
-class Tools : public QWidget, public Ui::Tools
+class Tools : public ToolsLayout
 {
     Q_OBJECT
   public:
-    Tools(QWidget* parent = 0);
+    Tools(QWidget* parent = 0, const char* name = 0, WFlags fl = 0);
     virtual ~Tools();
 
   public slots:
@@ -73,11 +62,10 @@ class Tools : public QWidget, public Ui::Tools
     virtual void enableButtons();
 
   protected:
-    bool writableItem(ToolItem* item);
+    bool writableItem(QToolListItem* item);
 
   private:
-    KUrl::List m_remove;
-    ToolListModel m_model;
+    KURL::List m_remove;
 };
 
 #endif

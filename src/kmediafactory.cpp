@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -28,104 +28,100 @@
 #include "projectoptions.h"
 #include "kmfproject.h"
 #include "kmfprogresslistview.h"
-#include "kmfoptions.h"
+#include "kmfoptionslayout.h"
 #include "tools.h"
 #include "kmediafactorysettings.h"
-#include <kmfimageview.h>
-#include <kmftools.h>
-#include <run.h>
+#include "kmfimageview.h"
+#include "kmftools.h"
+#include "kmfnewstuff.h"
 #include <kmediafactory/plugin.h>
 
-#include <krun.h>
-#include <kservice.h>
-#include <kactioncollection.h>
 #include <kmainwindow.h>
 #include <kconfigdialog.h>
 #include <klocale.h>
-#include <kstandardaction.h>
-#include <kpagewidget.h>
+#include <kstdaction.h>
+#include <kjanuswidget.h>
 #include <kdialog.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kiconloader.h>
 #include <kcmdlineargs.h>
+#include <kaction.h>
 #include <kconfig.h>
+#include <kurldrag.h>
+#include <kkeydialog.h>
 #include <kedittoolbar.h>
+#include <kactionclasses.h>
 #include <kmessagebox.h>
+#include <kprogress.h>
 #include <kpushbutton.h>
 #include <kmenubar.h>
 #include <kio/netaccess.h>
 #include <kdesktopfile.h>
+#include <dcopclient.h>
 #include <kstandarddirs.h>
-#include <kicon.h>
-#include <kxmlguifactory.h>
-#include <ktoggleaction.h>
-#include <ktoolbar.h>
-#include <kshortcutsdialog.h>
-#include <knewstuff2/engine.h>
 
-#include <QLabel>
-#include <QObject>
-#include <QToolButton>
-#include <QPoint>
-#include <QTimer>
-#include <QDragEnterEvent>
-#include <QDropEvent>
+#include <qlabel.h>
+#include <qvbox.h>
+#include <qobjectlist.h>
+#include <qtoolbutton.h>
+#include <qpopupmenu.h>
+#include <qpoint.h>
+#include <qtimer.h>
+#include <qsqlpropertymap.h>
+
+#ifdef KMF_TEST
+#include "qdvdinfo.h"
+#endif
+
+// TODO: Move everything not related to main window to application
+// (loadPlugins...)
 
 KMediaFactory::KMediaFactory()
-  : KXmlGuiWindow(0), m_janusIconList(0), m_enabled(true),
+  : KMainWindow( 0, "KMediaFactory" ), m_janusIconList(0), m_enabled(true),
     m_newStuffDlg(0)
 {
+  QObject *obj;
+
   // set the shell's ui resource file
   setXMLFile("kmediafactoryui.rc");
 
-  // Central widget
-  QWidget* main = new QWidget;
-  QVBoxLayout* vbox = new QVBoxLayout;
-  m_janus = new KPageWidget;
-  m_janus->setFaceType(KPageView::List);
+  // Centra widget
+  QVBox* vbox = new QVBox(this);
+  m_janus = new KJanusWidget(vbox, "m_janus", KJanusWidget::IconList);
   vbox->setMargin(KDialog::marginHint());
-  vbox->addWidget(m_janus);
-  main->setLayout(vbox);
-  setCentralWidget(main);
-  const QObjectList& list = m_janus->children();
-  for(int i = 0; i < list.size(); ++i)
+  setCentralWidget(vbox);
+  for(QObjectListIt it(*m_janus->children()); it.current() != 0; ++it)
   {
-    QWidget* w = static_cast<QWidget*>(list[i]);
-    if (qstrcmp(w->metaObject()->className(), "QWidget") == 0)
+    QWidget* w = static_cast<QWidget*>(it.current());
+    if(w->isA("QWidget"))
       m_janusIconList = w;
   }
 
   // Pages
   // Media
-
-  mediaPage = new MediaPage;
-  m_mediaPageItem = new KPageWidgetItem(mediaPage, i18n( "Media"));
-  m_mediaPageItem->setHeader(i18n("Media"));
-  m_mediaPageItem->setIcon(KIcon("folder-video"));
-  m_janus->addPage(m_mediaPageItem);
+  QVBox *parent = m_janus->addVBoxPage(i18n("Media"), i18n("Media"),
+                                     DesktopIcon("folder_video"));
+  mediaPage = new MediaPage(parent);
+  mediaPage->mediaButtons->setIconSize(KIcon::SizeLarge);
+  mediaPage->mediaButtons->setIconText(KToolBar::IconTextBottom);
+  mediaPage->mediaButtons->setFrameStyle(QFrame::Panel | QFrame::Raised);
+  mediaPage->mediaButtons->setLineWidth(1);
+  mediaPage->mediaButtons->setMargin(0);
 
   // Template
-  templatePage = new TemplatePage;
-  m_templatePageItem = new KPageWidgetItem(templatePage, i18n("Template"));
-  m_templatePageItem->setHeader(i18n("Template"));
-  m_templatePageItem->setIcon(KIcon("folder-image"));
-  m_janus->addPage(m_templatePageItem);
-  connect(m_janus,
-          SIGNAL(currentPageChanged(KPageWidgetItem*, KPageWidgetItem*)),
-          templatePage,
-          SLOT(currentPageChanged(KPageWidgetItem*, KPageWidgetItem*)));
+  parent = m_janus->addVBoxPage(i18n("Template"), i18n("Template"),
+                              DesktopIcon("kmultiple"));
+  templatePage = new TemplatePage(parent);
+  connect(m_janus, SIGNAL(aboutToShowPage(QWidget*)),
+          templatePage, SLOT(aboutToShowPage(QWidget*)));
 
   // Output
-  outputPage = new OutputPage;
-  m_ouputPageItem = new KPageWidgetItem(outputPage, i18n("Output"));
-  m_ouputPageItem->setHeader(i18n("Output"));
-  m_ouputPageItem->setIcon(KIcon("media-optical"));
-  m_janus->addPage(m_ouputPageItem);
-  connect(m_janus,
-          SIGNAL(currentPageChanged(KPageWidgetItem*, KPageWidgetItem*)),
-          outputPage,
-          SLOT(currentPageChanged(KPageWidgetItem*, KPageWidgetItem*)));
+  parent = m_janus->addVBoxPage(i18n("Output"), i18n("Output"),
+                              DesktopIcon("cdwriter_unmount"));
+  outputPage = new OutputPage(parent);
+  connect(m_janus, SIGNAL(aboutToShowPage(QWidget*)),
+          outputPage, SLOT(aboutToShowPage(QWidget*)));
 
   // then, setup our actions
   setupActions();
@@ -135,13 +131,20 @@ KMediaFactory::KMediaFactory()
   // position, icon size, etc.
   setAutoSaveSettings();
 
+  // TODO: move these to correct places
+  // TODO: make function QPtrList<KMF::Plugins> getPlugins()
+  const QObjectList *list = kmfApp->pluginInterface()->children();
+  for(QObjectListIt it(*list); (obj=it.current())!= 0; ++it)
+    if(obj->inherits("KMF::Plugin"))
+      guiFactory()->addClient((KMF::Plugin*)obj);
+
   // Do some things later
-  //QTimer::singleShot(0, this, SLOT(initGUI()));
+  QTimer::singleShot(0, this, SLOT(initGUI()));
 }
 
 KMediaFactory::~KMediaFactory()
 {
-  //delete m_newStuffDlg;
+  delete m_newStuffDlg;
   //delete mediaPage;
   //delete templatePage;
   //delete outputPage;
@@ -151,93 +154,90 @@ KMediaFactory::~KMediaFactory()
 
 void KMediaFactory::setupActions()
 {
-  kDebug();
-  QAction* action;
-
   // File
-  KStandardAction::openNew(this, SLOT(fileNew()), actionCollection());
-  KStandardAction::open(this, SLOT(fileOpen()), actionCollection());
-  KStandardAction::save(this, SLOT(fileSave()), actionCollection());
-  KStandardAction::saveAs(this, SLOT(fileSaveAs()), actionCollection());
-  KStandardAction::quit(this, SLOT(quit()), actionCollection());
+  KStdAction::openNew(this, SLOT(fileNew()), actionCollection());
+  KStdAction::open(this, SLOT(fileOpen()), actionCollection());
+  KStdAction::save(this, SLOT(fileSave()), actionCollection());
+  KStdAction::saveAs(this, SLOT(fileSaveAs()), actionCollection());
+  KStdAction::quit(this, SLOT(quit()), actionCollection());
 
   // Project
-  action = new KAction(KIcon("configure"), i18n("&Options"),this);
-  actionCollection()->addAction("project_options", action);
-  connect(action, SIGNAL(triggered()), SLOT(projectOptions()));
-
+  new KAction(i18n("&Options"), "configure", 0, this,
+              SLOT(projectOptions()), actionCollection(), "project_options");
   // KNewStuff
-  action = new KAction(KIcon("get-hot-new-stuff"), i18n("&Get new tools"),this);
-  actionCollection()->addAction("newstuff", action);
-  connect(action, SIGNAL(triggered()), SLOT(newStuff()));
+  new KAction(i18n("&Get new tools"), "bookmark", 0, this,
+               SLOT(newStuff()), actionCollection(), "newstuff");
 
   // Settings
-  KStandardAction::keyBindings(this, SLOT(optionsConfigureKeys()),
+  KStdAction::keyBindings(this, SLOT(optionsConfigureKeys()),
                           actionCollection());
-  KStandardAction::configureToolbars(this, SLOT(optionsConfigureToolbars()),
+  KStdAction::configureToolbars(this, SLOT(optionsConfigureToolbars()),
                                 actionCollection());
-  KStandardAction::preferences(this, SLOT(optionsPreferences()),
+  KStdAction::preferences(this, SLOT(optionsPreferences()),
                           actionCollection());
 
+#if KDE_IS_VERSION(3,5,0)
   setStandardToolBarMenuEnabled(true);
-
+#else
+  m_toolbarAction = KStdAction::showToolbar(this, SLOT(optionsShowToolbar()),
+                                            actionCollection());
+#endif
   // Media file menu
-  action = new KAction(KIcon("edit-delete"), i18n("&Delete"), this);
-  action->setShortcut(Qt::Key_Delete);
-  actionCollection()->addAction("delete", action);
-  connect(action, SIGNAL(triggered()), SLOT(itemDelete()));
+  new KAction(i18n("&Delete"), "editdelete", Key_Delete, this,
+              SLOT(itemDelete()), actionCollection(), "delete" );
 
-  createGUI("kmediafactoryui.rc");
+  // Testing
+#ifdef KMF_TEST
+  new KAction(i18n("&Test"), "configure", CTRL + Key_Z, this,
+              SLOT(test()), actionCollection(), "test" );
+#endif
+  //m_statusbarAction = KStdAction::showStatusbar(this,
+  //     SLOT(optionsShowStatusbar()), actionCollection());
 
-  QStringList dirs = KGlobal::dirs()->findDirs("data", "");
-  for(QStringList::ConstIterator it = dirs.begin(); it != dirs.end(); ++it)
-  {
-    kDebug() << "Watching: " <<
-        *it + "kmediafactory/tools";
-    m_toolsWatch.addDir(*it + "kmediafactory/tools");
-  }
-  connect(&m_toolsWatch, SIGNAL(dirty(QString)), this, SLOT(updateToolsMenu()));
+  createGUI("kmediafactoryui.rc", false);
+
   updateToolsMenu();
 }
 
 void KMediaFactory::connectProject()
 {
-  kDebug();
-  kmfApp->project()->disconnect();
+  connect(kmfApp->project(), SIGNAL(init(const QString&)),
+          mediaPage->mediaFiles, SLOT(init(const QString&)));
+  connect(kmfApp->project(), SIGNAL(newItem(KMF::Object*)),
+          mediaPage->mediaFiles, SLOT(newItem(KMF::Object*)));
+  connect(kmfApp->project(), SIGNAL(itemRemoved(KMF::Object*)),
+          mediaPage->mediaFiles, SLOT(itemRemoved(KMF::Object*)));
+  connect(kmfApp->project(), SIGNAL(newItem(KMF::Object*)),
+          mediaPage, SLOT(calculateSizes()));
+  connect(kmfApp->project(), SIGNAL(itemRemoved(KMF::Object*)),
+          mediaPage, SLOT(calculateSizes()));
+  connect(kmfApp->project(), SIGNAL(init(const QString&)),
+          mediaPage, SLOT(calculateSizes()));
+  connect(kmfApp->project(), SIGNAL(modified(const QString&, bool)),
+          this, SLOT(setCaption(const QString&, bool)));
 
   const KMF::PluginList list = kmfApp->plugins();
   for(KMF::PluginList::ConstIterator obj = list.begin();
       obj != list.end(); ++obj)
   {
-    connect(kmfApp->project(), SIGNAL(preinit(const QString&)),
+    connect(kmfApp->project(), SIGNAL(init(const QString&)),
             *obj, SLOT(init(const QString&)));
   }
-
-  connect(kmfApp->project(), SIGNAL(modified(const QString&, bool)),
-          this, SLOT(setCaption(const QString&, bool)));
-
-  connect(kmfApp->project(), SIGNAL(init(const QString&)),
-          mediaPage, SLOT(projectInit()));
-  connect(kmfApp->project(), SIGNAL(mediaModified()),
-          mediaPage, SLOT(mediaModified()));
-
-  connect(kmfApp->project(), SIGNAL(init(const QString&)),
-          templatePage, SLOT(projectInit()));
-
-  connect(kmfApp->project(), SIGNAL(init(const QString&)),
-          outputPage, SLOT(projectInit()));
 }
 
 void KMediaFactory::itemDelete()
 {
-  QModelIndex i = mediaPage->mediaFiles->currentIndex();
-  kmfApp->project()->mediaObjects()->removeAt(i);
-  kmfApp->project()->setDirty(KMF::ProjectInterface::DirtyMedia);
+  KMFIconViewItem* item =
+      static_cast<KMFIconViewItem*>(mediaPage->mediaFiles->currentItem());
+  if(item)
+  {
+    KMF::Object *ob = item->ob();
+    kmfApp->project()->removeItem(static_cast<KMF::MediaObject*>(ob));
+  }
 }
 
 void KMediaFactory::projectOptions()
 {
-  //kDebug();
   ProjectOptions dlg(this);
   dlg.setData(*kmfApp->project());
   if (dlg.exec())
@@ -246,23 +246,20 @@ void KMediaFactory::projectOptions()
 
 void KMediaFactory::newStuff()
 {
-  KNS::Engine *engine = new KNS::Engine();
-  engine->init("kmediafactory.knsrc");
-  KNS::Entry::List entries = engine->downloadDialogModal();
-  delete engine;
+  if(!m_newStuffDlg)
+  {
+    m_newStuffDlg =
+        new KMFNewStuff(KMediaFactorySettings::providersUrl(), this);
+    connect(m_newStuffDlg, SIGNAL(scriptInstalled()),
+            this, SLOT(updateToolsMenu()));
+  }
+  m_newStuffDlg->download();
 }
 
 void KMediaFactory::initGUI()
 {
-  kDebug();
-
-  const QObjectList& l = kmfApp->pluginInterface()->children();
-  for(int i = 0; i < l.size(); ++i)
-    if(l[i]->inherits("KMF::Plugin"))
-      guiFactory()->addClient((KMF::Plugin*)l[i]);
-
   if(!kmfApp->url().isEmpty() &&
-      KIO::NetAccess::exists(kmfApp->url(), KIO::NetAccess::SourceSide, this))
+      KIO::NetAccess::exists(kmfApp->url(), true, this))
     load(kmfApp->url());
   else
     fileNew();
@@ -270,24 +267,25 @@ void KMediaFactory::initGUI()
 
 void KMediaFactory::resetGUI()
 {
+  mediaPage->mediaFiles->clear();
+  //templatePage->templates->clear();
   templatePage->templatePreview->clear();
-  QListView* lv = outputPage->progressListView;
-  KMFProgressItemModel* model = static_cast<KMFProgressItemModel*>(lv->model());
-  model->clear();
+  //outputPage->outputs->clear();
+  outputPage->progressListView->clear();
   outputPage->progressBar->reset();
   outputPage->showLogPushBtn->setEnabled(false);
-  m_janus->setCurrentPage(m_mediaPageItem);
+  m_janus->showPage(0);
 }
 
 void KMediaFactory::fileNew()
 {
-  kDebug();
   if(checkSaveProject())
   {
     resetGUI();
     kmfApp->newProject();
     connectProject();
     kmfApp->project()->init();
+    templatePage->loadingFinished();
     if(KMediaFactorySettings::showProjectOptionsOnNew())
       projectOptions();
   }
@@ -295,9 +293,9 @@ void KMediaFactory::fileNew()
 
 void KMediaFactory::fileOpen()
 {
-  KUrl url =
-      KFileDialog::getOpenUrl(KUrl("kfiledialog:///<KMFProject>"),
-                                   "*.kmf|KMediaFactory project files");
+  KURL url =
+    KFileDialog::getOpenURL(":KMFProject",
+                            "*.kmf|KMediaFactory project files");
   if (!url.isEmpty())
     load(url);
 }
@@ -307,7 +305,7 @@ void KMediaFactory::quit()
   close();
 }
 
-void KMediaFactory::load(const KUrl& url)
+void KMediaFactory::load(const KURL& url)
 {
   if(checkSaveProject())
   {
@@ -315,8 +313,14 @@ void KMediaFactory::load(const KUrl& url)
     kmfApp->newProject();
     connectProject();
     kmfApp->project()->open(url);
-    mediaPage->mediaModified();
+    templatePage->templates->blockSignals(true);
+    templatePage->templates->setCurrentItem(kmfApp->project()->templateObj());
+    templatePage->templates->blockSignals(false);
     templatePage->updatePreview();
+    outputPage->outputs->blockSignals(true);
+    outputPage->outputs->setCurrentItem(kmfApp->project()->output());
+    outputPage->outputs->blockSignals(false);
+    templatePage->loadingFinished();
   }
 }
 
@@ -328,129 +332,137 @@ void KMediaFactory::fileSave()
 
 void KMediaFactory::fileSaveAs()
 {
-  KUrl url =
-      KFileDialog::getSaveUrl(KUrl("kfiledialog:///<KMFProject>"),
-                                   "*.kmf|KMediaFactory project files");
+  KURL url =
+    KFileDialog::getSaveURL(":KMFProject",
+                            "*.kmf|KMediaFactory project files");
   if (!url.isEmpty() && url.isValid())
   {
     if(!kmfApp->project()->save(url))
     {
       KMessageBox::error(kmfApp->activeWindow(),
-          i18n("Could not write to file: %1").arg(url.prettyUrl()));
+          i18n("Could not write to file: %1").arg(url.prettyURL()));
     }
   }
 }
 
-void KMediaFactory::saveProperties(KConfigGroup& config)
+void KMediaFactory::saveProperties(KConfig *config)
 {
   if (!kmfApp->url().isEmpty())
   {
-    config.writePathEntry("lastUrl", kmfApp->url().prettyUrl());
+#if KDE_IS_VERSION(3,1,3)
+    config->writePathEntry("lastURL", kmfApp->url().prettyURL());
+#else
+    config->writeEntry("lastURL", kmfApp->url().prettyURL());
+#endif
   }
 }
 
-void KMediaFactory::readProperties(const KConfigGroup& config)
+void KMediaFactory::readProperties(KConfig *config)
 {
-  QString url = config.readPathEntry("lastUrl", "");
+  QString url = config->readPathEntry("lastURL");
 
   if (!url.isEmpty())
-    load(KUrl(url));
+    load(KURL(url));
 }
 
 void KMediaFactory::dragEnterEvent(QDragEnterEvent *event)
 {
-  KUrl::List uriList = KUrl::List::fromMimeData(event->mimeData());
-  event->setAccepted(!uriList.isEmpty());
+  event->accept(KURLDrag::canDecode(event));
 }
 
 void KMediaFactory::dropEvent(QDropEvent *event)
 {
-  KUrl::List uriList = KUrl::List::fromMimeData(event->mimeData());
+  KURL::List urls;
 
-  if(!uriList.isEmpty())
+  if (KURLDrag::decode(event, urls) && !urls.isEmpty())
   {
-    const KUrl &url = uriList.first();
+    const KURL &url = urls.first();
     load(url);
   }
 }
 
 void KMediaFactory::optionsConfigureKeys()
 {
-  KShortcutsDialog::configure(actionCollection());
+  KKeyDialog::configure(actionCollection());
 }
 
 void KMediaFactory::optionsConfigureToolbars()
 {
-  if(autoSaveSettings())
-  {
-      KConfigGroup cg = KGlobal::config()->group("KMFMainWindow");
-      saveMainWindowSettings(cg);
-  }
-  KEditToolBar dlg(actionCollection());
-  connect(&dlg,SIGNAL(newToolbarConfig()),this,SLOT(newToolbarConfig()));
-  dlg.setDefaultToolBar("default");
+    // use the standard toolbar editor
+#if defined(KDE_MAKE_VERSION)
+# if KDE_VERSION >= KDE_MAKE_VERSION(3,1,0)
+  saveMainWindowSettings(KGlobal::config(), autoSaveGroup());
+# else
+  saveMainWindowSettings(KGlobal::config());
+# endif
+#else
+  saveMainWindowSettings(KGlobal::config());
+#endif
+  KEditToolbar dlg(actionCollection());
+  connect(&dlg, SIGNAL(newToolbarConfig()), this, SLOT(newToolbarConfig()));
+#if KDE_IS_VERSION(3, 3, 0)
+  dlg.setDefaultToolbar("default");
+#endif
   dlg.exec();
 }
 
 void KMediaFactory::newToolbarConfig()
 {
-  createGUI("kmediafactoryui.rc");
-  KConfigGroup cg = KGlobal::config()->group("KMFMainWindow");
-  applyMainWindowSettings( cg );
+  createGUI("kmediafactoryui.rc", false);
+#if defined(KDE_MAKE_VERSION)
+# if KDE_VERSION >= KDE_MAKE_VERSION(3,1,0)
+    applyMainWindowSettings(KGlobal::config(), autoSaveGroup());
+# else
+    applyMainWindowSettings(KGlobal::config());
+# endif
+#else
+    applyMainWindowSettings(KGlobal::config());
+#endif
 }
 
 void KMediaFactory::updateToolsMenu()
 {
-  kDebug();
-  QAction* action;
-  QList<QAction*> actions;
-  QList<QAction*> media_actions;
+  KAction* action;
+  QPtrList<KAction> actions;
+  QPtrList<KAction> media_actions;
   QStringList files =
       KGlobal::dirs()->findAllResources("appdata", "tools/*.desktop");
 
   unplugActionList("tools_list");
   unplugActionList("media_tools_list");
-  mediaPage->mediaButtons->removeActions("media_tools_list");
-
   for(QStringList::ConstIterator it = files.begin(); it != files.end(); ++it)
   {
-    KDesktopFile df(*it);
-    KConfigGroup group = df.group("Desktop Entry");
+    KDesktopFile df(*it, true);
 
     if (df.readName().isEmpty())
       continue;
-    action = new KAction(KIcon(df.readIcon()), df.readName(), this);
-    connect(action, SIGNAL(triggered()), this, SLOT(execTool()));
-    action->setObjectName(*it);
-    actionCollection()->addAction((*it), action);
-
-    if(group.readEntry("X-KMF-MediaMenu") == "true")
+    action = new KAction(df.readName(), df.readIcon(), 0, this,
+                         SLOT(execTool()), actionCollection(), (*it).latin1());
+    if(df.readEntry("X-KMF-MediaMenu") == "true")
       media_actions.append(action);
     else
       actions.append(action);
   }
   plugActionList("tools_list", actions);
   plugActionList("media_tools_list", media_actions);
-  mediaPage->mediaButtons->addActions(media_actions, "media_tools_list");
 }
 
 void KMediaFactory::execTool()
 {
   QString error;
-  QStringList envs;
-  KDesktopFile desktopFile(sender()->objectName());
-  KService service(&desktopFile);
-  KUrl::List lst;
-  QStringList program = KRun::processDesktopExec(service, lst);
-  QString workingDir = desktopFile.readPath();
-  if (workingDir.isEmpty())
-    workingDir = kmfApp->project()->directory("", false);
-  enableUi(false);
-  Run run(program, desktopFile.readPath());
-  QString output = run.output();
-  if(run.output().trimmed() != "")
-    kDebug() << "\n" + run.output();
-  enableUi(true);
+  QString dcopId = kmfApp->dcopClient()->appId();
+  QValueList<QCString> envs;
+
+  envs.append(QCString("KMF_DCOP=") + dcopId.latin1());
+  envs.append(QCString("KMF_WINID=") +
+      QString("%1").arg(kmfApp->mainWidget()->winId()).latin1());
+  if(kmfApp->startServiceByDesktopPath(sender()->name(),
+     QString::null, envs, &error))
+  {
+    KMessageBox::error(kapp->activeWindow(),
+                       i18n("Error in starting %1: %2")
+                           .arg(sender()->name()).arg(error));
+  }
 }
 
 void KMediaFactory::optionsPreferences()
@@ -458,15 +470,22 @@ void KMediaFactory::optionsPreferences()
   //An instance of your dialog could be already created and could be cached,
   //in which case you want to display the cached dialog instead of creating
   //another one
-  if(!KConfigDialog::showDialog("KMediaFactorySettings"))
+  if(!KConfigDialog::showDialog("settings"))
   {
     //KConfigDialog didn't find an instance of this dialog, so lets create it :
     KConfigDialog* dialog = new KConfigDialog(this, "KMediaFactorySettings",
-                                              KMediaFactorySettings::self());
-    dialog->addPage(new KMFOptions(dialog), i18n("KMediaFactory"),
-                    "kmediafactory", i18n("KMediaFactory"));
-    dialog->addPage(new Tools(dialog), i18n("Tools"),
-                    "configure", i18n("Tools"));
+                                              KMediaFactorySettings::self(),
+                                              KDialogBase::IconList,
+                                              KDialogBase::Ok|
+                                              KDialogBase::Cancel);
+    QSqlPropertyMap::defaultMap()->insert("KMFLanguageComboBox", "language");
+    QSqlPropertyMap::defaultMap()->insert("KMFLanguageListBox", "language");
+    QSqlPropertyMap::defaultMap()->insert("KColorCombo", "color");
+
+    dialog->addPage(new KMFOptionsLayout(dialog, "KMediaFactory"),
+                    i18n("KMediaFactory"), "kmediafactory");
+    dialog->addPage(new Tools(dialog, "KMediaFactory"),
+                    i18n("Tools"), "configure");
 
     const KMF::PluginList list = kmfApp->plugins();
     for(KMF::PluginList::ConstIterator obj = list.begin();
@@ -480,7 +499,7 @@ void KMediaFactory::optionsPreferences()
         delete page;
       }
     }
-    //connect(dialog, SIGNAL(okClicked()), this, SLOT(updateToolsMenu()));
+    connect(dialog, SIGNAL(okClicked()), this, SLOT(updateToolsMenu()));
 
     dialog->show();
   }
@@ -530,29 +549,28 @@ bool KMediaFactory::queryClose()
   return true;
 }
 
+#ifdef KMF_TEST
+void KMediaFactory::test()
+{
+  QDVD::Info info;
+
+  info.parseDVD();
+}
+#endif
+
 void KMediaFactory::enableUi(bool enabled)
 {
   menuBar()->setEnabled(enabled);
   toolBar()->setEnabled(enabled);
   if(m_janusIconList)
     m_janusIconList->setEnabled(enabled);
-  mediaPage->mediaFiles->setEnabled(enabled);
-  mediaPage->mediaButtons->setEnabled(enabled);
-  templatePage->templates->setEnabled(enabled);
-  templatePage->previewCheckBox->setEnabled(enabled);
-  templatePage->templatePreview->setEnabled(enabled);
   outputPage->outputs->setEnabled(enabled);
   m_enabled = enabled;
 }
 
-void KMediaFactory::showPage(int page)
+void KMediaFactory::showPage( int page )
 {
-  switch(page)
-  {
-    case 0: m_janus->setCurrentPage(m_mediaPageItem); break;
-    case 1: m_janus->setCurrentPage(m_templatePageItem); break;
-    case 2: m_janus->setCurrentPage(m_ouputPageItem); break;
-  }
+  m_janus->showPage(page);
 }
 
 #include "kmediafactory.moc"
