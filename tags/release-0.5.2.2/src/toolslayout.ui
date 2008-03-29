@@ -1,0 +1,169 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>ToolsLayout</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>ToolsLayout</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>500</width>
+            <height>300</height>
+        </rect>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>500</width>
+            <height>300</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Tools</string>
+    </property>
+    <hbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QListView">
+            <column>
+                <property name="text">
+                    <string>Name</string>
+                </property>
+                <property name="clickable">
+                    <bool>true</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <column>
+                <property name="text">
+                    <string>Description</string>
+                </property>
+                <property name="clickable">
+                    <bool>true</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <property name="name">
+                <cstring>toolsListView</cstring>
+            </property>
+            <property name="allColumnsShowFocus">
+                <bool>true</bool>
+            </property>
+            <property name="resizeMode">
+                <enum>LastColumn</enum>
+            </property>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout1</cstring>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>addButton</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Add</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>27</number>
+                    </property>
+                </widget>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>propertiesButton</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Properties</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>30</number>
+                    </property>
+                </widget>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>removeButton</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Remove</string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>28</number>
+                    </property>
+                </widget>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>40</height>
+                        </size>
+                    </property>
+                </spacer>
+            </vbox>
+        </widget>
+    </hbox>
+</widget>
+<customwidgets>
+</customwidgets>
+<connections>
+    <connection>
+        <sender>addButton</sender>
+        <signal>clicked()</signal>
+        <receiver>ToolsLayout</receiver>
+        <slot>addClicked()</slot>
+    </connection>
+    <connection>
+        <sender>propertiesButton</sender>
+        <signal>clicked()</signal>
+        <receiver>ToolsLayout</receiver>
+        <slot>propertiesClicked()</slot>
+    </connection>
+    <connection>
+        <sender>removeButton</sender>
+        <signal>clicked()</signal>
+        <receiver>ToolsLayout</receiver>
+        <slot>removeClicked()</slot>
+    </connection>
+    <connection>
+        <sender>toolsListView</sender>
+        <signal>selectionChanged()</signal>
+        <receiver>ToolsLayout</receiver>
+        <slot>enableButtons()</slot>
+    </connection>
+</connections>
+<slots>
+    <slot access="protected">addClicked()</slot>
+    <slot access="protected">propertiesClicked()</slot>
+    <slot access="protected">removeClicked()</slot>
+    <slot access="protected">enableButtons()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+</includehints>
+</UI>

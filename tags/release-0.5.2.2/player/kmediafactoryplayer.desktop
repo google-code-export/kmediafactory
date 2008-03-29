@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=KmediaFactory Player
+Name[xx]=xxKmediaFactory Playerxx
+Name[fi]=KmediaFactory Soitin
+Exec=kmediafactoryplayer
+Icon=kmediafactory
+Type=Application
+Comment=KmediaFactory DVD/Video player
+Comment[fi]=KmediaFactory DVD/Video soitin
+Terminal=false
+Categories=KDE;Application;AudioVideo;

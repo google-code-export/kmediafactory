@@ -1,0 +1,37 @@
+Patches and bug fixes:
+- Neal Becker - gcc 4.1/typo fixes
+
+These are credits for code not directly linked for KMediaFactory
+
+- kostore: from http://www.koffice.org/ GPL-2
+- ffmpeg from: ffmpeg.sourceforge.net/ GPL-2
+- Plugin based on 'Building a Plugin Structure for a KDE application'
+  example by Jesper K. Pedersen GPL-2
+- PLugin error handling from libkdepim/pluginmanager.cpp GPL-2
+- add_video.png from crystal icon set (aktion.png)
+- kmediafactory_project.png background from crystal icon set (empty.svgz)
+- ImageMagick check configure.in.in from koffice GPL-2
+- QMimage from: http://home.swipnet.se/~w-53694/CodeSnippets/QMImage/ GPL-2
+- dopr.c: modified from http://www.samba.org snprintf.c GPL-2
+- kmfintl.cpp: gettext code from kdecore GPL-2
+- dv reading from dv2sub.c by Miguel Sahagun GPL-2
+- Travel theme map from http://www.lib.utexas.edu/maps/ Public Domain
+- QFFMpeg based on avcodec_sample.0.4.9.cpp by Martin Böhme
+- QFFMpegEncoder based on output_example.c by Fabrice Bellard
+- mkdir in KMF::Project from QtEz by Jan Prokop GPL-2
+- kxinewidget.*, postfilter.*, positionslider.* in player from Kaffeine GPL-2
+- kmf*.png in lib/pics/ from Qt icons
+- kxinewidget.png from Linspire Clear icon set
+- qdvdinfo.* based on
+  - lsdvd.c from lsdvd GPL-2
+  - streamanalyze.c from streamdvd/streamanalyze GPL-2
+  - dvdread.c from DvdRead input module for vlc GPL-2
+- lrintf.m4 from http://mega-nerd.com/FPcast/lrintf.m4
+- removeDuplicates in KMF::Tools
+  from kdelibs/kded/kbuildimageiofactory.cpp GPL-2
+- appIcon function in tools.cpp from kmenuedit - treeview.cpp
+- desktop file starting from kdecore - kapplication.cpp
+- Most of the Finnish language name translations from here
+  http://elonen.iki.fi/code/misc-notes/RFC-3066-SQL-fi/index.html
+
+Hopefully not forgetting anybody...

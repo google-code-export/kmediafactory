@@ -1,0 +1,141 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>LanguageSelectionLayout</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>LanguageSelectionLayout</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>272</width>
+            <height>395</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Select language</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>languageLabel</cstring>
+            </property>
+            <property name="text">
+                <string>La&amp;nguages:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>languageListBox</cstring>
+            </property>
+        </widget>
+        <widget class="KMFLanguageListBox">
+            <property name="name">
+                <cstring>languageListBox</cstring>
+            </property>
+            <property name="autoFill">
+                <bool>true</bool>
+            </property>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout4</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer3_2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>40</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>okButton</cstring>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>100</width>
+                            <height>0</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string>&amp;OK</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+O</string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>1</number>
+                    </property>
+                </widget>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>cancelButton</cstring>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>100</width>
+                            <height>0</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Cancel</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+C</string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>2</number>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </vbox>
+</widget>
+<customwidgets>
+</customwidgets>
+<connections>
+    <connection>
+        <sender>cancelButton</sender>
+        <signal>clicked()</signal>
+        <receiver>LanguageSelectionLayout</receiver>
+        <slot>reject()</slot>
+    </connection>
+    <connection>
+        <sender>okButton</sender>
+        <signal>clicked()</signal>
+        <receiver>LanguageSelectionLayout</receiver>
+        <slot>accept()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>okButton</tabstop>
+    <tabstop>cancelButton</tabstop>
+</tabstops>
+<includes>
+    <include location="global" impldecl="in implementation">kiconloader.h</include>
+    <include location="global" impldecl="in implementation">kmflanguagewidgets.h</include>
+</includes>
+<slots>
+    <slot access="protected">chaptersClicked()</slot>
+    <slot>audioClicked()</slot>
+</slots>
+<pixmapfunction>BTN_ICON</pixmapfunction>
+<layoutdefaults spacing="6" margin="11"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+</UI>
