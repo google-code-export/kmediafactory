@@ -40,12 +40,15 @@ class KrossPlugin : public KMF::Plugin
 
   public:
     virtual QStringList supportedProjectTypes() const;
-    virtual void ddtest(QVariant v);
-    virtual void test2();
+    virtual KMF::MediaObject* createMediaObject(const QDomElement&);
+    virtual const KMF::ConfigPage* configPage() const;
+
+  public slots: // script functions
+    virtual void registerPlugin(Kross::Object::Ptr plugin);
 
   private:
     Kross::Action *m_action;
-    Kross::Object::Ptr m_plugin;
+    mutable Kross::Object::Ptr m_plugin;
 };
 
 K_EXPORT_KMEDIAFACTORY_PLUGIN(kross, KrossPlugin);
