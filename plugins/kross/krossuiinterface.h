@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2008 by Petri Damsten <damu@iki.fi>
+//   Copyright (C) 2008 Petri Damsten <damu@iki.fi>
 //
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License as published by
@@ -16,3 +16,17 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
+#ifndef KROSSUIINTERFACE_H
+#define KROSSUIINTERFACE_H
+
+#include <QObject>
+
+class KrossUiInterface : public QObject
+{
+  public:
+    KrossUiInterface();
+    ~KrossUiInterface();
+};
+
+#endif // KROSSUIINTERFACE_H
