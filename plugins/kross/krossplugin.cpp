@@ -33,6 +33,11 @@ KrossPlugin::KrossPlugin(QObject *parent, const QVariantList &args) :
   QString name = service->property("Name").toString();
   setObjectName(name);
   kDebug() << name;
+  m_action = new Kross::Action(this, "test");
+  m_action->setFile("/home/damu/test.py");
+  m_action->addObject(this, "kmediafactory");
+  m_action->trigger();
+
   // Initialize GUI
   //setComponentData(KrossFactory::componentData());
   //setXMLFile("kmediafactory_krossui.rc");
@@ -46,42 +51,37 @@ KrossPlugin::~KrossPlugin()
 
 void KrossPlugin::init(const QString &type)
 {
-  // init is reserved word in ??
   kDebug() << type;
   deleteChildren();
 
-  if (type == "DVD-PAL") {
-    m_action = new Kross::Action(this, "test");
-    m_action->setFile("/home/damu/test.py");
-    m_action->addObject(this, "plugin");
-    m_action->trigger();
-    QTimer::singleShot(500, this, SLOT(test2()));
+  if (m_plugin) {
+    // init is reserved word in ?? well in some scripting language
+    m_plugin->callMethod("initPlugin", QVariantList() << type);
   }
 }
 
 QStringList KrossPlugin::supportedProjectTypes() const
 {
   kDebug();
-  QStringList result;
-  return result;
-}
-
-void KrossPlugin::test2()
-{
-  kDebug() << m_action->functionNames();
-  m_action->callFunction("test3", QVariantList());
-}
-
-void KrossPlugin::ddtest(QVariant v)
-{
-  kDebug() << v << v.data();
-  Kross::Object::Ptr obj = v.value<Kross::Object::Ptr>();
-  kDebug() << obj;
-
-  if (obj) {
-    kDebug() << obj->methodNames();
-    obj->callMethod("test1", QVariantList() << "heippaXX");
+  if (m_plugin) {
+    return m_plugin->callMethod("supportedProjectTypes").toStringList();
   }
+  return QStringList();
+}
+
+KMF::MediaObject* KrossPlugin::createMediaObject(const QDomElement&)
+{
+  return 0;
+}
+
+const KMF::ConfigPage* KrossPlugin::configPage() const
+{
+  return 0;
+}
+
+void KrossPlugin::registerPlugin(Kross::Object::Ptr plugin)
+{
+  m_plugin = plugin;
 }
 
 #include "krossplugin.moc"
