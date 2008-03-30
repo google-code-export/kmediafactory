@@ -32,7 +32,7 @@ KMF::Plugin::~Plugin()
   deleteChildren();
 }
 
-KMF::UiInterface* KMF::Plugin::uiInterface()
+KMF::UiInterface* KMF::Plugin::uiInterface() const
 {
   KMF::UiInterface* obj = 0;
 
@@ -41,7 +41,7 @@ KMF::UiInterface* KMF::Plugin::uiInterface()
   return obj;
 }
 
-KMF::ProjectInterface* KMF::Plugin::projectInterface()
+KMF::ProjectInterface* KMF::Plugin::projectInterface() const
 {
   KMF::ProjectInterface* obj = 0;
 
@@ -56,6 +56,16 @@ void KMF::Plugin::deleteChildren()
 
   while(!list.isEmpty())
     delete list.takeFirst();
+}
+
+KMF::MediaObject* KMF::Plugin::createMediaObject(const QDomElement&)
+{ 
+  return 0; 
+}
+
+const KMF::ConfigPage* KMF::Plugin::configPage() const 
+{ 
+  return 0; 
 }
 
 #include "plugin.moc"

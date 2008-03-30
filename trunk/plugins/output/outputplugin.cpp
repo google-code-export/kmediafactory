@@ -147,7 +147,7 @@ void OutputPlugin::slotDVDInfo()
 #endif
 }
 
-QStringList OutputPlugin::supportedProjectTypes()
+QStringList OutputPlugin::supportedProjectTypes() const
 {
   QStringList result;
   result << "DVD-PAL" << "DVD-NTSC";

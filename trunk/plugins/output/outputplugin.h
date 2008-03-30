@@ -35,7 +35,11 @@ class OutputPlugin : public KMF::Plugin
 
   public slots:
     virtual void init(const QString &type);
-    virtual QStringList supportedProjectTypes();
+
+  public:
+    virtual QStringList supportedProjectTypes() const;
+
+  public slots:
     void slotPreviewDVDXine();
     void slotPreviewDVDKaffeine();
     void slotDVDInfo();

@@ -45,24 +45,22 @@ namespace KMF
   {
       Q_OBJECT
     public:
-      Plugin(QObject *parent = 0);
-      virtual ~Plugin();
-      virtual MediaObject* createMediaObject(const QDomElement&)
-        { return 0; };
-      virtual const ConfigPage* configPage() const { return 0; };
+      explicit Plugin(QObject *parent = 0);
+      ~Plugin();
 
-      UiInterface* uiInterface();
-      ProjectInterface* projectInterface();
+      UiInterface* uiInterface() const;
+      ProjectInterface* projectInterface() const;
 
     public slots:
-      virtual void init(const QString &type) { m_type = type; };
-      virtual QStringList supportedProjectTypes() = 0;
+      virtual void init(const QString &type) = 0;
+
+    public:
+      virtual QStringList supportedProjectTypes() const = 0;
+      virtual MediaObject* createMediaObject(const QDomElement&);
+      virtual const ConfigPage* configPage() const;
 
     protected:
       void deleteChildren();
-
-    private:
-      QString m_type;
   };
 
   typedef QList<Plugin*> PluginList;

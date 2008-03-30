@@ -177,7 +177,7 @@ KMF::MediaObject* VideoPlugin::createMediaObject(const QDomElement& element)
   return mob;
 }
 
-QStringList VideoPlugin::supportedProjectTypes()
+QStringList VideoPlugin::supportedProjectTypes() const
 {
   QStringList result;
   result << "DVD-PAL" << "DVD-NTSC";
