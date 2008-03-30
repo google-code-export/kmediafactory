@@ -41,22 +41,13 @@
 #include "dvdinfo.h"
 #endif
 
-static const KAboutData about("kmediafactory_output", 0,
-                              ki18n("KMediaFactory Output"), VERSION,
-                              ki18n("Output plugin for KMediaFactory."),
-                              KAboutData::License_GPL,
-                              ki18n(COPYRIGHT), KLocalizedString(),
-                              HOMEPAGE, BUG_EMAIL);
-
-K_PLUGIN_FACTORY(OutputFactory, registerPlugin<OutputPlugin>();)
-K_EXPORT_PLUGIN(OutputFactory("kmediafactory_output"))
+K_EXPORT_KMEDIAFACTORY_PLUGIN(output, OutputPlugin);
 
 OutputPlugin::OutputPlugin(QObject *parent, const QVariantList&) :
   KMF::Plugin(parent), addPreviewDVDXine(0), addPreviewDVDKaffeine(0)
 {
   setObjectName("KMFOutput");
   // Initialize GUI
-  setComponentData(OutputFactory::componentData());
   setXMLFile("kmediafactory_outputui.rc");
 
   m_xine = KStandardDirs::findExe("xine");

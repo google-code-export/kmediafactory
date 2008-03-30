@@ -34,15 +34,7 @@
 #include <kicon.h>
 #include <KPluginLoader>
 
-static const KAboutData about("kmediafactory_slideshow", 0,
-                              ki18n("KMediaFactory Slideshow"), VERSION,
-                              ki18n("Slideshow plugin for KMediaFactory."),
-                              KAboutData::License_GPL,
-                              ki18n(COPYRIGHT), KLocalizedString(),
-                              HOMEPAGE, BUG_EMAIL);
-
-K_PLUGIN_FACTORY(SlideshowFactory, registerPlugin<SlideshowPlugin>();)
-K_EXPORT_PLUGIN(SlideshowFactory("kmediafactory_slideshow"))
+K_EXPORT_KMEDIAFACTORY_PLUGIN(slideshow, SlideshowPlugin);
 
 class SlideshowConfig : public QWidget, public Ui::SlideshowConfig
 {
@@ -62,8 +54,6 @@ SlideshowPlugin::SlideshowPlugin(QObject *parent, const QVariantList&) :
 
 QAction* SlideshowPlugin::setupActions()
 {
-  // Initialize GUI
-  setComponentData(SlideshowFactory::componentData());
   // Add action for menu item
   QAction* addSlideshowAction = new KAction(KIcon("kuickshow"),
                                      i18n("Add Slideshow"), parent());

@@ -39,15 +39,7 @@
 #include <QPixmap>
 #include <QCheckBox>
 
-static const KAboutData about("kmediafactory_video", 0,
-                              ki18n("KMediaFactory Video"), VERSION,
-                              ki18n("Video plugin for KMediaFactory."),
-                              KAboutData::License_GPL,
-                              ki18n(COPYRIGHT), KLocalizedString(),
-                              HOMEPAGE, BUG_EMAIL);
-
-K_PLUGIN_FACTORY(VideoFactory, registerPlugin<VideoPlugin>();)
-K_EXPORT_PLUGIN(VideoFactory("kmediafactory_video"))
+K_EXPORT_KMEDIAFACTORY_PLUGIN(video, VideoPlugin);
 
 class VideoConfig : public QWidget, public Ui::VideoConfig
 {
@@ -81,8 +73,6 @@ const KMF::ConfigPage* VideoPlugin::configPage() const
 
 QAction* VideoPlugin::setupActions()
 {
-  setComponentData(VideoFactory::componentData());
-
   // Add action for menu item
   QAction* addVideoAction = new KAction(KIcon("video-mpeg"), i18n("Add Video"),
                                         parent());

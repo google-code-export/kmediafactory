@@ -64,6 +64,7 @@ namespace KMF
   };
 
   typedef QList<Plugin*> PluginList;
+
 } // KMF namespace
 
 Q_DECLARE_METATYPE(KService::Ptr)

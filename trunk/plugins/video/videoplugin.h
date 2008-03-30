@@ -17,6 +17,7 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef VIDEOPLUGIN_H
 #define VIDEOPLUGIN_H
 
@@ -25,9 +26,9 @@
 
 class KAction;
 
-class VideoPlugin :public KMF::Plugin
+class VideoPlugin : public KMF::Plugin
 {
-    Q_OBJECT
+  Q_OBJECT
   public:
     VideoPlugin(QObject *parent, const QVariantList&);
     ~VideoPlugin();
@@ -45,8 +46,7 @@ class VideoPlugin :public KMF::Plugin
 
   protected:
     QAction* setupActions();
-
 };
 
-#endif /* VIDEOPLUGIN_H */
+#endif // VIDEOPLUGIN_H
 
