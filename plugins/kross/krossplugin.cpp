@@ -23,7 +23,6 @@
 #include <QTimer>
 #include "krossplugin.h"
 #include <kross/core/action.h>
-#include <kross/core/object.h>
 #include <kross/core/interpreter.h>
 #include <kross/core/manager.h>
 
@@ -32,7 +31,6 @@ KrossPlugin::KrossPlugin(QObject *parent, const QVariantList &args) :
 {
   KService::Ptr service = args[0].value<KService::Ptr>();
   QString name = service->property("Name").toString();
-  // Custom property ScriptName?
   setObjectName(name);
   kDebug() << name;
   // Initialize GUI
@@ -48,6 +46,7 @@ KrossPlugin::~KrossPlugin()
 
 void KrossPlugin::init(const QString &type)
 {
+  // init is reserved word in ??
   kDebug() << type;
   deleteChildren();
 
@@ -60,7 +59,7 @@ void KrossPlugin::init(const QString &type)
   }
 }
 
-QStringList KrossPlugin::supportedProjectTypes()
+QStringList KrossPlugin::supportedProjectTypes() const
 {
   kDebug();
   QStringList result;

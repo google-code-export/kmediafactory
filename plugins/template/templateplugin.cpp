@@ -96,7 +96,7 @@ void TemplatePlugin::init(const QString &type)
   new NewStuffObject(this);
 }
 
-QStringList TemplatePlugin::supportedProjectTypes()
+QStringList TemplatePlugin::supportedProjectTypes() const
 {
   QStringList result;
   result << "DVD-PAL" << "DVD-NTSC";

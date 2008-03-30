@@ -30,18 +30,22 @@ class VideoPlugin :public KMF::Plugin
     Q_OBJECT
   public:
     VideoPlugin(QObject *parent, const QVariantList&);
-    virtual ~VideoPlugin();
+    ~VideoPlugin();
 
+  public slots:
+    virtual void init(const QString &type);
+
+  public:
     virtual KMF::MediaObject* createMediaObject(const QDomElement& element);
     virtual const KMF::ConfigPage* configPage() const;
+    virtual QStringList supportedProjectTypes() const;
+
+  public slots:
+    void slotAddVideo();
 
   protected:
     QAction* setupActions();
 
-  public slots:
-    virtual void init(const QString &type);
-    virtual QStringList supportedProjectTypes();
-    void slotAddVideo();
 };
 
 #endif /* VIDEOPLUGIN_H */

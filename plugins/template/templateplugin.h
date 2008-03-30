@@ -28,11 +28,12 @@ class TemplatePlugin :public KMF::Plugin
   public:
     TemplatePlugin(QObject *parent, const QVariantList&);
 
-    virtual const KMF::ConfigPage* configPage() const;
-
   public slots:
     virtual void init(const QString &type);
-    virtual QStringList supportedProjectTypes();
+
+  public:
+    virtual const KMF::ConfigPage* configPage() const;
+    virtual QStringList supportedProjectTypes() const;
 };
 
 #endif /* TEMPLATEPLUGIN_H */

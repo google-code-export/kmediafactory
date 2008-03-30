@@ -22,6 +22,7 @@
 #define KROSSPLUGIN_H
 
 #include <kmediafactory/plugin.h>
+#include <kross/core/object.h>
 
 namespace Kross {
   class Action;
@@ -36,12 +37,15 @@ class KrossPlugin : public KMF::Plugin
 
   public slots:
     virtual void init(const QString &type);
-    virtual QStringList supportedProjectTypes();
+
+  public:
+    virtual QStringList supportedProjectTypes() const;
     virtual void ddtest(QVariant v);
     virtual void test2();
 
   private:
     Kross::Action *m_action;
+    Kross::Object::Ptr m_plugin;
 };
 
 K_EXPORT_KMEDIAFACTORY_PLUGIN(kross, KrossPlugin);
