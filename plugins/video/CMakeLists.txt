@@ -29,6 +29,6 @@ kde4_add_plugin(kmediafactory_video ${kmediafactory_video_SRCS})
 target_link_libraries(kmediafactory_video ${KDE4_KDECORE_LIBS} kmediafactoryinterfaces kmf)
 
 install(TARGETS kmediafactory_video DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES kmediafactory_videoui.rc DESTINATION ${DATA_INSTALL_DIR}/kmediafactory_video)
+install(FILES kmediafactory_videoui.rc DESTINATION ${DATA_INSTALL_DIR}/kmediafactory)
 install(FILES videoplugin.kcfg DESTINATION ${KCFG_INSTALL_DIR})
 install(FILES kmediafactory_video.desktop DESTINATION ${SERVICES_INSTALL_DIR})

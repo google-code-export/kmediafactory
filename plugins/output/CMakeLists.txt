@@ -25,5 +25,5 @@ kde4_add_plugin(kmediafactory_output ${kmediafactory_output_SRCS})
 target_link_libraries(kmediafactory_output ${KDE4_KDECORE_LIBS} kmediafactoryinterfaces kmf kmediafactorykstore)
 
 install(TARGETS kmediafactory_output DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES kmediafactory_outputui.rc DESTINATION ${DATA_INSTALL_DIR}/kmediafactory_output)
+install(FILES kmediafactory_outputui.rc DESTINATION ${DATA_INSTALL_DIR}/kmediafactory)
 install(FILES kmediafactory_output.desktop DESTINATION ${SERVICES_INSTALL_DIR})

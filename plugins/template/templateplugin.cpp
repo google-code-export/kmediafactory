@@ -40,15 +40,7 @@
 #include <QPixmap>
 #include <QImage>
 
-static const KAboutData about("kmediafactory_template", 0,
-                              ki18n("KMediaFactory Template"), VERSION,
-                              ki18n("Template plugin for KMediaFactory."),
-                              KAboutData::License_GPL,
-                              ki18n(COPYRIGHT), KLocalizedString(),
-                              HOMEPAGE, BUG_EMAIL);
-
-K_PLUGIN_FACTORY(TemplateFactory, registerPlugin<TemplatePlugin>();)
-K_EXPORT_PLUGIN(TemplateFactory("kmediafactory_template"))
+K_EXPORT_KMEDIAFACTORY_PLUGIN(template, TemplatePlugin);
 
 class TemplateConfig : public QWidget, public Ui::ConfigureTemplatePlugin
 {
@@ -64,7 +56,6 @@ TemplatePlugin::TemplatePlugin(QObject *parent, const QVariantList&) :
 {
   setObjectName("KMFTemplateEngine");
   // Initialize GUI
-  setComponentData(TemplateFactory::componentData());
   setXMLFile("kmediafactory_templateui.rc");
 }
 

@@ -42,7 +42,7 @@ kde4_add_plugin(kmediafactory_template ${kmediafactory_template_SRCS})
 target_link_libraries(kmediafactory_template ${KDE4_KDECORE_LIBS} ${KDE4_KNEWSTUFF2_LIBRARY} ${QT_QTUITOOLS_LIBRARY} kmediafactoryinterfaces kmf kmediafactorykstore)
 
 install(TARGETS kmediafactory_template DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES kmediafactory_templateui.rc DESTINATION ${DATA_INSTALL_DIR}/kmediafactory_template)
+install(FILES kmediafactory_templateui.rc DESTINATION ${DATA_INSTALL_DIR}/kmediafactory)
 install(FILES templateplugin.kcfg DESTINATION ${KCFG_INSTALL_DIR})
 install(FILES kmediafactory_template.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(FILES kmediafactory_template.knsrc DESTINATION ${CONFIG_INSTALL_DIR})
