@@ -28,8 +28,8 @@
 #ifndef DSPUTIL_H
 #define DSPUTIL_H
 
-#include "ffmpeg/common.h"
-#include "ffmpeg/avcodec.h"
+#include "common.h"
+#include "avcodec.h"
 
 
 //#define DEBUG
