@@ -1,7 +1,7 @@
-CHANGED FROM THE LATEST RELEASE (0.5.2.2)
+CHANGED FROM THE LATEST RELEASE (0.5.2.3)
 ==========================================
 Bug fixes:
-- Fix version hasles
+- ffmpeg header fix
 
 CHANGED FROM THE PREVIOUS SNAPSHOT
 ========================================
