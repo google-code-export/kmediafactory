@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,21 +20,20 @@
 #ifndef KMFTOOLBUTTON_H
 #define KMFTOOLBUTTON_H
 
-#include <kdemacros.h>
 #include <qtoolbutton.h>
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
-class KDE_EXPORT KMFToolButton : public QToolButton
+class KMFToolButton : public QToolButton
 {
     Q_OBJECT
   public:
-    KMFToolButton(QWidget* parent);
+    KMFToolButton(QWidget* parent, const char* name=0);
     ~KMFToolButton();
 
   protected:
-    virtual void paintEvent(QPaintEvent* event);
+    void drawButton(QPainter *p);
 };
 
 #endif

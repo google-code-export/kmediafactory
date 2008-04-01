@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -18,18 +18,17 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 #include "dvdauthorparser.h"
-#include <QFile>
-#include <QTextStream>
+#include <qfile.h>
 
 void KMF::DVDAuthorParser::setFile(const QString& fileName)
 {
   m_file = fileName;
   m_files.clear();
   QFile file(fileName);
-  if(file.open(QIODevice::ReadOnly))
+  if(file.open(IO_ReadOnly))
   {
     QTextStream stream(&file);
-    m_doc.setContent(stream.readAll());
+    m_doc.setContent(stream.read());
     file.close();
   }
 }

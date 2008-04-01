@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -25,17 +25,11 @@
 #include <kmessagebox.h>
 #include <kapplication.h>
 #include <kdebug.h>
-#include <kio/netaccess.h>
-#include <QLabel>
+#include <qlabel.h>
 
-SubtitleOptions::SubtitleOptions(QWidget *parent)
- : KDialog(parent)
+SubtitleOptions::SubtitleOptions(QWidget *parent, const char *name)
+ : SubtitleOptionsLayout(parent, name)
 {
-  setupUi(mainWidget());
-  setButtons(KDialog::Ok | KDialog::Cancel);
-  setCaption(i18n("Subtitle options"));
-  m_languageModel.useAllLanguages();
-  languageCombo->setModel(&m_languageModel);
 }
 
 SubtitleOptions::~SubtitleOptions()
@@ -45,76 +39,45 @@ SubtitleOptions::~SubtitleOptions()
 void SubtitleOptions::getData(QDVD::Subtitle& obj) const
 {
   int align;
-  int n = languageCombo->currentIndex();
-  int hor[] = { 0, Qt::AlignLeft, Qt::AlignRight, Qt::AlignHCenter };
-  int ver[] = { Qt::AlignTop, Qt::AlignBottom, Qt::AlignVCenter };
 
-  obj.setLanguage(m_languageModel.at(n));
-  obj.setFile(subtitleUrl->url().pathOrUrl());
+  obj.setLanguage(languageCombo->language());
+  obj.setFile(subtitleURL->url());
   obj.setFont(subtitleFontChooser->font());
 
-  align =  ver[verticalAlignCombo->currentIndex()];
-  align |= hor[horizontalAlignCombo->currentIndex()];
-  obj.setAlignment(QFlags<Qt::AlignmentFlag>(align));
+  align =  0x10 << verticalAlignCombo->currentItem();
+  int n = horizontalAlignCombo->currentItem();
+  align |= (n == 0) ? 0 : 0x01 << (n - 1);
+  obj.setAlignment(Qt::AlignmentFlags(align));
 }
 
 void SubtitleOptions::setData(const QDVD::Subtitle& obj)
 {
   int n;
 
-  subtitleUrl->setFilter(
+  subtitleURL->setFilter(
       "*.sub *.srt *.ssa *.smi *.rt *.txt *.aqt *.jss *.js *.ass|" +
       i18n("Subtitle files") +
       "\n*.*|" + i18n("All files"));
-  QModelIndex i = m_languageModel.index(obj.language());
-  languageCombo->setCurrentIndex(i.row());
-  subtitleUrl->setUrl(obj.file());
+
+  languageCombo->setLanguage(obj.language());
+  subtitleURL->setURL(obj.file());
   subtitleFontChooser->setFont(obj.font());
 
-  switch(obj.alignment() & Qt::AlignVertical_Mask)
-  {
-    case Qt::AlignTop:
-      n = 0;
-      break;
-    case Qt::AlignVCenter:
-        n = 2;
-        break;
-    case Qt::AlignBottom:
-    default:
-        n = 1;
-        break;
-  }
-  verticalAlignCombo->setCurrentIndex(n);
-
-  switch(obj.alignment() & Qt::AlignHorizontal_Mask)
-  {
-    case Qt::AlignLeft:
-      n = 1;
-      break;
-    case Qt::AlignRight:
-      n = 2;
-      break;
-    case Qt::AlignHCenter:
-      n = 3;
-      break;
-    default:
-      n = 0;
-  }
-  horizontalAlignCombo->setCurrentIndex(n);
+  n = (obj.alignment() & Qt::AlignVertical_Mask) >> 4;
+  verticalAlignCombo->setCurrentItem((n > 2) ? 2 : n-1);
+  n = obj.alignment() & Qt::AlignHorizontal_Mask;
+  horizontalAlignCombo->setCurrentItem((n > 2)?3:n);
 }
 
-void SubtitleOptions::accept()
+void SubtitleOptions::okClicked()
 {
-  if(KIO::NetAccess::exists(subtitleUrl->url(), KIO::NetAccess::SourceSide,
-     kapp->activeWindow()))
-  {
-    KDialog::accept();
-  }
+  QFileInfo fi(subtitleURL->url());
+
+  if(fi.exists())
+    accept();
   else
-  {
     KMessageBox::sorry(kapp->activeWindow(),
                        i18n("Subtitle file does not exists."));
-  }
 }
 
 #include "subtitleoptions.moc"

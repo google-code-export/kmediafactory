@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,29 +20,25 @@
 #ifndef MEDIAPAGE_H
 #define MEDIAPAGE_H
 
-#include "ui_mediapage.h"
-#include <kmficonview.h>
+#include "mediapagelayout.h"
 
+class QIconViewItem;
 class QPoint;
-namespace KMF { class MediaObject; };
 
 /**
  * @short Page for media selection
- * @author Petri Damsten <petri.damsten@iki.fi>
+ * @author Petri Damstén <petri.damsten@iki.fi>
  */
 
-class MediaPage : public QWidget, public Ui::MediaPage
+class MediaPage : public MediaPageLayout
 {
     Q_OBJECT
   public:
-    MediaPage(QWidget* parent = 0);
+    MediaPage(QWidget* parent = 0, const char* name = 0, WFlags fl = 0);
     virtual ~MediaPage();
-
   public slots:
-    void contextMenuRequested(const QPoint& pos);
+    void contextMenuRequested(QIconViewItem* item, const QPoint& pos);
     void calculateSizes();
-    void projectInit();
-    void mediaModified();
 };
 
 #endif

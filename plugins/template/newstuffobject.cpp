@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -19,18 +19,18 @@
 //**************************************************************************
 
 #include "newstuffobject.h"
-#include "templateobject.h"
 #include "templateplugin.h"
 #include "templatepluginsettings.h"
+#include "templatenewstuff.h"
 #include <klocale.h>
-#include <knewstuff2/engine.h>
+#include <knewstuff/knewstuffgeneric.h>
 #include <kapplication.h>
 #include <kiconloader.h>
 
 NewStuffObject::NewStuffObject(QObject* parent):
   KMF::TemplateObject(parent), m_newstuff(0)
 {
-  setObjectName("newstuff");
+  setName("newstuff");
   setTitle(i18n("Get more..."));
   uiInterface()->addTemplateObject(this);
 }
@@ -40,37 +40,23 @@ NewStuffObject::~NewStuffObject()
   KMF::UiInterface *ui = uiInterface();
   if(ui)
     uiInterface()->removeTemplateObject(this);
+  delete m_newstuff;
 }
 
 bool NewStuffObject::clicked()
 {
-  KNS::Engine *engine = new KNS::Engine();
-  engine->init("kmediafactory_template.knsrc");
-  KNS::Entry::List entries = engine->downloadDialogModal();
-  // Remove uninstalled
-  QList< ::TemplateObject* > templates =
-      parent()->findChildren< ::TemplateObject* >();
-  foreach (::TemplateObject* temp, templates)
-  {
-    if (!temp->fileExists())
-      delete temp;
-  }
-  // Add installed
-  foreach (KNS::Entry* entry, entries)
-  {
-    foreach (QString file, entry->installedFiles())
-    {
-      new ::TemplateObject(file, parent());
-    }
-  }
-  delete engine;
+  if(!m_newstuff)
+    m_newstuff = new TemplateNewStuff(TemplatePluginSettings::providersUrl(),
+                                      kapp->activeWindow(), 
+                                      static_cast<TemplatePlugin*>(parent()));
+  m_newstuff->download();
   return true;
 }
 
 QPixmap NewStuffObject::pixmap() const
 {
-  return KIconLoader::global()->loadIcon("get-hot-new-stuff",
-      KIconLoader::NoGroup, KIconLoader::SizeLarge);
+  return KGlobal::iconLoader()->loadIcon("knewstuff", KIcon::NoGroup,
+      KIcon::SizeLarge);
 }
 
 #include "newstuffobject.moc"

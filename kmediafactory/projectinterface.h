@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -22,14 +22,16 @@
 
 #include "kmfobject.h"
 #include <qdatetime.h>
-#include <kdemacros.h>
+#include <qptrlist.h>
 
 class QDomElement;
 class MediaObject;
 
+/**
+*/
 namespace KMF
 {
-  class KDE_EXPORT ProjectInterface :public QObject
+  class ProjectInterface :public QObject
   {
       Q_OBJECT
     public:
@@ -37,9 +39,9 @@ namespace KMF
         DirtyMediaOrTemplate = 3, DirtyAny = 7 };
 
     public:
-      ProjectInterface(QObject* parent);
+      ProjectInterface(QObject* parent, const char* name = 0);
 
-      virtual QList<MediaObject*> mediaObjects() = 0;
+      virtual QPtrList<MediaObject>* mediaObjects() = 0;
       virtual QString title() = 0;
       virtual void setTitle(QString title) = 0;
       virtual QString projectDir(const QString& subDir = "") = 0;

@@ -1,6 +1,0 @@
-[KNewStuff2]
-ProvidersUrl=http://download.kde.org/khotnewstuff/kmediafactorytools-providers.xml
-ChecksumPolicy=ifpossible
-SignaturePolicy=ifpossible
-TargetDir=kmediafactory/tools
-Uncompress=true

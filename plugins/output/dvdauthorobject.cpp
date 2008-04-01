@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -23,12 +23,11 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <QPixmap>
 
-DvdAuthorObject::DvdAuthorObject(QObject* parent)
-  : OutputObject(parent)
+DvdAuthorObject::DvdAuthorObject(QObject* parent, const char* name)
+  : OutputObject(parent, name)
 {
-  setObjectName("dvdauthor");
+  setName("dvdauthor");
   setTitle(i18n("DVDAuthor project"));
 }
 
@@ -39,14 +38,13 @@ DvdAuthorObject::~DvdAuthorObject()
     ui->removeOutputObject(this);
 }
 
-void DvdAuthorObject::actions(QList<QAction*>&) const
+void DvdAuthorObject::actions(QPtrList<KAction>&) const
 {
   //actionList.append(dvdAuthorProperties);
 }
 
-bool DvdAuthorObject::fromXML(const QDomElement&)
+void DvdAuthorObject::fromXML(const QDomElement&)
 {
-  return true;
 }
 
 int DvdAuthorObject::timeEstimate() const
@@ -67,8 +65,8 @@ void DvdAuthorObject::toXML(QDomElement&) const
 
 QPixmap DvdAuthorObject::pixmap() const
 {
-  return KIconLoader::global()->loadIcon("media-optical", KIconLoader::NoGroup,
-                                         KIconLoader::SizeLarge);
+  return KGlobal::iconLoader()->loadIcon("dvd_unmount", KIcon::NoGroup,
+                                                        KIcon::SizeLarge);
 }
 
 #include "dvdauthorobject.moc"

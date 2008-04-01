@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -26,8 +26,8 @@
 #include "kmfproject.h"
 #include <kdebug.h>
 
-KMFProjectInterface::KMFProjectInterface(QObject *parent) :
-  KMF::ProjectInterface(parent)
+KMFProjectInterface::KMFProjectInterface(QObject *parent, const char *name) :
+  KMF::ProjectInterface(parent, name)
 {
 }
 
@@ -45,9 +45,9 @@ void KMFProjectInterface::setTitle(QString title)
   return kmfApp->project()->setTitle(title);
 }
 
-QList<KMF::MediaObject*> KMFProjectInterface::mediaObjects()
+QPtrList<KMF::MediaObject>* KMFProjectInterface::mediaObjects()
 {
-  return kmfApp->project()->mediaObjects()->list();
+  return kmfApp->project()->mediaObjects();
 }
 
 QString KMFProjectInterface::projectDir(const QString& subDir)

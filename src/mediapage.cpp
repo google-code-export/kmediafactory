@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -21,62 +21,55 @@
 #include "kmediafactory.h"
 #include "kmfapplication.h"
 #include "kmficonview.h"
-#include <kmftools.h>
 #include "sizewidget.h"
-#include <kxmlguifactory.h>
-#include <kactioncollection.h>
-#include <QPoint>
-#include <QMenu>
-#include <QTimer>
+#include <qpopupmenu.h>
+#include <qpoint.h>
+#include <qiconview.h>
 
-MediaPage::MediaPage(QWidget *parent) :
-  QWidget(parent)
+MediaPage::MediaPage(QWidget *parent, const char *name, WFlags fl)
+ : MediaPageLayout(parent, name, fl)
 {
-  setupUi(this);
-
-  mediaFiles->setSpacing(5);
-  mediaFiles->setItemDelegate(new KMFItemDelegate());
-  connect(mediaFiles, SIGNAL(customContextMenuRequested(const QPoint&)),
-          this, SLOT(contextMenuRequested(const QPoint&)));
+  connect(mediaFiles,
+          SIGNAL(contextMenuRequested(QIconViewItem*, const QPoint&)),
+          this, SLOT(contextMenuRequested(QIconViewItem*, const QPoint&)));
+  mediaFiles->setItemsMovable(true);
+  mediaFiles->setAutoArrange(true);
+  calculateSizes();
 }
 
 MediaPage::~MediaPage()
 {
 }
 
-void MediaPage::projectInit()
+void MediaPage::contextMenuRequested(QIconViewItem *item, const QPoint &pos)
 {
-  calculateSizes();
-  mediaFiles->setModel(kmfApp->project()->mediaObjects());
-}
-
-void MediaPage::mediaModified()
-{
-  calculateSizes();
-}
-
-void MediaPage::contextMenuRequested(const QPoint &pos)
-{
-  QModelIndex i = mediaFiles->indexAt(pos);
-
-  if(!kmfApp->project()->mediaObjects()->isValid(i))
-    return;
-
-  KMF::MediaObject* ob = kmfApp->project()->mediaObjects()->at(i);
-  KMediaFactory* mainWindow = kmfApp->mainWindow();
-  KXMLGUIFactory* factory = mainWindow->factory();
-
-  QList<QAction*> actions;
-  ob->actions(actions);
-  factory->plugActionList(mainWindow,
-      QString::fromLatin1("media_file_actionlist"), actions);
-  QWidget *w = factory->container("media_file_popup", mainWindow);
-  if(w)
+  if(item)
   {
-    QMenu* popup = static_cast<QMenu*>(w);
-    popup->exec(mediaFiles->viewport()->mapToGlobal(pos));
+    KMediaFactory* mainWindow =
+        static_cast<KMediaFactory*>(kmfApp->mainWidget());
+    KXMLGUIFactory* factory = mainWindow->factory();
+    KMF::Object* ob = (static_cast<KMFIconViewItem*>(item))->ob();
+    QIconView* iconView = item->iconView();
+
+    QPtrList<KAction> actions;
+    ob->actions(actions);
+    factory->plugActionList(mainWindow,
+        QString::fromLatin1("media_file_actionlist"), actions);
+    QWidget *w = factory->container("media_file_popup", mainWindow);
+    if(w)
+    {
+      QPopupMenu *popup = static_cast<QPopupMenu*>(w);
+      popup->exec(pos);
+      // TODO: Should object update itself?
+      if(iconView->index(item) != -1)
+      {
+        item->setText(ob->title());
+        item->setPixmap(ob->pixmap());
+        calculateSizes();
+      }
+    }
+    factory->unplugActionList(mainWindow, "media_file_actionlist");
   }
-  factory->unplugActionList(mainWindow, "media_file_actionlist");
 }
 
 void MediaPage::calculateSizes()
@@ -86,12 +79,12 @@ void MediaPage::calculateSizes()
 
   if(kmfApp->project())
   {
-    QList<KMF::MediaObject*> mobs = kmfApp->project()->mediaObjects()->list();
+    QPtrList<KMF::MediaObject>* mobs = kmfApp->project()->mediaObjects();
     KMF::MediaObject *mob;
 
-    foreach(mob, mobs)
+    for (mob = mobs->first(); mob; mob = mobs->next())
       size += mob->size();
-    size += mobs.size() * 200 * 1024; // Not very good estimate...
+    // size += TODO: MENU SIZE
   }
   sizeWidget->setMax(max);
   sizeWidget->setSize(size);

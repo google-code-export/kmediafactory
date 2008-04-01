@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -35,13 +35,9 @@ class Slide
     QString picture;
     QString comment;
     bool    chapter;
-
-    bool operator <(const Slide &t) const { return (comment < t.comment); }
 };
 
-Q_DECLARE_METATYPE(Slide);
-
-typedef QList<Slide> SlideList;
+typedef QValueList<Slide> SlideList;
 
 class SlideshowObject : public KMF::MediaObject
 {
@@ -54,7 +50,7 @@ class SlideshowObject : public KMF::MediaObject
     virtual QPixmap pixmap() const;
     virtual bool make(QString type);
     virtual int timeEstimate() const;
-    virtual void actions(QList<QAction*>&) const;
+    virtual void actions(QPtrList<KAction>&) const;
     virtual void writeDvdAuthorXml(QDomElement& element,
                                    QString preferredLanguage,
                                    QString post, QString type);
@@ -66,12 +62,12 @@ class SlideshowObject : public KMF::MediaObject
     virtual QTime chapterTime(int chapter) const;
 
     virtual void toXML(QDomElement& element) const;
-    virtual bool fromXML(const QDomElement& element);
+    virtual void fromXML(const QDomElement& element);
 
     void addPics(QStringList list);
 
-    const SlideList& slides() const { return m_slides; };
-    void setSlides(const SlideList& slides) { m_slides = slides; };
+    const QValueList<Slide>& slides() const { return m_slides; };
+    void setSlides(const QValueList<Slide>& slides) { m_slides = slides; };
     double slideDuration() const { return m_duration; };
     void setSlideDuration(double duration) { m_duration = duration; };
     bool loop() const { return m_loop; };
@@ -87,29 +83,29 @@ class SlideshowObject : public KMF::MediaObject
 
   public slots:
     virtual void slotProperties();
-    void output(QString line);
+    void output(KProcess* process, char* buffer, int buflen);
     virtual void clean();
 
   protected:
     void generateId();
     const Slide& chapter(int chap) const;
     bool writeSlideshowFile() const;
-    bool convertToDVD();
+    bool convertToDVD() const;
     bool copyOriginals() const;
     bool oooConvert(QString* file) const;
     QTime audioDuration() const;
     double calculatedSlideDuration() const;
+    bool lastChapter(SlideList::ConstIterator& iter);
 
   private:
-    QAction* m_slideshowProperties;
-    QList<Slide> m_slides;
+    KAction* m_slideshowProperties;
+    QValueList<Slide> m_slides;
     QString m_id;
     double  m_duration;
     bool m_loop;
     bool m_includeOriginals;
     QStringList m_audioFiles;
     QString m_buffer;
-    KProcess* dvdslideshow;
 };
 
 #endif // SLIDESHOWOBJECT_H

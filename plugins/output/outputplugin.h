@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -23,31 +23,30 @@
 #include <kmf_stddef.h>
 #include <kmediafactory/plugin.h>
 
-class QAction;
+class KAction;
 
-class OutputPlugin : public KMF::Plugin
+class OutputPlugin :public KMF::Plugin
 {
     Q_OBJECT
   public:
-    OutputPlugin(QObject *parent, const QVariantList&);
+    OutputPlugin(QObject *parent, const char* name, const QStringList&);
 
     void play(const QString& player = QString::null);
 
   public slots:
     virtual void init(const QString &type);
-
-  public:
-    virtual QStringList supportedProjectTypes() const;
-
-  public slots:
+    virtual QStringList supportedProjectTypes();
+    void slotPreviewDVD();
     void slotPreviewDVDXine();
     void slotPreviewDVDKaffeine();
     void slotDVDInfo();
 
   private:
-    QAction* dvdInfo;
-    QAction* addPreviewDVDXine;
-    QAction* addPreviewDVDKaffeine;
+    KAction* dvdInfo;
+    KAction* addPreviewDVD;
+    KAction* addPreviewDVDXine;
+    KAction* addPreviewDVDKaffeine;
+    QString m_kmfplayer;
     QString m_xine;
     QString m_kaffeine;
 };

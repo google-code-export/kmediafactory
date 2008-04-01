@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,35 +20,32 @@
 #include "toolproperties.h"
 #include <kurlrequester.h>
 #include <kicondialog.h>
-#include <QLineEdit>
-#include <QCheckBox>
+#include <qlineedit.h>
+#include <qcheckbox.h>
 
-ToolProperties::ToolProperties(QWidget *parent)
-    : KDialog(parent)
+ToolProperties::ToolProperties(QWidget *parent, const char *name)
+    :ToolPropertiesLayout(parent, name)
 {
-  setupUi(mainWidget());
-  setButtons(KDialog::Ok | KDialog::Cancel);
-  setCaption(i18n("Tool properties"));
-  workPathUrl->setMode(KFile::Directory | KFile::LocalOnly);
+  workPathURL->setMode(KFile::Directory | KFile::LocalOnly);
 }
 
-void ToolProperties::setData(const ToolItem& item)
+void ToolProperties::setData(const QToolListItem& item)
 {
   nameEdit->setText(item.name);
   descriptionEdit->setText(item.description);
-  commandUrl->setUrl(item.command);
-  workPathUrl->setUrl(item.workPath);
+  commandURL->setURL(item.command);
+  workPathURL->setURL(item.workPath);
   iconButton->setIcon(item.icon);
   mediaMenuCheckBox->setChecked(item.mediaMenu);
   runInTerminalCheckBox->setChecked(item.runInTerminal);
 }
 
-void ToolProperties::getData(ToolItem* item)
+void ToolProperties::getData(QToolListItem* item)
 {
   item->name = nameEdit->text();
   item->description = descriptionEdit->text();
-  item->command = commandUrl->url().prettyUrl();
-  item->workPath = workPathUrl->url().prettyUrl();
+  item->command = commandURL->url();
+  item->workPath = workPathURL->url();
   item->icon = iconButton->icon();
   item->mediaMenu = mediaMenuCheckBox->isChecked();
   item->runInTerminal = runInTerminalCheckBox->isChecked();
@@ -58,8 +55,8 @@ void ToolProperties::setReadOnly(bool readonly)
 {
   nameEdit->setEnabled(!readonly);
   descriptionEdit->setEnabled(!readonly);
-  commandUrl->setEnabled(!readonly);
-  workPathUrl->setEnabled(!readonly);
+  commandURL->setEnabled(!readonly);
+  workPathURL->setEnabled(!readonly);
   iconButton->setEnabled(!readonly);
   mediaMenuCheckBox->setEnabled(!readonly);
   runInTerminalCheckBox->setEnabled(!readonly);

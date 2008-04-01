@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damst�
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -22,210 +22,159 @@
 #include "kmediafactory.h"
 #include "kmfapplication.h"
 #include "kmfimageview.h"
-#include <kmftools.h>
-#include <kpagedialog.h>
+#include "kmfuiinterface.h"
 #include <kcursor.h>
 #include <klocale.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
-#include <kxmlguifactory.h>
-#include <QTimer>
-#include <QCheckBox>
-#include <QLabel>
-#include <QMenu>
+#include <qtimer.h>
+#include <qcheckbox.h>
+#include <qlabel.h>
+#include <qpopupmenu.h>
 
-TemplatePage::TemplatePage(QWidget *parent) :
-  QWidget(parent), m_menu(0), m_settingPrevious(false), m_scaled(false)
+TemplatePage::TemplatePage(QWidget *parent, const char *name) :
+  TemplatePageLayout(parent, name), m_previous(0), m_settingPrevious(false)
 {
-  setupUi(this);
-  templates->setSpacing(5);
-  templates->setItemDelegate(new KMFItemDelegate());
-  connect(templates, SIGNAL(customContextMenuRequested(const QPoint&)),
-          this, SLOT(contextMenuRequested(const QPoint&)));
+  connect(templates, SIGNAL(currentChanged(QIconViewItem*)),
+          this, SLOT(currentChanged(QIconViewItem*)));
+  connect(templates,
+          SIGNAL(contextMenuRequested(QIconViewItem*, const QPoint&)),
+          this, SLOT(contextMenuRequested(QIconViewItem*, const QPoint&)));
   connect(templatePreview,
           SIGNAL(contextMenuRequested(const QPoint&)),
           this, SLOT(imageContextMenuRequested(const QPoint&)));
+  templatePreview->setVScrollBarMode(QScrollView::Auto);
+  templatePreview->setHScrollBarMode(QScrollView::Auto);
 }
 
 TemplatePage::~TemplatePage()
 {
 }
 
-void TemplatePage::projectInit()
+void TemplatePage::currentChanged(QIconViewItem* item)
 {
-  templates->setModel(kmfApp->project()->templateObjects());
-  connect(templates->selectionModel(),
-          SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
-          this, SLOT(currentChanged(const QModelIndex&, const QModelIndex&)));
-  templates->blockSignals(true);
-  KMF::TemplateObject* obj = kmfApp->project()->templateObj();
-  QModelIndex i = kmfApp->project()->templateObjects()->indexOf(obj);
-  if(i == QModelIndex())
-    i = kmfApp->project()->templateObjects()->index(0);
-  templates->setCurrentIndex(i);
-  templates->blockSignals(false);
-}
-
-void TemplatePage::currentChanged(const QModelIndex& index,
-                                  const QModelIndex& previous)
-{
-  if(!m_settingPrevious && kmfApp->project())
+  if(item && kmfApp->project())
   {
-    KMF::TemplateObject* ob = kmfApp->project()->templateObjects()->at(index);
-    if(ob)
+    KMFIconViewItem* it = static_cast<KMFIconViewItem*>(item);
+    KMF::TemplateObject* ob = static_cast<KMF::TemplateObject*>(it->ob());
+
+    if(ob->clicked() == false and !m_settingPrevious)
     {
-      if(ob->clicked() == false)
-      {
-        m_menu = 0;
-        kmfApp->project()->setTemplateObj(ob);
-        updatePreview(index.row());
-      }
-      else
-      {
-        m_previous = previous;
-        QTimer::singleShot(0, this, SLOT(cancelSelection()));
-      }
+      m_menus = ob->menus();
+      m_menu = 0;
+
+      kmfApp->project()->setTemplateObj(ob);
+      updatePreview();
+      m_previous = item;
+    }
+    else if(!m_settingPrevious)
+    {
+      m_settingPrevious = true;
+      templates->setCurrentItem(m_previous);
+      m_settingPrevious = false;
     }
   }
-  m_settingPrevious = false;
 }
 
-void TemplatePage::cancelSelection()
+void TemplatePage::aboutToShowPage(QWidget* page)
 {
-  m_settingPrevious = true;
-  templates->setCurrentIndex(m_previous);
-}
+  m_previous = templates->currentItem();
 
-void TemplatePage::currentPageChanged(KPageWidgetItem* current,
-                                      KPageWidgetItem*)
-{
-  m_previous = templates->currentIndex();
-
-  if (current->parent() == this &&
+  if (parent() == page &&
       (templatePreview->image().size() == QSize(0,0) ||
       m_lastUpdate <
       kmfApp->project()->lastModified(KMF::ProjectInterface::DirtyMedia)))
-  {
     QTimer::singleShot(0, this, SLOT(updatePreview()));
-  }
-  // Arranges icon in a nice row. Otherwise icons are arranged in one column
-  templates->setViewMode(QListView::IconMode);
 }
 
-void TemplatePage::updatePreview(int n)
+void TemplatePage::updatePreview()
 {
-  if(n < 0)
-  {
-    QModelIndexList selected = templates->selectionModel()->selectedIndexes();
-    if(selected.count() > 0)
-      n = selected[0].row();
-  }
-
-  if(n >= 0 && n < kmfApp->project()->templateObjects()->rowCount())
+  KMFIconViewItem* item =
+      static_cast<KMFIconViewItem*>(templates->currentItem());
+  if(item)
   {
     QString menu;
 
-    kmfApp->setOverrideCursor(QCursor(Qt::WaitCursor));
+    kmfApp->setOverrideCursor(KCursor::waitCursor());
     kmfApp->uiInterface()->setUseMessageBox(true);
     kmfApp->uiInterface()->setStopped(false);
-    if(kmfApp->project()->mediaObjects()->count() > 0 &&
+    if(item && kmfApp->project()->mediaObjects()->count() > 0 &&
       previewCheckBox->isChecked())
     {
-      KMF::TemplateObject* ob =
-          kmfApp->project()->templateObjects()->at(templates->currentIndex());
-      QStringList menus = ob->menus();
-      if(m_menu < menus.count())
-        menu = menus[m_menu];
+      if(m_menu < m_menus.count())
+        menu = m_menus[m_menu];
       else
         menu = "Main";
     }
-    KMF::TemplateObject* ob = kmfApp->project()->templateObjects()->at(n);
+    KMF::TemplateObject* ob = static_cast<KMF::TemplateObject*>(item->ob());
     // Scale to real 4:3. Should get aspect ratio from template plugin?
-    QImage image = ob->preview(menu).scaled(768, 576, Qt::IgnoreAspectRatio,
-                                            Qt::SmoothTransformation);
+    QImage image = ob->preview(menu).smoothScale(768, 576);
     templatePreview->setImage(image);
+    templatePreview->resizeContents(image.width(), image.height());
     kmfApp->uiInterface()->setUseMessageBox(false);
     kmfApp->restoreOverrideCursor();
     m_lastUpdate = QDateTime::currentDateTime();
   }
 }
 
-void TemplatePage::contextMenuRequested(const QPoint &pos)
+void TemplatePage::contextMenuRequested(QIconViewItem *item, const QPoint &pos)
 {
-  QModelIndex i = templates->indexAt(pos);
-
-  if(i.row() < 0 || i.row() > kmfApp->project()->templateObjects()->count())
-    return;
-
-  KMF::TemplateObject* ob = kmfApp->project()->templateObjects()->at(i.row());
-  KMediaFactory* mainWindow = kmfApp->mainWindow();
-  KXMLGUIFactory* factory = mainWindow->factory();
-
-  QList<QAction*> actions;
-  ob->actions(actions);
-  factory->plugActionList(mainWindow,
-      QString::fromLatin1("template_actionlist"), actions);
-  QWidget *w = factory->container("template_popup", mainWindow);
-  if(w)
+  if(item)
   {
-    QMenu* popup = static_cast<QMenu*>(w);
-    if(popup->actions().count() > 0)
-      if(popup->exec(templates->viewport()->mapToGlobal(pos)) != 0)
-        updatePreview();
+    KMediaFactory* mainWindow =
+        static_cast<KMediaFactory*>(kmfApp->mainWidget());
+    KXMLGUIFactory* factory = mainWindow->factory();
+    KMF::Object* ob = (static_cast<KMFIconViewItem*>(item))->ob();
+
+    QPtrList<KAction> actions;
+    ob->actions(actions);
+    factory->plugActionList(mainWindow,
+        QString::fromLatin1("template_actionlist"), actions);
+    QWidget *w = factory->container("template_popup", mainWindow);
+    if(w)
+    {
+      QPopupMenu *popup = static_cast<QPopupMenu*>(w);
+      if(popup->count() > 0)
+        if(popup->exec(pos) != -1)
+          updatePreview();
+    }
+    factory->unplugActionList(mainWindow, "template_actionlist");
   }
-  factory->unplugActionList(mainWindow, "template_actionlist");
 }
 
 void TemplatePage::imageContextMenuRequested(const QPoint& pos)
 {
-  QMenu popup;
-  QAction* action;
-  QAction* saveAction = new QAction(i18n("Save image"), this);
-  QAction* scaledAction = new QAction(i18n("Scaled"), this);
-  KMF::TemplateObject* ob =
-      kmfApp->project()->templateObjects()->at(templates->currentIndex().row());
-  QStringList menus = ob->menus();
+  QPopupMenu popup;
   int i = 0;
 
-  scaledAction->setCheckable(true);
-  scaledAction->setChecked(m_scaled);
-
-  popup.addAction(scaledAction);
-  popup.addAction(saveAction);
-  popup.addSeparator();
-  for(QStringList::Iterator it = menus.begin();
-      it != menus.end(); ++it, ++i)
+  popup.setCheckable(true);
+  popup.insertItem(i18n("Save image"), 1000);
+  popup.insertSeparator();
+  for(QStringList::Iterator it = m_menus.begin();
+      it != m_menus.end(); ++it, ++i)
   {
-    action = new QAction(*it, this);
-    action->setCheckable(true);
-    action->setData(i);
-    action->setChecked(i == m_menu);
-    popup.addAction(action);
+    popup.insertItem(*it, i);
   }
-  if((action = popup.exec(pos)) != 0)
+  popup.setItemChecked(m_menu, true);
+  if((i = popup.exec(pos)) != -1)
   {
-    if(action == scaledAction)
+    if(i == 1000)
     {
-      m_scaled = (m_scaled)?false:true;
-      templatePreview->setScaled(m_scaled);
-    }
-    else if(action == saveAction)
-    {
-      KUrl url = KFileDialog::getSaveUrl(KUrl("kfiledialog:///<KMFPreview>"),
+      KURL url = KFileDialog::getSaveURL(":KMFPreview",
                                          i18n("*.png|PNG Graphics file"));
       if (!url.isEmpty() && url.isValid())
       {
         if(!templatePreview->image().save(url.path(), "PNG", 0))
         {
           KMessageBox::error(kmfApp->activeWindow(),
-              i18n("Could not write to file: %1").arg(url.prettyUrl()));
+              i18n("Could not write to file: %1").arg(url.prettyURL()));
         }
       }
     }
     else
     {
-      m_menu = action->data().toInt();
+      m_menu = i;
       previewCheckBox->setChecked(true);
       updatePreview();
     }
@@ -235,6 +184,18 @@ void TemplatePage::imageContextMenuRequested(const QPoint& pos)
 void TemplatePage::previewClicked()
 {
   updatePreview();
+}
+
+void TemplatePage::loadingFinished()
+{
+  QIconViewItem* item = templates->lastItem();
+
+  if(item)
+  {
+    item = item->prevItem();
+    if(item)
+      templates->setAfter(item);
+  }
 }
 
 #include "templatepage.moc"

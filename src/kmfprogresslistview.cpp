@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -18,62 +18,54 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 #include "kmfprogresslistview.h"
+#include "kmfprogressitem.h"
+#include <qheader.h>
 #include <kdebug.h>
-#include <kicon.h>
-#include <QPainter>
-#include <QModelIndex>
-#include <QProgressBar>
 
-QVariant KMFProgressItemModel::data(const QModelIndex &index, int role) const
+KMFProgressListView::KMFProgressListView(QWidget *parent, const char *name)
+  : KListView(parent, name)
 {
-  int i = index.row();
-
-  if (!isValid(i))
-    return QVariant();
-
-  if (role == Qt::DisplayRole)
-    return at(index).text;
-  else if (role == Qt::DecorationRole)
-    return KIcon(at(index).pixmap);
-  else if (role == Qt::UserRole)
-    return at(index).value;
-  else if (role == Qt::UserRole + 1)
-    return at(index).max;
-  return QVariant();
+  addColumn("", 10);
+  addColumn("", KMFProgressItem::ProgressWidth);
+  header()->hide();
+  setSorting(-1);
+  setFocusPolicy(QWidget::NoFocus);
 }
 
-#define BARW 100
-#define GRADIENTW 40
-
-void KMFProgressItemDelegate::paint(QPainter* painter,
-                                    const QStyleOptionViewItem& option,
-                                    const QModelIndex& index) const
+KMFProgressListView::~KMFProgressListView()
 {
-  int value = index.data(Qt::UserRole).toInt();
-  int max = index.data(Qt::UserRole + 1).toInt();
-  QRect rc = option.rect;
-  QStyleOptionViewItemV2 v2 = option;
+}
 
-  painter->save();
-  v2.features &= ~QStyleOptionViewItemV2::WrapText;
-  QItemDelegate::paint(painter, v2, index);
+void KMFProgressListView::viewportResizeEvent(QResizeEvent* e)
+{
+  setColumnWidth(0, e->size().width() - KMFProgressItem::ProgressWidth);
+}
 
-  if(value < max)
+void KMFProgressListView::insertItem(const QPixmap &pixmap,
+                                     const QString &text)
+{
+  KMFProgressItem* li = static_cast<KMFProgressItem*>(lastItem());
+  if(li)
   {
-    // Paint gradient
-    QRect rc2(rc.width() - BARW - GRADIENTW, rc.y(), GRADIENTW, rc.height());
-    QLinearGradient fade(rc2.x(), 0, rc2.x() + rc2.width(), 0);
-
-    fade.setColorAt(0, QColor(255, 255, 255, 0));
-    fade.setColorAt(0.9, QColor(255, 255, 255, 255));
-    painter->fillRect(rc2, fade);
-    // Paint progress bar
-    QProgressBar bar;
-    bar.setRange(0, max);
-    bar.setValue(value);
-    bar.resize(BARW, rc.height());
-    QPixmap barPixmap = QPixmap::grabWidget(&bar, QRect(0, 0, BARW, rc.height()));
-    painter->drawPixmap(rc.width() - BARW, rc.y(), barPixmap);
+    li->showProgressBar(false);
+    updateContents();
   }
-  painter->restore();
+  li = new KMFProgressItem(this, li);
+  li->setPixmap(0, pixmap);
+  li->setText(0, text);
+  ensureItemVisible(li);
+}
+
+void KMFProgressListView::setTotalSteps(int totalSteps)
+{
+  //kdDebug() << k_funcinfo << totalSteps << endl;
+  static_cast<KMFProgressItem*>(lastItem())->setTotalSteps(totalSteps);
+  repaintItem(lastItem());
+}
+
+void KMFProgressListView::setProgress(int progress)
+{
+  //kdDebug() << k_funcinfo << progress << endl;
+  static_cast<KMFProgressItem*>(lastItem())->setProgress(progress);
+  repaintItem(lastItem());
 }

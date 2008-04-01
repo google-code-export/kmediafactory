@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -21,9 +21,6 @@
 #define K3BOBJECT_H
 
 #include "dvddirectoryobject.h"
-#include <QPixmap>
-
-class KUrl;
 
 /**
 @author Petri Damsten
@@ -33,19 +30,17 @@ class K3bObject : public DvdDirectoryObject
     Q_OBJECT
   public:
     enum { TotalPoints = 100 };
-
-    K3bObject(QObject *parent = 0);
+    K3bObject(QObject *parent = 0, const char *name = 0);
     ~K3bObject();
-
     virtual void toXML(QDomElement& element) const;
-    virtual bool fromXML(const QDomElement& element);
+    virtual void fromXML(const QDomElement& element);
     virtual QPixmap pixmap() const;
-    virtual void actions(QList<QAction*>& actionList) const;
+    virtual void actions(QPtrList<KAction>& actionList) const;
     virtual int timeEstimate() const;
     virtual bool make(QString type);
 
   private:
-    bool saveDocument(const KUrl& url);
+    bool saveDocument(const KURL& url);
     bool saveDocumentData(QDomElement* docElem);
     bool saveGeneralDocumentData(QDomElement* part);
     void saveDocumentDataOptions(QDomElement& optionsElem);
@@ -56,6 +51,7 @@ class K3bObject : public DvdDirectoryObject
                       QDomElement* parent);
 
     QString m_rootDir;
+
 };
 
 #endif

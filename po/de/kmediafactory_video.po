@@ -111,9 +111,7 @@ msgstr "&Kapitel automatisch erstellen"
 msgid ""
 "_: Import chapter file\n"
 "&Import"
-msgstr ""
-"_: Kapiteldatei &importieren\n"
-"&Import"
+msgstr "Kapiteldatei &importieren"
 
 #: chapters.cpp:328
 msgid "You should have atleast one chapter."
@@ -488,7 +486,7 @@ msgid ""
 "_n: Video has %1 chapter\n"
 "Video has %1 chapters"
 msgstr ""
-"_n: Video hat %1 Kapitel\n"
+"Video hat %1 Kapitel\n"
 "Video hat %1 Kapitel"
 
 #: videooptions.cpp:199

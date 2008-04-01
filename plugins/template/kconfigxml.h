@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -50,12 +50,7 @@ class KConfigXML : public KConfigSkeleton
   private:
     void parseKCFGXMLEntry(const QDomElement& element);
 
-    QList<QString*> m_strings;
-    QList<bool*>    m_bools;
-    QList<QColor*>  m_colors;
-    QList<QFont*>   m_fonts;
-    QList<qint32*>  m_ints;
-    QList<KUrl*>    m_urls;
+    QPtrList<QVariant> m_delete;
 };
 
 #endif

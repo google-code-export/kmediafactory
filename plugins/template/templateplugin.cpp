@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damst�
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,12 +17,11 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
-
 #include "config.h"
 #include "templateplugin.h"
 #include "templateobject.h"
 #include "newstuffobject.h"
-#include "ui_templateconfig.h"
+#include "templateconfiglayout.h"
 #include "templatepluginsettings.h"
 #include "kconfigxml.h"
 #include "kmftools.h"
@@ -36,51 +35,58 @@
 #include <kiconloader.h>
 #include <kaboutdata.h>
 #include <kdebug.h>
-#include <KPluginLoader>
-#include <QRegExp>
-#include <QPixmap>
-#include <QImage>
+#include <qregexp.h>
+#include <qpixmap.h>
+#include <qdom.h>
+#include <qimage.h>
+#include <qsqlpropertymap.h>
+//#include <avcodec.h>
 
-K_EXPORT_KMEDIAFACTORY_PLUGIN(template, TemplatePlugin);
+static const char description[] =
+  I18N_NOOP("Template plugin for KMediaFactory.");
+static const char version[] = VERSION;
+static const KAboutData about("kmediafactory_template",
+                              I18N_NOOP("KMediaFactory Template"),
+                              version, description, KAboutData::License_GPL,
+                              "(C) 2005 Petri Damsten", 0, 0,
+                              "petri.damsten@iki.fi");
 
-class TemplateConfig : public QWidget, public Ui::ConfigureTemplatePlugin
+typedef KGenericFactory<TemplatePlugin> templateFactory;
+#if KDE_IS_VERSION(3, 3, 0)
+K_EXPORT_COMPONENT_FACTORY(kmediafactory_template, templateFactory(&about))
+#else
+K_EXPORT_COMPONENT_FACTORY(kmediafactory_template, templateFactory(about.appName()))
+#endif
+
+TemplatePlugin::TemplatePlugin(QObject *parent,
+                               const char* name, const QStringList&) :
+  KMF::Plugin(parent, name )
 {
-  public:
-    TemplateConfig(QWidget* parent = 0) : QWidget(parent)
-    {
-      setupUi(this);
-    };
-};
-
-TemplatePlugin::TemplatePlugin(QObject *parent, const QVariantList&) :
-  KMF::Plugin(parent)
-{
-  setObjectName("KMFTemplateEngine");
   // Initialize GUI
+  setInstance(templateFactory::instance());
   setXMLFile("kmediafactory_templateui.rc");
 }
 
 const KMF::ConfigPage* TemplatePlugin::configPage() const
 {
   KMF::ConfigPage* configPage = new KMF::ConfigPage;
-  configPage->page = new TemplateConfig;
+  configPage->page = new ConfigureTemplatePluginLayout;
   configPage->config = TemplatePluginSettings::self();
   configPage->itemName = i18n("Template plugin");
-  configPage->pixmapName = "folder-image";
+  configPage->pixmapName = "kmultiple";
   return configPage;
 }
 
 void TemplatePlugin::init(const QString &type)
 {
-  kDebug() << type;
   deleteChildren();
   if (type.left(3) == "DVD")
   {
-    kDebug() << "Trying to find templates from: "
-        << KGlobal::dirs()->resourceDirs("data");
+    kdDebug() << "Trying to find templates from: "
+        << KGlobal::dirs()->resourceDirs("data") << endl;
     QStringList list =
         KMF::Tools::findAllResources("data", "kmediafactory_template/*.kmft");
-    kDebug() << "Found templates: " << list;
+    kdDebug() << "Found templates: " << list << endl;
 
     for(QStringList::Iterator it = list.begin(); it != list.end(); ++it)
       new TemplateObject(*it, this);
@@ -88,7 +94,7 @@ void TemplatePlugin::init(const QString &type)
   new NewStuffObject(this);
 }
 
-QStringList TemplatePlugin::supportedProjectTypes() const
+QStringList TemplatePlugin::supportedProjectTypes()
 {
   QStringList result;
   result << "DVD-PAL" << "DVD-NTSC";

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -18,12 +18,12 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 #include "plugin.h"
-#include <qobject.h>
+#include <qobjectlist.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
 
-KMF::Plugin::Plugin(QObject *parent)
-  : QObject(parent)
+KMF::Plugin::Plugin(QObject *parent, const char* name)
+  : QObject(parent, name)
 {
 }
 
@@ -32,40 +32,40 @@ KMF::Plugin::~Plugin()
   deleteChildren();
 }
 
-KMF::UiInterface* KMF::Plugin::uiInterface() const
+KMF::UiInterface* KMF::Plugin::uiInterface()
 {
-  KMF::UiInterface* obj = 0;
-
   if(parent())
-    obj = parent()->findChild<KMF::UiInterface*>("KMF::UiInterface");
-  return obj;
+  {
+    QObject* obj = parent()->child(0, "KMF::UiInterface");
+    if(obj)
+      return static_cast<KMF::UiInterface*>(obj);
+  }
+  return 0;
 }
 
-KMF::ProjectInterface* KMF::Plugin::projectInterface() const
+KMF::ProjectInterface* KMF::Plugin::projectInterface()
 {
-  KMF::ProjectInterface* obj = 0;
-
   if(parent())
-    obj = parent()->findChild<KMF::ProjectInterface*>("KMF::ProjectInterface");
-  return obj;
+  {
+    QObject* obj = parent()->child(0, "KMF::ProjectInterface");
+    if(obj)
+      return static_cast<KMF::ProjectInterface*>(obj);
+  }
+  return 0;
 }
 
 void KMF::Plugin::deleteChildren()
 {
-  QObjectList list= children();
-
-  while(!list.isEmpty())
-    delete list.takeFirst();
-}
-
-KMF::MediaObject* KMF::Plugin::createMediaObject(const QDomElement&)
-{ 
-  return 0; 
-}
-
-const KMF::ConfigPage* KMF::Plugin::configPage() const 
-{ 
-  return 0; 
+  if(children())
+  {
+    QObjectListIt it(*children());
+    QObject* obj;
+    while((obj=it.current()))
+    {
+      ++it;
+      delete obj;
+    }
+  }
 }
 
 #include "plugin.moc"

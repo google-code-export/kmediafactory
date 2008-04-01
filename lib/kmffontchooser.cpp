@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -21,30 +21,30 @@
 #include <kfontdialog.h>
 #include <klocale.h>
 #include <kiconloader.h>
-#include <QLabel>
-#include <QPushButton>
-#include <QLayout>
-#include <QFont>
-#include <QPixmap>
-#include <QHBoxLayout>
+#include <qlabel.h>
+#include <qpushbutton.h>
+#include <qlayout.h>
+#include <qfont.h>
 #include "kmffontchooser.h"
 
-KMFFontChooser::KMFFontChooser(QWidget *parent)
- : QWidget(parent)
+KMFFontChooser::KMFFontChooser(QWidget *parent, const char *name)
+ : QWidget(parent, name)
 {
   QHBoxLayout* layout = new QHBoxLayout(this);
 
-  m_label = new QLabel(this);
-  m_label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+  m_label = new QLabel(this, "fontLabel");
   layout->addWidget(m_label);
   layout->setMargin(0);
   layout->setSpacing(KDialog::spacingHint());
 
-  m_button = new QPushButton(this);
+  m_button = new QPushButton(this, "fontButton");
   QString fontText = i18n("Font...");
   m_button->setText(fontText);
-  m_button->setIcon(KIcon("character-set"));
-  m_button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
+  QIconSet iconSet = SmallIconSet(QString::fromLatin1("fonts"));
+  QPixmap pixmap = iconSet.pixmap(QIconSet::Small, QIconSet::Normal);
+  m_button->setIconSet(iconSet);
+  m_button->setFixedWidth(m_button->fontMetrics().width(fontText) +
+      3 * KDialog::spacingHint() + pixmap.width());
   layout->addWidget(m_button);
 
   connect(m_button, SIGNAL(clicked()), this, SLOT(buttonClicked()));

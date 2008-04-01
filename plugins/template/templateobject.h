@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -52,18 +52,17 @@ class TemplateObject : public KMF::TemplateObject
     virtual ~TemplateObject();
 
     virtual void toXML(QDomElement& element) const;
-    virtual bool fromXML(const QDomElement& element);
+    virtual void fromXML(const QDomElement& element);
     virtual int timeEstimate() const;
     virtual bool make(QString type);
     virtual QPixmap pixmap() const;
     virtual QStringList menus();
     virtual QImage preview(const QString& menu = "");
-    virtual void actions(QList<QAction*>&) const;
+    virtual void actions(QPtrList<KAction>& actionList) const;
     KConfigXML& customProperties() { return m_customProperties; };
     QVariant property(const QString& widget, const QString& name) const;
     void setProperty(const QString& widget, const QString& name,
                      const QVariant& value);
-    bool fileExists();
 
   public slots:
     virtual void slotProperties();
@@ -76,9 +75,7 @@ class TemplateObject : public KMF::TemplateObject
     KAction* m_templateProperties;
     KMFConfigXML m_customProperties;
     KMFMenu m_menu;
-    QString m_file;
 
-    QString propertyString(KConfigSkeletonItem* item) const;
     bool isUpToDate(QString type);
 };
 

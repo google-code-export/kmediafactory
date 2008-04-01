@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -19,10 +19,9 @@
 //**************************************************************************
 #include "projectinterface.h"
 
-KMF::ProjectInterface::ProjectInterface(QObject *parent) :
-  QObject(parent)
+KMF::ProjectInterface::ProjectInterface(QObject *parent, const char *name) :
+  QObject(parent, name)
 {
-  setObjectName("KMF::ProjectInterface");
 }
 
 #include "projectinterface.moc"

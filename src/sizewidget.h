@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,19 +20,19 @@
 #ifndef SIZEWIDGET_H
 #define SIZEWIDGET_H
 
-#include <ui_sizewidget.h>
+#include <sizewidgetlayout.h>
 #include <stdint.h>
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
 
-class SizeWidget : public QWidget, public Ui::SizeWidget
+class SizeWidget : public SizeWidgetLayout
 {
     Q_OBJECT
   public:
-    SizeWidget(QWidget* parent = 0);
-    virtual ~SizeWidget();
+    SizeWidget(QWidget* parent = 0, const char* name = 0, WFlags fl = 0);
+    ~SizeWidget();
 
     void setMax(uint64_t max) { m_max = max; update(); };
     void setSize(uint64_t size) { m_size = size; update(); };

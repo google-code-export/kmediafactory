@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,12 +20,11 @@
 #ifndef KMEDIAFACTORY_PLUGIN_H
 #define KMEDIAFACTORY_PLUGIN_H
 
+#include <kxmlguiclient.h>
+#include <qobject.h>
+#include <qptrlist.h>
 #include "uiinterface.h"
 #include "projectinterface.h"
-#include <kservice.h>
-#include <kxmlguiclient.h>
-#include <kpluginfactory.h>
-#include <QObject>
 
 class QDomElement;
 class KConfigSkeleton;
@@ -41,36 +40,31 @@ namespace KMF
     QString pixmapName;
   };
 
-  class KDE_EXPORT Plugin : public QObject, public KXMLGUIClient
+  class Plugin : public QObject, public KXMLGUIClient
   {
       Q_OBJECT
     public:
-      explicit Plugin(QObject *parent = 0);
-      ~Plugin();
+      Plugin(QObject *parent = 0, const char* name = 0);
+      virtual ~Plugin();
+      virtual MediaObject* createMediaObject(const QDomElement&)
+        { return 0; };
+      virtual const ConfigPage* configPage() const { return 0; };
 
-      UiInterface* uiInterface() const;
-      ProjectInterface* projectInterface() const;
+      UiInterface* uiInterface();
+      ProjectInterface* projectInterface();
 
     public slots:
-      virtual void init(const QString &type) = 0;
-
-    public:
-      virtual QStringList supportedProjectTypes() const = 0;
-      virtual MediaObject* createMediaObject(const QDomElement&);
-      virtual const ConfigPage* configPage() const;
+      virtual void init(const QString &type) { m_type = type; };
+      virtual QStringList supportedProjectTypes() = 0;
 
     protected:
       void deleteChildren();
+
+    private:
+      QString m_type;
   };
 
-  typedef QList<Plugin*> PluginList;
-
-} // KMF namespace
-
-Q_DECLARE_METATYPE(KService::Ptr)
-
-#define K_EXPORT_KMEDIAFACTORY_PLUGIN(libname, classname) \
-K_PLUGIN_FACTORY(factory, registerPlugin<classname>();)   \
-K_EXPORT_PLUGIN(factory("kmediafactory_plugin_" #libname))
+  typedef QPtrList<Plugin> PluginList;
+};
 
 #endif // KMEDIAFACTORY_PLUGIN_H

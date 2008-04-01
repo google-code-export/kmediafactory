@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -26,14 +26,17 @@ class TemplatePlugin :public KMF::Plugin
 {
     Q_OBJECT
   public:
-    TemplatePlugin(QObject *parent, const QVariantList&);
+    TemplatePlugin(QObject *parent, const char* name, const QStringList&);
+
+    virtual const KMF::ConfigPage* configPage() const;
 
   public slots:
     virtual void init(const QString &type);
+    virtual QStringList supportedProjectTypes();
 
-  public:
-    virtual const KMF::ConfigPage* configPage() const;
-    virtual QStringList supportedProjectTypes() const;
+  private:
+    static void ffmpeg_av_log_callback(void *ptr, int level,
+                                       const char *fmt, va_list vl);
 };
 
 #endif /* TEMPLATEPLUGIN_H */

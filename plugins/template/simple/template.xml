@@ -3,7 +3,7 @@
 <template first_page="Main" id="simple" name="Simple">
 
 <page name="Main" titles="1" chapters="0">
-  <image url="kde://wallpaper/default_blue.jpg" x="0" y="0"  w="100%"
+  <image url="kde://wallpaper/blue-bend.jpg" x="0" y="0"  w="100%"
          h="100%" name="background" scale="1" proportional="0" />
   <vbox w="100%" h="100%">
     <spacer h="85%" />
@@ -72,7 +72,7 @@
 </page>
 
 <page name="CHAPTER_PAGE" titles="0" chapters="6">
-  <image url="kde://wallpaper/default_blue.jpg" x="0" y="0"  w="100%"
+  <image url="kde://wallpaper/blue-bend.jpg" x="0" y="0"  w="100%"
          h="100%" name="chapter_background" scale="1" proportional="0" />
   <vbox margin="40" w="100%" h="100%" name="main_box">
     <label w="100%" h="min" name="label_main" color="#ccccccaa">

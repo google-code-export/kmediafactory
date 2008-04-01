@@ -16,6 +16,7 @@ SLOT="0"
 KEYWORDS="x86 amd64"
 
 DEPEND="${DEPEND}
+    media-video/ffmpeg
     sys-devel/gettext
     >=media-gfx/imagemagick-6.1.3.2
     media-libs/fontconfig

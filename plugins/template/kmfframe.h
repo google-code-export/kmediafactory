@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -21,12 +21,15 @@
 #define KMFFRAME_H
 
 #include "kmfwidget.h"
+#include "color.h"
 
+/**
+*/
 class KMFFrame : public KMFWidget
 {
     Q_OBJECT
   public:
-    KMFFrame(QObject *parent = 0);
+    KMFFrame(QObject *parent = 0, const char *name = 0);
     ~KMFFrame();
 
     const int& lineWidth() const { return m_lineWidth; };
@@ -34,11 +37,11 @@ class KMFFrame : public KMFWidget
     void fromXML(const QDomElement& element);
 
   protected:
-    virtual void paintWidget(QImage& layer, bool shdw = false);
+    virtual void paintWidget(Magick::Image& layer, bool shdw = false);
 
   private:
     int m_lineWidth;
-    QColor m_fillColor;
+    KMF::Color m_fillColor;
     int m_rounded;
 };
 

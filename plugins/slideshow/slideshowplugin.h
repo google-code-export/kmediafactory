@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -23,32 +23,25 @@
 #include <kmf_stddef.h>
 #include <kmediafactory/plugin.h>
 
-class QAction;
+class KAction;
 
 class SlideshowPlugin : public KMF::Plugin
 {
     Q_OBJECT
   public:
-    SlideshowPlugin(QObject *parent, const QVariantList&);
+    SlideshowPlugin(QObject *parent, const char* name, const QStringList&);
 
+    KMF::MediaObject* createMediaObject(const QDomElement& element);
     QString dvdslideshowBin() { return m_dvdslideshow; };
 
   public slots:
     virtual void init(const QString &type);
-
-  public:
-    virtual const KMF::ConfigPage* configPage() const;
-    virtual KMF::MediaObject* createMediaObject(const QDomElement& element);
-    virtual QStringList supportedProjectTypes() const;
-
-  public slots:
+    virtual QStringList supportedProjectTypes();
     void slotAddSlideshow();
 
-  protected:
-    QAction* setupActions();
-
   private:
-    QString  m_dvdslideshow;
+    KAction* addSlideshowAction;
+    QString m_dvdslideshow;
 };
 
 #endif /* SLIDESHOWPLUGIN_H */

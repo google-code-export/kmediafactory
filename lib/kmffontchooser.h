@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,9 +20,7 @@
 #ifndef KMFFONTCHOOSER_H
 #define KMFFONTCHOOSER_H
 
-#include <kdemacros.h>
-#include <QWidget>
-#include <QLabel>
+#include <qwidget.h>
 
 class QLabel;
 class QPushButton;
@@ -32,12 +30,12 @@ class QFont;
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
 
-class KDE_EXPORT KMFFontChooser : public QWidget
+class KMFFontChooser : public QWidget
 {
     Q_OBJECT
-    Q_PROPERTY(QFont font READ font WRITE setFont USER true)
+    Q_PROPERTY(QFont font READ font WRITE setFont)
   public:
-    KMFFontChooser(QWidget *parent = 0);
+    KMFFontChooser(QWidget *parent = 0, const char *name = 0);
     ~KMFFontChooser();
 
     QFont font() const { return m_font; };

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damst�
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,134 +20,13 @@
 #include "kmfwidget.h"
 #include "kmflayout.h"
 #include "kmfmenupage.h"
-#include <kmftools.h>
+#include <qobjectlist.h>
+#include <magick/effect.h>
+#include "Magick++/Exception.h"
 #include <kdebug.h>
-#include <QObject>
-#include <QVariant>
-#include <QRegExp>
-#include <QPainter>
-#include <cmath>
-
-// Exponential blur, Jani Huhtanen, 2006
-//
-template<int aprec, int zprec>
-static inline void blurinner(unsigned char *bptr, int &zR,
-                             int &zG, int &zB, int &zA, int alpha);
-
-template<int aprec,int zprec>
-static inline void blurrow(QImage & im, int line, int alpha);
-
-template<int aprec, int zprec>
-static inline void blurcol(QImage & im, int col, int alpha);
-
-/*
- *  expblur(QImage &img, int radius)
- *
- *  In-place blur of image 'img' with kernel
- *  of approximate radius 'radius'.
- *
- *  Blurs with two sided exponential impulse
- *  response.
- *
- *  aprec = precision of alpha parameter
- *  in fixed-point format 0.aprec
- *
- *  zprec = precision of state parameters
- *  zR,zG,zB and zA in fp format 8.zprec
- */
-template<int aprec,int zprec>
-void expblur(QImage &img, int radius )
-{
-    if (radius < 1)
-        return;
-
-    /* Calculate the alpha such that 90% of
-       the kernel is within the radius.
-       (Kernel extends to infinity)
-    */
-    int alpha = (int)((1<<aprec)*(1.0f-expf(-2.3f/(radius+1.f))));
-
-    for(int row=0;row<img.height();row++) {
-        blurrow<aprec,zprec>(img,row,alpha);
-    }
-
-    for(int col=0;col<img.width();col++) {
-        blurcol<aprec,zprec>(img,col,alpha);
-    }
-    return;
-}
-
-template<int aprec, int zprec>
-static inline void blurinner(unsigned char *bptr,
-                             int &zR, int &zG, int &zB, int &zA, int alpha)
-{
-    int R,G,B,A;
-    R = *bptr;
-    G = *(bptr+1);
-    B = *(bptr+2);
-    A = *(bptr+3);
-
-    zR += (alpha * ((R<<zprec)-zR))>>aprec;
-    zG += (alpha * ((G<<zprec)-zG))>>aprec;
-    zB += (alpha * ((B<<zprec)-zB))>>aprec;
-    zA += (alpha * ((A<<zprec)-zA))>>aprec;
-
-    *bptr =     zR>>zprec;
-    *(bptr+1) = zG>>zprec;
-    *(bptr+2) = zB>>zprec;
-    *(bptr+3) = zA>>zprec;
-}
-
-template<int aprec,int zprec>
-static inline void blurrow( QImage & im, int line, int alpha)
-{
-    int zR,zG,zB,zA;
-
-    QRgb *ptr = (QRgb *)im.scanLine(line);
-
-    zR = *((unsigned char *)ptr    )<<zprec;
-    zG = *((unsigned char *)ptr + 1)<<zprec;
-    zB = *((unsigned char *)ptr + 2)<<zprec;
-    zA = *((unsigned char *)ptr + 3)<<zprec;
-
-    for(int index=1; index<im.width(); index++) {
-        blurinner<aprec,zprec>((unsigned char *)&ptr[index],
-                               zR, zG, zB, zA, alpha);
-    }
-    for(int index=im.width()-2; index>=0; index--) {
-        blurinner<aprec,zprec>((unsigned char *)&ptr[index],
-                               zR, zG, zB, zA, alpha);
-    }
-
-
-}
-
-template<int aprec, int zprec>
-static inline void blurcol(QImage & im, int col, int alpha)
-{
-    int zR,zG,zB,zA;
-
-    QRgb *ptr = (QRgb *)im.bits();
-    ptr+=col;
-
-    zR = *((unsigned char *)ptr    )<<zprec;
-    zG = *((unsigned char *)ptr + 1)<<zprec;
-    zB = *((unsigned char *)ptr + 2)<<zprec;
-    zA = *((unsigned char *)ptr + 3)<<zprec;
-
-    for(int index=im.width(); index<(im.height()-1)*im.width();
-        index+=im.width()) {
-        blurinner<aprec,zprec>((unsigned char *)&ptr[index],
-                               zR, zG, zB, zA, alpha);
-    }
-
-    for(int index=(im.height()-2)*im.width(); index>=0;
-        index-=im.width()) {
-        blurinner<aprec,zprec>((unsigned char *)&ptr[index],
-                               zR, zG, zB, zA, alpha);
-    }
-
-}
+#include <qvariant.h>
+#include <qdom.h>
+#include <qregexp.h>
 
 void KMFShadow::toXML(QDomElement& element) const
 {
@@ -163,18 +42,17 @@ void KMFShadow::fromXML(const QDomElement& element)
 {
   m_offset.setX(element.attribute("offset.x", 0).toInt());
   m_offset.setY(element.attribute("offset.y", 0).toInt());
-  m_color = KMF::Tools::toColor(element.attribute("color", "#00000088"));
+  m_color.setNamedColor(element.attribute("color", "#00000088"));
   m_type = static_cast<Type>(element.attribute("type", "0").toInt());
   m_radius = element.attribute("radius", "1").toDouble();
   m_sigma = element.attribute("sigma", "0.5").toDouble();
 }
 
-KMFWidget::KMFWidget(QObject *parent)
- : KMFTemplateBase(parent), m_geometry(this), m_layer(Background),
+KMFWidget::KMFWidget(QObject *parent, const char *name)
+ : KMFTemplateBase(parent, name), m_geometry(this), m_layer(Background),
    m_valign(KMF::Rect::Middle), m_halign(KMF::Rect::Center), m_hidden(false),
-   m_color("transparent"), m_takeSpace(false), m_row(0), m_column(0)
+   m_color(qRgba(0,0,0,255)), m_takeSpace(false), m_row(0), m_column(0)
 {
-  m_color.setAlpha(0);
 }
 
 KMFWidget::~KMFWidget()
@@ -195,38 +73,50 @@ int KMFWidget::minimumHeight() const
 
 int KMFWidget::minimumPaintWidth() const
 {
+  const QObjectList *list = children();
   int result = 0;
 
-  foreach(QObject* ob, children())
-    if(ob->inherits("KMFWidget"))
-      result = qMax(static_cast<KMFWidget*>(ob)->minimumWidth(), result);
+  if(list)
+    for(QObjectListIt it(*list); it.current() != 0; ++it)
+      if((*it)->inherits("KMFWidget"))
+        result = QMAX(static_cast<KMFWidget*>(*it)->minimumWidth(), result);
   return result;
 }
 
 int KMFWidget::minimumPaintHeight() const
 {
+  const QObjectList *list = children();
   int result = 0;
 
-  foreach(QObject* ob, children())
-    if(ob->inherits("KMFWidget"))
-      result = qMax(static_cast<KMFWidget*>(ob)->minimumHeight(), result);
+  if(list)
+    for(QObjectListIt it(*list); it.current() != 0; ++it)
+      if((*it)->inherits("KMFWidget"))
+        result = QMAX(static_cast<KMFWidget*>(*it)->minimumHeight(), result);
   return result;
 }
 
 void KMFWidget::setLayer(const Layer layer)
 {
-  foreach(QObject* obj, children())
-    if(obj->inherits("KMFWidget"))
-      ((KMFWidget*)obj)->setLayer(layer);
+  const QObjectList *list = children();
+  QObject *obj;
+
+  if(list)
+    for(QObjectListIt it(*list); (obj=it.current())!= 0; ++it)
+      if(obj->inherits("KMFWidget"))
+        ((KMFWidget*)obj)->setLayer(layer);
 
   m_layer = layer;
 }
 
 void KMFWidget::setShadow(const KMFShadow& shadow)
 {
-  foreach(QObject* obj, children())
-    if(obj->inherits("KMFWidget"))
-      ((KMFWidget*)obj)->setShadow(shadow);
+  const QObjectList *list = children();
+  QObject *obj;
+
+  if(list)
+    for(QObjectListIt it(*list); (obj=it.current())!= 0; ++it)
+      if(obj->inherits("KMFWidget"))
+        ((KMFWidget*)obj)->setShadow(shadow);
 
   m_shadow = shadow;
 }
@@ -234,7 +124,7 @@ void KMFWidget::setShadow(const KMFShadow& shadow)
 QRect KMFWidget::paintRect(const QPoint offset) const
 {
   QRect result = m_geometry.paintRect();
-  result.translate(offset.x(), offset.y());
+  result.moveBy(offset.x(), offset.y());
   return result;
 }
 
@@ -242,35 +132,33 @@ void KMFWidget::paint(KMFMenuPage* page)
 {
   if(m_shadow.type() != KMFShadow::None && layer() == Background)
   {
-    QImage& temp = page->layer(Temp);
-    QColor c = m_shadow.color();
-
-    c.setAlpha(0);
-    temp.fill(c.rgba());
+    Magick::Image& temp = page->layer(Temp);
+    temp.read(QString("xc:%1").arg(QColor(m_shadow.color()).name()));
+    temp.opacity(TransparentOpacity);
     paintWidget(temp, true);
-
     if(m_shadow.type() == KMFShadow::Blur)
     {
-      expblur<16,7>(temp, (int)m_shadow.radius());
-      //temp = KImageEffect::blur(temp, m_shadow.radius(), m_shadow.sigma());
+      MagickLib::ExceptionInfo exceptionInfo;
+      GetExceptionInfo(&exceptionInfo);
+      MagickLib::Image* newImage =
+          BlurImageChannel(temp.image(), MagickLib::AllChannels,
+                       m_shadow.radius(), m_shadow.sigma(), &exceptionInfo);
+      temp.replaceImage(newImage);
+      //throwException(exceptionInfo);
     }
-    //static int i = 0;
-    //temp.save(m_prjIf->projectDir("menus") + QString("%1.png").arg(++i));
-
-    QPainter p(&page->layer(Background));
-    p.drawImage(QPoint(0, 0), temp);
+    page->layer(Background).composite(temp, 0, 0, Magick::OverCompositeOp);
   }
   paintWidget(page->layer(layer()), false);
 }
 
 void KMFWidget::setColor(const QString& s)
 {
-  m_color = KMF::Tools::toColor(s);
+  m_color.setNamedColor(s);
 }
 
 void KMFWidget::fromXML(const QDomElement& element)
 {
-  setObjectName(element.attribute("name", ""));
+  setName(element.attribute("name", ""));
   m_geometry.setMargin(element.attribute("margin", "0"));
   m_takeSpace = element.attribute("take_space", "0").toInt();
   m_row = element.attribute("row", "0").toInt();
@@ -287,27 +175,27 @@ void KMFWidget::fromXML(const QDomElement& element)
     m_geometry.height().set(element.attribute("h"));
   if(element.hasAttribute("halign"))
   {
-    QString align = element.attribute("halign").toLower();
-    if(align == "left")
+    QString align = element.attribute("halign").lower();
+    if(align = "left")
       m_halign = KMF::Rect::Left;
-    else if(align == "right")
+    else if(align = "right")
       m_halign = KMF::Rect::Right;
-    else if(align == "center")
+    else if(align = "center")
       m_halign = KMF::Rect::Center;
   }
   if(element.hasAttribute("valign"))
   {
-    QString align = element.attribute("valign").toLower();
-    if(align == "top")
+    QString align = element.attribute("valign").lower();
+    if(align = "top")
       m_valign = KMF::Rect::Top;
-    else if(align == "bottom")
+    else if(align = "bottom")
       m_valign = KMF::Rect::Bottom;
-    else if(align == "middle")
+    else if(align = "middle")
       m_valign = KMF::Rect::Middle;
   }
   if(element.hasAttribute("layer"))
   {
-    QString layer = element.attribute("layer").toLower().trimmed();
+    QString layer = element.attribute("layer").lower().stripWhiteSpace();
     if(layer == "sub")
       setLayer(Sub);
     else if(layer == "select")
@@ -327,12 +215,12 @@ void KMFWidget::fromXML(const QDomElement& element)
     }
     n = n.nextSibling();
   }
-  //kDebug() << name() << " rect: " << m_geometry.rect();
+  //kdDebug() << name() << " rect: " << m_geometry.rect() << endl;
 }
 
 int KMFWidget::toInt(const QString& s, int offset)
 {
-  if(s.toUpper()[0] == 'X')
+  if(s.upper()[0] == 'X')
     return -1;
   if(s[0] == '$')
     return s.mid(1).toInt();
@@ -344,7 +232,7 @@ void KMFWidget::parseTitleChapter(const QString& s, int& title, int& chapter)
 {
   title = 0;
   chapter = 0;
-  QStringList list = s.split(".");
+  QStringList list = QStringList::split(".", s);
 
   if(list.count() > 0)
     title = toInt(list[0], page()->titleStart());
@@ -355,10 +243,7 @@ void KMFWidget::parseTitleChapter(const QString& s, int& title, int& chapter)
 void KMFWidget::setProperty(const QString& name, QVariant value)
 {
   if(name == "color")
-  {
-    //kDebug() << value.value<QColor>();
-    setColor(value.value<QColor>());
-  }
+    setColor(value.toColor().rgb());
 }
 
 #include "kmfwidget.moc"

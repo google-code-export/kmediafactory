@@ -6,17 +6,23 @@
   <kcfgfile name="kmediafactoryrc"/>
   <include>kstandarddirs.h</include>
   <group name="project">
-      <entry name="DefaultProjectDirectory" type="Url">
-          <label>Where the projects are saved by default.</label>
-          <default code="true">KStandardDirs::locateLocal("tmp", "kmf/")</default>
+      <entry name="DefaultProjectDirectory" type="String">
+          <label>Where the projects are saved by deafult.</label>
+          <default code="true">::locateLocal("tmp", "kmf/")</default>
       </entry>
       <entry name="DefaultProjectType" type="String">
           <label>Default project type.</label>
           <default>DVD-PAL</default>
       </entry>
       <entry name="ShowProjectOptionsOnNew" type="Bool">
-          <label>Show project options when new project is launched.</label>
+          <label>Show project options when new project is lanuched.</label>
           <default>false</default>
+      </entry>
+  </group>
+  <group name="KNewStuff">
+      <entry name="ProvidersUrl" type="String">
+          <label>Providers URL for GHNS</label>
+          <default>http://download.kde.org/khotnewstuff/kmediafactorytools-providers.xml</default>
       </entry>
   </group>
 </kcfg>

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 #include "kmfapplication.h"
 #include "kmediafactorysettings.h"
 #include <kmftools.h>
+#include <ktempfile.h>
 #include <kmessagebox.h>
 #include <kio/netaccess.h>
 #include <kio/job.h>
@@ -28,23 +29,32 @@
 #include <ksavefile.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
-#include <ksavefile.h>
-#include <ktemporaryfile.h>
-#include <QFile>
-#include <QDir>
-#include <QTextStream>
+#include <qfile.h>
+#include <qdir.h>
 
-template <class S, class T>
-void addMap(QMap<S, T>* map, const QMap<S, T>& add)
+template <class T>
+QPtrList<T> deepCopy(QPtrList<T> list)
 {
-  QList<S> keys = add.keys();
+  T* item;
+  QPtrList<T> newList;
 
-  for(int i = 0; i < keys.size(); ++i)
-    map->insert(keys[i], add[keys[i]]);
+  for(item = list.first(); item; item = list.next())
+    newList.append(new T(*item));
+  return newList;
 }
 
-KMFProject::KMFProject(QObject *parent) :
-  QObject(parent), m_template(0), m_output(0), m_modified(false),
+template <class Key, class T>
+void addMap(QMap<Key, T>* map, const QMap<Key, T>& add)
+{
+  QValueList<Key> keys = add.keys();
+  QValueListConstIterator<Key> it;
+
+  for(it = keys.begin(); it != keys.end(); ++it)
+    map->insert(*it, add[*it]);
+}
+
+KMFProject::KMFProject(QObject *parent, const char *name) :
+  QObject(parent, name), m_template(0), m_output(0), m_modified(false),
   m_loading(false), m_initializing(false), m_serial(0)
 {
   m_lastModified[ModMedia].setTime_t(0);
@@ -54,12 +64,12 @@ KMFProject::KMFProject(QObject *parent) :
   m_type = KMediaFactorySettings::defaultProjectType();
   m_title = i18n("Untitled");
 
-  QDir dir(KMediaFactorySettings::defaultProjectDirectory().path());
+  QDir dir(KMediaFactorySettings::defaultProjectDirectory());
   int i = 1;
 
   while(1)
   {
-    QString file = i18n("Project%1", i);
+    QString file = QString(i18n("Project%1")).arg(i);
 
     QDir projectDir(dir.filePath(file));
     if(!projectDir.exists())
@@ -69,7 +79,7 @@ KMFProject::KMFProject(QObject *parent) :
     }
     ++i;
   }
-  //kDebug() << m_directory;
+  //kdDebug() << m_directory << endl;
 }
 
 KMFProject::~KMFProject()
@@ -100,12 +110,14 @@ bool KMFProject::validProject() const
 void KMFProject::addItem(KMF::MediaObject *mob)
 {
   m_list.append(mob);
+  emit newItem(mob);
   setDirty(KMF::ProjectInterface::DirtyMedia);
 }
 
 void KMFProject::removeItem(KMF::MediaObject *mob)
 {
-  m_list.removeAll(mob);
+  m_list.remove(mob);
+  emit itemRemoved(mob);
   setDirty(KMF::ProjectInterface::DirtyMedia);
 }
 
@@ -114,16 +126,14 @@ void KMFProject::setType(const QString& type)
   if(type != m_type)
   {
     m_type = type;
-    emit preinit(m_type);
-    m_list.clear();
     emit init(type);
+    m_list.clear();
   }
 }
 
 void KMFProject::setDirectory(const QString& directory)
 {
   m_directory = KMF::Tools::addSlash(directory);
-  if(m_directory.startsWith("file://")) m_directory = m_directory.mid(7);
   setDirty(KMF::ProjectInterface::DirtyAny);
 }
 
@@ -148,9 +158,6 @@ void KMFProject::setOutput(KMF::OutputObject* output)
 void KMFProject::init()
 {
   m_initializing = true;
-  kDebug() << "preinit";
-  emit preinit(m_type);
-  kDebug() << "init";
   emit init(m_type);
   m_initializing = false;
   setDirty(KMF::ProjectInterface::DirtyAny, false);
@@ -159,7 +166,7 @@ void KMFProject::init()
 void KMFProject::mediaObjFromXML(const QDomElement& e)
 {
   KMF::Plugin *plugin =
-      kmfApp->pluginInterface()->findChild<KMF::Plugin*>(e.attribute("plugin"));
+      (KMF::Plugin *)kmfApp->pluginInterface()->child(e.attribute("plugin"));
 
   if(plugin)
   {
@@ -171,12 +178,12 @@ void KMFProject::mediaObjFromXML(const QDomElement& e)
 
 void KMFProject::templateFromXML(const QDomElement& e)
 {
-  KMF::Plugin *plugin =
-      kmfApp->pluginInterface()->findChild<KMF::Plugin*>(e.attribute("plugin"));
+  KMF::Plugin *plugin = static_cast<KMF::Plugin*>(kmfApp->pluginInterface()->
+      child(e.attribute("plugin")));
   if(plugin)
   {
-    m_template =
-        plugin->findChild<KMF::TemplateObject*>(e.attribute("object"));
+    m_template = static_cast<KMF::TemplateObject*>(
+        plugin->child(e.attribute("object")));
     if(m_template)
       m_template->fromXML(e);
   }
@@ -185,11 +192,12 @@ void KMFProject::templateFromXML(const QDomElement& e)
 void KMFProject::outputFromXML(const QDomElement& e)
 {
   KMF::Plugin *plugin =
-      kmfApp->pluginInterface()->findChild<KMF::Plugin*>(e.attribute("plugin"));
+      static_cast<KMF::Plugin*>(kmfApp->pluginInterface()->
+      child(e.attribute("plugin")));
   if(plugin)
   {
-    m_output =
-        plugin->findChild<KMF::OutputObject*>(e.attribute("object"));
+    m_output = static_cast<KMF::OutputObject*>(
+        plugin->child(e.attribute("object")));
     if(m_output)
       m_output->fromXML(e);
   }
@@ -197,13 +205,11 @@ void KMFProject::outputFromXML(const QDomElement& e)
 
 void KMFProject::fromXML(QString xml)
 {
-  emit preinit(m_type);
   QDomDocument doc("kmf_project");
   doc.setContent(xml);
   QDomElement element = doc.documentElement();
   m_type = element.attribute("type");
   m_directory = element.attribute("dir");
-  if(m_directory.startsWith("file://")) m_directory = m_directory.mid(7);
   m_title = element.attribute("title");
   m_serial = element.attribute("serial").toInt();
 
@@ -218,6 +224,8 @@ void KMFProject::fromXML(QString xml)
     QDateTime::fromString(element.attribute("last_mod_output"), Qt::ISODate);
   if(element.hasAttribute("last_subtype"))
     m_subType = element.attribute("last_subtype");
+
+  emit init(m_type);
 
   QDomNode n = element.firstChild();
   while(!n.isNull())
@@ -240,7 +248,6 @@ void KMFProject::fromXML(QString xml)
     }
     n = n.nextSibling();
   }
-  emit init(m_type);
 }
 
 void KMFProject::saveObj(QDomDocument& doc, QDomElement& root,
@@ -250,8 +257,8 @@ void KMFProject::saveObj(QDomDocument& doc, QDomElement& root,
   {
     QDomElement e = doc.createElement(name);
     if(ob->parent())
-      e.setAttribute("plugin", ob->parent()->objectName());
-    e.setAttribute("object", ob->objectName());
+      e.setAttribute("plugin", ob->parent()->name());
+    e.setAttribute("object", ob->name());
     ob->toXML(e);
     root.appendChild(e);
   }
@@ -279,35 +286,48 @@ QString KMFProject::toXML()
 
   doc.appendChild(root);
 
-  foreach(obj, m_list.list())
+  for(obj=m_list.first(); obj; obj=m_list.next())
     saveObj(doc, root, "media", obj);
   saveObj(doc, root, "template", m_template);
   saveObj(doc, root, "output", m_output);
   return doc.toString();
 }
 
-QString KMFProject::directory(const QString& subDir, bool create) const
+// From QtEz by Jan Prokop - GPL-2
+bool KMFProject::mkdir(const QString &path)
+{
+  QDir dir;
+  int pos = 1;
+
+  while((pos = path.find(QDir::separator(), pos)) != -1)
+    dir.mkdir(path.left(pos++));
+
+  return(dir.mkdir(path));
+}
+
+QString KMFProject::directory(const QString& subDir) const
 {
   QString result = m_directory;
   if(!subDir.isEmpty())
+  {
     result = KMF::Tools::joinPaths(result, subDir);
-
-  QDir dir(result);
-  if(create && !QDir(result).exists())
-    dir.mkpath(result);
+    QDir dir(result);
+    if(!QDir(result).exists())
+      mkdir(result);
+  }
   return KMF::Tools::addSlash(result);
 }
 
 void KMFProject::cleanFiles(const QString& subDir,
                             const QStringList& files) const
 {
-  KUrl::List list;
+  KURL::List list;
   QString sub = KMF::Tools::addSlash(subDir);
   QDir dir(KMF::Tools::joinPaths(m_directory, sub));
 
   for(QStringList::ConstIterator it=files.begin(); it!=files.end(); ++it)
   {
-    dir.setNameFilters(QStringList(*it));
+    dir.setNameFilter(*it);
     QStringList files2 = dir.entryList(QDir::Files | QDir::NoSymLinks);
     for(QStringList::Iterator jt=files2.begin(); jt!=files2.end(); ++jt)
     {
@@ -318,7 +338,7 @@ void KMFProject::cleanFiles(const QString& subDir,
   // Remove dirs if they are empty
   int pos = -1;
 
-  while((pos = sub.lastIndexOf(QDir::separator(), pos)) != -1)
+  while((pos = sub.findRev(QDir::separator(), pos)) != -1)
   {
     QString s = KMF::Tools::joinPaths(m_directory, sub.left(pos--));
     if(dir.rmdir(s) == false)
@@ -336,9 +356,9 @@ bool KMFProject::make(QString type)
 
   QDir dir(m_directory);
   if(!dir.exists())
-    dir.mkpath(dir.path());
+    mkdir(dir.path());
 
-  foreach(obj, m_list.list())
+  for(obj=m_list.first(); obj; obj=m_list.next())
   {
     if(!obj->make(type))
     {
@@ -356,31 +376,31 @@ bool KMFProject::make(QString type)
 
 int KMFProject::timeEstimate() const
 {
-  KMF::MediaObject* obj;
   int result = 0;
 
   if(!validProject())
     return result;
-  foreach(obj, m_list.list())
-    result += obj->timeEstimate();
+  for(QPtrList<KMF::MediaObject>::ConstIterator obj = m_list.begin();
+      obj != m_list.end(); ++obj)
+    result += (*obj)->timeEstimate();
   result += m_template->timeEstimate();
   result += m_output->timeEstimate();
   return result;
 }
 
-bool KMFProject::open(const KUrl &url)
+bool KMFProject::open(const KURL &url)
 {
   bool result = false;
   QString tmpFile;
 
   m_loading = true;
-  if(KIO::NetAccess::download(url, tmpFile, kmfApp->widget()))
+  if(KIO::NetAccess::download(url, tmpFile, kmfApp->mainWidget()))
   {
     QFile file(tmpFile);
-    if(file.open(QIODevice::ReadOnly))
+    if(file.open(IO_ReadOnly))
     {
       QTextStream stream(&file);
-      fromXML(stream.readAll());
+      fromXML(stream.read());
       file.close();
       m_url = url;
       setDirty(KMF::ProjectInterface::DirtyAny, false);
@@ -392,7 +412,7 @@ bool KMFProject::open(const KUrl &url)
   return result;
 }
 
-bool KMFProject::save(KUrl url)
+bool KMFProject::save(KURL url)
 {
   bool saveas = !url.isEmpty();
 
@@ -404,11 +424,10 @@ bool KMFProject::save(KUrl url)
       url = m_url;
   }
 
-  if(KIO::NetAccess::exists(url, KIO::NetAccess::DestinationSide,
-                            kmfApp->widget()) && saveas)
+  if(KIO::NetAccess::exists(url, false, kmfApp->mainWidget()) && saveas)
   {
     if(KMessageBox::questionYesNo(kmfApp->activeWindow(),
-        i18n("Do you want to overwrite %1", url.prettyUrl()))
+        i18n("Do you want to overwrite %1").arg(url.prettyURL()))
       == KMessageBox::No)
     {
       return true;
@@ -419,27 +438,24 @@ bool KMFProject::save(KUrl url)
   {
     KSaveFile saveFile(url.path());
 
-    if(saveFile.open())
-    {
-      QTextStream stream(&saveFile);
-      stream << toXML();
-      stream.flush();
-    }
+    if(saveFile.status() == 0)
+      *(saveFile.textStream()) << toXML();
     else
       return false;
-    saveFile.close();
   }
   else
   {
-    KTemporaryFile tempFile;
-
-    if(tempFile.open())
+    KTempFile tempFile;
+    tempFile.setAutoDelete(true);
+    if(tempFile.status() == 0)
     {
-      QTextStream stream(&tempFile);
-      stream << toXML();
-      stream.flush();
-      tempFile.close();
-      if (!KIO::NetAccess::upload(tempFile.fileName(), url, kmfApp->widget()))
+      *(tempFile.textStream()) << toXML();
+      if(tempFile.close())
+      {
+        if (!KIO::NetAccess::upload(tempFile.name(), url, kmfApp->mainWidget()))
+          return false;
+      }
+      else
         return false;
     }
     else
@@ -456,39 +472,27 @@ void KMFProject::setDirty(KMF::ProjectInterface::DirtyType type, bool dirty)
   if(dirty && !m_loading && !m_initializing)
   {
     if(type & KMF::ProjectInterface::DirtyMedia)
-      m_lastModified[ModMedia] = QDateTime::currentDateTime();
+      m_lastModified[ModMedia] = QDateTime::currentDateTime(Qt::LocalTime);
     if(type & KMF::ProjectInterface::DirtyTemplate)
-      m_lastModified[ModTemplate] = QDateTime::currentDateTime();
+      m_lastModified[ModTemplate] = QDateTime::currentDateTime(Qt::LocalTime);
     if(type & KMF::ProjectInterface::DirtyOutput)
-      m_lastModified[ModOutput] = QDateTime::currentDateTime();
+      m_lastModified[ModOutput] = QDateTime::currentDateTime(Qt::LocalTime);
   }
   if(!m_initializing)
     emit modified(m_title, dirty);
-  if(dirty && !m_loading && !m_initializing)
-  {
-    if(type & KMF::ProjectInterface::DirtyMedia)
-    {
-      kDebug() << "media modified";
-      emit mediaModified();
-    }
-    if(type & KMF::ProjectInterface::DirtyTemplate)
-      emit templatesModified();
-    if(type & KMF::ProjectInterface::DirtyOutput)
-      emit outputsModified();
-  }
 }
 
 QDateTime KMFProject::lastModified(KMF::ProjectInterface::DirtyType type) const
 {
   QDateTime d;
 
-  if((type & KMF::ProjectInterface::DirtyMedia) &&
+  if(type & KMF::ProjectInterface::DirtyMedia &&
      d < m_lastModified[ModTemplate])
     d = m_lastModified[ModMedia];
-  if((type & KMF::ProjectInterface::DirtyTemplate) &&
+  if(type & KMF::ProjectInterface::DirtyTemplate &&
      d < m_lastModified[ModTemplate])
     d = m_lastModified[ModTemplate];
-  if((type & KMF::ProjectInterface::DirtyOutput) &&
+  if(type & KMF::ProjectInterface::DirtyOutput &&
      d < m_lastModified[ModTemplate])
     d = m_lastModified[ModOutput];
   return d;
@@ -497,13 +501,10 @@ QDateTime KMFProject::lastModified(KMF::ProjectInterface::DirtyType type) const
 QMap<QString, QString> KMFProject::subTypes() const
 {
   QMap<QString, QString> result;
-  KMF::MediaObject* obj;
+  QPtrListIterator<KMF::MediaObject> it(m_list);
 
-  foreach(obj, m_list.list())
-  {
-    if(obj)
-      addMap(&result, obj->subTypes());
-  }
+  for(;*it != 0; ++it )
+    addMap(&result, (*it)->subTypes());
   if(m_template)
     addMap(&result, m_template->subTypes());
   if(m_output)

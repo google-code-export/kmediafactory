@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004, 2005 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -20,10 +20,8 @@
 #ifndef SLIDESHOWPROPERTIES_H
 #define SLIDESHOWPROPERTIES_H
 
-#include <kmflistmodel.h>
-#include <ui_slideshowproperties.h>
+#include <slideshowlayout.h>
 #include <slideshowobject.h>
-#include <QPixmap>
 
 class KFileItem;
 class SlideshowObject;
@@ -32,27 +30,11 @@ class SlideshowObject;
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
 
-class SlideListModel : public KMFListModel<Slide>
-{
-    virtual int columnCount(const QModelIndex&) const;
-    virtual QVariant data(const QModelIndex &index, int role) const;
-    virtual bool setData(const QModelIndex &index, const QVariant &value,
-                        int role = Qt::EditRole);
-    virtual QVariant headerData(int column, Qt::Orientation, int role) const;
-    virtual Qt::ItemFlags flags(const QModelIndex& index) const;
-
-  public:
-    void setPreview(const QString& file, const QPixmap& pixmap);
-
-  private:
-    QMap<QString, QPixmap> m_previews;
-};
-
-class SlideshowProperties : public KDialog, public Ui::SlideshowProperties
+class SlideshowProperties : public SlideshowPropertiesLayout
 {
     Q_OBJECT
   public:
-    SlideshowProperties(QWidget *parent = 0);
+    SlideshowProperties(QWidget *parent = 0, const char *name = 0);
     ~SlideshowProperties();
 
     void getData(SlideshowObject& obj) const;
@@ -60,9 +42,10 @@ class SlideshowProperties : public KDialog, public Ui::SlideshowProperties
 
   protected:
     void addSlides(const SlideList& slides);
+    void select(QListViewItem* item);
 
   public slots:
-    void gotPreview(const KFileItem& item, const QPixmap& pixmap);
+    void gotPreview(const KFileItem* item, const QPixmap& pixmap);
 
   protected slots:
     virtual void moveUp();
@@ -75,7 +58,6 @@ class SlideshowProperties : public KDialog, public Ui::SlideshowProperties
 
   private:
     const SlideshowObject* m_sob;
-    SlideListModel m_model;
     QStringList m_audioFiles;
 };
 

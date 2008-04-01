@@ -1,0 +1,112 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>KMFOptionsLayout</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>KMFOptionsLayout</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>357</width>
+            <height>187</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>KMediaFactory Settings</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>typeLabel</cstring>
+            </property>
+            <property name="text">
+                <string>Def&amp;ault Project Type:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>kcfg_DefaultProjectType</cstring>
+            </property>
+        </widget>
+        <widget class="QComboBox">
+            <item>
+                <property name="text">
+                    <string>DVD-PAL</string>
+                </property>
+            </item>
+            <item>
+                <property name="text">
+                    <string>DVD-NTSC</string>
+                </property>
+            </item>
+            <property name="name">
+                <cstring>kcfg_DefaultProjectType</cstring>
+            </property>
+            <property name="editable">
+                <bool>true</bool>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>directoryLabel</cstring>
+            </property>
+            <property name="text">
+                <string>Default Project Director&amp;y:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>kcfg_DefaultProjectDirectory</cstring>
+            </property>
+        </widget>
+        <widget class="KURLRequester">
+            <property name="name">
+                <cstring>kcfg_DefaultProjectDirectory</cstring>
+            </property>
+            <property name="mode">
+                <number>10</number>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>kcfg_ShowProjectOptionsOnNew</cstring>
+            </property>
+            <property name="text">
+                <string>Show project &amp;options on new project</string>
+            </property>
+            <property name="accel">
+                <string>Alt+O</string>
+            </property>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer3</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>40</height>
+                </size>
+            </property>
+        </spacer>
+    </vbox>
+</widget>
+<customwidgets>
+</customwidgets>
+<includes>
+    <include location="global" impldecl="in implementation">kiconloader.h</include>
+    <include location="local" impldecl="in implementation">common.h</include>
+</includes>
+<slots>
+    <slot access="protected">titleChanged(const QString&amp;)</slot>
+</slots>
+<pixmapfunction>BTN_ICON</pixmapfunction>
+<layoutdefaults spacing="6" margin="11"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+</UI>

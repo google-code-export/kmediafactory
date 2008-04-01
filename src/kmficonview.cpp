@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004 by Petri Damstén
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -18,135 +18,108 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 #include "kmficonview.h"
-#include <kmftools.h>
-#include <QPainter>
-#include <QLocale>
-#include <QPainterPath>
-#include <limits.h>
+#include <kdebug.h>
+#include <qpainter.h>
 
-#define MARGIN 6
+#define MARGIN 3
 
-// From qt4 qitemdelegate.cpp GPL-2
-QString KMFItemDelegate::replaceNewLine(QString text) const
+void KMFIconViewItem::paintItem(QPainter* p, const QColorGroup& cg)
 {
-  const QChar nl = QLatin1Char('\n');
-  for (int i = 0; i < text.count(); ++i)
-    if (text.at(i) == nl)
-      text[i] = QChar::LineSeparator;
-  return text;
+  if(iconView()->currentItem() == this)
+  {
+    QRect rc = rect();
+
+    p->setBrush(QBrush(cg.highlight()));
+    p->setPen(Qt::NoPen);
+    p->drawRoundRect(rc, 20, 20);
+  }
+  KIconViewItem::paintItem(p, cg);
 }
 
-// From qt4 qitemdelegate.cpp GPL-2
-QRect KMFItemDelegate::textLayoutBounds(
-    const QStyleOptionViewItemV2 &option) const
+void KMFIconViewItem::paintFocus(QPainter*, const QColorGroup&)
 {
-  QRect rect = option.rect;
-  const bool wrapText = option.features & QStyleOptionViewItemV2::WrapText;
-  switch (option.decorationPosition)
-  {
-    case QStyleOptionViewItem::Left:
-    case QStyleOptionViewItem::Right:
-        rect.setWidth(INT_MAX >> 6);
-        break;
-    case QStyleOptionViewItem::Top:
-    case QStyleOptionViewItem::Bottom:
-        rect.setWidth(wrapText ? option.decorationSize.width() :
-            (INT_MAX >> 6));
-        break;
-  }
-  return rect;
+  // No focus rectangle
 }
 
-// This function is mainly from qitemdelegate.cpp GPL-2
-void KMFItemDelegate::paint(QPainter* painter,
-                            const QStyleOptionViewItem& option,
-                            const QModelIndex& index) const
+void KMFIconViewItem::calcRect(const QString& text_)
 {
-  painter->save();
+  KIconViewItem::calcRect(text_);
+  QRect itemIconRect = pixmapRect();
+  QRect itemTextRect = textRect();
+  QRect itemRect = rect();
 
-  QStyleOptionViewItemV2 opt = setOptions(index, option);
-  const QStyleOptionViewItemV2 *v2 =
-      qstyleoption_cast<const QStyleOptionViewItemV2 *>(&option);
-  opt.features = v2 ? v2->features :
-      QStyleOptionViewItemV2::ViewItemFeatures(QStyleOptionViewItemV2::None);
-  drawBackground(painter, opt, index);
+  itemRect.addCoords(0, 0, 2*MARGIN, 2*MARGIN);
+  itemIconRect.moveBy(MARGIN, MARGIN);
+  itemTextRect.moveBy(MARGIN, MARGIN);
 
-  if(option.state & QStyle::State_Selected)
-  {
-    painter->setBrush(option.palette.brush(QPalette::Highlight));
-    painter->setPen(Qt::NoPen);
-    painter->setRenderHint(QPainter::Antialiasing);
-    KMF::Tools::drawRoundRect(painter, opt.rect, 10);
-  }
-  opt.rect.adjust(MARGIN, MARGIN, -1 * MARGIN, -1 * MARGIN);
+  setPixmapRect(itemIconRect);
+  setTextRect(itemTextRect);
+  setItemRect(itemRect);
+}
 
-  QVariant value;
+KMFIconView::KMFIconView(QWidget *parent, const char *name) :
+    KIconView(parent, name), m_after(0)
+{
+  setSelectionMode(QIconView::NoSelection);
+}
 
-  QIcon icon;
-  QPixmap pixmap;
-  QRect decorationRect;
-  value = index.data(Qt::DecorationRole);
-  if (value.isValid())
-  {
-    if (value.type() == QVariant::Icon)
-    {
-      icon = qvariant_cast<QIcon>(value);
-      decorationRect = QRect(QPoint(0, 0),
-                              icon.actualSize(option.decorationSize,
-                                              QIcon::Normal, QIcon::Off));
-    }
-    else
-    {
-      pixmap = decoration(opt, value);
-      decorationRect = QRect(QPoint(0, 0), pixmap.size());
-    }
-  }
+KMFIconView::~KMFIconView()
+{
+}
 
-  QString text;
-  QRect displayRect;
-  value = index.data(Qt::DisplayRole);
-  if (value.isValid())
-  {
-    if (value.type() == QVariant::Double)
-      text = QLocale().toString(value.toDouble());
-    else
-      text = replaceNewLine(value.toString());
+void KMFIconView::init(const QString&)
+{
+  clear();
+}
 
-    displayRect = textRectangle(painter, textLayoutBounds(opt),
-                                opt.font, text);
-  }
-
-  QRect checkRect;
-  // do the layout
-  doLayout(opt, &checkRect, &decorationRect, &displayRect, false);
-
-  // draw the item
-  if (!icon.isNull())
-  {
-    icon.paint(painter, decorationRect, option.decorationAlignment,
-               QIcon::Normal, QIcon::Off);
-  }
+KMFIconViewItem* KMFIconView::newItem(KMF::Object *ob)
+{
+  KMFIconViewItem* item;
+  if(m_after)
+    item = new KMFIconViewItem(this, m_after, ob->title(), ob->pixmap());
   else
-  {
-    // No grayed icon when selected
-    QStyle::State save = opt.state;
-    opt.state = QStyle::State_Enabled;
-    drawDecoration(painter, opt, decorationRect, pixmap);
-    opt.state = save;
-  }
-  drawDisplay(painter, opt, displayRect, text);
-
-  // done
-  painter->restore();
+    item = new KMFIconViewItem(this, ob->title(), ob->pixmap());
+  m_obs.insert(ob, item);
+  item->setOb(ob);
+  if(count() == 1)
+    setCurrentItem(ob);
+  return item;
 }
 
-QSize KMFItemDelegate::sizeHint(const QStyleOptionViewItem& option,
-                                const QModelIndex& index) const
+void KMFIconView::itemRemoved(KMF::Object *ob)
 {
-  if(!index.isValid())
-    return QSize(0, 0);
-  QSize res = QItemDelegate::sizeHint(option, index);
-  return res + QSize(2*MARGIN, 2*MARGIN);
+  const KIconViewItem *item = m_obs.find(ob).data();
+  if(item == m_after)
+    m_after = 0;
+  delete item;
+  m_obs.remove(ob);
+}
+
+void KMFIconView::setCurrentItem(KMF::Object* ob)
+{
+  if(ob)
+  {
+    KIconViewItem *item = m_obs[ob];
+    if(item)
+      KIconView::setCurrentItem(item);
+  }
+}
+
+void KMFIconView::setSelected(KMF::Object* ob, bool s, bool cb)
+{
+  if(ob)
+  {
+    KIconViewItem *item = m_obs.find(ob).data();
+    if(item)
+      KIconView::setSelected(item, s, cb);
+  }
+}
+
+void KMFIconView::clear()
+{
+  m_after = 0;
+  KIconView::clear();
+  m_obs.clear();
 }
 
 #include "kmficonview.moc"
