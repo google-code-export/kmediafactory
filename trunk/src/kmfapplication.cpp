@@ -27,6 +27,7 @@
 #include <kcmdlineargs.h>
 #include <kservicetypetrader.h>
 #include <kstandarddirs.h>
+#include <kdesktopfile.h>
 #include <kparts/componentfactory.h>
 #include <kdebug.h>
 #include <kmainwindow.h>
@@ -92,8 +93,13 @@ void KMFApplication::loadPlugins()
 
   //KMF::Tools::printChilds(m_pluginInterface);
 
-  const KService::List offers =
-      KServiceTypeTrader::self()->query("KMediaFactory/Plugin");
+  KService::List offers = KServiceTypeTrader::self()->query("KMediaFactory/Plugin");
+  QStringList files = KGlobal::dirs()->findAllResources("appdata", "tools/services/*.desktop");
+  foreach(QString file, files)
+  {
+    kDebug() << "Custom service: " << file;
+    offers << KService::Ptr(new KService(file));
+  }
 
   foreach(KService::Ptr service, offers)
   {

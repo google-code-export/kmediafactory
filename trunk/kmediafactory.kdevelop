@@ -87,6 +87,9 @@
         <default/>
       </environments>
     </other>
+    <general>
+      <activedir>plugins/kross</activedir>
+    </general>
   </kdevcustomproject>
   <kdevfilecreate>
     <filetypes/>

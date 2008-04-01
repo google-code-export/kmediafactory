@@ -53,6 +53,8 @@ int main(int argc, char **argv)
     kDebug() << "Adding resource dir: " << tooldir;
     // For icons in tool scripts
     KGlobal::dirs()->addResourceDir("icon", tooldir);
+    // For full script plugins
+    KGlobal::dirs()->addResourceDir("data", tooldir);
   }
   //KIconLoader::global()->reconfigure(about.appName(), KGlobal::dirs());
 
