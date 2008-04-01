@@ -162,9 +162,9 @@ function mail_to_news()
   cd $KMF
 
   if [ "$RELEASE" != "1" ]; then
-    mail -s "New snapshot - $SNAPSHOT" $NEWSMAIL < snapshot.changelog
+    mail -s "KMediaFactory - New snapshot - $SNAPSHOT" $NEWSMAIL < snapshot.changelog
   else
-    mail -s "New release - $SNAPSHOT" $NEWSMAIL < snapshot.changelog
+    mail -s "KMediaFactory - New release - $SNAPSHOT" $NEWSMAIL < snapshot.changelog
   fi
 }
 
