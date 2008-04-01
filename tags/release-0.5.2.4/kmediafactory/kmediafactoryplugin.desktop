@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=ServiceType
+X-KDE-ServiceType=KMediaFactory/Plugin
+Comment=KMediaFactory Plugin

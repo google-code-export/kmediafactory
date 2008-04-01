@@ -1,0 +1,258 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>ToolPropertiesLayout</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>ToolPropertiesLayout</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>549</width>
+            <height>242</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Tool Properties</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout3</cstring>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="KURLRequester" row="2" column="1" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>commandURL</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="0">
+                    <property name="name">
+                        <cstring>nameLabel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Name:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>nameEdit</cstring>
+                    </property>
+                </widget>
+                <widget class="KURLRequester" row="3" column="1" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>workPathURL</cstring>
+                    </property>
+                </widget>
+                <widget class="QLineEdit" row="0" column="1">
+                    <property name="name">
+                        <cstring>nameEdit</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="3" column="0">
+                    <property name="name">
+                        <cstring>workPathLabel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Wor&amp;k path:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>workPathURL</cstring>
+                    </property>
+                </widget>
+                <widget class="QLineEdit" row="1" column="1">
+                    <property name="name">
+                        <cstring>descriptionEdit</cstring>
+                    </property>
+                </widget>
+                <widget class="KIconButton" row="0" column="2" rowspan="2" colspan="1">
+                    <property name="name">
+                        <cstring>iconButton</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>1</hsizetype>
+                            <vsizetype>1</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>56</width>
+                            <height>56</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                    <property name="iconSize">
+                        <number>48</number>
+                    </property>
+                    <property name="strictIconSize">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="1" column="0">
+                    <property name="name">
+                        <cstring>descriptionLabel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Description:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>descriptionEdit</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="2" column="0">
+                    <property name="name">
+                        <cstring>commandLabel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Co&amp;mmand:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>commandURL</cstring>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>mediaMenuCheckBox</cstring>
+            </property>
+            <property name="text">
+                <string>Place in media &amp;button bar</string>
+            </property>
+            <property name="accel">
+                <string>Alt+B</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>runInTerminalCheckBox</cstring>
+            </property>
+            <property name="text">
+                <string>Run In Term&amp;inal</string>
+            </property>
+            <property name="accel">
+                <string>Alt+I</string>
+            </property>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer2</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout1</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer1</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>40</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>okButton</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;OK</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+O</string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>1</number>
+                    </property>
+                </widget>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>cancelButton</cstring>
+                    </property>
+                    <property name="text">
+                        <string>C&amp;ancel</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+A</string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>2</number>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </vbox>
+</widget>
+<customwidgets>
+</customwidgets>
+<connections>
+    <connection>
+        <sender>okButton</sender>
+        <signal>clicked()</signal>
+        <receiver>ToolPropertiesLayout</receiver>
+        <slot>accept()</slot>
+    </connection>
+    <connection>
+        <sender>cancelButton</sender>
+        <signal>clicked()</signal>
+        <receiver>ToolPropertiesLayout</receiver>
+        <slot>reject()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>nameEdit</tabstop>
+    <tabstop>descriptionEdit</tabstop>
+    <tabstop>iconButton</tabstop>
+    <tabstop>commandURL</tabstop>
+    <tabstop>workPathURL</tabstop>
+    <tabstop>mediaMenuCheckBox</tabstop>
+    <tabstop>okButton</tabstop>
+    <tabstop>cancelButton</tabstop>
+</tabstops>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kicondialog.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+</includehints>
+</UI>

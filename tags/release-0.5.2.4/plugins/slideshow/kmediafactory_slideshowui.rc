@@ -1,0 +1,11 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="kmediafactory-slideshow" version="1">
+  <MenuBar>
+    <Menu name="media">
+      <Action name="slideshow" />
+    </Menu>
+  </MenuBar>
+  <ToolBar name="mediaButtons">
+    <Action name="slideshow"/>
+  </ToolBar>
+</kpartgui>
