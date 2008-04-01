@@ -13,7 +13,7 @@ fi
 status=`svn status`
 if [ "$status" != "" ]; then
   svn status
-  if [ "$1" != "--nopause" ]; then
+  if [ "$1" != "--pause" ]; then
     comment="$1"
   else
     comment="$2"
@@ -30,6 +30,6 @@ else
 fi
 
 echo "Finished."
-if [ "$1" != "--nopause" ]; then
+if [ "$1" == "--pause" ]; then
   read
 fi
