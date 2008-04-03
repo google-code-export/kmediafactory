@@ -1,0 +1,16 @@
+# Import DV files in KMediaFactory 0.6.x
+
+= Import DV in 0.6.x =
+
+ * Get the import dvdauthor xml plugin from [http://www.kde-files.org/index.php?xcontentmode=667 kde-files.org].
+ * Grab dv:
+   {{{
+   $ dvgrab --format raw --opendml --size 0
+   --autosplit --timestamp video-
+   }}}
+ * Edit in kino:
+   {{{
+   $ kino video-*.dv
+   }}}
+ * Export to mpeg/8-dvd.
+ * Import dvdauthor xml to kmediafactory.
