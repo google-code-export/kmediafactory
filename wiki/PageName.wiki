@@ -1,0 +1,504 @@
+=Installing=
+
+ * Kubuntu 7.10 (Version tested: 0.6.0_alpha)
+ * Gentoo (Versions tested: All)
+ * Kubuntu 5.10 (Version tested: svn 18.01.2006 rev 161 - coming 0.5.0 release)
+ * Fedora Core 3 (Version tested: 0.4.0)
+ * Fedora Core 4 (Version tested: 0.5.0)
+ * Fedora Core 4 x86_64 (Version tested: svn 06.01.2006 rev 121 - coming 0.5.0 release)
+ * Fedora Core 5 (Version tested: svn 23.03.2006 - coming 0.5.1 release)
+ * Slackware 10.1 (Version tested: 0.3.0)
+ * Slackware 10.2 (Version tested: svn 16.01.2006 rev 155 - coming 0.5.0 release)
+ * Mandrake 10.1 (Version tested: 0.3.0)
+ * Mandriva Free 2006 (Version tested: svn 17.01.2006 rev 156 - coming 0.5.0 release)
+ * Suse 9.2 (Version tested: 0.3.0)
+ * Suse 10.0 (Version tested: svn 18.01.2006 rev 160 - coming 0.5.0 release)
+ * PCBSD/FreeBSD 6.0 (Version tested: svn 19.01.2006 rev xxx - coming 0.5.0 release)
+
+==Kubuntu 7.10==
+
+ * universe and multiverse must be enabled to install all needed packages.
+ * Install needed packages and they dependencies using apt-get.
+{{{
+# apt-get update
+
+# apt-get install g++
+# apt-get install make
+# apt-get install cmake
+# apt-get install zip
+# apt-get install gettext
+# apt-get install kdelibs5-dev
+
+# apt-get install mplayer
+# apt-get install ffmpeg
+# apt-get install mjpegtools
+# apt-get install dvdauthor
+}}}
+
+ * Install recommended packages and they dependencies using apt-get.
+{{{
+# apt-get install k3b
+# apt-get install libdvdread3-dev
+# dpkg -i dvd-slideshow-0.8.0-1_all.deb
+# apt-get install openoffice.org
+
+# apt-get install kaffeine
+# apt-get install xine-ui
+}}}
+
+ * Compile & install kmediafactory.
+{{{
+# cd ~/src
+# wget http://www.iki.fi/damu/software/kmediafactory/kmediafactory-0.X.X.tar.bz2
+# tar xjvf kmediafactory-0.X.X.tar.bz2
+# cd kmediafactory-0.X.X
+# ./configure
+# cd build; make
+# sudo make install
+}}}
+
+==Gentoo==
+
+ * Change directory overlay portage directory.
+{{{
+# source /etc/make.conf; cd $PORTDIR_OVERLAY
+}}}
+ * Get kmediafactory ebuilds
+{{{
+# wget http://www.iki.fi/damu/software/kmediafactory/kmediafactory.ebuild.tar.bz2
+}}}
+ * Extract ebuilds to portage overlay.
+{{{
+# tar xjvf kmediafactory.ebuild.tar.bz2
+}}}
+ * Emerge kmediafactory.
+{{{
+# emerge kmediafactory
+}}}
+
+==Kubuntu 5.10==
+
+ * universe and multiverse must be enabled to install all needed packages.
+ * Install needed packages and they dependencies using apt-get.
+{{{
+# apt-get update
+
+# apt-get install g++
+# apt-get install make
+# apt-get install kdelibs4-dev
+# apt-get install libmagick++6-dev
+# apt-get install mjpegtools
+# apt-get install dvdauthor
+}}}
+ * Install recommended packages and they dependencies using apt-get.
+{{{
+# apt-get install k3b
+# apt-get install libxine-dev
+# apt-get install libdvdread3-dev
+# apt-get install libdv4-dev
+# apt-get install libtheora-dev
+# apt-get install dvd-slideshow
+
+# apt-get install kaffeine
+# apt-get install xine-ui
+}}}
+ * Compile & install kmediafactory.
+{{{
+# cd ~/src
+# wget http://www.iki.fi/damu/software/kmediafactory/kmediafactory-0.X.X.tar.bz2
+# tar xjvf kmediafactory-0.X.X.tar.bz2
+# cd kmediafactory-0.X.X
+# ./configure
+# make
+# make install
+}}}
+
+==Suse 9.2==
+
+ * Some of the packages can be found from Packman
+ * Install needed devel packages and they dependencies using yast.
+{{{
+gcc-c++
+kdebase3-devel
+ImageMagick-Magick++-devel
+xine-devel
+}}}
+ * Install other needed packages and they dependencies using yast.
+{{{
+mjpegtools
+dvdauthor
+toolame
+(xine) - only needed for preview
+}}}
+ * Compile & install kmediafactory.
+{{{
+# cd ~/src
+# wget http://www.iki.fi/damu/software/kmediafactory/kmediafactory-0.X.X.tar.bz2
+# tar xjvf kmediafactory-0.X.X.tar.bz2
+# cd kmediafactory-0.X.X
+# ./configure --prefix=/opt/kde3
+# make
+# make install
+}}}
+ * It seems that there is something wrong with the suse toolame rpm.
+So if you find errors like this from the log
+{{{
+SmpFrqIndex: 48 is not a legal sample rate
+**ERROR: [mplex] Unable to open file Main_1.mp2 for reading.
+}}}
+you should build toolame from source.
+
+==Suse 10.0==
+
+RPM packages see Packman
+If you want to build source...
+Packman repository should be configured for this to work.
+ * Install needed packages and they dependencies using yast.
+{{{
+gcc-c++
+kdebase3-devel
+libacl-devel
+ImageMagick-Magick++-devel
+mjpegtools
+dvdauthor
+}}}
+ * Install other needed packages and they dependencies using yast.
+{{{
+libxine1-devel
+libdvdread-devel
+libtheora-devel
+libdv-devel
+dvd-slideshow
+}}}
+ * Compile & install kmediafactory.
+{{{
+# cd ~/src
+# wget http://www.iki.fi/damu/software/kmediafactory/kmediafactory-0.X.X.tar.bz2
+# tar xjvf kmediafactory-0.X.X.tar.bz2
+# cd kmediafactory-0.X.X
+# ./configure
+# make
+# make install
+}}}
+
+==Fedora Core 3==
+
+ * This guide needs configured.
+ * Install needed devel packages and they dependencies using yum.
+{{{
+# yum install gcc-c++
+# yum install kdebase-devel
+# yum install ImageMagick-c++-devel
+# yum install xine-lib-devel
+# yum install libdv-devel
+# yum install libdvdread-devel
+}}}
+ * Install other needed packages and they dependencies using yum. xine is only needed for preview.
+{{{
+# yum install mjpegtools
+# yum install xine
+}}}
+ * Install these packages from source:
+ * dvdauthor - 0.6.10 rpm won't work. kmediafactory needs atleast 0.6.11
+ * toolame
+
+
+ * Compile & install kmediafactory.
+{{{
+# cd ~/src
+# wget http://www.iki.fi/damu/software/kmediafactory/kmediafactory-0.X.X.tar.bz2
+# tar xjvf kmediafactory-0.X.X.tar.bz2
+# cd kmediafactory-0.X.X
+}}}
+For 32-bit Fedora
+{{{
+# ./configure --with-qt-dir=/usr/lib/qt-3.3
+}}}
+For 64-bit Fedora
+{{{
+# ./configure --enable-libsuffix=64
+}}}
+Then compile
+{{{
+# make
+# make install
+}}}
+
+
+==Fedora Core 4==
+
+RPM packages for normal FC4 and they also work with KDE from kde-redhat
+(http://kde-redhat.sourceforge.net/)
+(an extra repository for the newest KDE).
+===0.5.0===
+ * RPM (needed)
+ * Debuginfo (optional)
+ * Devel (optional)
+ * SRPM (optional)
+ * SPEC (optional)
+To install kmediafactory the repositories "Fedora Extras" (default since FC4) and the
+"semi-official" rpm.livna.org
+(Configuration) must be activated.
+Then install dependencies:
+{{{
+yum install dvdauthor xine-lib mjpegtools ImageMagick ImageMagick-c++ libdvdread
+}}}
+Not needed but recommened:
+{{{
+yum install k3b xine
+}}}
+These rpms are from http://deadbabylon.de.vu (Thanks to Sebastian Vahl)
+
+==Fedora Core 4 x86_64==
+Based on custom installation with XWindow and KDE selected. yum update run afterwards (4.1.2005).<br/>
+Repositories used:
+ * Dries RPM Repository
+ * ATrpms
+ * livna
+
+ * Mandatory packages:
+{{{
+# yum install gcc-c++
+# yum install kdebase-devel
+# yum install ImageMagick-c++-devel
+# yum install mjpegtools
+# yum install dvdauthor
+}}}
+ * Recommended packages:
+{{{
+# yum install xine-lib-devel
+# yum install libdv-devel
+# yum install libdvdread-devel
+# yum install libtheora-devel
+
+# yum install k3b
+# yum install openoffice.org-impress
+# rpm -i http://ovh.dl.sourceforge.net/sourceforge/dvd-slideshow/dvd-slideshow-0.7.2-1.noarch.rpm
+
+# yum install xine
+# yum install kaffeine
+}}}
+ * Optionally install other recommended packages from source.
+ * ProjectX
+
+ * Compile & install kmediafactory.
+{{{
+# cd ~/src
+# wget http://www.iki.fi/damu/software/kmediafactory/kmediafactory-0.X.X.tar.bz2
+# tar xjvf kmediafactory-0.X.X.tar.bz2
+# cd kmediafactory-0.X.X
+# ./configure --with-qt-dir=/usr/lib64/qt-3.3 --with-qt-libraries=/usr/lib64/qt-3.3/lib
+# make
+# make install
+}}}
+
+==Fedora Core 5==
+
+RPM packages:
+===0.5.1 & 0.5.2===
+ * RPMs
+If you want to build source...
+Based on custom installation with XWindow and kdebase installed. yum update run afterwards (23.03.2006).
+Repositories used:
+ * livna
+{{{
+rpm -ivh http://rpm.livna.org/livna-release-5.rpm
+}}}
+ * Mandatory packages:
+{{{
+# yum install gcc-c++
+# yum install kdebase-devel
+# yum install ImageMagick-c++-devel
+# yum install mjpegtools
+# yum install dvdauthor
+}}}
+ * Recommended packages:
+{{{
+# yum install xine-lib-devel
+# yum install libdv-devel
+# yum install libdvdread-devel
+# yum install libtheora-devel
+
+# yum install k3b
+# yum install openoffice.org-impress
+# rpm -i http://ovh.dl.sourceforge.net/sourceforge/dvd-slideshow/dvd-slideshow-0.7.5-1.noarch.rpm
+
+# yum install xine
+# yum install kaffeine
+}}}
+ * Optionally install other recommended packages from source.
+ * ProjectX
+
+ * Compile & install kmediafactory.
+{{{
+# cd ~/src
+# wget http://www.iki.fi/damu/software/kmediafactory/kmediafactory-0.X.X.tar.bz2
+# tar xjvf kmediafactory-0.X.X.tar.bz2
+# cd kmediafactory-0.X.X
+# ./configure
+# make
+# make install
+}}}
+
+==Slackware 10.1==
+
+ * Install needed packages (http://www.linuxpackages.net).
+{{{
+# installpkg libdvdread-0.9.4-i486-1tsu.tgz
+# installpkg dvdauthor-0.6.11-i686-1jto.tgz
+# installpkg mjpegtools-1.6.2-i686-3jto.tgz
+# installpkg toolame-02l-i486-1zeb.tgz
+}}}
+ * Compile & install kmediafactory.
+{{{
+# cd ~/src
+# wget http://www.iki.fi/damu/software/kmediafactory/kmediafactory-0.X.X.tar.bz2
+# tar xjvf kmediafactory-0.X.X.tar.bz2
+# cd kmediafactory-0.X.X
+# ./configure
+# make
+# make install
+}}}
+
+==Slackware 10.2==
+
+ * Install needed packages (http://www.linuxpackages.net).
+{{{
+# installpkg dvdauthor-0.6.11-i686-2jto.tgz
+# installpkg libdvdread-0.9.4-i486-1kjz.tgz
+# installpkg libdv-0.104-i486-1jed.tgz
+# installpkg libtheora-1.0alpha5-i486-1jed.tgz
+# installpkg mjpegtools-1.8.0-i686-1jto.tgz
+# installpkg openoffice.org-2.0.1-i586-1kjz.tgz
+}}}
+ * Compile & install kmediafactory.
+{{{
+# cd ~/src
+# wget http://www.iki.fi/damu/software/kmediafactory/kmediafactory-0.X.X.tar.bz2
+# tar xjvf kmediafactory-0.X.X.tar.bz2
+# cd kmediafactory-0.X.X
+# ./configure --with-libfontconfig=/usr/X11R6
+# make
+# make install
+}}}
+
+==Mandrake 10.1==
+
+ * For KDE 3.2 you must use snapshot 20050429 or later.
+ * Install needed devel packages and they dependencies using rpmdrake.
+{{{
+gcc-c++
+libkdebase4-devel
+libxine1-devel
+}}}
+ * Install other needed packages and they dependencies using rpmdrake. xine is only needed for preview.
+{{{
+mjpegtools
+xine-ui
+}}}
+ * Install these packages from source:
+   * dvdauthor - 0.6.10 rpm won't work. kmediafactory needs atleast 0.6.11
+   * toolame
+   * ImageMagick - libMagick6.4.0-devel crashes.
+ * Compile & install kmediafactory.
+{{{
+# cd ~/src
+# wget http://www.iki.fi/damu/software/kmediafactory/kmediafactory-0.X.X.tar.bz2
+# tar xjvf kmediafactory-0.X.X.tar.bz2
+# cd kmediafactory-0.X.X
+# ./configure --prefix=/usr
+# make
+# make install
+}}}
+
+==Mandriva Free 2006==
+
+ * KDE Workstation installation
+ * Install needed packages and they dependencies using rpmdrake.
+{{{
+make
+gcc-c++
+libkdebase4-devel
+libMagick8.4.2-devel
+dvdauthor
+mjpegtools
+}}}
+ * Install other recommended packages.
+{{{
+libdv4-devel
+libdvdread3-devel
+libtheora0-devel
+libxine1-devel
+openoffice.org-go-ooo
+k3b
+dvd-slideshow
+(xine-ui)
+(kaffeine)
+}}}
+ * Compile & install kmediafactory.
+{{{
+# cd ~/src
+# wget http://www.iki.fi/damu/software/kmediafactory/kmediafactory-0.X.X.tar.bz2
+# tar xjvf kmediafactory-0.X.X.tar.bz2
+# cd kmediafactory-0.X.X
+# ./configure
+# make
+# make install
+}}}
+
+==PCBSD / FreeBSD 6.0==
+
+ * This is a PCBSD install so KDE 3.4.0 is already installed.
+ * Install needed packages.
+{{{
+cvsup /root/ports-supfile
+
+cd /usr/ports/archivers/zip ; make install
+cd /usr/ports/graphics/ImageMagick ; make install
+cd /usr/ports/multimedia/mjpegtools ; make install
+cd /usr/ports/multimedia/dvdauthor ; make install
+
+cd /usr/ports/multimedia/libxine ; make install
+cd /usr/ports/multimedia/libtheora ; make install
+cd /usr/ports/multimedia/libdv ; make install
+cd /usr/ports/multimedia/libdvdread ; make install
+cd /usr/ports/multimedia/dvd-slideshow ; make install
+}}}
+ * I had to run this script in kmediafactory dir to compile ui files. Does
+anyone know how to fix this?
+{{{
+#!/bin/sh
+for item in `find . -name "*.ui" | sed s/.ui//`
+do
+       /usr/X11R6/bin/uic -L /usr/X11R6/lib/kde3/plugins/designer \
+       -nounload -o ${item}.h ./${item}.ui
+done
+cd plugins/slideshow
+kconfig_compiler slideshowplugin.kcfg slideshowpluginsettings.kcfgc
+cd -
+cd plugins/video
+kconfig_compiler videoplugin.kcfg videopluginsettings.kcfgc
+cd -
+cd plugins/template
+kconfig_compiler templateplugin.kcfg templatepluginsettings.kcfgc
+cd -
+cd plugins/dvimport
+kconfig_compiler dvimportplugin.kcfg dvimportpluginsettings.kcfgc
+cd -
+cd src
+kconfig_compiler kmediafactory.kcfg kmediafactorysettings.kcfgc
+cd -
+}}}
+ * Compile & install kmediafactory.
+{{{
+# cd ~/src
+
+# wget http://www.iki.fi/damu/software/kmediafactory/kmediafactory-0.X.X.tar.bz2
+# tar xjvf kmediafactory-0.X.X.tar.bz2
+# cd kmediafactory-0.X.X
+# ./configure --with-libfontconfig=/usr/X11R6
+    --with-libdv=/usr/local  --with-libdvdread=/usr/local
+    --with-libtheora=/usr/local  --with-libxine=/usr/local
+# make LDFLAGS=-lpthread
+# make install
+}}}
