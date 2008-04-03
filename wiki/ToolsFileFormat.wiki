@@ -17,6 +17,6 @@ Icon entry can be also existing kde icon (It should not have .png then).
 
 This special entry can be used to specify if tool is placed to media button bar and menu or in tools menu.
 
- * X-KMF-MediaMenu=true
+ * `X-KMF-MediaMenu=true`
 
 you can use [http://www.kde-files.org/content/show.php?content=38489 this] as an example.
