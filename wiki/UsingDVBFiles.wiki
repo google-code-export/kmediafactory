@@ -1,0 +1,14 @@
+=Using DVB TS Files=
+
+This is a guide for using TS Mpeg files recorded from DVB with KMediaFactory.
+I'm using [http://sourceforge.net/projects/projectx ProjectX] to convert / edit commercials in TS file.
+Get the import dvb plugin from [http://www.kde-files.org/index.php?xcontentmode=667 kde-files.org].
+
+==ProjectX==
+
+   * Add file to ProjectX: File - Add...
+   * Press 'Go!' in 'work' frame to demux mpeg.
+   * Edit video: Edit - open VideoCut/Specials...
+   * After editing, press 'Apply & close'
+   * Press 'Go!' in 'work' frame to demux mpeg again (Now with cut points).
+   * Plugin multiplexes (joins) files together with [http://mjpeg.sourceforge.net/" mplex] program.
