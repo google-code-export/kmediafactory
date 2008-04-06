@@ -27,6 +27,8 @@
 namespace Kross {
   class Action;
 }
+class KrossUiInterface;
+class KrossProjectInterface;
 
 class KrossPlugin : public KMF::Plugin
 {
@@ -44,11 +46,15 @@ class KrossPlugin : public KMF::Plugin
     virtual const KMF::ConfigPage* configPage() const;
 
   public slots: // script functions
-    virtual void registerPlugin(Kross::Object::Ptr plugin);
+    void registerPlugin(Kross::Object::Ptr plugin);
+    QObject* uiInterface();
+    QObject* projectInterface();
 
   private:
     Kross::Action *m_action;
     mutable Kross::Object::Ptr m_plugin;
+    KrossUiInterface* m_uiIf;
+    KrossProjectInterface* m_projectIf;
 };
 
 K_EXPORT_KMEDIAFACTORY_PLUGIN(kross, KrossPlugin);

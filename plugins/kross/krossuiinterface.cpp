@@ -19,8 +19,8 @@
 
 #include "krossuiinterface.h"
 
-KrossUiInterface::KrossUiInterface()
- : QObject()
+KrossUiInterface::KrossUiInterface(QObject *parent, KMF::UiInterface* uiIf)
+ : QObject(parent), m_uiIf(uiIf)
 {
 }
 
@@ -28,4 +28,61 @@ KrossUiInterface::~KrossUiInterface()
 {
 }
 
+//bool KrossUiInterface::addMediaAction(QAction* action, const QString& group = "") const
 
+bool KrossUiInterface::addMediaObject(Kross::Object::Ptr media) const
+{
+  return false;
+}
+
+bool KrossUiInterface::addTemplateObject(Kross::Object::Ptr tob)
+{
+  return false;
+}
+
+bool KrossUiInterface::addOutputObject(Kross::Object::Ptr oob)
+{
+  return false;
+}
+
+bool KrossUiInterface::removeMediaObject(Kross::Object::Ptr media) const
+{
+  return false;
+}
+
+bool KrossUiInterface::removeTemplateObject(Kross::Object::Ptr tob)
+{
+  return false;
+}
+
+bool KrossUiInterface::removeOutputObject(Kross::Object::Ptr oob)
+{
+  return false;
+}
+
+bool KrossUiInterface::message(KMF::MsgType type, const QString& msg)
+{
+  return m_uiIf->message(type, msg);
+}
+
+bool KrossUiInterface::progress(int advance)
+{
+  return m_uiIf->progress(advance);
+}
+
+bool KrossUiInterface::setItemTotalSteps(int totalSteps)
+{
+  return m_uiIf->setItemTotalSteps(totalSteps);
+}
+
+bool KrossUiInterface::setItemProgress(int progress)
+{
+  return m_uiIf->setItemProgress(progress);
+}
+
+QObject* KrossUiInterface::logger()
+{
+  return m_uiIf->logger();
+}
+
+#include "krossuiinterface.moc"

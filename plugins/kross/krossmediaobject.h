@@ -19,18 +19,14 @@
 #ifndef KROSSMEDIAOBJECT_H
 #define KROSSMEDIAOBJECT_H
 
-#include <mediaobject.h>
+#include <kmediafactory/uiinterface.h>
 
-/**
-	@author 
-*/
 class KrossMediaObject : public KMF::MediaObject
 {
-public:
-    KrossMediaObject();
-
+  Q_OBJECT
+  public:
+    KrossMediaObject(QObject *parent);
     ~KrossMediaObject();
-
 };
 
 #endif // KROSSMEDIAOBJECT_H

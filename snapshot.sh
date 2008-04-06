@@ -11,7 +11,7 @@ CHANGELOG="snapshot.changelog"
 US_DATE=`date +%Y-%m-%d`
 SVN="https://kmediafactory.googlecode.com/svn/"
 SNAPSHOT_HTML="snapshot_kde4.html"
-NEWSMAIL=`cat $HOME/.kmf_mailinglist`
+NEWSMAIL="kmediafactory-announce@googlegroups.com"
 
 KMF=`pwd`
 ABC="bcdefghijklmnopqrstuvxyz"
@@ -169,16 +169,16 @@ function mail_to_news()
   cd $KMF
 
   if [ "$RELEASE" != "1" ]; then
-    mail -s "KMediaFactory - New snapshot - $SNAPSHOT" $NEWSMAIL < snapshot.changelog
+    mail -s "New snapshot - $SNAPSHOT" $NEWSMAIL < snapshot.changelog
   else
-    mail -s "KMediaFactory - New release - $SNAPSHOT" $NEWSMAIL < snapshot.changelog
+    mail -s "New release - $SNAPSHOT" $NEWSMAIL < snapshot.changelog
   fi
 }
 
 snapshot_name
 fix_versions
 edit_changelog
-./commit.sh --nopause $SNAPSHOT
+./commit.sh $SNAPSHOT
 make_snapshot
 
 echo -n "Tag SVN (y/N): "

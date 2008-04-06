@@ -4,3 +4,9 @@ Type=ServiceType
 X-KDE-ServiceType=KMediaFactory/Plugin
 Name=KMediaFactory Plugin
 Comment=KMediaFactory Plugin
+
+[PropertyDef::X-KMediaFactory-Script]
+Type=QString
+
+[PropertyDef::X-KMediaFactory-UiRcFile]
+Type=QString

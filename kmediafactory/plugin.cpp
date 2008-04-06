@@ -36,8 +36,9 @@ KMF::UiInterface* KMF::Plugin::uiInterface() const
 {
   KMF::UiInterface* obj = 0;
 
-  if(parent())
+  if(parent()) {
     obj = parent()->findChild<KMF::UiInterface*>("KMF::UiInterface");
+  }
   return obj;
 }
 
@@ -45,8 +46,9 @@ KMF::ProjectInterface* KMF::Plugin::projectInterface() const
 {
   KMF::ProjectInterface* obj = 0;
 
-  if(parent())
+  if(parent()) {
     obj = parent()->findChild<KMF::ProjectInterface*>("KMF::ProjectInterface");
+  }
   return obj;
 }
 
