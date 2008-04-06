@@ -29,6 +29,8 @@
 #include "krossuiinterface.h"
 #include "krossprojectinterface.h"
 
+K_EXPORT_KMEDIAFACTORY_PLUGIN(kross, KrossPlugin);
+
 KrossPlugin::KrossPlugin(QObject* parent, const QVariantList& args) :
   KMF::Plugin(parent), m_action(0), m_uiIf(0), m_projectIf(0)
 {
@@ -48,6 +50,7 @@ KrossPlugin::KrossPlugin(QObject* parent, const QVariantList& args) :
   if (!uirc.isEmpty()) {
     setXMLFile(uirc);
   }
+  m_uiIf = new KrossUiInterface(this, KMF::Plugin::uiInterface());
 
   kDebug() << "Running" << script;
   m_action->trigger();
@@ -63,9 +66,6 @@ void KrossPlugin::init(const QString &type)
   deleteChildren();
 
   if (m_plugin) {
-    if (!m_uiIf) {
-      m_uiIf = new KrossUiInterface(this, KMF::Plugin::uiInterface());
-    }
     if (!m_projectIf) {
       m_projectIf = new KrossProjectInterface(this, KMF::Plugin::projectInterface());
     }
@@ -105,7 +105,6 @@ QObject* KrossPlugin::uiInterface()
 
 QObject* KrossPlugin::projectInterface() 
 { 
-  kDebug();// << m_projectIf;
   return m_projectIf; 
 }
 

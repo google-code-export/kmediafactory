@@ -32,7 +32,8 @@ class KrossUiInterface : public QObject
     ~KrossUiInterface();
 
   public slots:
-      //bool addMediaAction(QAction* action, const QString& group = "") const;
+      bool addMediaAction(QVariantMap action, const QString& group = "") const;
+      void setActionEnabled(const QString& name, bool enabled);
       bool addMediaObject(Kross::Object::Ptr media) const;
       bool addTemplateObject(Kross::Object::Ptr tob);
       bool addOutputObject(Kross::Object::Ptr oob);

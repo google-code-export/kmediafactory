@@ -18,6 +18,9 @@
 //**************************************************************************
 
 #include "krossuiinterface.h"
+#include "krossplugin.h"
+#include <KDebug>
+#include <KActionCollection>
 
 KrossUiInterface::KrossUiInterface(QObject *parent, KMF::UiInterface* uiIf)
  : QObject(parent), m_uiIf(uiIf)
@@ -28,7 +31,20 @@ KrossUiInterface::~KrossUiInterface()
 {
 }
 
-//bool KrossUiInterface::addMediaAction(QAction* action, const QString& group = "") const
+bool KrossUiInterface::addMediaAction(QVariantMap action, const QString& group) const
+{
+  kDebug();
+  return false;
+}
+
+void KrossUiInterface::setActionEnabled(const QString& name, bool enabled)
+{
+  KrossPlugin* plugin = qobject_cast<KrossPlugin*>(parent());
+  QAction* action = plugin->actionCollection()->action(name);
+  if(!action)
+    return;
+  action->setEnabled(enabled);
+}
 
 bool KrossUiInterface::addMediaObject(Kross::Object::Ptr media) const
 {

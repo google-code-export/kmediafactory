@@ -57,7 +57,5 @@ class KrossPlugin : public KMF::Plugin
     KrossProjectInterface* m_projectIf;
 };
 
-K_EXPORT_KMEDIAFACTORY_PLUGIN(kross, KrossPlugin);
-
 #endif // KROSSPLUGIN_H
 
