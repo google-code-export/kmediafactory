@@ -45,7 +45,7 @@ class SlideshowPlugin : public KMF::Plugin
     void slotAddSlideshow();
 
   protected:
-    QAction* setupActions();
+    void setupActions();
 
   private:
     QString  m_dvdslideshow;

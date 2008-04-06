@@ -52,20 +52,17 @@ SlideshowPlugin::SlideshowPlugin(QObject *parent, const QVariantList&) :
   setupActions();
 }
 
-QAction* SlideshowPlugin::setupActions()
+void SlideshowPlugin::setupActions()
 {
+  setXMLFile("kmediafactory_slideshowui.rc");
+
   // Add action for menu item
   QAction* addSlideshowAction = new KAction(KIcon("kuickshow"),
                                      i18n("Add Slideshow"), parent());
   addSlideshowAction->setShortcut(Qt::CTRL + Qt::Key_W);
   actionCollection()->addAction("slideshow", addSlideshowAction);
   connect(addSlideshowAction, SIGNAL(triggered()), SLOT(slotAddSlideshow()));
-
-  setXMLFile("kmediafactory_slideshowui.rc");
-
   uiInterface()->addMediaAction(addSlideshowAction);
-
-  return addSlideshowAction;
 }
 
 void SlideshowPlugin::init(const QString &type)
