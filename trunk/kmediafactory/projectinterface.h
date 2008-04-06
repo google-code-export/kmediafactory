@@ -32,6 +32,7 @@ namespace KMF
   class KDE_EXPORT ProjectInterface :public QObject
   {
       Q_OBJECT
+      Q_ENUMS(DirtyType)
     public:
       enum DirtyType { DirtyMedia = 1, DirtyTemplate = 2, DirtyOutput = 4,
         DirtyMediaOrTemplate = 3, DirtyAny = 7 };

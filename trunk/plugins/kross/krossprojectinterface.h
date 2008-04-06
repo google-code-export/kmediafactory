@@ -17,37 +17,33 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 
-#ifndef KROSSUIINTERFACE_H
-#define KROSSUIINTERFACE_H
+#ifndef KROSSPROJECTINTERFACE_H
+#define KROSSPROJECTINTERFACE_H
 
 #include <QObject>
-#include <kross/core/object.h>
-#include "kmediafactory/uiinterface.h"
+#include "kmediafactory/projectinterface.h"
 
-class KrossUiInterface : public QObject
+class KrossProjectInterface : public QObject
 {
   Q_OBJECT
   public:
-    KrossUiInterface(QObject* parent, KMF::UiInterface* uiIf);
-    ~KrossUiInterface();
+    KrossProjectInterface(QObject *parent, KMF::ProjectInterface* projectIf);
+    ~KrossProjectInterface();
 
   public slots:
-      //bool addMediaAction(QAction* action, const QString& group = "") const;
-      bool addMediaObject(Kross::Object::Ptr media) const;
-      bool addTemplateObject(Kross::Object::Ptr tob);
-      bool addOutputObject(Kross::Object::Ptr oob);
-      bool removeMediaObject(Kross::Object::Ptr media) const;
-      bool removeTemplateObject(Kross::Object::Ptr tob);
-      bool removeOutputObject(Kross::Object::Ptr oob);
+    QList<MediaObject*> mediaObjects();
+    QString title();
+    void setTitle(QString title);
+    QString projectDir(const QString& subDir = "");
+    void cleanFiles(const QString& subDir, const QStringList& files);
+    void setDirty(KMF::ProjectInterface::DirtyType type);
+    QString type();
+    QString lastSubType();
+    QDateTime lastModified(KMF::ProjectInterface::DirtyType type);
+    int serial();
 
-      bool message(KMF::MsgType type, const QString& msg);
-      bool progress(int advance);
-      bool setItemTotalSteps(int totalSteps);
-      bool setItemProgress(int progress);
-      QObject* logger();
-  
   private:
-    KMF::UiInterface* m_uiIf;
+    KMF::ProjectInterface* m_projectIf;
 };
 
-#endif // KROSSUIINTERFACE_H
+#endif // KROSSPROJECTINTERFACE_H

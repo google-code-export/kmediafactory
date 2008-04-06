@@ -37,54 +37,81 @@ KMFProjectInterface::~KMFProjectInterface()
 
 QString KMFProjectInterface::title()
 {
-  return kmfApp->project()->title();
+  if (kmfApp->project()) {
+    return kmfApp->project()->title();
+  }
+  return QString();
 }
 
 void KMFProjectInterface::setTitle(QString title)
 {
-  return kmfApp->project()->setTitle(title);
+  if (kmfApp->project()) {
+    kmfApp->project()->setTitle(title);
+  }
 }
 
 QList<KMF::MediaObject*> KMFProjectInterface::mediaObjects()
 {
-  return kmfApp->project()->mediaObjects()->list();
+  if (kmfApp->project()) {
+    return kmfApp->project()->mediaObjects()->list();
+  }
+  return QList<KMF::MediaObject*>();
 }
 
 QString KMFProjectInterface::projectDir(const QString& subDir)
 {
-  return kmfApp->project()->directory(subDir);
+  if (kmfApp->project()) {
+    return kmfApp->project()->directory(subDir);
+  }
+  return QString();
 }
 
 void KMFProjectInterface::cleanFiles(const QString& subDir,
                                      const QStringList& files)
 {
-  kmfApp->project()->cleanFiles(subDir, files);
+  if (kmfApp->project()) {
+    kmfApp->project()->cleanFiles(subDir, files);
+  }
 }
 
 void KMFProjectInterface::setDirty(KMF::ProjectInterface::DirtyType type)
 {
-  kmfApp->project()->setDirty(type);
+  if (kmfApp->project()) {
+    kmfApp->project()->setDirty(type);
+  }
 }
 
 QString KMFProjectInterface::type()
 {
-  return kmfApp->project()->type();
+  if (kmfApp->project()) {
+    return kmfApp->project()->type();
+  }
+  return QString();
 }
 
 QString KMFProjectInterface::lastSubType()
 {
-  return kmfApp->project()->lastSubType();
+  if (kmfApp->project()) {
+    return kmfApp->project()->lastSubType();
+  }
+  return QString();
 }
 
 QDateTime KMFProjectInterface::lastModified(
     KMF::ProjectInterface::DirtyType type)
 {
-  return kmfApp->project()->lastModified(type);
+  if (kmfApp->project()) {
+    return kmfApp->project()->lastModified(type);
+  }
+  return QDateTime();
 }
 
 int KMFProjectInterface::serial()
 {
-  return kmfApp->project()->serial();
+  if (kmfApp->project()) {
+    return kmfApp->project()->serial();
+  }
+  return -1;
 }
 
 #include "kmfprojectinterface.moc"

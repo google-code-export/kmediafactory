@@ -7,6 +7,9 @@ include_directories(
 
 set(kmediafactory_plugin_kross_SRCS
   krossplugin.cpp
+  krossprojectinterface.cpp
+  krossuiinterface.cpp
+  krossmediaobject.cpp
 )
 
 kde4_add_plugin(kmediafactory_plugin_kross ${kmediafactory_plugin_kross_SRCS})

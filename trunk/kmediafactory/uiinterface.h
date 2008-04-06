@@ -33,6 +33,9 @@ class QDomElement;
 
 namespace KMF
 {
+  Q_ENUMS(MsgType)
+  Q_ENUMS(AspectRatio)
+
   enum MsgType { None = -1, Info, Warning, Error, OK };
   enum AspectRatio { ASPECT_4_3 = 0 , ASPECT_16_9, ASPECT_LAST };
 

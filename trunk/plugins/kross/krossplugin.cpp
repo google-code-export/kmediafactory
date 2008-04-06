@@ -18,31 +18,39 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 
+#include "krossplugin.h"
 #include <ksharedptr.h>
 #include <KDebug>
+#include <KStandardDirs>
 #include <QTimer>
-#include "krossplugin.h"
 #include <kross/core/action.h>
 #include <kross/core/interpreter.h>
 #include <kross/core/manager.h>
+#include "krossuiinterface.h"
+#include "krossprojectinterface.h"
 
-KrossPlugin::KrossPlugin(QObject *parent, const QVariantList &args) :
-  KMF::Plugin(parent)
+KrossPlugin::KrossPlugin(QObject* parent, const QVariantList& args) :
+  KMF::Plugin(parent), m_action(0), m_uiIf(0), m_projectIf(0)
 {
   KService::Ptr service = args[0].value<KService::Ptr>();
   QString name = service->property("Name").toString();
+  QString script = service->property("X-KMediaFactory-Script").toString();
+  QString uirc = service->property("X-KMediaFactory-UiRcFile").toString();
+
+  kDebug() << name << script << uirc;
   setObjectName(name);
-  kDebug() << name;
-  m_action = new Kross::Action(this, "test");
-  m_action->setFile("/home/damu/test.py");
+  m_action = new Kross::Action(this, script);
+
+  script = KGlobal::dirs()->locate("appdata", "tools/bin/" + script);
+  m_action->setFile(script);
+
   m_action->addObject(this, "kmediafactory");
+  if (!uirc.isEmpty()) {
+    setXMLFile(uirc);
+  }
+
+  kDebug() << "Running" << script;
   m_action->trigger();
-
-  // Initialize GUI
-  //setComponentData(KrossFactory::componentData());
-  //setXMLFile("kmediafactory_krossui.rc");
-
-
 }
     
 KrossPlugin::~KrossPlugin()
@@ -55,6 +63,12 @@ void KrossPlugin::init(const QString &type)
   deleteChildren();
 
   if (m_plugin) {
+    if (!m_uiIf) {
+      m_uiIf = new KrossUiInterface(this, KMF::Plugin::uiInterface());
+    }
+    if (!m_projectIf) {
+      m_projectIf = new KrossProjectInterface(this, KMF::Plugin::projectInterface());
+    }
     // init is reserved word in ?? well in some scripting language
     m_plugin->callMethod("initPlugin", QVariantList() << type);
   }
@@ -82,6 +96,17 @@ const KMF::ConfigPage* KrossPlugin::configPage() const
 void KrossPlugin::registerPlugin(Kross::Object::Ptr plugin)
 {
   m_plugin = plugin;
+}
+
+QObject* KrossPlugin::uiInterface() 
+{ 
+  return m_uiIf; 
+}
+
+QObject* KrossPlugin::projectInterface() 
+{ 
+  kDebug();// << m_projectIf;
+  return m_projectIf; 
 }
 
 #include "krossplugin.moc"
