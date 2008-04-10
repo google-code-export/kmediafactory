@@ -19,22 +19,32 @@
 
 #include "krossuiinterface.h"
 #include "krossplugin.h"
+#include "kmftools.h"
 #include <KDebug>
 #include <KActionCollection>
+#include <QTimer>
 
 KrossUiInterface::KrossUiInterface(QObject *parent, KMF::UiInterface* uiIf)
  : QObject(parent), m_uiIf(uiIf)
 {
+  setObjectName("KrossUiInterface");
 }
 
 KrossUiInterface::~KrossUiInterface()
 {
 }
 
-bool KrossUiInterface::addMediaAction(QVariantMap action, const QString& group) const
+bool KrossUiInterface::addMediaAction(QVariantMap action, const QString& group)
 {
-  kDebug();
-  return false;
+  KrossPlugin* plugin = qobject_cast<KrossPlugin*>(parent());
+  QAction* act = new KAction(KIcon(action["icon"].toString()), 
+                             action["text"].toString(), plugin->parent());
+  //act->setShortcut(Qt::ALT + Qt::Key_W);
+  kDebug() << "addAction" << action["name"].toString() << act;
+  plugin->actionCollection()->addAction(action["name"].toString(), act);
+  connect(act, SIGNAL(triggered()), plugin, SLOT(actionTriggered()));
+  //m_actionMap[act] = QVariantList() << action["method"];
+  return m_uiIf->addMediaAction(act);
 }
 
 void KrossUiInterface::setActionEnabled(const QString& name, bool enabled)

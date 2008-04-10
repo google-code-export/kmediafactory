@@ -54,7 +54,7 @@ VideoObject::VideoObject(QObject* parent)
     m_aspect(QDVD::VideoTrack::Aspect_Unknown), m_spumux(0)
 {
   setObjectName("video");
-  m_videoProperties = new KAction(KIcon("pencil"), i18n("&Properties"),this);
+  m_videoProperties = new KAction(KIcon("pencil"), i18n("&Properties"), this);
   plugin()->actionCollection()->addAction("video", m_videoProperties);
   connect(m_videoProperties, SIGNAL(triggered()), SLOT(slotProperties()));
 
@@ -62,7 +62,7 @@ VideoObject::VideoObject(QObject* parent)
   if(!m_kmfplayer.isEmpty())
   {
     m_videoPlay = new KAction(KIcon("media-playback-start"),
-                              i18n("&Play Video"),this);
+                              i18n("&Play Video"), this);
     m_videoPlay->setShortcut(Qt::CTRL + Qt::Key_P);
     plugin()->actionCollection()->addAction("mob_play", m_videoPlay);
     connect(m_videoPlay, SIGNAL(triggered()), SLOT(slotPlayVideo()));

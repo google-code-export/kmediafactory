@@ -50,11 +50,12 @@ class KrossPlugin : public KMF::Plugin
     QObject* uiInterface();
     QObject* projectInterface();
 
+  protected slots:
+      void actionTriggered();
+
   private:
-    Kross::Action *m_action;
+    Kross::Action* m_action;
     mutable Kross::Object::Ptr m_plugin;
-    KrossUiInterface* m_uiIf;
-    KrossProjectInterface* m_projectIf;
 };
 
 #endif // KROSSPLUGIN_H

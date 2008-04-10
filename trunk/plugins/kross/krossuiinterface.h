@@ -21,6 +21,7 @@
 #define KROSSUIINTERFACE_H
 
 #include <QObject>
+#include <QMap>
 #include <kross/core/object.h>
 #include "kmediafactory/uiinterface.h"
 
@@ -32,7 +33,7 @@ class KrossUiInterface : public QObject
     ~KrossUiInterface();
 
   public slots:
-      bool addMediaAction(QVariantMap action, const QString& group = "") const;
+      bool addMediaAction(QVariantMap action, const QString& group = "");
       void setActionEnabled(const QString& name, bool enabled);
       bool addMediaObject(Kross::Object::Ptr media) const;
       bool addTemplateObject(Kross::Object::Ptr tob);
@@ -46,9 +47,10 @@ class KrossUiInterface : public QObject
       bool setItemTotalSteps(int totalSteps);
       bool setItemProgress(int progress);
       QObject* logger();
-  
+
   private:
     KMF::UiInterface* m_uiIf;
+    //QMap<QObject*, QVariantList> m_actionMap;
 };
 
 #endif // KROSSUIINTERFACE_H
