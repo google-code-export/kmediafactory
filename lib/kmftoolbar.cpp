@@ -59,8 +59,8 @@ void KMFToolBar::add(QAction* action, const QString& group)
   kDebug() << group << ": " << action->text();
   QToolButton* button = new QToolButton;
   button->setDefaultAction(action);
-  button->setText(action->text());
-  button->setIcon(action->icon());
+  //button->setText(action->text());
+  //button->setIcon(action->icon());
   button->setAutoRaise(true);
   button->setFocusPolicy(Qt::NoFocus);
   button->setIconSize(QSize(KIconLoader::SizeLarge, KIconLoader::SizeLarge));

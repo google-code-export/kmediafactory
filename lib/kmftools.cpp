@@ -18,9 +18,13 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 #include "kmftools.h"
-#include <kstringhandler.h>
-#include <kstandarddirs.h>
-#include <kdebug.h>
+#include <KXMLGUIClient>
+#include <KActionCollection>
+#include <KStringHandler>
+#include <KStandardDirs>
+#include <KDebug>
+#include <KApplication>
+#include <QAction>
 #include <QFileInfo>
 #include <QDir>
 #include <QSet>
@@ -35,11 +39,11 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include <fontconfig/fontconfig.h>
+#include <Q4puGenericSignalSpy.h>
 
 KMF::Tools::Tools()
 {
 }
-
 
 KMF::Tools::~Tools()
 {
@@ -451,6 +455,18 @@ void KMF::Tools::printChilds(QObject* obj, int level)
   }
 }
 
+void KMF::Tools::printActions(KXMLGUIClient* client)
+{
+  kDebug() << "*******************************************************";
+  kDebug() << client->actionCollection()->componentData().componentName();
+
+  foreach(QAction* action, client->actionCollection()->actions())
+  {
+    kDebug() << action->text();
+  }
+  kDebug() << "*******************************************************";
+}
+
 // This function is from qcolor.cpp
 int KMF::Tools::hex2int(QChar hexchar)
 {
@@ -533,3 +549,10 @@ void KMF::Tools::drawRoundRect(QPainter* painter, const QRect& rect,
 
   painter->drawPath(roundRectPath);
 }
+
+void KMF::Tools::spy(QObject* obj)
+{
+  Q4puGenericSignalSpy* spy = new Q4puGenericSignalSpy(kapp->activeWindow());
+  spy->spyOn(obj);
+}
+

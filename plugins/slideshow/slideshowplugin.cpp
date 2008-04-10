@@ -58,7 +58,7 @@ void SlideshowPlugin::setupActions()
 
   // Add action for menu item
   QAction* addSlideshowAction = new KAction(KIcon("kuickshow"),
-                                     i18n("Add Slideshow"), parent());
+                                            i18n("Add Slideshow"), parent());
   addSlideshowAction->setShortcut(Qt::CTRL + Qt::Key_W);
   actionCollection()->addAction("slideshow", addSlideshowAction);
   connect(addSlideshowAction, SIGNAL(triggered()), SLOT(slotAddSlideshow()));

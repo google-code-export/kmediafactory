@@ -22,18 +22,21 @@
 #include <ksharedptr.h>
 #include <KDebug>
 #include <KStandardDirs>
+#include <KMessageBox>
 #include <QTimer>
 #include <kross/core/action.h>
 #include <kross/core/interpreter.h>
 #include <kross/core/manager.h>
 #include "krossuiinterface.h"
 #include "krossprojectinterface.h"
+#include "kmftools.h"
 
 K_EXPORT_KMEDIAFACTORY_PLUGIN(kross, KrossPlugin);
 
 KrossPlugin::KrossPlugin(QObject* parent, const QVariantList& args) :
-  KMF::Plugin(parent), m_action(0), m_uiIf(0), m_projectIf(0)
+  KMF::Plugin(parent), m_action(0)
 {
+  KMF::Tools::spy(this);
   KService::Ptr service = args[0].value<KService::Ptr>();
   QString name = service->property("Name").toString();
   QString script = service->property("X-KMediaFactory-Script").toString();
@@ -50,7 +53,6 @@ KrossPlugin::KrossPlugin(QObject* parent, const QVariantList& args) :
   if (!uirc.isEmpty()) {
     setXMLFile(uirc);
   }
-  m_uiIf = new KrossUiInterface(this, KMF::Plugin::uiInterface());
 
   kDebug() << "Running" << script;
   m_action->trigger();
@@ -58,6 +60,7 @@ KrossPlugin::KrossPlugin(QObject* parent, const QVariantList& args) :
     
 KrossPlugin::~KrossPlugin()
 {
+  kDebug();
 }
 
 void KrossPlugin::init(const QString &type)
@@ -66,9 +69,6 @@ void KrossPlugin::init(const QString &type)
   deleteChildren();
 
   if (m_plugin) {
-    if (!m_projectIf) {
-      m_projectIf = new KrossProjectInterface(this, KMF::Plugin::projectInterface());
-    }
     // init is reserved word in ?? well in some scripting language
     m_plugin->callMethod("initPlugin", QVariantList() << type);
   }
@@ -100,12 +100,20 @@ void KrossPlugin::registerPlugin(Kross::Object::Ptr plugin)
 
 QObject* KrossPlugin::uiInterface() 
 { 
-  return m_uiIf; 
+  return new KrossUiInterface(this, KMF::Plugin::uiInterface());
 }
 
 QObject* KrossPlugin::projectInterface() 
 { 
-  return m_projectIf; 
+  return new KrossProjectInterface(this, KMF::Plugin::projectInterface());
+}
+
+void KrossPlugin::actionTriggered()
+{
+  kDebug() << "************************************";
+KMessageBox::error(0, i18n("Heippa"));
+  //QVariantList args = m_actionMap[sender()];
+  //kDebug() << args;
 }
 
 #include "krossplugin.moc"

@@ -19,6 +19,7 @@ set(kmf_LIB_SRCS
   kmfmediafile.cpp
   run.cpp
   kmftoolbar.cpp
+  Q4puGenericSignalSpy.cpp
 )
 
 set(kmf_HEADERS

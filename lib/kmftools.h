@@ -26,6 +26,7 @@
 #include <kurl.h>
 #include <QModelIndex>
 
+class KXMLGUIClient;
 class QStringList;
 class QFont;
 class QDomElement;
@@ -80,6 +81,8 @@ namespace KMF
       static QMap<QString, QString> readIniFile(const QString& ini);
       static void drawRoundRect(QPainter* painter, const QRect& rect,
                                 int radius);
+      static void printActions(KXMLGUIClient* client);
+      static void spy(QObject* obj);
   };
 }
 
