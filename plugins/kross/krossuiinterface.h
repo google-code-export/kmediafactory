@@ -41,12 +41,23 @@ class KrossUiInterface : public QObject
       bool removeMediaObject(Kross::Object::Ptr media) const;
       bool removeTemplateObject(Kross::Object::Ptr tob);
       bool removeOutputObject(Kross::Object::Ptr oob);
+      void addMediaObject(const QString& xml);
+      void selectTemplate(const QString& xml);
+      void selectOutput(const QString& xml);
 
       bool message(KMF::MsgType type, const QString& msg);
       bool progress(int advance);
       bool setItemTotalSteps(int totalSteps);
       bool setItemProgress(int progress);
       QObject* logger();
+
+      // Plugin helpers
+      QStringList getOpenFileNames(const QString &startDir, const QString &filter, 
+                                   const QString &caption);
+      void debug(const QString &txt);
+      int  messageBox(const QString &caption, const QString &txt, int type);
+      QObject* progressDialog(const QString &caption, const QString &label, int maximum);
+      QObject* progressDialog();
 
   private:
     KMF::UiInterface* m_uiIf;

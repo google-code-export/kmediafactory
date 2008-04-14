@@ -111,4 +111,46 @@ QObject* KrossUiInterface::logger()
   return m_uiIf->logger();
 }
 
+void KrossUiInterface::addMediaObject(const QString& xml)
+{
+  m_uiIf->addMediaObject(xml);
+}
+
+void KrossUiInterface::selectTemplate(const QString& xml)
+{
+  return m_uiIf->selectTemplate(xml);
+}
+
+void KrossUiInterface::selectOutput(const QString& xml)
+{
+  return m_uiIf->selectOutput(xml);
+}
+
+QStringList KrossUiInterface::getOpenFileNames(const QString &startDir, const QString &filter, 
+                                               const QString &caption)
+{
+  return m_uiIf->getOpenFileNames(startDir, filter, caption);
+}
+
+void KrossUiInterface::debug(const QString &txt)
+{
+  return m_uiIf->debug(txt);
+}
+
+int  KrossUiInterface::messageBox(const QString &caption, const QString &txt, int type)
+{
+  return m_uiIf->messageBox(caption, txt, type);
+}
+
+QObject* KrossUiInterface::progressDialog(const QString &caption, const QString &label, 
+                                          int maximum)
+{
+  return m_uiIf->progressDialog(caption, label, maximum);
+}
+
+QObject* KrossUiInterface::progressDialog()
+{
+  return m_uiIf->progressDialog();
+}
+
 #include "krossuiinterface.moc"
