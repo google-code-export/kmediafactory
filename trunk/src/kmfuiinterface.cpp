@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,6 +17,7 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "kmfuiinterface.h"
 #include "kmfapplication.h"
 #include "kmfproject.h"
@@ -27,9 +28,10 @@
 #include "kmficonview.h"
 #include "kmftools.h"
 #include "outputpage.h"
-#include <kdebug.h>
-#include <kiconloader.h>
-#include <kmessagebox.h>
+#include <KDebug>
+#include <KIconLoader>
+#include <KMessageBox>
+#include <KFileDialog>
 #include <QToolButton>
 #include <QEventLoop>
 #include <QPixmap>
@@ -37,9 +39,46 @@
 #include <QStringListModel>
 #include <QTextStream>
 
-#if RECORD_TIMINGS
-  StopWatch stopWatch;
-#endif
+KMFProgressDialog::KMFProgressDialog(QWidget* parent) : KMF::ProgressDialog(parent), m_pdlg(parent)
+{
+    m_pdlg.setAutoClose(false);
+}
+
+void KMFProgressDialog::setMaximum(int maximum)
+{
+    m_pdlg.progressBar()->setMaximum(maximum);
+}
+
+void KMFProgressDialog::setValue(int value)
+{
+    m_pdlg.progressBar()->setValue(value);
+}
+
+void KMFProgressDialog::setCaption(const QString &caption)
+{
+    m_pdlg.setCaption(caption);
+}
+
+void KMFProgressDialog::setLabel(const QString &label)
+{
+    m_pdlg.setLabelText(label);
+}
+
+void KMFProgressDialog::showCancelButton(bool show)
+{
+    m_pdlg.showCancelButton(show);
+}
+
+bool KMFProgressDialog::wasCancelled()
+{
+    return m_pdlg.wasCancelled();
+}
+
+void KMFProgressDialog::close()
+{
+    m_pdlg.close();
+    deleteLater();
+}
 
 KMFUiInterface::KMFUiInterface(QObject *parent) :
   KMF::UiInterface(parent), m_useMessageBox(false)
@@ -111,16 +150,35 @@ bool KMFUiInterface::removeOutputObject(KMF::OutputObject* oob)
   return true;
 }
 
+void KMFUiInterface::addMediaObject(const QString& xml)
+{
+  QDomDocument doc;
+  doc.setContent(xml);
+  kmfApp->project()->mediaObjFromXML(doc.documentElement());
+}
+
+void KMFUiInterface::selectTemplate(const QString& xml)
+{
+  QDomDocument doc;
+
+  doc.setContent(xml);
+  kmfApp->project()->templateFromXML(doc.documentElement());
+}
+
+void KMFUiInterface::selectOutput(const QString& xml)
+{
+  QDomDocument doc;
+
+  doc.setContent(xml);
+  kmfApp->project()->outputFromXML(doc.documentElement());
+}
+
 bool KMFUiInterface::message(KMF::MsgType type, const QString& msg)
 {
   KMediaFactory* mainWindow = kmfApp->mainWindow();
   QString pixmap;
   QColor color;
   KMessageBox::DialogType dlgType = KMessageBox::Information;
-
-#if RECORD_TIMINGS
-  stopWatch.message(msg);
-#endif
 
   switch(type)
   {
@@ -183,9 +241,6 @@ bool KMFUiInterface::progress(int advance)
     mainWindow->outputPage->progressBar->setValue(
         mainWindow->outputPage->progressBar->value()+advance);
   }
-#if RECORD_TIMINGS
-  stopWatch.progress(advance);
-#endif
   kmfApp->processEvents(QEventLoop::AllEvents);
   return m_stopped;
 }
@@ -216,6 +271,60 @@ bool KMFUiInterface::setItemProgress(int progress)
     model->replace(last, item);
   }
   return m_stopped;
+}
+
+void KMFUiInterface::progressDialogDestroyed()
+{
+  m_pdlg = 0;
+}
+
+KMF::ProgressDialog* KMFUiInterface::progressDialog(const QString &caption, const QString &label,
+                                                    int maximum)
+{
+  if(m_pdlg)
+    delete m_pdlg;
+  m_pdlg = new KMFProgressDialog(kmfApp->mainWindow());
+  connect(m_pdlg, SIGNAL(destroyed()), this, SLOT(progressDialogDestroyed));
+  m_pdlg->setCaption(caption);
+  m_pdlg->setLabel(label);
+  m_pdlg->setMaximum(maximum);
+  m_pdlg->showCancelButton(true);
+  return m_pdlg;
+}
+
+KMF::ProgressDialog* KMFUiInterface::progressDialog()
+{
+  if(m_pdlg)
+    return m_pdlg;
+  return progressDialog("KMediaFactory", i18n("Progress:"), 100);
+}
+
+int KMFUiInterface::messageBox(const QString &caption, const QString &txt,
+                               int type)
+{
+  kDebug() << caption << txt << type <<KMessageBox::Error ;
+  if(type == KMessageBox::Information)
+    KMessageBox::information(kmfApp->mainWindow(), txt, caption);
+  else if(type == KMessageBox::Sorry)
+    KMessageBox::sorry(kmfApp->mainWindow(), txt, caption);
+  else if(type == KMessageBox::Error)
+    KMessageBox::error(kmfApp->mainWindow(), txt, caption);
+  return 0;
+}
+
+QStringList KMFUiInterface::getOpenFileNames(const QString &startDir,
+                                             const QString &filter,
+                                             const QString &caption)
+{
+  QString start = QString("kfiledialog:///<%1>").arg(startDir);
+  //kDebug() << start;
+  return KFileDialog::getOpenFileNames(KUrl(start), filter,
+                                       kmfApp->mainWindow(), caption);
+}
+
+void KMFUiInterface::debug(const QString &txt)
+{
+  kDebug() << txt;
 }
 
 #include "kmfuiinterface.moc"

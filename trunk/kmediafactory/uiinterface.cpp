@@ -36,6 +36,11 @@ KMF::OutputObject::OutputObject(QObject *parent) :
 {
 }
 
+KMF::ProgressDialog::ProgressDialog(QObject *parent) :
+  QObject(parent)
+{
+}
+
 KMF::UiInterface::UiInterface(QObject* parent) :
   QObject(parent)
 {

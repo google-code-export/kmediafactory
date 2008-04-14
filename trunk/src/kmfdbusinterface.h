@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,6 +17,7 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef KMFDCOPINTERFACE_H
 #define KMFDCOPINTERFACE_H
 
@@ -67,9 +68,6 @@ class KMFDbusInterface : public QObject
     virtual void pdlgShowCancelButton(bool show);
     virtual bool pdlgWasCancelled();
     virtual void pdlgClose();
-
-  private:
-    KProgressDialog* m_pdlg;
 };
 
 #endif

@@ -101,25 +101,56 @@ namespace KMF
       KProcess* currentProcess;
   };
 
-  class KDE_EXPORT UiInterface :public QObject
+  class KDE_EXPORT ProgressDialog : public QObject
+  {
+      Q_OBJECT
+    public: 
+      ProgressDialog(QObject* parent);
+
+    public slots:
+      virtual void setMaximum(int maximum) = 0;
+      virtual void setValue(int value) = 0;
+      virtual void setCaption(const QString &caption) = 0;
+      virtual void setLabel(const QString &label) = 0;
+      virtual void showCancelButton(bool show) = 0;
+      virtual bool wasCancelled() = 0;
+      virtual void close() = 0;
+  };
+
+  class KDE_EXPORT UiInterface : public QObject
   {
       Q_OBJECT
     public:
       UiInterface(QObject* parent);
       virtual bool addMediaAction(QAction* action,
                                   const QString& group = "") const = 0;
+
       virtual bool addMediaObject(MediaObject* media) const = 0;
       virtual bool addTemplateObject(TemplateObject* tob) = 0;
       virtual bool addOutputObject(OutputObject* oob) = 0;
       virtual bool removeMediaObject(MediaObject* media) const = 0;
       virtual bool removeTemplateObject(TemplateObject* tob) = 0;
       virtual bool removeOutputObject(OutputObject* oob) = 0;
+      virtual void addMediaObject(const QString& xml) = 0;
+      virtual void selectTemplate(const QString& xml) = 0;
+      virtual void selectOutput(const QString& xml) = 0;
 
       virtual bool message(MsgType type, const QString& msg) = 0;
       virtual bool progress(int advance) = 0;
       virtual bool setItemTotalSteps(int totalSteps) = 0;
       virtual bool setItemProgress(int progress) = 0;
       virtual Logger* logger() = 0;
+
+      // Plugin helpers
+      virtual QStringList getOpenFileNames(const QString &startDir,
+                                           const QString &filter,
+                                           const QString &caption) = 0;
+      virtual void debug(const QString &txt) = 0;
+      virtual int  messageBox(const QString &caption, const QString &txt,
+                              int type) = 0;
+      virtual ProgressDialog* progressDialog(const QString &caption, const QString &label,
+                                             int maximum) = 0;
+      virtual ProgressDialog* progressDialog() = 0;
   };
 }
 

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,74 +17,41 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef KMFUIINTERFACE_H
 #define KMFUIINTERFACE_H
 
+#include <KProgressDialog>
 #include <kmediafactory/uiinterface.h>
 
-#define RECORD_TIMINGS 0
-
-#if RECORD_TIMINGS
-
-#include <qdatetime.h>
-#include <qfile.h>
-
-class StopWatch
-{
-  public:
-    void start()
-    {
-      if(!m_stream.device())
-      {
-        QFile* file = new QFile("/tmp/timings.txt");
-        file->open(QIODevice::WriteOnly);
-        m_stream.setDevice(file);
-        m_time.start();
-      }
-    };
-
-    void stop()
-    {
-      m_stream.device()->close();
-      delete m_stream.device();
-      m_stream.unsetDevice();
-    };
-
-    void message(const QString& msg)
-    {
-      m_stream << msg << endl;
-    };
-
-    void progress(int advance)
-    {
-      if(advance)
-      {
-        m_stream << advance << " - " << m_time.elapsed() << endl;
-        m_time.restart();
-      }
-    };
-
-  private:
-    QTextStream m_stream;
-    QTime m_time;
-};
-
-extern StopWatch stopWatch;
-
-#endif
-
-namespace KMF
-{
+namespace KMF {
   class Logger;
 }
 
-/**
-*/
+class KMFProgressDialog : public KMF::ProgressDialog
+{
+    Q_OBJECT
+  public: 
+    KMFProgressDialog(QWidget* parent);
+
+  public slots:
+    virtual void setMaximum(int maximum);
+    virtual void setValue(int value);
+    virtual void setCaption(const QString &caption);
+    virtual void setLabel(const QString &label);
+    virtual void showCancelButton(bool show);
+    virtual bool wasCancelled();
+    virtual void close();
+
+  private:
+    KProgressDialog m_pdlg;
+};
+
 class KMFUiInterface : public KMF::UiInterface
 {
     Q_OBJECT
   public:
-    KMFUiInterface(QObject *parent = 0);
+    KMFUiInterface(QObject *parent);
     virtual ~KMFUiInterface();
     virtual bool addMediaAction(QAction* action,
                                 const QString& group = "") const;
@@ -94,20 +61,36 @@ class KMFUiInterface : public KMF::UiInterface
     virtual bool removeMediaObject(KMF::MediaObject* media) const;
     virtual bool removeTemplateObject(KMF::TemplateObject* tob);
     virtual bool removeOutputObject(KMF::OutputObject* oob);
+    virtual void addMediaObject(const QString& xml);
+    virtual void selectTemplate(const QString& xml);
+    virtual void selectOutput(const QString& xml);
 
     virtual bool message(KMF::MsgType type, const QString& msg);
     virtual bool progress(int advance);
     virtual bool setItemTotalSteps(int totalSteps);
     virtual bool setItemProgress(int progress);
     virtual KMF::Logger* logger();
-    void setUseMessageBox(bool useMessageBox)
-        { m_useMessageBox = useMessageBox; };
-    void setStopped(bool stopped)
-        { m_stopped = stopped; };
+    void setUseMessageBox(bool useMessageBox) { m_useMessageBox = useMessageBox; };
+    void setStopped(bool stopped) { m_stopped = stopped; };
+
+    // Plugin helpers
+    virtual QStringList getOpenFileNames(const QString &startDir,
+                                         const QString &filter,
+                                         const QString &caption);
+    virtual void debug(const QString &txt);
+    virtual int  messageBox(const QString &caption, const QString &txt,
+                            int type);
+    virtual KMF::ProgressDialog* progressDialog(const QString &caption, const QString &label,
+                                                int maximum);
+    virtual KMF::ProgressDialog* progressDialog();
+
+  public slots:
+    void progressDialogDestroyed();
 
   private:
     bool m_useMessageBox;
     bool m_stopped;
+    KMF::ProgressDialog* m_pdlg;
 };
 
 #endif // KMFUIINTERFACE_H
