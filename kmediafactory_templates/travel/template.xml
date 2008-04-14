@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE kmf_template>
+<template first_page="Main" id="travel" name="Travel">
+
+<page name="Main" titles="6" chapters="0">
+  <image url="template:///images/background.jpg" x="0" y="0"  w="100%"
+         h="100%" scale="1" proportional="0" />
+  <vbox margin="40" w="100%" h="100%" name="main_box">
+    <hbox w="100%" h="min">
+      <spacer w="50%" />
+      <frame fill_color="#5a380399" rounded="12">
+        <label margin="5" x="+0:100" w="100%:100" h="min" name="label_main"
+              color="#fdf8df">
+          <font size="32" weight="700" name="Helvetica" />
+          <text>%$0.$0%</text>
+        </label>
+      </frame>
+      <spacer w="50%" />
+    </hbox>
+    <spacer h="50%" />
+    <hbox w="100%" h="min" name="MENU_HBOX">
+      <spacer w="20%" />
+      <image url="project:///1.0" margin="6" x="+0" y="+0" w="300"
+             name="MAIN_PREVIEW">
+        <shadow radius="10" offset.x="5" offset.y="5" type="2"
+                color="#00000088" sigma="5" />
+        <frame color="white" x="-6" y="-6" w="+12" h="+12" line_width="6" />
+      </image>
+      <spacer w="40%" />
+      <frame fill_color="#5a380399" rounded="25" h="100%">
+        <vbox margin="15">
+          <button margin="15" w="100%" h="min:5" jump="1.0" name="PLAY_1"
+                  up="PREV,NEXT,CHAPTERS_1" left="PLAY_3,PLAY_2"
+                  right="PLAY_2" down="CHAPTERS_1">
+            <hbox>
+              <group h="100%">
+                <image url="template:///images/next.png" h="100%" scale="0"
+                      color="yellow" layer="highlight" name="hl_play_1" />
+                <image url="template:///images/next.png" h="100%" scale="0"
+                      color="red" layer="select" name="sl_play_1" />
+              </group>
+              <label x="+0:10" name="label_title_play_1" color="#ccccccaa">
+                <shadow radius="10" offset.x="3" offset.y="3" type="2"
+                        color="#000000ee" sigma="5" />
+                <font size="22" weight="400" name="Helvetica" />
+                <text>Play</text>
+              </label>
+            </hbox>
+          </button>
+          <button margin="15" w="100%" h="min" jump="CHAPTER_PAGE:1.0"
+                  name="CHAPTERS_1"
+                  up="PLAY_1" left="CHAPTERS_3,CHAPTERS_2"
+                  right="CHAPTERS_2" down="PREV,NEXT,PLAY_1">
+            <hbox>
+              <group h="100%">
+                <image url="template:///images/next.png" h="100%" scale="0"
+                      color="yellow" layer="highlight" name="hl_chapters_1" />
+                <image url="template:///images/next.png" h="100%" scale="0"
+                      color="red" layer="select" name="sl_chapters_1" />
+              </group>
+              <label x="+0:10" name="label_title_chapters_1" color="#ccccccaa">
+                <shadow radius="10" offset.x="3" offset.y="3" type="2"
+                        color="#000000ee" sigma="5" />
+                <font size="22" weight="400" name="Helvetica" />
+                <text>Chapters</text>
+              </label>
+            </hbox>
+          </button>
+          <button margin="15" w="100%" h="min:5" jump="2.0" name="PLAY_2"
+                  up="CHAPTERS_1"
+                  left="PLAY_2"
+                  right="PLAY_2"
+                  down="PLAY_3,PREV,NEXT,PLAY_1">
+            <hbox>
+              <group h="100%">
+                <image url="template:///images/next.png" h="100%" scale="0"
+                       color="green" layer="highlight" name="hl_play_1" />
+                <image url="template:///images/next.png" h="100%" scale="0"
+                       color="red" layer="select" name="sl_play_1" />
+              </group>
+              <label x="+0:10" name="label_title_play_2" color="#ccccccaa">
+                <shadow radius="10" offset.x="3" offset.y="3" type="2"
+                        color="#000000ee" sigma="5" />
+                <font size="22" weight="400" name="Helvetica" />
+                <text>%2.0%</text>
+              </label>
+            </hbox>
+          </button>
+          <button margin="15" w="100%" h="min:5" jump="3.0" name="PLAY_3"
+                  up="PLAY_2"
+                  left="PLAY_3"
+                  right="PLAY_3"
+                  down="PLAY_4,PREV,NEXT,PLAY_1">
+            <hbox>
+              <group h="100%">
+                <image url="template:///images/next.png" h="100%" scale="0"
+                       color="green" layer="highlight" name="hl_play_1" />
+                <image url="template:///images/next.png" h="100%" scale="0"
+                       color="red" layer="select" name="sl_play_1" />
+              </group>
+              <label x="+0:10" name="label_title_play_3" color="#ccccccaa">
+                <shadow radius="10" offset.x="3" offset.y="3" type="2"
+                        color="#000000ee" sigma="5" />
+                <font size="22" weight="400" name="Helvetica" />
+                <text>%3.0%</text>
+              </label>
+            </hbox>
+          </button>
+          <button margin="15" w="100%" h="min:5" jump="4.0" name="PLAY_4"
+                  up="PLAY_3"
+                  left="PLAY_4"
+                  right="PLAY_4"
+                  down="PLAY_5,PREV,NEXT,PLAY_1">
+            <hbox>
+              <group h="100%">
+                <image url="template:///images/next.png" h="100%" scale="0"
+                       color="green" layer="highlight" name="hl_play_1" />
+                <image url="template:///images/next.png" h="100%" scale="0"
+                       color="red" layer="select" name="sl_play_1" />
+              </group>
+              <label x="+0:10" name="label_title_play_4" color="#ccccccaa">
+                <shadow radius="10" offset.x="3" offset.y="3" type="2"
+                        color="#000000ee" sigma="5" />
+                <font size="22" weight="400" name="Helvetica" />
+                <text>%4.0%</text>
+              </label>
+            </hbox>
+          </button>
+          <button margin="15" w="100%" h="min:5" jump="5.0" name="PLAY_5"
+                  up="PLAY_4"
+                  left="PLAY_5"
+                  right="PLAY_5"
+                  down="PLAY_6,PREV,NEXT,PLAY_1">
+            <hbox>
+              <group h="100%">
+                <image url="template:///images/next.png" h="100%" scale="0"
+                       color="green" layer="highlight" name="hl_play_1" />
+                <image url="template:///images/next.png" h="100%" scale="0"
+                       color="red" layer="select" name="sl_play_1" />
+              </group>
+              <label x="+0:10" name="label_title_play_5" color="#ccccccaa">
+                <shadow radius="10" offset.x="3" offset.y="3" type="2"
+                        color="#000000ee" sigma="5" />
+                <font size="22" weight="400" name="Helvetica" />
+                <text>%5.0%</text>
+              </label>
+            </hbox>
+          </button>
+          <button margin="15" w="100%" h="min:5" jump="6.0" name="PLAY_6"
+                  up="PLAY_5"
+                  left="PLAY_6"
+                  right="PLAY_6"
+                  down="PREV,NEXT,PLAY_1">
+            <hbox>
+              <group h="100%">
+                <image url="template:///images/next.png" h="100%" scale="0"
+                       color="green" layer="highlight" name="hl_play_1" />
+                <image url="template:///images/next.png" h="100%" scale="0"
+                       color="red" layer="select" name="sl_play_1" />
+              </group>
+              <label x="+0:10" name="label_title_play_6" color="#ccccccaa">
+                <shadow radius="10" offset.x="3" offset.y="3" type="2"
+                        color="#000000ee" sigma="5" />
+                <font size="22" weight="400" name="Helvetica" />
+                <text>%6.0%</text>
+              </label>
+            </hbox>
+          </button>
+        </vbox>
+      </frame>
+      <spacer w="20%" />
+    </hbox>
+    <spacer h="50%" />
+    <hbox y="+0:5" w="100%" h="min" name="nav_box">
+      <spacer w="16.66%" />
+      <button w="min" h="min" jump="PREV" name="PREV"
+              up="4,1" left="NEXT" right="NEXT" down="1">
+        <image url="template:///images/button.png" scale="0">
+          <shadow radius="10" offset.x="3" offset.y="3" type="2"
+                  color="#00000088" sigma="5" />
+          <image url="template:///images/prev.png" x="+13" y="+12" scale="0" />
+          <image url="template:///images/prev.png" x="+13" y="+12"
+                 color="yellow" layer="highlight" name="hl_prev" scale="0" />
+          <image url="template:///images/prev.png" x="+13" y="+12"
+                 color="red" layer="select" name="sl_prev" scale="0" />
+          <label x="+28" y="+3" w="108" h="100%" color="#a0a0a0" >
+            <font size="28" weight="700" name="Helvetica-Bold" />
+            <text>PREV</text>
+          </label>
+        </image>
+      </button>
+      <spacer w="66.66%" />
+      <button w="min" h="min" jump="NEXT" name="NEXT"
+              up="6,3,2,1" left="PREV" right="PREV" down="3,2,1">
+        <image url="template:///images/button.png" scale="0">
+          <shadow radius="10" offset.x="5" offset.y="5" type="2"
+                  color="#00000088" sigma="5" />
+          <image url="template:///images/next.png" x="+13" y="+12" scale="0" />
+          <image url="template:///images/next.png" x="+13" y="+12"
+                 color="yellow" layer="highlight" name="hl_next" scale="0" />
+          <image url="template:///images/next.png" x="+13" y="+12"
+                 color="red" layer="select" name="sl_next" scale="0" />
+          <label x="+28" y="+3" w="108" h="100%" color="#a0a0a0" >
+            <font size="28" weight="700" name="Helvetica-Bold" />
+            <text>NEXT</text>
+          </label>
+        </image>
+      </button>
+      <spacer w="16.66%" />
+    </hbox>
+  </vbox>
+</page>
+
+<page name="CHAPTER_PAGE" titles="0" chapters="6">
+  <image url="template:///images/background2.jpg" x="0" y="0"  w="100%"
+         h="100%" scale="1" proportional="0" />
+  <vbox margin="40" w="100%" h="100%" name="main_box">
+    <hbox w="100%" h="min">
+      <spacer w="50%" />
+      <frame fill_color="#5a380399" rounded="12">
+        <label margin="5" x="+0:100" w="100%:100" h="min" name="label_main"
+              color="#fdf8df">
+          <font size="32" weight="700" name="Helvetica" />
+          <text>%1.$0%</text>
+        </label>
+      </frame>
+      <spacer w="50%" />
+    </hbox>
+    <hbox y="+0:5" w="100%" h="50%" take_space="1">
+      <button w="33.33%" h="100%" jump="X.1" name="1" take_space="1"
+              left="3,2" up="PREV,4" right="2" down="4,PREV,BACK">
+        <vbox w="100%" h="100%">
+          <image url="project:///1.1" margin="8" w="100%" h="100%">
+            <shadow radius="10" offset.x="5" offset.y="5" type="2"
+                    color="#00000088" sigma="5" />
+            <frame line_width="4" color="white" x="-3" y="-3" w="+6" h="+6" />
+            <frame line_width="4" color="red" x="-3" y="-3" w="+6" h="+6"
+                    layer="select" name="sl_1"/>
+            <frame line_width="4" color="yellow" x="-3" y="-3" w="+6" h="+6"
+                    layer="highlight" name="hl_1"/>
+          </image>
+          <frame x="+0:5" w="100%:5" fill_color="#5a380399" rounded="12">
+            <label margin="5" w="100%" h="min" name="label_title_1"
+                   color="#ccccccaa">
+              <shadow radius="10" offset.x="3" offset.y="3" type="2"
+                      color="#000000ee" sigma="5" />
+              <font size="22" weight="400" name="Helvetica" />
+              <text>%1.1%</text>
+            </label>
+          </frame>
+        </vbox>
+      </button>
+      <button w="33.33%" h="100%" jump="X.2" name="2" take_space="1"
+              left="1" up="NEXT,PREV,5" right="3,1" down="5,BACK">
+        <vbox w="100%" h="100%">
+          <image url="project:///1.2" margin="8" w="100%" h="100%">
+            <shadow radius="10" offset.x="5" offset.y="5" type="2"
+                    color="#00000088" sigma="5" />
+            <frame line_width="4" color="white" x="-3" y="-3" w="+6" h="+6" />
+            <frame line_width="4" color="red" x="-3" y="-3" w="+6" h="+6"
+                  layer="select" name="sl_2"/>
+            <frame line_width="4" color="yellow" x="-3" y="-3" w="+6" h="+6"
+                  layer="highlight" name="hl_2"/>
+          </image>
+          <frame x="+0:5" w="100%:5" fill_color="#5a380399" rounded="12">
+            <label margin="5" w="100%" h="min" name="label_title_2"
+                   color="#ccccccaa">
+              <shadow radius="10" offset.x="3" offset.y="3" type="2"
+                      color="#000000ee" sigma="5" />
+              <font size="22" weight="400" name="Helvetica" />
+              <text>%1.2%</text>
+            </label>
+          </frame>
+        </vbox>
+      </button>
+      <button w="33.33%" h="100%" jump="X.3" name="3" take_space="1"
+              left="2" up="NEXT,6" right="1" down="6,NEXT,BACK">
+        <vbox w="100%" h="100%">
+          <image url="project:///1.3" margin="8" w="100%" h="100%">
+            <shadow radius="10" offset.x="5" offset.y="5" type="2"
+                    color="#00000088" sigma="5" />
+            <frame line_width="4" color="white" x="-3" y="-3" w="+6" h="+6" />
+            <frame line_width="4" color="red" x="-3" y="-3" w="+6" h="+6"
+                  layer="select" name="sl_3"/>
+            <frame line_width="4" color="yellow" x="-3" y="-3" w="+6" h="+6"
+                  layer="highlight" name="hl_3"/>
+          </image>
+          <frame x="+0:5" w="100%:5" fill_color="#5a380399" rounded="12">
+            <label margin="5" w="100%" h="min" name="label_title_3"
+                   color="#ccccccaa">
+              <shadow radius="10" offset.x="3" offset.y="3" type="2"
+                      color="#000000ee" sigma="5" />
+              <font size="22" weight="400" name="Helvetica" />
+              <text>%1.3%</text>
+            </label>
+          </frame>
+        </vbox>
+      </button>
+    </hbox>
+    <hbox y="+0:5" w="100%" h="50%:0" take_space="1">
+      <button w="33.33%" h="100%" jump="X.4" name="4" take_space="1"
+              up="1" left="6,5" right="5" down="PREV,BACK,1">
+        <vbox w="100%" h="100%">
+          <image url="project:///1.4" margin="8" w="100%" h="100%">
+            <shadow radius="10" offset.x="5" offset.y="5" type="2"
+                    color="#00000088" sigma="5" />
+            <frame line_width="4" color="white" x="-3" y="-3" w="+6" h="+6" />
+            <frame line_width="4" color="red" x="-3" y="-3" w="+6" h="+6"
+                  layer="select" name="sl_4"/>
+            <frame line_width="4" color="yellow" x="-3" y="-3" w="+6" h="+6"
+                  layer="highlight" name="hl_4"/>
+          </image>
+          <frame x="+0:5" w="100%:5" fill_color="#5a380399" rounded="12">
+            <label margin="5" w="100%" h="min" name="label_title_4"
+                   color="#ccccccaa">
+              <shadow radius="10" offset.x="3" offset.y="3" type="2"
+                      color="#000000ee" sigma="5" />
+              <font size="22" weight="400" name="Helvetica" />
+              <text>%1.4%</text>
+            </label>
+          </frame>
+        </vbox>
+      </button>
+      <button w="33.33%" h="100%" jump="X.5" name="5" take_space="1"
+              up="2" left="4" right="6,4" down="BACK,2">
+        <vbox w="100%" h="100%">
+          <image url="project:///1.5" margin="8" w="100%" h="100%">
+            <shadow radius="10" offset.x="5" offset.y="5" type="2"
+                    color="#00000088" sigma="5" />
+            <frame line_width="4" color="white" x="-3" y="-3" w="+6" h="+6" />
+            <frame line_width="4" color="red" x="-3" y="-3" w="+6" h="+6"
+                  layer="select" name="sl_5"/>
+            <frame line_width="4" color="yellow" x="-3" y="-3" w="+6" h="+6"
+                  layer="highlight" name="hl_5"/>
+          </image>
+          <frame x="+0:5" w="100%:5" fill_color="#5a380399" rounded="12">
+            <label margin="5" w="100%" h="min" name="label_title_5"
+                   color="#ccccccaa">
+              <shadow radius="10" offset.x="3" offset.y="3" type="2"
+                      color="#000000ee" sigma="5" />
+              <font size="22" weight="400" name="Helvetica" />
+              <text>%1.5%</text>
+            </label>
+          </frame>
+        </vbox>
+      </button>
+      <button w="33.33%" h="100%" jump="X.6" name="6" take_space="1"
+              up="3" left="5" right="4" down="NEXT,BACK,3">
+        <vbox w="100%" h="100%">
+          <image url="project:///1.6" margin="8" w="100%" h="100%">
+            <shadow radius="10" offset.x="5" offset.y="5" type="2"
+                    color="#00000088" sigma="5" />
+            <frame line_width="4" color="white" x="-3" y="-3" w="+6" h="+6" />
+            <frame line_width="4" color="red" x="-3" y="-3" w="+6" h="+6"
+                  layer="select" name="sl_6"/>
+            <frame line_width="4" color="yellow" x="-3" y="-3" w="+6" h="+6"
+                  layer="highlight" name="hl_6"/>
+          </image>
+          <frame x="+0:5" w="100%:5" fill_color="#5a380399" rounded="12">
+            <label margin="5" w="100%" h="min" name="label_title_6"
+                   color="#ccccccaa">
+              <shadow radius="10" offset.x="3" offset.y="3" type="2"
+                      color="#000000ee" sigma="5" />
+              <font size="22" weight="400" name="Helvetica" />
+              <text>%1.6%</text>
+            </label>
+          </frame>
+        </vbox>
+      </button>
+    </hbox>
+    <hbox y="+0:5" w="100%" h="min" name="nav_box">
+      <spacer w="16.66%" />
+      <button w="min" h="min" jump="PREV" name="PREV"
+              up="4,1" left="NEXT,BACK" right="BACK,NEXT" down="1">
+        <image url="template:///images/button.png" scale="0">
+          <shadow radius="10" offset.x="3" offset.y="3" type="2"
+                  color="#00000088" sigma="5" />
+          <image url="template:///images/prev.png" x="+13" y="+12" scale="0" />
+          <image url="template:///images/prev.png" x="+13" y="+12"
+                 color="yellow" layer="highlight" name="hl_prev" scale="0" />
+          <image url="template:///images/prev.png" x="+13" y="+12"
+                 color="red" layer="select" name="sl_prev" scale="0" />
+          <label x="+28" y="+3" w="108" h="100%" color="#a0a0a0" >
+            <font size="28" weight="700" name="Helvetica-Bold" />
+            <text>PREV</text>
+          </label>
+        </image>
+      </button>
+      <spacer w="33.33%" />
+      <button w="min" h="min" jump="BACK" name="BACK"
+              up="4,1" left="PREV,NEXT" right="NEXT,PREV" down="1">
+        <image url="template:///images/button.png" scale="0">
+          <shadow radius="10" offset.x="3" offset.y="3" type="2"
+                  color="#00000088" sigma="5" />
+          <image url="template:///images/back.png" x="+11" y="+15" scale="0" />
+          <image url="template:///images/back.png" x="+11" y="+15"
+                 color="yellow" layer="highlight" name="hl_prev" scale="0" />
+          <image url="template:///images/back.png" x="+11" y="+15"
+                 color="red" layer="select" name="sl_prev" scale="0" />
+          <label x="+28" y="+3" w="108" h="100%" color="#a0a0a0" >
+            <font size="28" weight="700" name="Helvetica-Bold" />
+            <text>BACK</text>
+          </label>
+        </image>
+      </button>
+      <spacer w="33.33%" />
+      <button w="min" h="min" jump="NEXT" name="NEXT"
+              up="6,3,2,1" left="BACK,PREV" right="PREV,BACK" down="3,2,1">
+        <image url="template:///images/button.png" scale="0">
+          <shadow radius="10" offset.x="5" offset.y="5" type="2"
+                  color="#00000088" sigma="5" />
+          <image url="template:///images/next.png" x="+13" y="+12" scale="0" />
+          <image url="template:///images/next.png" x="+13" y="+12"
+                 color="yellow" layer="highlight" name="hl_next" scale="0" />
+          <image url="template:///images/next.png" x="+13" y="+12"
+                 color="red" layer="select" name="sl_next" scale="0" />
+          <label x="+28" y="+3" w="108" h="100%" color="#a0a0a0" >
+            <font size="28" weight="700" name="Helvetica-Bold" />
+            <text>NEXT</text>
+          </label>
+        </image>
+      </button>
+      <spacer w="16.66%" />
+    </hbox>
+   </vbox>
+</page>
+
+</template>
