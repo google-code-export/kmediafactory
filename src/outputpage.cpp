@@ -131,9 +131,6 @@ void OutputPage::start(QAction* type)
 
 void OutputPage::start()
 {
-#if RECORD_TIMINGS
-  stopWatch.start();
-#endif
   kmfApp->mainWindow()->enableUi(false);
   showLogPushBtn->setEnabled(false);
   stopPushBtn->setEnabled(true);
@@ -155,9 +152,6 @@ void OutputPage::start()
   stopPushBtn->setEnabled(false);
   startButton->setEnabled(true);
   kmfApp->mainWindow()->enableUi(true);
-#if RECORD_TIMINGS
-  stopWatch.stop();
-#endif
 }
 
 void OutputPage::currentPageChanged(KPageWidgetItem* current, KPageWidgetItem*)

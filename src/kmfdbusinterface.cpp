@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,6 +17,7 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "kmfdbusinterface.h"
 #include "kmfapplication.h"
 #include "kmediafactory.h"
@@ -28,7 +29,7 @@
 #include <kmessagebox.h>
 
 KMFDbusInterface::KMFDbusInterface(QObject *parent) :
-  QObject(parent), m_pdlg(0)
+  QObject(parent)
 {
 }
 
@@ -83,25 +84,17 @@ QString KMFDbusInterface::projectDirectory(const QString& subdir)
 
 void KMFDbusInterface::addMediaObject(const QString& xml)
 {
-  QDomDocument doc;
-  doc.setContent(xml);
-  kmfApp->project()->mediaObjFromXML(doc.documentElement());
+  kmfApp->uiInterface()->addMediaObject(xml);
 }
 
 void KMFDbusInterface::selectTemplate(const QString& xml)
 {
-  QDomDocument doc;
-
-  doc.setContent(xml);
-  kmfApp->project()->templateFromXML(doc.documentElement());
+  kmfApp->uiInterface()->selectTemplate(xml);
 }
 
 void KMFDbusInterface::selectOutput(const QString& xml)
 {
-  QDomDocument doc;
-
-  doc.setContent(xml);
-  kmfApp->project()->outputFromXML(doc.documentElement());
+  kmfApp->uiInterface()->selectOutput(xml);
 }
 
 void KMFDbusInterface::start()
@@ -114,80 +107,53 @@ QStringList KMFDbusInterface::getOpenFileNames(const QString &startDir,
                                                const QString &filter,
                                                const QString &caption)
 {
-  QString start = QString("kfiledialog:///<%1>").arg(startDir);
-  //kDebug() << start;
-  return KFileDialog::getOpenFileNames(KUrl(start), filter,
-                                       kmfApp->mainWindow(), caption);
+  return kmfApp->uiInterface()->getOpenFileNames(startDir, filter, caption);
 }
 
 void KMFDbusInterface::debug(const QString &txt)
 {
-  kDebug() << "SCRIPT: " << txt;
+  kmfApp->uiInterface()->debug(txt);
 }
 
 void KMFDbusInterface::progressDialog(const QString &caption,
                                       const QString &label,
                                       int maximum)
 {
-  if(m_pdlg)
-    delete m_pdlg;
-  kDebug();
-  m_pdlg = new KProgressDialog(kmfApp->mainWindow(), caption, label);
-  m_pdlg->progressBar()->setMaximum(maximum);
-  m_pdlg->showCancelButton(true);
-  m_pdlg->setAutoClose(false);
+  kmfApp->uiInterface()->progressDialog(caption, label, maximum);
 }
 
 void KMFDbusInterface::pdlgSetMaximum(int maximum)
 {
-  if(m_pdlg)
-    m_pdlg->progressBar()->setMaximum(maximum);
+  kmfApp->uiInterface()->progressDialog()->setMaximum(maximum);
 }
 
 void KMFDbusInterface::pdlgSetValue(int value)
 {
-  if(m_pdlg)
-    m_pdlg->progressBar()->setValue(value);
+  kmfApp->uiInterface()->progressDialog()->setValue(value);
 }
 
 void KMFDbusInterface::pdlgSetLabel(const QString &label)
 {
-  if(m_pdlg)
-    m_pdlg->setLabelText(label);
+  kmfApp->uiInterface()->progressDialog()->setLabel(label);
 }
 
 void KMFDbusInterface::pdlgShowCancelButton(bool show)
 {
-  if(m_pdlg)
-    m_pdlg->showCancelButton(show);
+  kmfApp->uiInterface()->progressDialog()->showCancelButton(show);
 }
 
 bool KMFDbusInterface::pdlgWasCancelled()
 {
-  if(m_pdlg)
-    return m_pdlg->wasCancelled();
-  return false;
+  return kmfApp->uiInterface()->progressDialog()->wasCancelled();
 }
 
 void KMFDbusInterface::pdlgClose()
 {
-  if(m_pdlg)
-  {
-    m_pdlg->close();
-    delete m_pdlg;
-    m_pdlg = 0;
-  }
+  kmfApp->uiInterface()->progressDialog()->close();
 }
 
 int KMFDbusInterface::message(const QString &caption, const QString &txt,
                               int type)
 {
-  kDebug() << caption << txt << type <<KMessageBox::Error ;
-  if(type == KMessageBox::Information)
-    KMessageBox::information(kmfApp->mainWindow(), txt, caption);
-  else if(type == KMessageBox::Sorry)
-    KMessageBox::sorry(kmfApp->mainWindow(), txt, caption);
-  else if(type == KMessageBox::Error)
-    KMessageBox::error(kmfApp->mainWindow(), txt, caption);
-  return 0;
+  return kmfApp->uiInterface()->messageBox(caption, txt, type);
 }
