@@ -33,7 +33,9 @@ class KrossUiInterface : public QObject
     ~KrossUiInterface();
 
   public slots:
-      bool addMediaAction(QVariantMap action, const QString& group = "");
+      bool addMediaAction(const QString& icon, const QString& text,
+                          const QString& shortcut, const QString& name,
+                          Kross::Object::Ptr obj, const QString& method);
       void setActionEnabled(const QString& name, bool enabled);
       bool addMediaObject(Kross::Object::Ptr media) const;
       bool addTemplateObject(Kross::Object::Ptr tob);
@@ -41,9 +43,9 @@ class KrossUiInterface : public QObject
       bool removeMediaObject(Kross::Object::Ptr media) const;
       bool removeTemplateObject(Kross::Object::Ptr tob);
       bool removeOutputObject(Kross::Object::Ptr oob);
-      void addMediaObject(const QString& xml);
-      void selectTemplate(const QString& xml);
-      void selectOutput(const QString& xml);
+      void addMediaObjectFromXML(const QString& xml);
+      void setTemplateFromXML(const QString& xml);
+      void setOutputFromXML(const QString& xml);
 
       bool message(KMF::MsgType type, const QString& msg);
       bool progress(int advance);
@@ -61,7 +63,6 @@ class KrossUiInterface : public QObject
 
   private:
     KMF::UiInterface* m_uiIf;
-    //QMap<QObject*, QVariantList> m_actionMap;
 };
 
 #endif // KROSSUIINTERFACE_H

@@ -81,7 +81,7 @@ void KMFProgressDialog::close()
 }
 
 KMFUiInterface::KMFUiInterface(QObject *parent) :
-  KMF::UiInterface(parent), m_useMessageBox(false)
+  KMF::UiInterface(parent), m_useMessageBox(false), m_pdlg(0)
 {
 }
 
@@ -152,6 +152,7 @@ bool KMFUiInterface::removeOutputObject(KMF::OutputObject* oob)
 
 void KMFUiInterface::addMediaObject(const QString& xml)
 {
+  kDebug() << xml;
   QDomDocument doc;
   doc.setContent(xml);
   kmfApp->project()->mediaObjFromXML(doc.documentElement());
@@ -284,7 +285,7 @@ KMF::ProgressDialog* KMFUiInterface::progressDialog(const QString &caption, cons
   if(m_pdlg)
     delete m_pdlg;
   m_pdlg = new KMFProgressDialog(kmfApp->mainWindow());
-  connect(m_pdlg, SIGNAL(destroyed()), this, SLOT(progressDialogDestroyed));
+  connect(m_pdlg, SIGNAL(destroyed()), this, SLOT(progressDialogDestroyed()));
   m_pdlg->setCaption(caption);
   m_pdlg->setLabel(label);
   m_pdlg->setMaximum(maximum);

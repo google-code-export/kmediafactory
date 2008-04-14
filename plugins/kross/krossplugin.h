@@ -32,8 +32,16 @@ class KrossProjectInterface;
 
 class KrossPlugin : public KMF::Plugin
 {
+  Q_ENUMS(DialogType)
   Q_OBJECT
   public:
+    // From KMessageBox
+    enum DialogType {
+      Information = 5,
+      Sorry = 7,
+      Error = 8
+    };
+
     KrossPlugin(QObject *parent, const QVariantList&);
     ~KrossPlugin();
 
@@ -44,6 +52,7 @@ class KrossPlugin : public KMF::Plugin
     virtual QStringList supportedProjectTypes() const;
     virtual KMF::MediaObject* createMediaObject(const QDomElement&);
     virtual const KMF::ConfigPage* configPage() const;
+    QMap<QObject*, QVariantList>* actionMap() { return &m_actionMap; };
 
   public slots: // script functions
     void registerPlugin(Kross::Object::Ptr plugin);
@@ -56,6 +65,7 @@ class KrossPlugin : public KMF::Plugin
   private:
     Kross::Action* m_action;
     mutable Kross::Object::Ptr m_plugin;
+    QMap<QObject*, QVariantList> m_actionMap;
 };
 
 #endif // KROSSPLUGIN_H

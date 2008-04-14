@@ -34,16 +34,19 @@ KrossUiInterface::~KrossUiInterface()
 {
 }
 
-bool KrossUiInterface::addMediaAction(QVariantMap action, const QString& group)
+bool KrossUiInterface::addMediaAction(const QString& icon, const QString& text,
+                                      const QString& shortcut, const QString& name,
+                                      Kross::Object::Ptr obj, const QString& method)
 {
   KrossPlugin* plugin = qobject_cast<KrossPlugin*>(parent());
-  QAction* act = new KAction(KIcon(action["icon"].toString()), 
-                             action["text"].toString(), plugin->parent());
-  //act->setShortcut(Qt::ALT + Qt::Key_W);
-  kDebug() << "addAction" << action["name"].toString() << act;
-  plugin->actionCollection()->addAction(action["name"].toString(), act);
+  QAction* act = new KAction(KIcon(icon), text, plugin->parent());
+  act->setShortcut(QKeySequence::fromString(shortcut));
+  //kDebug() << "addAction" << name << act;
+  plugin->actionCollection()->addAction(name, act);
   connect(act, SIGNAL(triggered()), plugin, SLOT(actionTriggered()));
-  //m_actionMap[act] = QVariantList() << action["method"];
+  QVariant arg;
+  arg.setValue(obj);
+  plugin->actionMap()->insert(act, QVariantList() << arg << method);
   return m_uiIf->addMediaAction(act);
 }
 
@@ -58,31 +61,37 @@ void KrossUiInterface::setActionEnabled(const QString& name, bool enabled)
 
 bool KrossUiInterface::addMediaObject(Kross::Object::Ptr media) const
 {
+  Q_UNUSED(media)
   return false;
 }
 
 bool KrossUiInterface::addTemplateObject(Kross::Object::Ptr tob)
 {
+  Q_UNUSED(tob)
   return false;
 }
 
 bool KrossUiInterface::addOutputObject(Kross::Object::Ptr oob)
 {
+  Q_UNUSED(oob)
   return false;
 }
 
 bool KrossUiInterface::removeMediaObject(Kross::Object::Ptr media) const
 {
+  Q_UNUSED(media)
   return false;
 }
 
 bool KrossUiInterface::removeTemplateObject(Kross::Object::Ptr tob)
 {
+  Q_UNUSED(tob)
   return false;
 }
 
 bool KrossUiInterface::removeOutputObject(Kross::Object::Ptr oob)
 {
+  Q_UNUSED(oob)
   return false;
 }
 
@@ -111,19 +120,20 @@ QObject* KrossUiInterface::logger()
   return m_uiIf->logger();
 }
 
-void KrossUiInterface::addMediaObject(const QString& xml)
+void KrossUiInterface::addMediaObjectFromXML(const QString& xml)
 {
+  kDebug() << xml;
   m_uiIf->addMediaObject(xml);
 }
 
-void KrossUiInterface::selectTemplate(const QString& xml)
+void KrossUiInterface::setTemplateFromXML(const QString& xml)
 {
-  return m_uiIf->selectTemplate(xml);
+  m_uiIf->selectTemplate(xml);
 }
 
-void KrossUiInterface::selectOutput(const QString& xml)
+void KrossUiInterface::setOutputFromXML(const QString& xml)
 {
-  return m_uiIf->selectOutput(xml);
+  m_uiIf->selectOutput(xml);
 }
 
 QStringList KrossUiInterface::getOpenFileNames(const QString &startDir, const QString &filter, 

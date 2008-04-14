@@ -36,13 +36,13 @@ K_EXPORT_KMEDIAFACTORY_PLUGIN(kross, KrossPlugin);
 KrossPlugin::KrossPlugin(QObject* parent, const QVariantList& args) :
   KMF::Plugin(parent), m_action(0)
 {
-  KMF::Tools::spy(this);
+  //KMF::Tools::spy(this);
   KService::Ptr service = args[0].value<KService::Ptr>();
   QString name = service->property("Name").toString();
   QString script = service->property("X-KMediaFactory-Script").toString();
   QString uirc = service->property("X-KMediaFactory-UiRcFile").toString();
 
-  kDebug() << name << script << uirc;
+  //kDebug() << name << script << uirc;
   setObjectName(name);
   m_action = new Kross::Action(this, script);
 
@@ -54,7 +54,7 @@ KrossPlugin::KrossPlugin(QObject* parent, const QVariantList& args) :
     setXMLFile(uirc);
   }
 
-  kDebug() << "Running" << script;
+  //kDebug() << "Running" << script;
   m_action->trigger();
 }
     
@@ -110,10 +110,11 @@ QObject* KrossPlugin::projectInterface()
 
 void KrossPlugin::actionTriggered()
 {
-  kDebug() << "************************************";
-KMessageBox::error(0, i18n("Heippa"));
-  //QVariantList args = m_actionMap[sender()];
-  //kDebug() << args;
+  QVariantList args = m_actionMap[sender()];
+  if (args.size() == 2) {
+    Kross::Object::Ptr obj = args[0].value< Kross::Object::Ptr >();
+    obj->callMethod(args[1].toString());
+  }
 }
 
 #include "krossplugin.moc"
