@@ -1,0 +1,8 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="kmediafactory-kross" version="1">
+  <MenuBar>
+    <Menu name="media">
+      <Action name="dvb_edit" />
+    </Menu>
+  </MenuBar>
+</kpartgui>

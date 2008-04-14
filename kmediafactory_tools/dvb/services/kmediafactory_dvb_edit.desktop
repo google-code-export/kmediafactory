@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=DVB Edit
+Comment=KMediaFactory DVB Edit Plugin
+ServiceTypes=KMediaFactory/Plugin
+Type=Service
+X-KDE-Library=kmediafactory_plugin_kross
+X-KMediaFactory-Script=dvb_edit.py
+X-KMediaFactory-UiRcFile=dvb_editui.rc
