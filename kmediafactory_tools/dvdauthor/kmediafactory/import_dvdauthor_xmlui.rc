@@ -1,0 +1,8 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="kmediafactory-kross" version="1">
+  <MenuBar>
+    <Menu name="media">
+      <Action name="import_dvdauthor_xml" />
+    </Menu>
+  </MenuBar>
+</kpartgui>

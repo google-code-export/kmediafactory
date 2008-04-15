@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Import DVDAuthor XML
+Comment=KMediaFactory Import DVDAuthor XML Plugin
+ServiceTypes=KMediaFactory/Plugin
+Type=Service
+X-KDE-Library=kmediafactory_plugin_kross
+X-KMediaFactory-Script=import_dvdauthor_xml.py
+X-KMediaFactory-UiRcFile=import_dvdauthor_xmlui.rc
