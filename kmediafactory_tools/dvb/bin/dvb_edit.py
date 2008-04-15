@@ -1,9 +1,29 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
+#**************************************************************************
+#   Tool for editing DVB (or any mpg files) for KMediaFactory
+#   Copyright (C) 2008 Petri Damsten <damu@iki.fi>
+#
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the
+#   Free Software Foundation, Inc.,
+#   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#**************************************************************************
 
 from kmediafactory import uiInterface, projectInterface
 import os
 from popen2 import Popen4
-import time 
+import time
 
 APP = 'KMediaFactory'
 
@@ -16,14 +36,14 @@ class DVBPlugin:
                                      self,               # Object
                                      'edit'              # Method
         )
-        
+
     def run(self, cmd):
         uiInterface().debug(cmd)
         pipe = Popen4(cmd)
         result = pipe.wait()
         output = pipe.fromchild.read()
         return(result, output.strip())
-    
+
     def projectx(self):
         result = self.run('which projectx')
         if result[0] == 0:
@@ -34,9 +54,9 @@ class DVBPlugin:
         if os.path.exists('/usr/share/projectx/ProjectX.jar'):
             return 'java -jar /usr/share/projectx/ProjectX.jar'
         return 'java -jar ProjectX.jar'
-    
+
     def edit(self):
-        ts_files = uiInterface().getOpenFileNames('KMF_DVB', 
+        ts_files = uiInterface().getOpenFileNames('KMF_DVB',
                                                   '*.ts *.ps *.mpg *.mpeg|Mpeg files',
                                                   'Add DVB file')
 
@@ -52,7 +72,7 @@ class DVBPlugin:
                 input_audio_mp2 = projectDir + base + '.mp2'
                 input_video = projectDir + base + '.m2v'
                 output = projectDir + base + '.mpg'
-        
+
                 if os.path.exists(input_audio_ac3):
                     input_audio = input_audio_ac3
                 else:
@@ -65,7 +85,7 @@ class DVBPlugin:
                     return
                 dlg = uiInterface().progressDialog(APP, 'Making %s...' % output,
                                                    (size / 1024))
-        
+
                 cmd = 'mplex -f 8 -o "' + output + '" "' + input_video + '" "' + \
                       input_audio + '"'
                 pipe = Popen4(cmd)
