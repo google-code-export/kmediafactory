@@ -45,3 +45,14 @@ KMF::ProjectInterface* KMF::Object::projectInterface() const
       m_prjIf = plugin()->projectInterface();
   return m_prjIf;
 }
+
+QVariant KMF::Object::call(const QString& func, QVariantList args)
+{
+  QVariant result;
+
+  //kDebug() << func << args;
+  QMetaObject::invokeMethod(this, func.toAscii(), Qt::DirectConnection,
+                            Q_RETURN_ARG(QVariant, result),
+                            Q_ARG(QVariantList, args));
+  return result;
+}

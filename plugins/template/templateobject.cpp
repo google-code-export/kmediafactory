@@ -192,6 +192,7 @@ int TemplateObject::timeEstimate() const
 
 bool TemplateObject::make(QString type)
 {
+  m_type = type;
   // Make menu
   if(isUpToDate(type))
   {
@@ -200,7 +201,7 @@ bool TemplateObject::make(QString type)
     return true;
   }
   else
-    return m_menu.makeMenu(type);
+    return m_menu.makeMenu();
 }
 
 QStringList TemplateObject::menus()
@@ -378,6 +379,31 @@ bool TemplateObject::isUpToDate(QString type)
 bool TemplateObject::fileExists()
 {
     return QFileInfo(m_file).exists();
+}
+
+QVariant TemplateObject::directPlay(QVariantList args)
+{
+  Q_UNUSED(args);
+  return property("%KMFMenuPage%", "direct_play");
+}
+
+QVariant TemplateObject::continueToNextTitle(QVariantList args)
+{
+  Q_UNUSED(args);
+  return property("%KMFMenuPage%", "continue_to_next_title");
+}
+
+QVariant TemplateObject::language(QVariantList args)
+{
+  Q_UNUSED(args);
+  return m_menu.templateStore()->language();
+}
+
+QVariant TemplateObject::writeDvdAuthorXml(QVariantList args)
+{
+  QVariant result;
+  result.setValue(m_menu.writeDvdAuthorXml(m_type, args[0].toInt()));
+  return result;
 }
 
 #include "templateobject.moc"

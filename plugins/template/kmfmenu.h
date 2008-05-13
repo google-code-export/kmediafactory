@@ -37,12 +37,11 @@ class KMFMenu : public KMFTemplateBase
     KMFMenu(const QString& tmplate, QObject *parent = 0);
     ~KMFMenu();
 
-    bool makeMenu(QString type);
+    bool makeMenu();
     QImage makeMenuPreview(QString page = "");
     QImage icon() const { return templateImage("icon.png"); };
     bool addPage(const QString& name, int title, int chapter);
-    bool writeDvdAuthorXml(QDomDocument& doc, QString type);
-    bool writeDvdAuthorXml(const QString& file, QString type);
+    QDomElement writeDvdAuthorXml(const QString& type, int titleset);
     bool makeMenuMpegs();
     KMFTemplate* templateStore() { return &m_template; };
     const QStringList& menus() const { return m_menus; };

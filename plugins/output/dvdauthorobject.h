@@ -44,6 +44,7 @@ class DvdAuthorObject : public KMF::OutputObject
 
   private:
     //KAction* dvdAuthorProperties;
+    QDomElement toElement(const QVariant& element);
 };
 
 #endif // DVDAUTHOROBJECT_H

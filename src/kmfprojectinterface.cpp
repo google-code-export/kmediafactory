@@ -58,6 +58,22 @@ QList<KMF::MediaObject*> KMFProjectInterface::mediaObjects()
   return QList<KMF::MediaObject*>();
 }
 
+KMF::TemplateObject* KMFProjectInterface::templateObject()
+{
+  if (kmfApp->project()) {
+    return kmfApp->project()->templateObj();
+  }
+  return 0;
+}
+
+KMF::OutputObject* KMFProjectInterface::outputObject()
+{
+  if (kmfApp->project()) {
+    return kmfApp->project()->output();
+  }
+  return 0;
+}
+
 QString KMFProjectInterface::projectDir(const QString& subDir)
 {
   if (kmfApp->project()) {

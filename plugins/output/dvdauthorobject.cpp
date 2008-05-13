@@ -19,10 +19,11 @@
 //**************************************************************************
 #include "dvdauthorobject.h"
 #include "outputplugin.h"
-#include <kmimetype.h>
-#include <kiconloader.h>
-#include <klocale.h>
-#include <kdebug.h>
+#include <KMimeType>
+#include <KIconLoader>
+#include <KLocale>
+#include <KDebug>
+#include <KAboutData>
 #include <QPixmap>
 
 DvdAuthorObject::DvdAuthorObject(QObject* parent)
@@ -54,8 +55,144 @@ int DvdAuthorObject::timeEstimate() const
   return TotalPoints;
 }
 
+QDomElement DvdAuthorObject::toElement(const QVariant& element)
+{
+  if (element.canConvert<QDomElement>()) {
+    return element.value<QDomElement>();
+  } else {
+    QDomDocument doc;
+    doc.setContent(element.toString());
+    return doc.documentElement();
+  }
+}
+
+/*
+bool KMFMenu::writeDvdAuthorXml(const QString& fileName, QString type)
+{
+  QDomDocument doc("");
+  doc.appendChild(doc.createProcessingInstruction("xml",
+                  "version=\"1.0\" encoding=\"UTF-8\""));
+  if(writeDvdAuthorXml(doc, type))
+  {
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly))
+      return false;
+    QTextStream stream(&file);
+    stream.setCodec("UTF-8");
+    stream << doc.toString();
+    file.close();
+    return true;
+  }
+  return false;
+}
+*/
+
 bool DvdAuthorObject::make(QString)
 {
+  if(uiInterface()->message(KMF::Info, i18n("Generating DVDAuthor xml")))
+    return false;
+
+  QDomDocument doc("");
+  doc.appendChild(doc.createProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\""));
+  QDomElement root = doc.createElement("dvdauthor");
+  KMF::TemplateObject* tempObj = projectInterface()->templateObject();
+  int i;
+  QString tmp;
+  QString header = "\n"
+    " *********************************************************************\n"
+    " %1\n"
+    " *********************************************************************\n";
+  QString comment = i18n("\n"
+    "**********************************************************************\n"
+    "\n"
+    "This file was made with %1 - %2\n"
+    "http://www.iki.fi/damu/software/kmediafactory/\n"
+    "\n"
+    "**********************************************************************\n"
+    "\n"
+    "Register usage:\n"
+    "================\n"
+    "g0: Playing chapter saved here.\n"
+    "g1: Play this chapter when entering titleset menu. 0 == show menu.\n"
+    "    Also used by Back button.\n"
+    "g2: Used vmgm button is saved here\n"
+    "g3: Jump to this titleset. Also used for direct play.\n"
+    "g4: Used titleset button is saved here\n"
+    "g5: vmgm page is saved here\n"
+    "g6: titleset page is saved here\n"
+    "g7: temporary variable\n"
+    "\n"
+    "**********************************************************************\n"
+    , KGlobal::mainComponent().aboutData()->programName()
+    , KGlobal::mainComponent().aboutData()->version());
+
+  doc.appendChild(doc.createComment(comment));
+  doc.appendChild(doc.createTextNode("\n"));
+
+  root.setAttribute("dest", "./DVD");
+  doc.appendChild(root);
+
+  root.appendChild(doc.createTextNode("\n "));
+  tmp = i18n("Main menu for %1", projectInterface()->title());
+  root.appendChild(doc.createComment(header.arg(tmp)));
+  root.appendChild(doc.createTextNode("\n "));
+
+  QDomElement vmgm = doc.createElement("vmgm");
+
+  QDomElement fpc = doc.createElement("fpc");
+
+  int titleset = 0;
+  if (tempObj->call("directPlay").toBool()) {
+      titleset = 1;
+  }
+  fpc.appendChild(doc.createTextNode(QString(
+      " { g0 = 0; g1 = 0; g2 = 0; g3 = %1; g4 = 0; g5 = 0; g6 = 0;"
+      " jump menu 1; }").arg(titleset)));
+  vmgm.appendChild(fpc);
+
+  KMF::MediaObject *mob;
+  QList<KMF::MediaObject*> mobs =  projectInterface()->mediaObjects();
+
+  QDomElement menus = toElement(tempObj->call("writeDvdAuthorXml", QVariantList() << 0));
+  menus.setTagName("menus");
+  if(menus.hasChildNodes())
+    vmgm.appendChild(menus);
+  root.appendChild(vmgm);
+
+  i=1;
+  foreach(mob, mobs)
+  {
+    root.appendChild(doc.createTextNode("\n "));
+    root.appendChild(doc.createComment(header.arg(mob->text())));
+    root.appendChild(doc.createTextNode("\n "));
+
+    QDomElement menus = toElement(tempObj->call("writeDvdAuthorXml", QVariantList() << i));
+    menus.setTagName("menus");
+
+    QDomElement titleset = toElement(mob->call("writeDvdAuthorXml", 
+        QVariantList() << tempObj->call("language")));
+    titleset.setTagName("titleset");
+    titleset.appendChild(menus);
+
+    QString postString;
+    if(i < mobs.count() && tempObj->call("continueToNextTitle").toInt() == 1)
+    {
+      postString = QString(" g3 = %1 ; ").arg(i+1);
+    }
+    postString += " call vmgm menu 1 ; ";
+    QDomElement post = doc.createElement("post");
+    QDomText text = doc.createTextNode(postString);
+    post.appendChild(text);
+    QDomNodeList pgcList = titleset.elementsByTagName("pgc");
+    if (pgcList.count() > 0) 
+    {
+      QDomElement pgc = pgcList.at(0).toElement();
+      pgc.appendChild(post);
+    }
+    root.appendChild(titleset);
+    ++i;
+  }
+
   uiInterface()->message(KMF::OK, i18n("DVDAuthor project ready"));
   uiInterface()->progress(TotalPoints);
   return true;

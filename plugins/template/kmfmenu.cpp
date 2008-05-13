@@ -50,145 +50,48 @@ KMFMenu::~KMFMenu()
     qDeleteAll(pages);
 }
 
-bool KMFMenu::writeDvdAuthorXml(QDomDocument& doc, QString type)
+QDomElement KMFMenu::writeDvdAuthorXml(const QString& type, int titleset)
 {
-  QDomElement root = doc.createElement("dvdauthor");
-  int i, j;
-  QString tmp;
-  QString header = "\n"
-    " *********************************************************************\n"
-    " %1\n"
-    " *********************************************************************\n";
-  QString comment = i18n("\n"
-    "**********************************************************************\n"
-    "\n"
-    "This file was made with %1 - %2\n"
-    "http://www.iki.fi/damu/software/kmediafactory/\n"
-    "\n"
-    "**********************************************************************\n"
-    "\n"
-    "Register usage:\n"
-    "================\n"
-    "g0: Playing chapter saved here.\n"
-    "g1: Play this chapter when entering titleset menu. 0 == show menu.\n"
-    "    Also used by Back button.\n"
-    "g2: Used vmgm button is saved here\n"
-    "g3: Jump to this titleset. Also used for direct play.\n"
-    "g4: Used titleset button is saved here\n"
-    "g5: vmgm page is saved here\n"
-    "g6: titleset page is saved here\n"
-    "g7: temporary variable\n"
-    "\n"
-    "**********************************************************************\n"
-    , KGlobal::mainComponent().aboutData()->programName()
-    , KGlobal::mainComponent().aboutData()->version());
-
-  doc.appendChild(doc.createComment(comment));
-  doc.appendChild(doc.createTextNode("\n"));
-
-  root.setAttribute("dest", "./DVD");
-  doc.appendChild(root);
-
-  root.appendChild(doc.createTextNode("\n "));
-  tmp = i18n("Main menu for %1", m_prjIf->title());
-  root.appendChild(doc.createComment(header.arg(tmp)));
-  root.appendChild(doc.createTextNode("\n "));
-
-  QDomElement elem = doc.createElement("vmgm");
-
-  QDomElement fpc = doc.createElement("fpc");
-
-  int titleset = 0;
-  if(templateObject()->property("%KMFMenuPage%", "direct_play").toBool())
-    titleset = 1;
-  fpc.appendChild(doc.createTextNode(QString(
-      " { g0 = 0; g1 = 0; g2 = 0; g3 = %1; g4 = 0; g5 = 0; g6 = 0;"
-      " jump menu 1; }").arg(titleset)));
-  elem.appendChild(fpc);
-
-  QDomElement menus = doc.createElement("menus");
-
   if(pages() > 0)
   {
-    KMF::MediaObject *mob;
+    QDomElement result;
     QList<KMF::MediaObject*> mobs = m_prjIf->mediaObjects();
 
-    j=1;
-    foreach(KMFMenuPage* ob, m_pages[0])
-    {
-      ob->setIndex(0, mobs.count(), j, m_pages[0].count());
-      ob->writeDvdAuthorXml(menus, type);
-      j++;
-    }
-    if(menus.hasChildNodes())
-      elem.appendChild(menus);
-    root.appendChild(elem);
-
-    i=1;
-    foreach(mob, mobs)
-    {
-      root.appendChild(doc.createTextNode("\n "));
-      root.appendChild(doc.createComment(header.arg(mob->text())));
-      root.appendChild(doc.createTextNode("\n "));
-
-      QDomElement elem = doc.createElement("titleset");
-      QDomElement menus = doc.createElement("menus");
-      if(i < m_pages.count() && m_pages[i].count() != 0)
+    if (titleset == 0) {
+      int j = 1;
+      foreach(KMFMenuPage* ob, m_pages[0])
       {
-        j=1;
-        foreach(KMFMenuPage* ob, m_pages[i])
+        ob->setIndex(0, mobs.count(), j, m_pages[0].count());
+        ob->writeDvdAuthorXml(result, type);
+        ++j;
+      }
+      return result;
+    } 
+    else 
+    {
+      if(titleset < m_pages.count() && m_pages[titleset].count() != 0)
+      {
+        int j = 1;
+        foreach(KMFMenuPage* ob, m_pages[titleset])
         {
-          ob->setIndex(i, mobs.count(), j, m_pages[i].count());
-          ob->writeDvdAuthorXml(menus, type);
+          ob->setIndex(titleset, mobs.count(), j, m_pages[titleset].count());
+          ob->writeDvdAuthorXml(result, type);
           ++j;
         }
       }
-      if(!menus.hasChildNodes())
+      if(!result.hasChildNodes())
       {
         KMFMenuPage page(this);
-        page.writeDvdAuthorXmlNoMenu(menus);
+        page.writeDvdAuthorXmlNoMenu(result);
       }
-      elem.appendChild(menus);
-
-      QString post;
-
-      if(i < mobs.count() && templateObject()->property("%KMFMenuPage%",
-                                 "continue_to_next_title").toInt() == 1)
-      {
-        post = QString(" g3 = %1 ; ").arg(i+1);
-      }
-      post += " call vmgm menu 1 ; ";
-      mob->writeDvdAuthorXml(elem, m_template.language(), post, type);
-      root.appendChild(elem);
-      ++i;
+      return result;
     }
-    return true;
-    //kDebug() << doc.toString();
   }
   else
   {
     m_uiIf->message(KMF::Error, i18n("No pages."));
-    return false;
+    return QDomElement();
   }
-}
-
-bool KMFMenu::writeDvdAuthorXml(const QString& fileName, QString type)
-{
-  QDomDocument doc("");
-  doc.appendChild(doc.createProcessingInstruction("xml",
-                  "version=\"1.0\" encoding=\"UTF-8\""));
-  if(writeDvdAuthorXml(doc, type))
-  {
-    QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly))
-      return false;
-    QTextStream stream(&file);
-    stream.setCodec("UTF-8");
-    stream << doc.toString();
-    file.close();
-    return true;
-  }
-  return false;
 }
 
 bool KMFMenu::makeMenuMpegs()
@@ -347,7 +250,7 @@ void KMFMenu::progress(int points)
   m_uiIf->progress(points);
 }
 
-bool KMFMenu::makeMenu(QString type)
+bool KMFMenu::makeMenu()
 {
   clear();
   m_points = TotalPoints / 4;
@@ -369,14 +272,9 @@ bool KMFMenu::makeMenu(QString type)
     if(makeMenuMpegs() == false)
       return false;
 
-    // Generate xml
-    if(m_uiIf->message(KMF::Info, i18n("Generating DVDAuthor xml")))
-      return false;
-    bool result = writeDvdAuthorXml(m_prjIf->projectDir() + "/dvdauthor.xml",
-                                   type);
     progress(TotalPoints);
     clear();
-    return result;
+    return true;
   }
   return false;
 }
