@@ -55,9 +55,6 @@ class SlideshowObject : public KMF::MediaObject
     virtual bool make(QString type);
     virtual int timeEstimate() const;
     virtual void actions(QList<QAction*>&) const;
-    virtual void writeDvdAuthorXml(QDomElement& element,
-                                   QString preferredLanguage,
-                                   QString post, QString type);
     virtual QImage preview(int chapter = MainPreview) const;
     virtual QString text(int chapter = MainTitle) const;
     virtual int chapters() const;
@@ -89,6 +86,8 @@ class SlideshowObject : public KMF::MediaObject
     virtual void slotProperties();
     void output(QString line);
     virtual void clean();
+    // KMF::Object::call slots
+    QVariant writeDvdAuthorXml(QVariantList args);
 
   protected:
     void generateId();
@@ -109,6 +108,7 @@ class SlideshowObject : public KMF::MediaObject
     bool m_includeOriginals;
     QStringList m_audioFiles;
     QString m_buffer;
+    QString m_type;
     KProcess* dvdslideshow;
 };
 

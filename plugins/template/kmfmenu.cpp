@@ -54,7 +54,8 @@ QDomElement KMFMenu::writeDvdAuthorXml(const QString& type, int titleset)
 {
   if(pages() > 0)
   {
-    QDomElement result;
+    QDomDocument doc;
+    QDomElement result = doc.createElement("menus");
     QList<KMF::MediaObject*> mobs = m_prjIf->mediaObjects();
 
     if (titleset == 0) {
@@ -273,7 +274,6 @@ bool KMFMenu::makeMenu()
       return false;
 
     progress(TotalPoints);
-    clear();
     return true;
   }
   return false;
