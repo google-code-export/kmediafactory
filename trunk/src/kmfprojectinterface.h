@@ -34,6 +34,8 @@ class KMFProjectInterface : public KMF::ProjectInterface
     virtual ~KMFProjectInterface();
 
     virtual QList<KMF::MediaObject*> mediaObjects();
+    virtual KMF::TemplateObject* templateObject();
+    virtual KMF::OutputObject* outputObject();
     virtual QString title();
     virtual void setTitle(QString title);
     virtual QString projectDir(const QString& subDir = "");

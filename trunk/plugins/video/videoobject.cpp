@@ -292,10 +292,11 @@ void VideoObject::toXML(QDomElement& element) const
   element.appendChild(video);
 }
 
-void VideoObject::writeDvdAuthorXml(QDomElement& element,
-                                    QString preferredLanguage,
-                                    QString post, QString type)
+QVariant VideoObject::writeDvdAuthorXml(QVariantList args)
 {
+  QDomElement element;
+  QString preferredLanguage = args[0].toString();
+
   QDir dir(projectInterface()->projectDir("media"));
   int audioTrack = 0; // First audio track
   int subTrack = 62; // Let player decide
@@ -368,7 +369,7 @@ void VideoObject::writeDvdAuthorXml(QDomElement& element,
     if(!open)
     {
       vob = doc.createElement("vob");
-      if(type != "dummy")
+      if(m_type != "dummy")
       {
         vob.setAttribute("file", videoFileFind(i));
       }
@@ -409,12 +410,12 @@ void VideoObject::writeDvdAuthorXml(QDomElement& element,
     vob.appendChild(c);
     //kDebug() << "Cell: " << start << ", " << end;
   }
-  QDomElement postElem = doc.createElement("post");
-  QDomText text2 = doc.createTextNode(post);
-  postElem.appendChild(text2);
-  pgc.appendChild(postElem);
   titles.appendChild(pgc);
   element.appendChild(titles);
+  
+  QVariant result;
+  result.setValue(element);
+  return result;
 }
 
 int VideoObject::timeEstimate() const
@@ -619,6 +620,7 @@ bool VideoObject::make(QString type)
   uiInterface()->message(KMF::Info, i18n("Preparing file(s) for %1", title()));
   QString fileName;
 
+  m_type = type;
   if(type != "dummy")
   {
     for(QDVD::SubtitleList::ConstIterator it = m_subtitles.begin();

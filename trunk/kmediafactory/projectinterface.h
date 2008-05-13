@@ -26,6 +26,8 @@
 
 class QDomElement;
 class MediaObject;
+class TemplateObject;
+class OutputObject;
 
 namespace KMF
 {
@@ -41,6 +43,8 @@ namespace KMF
       ProjectInterface(QObject* parent);
 
       virtual QList<MediaObject*> mediaObjects() = 0;
+      virtual TemplateObject* templateObject() = 0;
+      virtual OutputObject* outputObject() = 0;
       virtual QString title() = 0;
       virtual void setTitle(QString title) = 0;
       virtual QString projectDir(const QString& subDir = "") = 0;

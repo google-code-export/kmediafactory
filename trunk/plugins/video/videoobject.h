@@ -61,9 +61,6 @@ class VideoObject : public KMF::MediaObject
     virtual ~VideoObject();
     virtual void toXML(QDomElement& element) const;
     virtual bool fromXML(const QDomElement& element);
-    virtual void writeDvdAuthorXml(QDomElement& element,
-                                   QString preferredLanguage,
-                                   QString post, QString type);
     virtual bool make(QString type);
     virtual QMap<QString, QString> subTypes() const;
     virtual int timeEstimate() const;
@@ -118,6 +115,8 @@ class VideoObject : public KMF::MediaObject
     virtual void slotProperties();
     virtual void slotPlayVideo();
     virtual void clean() { };
+    // KMF::Object::call slots
+    QVariant writeDvdAuthorXml(QVariantList args);
 
   private slots:
     void output(QString line);
@@ -144,6 +143,7 @@ class VideoObject : public KMF::MediaObject
     ConversionParams m_conversion;
     QStringList m_files;
     KProcess* m_spumux;
+    QString m_type;
 
     void generateId();
     void setCellSecs(double secs);

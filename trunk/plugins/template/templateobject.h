@@ -68,6 +68,11 @@ class TemplateObject : public KMF::TemplateObject
   public slots:
     virtual void slotProperties();
     virtual void clean() { };
+    // KMF::Object::call slots
+    QVariant directPlay(QVariantList args);
+    QVariant continueToNextTitle(QVariantList args);
+    QVariant writeDvdAuthorXml(QVariantList args);
+    QVariant language(QVariantList args);
 
   protected:
     const KMFMenu& menu() const { return m_menu; }
@@ -77,6 +82,7 @@ class TemplateObject : public KMF::TemplateObject
     KMFConfigXML m_customProperties;
     KMFMenu m_menu;
     QString m_file;
+    QString m_type;
 
     QString propertyString(KConfigSkeletonItem* item) const;
     bool isUpToDate(QString type);

@@ -47,9 +47,6 @@ namespace KMF
       enum { MainTitle = 0 };
 
       MediaObject(QObject* parent);
-      virtual void writeDvdAuthorXml(QDomElement& element,
-                                     QString preferredLanguage,
-                                     QString post, QString type) = 0;
       virtual QImage preview(int chapter = MainPreview) const = 0;
       virtual QString text(int chapter = MainTitle) const = 0;
       virtual int chapters() const = 0;
@@ -157,6 +154,7 @@ namespace KMF
 Q_DECLARE_METATYPE(KMF::OutputObject*);
 Q_DECLARE_METATYPE(KMF::TemplateObject*);
 Q_DECLARE_METATYPE(KMF::MediaObject*);
+Q_DECLARE_METATYPE(QDomElement);
 
 #endif // UIINTERFACE_H
 

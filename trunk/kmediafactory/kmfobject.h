@@ -51,6 +51,7 @@ namespace KMF
       Plugin* plugin() const;
       UiInterface* uiInterface() const;
       ProjectInterface* projectInterface() const;
+      QVariant call(const QString& func, QVariantList args = QVariantList());
 
     public slots:
       virtual void clean() {};
