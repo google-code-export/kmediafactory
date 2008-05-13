@@ -25,6 +25,7 @@
 #include <KDebug>
 #include <KAboutData>
 #include <QPixmap>
+#include <QFile>
 
 DvdAuthorObject::DvdAuthorObject(QObject* parent)
   : OutputObject(parent)
@@ -192,6 +193,16 @@ bool DvdAuthorObject::make(QString)
     root.appendChild(titleset);
     ++i;
   }
+
+  QFile file(projectInterface()->projectDir() + "/dvdauthor.xml");
+  if (!file.open(QIODevice::WriteOnly)) {
+    uiInterface()->message(KMF::Error, i18n("Error in saving dvdauthor.xml"));
+    return false;
+  }
+  QTextStream stream(&file);
+  stream.setCodec("UTF-8");
+  doc.save(stream, 2);
+  file.close();
 
   uiInterface()->message(KMF::OK, i18n("DVDAuthor project ready"));
   uiInterface()->progress(TotalPoints);
