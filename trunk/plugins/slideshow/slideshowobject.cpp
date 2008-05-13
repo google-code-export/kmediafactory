@@ -316,6 +316,7 @@ bool SlideshowObject::copyOriginals() const
 bool SlideshowObject::make(QString type)
 {
   uiInterface()->message(KMF::Info, i18n("Preparing file(s) for %1", title()));
+  m_type = type;
   if(type != "dummy")
   {
     if(m_includeOriginals)
@@ -459,16 +460,14 @@ int SlideshowObject::timeEstimate() const
   return TotalPoints;
 }
 
-void SlideshowObject::writeDvdAuthorXml(QDomElement& element,
-                                        QString preferredLanguage,
-                                        QString post, QString type)
+QVariant SlideshowObject::writeDvdAuthorXml(QVariantList args)
 {
+  QDomDocument doc;
   QDir dir(projectInterface()->projectDir("media"));
-
-  QDomDocument doc = element.ownerDocument();
   QDomElement titles = doc.createElement("titles");
-
   QDomElement video = doc.createElement("video");
+  QString preferredLanguage = args[0].toString();
+
   video.setAttribute("aspect",
       QDVD::VideoTrack::aspectRatioString(QDVD::VideoTrack::Aspect_4_3));
   titles.appendChild(video);
@@ -488,7 +487,7 @@ void SlideshowObject::writeDvdAuthorXml(QDomElement& element,
 
   QDomElement vob = doc.createElement("vob");
 
-  if(type != "dummy")
+  if(m_type != "dummy")
   {
     vob.setAttribute("file", dir.filePath(QString("%1.vob").arg(m_id)));
 
@@ -535,17 +534,18 @@ void SlideshowObject::writeDvdAuthorXml(QDomElement& element,
 
   pgc.appendChild(vob);
 
-  QDomElement postElem = doc.createElement("post");
-  QDomText text2;
-  if(m_loop)
+  if(m_loop) {
+    QDomElement postElem = doc.createElement("post");
+    QDomText text2;
     text2 = doc.createTextNode(" jump chapter 1 ; ");
-  else
-    text2 = doc.createTextNode(post);
-  postElem.appendChild(text2);
-  pgc.appendChild(postElem);
-
+    postElem.appendChild(text2);
+    pgc.appendChild(postElem);
+  }
   titles.appendChild(pgc);
-  element.appendChild(titles);
+
+  QVariant result;
+  result.setValue(titles);
+  return result;
 }
 
 QImage SlideshowObject::preview(int chap) const

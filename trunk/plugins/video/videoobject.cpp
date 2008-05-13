@@ -294,7 +294,7 @@ void VideoObject::toXML(QDomElement& element) const
 
 QVariant VideoObject::writeDvdAuthorXml(QVariantList args)
 {
-  QDomElement element;
+  QDomDocument doc;
   QString preferredLanguage = args[0].toString();
 
   QDir dir(projectInterface()->projectDir("media"));
@@ -304,9 +304,7 @@ QVariant VideoObject::writeDvdAuthorXml(QVariantList args)
   bool subFound = false;
   int i;
 
-  QDomDocument doc = element.ownerDocument();
   QDomElement titles = doc.createElement("titles");
-
   QDomElement video = doc.createElement("video");
   video.setAttribute("aspect", QDVD::VideoTrack::aspectRatioString(m_aspect));
   titles.appendChild(video);
@@ -411,10 +409,9 @@ QVariant VideoObject::writeDvdAuthorXml(QVariantList args)
     //kDebug() << "Cell: " << start << ", " << end;
   }
   titles.appendChild(pgc);
-  element.appendChild(titles);
   
   QVariant result;
-  result.setValue(element);
+  result.setValue(titles);
   return result;
 }
 

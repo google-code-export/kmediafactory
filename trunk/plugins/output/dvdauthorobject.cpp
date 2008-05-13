@@ -67,27 +67,6 @@ QDomElement DvdAuthorObject::toElement(const QVariant& element)
   }
 }
 
-/*
-bool KMFMenu::writeDvdAuthorXml(const QString& fileName, QString type)
-{
-  QDomDocument doc("");
-  doc.appendChild(doc.createProcessingInstruction("xml",
-                  "version=\"1.0\" encoding=\"UTF-8\""));
-  if(writeDvdAuthorXml(doc, type))
-  {
-    QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly))
-      return false;
-    QTextStream stream(&file);
-    stream.setCodec("UTF-8");
-    stream << doc.toString();
-    file.close();
-    return true;
-  }
-  return false;
-}
-*/
-
 bool DvdAuthorObject::make(QString)
 {
   if(uiInterface()->message(KMF::Info, i18n("Generating DVDAuthor xml")))
@@ -155,7 +134,6 @@ bool DvdAuthorObject::make(QString)
   QList<KMF::MediaObject*> mobs =  projectInterface()->mediaObjects();
 
   QDomElement menus = toElement(tempObj->call("writeDvdAuthorXml", QVariantList() << 0));
-  menus.setTagName("menus");
   if(menus.hasChildNodes())
     vmgm.appendChild(menus);
   root.appendChild(vmgm);
@@ -166,29 +144,30 @@ bool DvdAuthorObject::make(QString)
     root.appendChild(doc.createTextNode("\n "));
     root.appendChild(doc.createComment(header.arg(mob->text())));
     root.appendChild(doc.createTextNode("\n "));
-
+    
+    QDomElement titleset = doc.createElement("titleset");
     QDomElement menus = toElement(tempObj->call("writeDvdAuthorXml", QVariantList() << i));
-    menus.setTagName("menus");
-
-    QDomElement titleset = toElement(mob->call("writeDvdAuthorXml", 
-        QVariantList() << tempObj->call("language")));
-    titleset.setTagName("titleset");
     titleset.appendChild(menus);
+    QDomElement titles = toElement(mob->call("writeDvdAuthorXml", 
+        QVariantList() << tempObj->call("language")));
+    titleset.appendChild(titles);
 
-    QString postString;
-    if(i < mobs.count() && tempObj->call("continueToNextTitle").toInt() == 1)
-    {
-      postString = QString(" g3 = %1 ; ").arg(i+1);
-    }
-    postString += " call vmgm menu 1 ; ";
-    QDomElement post = doc.createElement("post");
-    QDomText text = doc.createTextNode(postString);
-    post.appendChild(text);
-    QDomNodeList pgcList = titleset.elementsByTagName("pgc");
-    if (pgcList.count() > 0) 
-    {
-      QDomElement pgc = pgcList.at(0).toElement();
-      pgc.appendChild(post);
+    if (titles.elementsByTagName("post").count() == 0) {
+      QString postString;
+      if(i < mobs.count() && tempObj->call("continueToNextTitle").toInt() == 1)
+      {
+        postString = QString(" g3 = %1 ; ").arg(i+1);
+      }
+      postString += " call vmgm menu 1 ; ";
+      QDomElement post = doc.createElement("post");
+      QDomText text = doc.createTextNode(postString);
+      post.appendChild(text);
+      QDomNodeList pgcList = titles.elementsByTagName("pgc");
+      if (pgcList.count() > 0) 
+      {
+        QDomElement pgc = pgcList.at(0).toElement();
+        pgc.appendChild(post);
+      }
     }
     root.appendChild(titleset);
     ++i;
@@ -201,7 +180,7 @@ bool DvdAuthorObject::make(QString)
   }
   QTextStream stream(&file);
   stream.setCodec("UTF-8");
-  doc.save(stream, 2);
+  doc.save(stream, 1);
   file.close();
 
   uiInterface()->message(KMF::OK, i18n("DVDAuthor project ready"));

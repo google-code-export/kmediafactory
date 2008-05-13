@@ -402,7 +402,8 @@ QVariant TemplateObject::language(QVariantList args)
 QVariant TemplateObject::writeDvdAuthorXml(QVariantList args)
 {
   QVariant result;
-  result.setValue(m_menu.writeDvdAuthorXml(m_type, args[0].toInt()));
+  QDomElement elem = m_menu.writeDvdAuthorXml(m_type, args[0].toInt());
+  result.setValue(elem);
   return result;
 }
 
