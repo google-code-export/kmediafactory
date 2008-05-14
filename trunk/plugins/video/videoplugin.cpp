@@ -82,7 +82,7 @@ QAction* VideoPlugin::setupActions()
 
   setXMLFile("kmediafactory_videoui.rc");
 
-  uiInterface()->addMediaAction(addVideoAction);
+  interface()->addMediaAction(addVideoAction);
 
   return addVideoAction;
 }
@@ -121,7 +121,7 @@ void VideoPlugin::slotAddVideo()
   dlg.exec();
 
   QStringList filenames = dlg.selectedFiles();
-  KMF::UiInterface *m = uiInterface();
+  KMF::PluginInterface *m = interface();
 
   kDebug() << m << filenames;
   if(m && filenames.count() > 0)
