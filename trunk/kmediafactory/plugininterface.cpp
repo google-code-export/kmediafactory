@@ -83,6 +83,11 @@ KMF::Logger::~Logger()
 {
 }
 
+KProcess* KMF::Logger::currentProcess()
+{
+  return d->currentProcess;
+}
+
 void KMF::Logger::connectProcess(KProcess *proc, const QString& filter,
                                  KProcess::OutputChannelMode mode)
 {

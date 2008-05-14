@@ -23,7 +23,7 @@
 #include "mediapage.h"
 #include "templatepage.h"
 #include "outputpage.h"
-#include "kmfuiinterface.h"
+#include "kmfplugininterface.h"
 #include "kmficonview.h"
 #include "projectoptions.h"
 #include "kmfproject.h"
@@ -232,7 +232,7 @@ void KMediaFactory::itemDelete()
 {
   QModelIndex i = mediaPage->mediaFiles->currentIndex();
   kmfApp->project()->mediaObjects()->removeAt(i);
-  kmfApp->project()->setDirty(KMF::ProjectInterface::DirtyMedia);
+  kmfApp->project()->setDirty(KMF::PluginInterface::DirtyMedia);
 }
 
 void KMediaFactory::projectOptions()

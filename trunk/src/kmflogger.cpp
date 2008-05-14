@@ -26,6 +26,10 @@
 #include <QTextStream>
 #include <QTextDocument>
 
+KMFLogger::KMFLogger(QObject *parent) : KMF::Logger(parent)
+{
+}
+
 void KMFLogger::start()
 {
   m_log = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n" \
@@ -58,13 +62,13 @@ void KMFLogger::out()
 
 void KMFLogger::stdout()
 {
-  m_buffer += currentProcess->readAllStandardOutput();
+  m_buffer += currentProcess()->readAllStandardOutput();
   out();
 }
 
 void KMFLogger::stderr()
 {
-  m_buffer += currentProcess->readAllStandardError();
+  m_buffer += currentProcess()->readAllStandardError();
   out();
 }
 

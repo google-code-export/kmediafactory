@@ -29,8 +29,7 @@
 
 class KMediaFactory;
 class QObject;
-class KMFUiInterface;
-class KMFProjectInterface;
+class KMFPluginInterface;
 class KCmdLineArgs;
 class KMFDbusInterface;
 
@@ -53,7 +52,7 @@ class KMFApplication : public KApplication
     KMFProject* newProject();
     KMFProject* project() { return m_project; };
     QObject *pluginInterface() { return m_pluginInterface; };
-    KMFUiInterface* uiInterface() { return m_uiInterface; };
+    KMFPluginInterface* interface() { return m_interface; };
     KMediaFactory* mainWindow() { return m_mainWin; };
     QWidget* widget() { return (QWidget*)m_mainWin; };
     const KUrl& url() { return m_url; };
@@ -75,8 +74,7 @@ class KMFApplication : public KApplication
     KMediaFactory* m_mainWin;
     KMFProject* m_project;
     QObject* m_pluginInterface;
-    KMFUiInterface* m_uiInterface;
-    KMFProjectInterface* m_projectInterface;
+    KMFPluginInterface* m_interface;
     KUrl m_url;
     KMFLogger m_logger;
     QStringList m_supportedProjects;

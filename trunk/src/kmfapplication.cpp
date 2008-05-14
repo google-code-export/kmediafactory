@@ -18,8 +18,7 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 #include "kmfapplication.h"
-#include "kmfuiinterface.h"
-#include "kmfprojectinterface.h"
+#include "kmfplugininterface.h"
 #include "kmediafactory.h"
 #include "kmftools.h"
 #include "kmfdbusinterface.h"
@@ -46,7 +45,7 @@
 
 KMFApplication::KMFApplication()
   : KApplication(), m_mainWin(0), m_project(0), m_pluginInterface(0),
-    m_uiInterface(0), m_projectInterface(0)
+    m_interface(0)
 {
   iface = new KMFDbusInterface(this);
   new KMediaFactoryAdaptor(iface);
@@ -88,8 +87,7 @@ void KMFApplication::loadPlugins()
   kDebug();
   m_pluginInterface = new QObject(this);
   m_pluginInterface->setObjectName("pluginInterface");
-  m_uiInterface = new KMFUiInterface(m_pluginInterface);
-  m_projectInterface = new KMFProjectInterface(m_pluginInterface);
+  m_interface = new KMFPluginInterface(m_pluginInterface);
 
   //KMF::Tools::printChilds(m_pluginInterface);
 
@@ -158,10 +156,8 @@ void KMFApplication::finalize()
     delete (*obj);
   }
 
-  delete m_uiInterface;
-  m_uiInterface = 0;
-  delete m_projectInterface;
-  m_projectInterface = 0;
+  delete m_interface;
+  m_interface = 0;
   delete m_pluginInterface;
   m_pluginInterface = 0;
 }
