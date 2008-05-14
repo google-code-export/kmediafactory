@@ -47,6 +47,4 @@ class DvdAuthorObject : public KMF::OutputObject
     QDomElement toElement(const QVariant& element);
 };
 
-Q_DECLARE_METATYPE(QDomElement);
-
 #endif // DVDAUTHOROBJECT_H

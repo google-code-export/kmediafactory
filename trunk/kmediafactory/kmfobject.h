@@ -25,8 +25,8 @@
 #include <QObject>
 #include <QPixmap>
 #include <QVariantList>
+#include <QDomElement>
 
-class QDomElement;
 class QAction;
 
 namespace KMF
@@ -66,5 +66,7 @@ namespace KMF
       Private *const d;
   };
 };
+
+Q_DECLARE_METATYPE(QDomElement);
 
 #endif // KMFOBJECT_H

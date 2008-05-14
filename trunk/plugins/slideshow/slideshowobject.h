@@ -54,7 +54,7 @@ class SlideshowObject : public KMF::MediaObject
     virtual QPixmap pixmap() const;
     virtual bool make(QString type);
     virtual int timeEstimate() const;
-    virtual void actions(QList<QAction*>&) const;
+    virtual void actions(QList<QAction*>*) const;
     virtual QImage preview(int chapter = MainPreview) const;
     virtual QString text(int chapter = MainTitle) const;
     virtual int chapters() const;
@@ -62,7 +62,7 @@ class SlideshowObject : public KMF::MediaObject
     virtual QTime duration() const;
     virtual QTime chapterTime(int chapter) const;
 
-    virtual void toXML(QDomElement& element) const;
+    virtual void toXML(QDomElement* element) const;
     virtual bool fromXML(const QDomElement& element);
 
     void addPics(QStringList list);
