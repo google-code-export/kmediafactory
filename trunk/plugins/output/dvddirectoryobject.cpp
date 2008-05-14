@@ -22,6 +22,7 @@
 #include "dvdauthorparser.h"
 #include "outputplugin.h"
 #include <kmediafactory/kmfobject.h>
+#include <kmediafactory/logger.h>
 #include <KApplication>
 #include <KMimeType>
 #include <KIconLoader>

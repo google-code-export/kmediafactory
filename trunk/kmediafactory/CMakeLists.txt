@@ -4,12 +4,14 @@ set(kmediafactoryinterfaces_LIB_SRCS
   plugin.cpp
   plugininterface.cpp
   kmfobject.cpp
+  logger.cpp
 )
 
 set(kmediafactoryinclude_HEADERS
   plugin.h
   plugininterface.h
   kmfobject.h
+  logger.h
 )
 
 kde4_add_library(kmediafactoryinterfaces SHARED ${kmediafactoryinterfaces_LIB_SRCS})

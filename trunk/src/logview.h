@@ -21,7 +21,7 @@
 #define LOGVIEW_H
 
 #include "ui_logview.h"
-#include <kmflogger.h>
+#include <kmediafactory/logger.h>
 #include <QVBoxLayout>
 
 class QVBoxLayout;

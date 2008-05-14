@@ -22,6 +22,7 @@
 #define PLUGININTERFACE_H
 
 #include "kmfobject.h"
+#include "logger.h"
 #include <KProcess>
 #include <kdemacros.h>
 #include <QDateTime>
@@ -68,44 +69,6 @@ namespace KMF
           { return QImage(); };
       virtual QStringList menus() { return QStringList(); };
       virtual bool clicked() { return false; };
-  };
-
-  class KDE_EXPORT Logger :public QObject
-  {
-      Q_OBJECT
-    public:
-      explicit Logger(QObject* parent);
-      ~Logger();
-
-      virtual void stop() = 0;
-      virtual void start() = 0;
-      virtual const QString& log() const = 0;
-      virtual void message(const QString& msg, const QColor& color) = 0;
-      // TODO move to job
-      virtual void setFilter(const QString& filter) = 0;
-      // TODO move to job
-      virtual QString filter() const = 0;
-      virtual bool save(QString file) const = 0;
-      // TODO move to job
-      void connectProcess(KProcess* proc,
-                          const QString& filter = "",
-                          KProcess::OutputChannelMode mode =
-                              KProcess::SeparateChannels);
-
-    public slots:
-      // TODO move to job
-      virtual void stdout() = 0;
-      // TODO move to job
-      virtual void stderr() = 0;
-      void message(const QString& msg);
-
-    protected:
-      // TODO move to job
-      KProcess* currentProcess();
-
-    private:
-      class Private;
-      Private *const d;
   };
 
   class KDE_EXPORT ProgressDialog : public QObject
@@ -186,7 +149,7 @@ namespace KMF
       virtual ProgressDialog* progressDialog() = 0;
   };
 /*
-  class KDE_EXPORT Job :public ThreadWeaver::Job
+  class KDE_EXPORT Job : public ThreadWeaver::Job
   {
       Q_OBJECT
     public:
@@ -197,11 +160,26 @@ namespace KMF
       KProcess* process(const QString& filter = "",
                         KProcess::OutputChannelMode mode =
                             KProcess::SeparateChannels);
-      bool setValue(int value);
-      bool setMaximum(int maximum);
-
-    public slots:
+      void setValue(int value);
+      void setMaximum(int maximum);
       virtual void output(const QString& line);
+
+      // Copy these To helper class && functions emit helper class signals
+      // http://api.kde.org/4.0-api/kdelibs-apidocs/threadweaver/html/MainComponents.html
+      // Signals from jobs
+    signals:
+      void message(PluginInterface::MsgType type, const QString& msg);
+      // Howto connect these to list items??
+      // Main message?
+      // ...or on first maximum message connect to list item widget
+      void value(int value);
+      void maximum(int maximum);
+
+      void log(const QString& msg);
+
+    private:
+      class Private;
+      Private *const d;
   };
 */
 }
