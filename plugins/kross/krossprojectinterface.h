@@ -17,18 +17,18 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 
-#ifndef KROSSPROJECTINTERFACE_H
-#define KROSSPROJECTINTERFACE_H
+#ifndef KROSSPLUGININTERFACE_H
+#define KROSSPLUGININTERFACE_H
 
 #include <QObject>
-#include "kmediafactory/projectinterface.h"
+#include "kmediafactory/plugininterface.h"
 
-class KrossProjectInterface : public QObject
+class KrossPluginInterface : public QObject
 {
   Q_OBJECT
   public:
-    KrossProjectInterface(QObject *parent, KMF::ProjectInterface* projectIf);
-    ~KrossProjectInterface();
+    KrossPluginInterface(QObject *parent, KMF::PluginInterface* projectIf);
+    ~KrossPluginInterface();
 
   public slots:
     QList<MediaObject*> mediaObjects();
@@ -36,14 +36,41 @@ class KrossProjectInterface : public QObject
     void setTitle(QString title);
     QString projectDir(const QString& subDir = "");
     void cleanFiles(const QString& subDir, const QStringList& files);
-    void setDirty(KMF::ProjectInterface::DirtyType type);
+    void setDirty(KMF::PluginInterface::DirtyType type);
     QString type();
     QString lastSubType();
-    QDateTime lastModified(KMF::ProjectInterface::DirtyType type);
+    QDateTime lastModified(KMF::PluginInterface::DirtyType type);
     int serial();
+    bool addMediaAction(const QString& icon, const QString& text,
+                        const QString& shortcut, const QString& name,
+                        Kross::Object::Ptr obj, const QString& method);
+    void setActionEnabled(const QString& name, bool enabled);
+    bool addMediaObject(Kross::Object::Ptr media) const;
+    bool addTemplateObject(Kross::Object::Ptr tob);
+    bool addOutputObject(Kross::Object::Ptr oob);
+    bool removeMediaObject(Kross::Object::Ptr media) const;
+    bool removeTemplateObject(Kross::Object::Ptr tob);
+    bool removeOutputObject(Kross::Object::Ptr oob);
+    void addMediaObjectFromXML(const QString& xml);
+    void setTemplateFromXML(const QString& xml);
+    void setOutputFromXML(const QString& xml);
+
+    bool message(KMF::MsgType type, const QString& msg);
+    bool progress(int advance);
+    bool setItemTotalSteps(int totalSteps);
+    bool setItemProgress(int progress);
+    QObject* logger();
+
+    // Plugin helpers
+    QStringList getOpenFileNames(const QString &startDir, const QString &filter, 
+                                  const QString &caption);
+    void debug(const QString &txt);
+    int  messageBox(const QString &caption, const QString &txt, int type);
+    QObject* progressDialog(const QString &caption, const QString &label, int maximum);
+    QObject* progressDialog();
 
   private:
-    KMF::ProjectInterface* m_projectIf;
+    KMF::PluginInterface* m_interface;
 };
 
-#endif // KROSSPROJECTINTERFACE_H
+#endif // KROSSPLUGININTERFACE_H
