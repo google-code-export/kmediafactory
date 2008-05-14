@@ -7,8 +7,7 @@ include_directories(
 
 set(kmediafactory_plugin_kross_SRCS
   krossplugin.cpp
-  krossprojectinterface.cpp
-  krossuiinterface.cpp
+  krossplugininterface.cpp
   krossmediaobject.cpp
 )
 
