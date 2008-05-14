@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,21 +17,22 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "config.h"
 #include "slideshowplugin.h"
 #include "ui_slideshowconfig.h"
 #include "slideshowpluginsettings.h"
 #include "slideshowobject.h"
 #include <kmftools.h>
-#include <kactioncollection.h>
-#include <klocale.h>
-#include <kaboutdata.h>
-#include <kpluginfactory.h>
-#include <kdeversion.h>
-#include <kstandarddirs.h>
-#include <kapplication.h>
-#include <kfiledialog.h>
-#include <kicon.h>
+#include <KAction>
+#include <KActionCollection>
+#include <KLocale>
+#include <KAboutData>
+#include <KPluginFactory>
+#include <KStandardDirs>
+#include <KApplication>
+#include <KFileDialog>
+#include <KIcon>
 #include <KPluginLoader>
 
 K_EXPORT_KMEDIAFACTORY_PLUGIN(slideshow, SlideshowPlugin);
@@ -62,7 +63,7 @@ void SlideshowPlugin::setupActions()
   addSlideshowAction->setShortcut(Qt::CTRL + Qt::Key_W);
   actionCollection()->addAction("slideshow", addSlideshowAction);
   connect(addSlideshowAction, SIGNAL(triggered()), SLOT(slotAddSlideshow()));
-  uiInterface()->addMediaAction(addSlideshowAction);
+  interface()->addMediaAction(addSlideshowAction);
 }
 
 void SlideshowPlugin::init(const QString &type)
@@ -102,7 +103,7 @@ void SlideshowPlugin::slotAddSlideshow()
 
   if(pics.count() > 0)
   {
-    KMF::UiInterface *m = uiInterface();
+    KMF::PluginInterface *m = interface();
     SlideshowObject *sob;
 
     sob = new SlideshowObject(this);

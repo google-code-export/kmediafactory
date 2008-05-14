@@ -26,7 +26,7 @@
 #include "templatepluginsettings.h"
 #include "kconfigxml.h"
 #include "kmftools.h"
-#include <kmediafactory/uiinterface.h>
+#include <kmediafactory/plugininterface.h>
 #include <kdeversion.h>
 #include <kgenericfactory.h>
 #include <kstandarddirs.h>

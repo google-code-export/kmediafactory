@@ -59,7 +59,7 @@ class VideoObject : public KMF::MediaObject
 
     VideoObject(QObject* parent);
     virtual ~VideoObject();
-    virtual void toXML(QDomElement& element) const;
+    virtual void toXML(QDomElement* element) const;
     virtual bool fromXML(const QDomElement& element);
     virtual bool make(QString type);
     virtual QMap<QString, QString> subTypes() const;
@@ -90,7 +90,7 @@ class VideoObject : public KMF::MediaObject
     virtual QDVD::VideoTrack::AspectRatio aspect() const { return m_aspect; };
     void setAspect(QDVD::VideoTrack::AspectRatio aspect) { m_aspect = aspect; };
 
-    virtual void actions(QList<QAction*>& actionList) const;
+    virtual void actions(QList<QAction*>* actionList) const;
     virtual bool addFile(QString fileName);
     void setTitleFromFileName();
     const KUrl& previewUrl() const { return m_previewUrl; };
