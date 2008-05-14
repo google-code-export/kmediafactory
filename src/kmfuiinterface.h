@@ -28,69 +28,12 @@ namespace KMF {
   class Logger;
 }
 
-class KMFProgressDialog : public KMF::ProgressDialog
-{
-    Q_OBJECT
-  public: 
-    KMFProgressDialog(QWidget* parent);
-
-  public slots:
-    virtual void setMaximum(int maximum);
-    virtual void setValue(int value);
-    virtual void setCaption(const QString &caption);
-    virtual void setLabel(const QString &label);
-    virtual void showCancelButton(bool show);
-    virtual bool wasCancelled();
-    virtual void close();
-
-  private:
-    KProgressDialog m_pdlg;
-};
-
 class KMFUiInterface : public KMF::UiInterface
 {
     Q_OBJECT
   public:
     KMFUiInterface(QObject *parent);
     virtual ~KMFUiInterface();
-    virtual bool addMediaAction(QAction* action,
-                                const QString& group = "") const;
-    virtual bool addMediaObject(KMF::MediaObject* media) const;
-    virtual bool addTemplateObject(KMF::TemplateObject* tob);
-    virtual bool addOutputObject(KMF::OutputObject* oob);
-    virtual bool removeMediaObject(KMF::MediaObject* media) const;
-    virtual bool removeTemplateObject(KMF::TemplateObject* tob);
-    virtual bool removeOutputObject(KMF::OutputObject* oob);
-    virtual void addMediaObject(const QString& xml);
-    virtual void selectTemplate(const QString& xml);
-    virtual void selectOutput(const QString& xml);
-
-    virtual bool message(KMF::MsgType type, const QString& msg);
-    virtual bool progress(int advance);
-    virtual bool setItemTotalSteps(int totalSteps);
-    virtual bool setItemProgress(int progress);
-    virtual KMF::Logger* logger();
-    void setUseMessageBox(bool useMessageBox) { m_useMessageBox = useMessageBox; };
-    void setStopped(bool stopped) { m_stopped = stopped; };
-
-    // Plugin helpers
-    virtual QStringList getOpenFileNames(const QString &startDir,
-                                         const QString &filter,
-                                         const QString &caption);
-    virtual void debug(const QString &txt);
-    virtual int  messageBox(const QString &caption, const QString &txt,
-                            int type);
-    virtual KMF::ProgressDialog* progressDialog(const QString &caption, const QString &label,
-                                                int maximum);
-    virtual KMF::ProgressDialog* progressDialog();
-
-  public slots:
-    void progressDialogDestroyed();
-
-  private:
-    bool m_useMessageBox;
-    bool m_stopped;
-    KMF::ProgressDialog* m_pdlg;
 };
 
 #endif // KMFUIINTERFACE_H
