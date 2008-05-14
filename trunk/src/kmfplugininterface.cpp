@@ -383,7 +383,7 @@ void KMFPluginInterface::setDirty(KMF::PluginInterface::DirtyType type)
   }
 }
 
-QString KMFPluginInterface::type()
+QString KMFPluginInterface::projectType()
 {
   if (kmfApp->project()) {
     return kmfApp->project()->type();

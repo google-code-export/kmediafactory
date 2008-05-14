@@ -62,9 +62,9 @@ void KrossPluginInterface::setDirty(KMF::PluginInterface::DirtyType type)
   return m_interface->setDirty(type);
 }
 
-QString KrossPluginInterface::type()
+QString KrossPluginInterface::projectType()
 {
-  return m_interface->type();
+  return m_interface->projectType();
 }
 
 QString KrossPluginInterface::lastSubType()

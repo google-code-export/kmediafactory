@@ -424,7 +424,7 @@ bool SlideshowObject::convertToDVD()
     *dvdslideshow << "-o" << interface()->projectDir("media") <<
         "-n" << m_id <<
         "-f" << dir.filePath(QString("%1.slideshow").arg(m_id));
-    if(interface()->type() == "DVD-PAL")
+    if(interface()->projectType() == "DVD-PAL")
       *dvdslideshow << "-p";
     for(QStringList::ConstIterator it = m_audioFiles.begin();
         it != m_audioFiles.end(); ++it)
@@ -553,7 +553,7 @@ QImage SlideshowObject::preview(int chap) const
 {
   QImage img(chapter(chap).picture);
   QSize res = KMF::Tools::resolution(img.size(), img.size(),
-      KMF::Tools::maxResolution(interface()->type()), QSize(4,3));
+      KMF::Tools::maxResolution(interface()->projectType()), QSize(4,3));
   kDebug() << res;
   img = img.scaled(res, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
   return img;

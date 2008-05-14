@@ -5,6 +5,7 @@ set(kmediafactoryinterfaces_LIB_SRCS
   plugininterface.cpp
   kmfobject.cpp
   logger.cpp
+  job.cpp
 )
 
 set(kmediafactoryinclude_HEADERS
@@ -12,10 +13,11 @@ set(kmediafactoryinclude_HEADERS
   plugininterface.h
   kmfobject.h
   logger.h
+  job.h
 )
 
 kde4_add_library(kmediafactoryinterfaces SHARED ${kmediafactoryinterfaces_LIB_SRCS})
-target_link_libraries(kmediafactoryinterfaces ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS})
+target_link_libraries(kmediafactoryinterfaces ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_THREADWEAVER_LIBRARIES})
 set_target_properties(kmediafactoryinterfaces PROPERTIES VERSION 1.0.0 SOVERSION 1)
 install(TARGETS kmediafactoryinterfaces DESTINATION ${LIB_INSTALL_DIR})
 #kde4_install_libtool_file(${LIB_INSTALL_DIR} kmediafactoryinterfaces)

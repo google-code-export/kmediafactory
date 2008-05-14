@@ -38,7 +38,7 @@ class KrossPluginInterface : public QObject
     QString projectDir(const QString& subDir = "");
     void cleanFiles(const QString& subDir, const QStringList& files);
     void setDirty(KMF::PluginInterface::DirtyType type);
-    QString type();
+    QString projectType();
     QString lastSubType();
     QDateTime lastModified(KMF::PluginInterface::DirtyType type);
     int serial();

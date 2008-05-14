@@ -118,9 +118,6 @@ class VideoObject : public KMF::MediaObject
     // KMF::Object::call slots
     QVariant writeDvdAuthorXml(QVariantList args);
 
-  private slots:
-    void output(QString line);
-
   protected:
     mutable QDVD::CellList m_cells;
     QDVD::AudioList m_audioTracks;
@@ -135,8 +132,6 @@ class VideoObject : public KMF::MediaObject
     KUrl m_previewUrl;
     QDVD::VideoTrack::AspectRatio m_aspect;
     QString m_id;
-    qulonglong m_lastUpdate;
-    qulonglong m_half;
     bool m_stopped;
     QString m_kmfplayer;
     static const char* m_prefixes[];
@@ -148,12 +143,6 @@ class VideoObject : public KMF::MediaObject
     void generateId();
     void setCellSecs(double secs);
     bool isBlack(const QImage& img) const;
-    bool convertSubtitles(const QDVD::Subtitle& subtitle);
-    bool writeSpumuxXml(QDomDocument& doc, const QString& subFile,
-                        const QDVD::Subtitle& subtitle);
-    bool writeSpumuxXml(const QString& fileName, const QString& subFile,
-                        const QDVD::Subtitle& subtitle);
-    QString checkFontFile(const QString& file);
     void addCell(QDomElement& vob, const QDVD::Cell& cell,
                  const KMF::Time& fileStart);
     const QDVD::Cell& chapter(int chap) const;

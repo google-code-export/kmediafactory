@@ -26,89 +26,48 @@
 #include <QObject>
 #include <QColor>
 
-/*
-  class KDE_EXPORT Logger :public QObject
+namespace KMF
+{
+  class KDE_EXPORT Logger : public QObject
   {
       Q_OBJECT
     public:
-      explicit Logger(QObject* parent);
+      explicit Logger(QObject *parent = 0);
       ~Logger();
-
-      virtual void stop() = 0;
-      virtual void start() = 0;
-      virtual const QString& log() const = 0;
-      virtual void message(const QString& msg, const QColor& color) = 0;
+  
+      virtual void start();
+      virtual void stop();
+      virtual const QString& log() const;
+      virtual void message(const QString& msg, const QColor& color);
       // TODO move to job
-      virtual void setFilter(const QString& filter) = 0;
+      virtual void setFilter(const QString& filter);
       // TODO move to job
-      virtual QString filter() const = 0;
-      virtual bool save(QString file) const = 0;
+      virtual QString filter() const;
+      virtual bool save(QString file) const;
       // TODO move to job
       void connectProcess(KProcess* proc,
                           const QString& filter = "",
                           KProcess::OutputChannelMode mode =
                               KProcess::SeparateChannels);
-
+  
+    signals:
+      void line(QString line);
+  
     public slots:
       // TODO move to job
-      virtual void stdout() = 0;
+      virtual void stdout();
       // TODO move to job
-      virtual void stderr() = 0;
+      virtual void stderr();
       void message(const QString& msg);
-
+  
     protected:
       // TODO move to job
       KProcess* currentProcess();
-
+  
     private:
       class Private;
       Private *const d;
   };
-*/
-namespace KMF
-{
-
-class KDE_EXPORT Logger : public QObject
-{
-    Q_OBJECT
-  public:
-    explicit Logger(QObject *parent = 0);
-    ~Logger();
-
-    virtual void start();
-    virtual void stop();
-    virtual const QString& log() const;
-    virtual void message(const QString& msg, const QColor& color);
-    // TODO move to job
-    virtual void setFilter(const QString& filter);
-    // TODO move to job
-    virtual QString filter() const;
-    virtual bool save(QString file) const;
-    // TODO move to job
-    void connectProcess(KProcess* proc,
-                        const QString& filter = "",
-                        KProcess::OutputChannelMode mode =
-                            KProcess::SeparateChannels);
-
-  signals:
-    void line(QString line);
-
-  public slots:
-    // TODO move to job
-    virtual void stdout();
-    // TODO move to job
-    virtual void stderr();
-    void message(const QString& msg);
-
-  protected:
-    // TODO move to job
-    KProcess* currentProcess();
-
-  private:
-    class Private;
-    Private *const d;
-};
-
 } // namespace KMF
 
 #endif // KMFLOGGER_H
