@@ -30,7 +30,7 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${template}
   DEPENDS ${template_files} ${po_files}
 )
 
-add_custom_target(${template} ALL
+add_custom_target(template ALL
   DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${template}
 )
 
