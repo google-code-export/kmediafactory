@@ -14,7 +14,6 @@ set(kmediafactory_SRCS
 	kmfproject.cpp
 	projectoptions.cpp
 	kmficonview.cpp
-	kmflogger.cpp
 	logview.cpp
 	kmfprogresslistview.cpp
 	kmfdbusinterface.cpp

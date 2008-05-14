@@ -20,14 +20,6 @@
 
 #include "plugininterface.h"
 
-class KMF::Logger::Private
-{
-  public:
-    Private() : currentProcess(0) {};
-
-    KProcess* currentProcess;
-};
-
 KMF::MediaObject::MediaObject(QObject* parent) :
   Object(parent)
 {
@@ -72,41 +64,6 @@ KMF::PluginInterface::PluginInterface(QObject *parent) :
 
 KMF::PluginInterface::~PluginInterface()
 {
-}
-
-KMF::Logger::Logger(QObject *parent) :
-  QObject(parent), d(new KMF::Logger::Private)
-{
-}
-
-KMF::Logger::~Logger()
-{
-}
-
-KProcess* KMF::Logger::currentProcess()
-{
-  return d->currentProcess;
-}
-
-void KMF::Logger::message(const QString& msg) 
-{ 
-  message(msg, QColor("black")); 
-}
-
-void KMF::Logger::connectProcess(KProcess *proc, const QString& filter,
-                                 KProcess::OutputChannelMode mode)
-{
-  proc->setOutputChannelMode(KProcess::SeparateChannels);
-  if(mode != KProcess::OnlyStderrChannel)
-  {
-    connect(proc, SIGNAL(readyReadStandardOutput()), this, SLOT(stdout()));
-  }
-  if(mode != KProcess::OnlyStdoutChannel)
-  {
-    connect(proc, SIGNAL(readyReadStandardError()), this, SLOT(stderr()));
-  }
-  d->currentProcess = proc;
-  setFilter(filter);
 }
 
 #include "plugininterface.moc"
