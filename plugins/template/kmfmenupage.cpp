@@ -51,7 +51,7 @@ KMFMenuPage::KMFMenuPage(QObject *parent) :
   m_directPlay(false), m_directChapterPlay(false), m_continueToNextTitle(true)
 {
   m_buttons = new QList<KMFButton*>;
-  setResolution(KMF::Tools::maxResolution(m_interface->type()));
+  setResolution(KMF::Tools::maxResolution(m_interface->projectType()));
 }
 
 KMFMenuPage::~KMFMenuPage()
@@ -284,7 +284,7 @@ void KMFMenuPage::checkDummyVideo()
     QImage temp;
     QString size;
 
-    if(m_interface->type() == "DVD-PAL")
+    if(m_interface->projectType() == "DVD-PAL")
       temp = QImage(720, 576, QImage::Format_RGB32);
     else
       temp = QImage(720, 480, QImage::Format_RGB32);
@@ -395,7 +395,7 @@ bool KMFMenuPage::runScript(QString scriptName, QString place)
   }
 
   uint frames;
-  if(m_interface->type() == "DVD-PAL")
+  if(m_interface->projectType() == "DVD-PAL")
   {
     frames = (uint)(seconds.toSeconds() * 25.0);
   }
@@ -404,7 +404,7 @@ bool KMFMenuPage::runScript(QString scriptName, QString place)
     frames = (uint)(seconds.toSeconds() * 30000.0 / 1001.0);
   }
 
-  Run run(QString("kmf_make_mpeg %1 %2 %3 %4").arg(m_interface->type()).arg(frames)
+  Run run(QString("kmf_make_mpeg %1 %2 %3 %4").arg(m_interface->projectType()).arg(frames)
           .arg(scriptName).arg(menuSound),
           m_interface->projectDir(place));
 

@@ -21,6 +21,7 @@
 #include "videoplugin.h"
 #include "videooptions.h"
 #include "videopluginsettings.h"
+#include <kmediafactory/job.h>
 #include <kmfmediafile.h>
 #include <kactioncollection.h>
 #include <kfileitem.h>
@@ -49,6 +50,136 @@
 
 const char* VideoObject::m_prefixes[] =
   {".sub.mpg", ".mpg", "", ".xml", ".sub"};
+
+class ConvertSubtitlesJob : public KMF::Job
+{
+public:
+  QDVD::Subtitle subtitle;
+  QString subtitleFile;
+  QString subtitleXmlFile;
+  QString videoFile;
+  QString videoFileWithSubtitles;
+  QString mediaDir;
+  QString type;
+
+  qulonglong lastUpdate;
+  qulonglong half;
+
+  void run()
+  {
+    message(KMF::PluginInterface::Info, i18n("   Adding subtitles to %1", videoFile));
+
+    QStringList subtitleFiles = subtitle.file().split(";");
+  
+    writeSpumuxXml();
+
+    KProcess *spumux = process("INFO: \\d+ bytes of data written", KProcess::OnlyStderrChannel);
+    *spumux << "spumux" << "-P" << subtitleXmlFile;
+    spumux->setStandardInputFile(videoFile);
+    spumux->setStandardOutputFile(videoFileWithSubtitles);
+    spumux->setWorkingDirectory(mediaDir);
+
+    QFileInfo info(videoFile);
+    setMaximum(info.size() / 1024);
+    lastUpdate = 0;
+    half = info.size() / 200;
+    spumux->start();
+
+    while(!spumux->waitForFinished(500))
+    {
+      if (spumux->state() == QProcess::NotRunning)
+        break;
+    }
+    if(spumux->exitCode() == QProcess::NormalExit && spumux->exitStatus() == 0)
+    {
+      setValue(info.size() / 1024);
+    }
+    else
+    {
+      QFile::remove(videoFileWithSubtitles);
+      message(KMF::PluginInterface::Error, i18n("   Conversion error."));
+    }
+  }
+
+  void writeSpumuxXml()
+  {
+    QDomDocument doc("");
+    QDomElement root = doc.createElement("subpictures");
+    QDomElement stream = doc.createElement("stream");
+    QDomElement textsub = doc.createElement("textsub");
+  
+    textsub.setAttribute("filename", subtitleFile);
+    textsub.setAttribute("vertical-alignment", subtitle.verticalAlign());
+    textsub.setAttribute("horizontal-alignment", subtitle.horizontalAlign());
+    textsub.setAttribute("left-margin", 40);
+    textsub.setAttribute("right-margin", 40);
+    textsub.setAttribute("top-margin", 30);
+    textsub.setAttribute("bottom-margin", 40);
+    textsub.setAttribute("movie-width", "720");
+
+    if(type == "DVD-PAL")
+    {
+      textsub.setAttribute("movie-fps", "25");
+      textsub.setAttribute("movie-height", "574");
+    }
+    else
+    {
+      textsub.setAttribute("movie-fps", "29.97");
+      textsub.setAttribute("movie-height", "478");
+    }
+  
+    QFont font(subtitle.font());
+    QString fontFile = KMF::Tools::fontFile(font);
+    if(!fontFile.isEmpty())
+      textsub.setAttribute("font", checkFontFile(fontFile));
+    if(subtitle.font().pointSize() > 0)
+      textsub.setAttribute("fontsize", subtitle.font().pointSize());
+  
+    stream.appendChild(textsub);
+    root.appendChild(stream);
+    doc.appendChild(root);
+
+    // Write spumux xml
+    QString s;
+    QFile file(subtitleXmlFile);
+    if (file.open(QIODevice::WriteOnly))
+    {
+      QTextStream stream(&file);
+      doc.save(stream, 1);
+      file.close();
+    }
+  }
+
+  void output(const QString& line)
+  {
+    QRegExp bytes("INFO: (\\d+) bytes of data written");
+  
+    if(bytes.indexIn(line) > -1)
+    {
+      qulonglong temp = bytes.cap(1).toULongLong();
+      if(temp - lastUpdate > half)
+      {
+        setValue(temp / 1024);
+        lastUpdate = temp;
+      }
+    }
+  }
+
+  QString checkFontFile(const QString& file)
+  {
+    QFileInfo fi(file);
+    QDir dir(QDir::home().filePath(".spumux"));
+    QFileInfo link(dir.absoluteFilePath(fi.fileName()));
+  
+    if(!dir.exists())
+      dir.mkdir(dir.path());
+    //kDebug() << link.filePath() << " -> " << file;
+    if(!link.exists())
+      if(symlink(file.toLocal8Bit(), link.filePath().toLocal8Bit()) < 0)
+        kDebug() << strerror(errno);
+    return fi.fileName();
+  }
+};
 
 VideoObject::VideoObject(QObject* parent)
   : MediaObject(parent), m_videoPlay(0),
@@ -457,146 +588,6 @@ QString VideoObject::videoFileFind(int index, VideoFilePrefix prefixStart) const
   return m_files[index];
 }
 
-QString VideoObject::checkFontFile(const QString& file)
-{
-  QFileInfo fi(file);
-  QDir dir(QDir::home().filePath(".spumux"));
-  QFileInfo link(dir.absoluteFilePath(fi.fileName()));
-
-  if(!dir.exists())
-    dir.mkdir(dir.path());
-  //kDebug() << link.filePath() << " -> " << file;
-  if(!link.exists())
-    if(symlink(file.toLocal8Bit(), link.filePath().toLocal8Bit()) < 0)
-      kDebug() << strerror(errno);
-  return fi.fileName();
-}
-
-bool VideoObject::writeSpumuxXml(QDomDocument& doc,
-                                 const QString& subFile,
-                                 const QDVD::Subtitle& subtitle)
-{
-  QDomElement root = doc.createElement("subpictures");
-  QDomElement stream = doc.createElement("stream");
-  QDomElement textsub = doc.createElement("textsub");
-
-  textsub.setAttribute("filename", subFile);
-  textsub.setAttribute("vertical-alignment", subtitle.verticalAlign());
-  textsub.setAttribute("horizontal-alignment", subtitle.horizontalAlign());
-  textsub.setAttribute("left-margin", 40);
-  textsub.setAttribute("right-margin", 40);
-  textsub.setAttribute("top-margin", 30);
-  textsub.setAttribute("bottom-margin", 40);
-  textsub.setAttribute("movie-width", "720");
-  if(interface()->type() == "DVD-PAL")
-  {
-    textsub.setAttribute("movie-fps", "25");
-    textsub.setAttribute("movie-height", "574");
-  }
-  else
-  {
-    textsub.setAttribute("movie-fps", "29.97");
-    textsub.setAttribute("movie-height", "478");
-  }
-
-  QFont font(subtitle.font());
-  QString fontFile = KMF::Tools::fontFile(font);
-  if(!fontFile.isEmpty())
-    textsub.setAttribute("font", checkFontFile(fontFile));
-  if(subtitle.font().pointSize() > 0)
-    textsub.setAttribute("fontsize", subtitle.font().pointSize());
-
-  stream.appendChild(textsub);
-  root.appendChild(stream);
-  doc.appendChild(root);
-  return true;
-}
-
-bool VideoObject::writeSpumuxXml(const QString& fileName,
-                                 const QString& subFile,
-                                 const QDVD::Subtitle& subtitle)
-{
-  // Write spumux xml
-  QString s;
-  QDomDocument doc("");
-  if(writeSpumuxXml(doc, subFile, subtitle) == false)
-    return false;
-
-  QFile file(fileName);
-  if (!file.open(QIODevice::WriteOnly))
-    return false;
-  QTextStream stream(&file);
-  stream << doc.toString();
-  file.close();
-  return true;
-}
-
-void VideoObject::output(QString line)
-{
-  QRegExp bytes("INFO: (\\d+) bytes of data written");
-
-  if(bytes.indexIn(line) > -1)
-  {
-    qulonglong temp = bytes.cap(1).toULongLong();
-    if(temp - m_lastUpdate > m_half)
-    {
-      if(interface()->setItemProgress(temp / 1024))
-        m_spumux->kill();
-      m_lastUpdate = temp;
-    }
-  }
-}
-
-bool VideoObject::convertSubtitles(const QDVD::Subtitle& subtitle)
-{
-  int i = 0;
-  QStringList subtitleFiles = subtitle.file().split(";");
-  bool result = true;
-
-  QFileInfo fio(videoFileName(i, PrefixSub));
-  QFileInfo fiXml(videoFileName(i, PrefixXml));
-  QFileInfo fii(videoFileFind(i, PrefixMpg));
-  QFileInfo fiSub(subtitleFiles[i]);
-
-  interface()->message(KMF::PluginInterface::Info,
-      i18n("   Adding subtitles to %1", fii.fileName()));
-
-  //kDebug() << fiXml.filePath();
-  m_spumux = new KProcess();
-  writeSpumuxXml(fiXml.filePath(), fiSub.filePath(), subtitle);
-  *m_spumux << "spumux" << "-P" << fiXml.filePath();
-  m_spumux->setStandardInputFile(fii.filePath());
-  m_spumux->setStandardOutputFile(fio.filePath());
-  m_spumux->setWorkingDirectory(interface()->projectDir("media"));
-  interface()->logger()->connectProcess(m_spumux,
-      "INFO: \\d+ bytes of data written", KProcess::OnlyStderrChannel);
-  connect(interface()->logger(), SIGNAL(line(QString)),
-          this, SLOT(output(QString)));
-  interface()->setItemTotalSteps(fii.size()/1024);
-  m_lastUpdate = 0;
-  m_half = fii.size() / 200;
-  m_spumux->start();
-  while(!m_spumux->waitForFinished(500))
-  {
-    if(m_spumux->state() == QProcess::NotRunning)
-      break;
-  }
-  if(m_spumux->exitCode() == QProcess::NormalExit &&
-      m_spumux->exitStatus() == 0)
-  {
-    interface()->setItemProgress(fii.size()/1024);
-  }
-  else
-  {
-    QFile::remove(fio.filePath());
-    interface()->message(KMF::PluginInterface::Error, i18n("   Conversion error."));
-    result = false;
-  }
-  delete m_spumux;
-  m_spumux = 0;
-  return result;
-}
-
 bool VideoObject::make(QString type)
 {
   interface()->message(KMF::PluginInterface::Info, i18n("Preparing file(s) for %1", title()));
@@ -623,8 +614,16 @@ bool VideoObject::make(QString type)
               videoFile.lastModified() > videoFileWithSubtitles.lastModified() ||
               subtitleFile.lastModified() > videoFileWithSubtitles.lastModified())
           {
-            if(!convertSubtitles(subtitle))
-              return false;
+            ConvertSubtitlesJob *job = new ConvertSubtitlesJob();
+            job->subtitle = subtitle;
+            job->subtitleFile = subtitleFile.fileName();
+            job->subtitleXmlFile = videoFileName(i, PrefixXml);
+            job->videoFile = videoFile.fileName();
+            job->videoFileWithSubtitles = videoFileWithSubtitles.fileName();
+            job->mediaDir = interface()->projectDir("media");
+            job->type = interface()->projectType();
+            // Just for testing
+            job->run();
           }
           else
           {
@@ -747,7 +746,7 @@ QImage VideoObject::preview(int chap) const
   QSize videoRatio = (aspect() == QDVD::VideoTrack::Aspect_4_3) ?
                           QSize(4, 3) : QSize(16, 9);
   QSize imageRatio = KMF::Tools::guessRatio(img.size(), videoRatio);
-  QSize templateSize = KMF::Tools::maxResolution(interface()->type());
+  QSize templateSize = KMF::Tools::maxResolution(interface()->projectType());
   QSize imageSize = img.size();
   QSize res = KMF::Tools::resolution(imageSize, imageRatio,
                                      templateSize, templateRatio);

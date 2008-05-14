@@ -108,10 +108,10 @@ namespace KMF
       virtual QString title() = 0;
       virtual void setTitle(QString title) = 0;
       virtual QString projectDir(const QString& subDir = "") = 0;
+      virtual QString projectType() = 0;
       virtual void cleanFiles(const QString& subDir,
                               const QStringList& files) = 0;
       virtual void setDirty(DirtyType type) = 0;
-      virtual QString type() = 0;
       virtual QString lastSubType() = 0;
       virtual QDateTime lastModified(DirtyType type) = 0;
       virtual int serial() = 0;
@@ -148,40 +148,7 @@ namespace KMF
                                              int maximum) = 0;
       virtual ProgressDialog* progressDialog() = 0;
   };
-/*
-  class KDE_EXPORT Job : public ThreadWeaver::Job
-  {
-      Q_OBJECT
-    public:
-      explicit Job(Object* parent);
-      ~Job();
-  
-      bool message(PluginInterface::MsgType type, const QString& msg);
-      KProcess* process(const QString& filter = "",
-                        KProcess::OutputChannelMode mode =
-                            KProcess::SeparateChannels);
-      void setValue(int value);
-      void setMaximum(int maximum);
-      virtual void output(const QString& line);
 
-      // Copy these To helper class && functions emit helper class signals
-      // http://api.kde.org/4.0-api/kdelibs-apidocs/threadweaver/html/MainComponents.html
-      // Signals from jobs
-    signals:
-      void message(PluginInterface::MsgType type, const QString& msg);
-      // Howto connect these to list items??
-      // Main message?
-      // ...or on first maximum message connect to list item widget
-      void value(int value);
-      void maximum(int maximum);
-
-      void log(const QString& msg);
-
-    private:
-      class Private;
-      Private *const d;
-  };
-*/
 }
 
 Q_DECLARE_METATYPE(KMF::OutputObject*);
