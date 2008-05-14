@@ -16,10 +16,11 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef KROSSMEDIAOBJECT_H
 #define KROSSMEDIAOBJECT_H
 
-#include <kmediafactory/uiinterface.h>
+#include <kmediafactory/plugininterface.h>
 
 class KrossMediaObject : public KMF::MediaObject
 {

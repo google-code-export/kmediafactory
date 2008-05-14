@@ -23,12 +23,10 @@
 #include "kmfmenupage.h"
 #include "kmftemplatebase.h"
 #include "kmftemplate.h"
-#include <kmediafactory/uiinterface.h>
+#include <kmediafactory/plugininterface.h>
 #include <QImage>
 #include <QObject>
 
-/**
-*/
 class KMFMenu : public KMFTemplateBase
 {
     Q_OBJECT

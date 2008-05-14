@@ -27,8 +27,7 @@
 #include <kross/core/action.h>
 #include <kross/core/interpreter.h>
 #include <kross/core/manager.h>
-#include "krossuiinterface.h"
-#include "krossprojectinterface.h"
+#include "krossplugininterface.h"
 #include "kmftools.h"
 
 K_EXPORT_KMEDIAFACTORY_PLUGIN(kross, KrossPlugin);
@@ -98,14 +97,9 @@ void KrossPlugin::registerPlugin(Kross::Object::Ptr plugin)
   m_plugin = plugin;
 }
 
-QObject* KrossPlugin::uiInterface() 
+QObject* KrossPlugin::interface() 
 { 
-  return new KrossUiInterface(this, KMF::Plugin::uiInterface());
-}
-
-QObject* KrossPlugin::projectInterface() 
-{ 
-  return new KrossProjectInterface(this, KMF::Plugin::projectInterface());
+  return new KrossPluginInterface(this, KMF::Plugin::interface());
 }
 
 void KrossPlugin::actionTriggered()
