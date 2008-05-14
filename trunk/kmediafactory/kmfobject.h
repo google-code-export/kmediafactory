@@ -39,7 +39,9 @@ namespace KMF
       Q_PROPERTY(QString title READ title WRITE setTitle)
       Q_PROPERTY(QPixmap pixmap READ pixmap)
     public:
-      Object(QObject* parent);
+      explicit Object(QObject* parent);
+      ~Object();
+
       virtual void toXML(QDomElement*) const;
       virtual bool fromXML(const QDomElement&);
       virtual QPixmap pixmap() const = 0;
@@ -53,14 +55,15 @@ namespace KMF
       const QString& title() const;
       void setTitle(const QString& title);
       Plugin* plugin() const;
-      PLuginInterface* interface() const;
+      PluginInterface* interface() const;
       QVariant call(const QString& func, QVariantList args = QVariantList());
 
     public slots:
       virtual void clean() {};
 
     private:
-      class Private *const d;
+      class Private;
+      Private *const d;
   };
 };
 

@@ -20,25 +20,27 @@
 
 #include "kmfobject.h"
 #include "plugin.h"
-#include "projectinterface.h"
-#include "uiinterface.h"
+#include "plugininterface.h"
 
-class Object::Private
+class KMF::Object::Private
 {
   public:
-    Object(QObject* parent): 
-      QObject(parent), 
-      m_plg(0), 
-      m_uiIf(0), 
-      m_prjIf(0) {};
+    Private() : 
+      plugin(0), 
+      interface(0) {};
 
     QString title;
     Plugin* plugin;
     PluginInterface* interface;
 };
 
-Object(QObject* parent): QObject(parent), m_plg(0), m_uiIf(0), m_prjIf(0) 
+KMF::Object::Object(QObject* parent) : QObject(parent), d(new Private)
 {
+}
+
+KMF::Object::~Object()
+{
+  delete d;
 }
 
 void KMF::Object::toXML(QDomElement*) const 
@@ -50,7 +52,7 @@ bool KMF::Object::fromXML(const QDomElement&)
   return false; 
 }
 
-void KMF::Object::actions(QList<QAction*>&) const 
+void KMF::Object::actions(QList<QAction*>*) const 
 {
 }
 
@@ -71,35 +73,27 @@ int KMF::Object::timeEstimate() const
 
 const QString& KMF::Object::title() const 
 { 
-  return m_title; 
+  return d->title; 
 }
 
 void KMF::Object::setTitle(const QString& title) 
 { 
-  m_title = title; 
+  d->title = title; 
 }
 
 KMF::Plugin* KMF::Object::plugin() const
 {
-  if(!m_plg)
-    m_plg = static_cast<KMF::Plugin*>(parent());
-  return m_plg;
+  if(!d->plugin)
+    d->plugin = static_cast<KMF::Plugin*>(parent());
+  return d->plugin;
 }
 
-KMF::UiInterface* KMF::Object::uiInterface() const
+KMF::PluginInterface* KMF::Object::interface() const
 {
-  if(!m_uiIf)
+  if(!d->interface)
     if(plugin())
-      m_uiIf = plugin()->uiInterface();
-  return m_uiIf;
-}
-
-KMF::ProjectInterface* KMF::Object::projectInterface() const
-{
-  if(!m_prjIf)
-    if(plugin())
-      m_prjIf = plugin()->projectInterface();
-  return m_prjIf;
+      d->interface = plugin()->interface();
+  return d->interface;
 }
 
 QVariant KMF::Object::call(const QString& func, QVariantList args)

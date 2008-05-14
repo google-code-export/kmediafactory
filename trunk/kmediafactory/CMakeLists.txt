@@ -2,15 +2,13 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 set(kmediafactoryinterfaces_LIB_SRCS
   plugin.cpp
-  projectinterface.cpp
-  uiinterface.cpp
+  plugininterface.cpp
   kmfobject.cpp
 )
 
 set(kmediafactoryinclude_HEADERS
   plugin.h
-  projectinterface.h
-  uiinterface.h
+  plugininterface.h
   kmfobject.h
 )
 

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,17 +17,14 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef KMEDIAFACTORY_PLUGIN_H
 #define KMEDIAFACTORY_PLUGIN_H
 
-#include "uiinterface.h"
-#include "projectinterface.h"
-#include <kservice.h>
-#include <kxmlguiclient.h>
-#include <kpluginfactory.h>
-#include <QObject>
+#include "plugininterface.h"
+#include <KService>
+#include <KXMLGUIClient>
 
-class QDomElement;
 class KConfigSkeleton;
 
 namespace KMF
@@ -48,16 +45,13 @@ namespace KMF
       explicit Plugin(QObject *parent = 0);
       ~Plugin();
 
-      UiInterface* uiInterface() const;
-      ProjectInterface* projectInterface() const;
-
-    public slots:
-      virtual void init(const QString &type) = 0;
-
-    public:
+      PluginInterface* interface() const;
       virtual QStringList supportedProjectTypes() const = 0;
       virtual MediaObject* createMediaObject(const QDomElement&);
       virtual const ConfigPage* configPage() const;
+
+    public slots:
+      virtual void init(const QString &type) = 0;
 
     protected:
       void deleteChildren();

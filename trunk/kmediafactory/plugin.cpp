@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,10 +17,8 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "plugin.h"
-#include <qobject.h>
-#include <kdebug.h>
-#include <kmessagebox.h>
 
 KMF::Plugin::Plugin(QObject *parent)
   : QObject(parent)
@@ -32,29 +30,19 @@ KMF::Plugin::~Plugin()
   deleteChildren();
 }
 
-KMF::UiInterface* KMF::Plugin::uiInterface() const
+KMF::PluginInterface* KMF::Plugin::interface() const
 {
-  KMF::UiInterface* obj = 0;
+  KMF::PluginInterface* obj = 0;
 
   if(parent()) {
-    obj = parent()->findChild<KMF::UiInterface*>("KMF::UiInterface");
-  }
-  return obj;
-}
-
-KMF::ProjectInterface* KMF::Plugin::projectInterface() const
-{
-  KMF::ProjectInterface* obj = 0;
-
-  if(parent()) {
-    obj = parent()->findChild<KMF::ProjectInterface*>("KMF::ProjectInterface");
+    obj = parent()->findChild<KMF::PluginInterface*>("KMF::PluginInterface");
   }
   return obj;
 }
 
 void KMF::Plugin::deleteChildren()
 {
-  QObjectList list= children();
+  QObjectList list = children();
 
   while(!list.isEmpty())
     delete list.takeFirst();
