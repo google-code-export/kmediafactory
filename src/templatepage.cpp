@@ -105,7 +105,7 @@ void TemplatePage::currentPageChanged(KPageWidgetItem* current,
   if (current->parent() == this &&
       (templatePreview->image().size() == QSize(0,0) ||
       m_lastUpdate <
-      kmfApp->project()->lastModified(KMF::ProjectInterface::DirtyMedia)))
+      kmfApp->project()->lastModified(KMF::PluginInterface::DirtyMedia)))
   {
     QTimer::singleShot(0, this, SLOT(updatePreview()));
   }
@@ -127,8 +127,8 @@ void TemplatePage::updatePreview(int n)
     QString menu;
 
     kmfApp->setOverrideCursor(QCursor(Qt::WaitCursor));
-    kmfApp->uiInterface()->setUseMessageBox(true);
-    kmfApp->uiInterface()->setStopped(false);
+    kmfApp->interface()->setUseMessageBox(true);
+    kmfApp->interface()->setStopped(false);
     if(kmfApp->project()->mediaObjects()->count() > 0 &&
       previewCheckBox->isChecked())
     {
@@ -145,7 +145,7 @@ void TemplatePage::updatePreview(int n)
     QImage image = ob->preview(menu).scaled(768, 576, Qt::IgnoreAspectRatio,
                                             Qt::SmoothTransformation);
     templatePreview->setImage(image);
-    kmfApp->uiInterface()->setUseMessageBox(false);
+    kmfApp->interface()->setUseMessageBox(false);
     kmfApp->restoreOverrideCursor();
     m_lastUpdate = QDateTime::currentDateTime();
   }
@@ -163,7 +163,7 @@ void TemplatePage::contextMenuRequested(const QPoint &pos)
   KXMLGUIFactory* factory = mainWindow->factory();
 
   QList<QAction*> actions;
-  ob->actions(actions);
+  ob->actions(&actions);
   factory->plugActionList(mainWindow,
       QString::fromLatin1("template_actionlist"), actions);
   QWidget *w = factory->container("template_popup", mainWindow);

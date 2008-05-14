@@ -2,8 +2,7 @@ include_directories(${CMAKE_SOURCE_DIR}/lib ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_
 
 set(kmediafactory_SRCS
 	sizewidget.cpp
-	kmfuiinterface.cpp
-	kmfprojectinterface.cpp
+	kmfplugininterface.cpp
 	main.cpp
 	tools.cpp
 	kmfoptions.cpp

@@ -67,7 +67,7 @@ void MediaPage::contextMenuRequested(const QPoint &pos)
   KXMLGUIFactory* factory = mainWindow->factory();
 
   QList<QAction*> actions;
-  ob->actions(actions);
+  ob->actions(&actions);
   factory->plugActionList(mainWindow,
       QString::fromLatin1("media_file_actionlist"), actions);
   QWidget *w = factory->container("media_file_popup", mainWindow);

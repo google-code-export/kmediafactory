@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,19 +17,17 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef TEMPLATEPAGE_H
 #define TEMPLATEPAGE_H
 
 #include <ui_templatepage.h>
 #include <qdatetime.h>
-#include "kmfuiinterface.h"
+#include "kmfplugininterface.h"
 #include <kmficonview.h>
 
 class KPageWidgetItem;
 
-/**
-@author Petri Damsten
-*/
 class TemplatePage : public QWidget, public Ui::TemplatePage
 {
     Q_OBJECT
@@ -58,4 +56,4 @@ class TemplatePage : public QWidget, public Ui::TemplatePage
     bool m_scaled;
 };
 
-#endif
+#endif // TEMPLATEPAGE_H

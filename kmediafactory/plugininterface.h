@@ -99,6 +99,9 @@ namespace KMF
       virtual void stderr() = 0;
       void message(const QString& msg) { message(msg, QColor("black")); };
 
+    protected:
+      KProcess* currentProcess();
+
     private:
       class Private;
       Private *const d;

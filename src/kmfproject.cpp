@@ -33,6 +33,7 @@
 #include <QFile>
 #include <QDir>
 #include <QTextStream>
+#include <QDomElement>
 
 template <class S, class T>
 void addMap(QMap<S, T>* map, const QMap<S, T>& add)
@@ -100,13 +101,13 @@ bool KMFProject::validProject() const
 void KMFProject::addItem(KMF::MediaObject *mob)
 {
   m_list.append(mob);
-  setDirty(KMF::ProjectInterface::DirtyMedia);
+  setDirty(KMF::PluginInterface::DirtyMedia);
 }
 
 void KMFProject::removeItem(KMF::MediaObject *mob)
 {
   m_list.removeAll(mob);
-  setDirty(KMF::ProjectInterface::DirtyMedia);
+  setDirty(KMF::PluginInterface::DirtyMedia);
 }
 
 void KMFProject::setType(const QString& type)
@@ -124,25 +125,25 @@ void KMFProject::setDirectory(const QString& directory)
 {
   m_directory = KMF::Tools::addSlash(directory);
   if(m_directory.startsWith("file://")) m_directory = m_directory.mid(7);
-  setDirty(KMF::ProjectInterface::DirtyAny);
+  setDirty(KMF::PluginInterface::DirtyAny);
 }
 
 void KMFProject::setTitle(const QString& title)
 {
   m_title = title;
-  setDirty(KMF::ProjectInterface::DirtyTemplate);
+  setDirty(KMF::PluginInterface::DirtyTemplate);
 }
 
 void KMFProject::setTemplateObj(KMF::TemplateObject* tmplate)
 {
   m_template = tmplate;
-  setDirty(KMF::ProjectInterface::DirtyTemplate);
+  setDirty(KMF::PluginInterface::DirtyTemplate);
 }
 
 void KMFProject::setOutput(KMF::OutputObject* output)
 {
   m_output = output;
-  setDirty(KMF::ProjectInterface::DirtyOutput);
+  setDirty(KMF::PluginInterface::DirtyOutput);
 }
 
 void KMFProject::init()
@@ -153,7 +154,7 @@ void KMFProject::init()
   kDebug() << "init";
   emit init(m_type);
   m_initializing = false;
-  setDirty(KMF::ProjectInterface::DirtyAny, false);
+  setDirty(KMF::PluginInterface::DirtyAny, false);
 }
 
 void KMFProject::mediaObjFromXML(const QDomElement& e)
@@ -252,7 +253,7 @@ void KMFProject::saveObj(QDomDocument& doc, QDomElement& root,
     if(ob->parent())
       e.setAttribute("plugin", ob->parent()->objectName());
     e.setAttribute("object", ob->objectName());
-    ob->toXML(e);
+    ob->toXML(&e);
     root.appendChild(e);
   }
 }
@@ -383,7 +384,7 @@ bool KMFProject::open(const KUrl &url)
       fromXML(stream.readAll());
       file.close();
       m_url = url;
-      setDirty(KMF::ProjectInterface::DirtyAny, false);
+      setDirty(KMF::PluginInterface::DirtyAny, false);
       result = true;
     }
     KIO::NetAccess::removeTempFile(tmpFile);
@@ -446,49 +447,49 @@ bool KMFProject::save(KUrl url)
       return false;
   }
   m_url = url;
-  setDirty(KMF::ProjectInterface::DirtyAny, false);
+  setDirty(KMF::PluginInterface::DirtyAny, false);
   return true;
 }
 
-void KMFProject::setDirty(KMF::ProjectInterface::DirtyType type, bool dirty)
+void KMFProject::setDirty(KMF::PluginInterface::DirtyType type, bool dirty)
 {
   m_modified = dirty;
   if(dirty && !m_loading && !m_initializing)
   {
-    if(type & KMF::ProjectInterface::DirtyMedia)
+    if(type & KMF::PluginInterface::DirtyMedia)
       m_lastModified[ModMedia] = QDateTime::currentDateTime();
-    if(type & KMF::ProjectInterface::DirtyTemplate)
+    if(type & KMF::PluginInterface::DirtyTemplate)
       m_lastModified[ModTemplate] = QDateTime::currentDateTime();
-    if(type & KMF::ProjectInterface::DirtyOutput)
+    if(type & KMF::PluginInterface::DirtyOutput)
       m_lastModified[ModOutput] = QDateTime::currentDateTime();
   }
   if(!m_initializing)
     emit modified(m_title, dirty);
   if(dirty && !m_loading && !m_initializing)
   {
-    if(type & KMF::ProjectInterface::DirtyMedia)
+    if(type & KMF::PluginInterface::DirtyMedia)
     {
       kDebug() << "media modified";
       emit mediaModified();
     }
-    if(type & KMF::ProjectInterface::DirtyTemplate)
+    if(type & KMF::PluginInterface::DirtyTemplate)
       emit templatesModified();
-    if(type & KMF::ProjectInterface::DirtyOutput)
+    if(type & KMF::PluginInterface::DirtyOutput)
       emit outputsModified();
   }
 }
 
-QDateTime KMFProject::lastModified(KMF::ProjectInterface::DirtyType type) const
+QDateTime KMFProject::lastModified(KMF::PluginInterface::DirtyType type) const
 {
   QDateTime d;
 
-  if((type & KMF::ProjectInterface::DirtyMedia) &&
+  if((type & KMF::PluginInterface::DirtyMedia) &&
      d < m_lastModified[ModTemplate])
     d = m_lastModified[ModMedia];
-  if((type & KMF::ProjectInterface::DirtyTemplate) &&
+  if((type & KMF::PluginInterface::DirtyTemplate) &&
      d < m_lastModified[ModTemplate])
     d = m_lastModified[ModTemplate];
-  if((type & KMF::ProjectInterface::DirtyOutput) &&
+  if((type & KMF::PluginInterface::DirtyOutput) &&
      d < m_lastModified[ModTemplate])
     d = m_lastModified[ModOutput];
   return d;

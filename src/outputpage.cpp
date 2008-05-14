@@ -22,7 +22,7 @@
 #include "kmediafactory.h"
 #include "kmfapplication.h"
 #include "kmfprogresslistview.h"
-#include "kmfuiinterface.h"
+#include "kmfplugininterface.h"
 #include "kmftoolbutton.h"
 #include "logview.h"
 #include <kmftools.h>
@@ -91,7 +91,7 @@ void OutputPage::contextMenuRequested(const QPoint &pos)
   KXMLGUIFactory* factory = mainWindow->factory();
 
   QList<QAction*> actions;
-  ob->actions(actions);
+  ob->actions(&actions);
   factory->plugActionList(mainWindow,
       QString::fromLatin1("output_actionlist"), actions);
   QWidget *w = factory->container("output_popup", mainWindow);
@@ -115,9 +115,9 @@ void OutputPage::showLog()
 void OutputPage::stop()
 {
   stopPushBtn->setEnabled(false);
-  kmfApp->uiInterface()->setStopped(true);
-  kmfApp->uiInterface()->message(KMF::Error, i18n("User cancelled."));
-  kmfApp->uiInterface()->setItemProgress(-1);
+  kmfApp->interface()->setStopped(true);
+  kmfApp->interface()->message(KMF::PluginInterface::Error, i18n("User cancelled."));
+  kmfApp->interface()->setItemProgress(-1);
 }
 
 void OutputPage::start(QAction* type)
@@ -135,8 +135,8 @@ void OutputPage::start()
   showLogPushBtn->setEnabled(false);
   stopPushBtn->setEnabled(true);
   startButton->setEnabled(false);
-  kmfApp->uiInterface()->setUseMessageBox(false);
-  kmfApp->uiInterface()->setStopped(false);
+  kmfApp->interface()->setUseMessageBox(false);
+  kmfApp->interface()->setStopped(false);
   progressBar->setRange(0, kmfApp->project()->timeEstimate());
   progressBar->setValue(0);
   static_cast<QStringListModel*>(progressListView->model())->
@@ -144,7 +144,7 @@ void OutputPage::start()
   kmfApp->logger().start();
   if(kmfApp->project()->make(m_type) == false)
     if(!kmfApp->project()->error().isEmpty())
-      kmfApp->uiInterface()->message(KMF::Error, kmfApp->project()->error());
+      kmfApp->interface()->message(KMF::PluginInterface::Error, kmfApp->project()->error());
   m_type = "";
   kmfApp->logger().stop();
   kmfApp->logger().save(kmfApp->project()->directory() + "kmf_log.html");

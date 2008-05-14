@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,19 +17,18 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef KMFLOGGER_H
 #define KMFLOGGER_H
 
-#include <kmediafactory/uiinterface.h>
+#include <kmediafactory/plugininterface.h>
 #include <qregexp.h>
-
-/**
-*/
 
 class KMFLogger : public KMF::Logger
 {
     Q_OBJECT
   public:
+    explicit KMFLogger(QObject *parent = 0);
     virtual void start();
     virtual void stop();
     virtual const QString& log() const { return m_log; };
@@ -54,4 +53,4 @@ class KMFLogger : public KMF::Logger
     QRegExp m_filter;
 };
 
-#endif
+#endif // KMFLOGGER_H

@@ -84,17 +84,17 @@ QString KMFDbusInterface::projectDirectory(const QString& subdir)
 
 void KMFDbusInterface::addMediaObject(const QString& xml)
 {
-  kmfApp->uiInterface()->addMediaObject(xml);
+  kmfApp->interface()->addMediaObject(xml);
 }
 
 void KMFDbusInterface::selectTemplate(const QString& xml)
 {
-  kmfApp->uiInterface()->selectTemplate(xml);
+  kmfApp->interface()->selectTemplate(xml);
 }
 
 void KMFDbusInterface::selectOutput(const QString& xml)
 {
-  kmfApp->uiInterface()->selectOutput(xml);
+  kmfApp->interface()->selectOutput(xml);
 }
 
 void KMFDbusInterface::start()
@@ -107,53 +107,53 @@ QStringList KMFDbusInterface::getOpenFileNames(const QString &startDir,
                                                const QString &filter,
                                                const QString &caption)
 {
-  return kmfApp->uiInterface()->getOpenFileNames(startDir, filter, caption);
+  return kmfApp->interface()->getOpenFileNames(startDir, filter, caption);
 }
 
 void KMFDbusInterface::debug(const QString &txt)
 {
-  kmfApp->uiInterface()->debug(txt);
+  kmfApp->interface()->debug(txt);
 }
 
 void KMFDbusInterface::progressDialog(const QString &caption,
                                       const QString &label,
                                       int maximum)
 {
-  kmfApp->uiInterface()->progressDialog(caption, label, maximum);
+  kmfApp->interface()->progressDialog(caption, label, maximum);
 }
 
 void KMFDbusInterface::pdlgSetMaximum(int maximum)
 {
-  kmfApp->uiInterface()->progressDialog()->setMaximum(maximum);
+  kmfApp->interface()->progressDialog()->setMaximum(maximum);
 }
 
 void KMFDbusInterface::pdlgSetValue(int value)
 {
-  kmfApp->uiInterface()->progressDialog()->setValue(value);
+  kmfApp->interface()->progressDialog()->setValue(value);
 }
 
 void KMFDbusInterface::pdlgSetLabel(const QString &label)
 {
-  kmfApp->uiInterface()->progressDialog()->setLabel(label);
+  kmfApp->interface()->progressDialog()->setLabel(label);
 }
 
 void KMFDbusInterface::pdlgShowCancelButton(bool show)
 {
-  kmfApp->uiInterface()->progressDialog()->showCancelButton(show);
+  kmfApp->interface()->progressDialog()->showCancelButton(show);
 }
 
 bool KMFDbusInterface::pdlgWasCancelled()
 {
-  return kmfApp->uiInterface()->progressDialog()->wasCancelled();
+  return kmfApp->interface()->progressDialog()->wasCancelled();
 }
 
 void KMFDbusInterface::pdlgClose()
 {
-  kmfApp->uiInterface()->progressDialog()->close();
+  kmfApp->interface()->progressDialog()->close();
 }
 
 int KMFDbusInterface::message(const QString &caption, const QString &txt,
                               int type)
 {
-  return kmfApp->uiInterface()->messageBox(caption, txt, type);
+  return kmfApp->interface()->messageBox(caption, txt, type);
 }

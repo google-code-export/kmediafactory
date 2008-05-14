@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,18 +17,17 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef KMFPROJECT_H
 #define KMFPROJECT_H
 
 #include <kmediafactory/plugin.h>
-#include <kmediafactory/projectinterface.h>
+#include <kmediafactory/plugininterface.h>
 #include "kmficonview.h"
 #include <kurl.h>
 #include <QString>
 #include <QDateTime>
 
-/**
-*/
 class KMFProject : public QObject
 {
     Q_OBJECT
@@ -58,9 +57,9 @@ class KMFProject : public QObject
     KMF::OutputObject* output() const { return m_output; };
     bool make(QString type);
     int timeEstimate() const;
-    void setDirty(KMF::ProjectInterface::DirtyType type, bool dirty = true);
+    void setDirty(KMF::PluginInterface::DirtyType type, bool dirty = true);
     bool isModified() const { return m_modified; };
-    QDateTime lastModified(KMF::ProjectInterface::DirtyType type) const;
+    QDateTime lastModified(KMF::PluginInterface::DirtyType type) const;
     const KUrl& url() { return m_url; };
     bool validProject() const;
     const QString& error() const { return m_error; };

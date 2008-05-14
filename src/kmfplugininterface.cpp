@@ -18,14 +18,19 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 
-#include "kmfprojectinterface.h"
+#include "kmfplugininterface.h"
 #include "kmediafactory.h"
 #include "templatepage.h"
 #include "outputpage.h"
 #include "kmficonview.h"
 #include "kmfapplication.h"
 #include "kmfproject.h"
-#include <kdebug.h>
+#include "kmfprogresslistview.h"
+#include "mediapage.h"
+#include <KDebug>
+#include <KMessageBox>
+#include <QDomDocument>
+#include <KFileDialog>
 
 KMFProgressDialog::KMFProgressDialog(QWidget* parent) : KMF::ProgressDialog(parent), m_pdlg(parent)
 {
@@ -69,7 +74,7 @@ void KMFProgressDialog::close()
 }
 
 KMFPluginInterface::KMFPluginInterface(QObject *parent) :
-  KMF::UiInterface(parent), m_useMessageBox(false), m_pdlg(0)
+  KMF::PluginInterface(parent), m_useMessageBox(false), m_pdlg(0)
 {
 }
 
@@ -162,7 +167,7 @@ void KMFPluginInterface::selectOutput(const QString& xml)
   kmfApp->project()->outputFromXML(doc.documentElement());
 }
 
-bool KMFPluginInterface::message(KMF::MsgType type, const QString& msg)
+bool KMFPluginInterface::message(KMF::PluginInterface::MsgType type, const QString& msg)
 {
   KMediaFactory* mainWindow = kmfApp->mainWindow();
   QString pixmap;
@@ -171,23 +176,23 @@ bool KMFPluginInterface::message(KMF::MsgType type, const QString& msg)
 
   switch(type)
   {
-    case KMF::None:
-    case KMF::Info:
+    case KMF::PluginInterface::None:
+    case KMF::PluginInterface::Info:
       pixmap = "dialog-information";
       color = QColor("darkGreen");
       dlgType = KMessageBox::Information;
       break;
-    case KMF::Warning:
+    case KMF::PluginInterface::Warning:
       pixmap = "dialog-warning";
       color = QColor(211, 183, 98);
       dlgType = KMessageBox::Sorry;
       break;
-    case KMF::Error:
+    case KMF::PluginInterface::Error:
       pixmap = "dialog-error";
       color = QColor("red");
       dlgType = KMessageBox::Error;
       break;
-    case KMF::OK:
+    case KMF::PluginInterface::OK:
       pixmap = "dialog-ok";
       color = QColor("darkGreen");
       dlgType = KMessageBox::Information;
@@ -316,15 +321,6 @@ void KMFPluginInterface::debug(const QString &txt)
   kDebug() << txt;
 }
 
-KMFPluginInterface::KMFPluginInterface(QObject *parent) :
-  KMF::ProjectInterface(parent)
-{
-}
-
-KMFPluginInterface::~KMFPluginInterface()
-{
-}
-
 QString KMFPluginInterface::title()
 {
   if (kmfApp->project()) {
@@ -380,7 +376,7 @@ void KMFPluginInterface::cleanFiles(const QString& subDir,
   }
 }
 
-void KMFPluginInterface::setDirty(KMF::ProjectInterface::DirtyType type)
+void KMFPluginInterface::setDirty(KMF::PluginInterface::DirtyType type)
 {
   if (kmfApp->project()) {
     kmfApp->project()->setDirty(type);
@@ -404,7 +400,7 @@ QString KMFPluginInterface::lastSubType()
 }
 
 QDateTime KMFPluginInterface::lastModified(
-    KMF::ProjectInterface::DirtyType type)
+    KMF::PluginInterface::DirtyType type)
 {
   if (kmfApp->project()) {
     return kmfApp->project()->lastModified(type);
@@ -420,4 +416,4 @@ int KMFPluginInterface::serial()
   return -1;
 }
 
-#include "kmfprojectinterface.moc"
+#include "kmfplugininterface.moc"

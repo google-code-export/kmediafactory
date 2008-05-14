@@ -21,8 +21,8 @@
 #ifndef KMFPLUGININTERFACE_H
 #define KMFPLUGININTERFACE_H
 
-#include <kmediafactory/uiinterface.h>
-#include <kmediafactory/projectinterface.h>
+#include <KProgressDialog>
+#include <kmediafactory/plugininterface.h>
 
 class KMFProgressDialog : public KMF::ProgressDialog
 {
@@ -75,7 +75,7 @@ class KMFPluginInterface : public KMF::PluginInterface
     virtual void selectTemplate(const QString& xml);
     virtual void selectOutput(const QString& xml);
 
-    virtual bool message(KMF::MsgType type, const QString& msg);
+    virtual bool message(KMF::PluginInterface::MsgType type, const QString& msg);
     virtual bool progress(int advance);
     virtual bool setItemTotalSteps(int totalSteps);
     virtual bool setItemProgress(int progress);
