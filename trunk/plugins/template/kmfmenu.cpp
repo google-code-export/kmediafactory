@@ -56,7 +56,7 @@ QDomElement KMFMenu::writeDvdAuthorXml(const QString& type, int titleset)
   {
     QDomDocument doc;
     QDomElement result = doc.createElement("menus");
-    QList<KMF::MediaObject*> mobs = m_prjIf->mediaObjects();
+    QList<KMF::MediaObject*> mobs = m_interface->mediaObjects();
 
     if (titleset == 0) {
       int j = 1;
@@ -90,7 +90,7 @@ QDomElement KMFMenu::writeDvdAuthorXml(const QString& type, int titleset)
   }
   else
   {
-    m_uiIf->message(KMF::Error, i18n("No pages."));
+    m_interface->message(KMF::PluginInterface::Error, i18n("No pages."));
     return QDomElement();
   }
 }
@@ -104,7 +104,7 @@ bool KMFMenu::makeMenuMpegs()
       foreach(KMFMenuPage* ob,  m_pages[i])
       {
         progress(m_pagePoints);
-        if(m_uiIf->message(KMF::Info,
+        if(m_interface->message(KMF::PluginInterface::Info,
            i18n("   Menu: %1", uiText(ob->objectName()))))
           return false;
 
@@ -131,7 +131,7 @@ bool KMFMenu::addPage(const QDomElement& element, int pageSet,
   progress(m_pagePoints);
   if(menuPage)
   {
-    if(m_uiIf->message(KMF::Info,
+    if(m_interface->message(KMF::PluginInterface::Info,
        i18n("   Menu: %1", uiText(menuPage->objectName()))))
       return false;
     if(pageSet == 0)
@@ -146,7 +146,7 @@ bool KMFMenu::addPage(const QString& name, int title, int chapter)
 {
   QDomElement element = m_templateXML.documentElement();
   QDomElement pageElement = getPage(element.firstChild(), name);
-  QList<KMF::MediaObject*> mobs = m_prjIf->mediaObjects();
+  QList<KMF::MediaObject*> mobs = m_interface->mediaObjects();
   KMFMenuPage temp(this);
 
   temp.fromXML(pageElement);
@@ -194,7 +194,7 @@ QDomElement KMFMenu::getPage(const QDomNode& node, const QString& name)
     }
     n = n.nextSibling();
   }
-  m_uiIf->message(KMF::Error,
+  m_interface->message(KMF::PluginInterface::Error,
                   i18n("Cannot find page %1 from template.", name));
   return QDomElement();
 }
@@ -248,18 +248,18 @@ void KMFMenu::progress(int points)
   if(points > m_points)
     points = m_points;
   m_points -= points;
-  m_uiIf->progress(points);
+  m_interface->progress(points);
 }
 
 bool KMFMenu::makeMenu()
 {
   clear();
   m_points = TotalPoints / 4;
-  m_pagePoints = m_points / ((m_prjIf->mediaObjects().count() * 2) + 1);
+  m_pagePoints = m_points / ((m_interface->mediaObjects().count() * 2) + 1);
   QDomElement element = m_templateXML.documentElement();
   QString page = element.attribute("first_page");
 
-  if(m_uiIf->message(KMF::Info, i18n("Generating menus")))
+  if(m_interface->message(KMF::PluginInterface::Info, i18n("Generating menus")))
     return false;
   if(addPage(page, 0, 0))
   {
@@ -269,7 +269,7 @@ bool KMFMenu::makeMenu()
     if(p > 0)
       m_pagePoints = m_points / p;
     // Generate jpgs
-    m_uiIf->message(KMF::Info, i18n("Making menu mpegs"));
+    m_interface->message(KMF::PluginInterface::Info, i18n("Making menu mpegs"));
     if(makeMenuMpegs() == false)
       return false;
 
@@ -281,12 +281,12 @@ bool KMFMenu::makeMenu()
 
 int KMFMenu::mediaObjCount()
 {
-  return m_prjIf->mediaObjects().count();
+  return m_interface->mediaObjects().count();
 }
 
 int KMFMenu::mediaObjChapterCount(int title)
 {
-  QList<KMF::MediaObject*> mobs = m_prjIf->mediaObjects();
+  QList<KMF::MediaObject*> mobs = m_interface->mediaObjects();
   KMF::MediaObject* mob = mobs.at(title);
   int result = mob->chapters();
   KMF::Time chapter = mob->chapterTime(result);

@@ -21,18 +21,17 @@
 #include "templateobject.h"
 #include "kmfmenu.h"
 #include "kmfmenupage.h"
-#include <kmediafactory/uiinterface.h>
+#include <kmediafactory/plugininterface.h>
 #include <kmediafactory/plugin.h>
 #include <qregexp.h>
 
 KMFTemplateBase::KMFTemplateBase(QObject *parent) :
-  QObject(parent), m_uiIf(0), m_prjIf(0)
+  QObject(parent), m_interface(0)
 {
   KMF::Plugin* p = plugin();
   if(p)
   {
-    m_uiIf = p->uiInterface();
-    m_prjIf = p->projectInterface();
+    m_interface = p->interface();
   }
 }
 

@@ -51,14 +51,14 @@ class TemplateObject : public KMF::TemplateObject
     TemplateObject(const QString& templateFile, QObject* parent);
     virtual ~TemplateObject();
 
-    virtual void toXML(QDomElement& element) const;
+    virtual void toXML(QDomElement* element) const;
     virtual bool fromXML(const QDomElement& element);
     virtual int timeEstimate() const;
     virtual bool make(QString type);
     virtual QPixmap pixmap() const;
     virtual QStringList menus();
     virtual QImage preview(const QString& menu = "");
-    virtual void actions(QList<QAction*>&) const;
+    virtual void actions(QList<QAction*>*) const;
     KConfigXML& customProperties() { return m_customProperties; };
     QVariant property(const QString& widget, const QString& name) const;
     void setProperty(const QString& widget, const QString& name,

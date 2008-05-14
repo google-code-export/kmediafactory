@@ -26,7 +26,7 @@
 #include <kmftime.h>
 #include <kmftools.h>
 #include <run.h>
-#include <kmediafactory/projectinterface.h>
+#include <kmediafactory/plugininterface.h>
 #include <kapplication.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
@@ -51,7 +51,7 @@ KMFMenuPage::KMFMenuPage(QObject *parent) :
   m_directPlay(false), m_directChapterPlay(false), m_continueToNextTitle(true)
 {
   m_buttons = new QList<KMFButton*>;
-  setResolution(KMF::Tools::maxResolution(m_prjIf->type()));
+  setResolution(KMF::Tools::maxResolution(m_interface->type()));
 }
 
 KMFMenuPage::~KMFMenuPage()
@@ -277,20 +277,20 @@ void KMFMenuPage::writeDvdAuthorXml(QDomElement& element, QString type)
 
 void KMFMenuPage::checkDummyVideo()
 {
-  QFileInfo fi(m_prjIf->projectDir("media") + "dummy.mpg");
+  QFileInfo fi(m_interface->projectDir("media") + "dummy.mpg");
 
   if(!fi.exists())
   {
     QImage temp;
     QString size;
 
-    if(m_prjIf->type() == "DVD-PAL")
+    if(m_interface->type() == "DVD-PAL")
       temp = QImage(720, 576, QImage::Format_RGB32);
     else
       temp = QImage(720, 480, QImage::Format_RGB32);
     temp.fill(QColor("black").rgba());
     // PNM P6 256
-    temp.save(m_prjIf->projectDir("media") + "dummy.pnm", "PPM");
+    temp.save(m_interface->projectDir("media") + "dummy.pnm", "PPM");
     m_sound = "";
     runScript("dummy", "media");
   }
@@ -336,7 +336,7 @@ void KMFMenuPage::writeDvdAuthorXmlNoMenu(QDomElement& element)
 bool KMFMenuPage::saveImages()
 {
   QString file;
-  QString menus = m_prjIf->projectDir("menus");
+  QString menus = m_interface->projectDir("menus");
 
   // Save subpicture files
   if(m_modifiedLayers & Sub)
@@ -370,7 +370,7 @@ bool KMFMenuPage::writeSpumuxXml()
   if(writeSpumuxXml(doc) == false)
     return false;
 
-  QFile file(m_prjIf->projectDir("menus") + objectName() + ".xml");
+  QFile file(m_interface->projectDir("menus") + objectName() + ".xml");
   if (!file.open(QIODevice::WriteOnly))
     return false;
   QTextStream stream(&file);
@@ -395,7 +395,7 @@ bool KMFMenuPage::runScript(QString scriptName, QString place)
   }
 
   uint frames;
-  if(m_prjIf->type() == "DVD-PAL")
+  if(m_interface->type() == "DVD-PAL")
   {
     frames = (uint)(seconds.toSeconds() * 25.0);
   }
@@ -404,14 +404,14 @@ bool KMFMenuPage::runScript(QString scriptName, QString place)
     frames = (uint)(seconds.toSeconds() * 30000.0 / 1001.0);
   }
 
-  Run run(QString("kmf_make_mpeg %1 %2 %3 %4").arg(m_prjIf->type()).arg(frames)
+  Run run(QString("kmf_make_mpeg %1 %2 %3 %4").arg(m_interface->type()).arg(frames)
           .arg(scriptName).arg(menuSound),
-          m_prjIf->projectDir(place));
+          m_interface->projectDir(place));
 
-  m_uiIf->logger()->message(run.output());
+  m_interface->logger()->message(run.output());
   if(run.exitStatus() != 0)
   {
-    m_uiIf->message(KMF::Error, i18n("   Conversion error."));
+    m_interface->message(KMF::PluginInterface::Error, i18n("   Conversion error."));
     return false;
   }
   return true;
@@ -421,7 +421,7 @@ bool KMFMenuPage::makeMpeg()
 {
   QString file;
 
-  QDir dir(m_prjIf->projectDir("menus"));
+  QDir dir(m_interface->projectDir("menus"));
 
   if(paint() == false)
     return false;
@@ -531,7 +531,7 @@ bool KMFMenuPage::paintChildWidgets(QObject* parent)
       if(paintChildWidgets(obj) == false)
         return false;
       // Just to make ui more responsible
-      if(m_uiIf->progress(0))
+      if(m_interface->progress(0))
         return false;
     }
   }
