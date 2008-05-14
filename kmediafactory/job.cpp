@@ -19,11 +19,24 @@
 //**************************************************************************
 
 #include "job.h"
+#include "job_p.h"
+
+KMF::JobHelper::JobHelper(KMF::Job* parent) : QObject(parent)
+{
+  connect(this, SIGNAL(newMessage(PluginInterface::MsgType, const QString&)), 
+          parent, SIGNAL(newMessage(PluginInterface::MsgType, const QString&)));
+  connect(this, SIGNAL(value(int)), parent, SIGNAL(value(int)));
+  connect(this, SIGNAL(maximum(int)), parent, SIGNAL(maximum(int)));
+}
+
+KMF::JobHelper::~JobHelper()
+{
+}
 
 class KMF::Job::Private
 {
 public:
-  Private(KMF::Job *j) : job(j), proc(0), result(true), aborted(false) {};
+  Private(KMF::Job *j) : job(j), proc(0), result(true), aborted(false), jobHelper(0) {};
 
   void stdout()
   {
@@ -53,6 +66,15 @@ public:
     }
   }
 
+  KMF::JobHelper* helper()
+  {
+    if (!jobHelper) 
+    {
+      jobHelper = new KMF::JobHelper(job);
+    }
+    return jobHelper;
+  }
+
   QString log;
   QString buffer;
   QRegExp filter;
@@ -60,6 +82,7 @@ public:
   KProcess* proc;
   bool result;
   bool aborted;
+  KMF::JobHelper *jobHelper;
 };
 
 KMF::Job::Job(QObject* parent) : ThreadWeaver::Job(parent), d(new KMF::Job::Private(this))
@@ -94,7 +117,7 @@ void KMF::Job::message(PluginInterface::MsgType type, const QString& msg)
   {
     failed(); 
   }
-  // emit through helper class
+  //emit d->helper()->newMessage(type, msg);
 }
 
 void KMF::Job::setValue(int value)
@@ -147,3 +170,4 @@ void KMF::Job::requestAbort()
 }
 
 #include "job.moc"
+#include "job_p.moc"
