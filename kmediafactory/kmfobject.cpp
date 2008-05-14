@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,11 +17,67 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "kmfobject.h"
 #include "plugin.h"
 #include "projectinterface.h"
 #include "uiinterface.h"
 
+class Object::Private
+{
+  public:
+    Object(QObject* parent): 
+      QObject(parent), 
+      m_plg(0), 
+      m_uiIf(0), 
+      m_prjIf(0) {};
+
+    QString title;
+    Plugin* plugin;
+    PluginInterface* interface;
+};
+
+Object(QObject* parent): QObject(parent), m_plg(0), m_uiIf(0), m_prjIf(0) 
+{
+}
+
+void KMF::Object::toXML(QDomElement*) const 
+{
+}
+
+bool KMF::Object::fromXML(const QDomElement&) 
+{ 
+  return false; 
+}
+
+void KMF::Object::actions(QList<QAction*>&) const 
+{
+}
+
+bool KMF::Object::make(QString) 
+{ 
+  return false; 
+}
+
+QMap<QString, QString> KMF::Object::subTypes() const
+{ 
+  return QMap<QString, QString>(); 
+}
+
+int KMF::Object::timeEstimate() const 
+{ 
+  return 0; 
+}
+
+const QString& KMF::Object::title() const 
+{ 
+  return m_title; 
+}
+
+void KMF::Object::setTitle(const QString& title) 
+{ 
+  m_title = title; 
+}
 
 KMF::Plugin* KMF::Object::plugin() const
 {

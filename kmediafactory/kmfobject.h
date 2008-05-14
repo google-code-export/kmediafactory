@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,50 +17,50 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef KMFOBJECT_H
 #define KMFOBJECT_H
 
 #include <kdemacros.h>
-#include <QAction>
 #include <QObject>
 #include <QPixmap>
-#include <QDomElement>
+#include <QVariantList>
+
+class QDomElement;
+class QAction;
 
 namespace KMF
 {
-  class UiInterface;
-  class ProjectInterface;
+  class PluginInterface;
   class Plugin;
 
   class KDE_EXPORT Object : public QObject
   {
+      Q_PROPERTY(QString title READ title WRITE setTitle)
+      Q_PROPERTY(QPixmap pixmap READ pixmap)
     public:
-      Object(QObject* parent):
-          QObject(parent), m_plg(0), m_uiIf(0), m_prjIf(0) {};
-      virtual void toXML(QDomElement&) const {};
-      virtual bool fromXML(const QDomElement&) { return false; };
+      Object(QObject* parent);
+      virtual void toXML(QDomElement*) const;
+      virtual bool fromXML(const QDomElement&);
       virtual QPixmap pixmap() const = 0;
-      virtual void actions(QList<QAction*>&) const {};
-      virtual bool make(QString) { return false; };
-      virtual QMap<QString, QString> subTypes() const
-          { return QMap<QString, QString>(); };
-      virtual int timeEstimate() const { return 0; };
+      virtual void actions(QList<QAction*>*) const;
+      // TODO remove
+      virtual bool make(QString);
+      virtual QMap<QString, QString> subTypes() const;
+      // TODO remove
+      virtual int timeEstimate() const;
 
-      const QString& title() const { return m_title; };
-      void setTitle(const QString& title) { m_title = title; };
+      const QString& title() const;
+      void setTitle(const QString& title);
       Plugin* plugin() const;
-      UiInterface* uiInterface() const;
-      ProjectInterface* projectInterface() const;
+      PLuginInterface* interface() const;
       QVariant call(const QString& func, QVariantList args = QVariantList());
 
     public slots:
       virtual void clean() {};
 
     private:
-      QString m_title;
-      mutable Plugin* m_plg;
-      mutable UiInterface* m_uiIf;
-      mutable ProjectInterface* m_prjIf;
+      class Private *const d;
   };
 };
 
