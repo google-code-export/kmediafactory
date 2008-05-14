@@ -32,14 +32,14 @@ NewStuffObject::NewStuffObject(QObject* parent):
 {
   setObjectName("newstuff");
   setTitle(i18n("Get more..."));
-  uiInterface()->addTemplateObject(this);
+  interface()->addTemplateObject(this);
 }
 
 NewStuffObject::~NewStuffObject()
 {
-  KMF::UiInterface *ui = uiInterface();
+  KMF::PluginInterface *ui = interface();
   if(ui)
-    uiInterface()->removeTemplateObject(this);
+    interface()->removeTemplateObject(this);
 }
 
 bool NewStuffObject::clicked()

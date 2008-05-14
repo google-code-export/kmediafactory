@@ -78,7 +78,7 @@ void KMFLabel::fromXML(const QDomElement& element)
 void KMFLabel::setText(const QString& text)
 {
   QRegExp rx("%([\\d\\.$]+)%" );
-  QList<KMF::MediaObject*> mobs = m_prjIf->mediaObjects();
+  QList<KMF::MediaObject*> mobs = m_interface->mediaObjects();
   int title, chapter;
   QString s;
   int pos = 0;
@@ -94,7 +94,7 @@ void KMFLabel::setText(const QString& text)
       parseTitleChapter(rx.cap(1), title, chapter);
 
       if(title < 1)
-        s = m_prjIf->title();
+        s = m_interface->title();
       else
       {
         if(title <= (int)mobs.count()

@@ -91,21 +91,21 @@ TemplateObject::TemplateObject(const QString& templateFile, QObject* parent):
   }
   m_menu.setLanguage("ui", KGlobal::locale()->language());
   setTitle(m_menu.templateStore()->translate(m_menu.title().toLocal8Bit()));
-  uiInterface()->addTemplateObject(this);
+  interface()->addTemplateObject(this);
 }
 
 TemplateObject::~TemplateObject()
 {
-  KMF::UiInterface *ui = uiInterface();
+  KMF::PluginInterface *ui = interface();
   if(ui)
-    uiInterface()->removeTemplateObject(this);
+    interface()->removeTemplateObject(this);
 }
 
-void TemplateObject::actions(QList<QAction*>& actionList) const
+void TemplateObject::actions(QList<QAction*>* actionList) const
 {
   if(m_templateProperties)
   {
-    actionList.append(m_templateProperties);
+    actionList->append(m_templateProperties);
   }
 }
 
@@ -155,9 +155,9 @@ bool TemplateObject::fromXML(const QDomElement& element)
   return true;
 }
 
-void TemplateObject::toXML(QDomElement& element) const
+void TemplateObject::toXML(QDomElement* element) const
 {
-  QDomDocument doc = element.ownerDocument();
+  QDomDocument doc = element->ownerDocument();
   QDomElement tmplate = doc.createElement("custom_properties");
 
   KConfigSkeletonItem::List items = m_customProperties.items();
@@ -182,7 +182,7 @@ void TemplateObject::toXML(QDomElement& element) const
   }
   if(!group.isEmpty())
     tmplate.appendChild(e);
-  element.appendChild(tmplate);
+  element->appendChild(tmplate);
 }
 
 int TemplateObject::timeEstimate() const
@@ -196,8 +196,8 @@ bool TemplateObject::make(QString type)
   // Make menu
   if(isUpToDate(type))
   {
-    uiInterface()->message(KMF::Info, i18n("Menus are up to date"));
-    uiInterface()->progress(KMFMenu::TotalPoints);
+    interface()->message(KMF::PluginInterface::Info, i18n("Menus are up to date"));
+    interface()->progress(KMFMenu::TotalPoints);
     return true;
   }
   else
@@ -276,7 +276,7 @@ void TemplateObject::slotProperties()
   */
 
   if(dialog.result() == QDialog::Accepted)
-    projectInterface()->setDirty(KMF::ProjectInterface::DirtyTemplate);
+    interface()->setDirty(KMF::PluginInterface::DirtyTemplate);
 
   kapp->removeTranslator(&kmftr);
 }
@@ -345,12 +345,12 @@ void TemplateObject::setProperty(const QString& widget,
 
 bool TemplateObject::isUpToDate(QString type)
 {
-  if(type != projectInterface()->lastSubType())
+  if(type != interface()->lastSubType())
     return false;
 
-  QDateTime lastModified = projectInterface()->lastModified(
-      KMF::ProjectInterface::DirtyMediaOrTemplate);
-  QString file = projectInterface()->projectDir() + "dvdauthor.xml";
+  QDateTime lastModified = interface()->lastModified(
+      KMF::PluginInterface::DirtyMediaOrTemplate);
+  QString file = interface()->projectDir() + "dvdauthor.xml";
   QFileInfo fileInfo(file);
 
   if(fileInfo.exists() == false || lastModified > fileInfo.lastModified())
@@ -367,7 +367,7 @@ bool TemplateObject::isUpToDate(QString type)
   {
     if((*it).startsWith("./menus/"))
     {
-      fileInfo.setFile(projectInterface()->projectDir() + *it);
+      fileInfo.setFile(interface()->projectDir() + *it);
 
       if(fileInfo.exists() == false || lastModified > fileInfo.lastModified())
         return false;

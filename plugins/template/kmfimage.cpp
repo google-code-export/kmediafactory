@@ -156,7 +156,7 @@ void KMFImage::setImage(KUrl url)
   //kDebug() << url;
   if(url.protocol() == "project")
   {
-    QList<KMF::MediaObject*> mobs = m_prjIf->mediaObjects();
+    QList<KMF::MediaObject*> mobs = m_interface->mediaObjects();
     int title;
     int chapter;
 
