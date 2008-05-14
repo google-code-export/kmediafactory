@@ -198,7 +198,7 @@ void Chapters::setData(const QDVD::CellList& cells,
 
 void Chapters::updateVideo()
 {
-  QDir dir(m_obj->projectInterface()->projectDir("media"));
+  QDir dir(m_obj->interface()->projectDir("media"));
   QString file = dir.filePath(QString("%1_frame.pnm") \
       .arg(m_obj->id()));
   QImage img = m_obj->getFrame(m_pos, file);
@@ -406,8 +406,8 @@ void Chapters::import()
 
 void Chapters::saveCustomPreview( )
 {
-  int serial = m_obj->projectInterface()->serial();
-  QDir dir = m_obj->projectInterface()->projectDir("media");
+  int serial = m_obj->interface()->serial();
+  QDir dir = m_obj->interface()->projectDir("media");
 
   m_preview.sprintf("%3.3d_preview.png", serial);
   m_preview = dir.filePath(m_preview);

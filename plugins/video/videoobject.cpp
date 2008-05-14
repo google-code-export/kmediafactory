@@ -37,6 +37,7 @@
 #include <krun.h>
 #include <kprocess.h>
 #include <kshell.h>
+#include <KAction>
 #include <QImage>
 #include <QColor>
 #include <QFileInfo>
@@ -110,11 +111,11 @@ QString VideoObject::fileName() const
   return m_files.first();
 }
 
-void VideoObject::actions(QList<QAction*>& actionList) const
+void VideoObject::actions(QList<QAction*>* actionList) const
 {
   if(m_videoPlay)
-    actionList.append(m_videoPlay);
-  actionList.append(m_videoProperties);
+    actionList->append(m_videoPlay);
+  actionList->append(m_videoProperties);
 }
 
 bool VideoObject::fromXML(const QDomElement& element)
@@ -242,9 +243,9 @@ bool VideoObject::checkObjectParams()
   return false;
 }
 
-void VideoObject::toXML(QDomElement& element) const
+void VideoObject::toXML(QDomElement* element) const
 {
-  QDomDocument doc = element.ownerDocument();
+  QDomDocument doc = element->ownerDocument();
   QDomElement video = doc.createElement("video");
   video.setAttribute("title", title());
   video.setAttribute("aspect", (int)m_aspect);
@@ -289,7 +290,7 @@ void VideoObject::toXML(QDomElement& element) const
     e.appendChild(e2);
     video.appendChild(e);
   }
-  element.appendChild(video);
+  element->appendChild(video);
 }
 
 QVariant VideoObject::writeDvdAuthorXml(QVariantList args)
@@ -297,7 +298,7 @@ QVariant VideoObject::writeDvdAuthorXml(QVariantList args)
   QDomDocument doc;
   QString preferredLanguage = args[0].toString();
 
-  QDir dir(projectInterface()->projectDir("media"));
+  QDir dir(interface()->projectDir("media"));
   int audioTrack = 0; // First audio track
   int subTrack = 62; // Let player decide
   bool audioFound = false;
@@ -422,7 +423,7 @@ int VideoObject::timeEstimate() const
 
 QString VideoObject::videoFileName(int index, VideoFilePrefix prefix)
 {
-  QDir dir(projectInterface()->projectDir("media"));
+  QDir dir(interface()->projectDir("media"));
   QString file = QFileInfo(m_files[index]).fileName();
 
   /*
@@ -437,7 +438,7 @@ QString VideoObject::videoFileName(int index, VideoFilePrefix prefix)
 
 QString VideoObject::videoFileFind(int index, VideoFilePrefix prefixStart) const
 {
-  QDir dir(projectInterface()->projectDir("media"));
+  QDir dir(interface()->projectDir("media"));
   QString file = QFileInfo(m_files[index]).fileName();
 
   for(int i = prefixStart; i < PrefixEmpty; ++i)
@@ -487,7 +488,7 @@ bool VideoObject::writeSpumuxXml(QDomDocument& doc,
   textsub.setAttribute("top-margin", 30);
   textsub.setAttribute("bottom-margin", 40);
   textsub.setAttribute("movie-width", "720");
-  if(projectInterface()->type() == "DVD-PAL")
+  if(interface()->type() == "DVD-PAL")
   {
     textsub.setAttribute("movie-fps", "25");
     textsub.setAttribute("movie-height", "574");
@@ -539,7 +540,7 @@ void VideoObject::output(QString line)
     qulonglong temp = bytes.cap(1).toULongLong();
     if(temp - m_lastUpdate > m_half)
     {
-      if(uiInterface()->setItemProgress(temp / 1024))
+      if(interface()->setItemProgress(temp / 1024))
         m_spumux->kill();
       m_lastUpdate = temp;
     }
@@ -549,7 +550,7 @@ void VideoObject::output(QString line)
 bool VideoObject::convertSubtitles(const QDVD::Subtitle& subtitle)
 {
   int i = 0;
-  QDir dir(projectInterface()->projectDir("media"));
+  QDir dir(interface()->projectDir("media"));
   QStringList subtitleFiles = subtitle.file().split(";");
   bool result = true;
 
@@ -566,7 +567,7 @@ bool VideoObject::convertSubtitles(const QDVD::Subtitle& subtitle)
       fii.lastModified() > fio.lastModified() ||
       fiSub.lastModified() > fio.lastModified())
     {
-      uiInterface()->message(KMF::Info,
+      interface()->message(KMF::PluginInterface::Info,
           i18n("   Adding subtitles to %1", fii.fileName()));
 
       //kDebug() << fiXml.filePath();
@@ -575,12 +576,12 @@ bool VideoObject::convertSubtitles(const QDVD::Subtitle& subtitle)
       *m_spumux << "spumux" << "-P" << fiXml.filePath();
       m_spumux->setStandardInputFile(fii.filePath());
       m_spumux->setStandardOutputFile(fio.filePath());
-      m_spumux->setWorkingDirectory(projectInterface()->projectDir("media"));
-      uiInterface()->logger()->connectProcess(m_spumux,
+      m_spumux->setWorkingDirectory(interface()->projectDir("media"));
+      interface()->logger()->connectProcess(m_spumux,
           "INFO: \\d+ bytes of data written", KProcess::OnlyStderrChannel);
-      connect(uiInterface()->logger(), SIGNAL(line(QString)),
+      connect(interface()->logger(), SIGNAL(line(QString)),
               this, SLOT(output(QString)));
-      uiInterface()->setItemTotalSteps(fii.size()/1024);
+      interface()->setItemTotalSteps(fii.size()/1024);
       m_lastUpdate = 0;
       m_half = fii.size() / 200;
       m_spumux->start();
@@ -592,12 +593,12 @@ bool VideoObject::convertSubtitles(const QDVD::Subtitle& subtitle)
       if(m_spumux->exitCode() == QProcess::NormalExit &&
          m_spumux->exitStatus() == 0)
       {
-        uiInterface()->setItemProgress(fii.size()/1024);
+        interface()->setItemProgress(fii.size()/1024);
       }
       else
       {
         QFile::remove(fio.filePath());
-        uiInterface()->message(KMF::Error, i18n("   Conversion error."));
+        interface()->message(KMF::PluginInterface::Error, i18n("   Conversion error."));
         result = false;
       }
       delete m_spumux;
@@ -605,7 +606,7 @@ bool VideoObject::convertSubtitles(const QDVD::Subtitle& subtitle)
     }
     else
     {
-      uiInterface()->message(KMF::Info,
+      interface()->message(KMF::PluginInterface::Info,
           i18n("   Subtitle conversion seems to be up to date"));
     }
   }
@@ -614,7 +615,7 @@ bool VideoObject::convertSubtitles(const QDVD::Subtitle& subtitle)
 
 bool VideoObject::make(QString type)
 {
-  uiInterface()->message(KMF::Info, i18n("Preparing file(s) for %1", title()));
+  interface()->message(KMF::PluginInterface::Info, i18n("Preparing file(s) for %1", title()));
   QString fileName;
 
   m_type = type;
@@ -630,7 +631,7 @@ bool VideoObject::make(QString type)
       }
     }
   }
-  uiInterface()->progress(TotalPoints);
+  interface()->progress(TotalPoints);
   return true;
 }
 
@@ -641,7 +642,7 @@ void VideoObject::slotProperties()
   if (dlg.exec())
   {
     dlg.getData(*this);
-    projectInterface()->setDirty(KMF::ProjectInterface::DirtyMedia);
+    interface()->setDirty(KMF::PluginInterface::DirtyMedia);
   }
 }
 
@@ -718,7 +719,7 @@ QImage VideoObject::preview(int chap) const
   }
 
   KMF::Time t = chapter(chap).start();
-  QDir dir(projectInterface()->projectDir("media"));
+  QDir dir(interface()->projectDir("media"));
   QString s;
   cacheFile = dir.filePath(s.sprintf("%s_%s.pnm",
       (const char*)m_id.toLocal8Bit(),
@@ -741,7 +742,7 @@ QImage VideoObject::preview(int chap) const
   QSize videoRatio = (aspect() == QDVD::VideoTrack::Aspect_4_3) ?
                           QSize(4, 3) : QSize(16, 9);
   QSize imageRatio = KMF::Tools::guessRatio(img.size(), videoRatio);
-  QSize templateSize = KMF::Tools::maxResolution(projectInterface()->type());
+  QSize templateSize = KMF::Tools::maxResolution(interface()->type());
   QSize imageSize = img.size();
   QSize res = KMF::Tools::resolution(imageSize, imageRatio,
                                      templateSize, templateRatio);
@@ -820,7 +821,7 @@ const QDVD::Cell& VideoObject::chapter(int chap) const
 
 void VideoObject::generateId()
 {
-  int serial = projectInterface()->serial();
+  int serial = interface()->serial();
   QString name = KMF::Tools::simpleBaseName(m_files.first());
   m_id.sprintf("%3.3d_%s", serial, (const char*)name.toLocal8Bit());
 }
