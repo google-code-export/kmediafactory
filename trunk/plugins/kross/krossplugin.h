@@ -56,8 +56,7 @@ class KrossPlugin : public KMF::Plugin
 
   public slots: // script functions
     void registerPlugin(Kross::Object::Ptr plugin);
-    QObject* uiInterface();
-    QObject* projectInterface();
+    QObject* interface();
 
   protected slots:
       void actionTriggered();

@@ -22,16 +22,17 @@
 
 #include <QObject>
 #include "kmediafactory/plugininterface.h"
+#include <kross/core/object.h>
 
 class KrossPluginInterface : public QObject
 {
   Q_OBJECT
   public:
-    KrossPluginInterface(QObject *parent, KMF::PluginInterface* projectIf);
+    KrossPluginInterface(QObject *parent, KMF::PluginInterface* interface);
     ~KrossPluginInterface();
 
   public slots:
-    QList<MediaObject*> mediaObjects();
+    QList<KMF::MediaObject*> mediaObjects();
     QString title();
     void setTitle(QString title);
     QString projectDir(const QString& subDir = "");
@@ -55,7 +56,7 @@ class KrossPluginInterface : public QObject
     void setTemplateFromXML(const QString& xml);
     void setOutputFromXML(const QString& xml);
 
-    bool message(KMF::MsgType type, const QString& msg);
+    bool message(KMF::PluginInterface::MsgType type, const QString& msg);
     bool progress(int advance);
     bool setItemTotalSteps(int totalSteps);
     bool setItemProgress(int progress);
