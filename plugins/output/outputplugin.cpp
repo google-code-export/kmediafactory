@@ -85,7 +85,7 @@ void OutputPlugin::init(const QString &type)
   deleteChildren();
   if (type.left(3) == "DVD")
   {
-    KMF::UiInterface *ui = uiInterface();
+    KMF::PluginInterface *ui = interface();
     if(ui)
     {
       DvdAuthorObject *daob = new DvdAuthorObject(this);
@@ -101,7 +101,7 @@ void OutputPlugin::init(const QString &type)
 void OutputPlugin::play(const QString& player)
 {
   QString cmd;
-  QString projectDir = projectInterface()->projectDir();
+  QString projectDir = interface()->projectDir();
 
   if(player.isEmpty())
   {
@@ -131,7 +131,7 @@ void OutputPlugin::slotPreviewDVDKaffeine()
 void OutputPlugin::slotDVDInfo()
 {
 #ifdef HAVE_LIBDVDREAD
-  QString projectDir = projectInterface()->projectDir();
+  QString projectDir = interface()->projectDir();
   DVDInfo dlg(kapp->activeWindow(), projectDir + "DVD/");
 
   dlg.exec();

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,6 +17,7 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "dvdauthorobject.h"
 #include "outputplugin.h"
 #include <KMimeType>
@@ -26,6 +27,7 @@
 #include <KAboutData>
 #include <QPixmap>
 #include <QFile>
+#include <QDomElement>
 
 DvdAuthorObject::DvdAuthorObject(QObject* parent)
   : OutputObject(parent)
@@ -36,12 +38,12 @@ DvdAuthorObject::DvdAuthorObject(QObject* parent)
 
 DvdAuthorObject::~DvdAuthorObject()
 {
-  KMF::UiInterface *ui = uiInterface();
-  if(ui)
-    ui->removeOutputObject(this);
+  KMF::PluginInterface *pi = interface();
+  if(pi)
+    pi->removeOutputObject(this);
 }
 
-void DvdAuthorObject::actions(QList<QAction*>&) const
+void DvdAuthorObject::actions(QList<QAction*>*) const
 {
   //actionList.append(dvdAuthorProperties);
 }
@@ -69,13 +71,13 @@ QDomElement DvdAuthorObject::toElement(const QVariant& element)
 
 bool DvdAuthorObject::make(QString)
 {
-  if(uiInterface()->message(KMF::Info, i18n("Generating DVDAuthor xml")))
+  if(interface()->message(KMF::PluginInterface::Info, i18n("Generating DVDAuthor xml")))
     return false;
 
   QDomDocument doc("");
   doc.appendChild(doc.createProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\""));
   QDomElement root = doc.createElement("dvdauthor");
-  KMF::TemplateObject* tempObj = projectInterface()->templateObject();
+  KMF::TemplateObject* tempObj = interface()->templateObject();
   int i;
   QString tmp;
   QString header = "\n"
@@ -113,7 +115,7 @@ bool DvdAuthorObject::make(QString)
   doc.appendChild(root);
 
   root.appendChild(doc.createTextNode("\n "));
-  tmp = i18n("Main menu for %1", projectInterface()->title());
+  tmp = i18n("Main menu for %1", interface()->title());
   root.appendChild(doc.createComment(header.arg(tmp)));
   root.appendChild(doc.createTextNode("\n "));
 
@@ -131,7 +133,7 @@ bool DvdAuthorObject::make(QString)
   vmgm.appendChild(fpc);
 
   KMF::MediaObject *mob;
-  QList<KMF::MediaObject*> mobs =  projectInterface()->mediaObjects();
+  QList<KMF::MediaObject*> mobs =  interface()->mediaObjects();
 
   QDomElement menus = toElement(tempObj->call("writeDvdAuthorXml", QVariantList() << 0));
   if(menus.hasChildNodes())
@@ -173,9 +175,9 @@ bool DvdAuthorObject::make(QString)
     ++i;
   }
 
-  QFile file(projectInterface()->projectDir() + "/dvdauthor.xml");
+  QFile file(interface()->projectDir() + "/dvdauthor.xml");
   if (!file.open(QIODevice::WriteOnly)) {
-    uiInterface()->message(KMF::Error, i18n("Error in saving dvdauthor.xml"));
+    interface()->message(KMF::PluginInterface::Error, i18n("Error in saving dvdauthor.xml"));
     return false;
   }
   QTextStream stream(&file);
@@ -183,12 +185,12 @@ bool DvdAuthorObject::make(QString)
   doc.save(stream, 1);
   file.close();
 
-  uiInterface()->message(KMF::OK, i18n("DVDAuthor project ready"));
-  uiInterface()->progress(TotalPoints);
+  interface()->message(KMF::PluginInterface::OK, i18n("DVDAuthor project ready"));
+  interface()->progress(TotalPoints);
   return true;
 }
 
-void DvdAuthorObject::toXML(QDomElement&) const
+void DvdAuthorObject::toXML(QDomElement*) const
 {
 }
 
