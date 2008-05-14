@@ -25,20 +25,22 @@
 #include <QFileInfo>
 #include <QPixmap>
 
+class KAction;
+
 class DvdDirectoryObject : public DvdAuthorObject
 {
   Q_OBJECT
   public:
     enum { TotalPoints = 1000 };
-    enum LastLine { Warning = KMF::Warning, Error = KMF::Error,
+    enum LastLine { Warning = KMF::PluginInterface::Warning, Error = KMF::PluginInterface::Error,
       Processing, Vobu, FixingVobu, None };
 
     DvdDirectoryObject(QObject *parent = 0);
     virtual ~DvdDirectoryObject();
-    virtual void toXML(QDomElement& element) const;
+    virtual void toXML(QDomElement* element) const;
     virtual bool fromXML(const QDomElement& element);
     virtual QPixmap pixmap() const;
-    virtual void actions(QList<QAction*>& actionList) const;
+    virtual void actions(QList<QAction*>* actionList) const;
     virtual int timeEstimate() const;
     virtual bool make(QString type);
 

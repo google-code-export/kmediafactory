@@ -37,10 +37,10 @@ class K3bObject : public DvdDirectoryObject
     K3bObject(QObject *parent = 0);
     ~K3bObject();
 
-    virtual void toXML(QDomElement& element) const;
+    virtual void toXML(QDomElement* element) const;
     virtual bool fromXML(const QDomElement& element);
     virtual QPixmap pixmap() const;
-    virtual void actions(QList<QAction*>& actionList) const;
+    virtual void actions(QList<QAction*>* actionList) const;
     virtual int timeEstimate() const;
     virtual bool make(QString type);
 
