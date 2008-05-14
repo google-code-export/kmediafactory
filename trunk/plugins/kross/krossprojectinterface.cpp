@@ -79,4 +79,133 @@ int KrossProjectInterface::serial()
   return m_projectIf->serial();
 }
 
+bool KrossUiInterface::addMediaAction(const QString& icon, const QString& text,
+                                      const QString& shortcut, const QString& name,
+                                      Kross::Object::Ptr obj, const QString& method)
+{
+  KrossPlugin* plugin = qobject_cast<KrossPlugin*>(parent());
+  QAction* act = new KAction(KIcon(icon), text, plugin->parent());
+  act->setShortcut(QKeySequence::fromString(shortcut));
+  //kDebug() << "addAction" << name << act;
+  plugin->actionCollection()->addAction(name, act);
+  connect(act, SIGNAL(triggered()), plugin, SLOT(actionTriggered()));
+  QVariant arg;
+  arg.setValue(obj);
+  plugin->actionMap()->insert(act, QVariantList() << arg << method);
+  return m_uiIf->addMediaAction(act);
+}
+
+void KrossUiInterface::setActionEnabled(const QString& name, bool enabled)
+{
+  KrossPlugin* plugin = qobject_cast<KrossPlugin*>(parent());
+  QAction* action = plugin->actionCollection()->action(name);
+  if(!action)
+    return;
+  action->setEnabled(enabled);
+}
+
+bool KrossUiInterface::addMediaObject(Kross::Object::Ptr media) const
+{
+  Q_UNUSED(media)
+  return false;
+}
+
+bool KrossUiInterface::addTemplateObject(Kross::Object::Ptr tob)
+{
+  Q_UNUSED(tob)
+  return false;
+}
+
+bool KrossUiInterface::addOutputObject(Kross::Object::Ptr oob)
+{
+  Q_UNUSED(oob)
+  return false;
+}
+
+bool KrossUiInterface::removeMediaObject(Kross::Object::Ptr media) const
+{
+  Q_UNUSED(media)
+  return false;
+}
+
+bool KrossUiInterface::removeTemplateObject(Kross::Object::Ptr tob)
+{
+  Q_UNUSED(tob)
+  return false;
+}
+
+bool KrossUiInterface::removeOutputObject(Kross::Object::Ptr oob)
+{
+  Q_UNUSED(oob)
+  return false;
+}
+
+bool KrossUiInterface::message(KMF::MsgType type, const QString& msg)
+{
+  return m_uiIf->message(type, msg);
+}
+
+bool KrossUiInterface::progress(int advance)
+{
+  return m_uiIf->progress(advance);
+}
+
+bool KrossUiInterface::setItemTotalSteps(int totalSteps)
+{
+  return m_uiIf->setItemTotalSteps(totalSteps);
+}
+
+bool KrossUiInterface::setItemProgress(int progress)
+{
+  return m_uiIf->setItemProgress(progress);
+}
+
+QObject* KrossUiInterface::logger()
+{
+  return m_uiIf->logger();
+}
+
+void KrossUiInterface::addMediaObjectFromXML(const QString& xml)
+{
+  kDebug() << xml;
+  m_uiIf->addMediaObject(xml);
+}
+
+void KrossUiInterface::setTemplateFromXML(const QString& xml)
+{
+  m_uiIf->selectTemplate(xml);
+}
+
+void KrossUiInterface::setOutputFromXML(const QString& xml)
+{
+  m_uiIf->selectOutput(xml);
+}
+
+QStringList KrossUiInterface::getOpenFileNames(const QString &startDir, const QString &filter, 
+                                               const QString &caption)
+{
+  return m_uiIf->getOpenFileNames(startDir, filter, caption);
+}
+
+void KrossUiInterface::debug(const QString &txt)
+{
+  return m_uiIf->debug(txt);
+}
+
+int  KrossUiInterface::messageBox(const QString &caption, const QString &txt, int type)
+{
+  return m_uiIf->messageBox(caption, txt, type);
+}
+
+QObject* KrossUiInterface::progressDialog(const QString &caption, const QString &label, 
+                                          int maximum)
+{
+  return m_uiIf->progressDialog(caption, label, maximum);
+}
+
+QObject* KrossUiInterface::progressDialog()
+{
+  return m_uiIf->progressDialog();
+}
+
 #include "krossprojectinterface.moc"
