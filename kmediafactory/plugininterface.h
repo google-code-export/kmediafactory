@@ -31,11 +31,6 @@ class QDomElement;
 
 namespace KMF
 {
-  /*
-  Q_ENUMS(AspectRatio)
-
-  enum AspectRatio { ASPECT_4_3 = 0 , ASPECT_16_9, ASPECT_LAST };
-  */
   class KDE_EXPORT MediaObject :public Object
   {
       Q_OBJECT
@@ -86,20 +81,26 @@ namespace KMF
       virtual void start() = 0;
       virtual const QString& log() const = 0;
       virtual void message(const QString& msg, const QColor& color) = 0;
+      // TODO move to job
       virtual void setFilter(const QString& filter) = 0;
+      // TODO move to job
       virtual QString filter() const = 0;
       virtual bool save(QString file) const = 0;
+      // TODO move to job
       void connectProcess(KProcess* proc,
                           const QString& filter = "",
                           KProcess::OutputChannelMode mode =
                               KProcess::SeparateChannels);
 
     public slots:
+      // TODO move to job
       virtual void stdout() = 0;
+      // TODO move to job
       virtual void stderr() = 0;
-      void message(const QString& msg) { message(msg, QColor("black")); };
+      void message(const QString& msg);
 
     protected:
+      // TODO move to job
       KProcess* currentProcess();
 
     private:
@@ -165,8 +166,11 @@ namespace KMF
       virtual void selectOutput(const QString& xml) = 0;
 
       virtual bool message(MsgType type, const QString& msg) = 0;
+      // TODO remove
       virtual bool progress(int advance) = 0;
+      // TODO remove
       virtual bool setItemTotalSteps(int totalSteps) = 0;
+      // TODO remove
       virtual bool setItemProgress(int progress) = 0;
       virtual Logger* logger() = 0;
 
@@ -181,6 +185,25 @@ namespace KMF
                                              int maximum) = 0;
       virtual ProgressDialog* progressDialog() = 0;
   };
+/*
+  class KDE_EXPORT Job :public ThreadWeaver::Job
+  {
+      Q_OBJECT
+    public:
+      explicit Job(Object* parent);
+      ~Job();
+  
+      bool message(PluginInterface::MsgType type, const QString& msg);
+      KProcess* process(const QString& filter = "",
+                        KProcess::OutputChannelMode mode =
+                            KProcess::SeparateChannels);
+      bool setValue(int value);
+      bool setMaximum(int maximum);
+
+    public slots:
+      virtual void output(const QString& line);
+  };
+*/
 }
 
 Q_DECLARE_METATYPE(KMF::OutputObject*);

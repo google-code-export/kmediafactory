@@ -88,6 +88,11 @@ KProcess* KMF::Logger::currentProcess()
   return d->currentProcess;
 }
 
+void KMF::Logger::message(const QString& msg) 
+{ 
+  message(msg, QColor("black")); 
+}
+
 void KMF::Logger::connectProcess(KProcess *proc, const QString& filter,
                                  KProcess::OutputChannelMode mode)
 {

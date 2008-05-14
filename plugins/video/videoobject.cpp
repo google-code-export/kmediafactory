@@ -550,66 +550,50 @@ void VideoObject::output(QString line)
 bool VideoObject::convertSubtitles(const QDVD::Subtitle& subtitle)
 {
   int i = 0;
-  QDir dir(interface()->projectDir("media"));
   QStringList subtitleFiles = subtitle.file().split(";");
   bool result = true;
 
-  for(i = 0; i < m_files.count(); ++i)
+  QFileInfo fio(videoFileName(i, PrefixSub));
+  QFileInfo fiXml(videoFileName(i, PrefixXml));
+  QFileInfo fii(videoFileFind(i, PrefixMpg));
+  QFileInfo fiSub(subtitleFiles[i]);
+
+  interface()->message(KMF::PluginInterface::Info,
+      i18n("   Adding subtitles to %1", fii.fileName()));
+
+  //kDebug() << fiXml.filePath();
+  m_spumux = new KProcess();
+  writeSpumuxXml(fiXml.filePath(), fiSub.filePath(), subtitle);
+  *m_spumux << "spumux" << "-P" << fiXml.filePath();
+  m_spumux->setStandardInputFile(fii.filePath());
+  m_spumux->setStandardOutputFile(fio.filePath());
+  m_spumux->setWorkingDirectory(interface()->projectDir("media"));
+  interface()->logger()->connectProcess(m_spumux,
+      "INFO: \\d+ bytes of data written", KProcess::OnlyStderrChannel);
+  connect(interface()->logger(), SIGNAL(line(QString)),
+          this, SLOT(output(QString)));
+  interface()->setItemTotalSteps(fii.size()/1024);
+  m_lastUpdate = 0;
+  m_half = fii.size() / 200;
+  m_spumux->start();
+  while(!m_spumux->waitForFinished(500))
   {
-    if(i >= subtitleFiles.count())
+    if(m_spumux->state() == QProcess::NotRunning)
       break;
-    QFileInfo fio(videoFileName(i, PrefixSub));
-    QFileInfo fiXml(videoFileName(i, PrefixXml));
-    QFileInfo fii(videoFileFind(i, PrefixMpg));
-    QFileInfo fiSub(subtitleFiles[i]);
-
-    if(!fio.exists() ||
-      fii.lastModified() > fio.lastModified() ||
-      fiSub.lastModified() > fio.lastModified())
-    {
-      interface()->message(KMF::PluginInterface::Info,
-          i18n("   Adding subtitles to %1", fii.fileName()));
-
-      //kDebug() << fiXml.filePath();
-      m_spumux = new KProcess();
-      writeSpumuxXml(fiXml.filePath(), fiSub.filePath(), subtitle);
-      *m_spumux << "spumux" << "-P" << fiXml.filePath();
-      m_spumux->setStandardInputFile(fii.filePath());
-      m_spumux->setStandardOutputFile(fio.filePath());
-      m_spumux->setWorkingDirectory(interface()->projectDir("media"));
-      interface()->logger()->connectProcess(m_spumux,
-          "INFO: \\d+ bytes of data written", KProcess::OnlyStderrChannel);
-      connect(interface()->logger(), SIGNAL(line(QString)),
-              this, SLOT(output(QString)));
-      interface()->setItemTotalSteps(fii.size()/1024);
-      m_lastUpdate = 0;
-      m_half = fii.size() / 200;
-      m_spumux->start();
-      while(!m_spumux->waitForFinished(500))
-      {
-        if(m_spumux->state() == QProcess::NotRunning)
-          break;
-      }
-      if(m_spumux->exitCode() == QProcess::NormalExit &&
-         m_spumux->exitStatus() == 0)
-      {
-        interface()->setItemProgress(fii.size()/1024);
-      }
-      else
-      {
-        QFile::remove(fio.filePath());
-        interface()->message(KMF::PluginInterface::Error, i18n("   Conversion error."));
-        result = false;
-      }
-      delete m_spumux;
-      m_spumux = 0;
-    }
-    else
-    {
-      interface()->message(KMF::PluginInterface::Info,
-          i18n("   Subtitle conversion seems to be up to date"));
-    }
   }
+  if(m_spumux->exitCode() == QProcess::NormalExit &&
+      m_spumux->exitStatus() == 0)
+  {
+    interface()->setItemProgress(fii.size()/1024);
+  }
+  else
+  {
+    QFile::remove(fio.filePath());
+    interface()->message(KMF::PluginInterface::Error, i18n("   Conversion error."));
+    result = false;
+  }
+  delete m_spumux;
+  m_spumux = 0;
   return result;
 }
 
@@ -619,15 +603,36 @@ bool VideoObject::make(QString type)
   QString fileName;
 
   m_type = type;
-  if(type != "dummy")
+  if (type != "dummy") 
   {
-    for(QDVD::SubtitleList::ConstIterator it = m_subtitles.begin();
-        it != m_subtitles.end(); ++it)
+    foreach(const QDVD::Subtitle& subtitle, m_subtitles) 
     {
-      if(!(*it).file().isEmpty())
+      if(!subtitle.file().isEmpty())
       {
-        if(!convertSubtitles(*it))
-          return false;
+        QStringList subtitleFiles = subtitle.file().split(";");
+
+        for(int i = 0; i < m_files.count(); ++i)
+        {
+          if(i >= subtitleFiles.count())
+            break;
+          QFileInfo subtitleFile(subtitleFiles[i]);
+          QFileInfo videoFile(videoFileFind(i, PrefixMpg));
+          QFileInfo videoFileWithSubtitles(videoFileName(i, PrefixSub));
+
+          if(!videoFileWithSubtitles.exists() ||
+              videoFile.lastModified() > videoFileWithSubtitles.lastModified() ||
+              subtitleFile.lastModified() > videoFileWithSubtitles.lastModified())
+          {
+            if(!convertSubtitles(subtitle))
+              return false;
+          }
+          else
+          {
+            interface()->message(KMF::PluginInterface::Info,
+                i18n("   Subtitle conversion seems to be up to date: %1")
+                    .arg(videoFile.fileName()));
+          }
+        }
       }
     }
   }
