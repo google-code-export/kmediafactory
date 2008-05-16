@@ -23,6 +23,7 @@
 #include "slideshowpluginsettings.h"
 #include "slideshowproperties.h"
 #include "run.h"
+#include <kmediafactory/job.h>
 #include <qdvdinfo.h>
 #include <kmfmediafile.h>
 #include <kio/copyjob.h>
@@ -49,6 +50,28 @@
 #include <QTextStream>
 #include <QDomDocument>
 #include <list>
+
+class CopyOriginalsJob : public KMF::Job
+{
+public:
+  CopyOriginalsJob(const SlideList& s) : slides(s) {};
+
+  QString destDir;
+  const SlideList& slides;
+
+  void run()
+  {
+    KUrl::List files;
+  
+    foreach(const Slide& slide, slides)
+    {
+      files.append(slide.picture);
+    }
+    KMF::Tools::stripExisting(&files, destDir);
+    if(files.count() > 0)
+      KIO::copy(files, destDir);
+  }
+};
 
 Slide::Slide() : chapter(true)
 {
@@ -298,22 +321,6 @@ void SlideshowObject::actions(QList<QAction*>* actionList) const
   actionList->append(m_slideshowProperties);
 }
 
-bool SlideshowObject::copyOriginals() const
-{
-  KUrl::List files;
-
-  for(SlideList::ConstIterator it = m_slides.begin();
-      it != m_slides.end(); ++it)
-  {
-    files.append((*it).picture);
-  }
-  KMF::Tools::stripExisting(&files,
-                            interface()->projectDir("DVD/PICTURES"));
-  if(files.count() > 0)
-    KIO::copy(files, interface()->projectDir("DVD/PICTURES"));
-  return true;
-}
-
 bool SlideshowObject::make(QString type)
 {
   interface()->message(KMF::PluginInterface::Info, i18n("Preparing file(s) for %1", title()));
@@ -321,7 +328,13 @@ bool SlideshowObject::make(QString type)
   if(type != "dummy")
   {
     if(m_includeOriginals)
-      copyOriginals();
+    {
+      CopyOriginalsJob *job = new CopyOriginalsJob(slides());
+      job->destDir = interface()->projectDir("DVD/PICTURES");
+      // TODO Just for testing
+      job->TODO_REMOVE_ME_START();
+      delete job;
+    }
     if(!convertToDVD())
       return false;
   }
@@ -461,7 +474,7 @@ int SlideshowObject::timeEstimate() const
   return TotalPoints;
 }
 
-QVariant SlideshowObject::writeDvdAuthorXml(QVariantList args)
+QVariant SlideshowObject::writeDvdAuthorXml(QVariantList args) const
 {
   QDomDocument doc;
   QDir dir(interface()->projectDir("media"));
