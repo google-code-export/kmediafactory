@@ -48,6 +48,7 @@ namespace KMF
       virtual bool success() const;
       virtual void requestAbort();
 
+      void TODO_REMOVE_ME_START() { run(); };
       // Copy these To helper class && functions emit helper class signals
       // http://api.kde.org/4.0-api/kdelibs-apidocs/threadweaver/html/MainComponents.html
       // Signals from jobs

@@ -30,6 +30,10 @@
 class KMFButton;
 class TemplateObject;
 class KMFMenuPage;
+namespace KMF 
+{
+  class Job;
+}
 
 class KMFMenuPage : public KMFWidget
 {
@@ -43,19 +47,18 @@ class KMFMenuPage : public KMFWidget
     int buttonCount() { return m_buttons->count(); };
     KMFButton* button(int n) { return m_buttons->at(n); };
     KMFButton* button(const QString& name);
-    void writeDvdAuthorXml(QDomElement& element, QString type);
-    void writeDvdAuthorXmlNoMenu(QDomElement& element);
+    const QList<KMFButton*>& buttons() const { return *m_buttons; };
+    void writeDvdAuthorXml(QDomElement& element, QString type) const;
+    void writeDvdAuthorXmlNoMenu(QDomElement& element) const;
 
     void setResolution(QSize resolution);
-    const QSize& resolution() { return m_resolution; };
-    bool makeMpeg();
-    bool paint();
+    const QSize& resolution() const { return m_resolution; };
     void fromXML(const QDomElement& element);
     bool parseButtons(bool addPages = true);
 
-    int titleStart() { return m_titleStart; }
+    int titleStart() const { return m_titleStart; }
     void setTitleStart(int titleStart) { m_titleStart = titleStart; };
-    int chapterStart() { return m_chapterStart; }
+    int chapterStart() const { return m_chapterStart; }
     void setChapterStart(int chapterStart) { m_chapterStart = chapterStart; };
     const int& titles() const { return m_titles; };
     void setTitles(const int& titles) { m_titles = titles; };
@@ -69,22 +72,18 @@ class KMFMenuPage : public KMFWidget
     void setIndex(int titleset, int titlesetCount, int index, int count)
         { m_titleset = titleset; m_titlesetCount = titlesetCount;
           m_index = index; m_count = count; };
-    bool directChapterPlay() { return m_directChapterPlay; };
-    bool directPlay() { return m_directPlay; };
-    QImage& layer(Layer layer);
-    Layer layerType(const QImage& img);
+    bool directChapterPlay() const { return m_directChapterPlay; };
+    bool directPlay() const { return m_directPlay; };
+    QString sound() const { return m_sound; };
+
+    KMF::Job* job() const;
+    QImage preview();
 
   private:
-    QImage m_background;
-    QImage m_sub;
-    QImage m_subHighlight;
-    QImage m_subSelect;
-    QImage m_temp;
     QList<KMFButton*>* m_buttons;
     QSize m_resolution;
     QString m_language;
     QString m_sound;
-    int m_modifiedLayers;
     int m_titles;
     int m_chapters;
     int m_titleStart;
@@ -100,12 +99,7 @@ class KMFMenuPage : public KMFWidget
     int m_continueToNextTitle;
     static int m_mjpegtoolsVersion;
 
-    void checkDummyVideo();
-    bool paintChildWidgets(QObject* parent);
-    bool saveImages();
-    bool writeSpumuxXml(QDomDocument& doc);
-    bool writeSpumuxXml();
-    bool runScript(QString scriptName, QString place = "menus");
+    void checkDummyVideo() const;
 };
 
 #endif

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,6 +17,7 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef KMFBUTTON_H
 #define KMFBUTTON_H
 
@@ -52,8 +53,6 @@ class KMFJump
     QString m_command;
 };
 
-/**
-*/
 class KMFButton : public KMFWidget
 {
     Q_OBJECT
@@ -63,18 +62,18 @@ class KMFButton : public KMFWidget
     KMFButton(QObject *parent = 0);
     ~KMFButton();
 
-    KMFButton* up() { return m_buttons[Up]; };
+    KMFButton* up() const { return m_buttons[Up]; };
     void setUp(KMFButton* up) { m_buttons[Up] = up; };
-    KMFButton* down() { return m_buttons[Down]; };
+    KMFButton* down() const { return m_buttons[Down]; };
     void setDown(KMFButton* down) { m_buttons[Down] = down; };
-    KMFButton* left() { return m_buttons[Left]; };
+    KMFButton* left() const { return m_buttons[Left]; };
     void setLeft(KMFButton* left) { m_buttons[Left] = left; };
-    KMFButton* right() { return m_buttons[Right]; };
+    KMFButton* right() const { return m_buttons[Right]; };
     void setRight(KMFButton* right) { m_buttons[Right] = right; };
-    const QString& direction(Direction dir) { return m_directions[dir]; };
+    const QString& direction(Direction dir) const { return m_directions[dir]; };
 
-    KMFJump jump() { return m_jump; };
-    void setJump(KMFJump jump) { m_jump = jump; };
+    KMFJump jump() const { return m_jump; };
+    void setJump(const KMFJump& jump) { m_jump = jump; };
 
     void fromXML(const QDomElement& element);
     void writeDvdAuthorXml(QDomText& element, QString type);
@@ -90,4 +89,4 @@ class KMFButton : public KMFWidget
     KMFButton* parseDirection(const QString& dir);
 };
 
-#endif
+#endif // KMFBUTTON_H

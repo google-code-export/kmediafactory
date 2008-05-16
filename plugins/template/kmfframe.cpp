@@ -42,12 +42,12 @@ void KMFFrame::fromXML(const QDomElement& element)
   m_rounded = element.attribute("rounded", "0").toInt();
 }
 
-void KMFFrame::paintWidget(QImage& layer, bool shdw)
+void KMFFrame::paintWidget(QImage* layer, bool shdw) const
 {
   if(m_fillColor.alpha() == 0 && m_lineWidth == 0)
     return;
 
-  QPainter p(&layer);
+  QPainter p(layer);
   QRect rc = (shdw)? paintRect(shadow().offset()) : paintRect();
   QColor rgb = (shdw && color().alpha() != 0)? shadow().color() : color();
   QColor rgbFill = (shdw && m_fillColor.alpha() != 0) ?

@@ -34,7 +34,7 @@ class KMFFrame : public KMFWidget
     void fromXML(const QDomElement& element);
 
   protected:
-    virtual void paintWidget(QImage& layer, bool shdw = false);
+    virtual void paintWidget(QImage* layer, bool shdw = false) const;
 
   private:
     int m_lineWidth;

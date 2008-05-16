@@ -48,8 +48,8 @@ class KMFImage : public KMFWidget
     virtual int paintY() const;
 
   protected:
-    virtual void paintWidget(QImage& layer, bool shdw = false);
-    QImage mask(const QImage& img, const QRgb& maskColor, bool oneBitMask);
+    virtual void paintWidget(QImage* layer, bool shdw = false) const;
+    QImage mask(const QImage& img, const QRgb& maskColor, bool oneBitMask) const;
 
   private:
     QImage m_image;

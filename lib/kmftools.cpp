@@ -556,3 +556,16 @@ void KMF::Tools::spy(QObject* obj)
   spy->spyOn(obj);
 }
 
+uint KMF::Tools::frames(const QString &type)
+{
+  if(type == "DVD-PAL")
+  {
+    return 25;
+  }
+  else // NTSC
+  {
+    return (uint)(30000.0 / 1001.0);
+  }
+}
+
+

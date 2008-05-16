@@ -43,8 +43,8 @@ class KMFLabel : public KMFWidget
     virtual void setProperty(const QString& name, QVariant value);
 
   protected:
-    virtual void paintWidget(QImage& layer, bool shdw = false);
-    QString fitText(QString txt, int width);
+    virtual void paintWidget(QImage* layer, bool shdw = false) const;
+    QString fitText(QString txt, int width) const;
 
   private:
     QString m_text;
