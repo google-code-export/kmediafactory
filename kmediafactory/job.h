@@ -34,33 +34,34 @@ namespace KMF
       explicit Job(QObject* parent = 0);
       ~Job();
   
-      void message(KMF::PluginInterface::MsgType type, const QString& msg);
       KProcess* process(const QString& filter = "",
                         KProcess::OutputChannelMode mode =
                             KProcess::SeparateChannels);
+      void message(KMF::PluginInterface::MsgType type, const QString& msg);
+      void log(const QString& msg);
       void setValue(int value);
       void setMaximum(int maximum);
+
       void setFilter(const QString& filter);
       QString filter() const;
+
       void failed();
       bool aborted();
+
       virtual void output(const QString& line);
       virtual bool success() const;
       virtual void requestAbort();
 
       void TODO_REMOVE_ME_START() { run(); };
-      // Copy these To helper class && functions emit helper class signals
-      // http://api.kde.org/4.0-api/kdelibs-apidocs/threadweaver/html/MainComponents.html
-      // Signals from jobs
+
     signals:
       void newMessage(PluginInterface::MsgType type, const QString& msg);
+      void newLogMessage(const QString& msg);
       // Howto connect these to list items??
       // Main message?
       // ...or on first maximum message connect to list item widget
-      void value(int value);
-      void maximum(int maximum);
-
-      void log(const QString& msg);
+      void valueChanged(int value);
+      void maximumChanged(int maximum);
 
     private:
       class Private;
