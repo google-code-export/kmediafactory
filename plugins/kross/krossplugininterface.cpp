@@ -52,11 +52,6 @@ QString KrossPluginInterface::projectDir(const QString& subDir)
   return m_interface->projectDir(subDir);
 }
 
-void KrossPluginInterface::cleanFiles(const QString& subDir, const QStringList& files)
-{
-  return m_interface->cleanFiles(subDir, files);
-}
-
 void KrossPluginInterface::setDirty(KMF::PluginInterface::DirtyType type)
 {
   return m_interface->setDirty(type);

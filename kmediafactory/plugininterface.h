@@ -109,14 +109,11 @@ namespace KMF
       virtual void setTitle(QString title) = 0;
       virtual QString projectDir(const QString& subDir = "") = 0;
       virtual QString projectType() = 0;
-      virtual void cleanFiles(const QString& subDir,
-                              const QStringList& files) = 0;
       virtual void setDirty(DirtyType type) = 0;
       virtual QString lastSubType() = 0;
       virtual QDateTime lastModified(DirtyType type) = 0;
       virtual int serial() = 0;
-      virtual bool addMediaAction(QAction* action,
-                                  const QString& group = "") const = 0;
+      virtual bool addMediaAction(QAction* action,const QString& group = "") const = 0;
 
       virtual bool addMediaObject(MediaObject* media) const = 0;
       virtual bool addTemplateObject(TemplateObject* tob) = 0;

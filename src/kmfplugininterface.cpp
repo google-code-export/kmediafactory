@@ -368,14 +368,6 @@ QString KMFPluginInterface::projectDir(const QString& subDir)
   return QString();
 }
 
-void KMFPluginInterface::cleanFiles(const QString& subDir,
-                                     const QStringList& files)
-{
-  if (kmfApp->project()) {
-    kmfApp->project()->cleanFiles(subDir, files);
-  }
-}
-
 void KMFPluginInterface::setDirty(KMF::PluginInterface::DirtyType type)
 {
   if (kmfApp->project()) {

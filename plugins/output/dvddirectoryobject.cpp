@@ -24,6 +24,7 @@
 #include <kmediafactory/kmfobject.h>
 #include <kmediafactory/logger.h>
 #include <kmediafactory/job.h>
+#include <kmftools.h>
 #include <KApplication>
 #include <KMimeType>
 #include <KIconLoader>
@@ -72,8 +73,7 @@ class DVDDirectoryJob : public KMF::Job
     else
       m_filePoints = 0;
   
-    //TODO
-    //clean();
+    clean(projectDir);
   
     KProcess *dvdauthor = process();
     *dvdauthor << "dvdauthor" << "-x" << "dvdauthor.xml";
@@ -88,10 +88,8 @@ class DVDDirectoryJob : public KMF::Job
         static_cast<OutputPlugin*>(plugin())->play();
       */
     }
-    /*TODO
     else
-      clean();
-    */
+      clean(projectDir);
   }
 
   void output(const QString& line)
@@ -193,6 +191,13 @@ class DVDDirectoryJob : public KMF::Job
     //interface()->progress(points);
   }
 
+  static void clean(const QString& projectDir)
+  {
+    KMF::Tools::cleanFiles(projectDir + "DVD/AUDIO_TS");
+    KMF::Tools::cleanFiles(projectDir + "DVD/VIDEO_TS", 
+                           QStringList() << "*.VOB" << "*.BUP" << "*.IFO");
+  }
+
 private:
   bool m_error;
   LastLine m_lastLine;
@@ -233,19 +238,6 @@ bool DvdDirectoryObject::fromXML(const QDomElement&)
 int DvdDirectoryObject::timeEstimate() const
 {
   return TotalPoints + DvdAuthorObject::timeEstimate();
-}
-
-void DvdDirectoryObject::clean()
-{
-  DvdAuthorObject::clean();
-
-  QStringList list;
-
-  interface()->cleanFiles("DVD/AUDIO_TS", list);
-  list.append("*.VOB");
-  list.append("*.BUP");
-  list.append("*.IFO");
-  interface()->cleanFiles("DVD/VIDEO_TS", list);
 }
 
 bool DvdDirectoryObject::isUpToDate(QString type)
@@ -290,7 +282,7 @@ bool DvdDirectoryObject::make(QString type)
     return true;
   }
   DVDDirectoryJob *job = new DVDDirectoryJob();
-
+  job->projectDir = interface()->projectDir();
   // TODO Just for testing
   job->TODO_REMOVE_ME_START();
   delete job;
@@ -306,6 +298,12 @@ QPixmap DvdDirectoryObject::pixmap() const
 {
   return KIconLoader::global()->loadIcon("folder-video", KIconLoader::NoGroup,
                                          KIconLoader::SizeLarge);
+}
+
+void DvdDirectoryObject::DvdDirectoryObject::clean()
+{
+  DvdAuthorObject::clean();
+  DVDDirectoryJob::clean(interface()->projectDir());
 }
 
 #include "dvddirectoryobject.moc"
