@@ -69,7 +69,7 @@ class KMFWidget : public KMFTemplateBase
     Q_OBJECT
   public:
     enum Layer { None = 0, Background = 1, Sub = 2, Highlight = 4,
-                 Select = 8, Temp = 16 };
+                 Select = 8 };
 
     KMFWidget(QObject *parent = 0);
     ~KMFWidget();
@@ -98,7 +98,7 @@ class KMFWidget : public KMFTemplateBase
     const KMFGeometry& geometry() const { return m_geometry; };
     virtual void setProperty(const QString& name, QVariant value);
 
-    void paint(KMFMenuPage* page);
+    void paint(QImage* layer, bool background) const;
 
     Layer layer() const { return m_layer; };
     virtual void setLayer(const Layer layer);
@@ -121,7 +121,7 @@ class KMFWidget : public KMFTemplateBase
     virtual void fromXML(const QDomElement& element);
 
   protected:
-    virtual void paintWidget(QImage&, bool = false) { };
+    virtual void paintWidget(QImage*, bool = false) const { };
     int parse(const QString& coordinate,
 	      KMFUnit::Type& type);
     void parseTitleChapter(const QString& s, int& title, int& chapter);

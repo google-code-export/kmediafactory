@@ -83,6 +83,7 @@ namespace KMF
                                 int radius);
       static void printActions(KXMLGUIClient* client);
       static void spy(QObject* obj);
+      static uint frames(const QString &type);
   };
 }
 

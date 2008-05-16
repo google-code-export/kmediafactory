@@ -112,14 +112,14 @@ void KMFLabel::setText(const QString& text)
     hide();
 }
 
-void KMFLabel::paintWidget(QImage& layer, bool shdw)
+void KMFLabel::paintWidget(QImage* layer, bool shdw) const
 {
-  QPainter p(&layer);
-  QFontMetrics fm(m_font, &layer);
+  QPainter p(layer);
+  QFontMetrics fm(m_font, layer);
 
   //kDebug() << m_font.family() << m_font.pointSize() <<
   //    m_font.weight();
-  Layer lt = page()->layerType(layer);
+  QString lt = layer->text("layer");
   QRect rc = (shdw)? paintRect(shadow().offset()) : paintRect();
   QString text = fitText(m_text, rc.width());
   QColor rgb = (shdw)? shadow().color() : color() ;
@@ -130,7 +130,7 @@ void KMFLabel::paintWidget(QImage& layer, bool shdw)
   p.setFont(m_font);
 
   textrc.align(rc, halign(), valign());
-  bool aa = (lt == Background || lt == Temp);
+  bool aa = (lt == "background" || lt == "temp");
   p.setRenderHint(QPainter::TextAntialiasing, aa);
   p.drawText(textrc, Qt::AlignLeft, text);
 }
@@ -146,7 +146,7 @@ void KMFLabel::setProperty(const QString& name, QVariant value)
   }
 }
 
-QString KMFLabel::fitText(QString txt, int width)
+QString KMFLabel::fitText(QString txt, int width) const
 {
   QString s = txt;
   int i = 0;

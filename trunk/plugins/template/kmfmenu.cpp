@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,14 +17,16 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "kmfmenu.h"
 #include "kmfwidgetfactory.h"
 #include "kmftime.h"
-#include "kaboutdata.h"
+#include <kmediafactory/job.h>
+#include <KAboutData>
 #include <kstore/KoStore.h>
-#include <kdebug.h>
-#include <klocale.h>
-#include <kcomponentdata.h>
+#include <KDebug>
+#include <KLocale>
+#include <KComponentData>
 #include <QImage>
 #include <QFile>
 #include <QFileInfo>
@@ -108,8 +110,8 @@ bool KMFMenu::makeMenuMpegs()
            i18n("   Menu: %1", uiText(ob->objectName()))))
           return false;
 
-        if(!ob->makeMpeg())
-          return false;
+        // TODO just for testing
+        ob->job()->TODO_REMOVE_ME_START();
       }
     }
   }
@@ -221,9 +223,7 @@ QImage KMFMenu::makeMenuPreview(QString page)
         static_cast<KMFMenuPage*>(KMFWidgetFactory::createPage(e, this));
     if(p)
     {
-      p->parseButtons(false);
-      p->paint();
-      return p->layer(KMFMenuPage::Background);
+      return p->preview();
     }
   }
   return QImage();

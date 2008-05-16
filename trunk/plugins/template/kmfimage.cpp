@@ -91,7 +91,7 @@ QRect KMFImage::paintRect(const QPoint offset) const
   return rc;
 }
 
-QImage KMFImage::mask(const QImage& img, const QRgb& maskColor, bool oneBitMask)
+QImage KMFImage::mask(const QImage& img, const QRgb& maskColor, bool oneBitMask) const
 {
   QImage result(img.width(), img.height(), QImage::Format_ARGB32);
   double alphaScale = qAlpha(maskColor) / 255.0;
@@ -121,12 +121,12 @@ QImage KMFImage::mask(const QImage& img, const QRgb& maskColor, bool oneBitMask)
   return result;
 }
 
-void KMFImage::paintWidget(QImage& layer, bool shdw)
+void KMFImage::paintWidget(QImage* layer, bool shdw) const
 {
   QPoint off = (shdw) ? shadow().offset() : QPoint();
   QColor clr = (shdw) ? shadow().color() : color();
   QRect rc = paintRect(off);
-  QPainter p(&layer);
+  QPainter p(layer);
   QImage image;
 
   if(clr.isValid())

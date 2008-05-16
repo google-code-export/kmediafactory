@@ -88,7 +88,7 @@
       </environments>
     </other>
     <general>
-      <activedir>plugins/kross</activedir>
+      <activedir>plugins/video</activedir>
     </general>
   </kdevcustomproject>
   <kdevfilecreate>

@@ -622,8 +622,8 @@ bool VideoObject::make(QString type)
             job->videoFileWithSubtitles = videoFileWithSubtitles.fileName();
             job->mediaDir = interface()->projectDir("media");
             job->type = interface()->projectType();
-            // Just for testing
-            job->run();
+            // TODO Just for testing
+            job->TODO_REMOVE_ME_START();
           }
           else
           {

@@ -27,6 +27,7 @@
 #include <kmftools.h>
 #include <run.h>
 #include <kmediafactory/plugininterface.h>
+#include <kmediafactory/job.h>
 #include <kapplication.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
@@ -44,8 +45,281 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+class KMFMenuPageJob : public KMF::Job
+{
+public:
+  KMFMenuPageJob(const KMFMenuPage& page) : menuPage(page), m_modifiedLayers(0) {};
+
+  const KMFMenuPage& menuPage;
+  QString menuDir;
+  QString projectType;
+
+  void run()
+  {
+    message(KMF::PluginInterface::Info, i18n("Making menu: %1").arg(menuPage.objectName()));
+    QSize resolution = menuPage.resolution();
+    m_background = QImage(resolution, QImage::Format_ARGB32);
+    m_background.fill(KMF::Tools::toColor("#444444FF").rgba());
+    m_background.setDotsPerMeterX(DPM);
+    m_background.setDotsPerMeterY(DPM);
+    m_background.setText("layer", "background");
+    m_sub = QImage(resolution, QImage::Format_ARGB32);
+    m_sub.fill(KMF::Tools::toColor("#00000000").rgba());
+    m_sub.setDotsPerMeterX(DPM);
+    m_sub.setDotsPerMeterY(DPM);
+    m_sub.setText("layer", "sub");
+    m_subHighlight = QImage(resolution, QImage::Format_ARGB32);
+    m_subHighlight.fill(KMF::Tools::toColor("#00000000").rgba());
+    m_subHighlight.setDotsPerMeterX(DPM);
+    m_subHighlight.setDotsPerMeterY(DPM);
+    m_subHighlight.setText("layer", "highlight");
+    m_subSelect = QImage(resolution, QImage::Format_ARGB32);
+    m_subSelect.fill(KMF::Tools::toColor("#00000000").rgba());
+    m_subSelect.setDotsPerMeterX(DPM);
+    m_subSelect.setDotsPerMeterY(DPM);
+    m_subSelect.setText("layer", "select");
+
+    if(paint() == false)
+    {
+      message(KMF::PluginInterface::Error, i18n("Could not paint menu."));
+      return;
+    }
+    if(writeSpumuxXml() == false)
+    {
+      message(KMF::PluginInterface::Error, i18n("Could not write spumux xml file."));
+      return;
+    }
+    if(saveImages() == false)
+    {
+      message(KMF::PluginInterface::Error, i18n("Could not save images."));
+      return;
+    }
+    if(makeMpeg() == false)
+    {
+      message(KMF::PluginInterface::Error, i18n("Could not make mpeg file."));
+      return;
+    }
+  }
+
+  bool paint()
+  {
+    m_modifiedLayers = 0;
+    return paintChildWidgets(&menuPage);
+  }
+  
+  bool paintChildWidgets(const QObject* parent)
+  {
+    foreach(const QObject *obj, parent->children())
+    {
+      if(obj->inherits("KMFWidget"))
+      {
+        const KMFWidget* widget = static_cast<const KMFWidget*>(obj);
+        if(widget->isHidden())
+          continue;
+        if(TemplatePluginSettings::widgetDebug())
+        {
+          QRect paintRC = widget->paintRect();
+          QRect rc = widget->rect();
+          QString type = widget->metaObject()->className();
+          QColor color;
+  
+          if(TemplatePluginSettings::widgetDebugInfo())
+            kDebug() << type << " (" << widget->objectName() << "): " << rc
+                << " - " << paintRC;
+  
+          if(type == "KMFImage" &&
+              TemplatePluginSettings::widgetDebugImage())
+          {
+            color.setNamedColor("blue");
+          }
+          else if(type == "KMFLabel" &&
+                  TemplatePluginSettings::widgetDebugLabel())
+          {
+            color.setNamedColor("red");
+          }
+          else if(type == "KMFFrame" &&
+                  TemplatePluginSettings::widgetDebugFrame())
+          {
+            color.setNamedColor("green");
+          }
+          else if(type == "KMFButton" &&
+                  TemplatePluginSettings::widgetDebugButton())
+          {
+            color.setNamedColor("yellow");
+          }
+          else if((type == "KMFVBox" || type == "KMFHBox")
+                    && TemplatePluginSettings::widgetDebugBox())
+          {
+            color.setNamedColor("white");
+          }
+          else if(type == "KMWidget" &&
+                  TemplatePluginSettings::widgetDebugWidget())
+          {
+            color.setNamedColor("gray");
+          }
+          if(color.isValid())
+          {
+            QPainter p(&m_background);
+  
+            p.setPen(QPen(QBrush(color), 1));
+            if(TemplatePluginSettings::withMargin())
+            {
+              color.setAlphaF(0.1);
+              p.setBrush(QBrush(color));
+              p.drawRect(rc);
+            }
+            color.setAlphaF(0.3);
+            p.setBrush(QBrush(color));
+            p.drawRect(rc);
+          }
+        }
+        widget->paint(layer(widget->layer()), widget->layer() == KMFWidget::Background);
+        m_modifiedLayers |= widget->layer();
+        if(paintChildWidgets(obj) == false)
+          return false;
+      }
+    }
+    return true;
+  }
+
+  bool writeSpumuxXml()
+  {
+    QDomDocument doc("");
+    QDomElement root = doc.createElement("subpictures");
+    QDomElement stream = doc.createElement("stream");
+    QDomElement spu = doc.createElement("spu");
+  
+    spu.setAttribute("end", "00:00:00.00");
+    if(m_modifiedLayers & KMFWidget::Sub)
+      spu.setAttribute("image", QString("%1_sub.png").arg(objectName()));
+    if(m_modifiedLayers & KMFWidget::Highlight)
+      spu.setAttribute("highlight",
+                      QString("%1_highlight.png").arg(objectName()));
+    if(m_modifiedLayers & KMFWidget::Select)
+      spu.setAttribute("select",
+                      QString("%1_select.png").arg(objectName()));
+    spu.setAttribute("force", "yes");
+  
+    // We can't search and loop in the same list concurrently
+    //QList<KMFButton*> temp = *m_buttons;
+    //foreach(KMFButton *btn, temp)
+    // TODO What search?
+    foreach(const KMFButton* btn, menuPage.buttons())
+    {
+      if(btn->isHidden())
+        continue;
+      /*QDomComment comment =
+          doc.createComment(QString("Button: %1").arg(btn->objectName()));
+      spu.appendChild(comment);*/
+      QDomElement button = doc.createElement("button");
+      button.setAttribute("name", btn->objectName());
+      QRect rc = btn->paintRect();
+      //kDebug() << rc;
+      button.setAttribute("x0", rc.left());
+      button.setAttribute("y0", rc.top());
+      button.setAttribute("x1", rc.right());
+      button.setAttribute("y1", rc.bottom());
+      if(btn->down())
+        button.setAttribute("down", btn->down()->objectName());
+      if(btn->up())
+        button.setAttribute("up", btn->up()->objectName());
+      if(btn->right())
+        button.setAttribute("right", btn->right()->objectName());
+      if(btn->left())
+        button.setAttribute("left", btn->left()->objectName());
+      spu.appendChild(button);
+    }
+    stream.appendChild(spu);
+    root.appendChild(stream);
+    doc.appendChild(root);
+
+    // Write spumux xml
+    QFile file(menuDir + objectName() + ".xml");
+    if (!file.open(QIODevice::WriteOnly))
+      return false;
+    QTextStream s(&file);
+    doc.save(s, 1);
+    file.close();
+    return true;
+  }
+
+  bool saveImages()
+  {
+    QString file;
+  
+    // Save subpicture files
+    if(m_modifiedLayers & KMFWidget::Sub)
+    {
+      file = menuDir + QString("%1_sub.png").arg(objectName());
+      m_sub.save(file);
+    }
+  
+    if(m_modifiedLayers & KMFWidget::Highlight)
+    {
+      file = menuDir + QString("%1_highlight.png").arg(objectName());
+      m_subHighlight.save(file);
+    }
+  
+    if(m_modifiedLayers & KMFWidget::Select)
+    {
+      file = menuDir + QString("%1_select.png").arg(objectName());
+      m_subSelect.save(file);
+    }
+  
+    file = menuDir + QString("%1.pnm").arg(objectName());
+    // PNM P6 256
+    return m_background.save(file, "PPM");
+  }
+  
+  bool makeMpeg()
+  {
+    QString sound = menuPage.sound();
+
+    if(sound.isEmpty())
+    {
+      sound = KStandardDirs::locate("data", "kmediafactory/media/silence.mp2");
+    }
+  
+    Run run(QString("kmf_make_mpeg %1 %2 %3 %4").arg(projectType)
+        .arg(KMF::Tools::frames(projectType)).arg(menuPage.objectName()).arg(sound), menuDir);
+    log(run.output());
+
+    if(run.exitStatus() != 0)
+    {
+      return false;
+    }
+    return true;
+  }
+
+  QImage* layer(KMFWidget::Layer l)
+  {
+    switch(l)
+    {
+      case KMFWidget::Sub:
+        return &m_sub;
+      case KMFWidget::Highlight:
+        return &m_subHighlight;
+      case KMFWidget::Select:
+        return &m_subSelect;
+      case KMFWidget::None:
+      case KMFWidget::Background:
+      default:
+        return &m_background;
+    }
+    return &m_background;
+  }
+
+private:
+  int m_modifiedLayers;
+  QImage m_background;
+  QImage m_sub;
+  QImage m_subHighlight;
+  QImage m_subSelect;
+  QString m_sound;
+};
+
 KMFMenuPage::KMFMenuPage(QObject *parent) :
-  KMFWidget(parent), m_language("en"), m_modifiedLayers(0), m_titles(0),
+  KMFWidget(parent), m_language("en"), m_titles(0),
   m_chapters(0), m_titleStart(0), m_chapterStart(0), m_index(0), m_titleset(0),
   m_titlesetCount(0), m_count(0), m_vmgm(false),
   m_directPlay(false), m_directChapterPlay(false), m_continueToNextTitle(true)
@@ -82,79 +356,10 @@ void KMFMenuPage::setResolution(QSize resolution)
 {
   KMFUnit::setMaxRes(resolution);
   m_resolution = resolution;
-  m_background = QImage(m_resolution, QImage::Format_ARGB32);
-  m_background.fill(KMF::Tools::toColor("#444444FF").rgba());
-  m_background.setDotsPerMeterX(DPM);
-  m_background.setDotsPerMeterY(DPM);
-  m_sub = QImage(m_resolution, QImage::Format_ARGB32);
-  m_sub.fill(KMF::Tools::toColor("#00000000").rgba());
-  m_sub.setDotsPerMeterX(DPM);
-  m_sub.setDotsPerMeterY(DPM);
-  m_subHighlight = QImage(m_resolution, QImage::Format_ARGB32);
-  m_subHighlight.fill(KMF::Tools::toColor("#00000000").rgba());
-  m_subHighlight.setDotsPerMeterX(DPM);
-  m_subHighlight.setDotsPerMeterY(DPM);
-  m_subSelect = QImage(m_resolution, QImage::Format_ARGB32);
-  m_subSelect.fill(KMF::Tools::toColor("#00000000").rgba());
-  m_subSelect.setDotsPerMeterX(DPM);
-  m_subSelect.setDotsPerMeterY(DPM);
-  m_temp = QImage(m_resolution, QImage::Format_ARGB32);
-  m_temp.setDotsPerMeterX(DPM);
-  m_temp.setDotsPerMeterY(DPM);
   geometry().left().set(0, KMFUnit::Absolute);
   geometry().top().set(0, KMFUnit::Absolute);
   geometry().width().set(resolution.width(), KMFUnit::Absolute);
   geometry().height().set(resolution.height(), KMFUnit::Absolute);
-}
-
-bool KMFMenuPage::writeSpumuxXml(QDomDocument& doc)
-{
-  QDomElement root = doc.createElement("subpictures");
-  QDomElement stream = doc.createElement("stream");
-  QDomElement spu = doc.createElement("spu");
-
-  spu.setAttribute("end", "00:00:00.00");
-  if(m_modifiedLayers & Sub)
-    spu.setAttribute("image", QString("%1_sub.png").arg(objectName()));
-  if(m_modifiedLayers & Highlight)
-    spu.setAttribute("highlight",
-                     QString("%1_highlight.png").arg(objectName()));
-  if(m_modifiedLayers & Select)
-    spu.setAttribute("select",
-                     QString("%1_select.png").arg(objectName()));
-  spu.setAttribute("force", "yes");
-
-  // We can't search and loop in the same list concurrently
-  QList<KMFButton*> temp = *m_buttons;
-  foreach(KMFButton *btn, temp)
-  {
-    if(btn->isHidden())
-      continue;
-    /*QDomComment comment =
-        doc.createComment(QString("Button: %1").arg(btn->objectName()));
-    spu.appendChild(comment);*/
-    QDomElement button = doc.createElement("button");
-    button.setAttribute("name", btn->objectName());
-    QRect rc = btn->paintRect();
-    //kDebug() << rc;
-    button.setAttribute("x0", rc.left());
-    button.setAttribute("y0", rc.top());
-    button.setAttribute("x1", rc.right());
-    button.setAttribute("y1", rc.bottom());
-    if(btn->down())
-      button.setAttribute("down", btn->down()->objectName());
-    if(btn->up())
-      button.setAttribute("up", btn->up()->objectName());
-    if(btn->right())
-      button.setAttribute("right", btn->right()->objectName());
-    if(btn->left())
-      button.setAttribute("left", btn->left()->objectName());
-    spu.appendChild(button);
-  }
-  stream.appendChild(spu);
-  root.appendChild(stream);
-  doc.appendChild(root);
-  return true;
 }
 
 bool KMFMenuPage::parseButtons(bool addPages)
@@ -168,7 +373,7 @@ bool KMFMenuPage::parseButtons(bool addPages)
   return true;
 }
 
-void KMFMenuPage::writeDvdAuthorXml(QDomElement& element, QString type)
+void KMFMenuPage::writeDvdAuthorXml(QDomElement& element, QString type) const
 {
   QDomDocument doc = element.ownerDocument();
   QDomElement pgc = doc.createElement("pgc");
@@ -275,7 +480,7 @@ void KMFMenuPage::writeDvdAuthorXml(QDomElement& element, QString type)
   element.appendChild(pgc);
 }
 
-void KMFMenuPage::checkDummyVideo()
+void KMFMenuPage::checkDummyVideo() const
 {
   QFileInfo fi(m_interface->projectDir("media") + "dummy.mpg");
 
@@ -291,12 +496,16 @@ void KMFMenuPage::checkDummyVideo()
     temp.fill(QColor("black").rgba());
     // PNM P6 256
     temp.save(m_interface->projectDir("media") + "dummy.pnm", "PPM");
-    m_sound = "";
-    runScript("dummy", "media");
+    QString sound = KStandardDirs::locate("data", "kmediafactory/media/silence.mp2");
+    Run run(QString("kmf_make_mpeg %1 %2 %3 %4")
+        .arg(m_interface->projectType())
+        .arg(KMF::Tools::frames(m_interface->projectType()))
+        .arg("dummy")
+        .arg(sound), m_interface->projectDir("media"));
   }
 }
 
-void KMFMenuPage::writeDvdAuthorXmlNoMenu(QDomElement& element)
+void KMFMenuPage::writeDvdAuthorXmlNoMenu(QDomElement& element) const
 {
   QDomDocument doc = element.ownerDocument();
   QDomElement pgc = doc.createElement("pgc");
@@ -333,211 +542,6 @@ void KMFMenuPage::writeDvdAuthorXmlNoMenu(QDomElement& element)
   element.appendChild(pgc);
 }
 
-bool KMFMenuPage::saveImages()
-{
-  QString file;
-  QString menus = m_interface->projectDir("menus");
-
-  // Save subpicture files
-  if(m_modifiedLayers & Sub)
-  {
-    file = menus + QString("%1_sub.png").arg(objectName());
-    m_sub.save(file);
-  }
-
-  if(m_modifiedLayers & Highlight)
-  {
-    file = menus + QString("%1_highlight.png").arg(objectName());
-    m_subHighlight.save(file);
-  }
-
-  if(m_modifiedLayers & Select)
-  {
-    file = menus + QString("%1_select.png").arg(objectName());
-    m_subSelect.save(file);
-  }
-
-  file = menus + QString("%1.pnm").arg(objectName());
-  // PNM P6 256
-  return m_background.save(file, "PPM");
-}
-
-bool KMFMenuPage::writeSpumuxXml()
-{
-  // Write spumux xml
-  QString s;
-  QDomDocument doc("");
-  if(writeSpumuxXml(doc) == false)
-    return false;
-
-  QFile file(m_interface->projectDir("menus") + objectName() + ".xml");
-  if (!file.open(QIODevice::WriteOnly))
-    return false;
-  QTextStream stream(&file);
-  stream << doc.toString();
-  file.close();
-  return true;
-}
-
-bool KMFMenuPage::runScript(QString scriptName, QString place)
-{
-  QString menuSound = "silence.mp2";
-  KMF::Time seconds = 1.0;
-
-  if(m_sound.isEmpty())
-  {
-    menuSound = KStandardDirs::locate("data",
-                                      "kmediafactory/media/silence.mp2");
-  }
-  else
-  {
-    menuSound = m_sound;
-  }
-
-  uint frames;
-  if(m_interface->projectType() == "DVD-PAL")
-  {
-    frames = (uint)(seconds.toSeconds() * 25.0);
-  }
-  else // NTSC
-  {
-    frames = (uint)(seconds.toSeconds() * 30000.0 / 1001.0);
-  }
-
-  Run run(QString("kmf_make_mpeg %1 %2 %3 %4").arg(m_interface->projectType()).arg(frames)
-          .arg(scriptName).arg(menuSound),
-          m_interface->projectDir(place));
-
-  m_interface->logger()->message(run.output());
-  if(run.exitStatus() != 0)
-  {
-    m_interface->message(KMF::PluginInterface::Error, i18n("   Conversion error."));
-    return false;
-  }
-  return true;
-}
-
-bool KMFMenuPage::makeMpeg()
-{
-  QString file;
-
-  QDir dir(m_interface->projectDir("menus"));
-
-  if(paint() == false)
-    return false;
-  if(writeSpumuxXml() == false)
-    return false;
-  if(saveImages() == false)
-    return false;
-  if(runScript(objectName()) == false)
-    return false;
-  return true;
-}
-
-QImage& KMFMenuPage::layer(Layer layer)
-{
-  switch(layer)
-  {
-    case Temp:
-      return m_temp;
-    case Sub:
-      return m_sub;
-    case Highlight:
-      return m_subHighlight;
-    case Select:
-      return m_subSelect;
-    case None:
-    case Background:
-    default:
-      return m_background;
-  }
-  return m_background;
-}
-
-bool KMFMenuPage::paint()
-{
-  m_modifiedLayers = 0;
-  return paintChildWidgets(this);
-}
-
-bool KMFMenuPage::paintChildWidgets(QObject* parent)
-{
-  foreach(QObject *obj, parent->children())
-  {
-    if(obj->inherits("KMFWidget"))
-    {
-      KMFWidget* widget = static_cast<KMFWidget*>(obj);
-      if(widget->isHidden())
-        continue;
-      if(TemplatePluginSettings::widgetDebug())
-      {
-        QRect paintRC = widget->paintRect();
-        QRect rc = widget->rect();
-        QString type = widget->metaObject()->className();
-        QColor color;
-
-        if(TemplatePluginSettings::widgetDebugInfo())
-          kDebug() << type << " (" << widget->objectName() << "): " << rc
-              << " - " << paintRC;
-
-        if(type == "KMFImage" &&
-            TemplatePluginSettings::widgetDebugImage())
-        {
-          color.setNamedColor("blue");
-        }
-        else if(type == "KMFLabel" &&
-                TemplatePluginSettings::widgetDebugLabel())
-        {
-          color.setNamedColor("red");
-        }
-        else if(type == "KMFFrame" &&
-                TemplatePluginSettings::widgetDebugFrame())
-        {
-          color.setNamedColor("green");
-        }
-        else if(type == "KMFButton" &&
-                TemplatePluginSettings::widgetDebugButton())
-        {
-          color.setNamedColor("yellow");
-        }
-        else if((type == "KMFVBox" || type == "KMFHBox")
-                  && TemplatePluginSettings::widgetDebugBox())
-        {
-          color.setNamedColor("white");
-        }
-        else if(type == "KMWidget" &&
-                TemplatePluginSettings::widgetDebugWidget())
-        {
-          color.setNamedColor("gray");
-        }
-        if(color.isValid())
-        {
-          QPainter p(&m_background);
-
-          p.setPen(QPen(QBrush(color), 1));
-          if(TemplatePluginSettings::withMargin())
-          {
-            color.setAlphaF(0.1);
-            p.setBrush(QBrush(color));
-            p.drawRect(rc);
-          }
-          color.setAlphaF(0.3);
-          p.setBrush(QBrush(color));
-          p.drawRect(rc);
-        }
-      }
-      widget->paint(this);
-      m_modifiedLayers |= widget->layer();
-      if(paintChildWidgets(obj) == false)
-        return false;
-      // Just to make ui more responsible
-      if(m_interface->progress(0))
-        return false;
-    }
-  }
-  return true;
-}
-
 KMFButton* KMFMenuPage::button(const QString& name)
 {
   // We can't search and loop in the same list concurrently
@@ -569,19 +573,22 @@ void KMFMenuPage::setProperty(const QString& name, QVariant value)
     m_continueToNextTitle = value.toInt();
 }
 
-KMFWidget::Layer KMFMenuPage::layerType(const QImage& img)
+KMF::Job* KMFMenuPage::job() const
 {
-  if(&img == &m_background)
-    return Background;
-  else if(&img == &m_sub)
-    return Background;
-  else if(&img == &m_subHighlight)
-    return Highlight;
-  else if(&img == &m_subSelect)
-    return Select;
-  else if(&img == &m_temp)
-    return Temp;
-  return None;
+  KMFMenuPageJob* job = new KMFMenuPageJob(*this);
+  job->menuDir = m_interface->projectDir("menus");
+  job->projectType = m_interface->projectType();
+  return job;
+}
+
+QImage KMFMenuPage::preview()
+{
+  parseButtons(false);
+  KMFMenuPageJob* j = static_cast<KMFMenuPageJob*>(job());
+  j->paint();
+  QImage img = *j->layer(KMFWidget::Background);
+  delete j;
+  return img;
 }
 
 #include "kmfmenupage.moc"

@@ -238,16 +238,17 @@ QRect KMFWidget::paintRect(const QPoint offset) const
   return result;
 }
 
-void KMFWidget::paint(KMFMenuPage* page)
+void KMFWidget::paint(QImage* layer, bool background) const
 {
-  if(m_shadow.type() != KMFShadow::None && layer() == Background)
+  if(m_shadow.type() != KMFShadow::None && background)
   {
-    QImage& temp = page->layer(Temp);
+    QImage temp = *layer;
     QColor c = m_shadow.color();
 
     c.setAlpha(0);
     temp.fill(c.rgba());
-    paintWidget(temp, true);
+    temp.setText("layer", "temp");
+    paintWidget(&temp, true);
 
     if(m_shadow.type() == KMFShadow::Blur)
     {
@@ -257,10 +258,10 @@ void KMFWidget::paint(KMFMenuPage* page)
     //static int i = 0;
     //temp.save(m_prjIf->projectDir("menus") + QString("%1.png").arg(++i));
 
-    QPainter p(&page->layer(Background));
+    QPainter p(layer);
     p.drawImage(QPoint(0, 0), temp);
   }
-  paintWidget(page->layer(layer()), false);
+  paintWidget(layer, false);
 }
 
 void KMFWidget::setColor(const QString& s)
