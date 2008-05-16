@@ -69,20 +69,19 @@ class SlideshowObject : public KMF::MediaObject
     void setSlides(const SlideList& slides) { m_slides = slides; };
     double slideDuration() const { return m_duration; };
     void setSlideDuration(double duration) { m_duration = duration; };
+    double calculatedSlideDuration() const;
     bool loop() const { return m_loop; };
     void setLoop(bool loop) { m_loop = loop; };
     bool includeOriginals() const { return m_includeOriginals; };
-    void setIncludeOriginals(bool includeOriginals)
-        { m_includeOriginals = includeOriginals; };
-    const QStringList& audioFile() const { return m_audioFiles; };
-    void setAudioFile(const QStringList& audioFiles)
-        { m_audioFiles = audioFiles; };
-
+    void setIncludeOriginals(bool includeOriginals) { m_includeOriginals = includeOriginals; };
+    void setAudioFiles(const QStringList& audioFiles) { m_audioFiles = audioFiles; };
+    QStringList audioFiles() const { return m_audioFiles; };
+    QTime audioDuration() const;
     SlideList slideList(QStringList list) const;
+    QString id() const { return m_id; };
 
   public slots:
     virtual void slotProperties();
-    void output(QString line);
     virtual void clean();
     // KMF::Object::call slots
     QVariant writeDvdAuthorXml(QVariantList args) const;
@@ -90,11 +89,7 @@ class SlideshowObject : public KMF::MediaObject
   protected:
     void generateId();
     const Slide& chapter(int chap) const;
-    bool writeSlideshowFile() const;
-    bool convertToDVD();
     bool oooConvert(QString* file) const;
-    QTime audioDuration() const;
-    double calculatedSlideDuration() const;
 
   private:
     QAction* m_slideshowProperties;
@@ -106,7 +101,6 @@ class SlideshowObject : public KMF::MediaObject
     QStringList m_audioFiles;
     QString m_buffer;
     QString m_type;
-    KProcess* dvdslideshow;
 };
 
 #endif // SLIDESHOWOBJECT_H

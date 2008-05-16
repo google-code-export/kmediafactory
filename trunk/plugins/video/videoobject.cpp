@@ -83,13 +83,8 @@ public:
     setMaximum(info.size() / 1024);
     lastUpdate = 0;
     half = info.size() / 200;
-    spumux->start();
+    spumux->execute();
 
-    while(!spumux->waitForFinished(500))
-    {
-      if (spumux->state() == QProcess::NotRunning)
-        break;
-    }
     if(spumux->exitCode() == QProcess::NormalExit && spumux->exitStatus() == 0)
     {
       setValue(info.size() / 1024);
