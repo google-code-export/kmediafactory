@@ -299,34 +299,6 @@ QString KMFProject::directory(const QString& subDir, bool create) const
   return KMF::Tools::addSlash(result);
 }
 
-void KMFProject::cleanFiles(const QString& subDir,
-                            const QStringList& files) const
-{
-  KUrl::List list;
-  QString sub = KMF::Tools::addSlash(subDir);
-  QDir dir(KMF::Tools::joinPaths(m_directory, sub));
-
-  for(QStringList::ConstIterator it=files.begin(); it!=files.end(); ++it)
-  {
-    dir.setNameFilters(QStringList(*it));
-    QStringList files2 = dir.entryList(QDir::Files | QDir::NoSymLinks);
-    for(QStringList::Iterator jt=files2.begin(); jt!=files2.end(); ++jt)
-    {
-      QFile file(dir.filePath(*jt));
-      file.remove();
-    }
-  }
-  // Remove dirs if they are empty
-  int pos = -1;
-
-  while((pos = sub.lastIndexOf(QDir::separator(), pos)) != -1)
-  {
-    QString s = KMF::Tools::joinPaths(m_directory, sub.left(pos--));
-    if(dir.rmdir(s) == false)
-      break;
-  }
-}
-
 bool KMFProject::make(QString type)
 {
   KMF::MediaObject *obj;

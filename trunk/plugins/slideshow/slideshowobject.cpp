@@ -464,7 +464,7 @@ void SlideshowObject::clean()
   list.append(name + ".xml");
   list.append(name + ".slideshow");
   list.append("dvd-slideshow.log");
-  plugin()->interface()->cleanFiles("media", list);
+  KMF::Tools::cleanFiles(interface()->projectDir("media"), list);
 }
 
 int SlideshowObject::timeEstimate() const

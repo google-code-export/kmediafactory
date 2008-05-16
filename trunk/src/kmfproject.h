@@ -47,7 +47,6 @@ class KMFProject : public QObject
     QMap<QString, QString> subTypes() const;
     void setType(const QString& type);
     QString directory(const QString& subDir = "", bool create = true) const;
-    void cleanFiles(const QString& subDir, const QStringList& files) const;
     void setDirectory(const QString& directory);
     const QString& title() const { return m_title; };
     void setTitle(const QString& title);

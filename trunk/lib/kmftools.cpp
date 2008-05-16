@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,6 +17,7 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "kmftools.h"
 #include <KXMLGUIClient>
 #include <KActionCollection>
@@ -565,6 +566,32 @@ uint KMF::Tools::frames(const QString &type)
   else // NTSC
   {
     return (uint)(30000.0 / 1001.0);
+  }
+}
+
+void KMF::Tools::cleanFiles(const QString& d, const QStringList& files)
+{
+  KUrl::List list;
+  QDir dir(d);
+
+  for(QStringList::ConstIterator it=files.begin(); it!=files.end(); ++it)
+  {
+    dir.setNameFilters(QStringList(*it));
+    QStringList files2 = dir.entryList(QDir::Files | QDir::NoSymLinks);
+    for(QStringList::Iterator jt=files2.begin(); jt!=files2.end(); ++jt)
+    {
+      QFile file(dir.filePath(*jt));
+      file.remove();
+    }
+  }
+  // Remove dirs if they are empty
+  int pos = -1;
+
+  while((pos = d.lastIndexOf(QDir::separator(), pos)) != -1)
+  {
+    QString s = d.left(pos--);
+    if(dir.rmdir(s) == false)
+      break;
   }
 }
 

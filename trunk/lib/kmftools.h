@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,6 +17,7 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef KMFKMFTOOLS_H
 #define KMFKMFTOOLS_H
 
@@ -25,6 +26,7 @@
 #include <stdint.h>
 #include <kurl.h>
 #include <QModelIndex>
+#include <QStringList>
 
 class KXMLGUIClient;
 class QStringList;
@@ -36,10 +38,6 @@ class QPainter;
 
 namespace KMF
 {
-
-  /**
-    @author Petri Damsten <petri.damsten@iki.fi>
-  */
   class KDE_EXPORT Tools
   {
     public:
@@ -84,7 +82,8 @@ namespace KMF
       static void printActions(KXMLGUIClient* client);
       static void spy(QObject* obj);
       static uint frames(const QString &type);
+      static void cleanFiles(const QString& dir, const QStringList& files = QStringList());
   };
 }
 
-#endif
+#endif // KMFKMFTOOLS_H
