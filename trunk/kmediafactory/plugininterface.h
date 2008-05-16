@@ -96,7 +96,7 @@ namespace KMF
     public:
       enum DirtyType { DirtyMedia = 1, DirtyTemplate = 2, DirtyOutput = 4,
         DirtyMediaOrTemplate = 3, DirtyAny = 7 };
-      enum MsgType { None = -1, Info, Warning, Error, OK };
+      enum MsgType { None = -1, Info, Start, Warning, Error, Done, OK };
 
     public:
       explicit PluginInterface(QObject* parent);

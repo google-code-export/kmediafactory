@@ -37,7 +37,7 @@ namespace KMF
       KProcess* process(const QString& filter = "",
                         KProcess::OutputChannelMode mode =
                             KProcess::SeparateChannels);
-      void message(KMF::PluginInterface::MsgType type, const QString& msg);
+      void message(KMF::PluginInterface::MsgType type, const QString& msg = "");
       void log(const QString& msg);
       void setValue(int value);
       void setMaximum(int maximum);

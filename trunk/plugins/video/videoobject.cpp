@@ -62,9 +62,6 @@ public:
   QString mediaDir;
   QString type;
 
-  qulonglong lastUpdate;
-  qulonglong half;
-
   void run()
   {
     message(KMF::PluginInterface::Info, i18n("   Adding subtitles to %1", videoFile));
@@ -174,6 +171,10 @@ public:
         kDebug() << strerror(errno);
     return fi.fileName();
   }
+
+private:
+  qulonglong lastUpdate;
+  qulonglong half;
 };
 
 VideoObject::VideoObject(QObject* parent)
