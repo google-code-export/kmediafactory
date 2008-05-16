@@ -183,7 +183,7 @@ void SlideshowProperties::getData(SlideshowObject& obj) const
   obj.setIncludeOriginals(addOriginalsCheckBox->isChecked());
   obj.setLoop(loopCheckBox->isChecked());
   obj.setTitle(titleEdit->text());
-  obj.setAudioFile(m_audioFiles);
+  obj.setAudioFiles(m_audioFiles);
   obj.setSlides(m_model.list());
 }
 
@@ -192,7 +192,7 @@ void SlideshowProperties::setData(const SlideshowObject& obj)
   durationSpinBox->setValue((int)obj.slideDuration());
   addOriginalsCheckBox->setChecked(obj.includeOriginals());
   loopCheckBox->setChecked(obj.loop());
-  m_audioFiles = obj.audioFile();
+  m_audioFiles = obj.audioFiles();
   titleEdit->setText(obj.title());
 
   addSlides(obj.slides());

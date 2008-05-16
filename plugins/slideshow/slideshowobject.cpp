@@ -73,13 +73,107 @@ public:
   }
 };
 
+class SlideshowJob : public KMF::Job
+{
+public:
+  SlideshowJob(const SlideshowObject& s) : slideshow(s) {};
+
+  QString mediaDir;
+  QString projectType;
+  QString dvdslideshowBin;
+  const SlideshowObject& slideshow;
+
+  void run()
+  {
+    message(KMF::PluginInterface::Info, i18n("Making Slideshow"));
+    QDir dir(mediaDir);
+    QString output = dir.filePath(QString("%1.vob").arg(slideshow.id()));
+  
+    if(writeSlideshowFile() == false)
+    {
+      message(KMF::PluginInterface::Error, i18n("Can't write slideshow file."));
+      return;
+    }
+    KProcess *dvdslideshow = process("INFO: \\d+ bytes of data written");
+    *dvdslideshow << dvdslideshowBin;
+    if(SlideshowPluginSettings::audioType() == 0)
+      *dvdslideshow << "-mp2";
+    *dvdslideshow << "-o" << mediaDir <<
+        "-n" << slideshow.id() <<
+        "-f" << dir.filePath(QString("%1.slideshow").arg(slideshow.id()));
+    if(projectType == "DVD-PAL")
+      *dvdslideshow << "-p";
+    foreach(const QString &audio, slideshow.audioFiles())
+    {
+      *dvdslideshow << "-a" << audio;
+    }
+    dvdslideshow->setWorkingDirectory(mediaDir);
+    dvdslideshow->execute();
+
+    if(dvdslideshow->exitCode() != QProcess::NormalExit || dvdslideshow->exitStatus() != 0)
+    {
+      message(KMF::PluginInterface::Error, i18n("Slideshow error."));
+    }
+  }
+
+  bool writeSlideshowFile() const
+  {
+    QDir dir(mediaDir);
+    QString output = dir.filePath(QString("%1.slideshow").arg(slideshow.id()));
+    QFile file(output);
+    double duration = slideshow.calculatedSlideDuration();
+  
+    if(file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+    {
+      QTextStream ts(&file);
+      ts << QString(
+          "#**************************************************************\n"
+          "#\n"
+          "# This file was made with %1 - %2\n"
+          "# http://www.iki.fi/damu/software/kmediafactory/\n"
+          "# \n"
+          "#**************************************************************\n")
+          .arg(KGlobal::mainComponent().aboutData()->programName())
+          .arg(KGlobal::mainComponent().aboutData()->version());
+  
+      ts << "background:0::black\n";
+      ts << "fadein:1\n";
+      foreach(Slide slide, slideshow.slides())
+      {
+        QString comment = slide.comment;
+        comment.replace(":", "\\:");
+        comment.replace("\n", " ");
+        ts << slide.picture << ":" << QString::number(duration, 'f', 2) <<
+            ":" << comment << "\n";
+        if(slide.picture != slideshow.slides().last().picture)
+          ts << "crossfade:1\n";
+      }
+      ts << "fadeout:1\n";
+      file.close();
+      return true;
+    }
+    return false;
+  }
+
+  void output(const QString& line)
+  {
+    QRegExp re2(" (\\d+)\\/(\\d+) ");
+    int pos = re2.indexIn(line);
+    if(pos > -1)
+    {
+      // Maximum is eg. 6/5
+      setMaximum(re2.cap(2).toInt() + 1);
+      setValue(re2.cap(1).toInt() - 1);
+    }
+  }
+};
+
 Slide::Slide() : chapter(true)
 {
 }
 
 SlideshowObject::SlideshowObject(QObject* parent)
-  : MediaObject(parent), m_loop(false), m_includeOriginals(true),
-    dvdslideshow(0)
+  : MediaObject(parent), m_loop(false), m_includeOriginals(true)
 {
   setObjectName("slideshow");
   m_slideshowProperties = new KAction(KIcon("pencil"),
@@ -131,7 +225,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
        mime == "application/msword" ||
        mime == "application/mspowerpoint")
     {
-      QString output = QString("%1.pdf").arg(m_id);
+      QString output = QString("%1.pdf").arg(id());
       QDir dir(interface()->projectDir("media"));
       output = dir.filePath(output);
       Run run(QString("kmf_oo2pdf \"%1\" \"%2\"").arg(file).arg(output));
@@ -147,7 +241,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
     }
     if(mime == "application/pdf")
     {
-      QString output = m_id + "_%d.png";
+      QString output = id() + "_%d.png";
       QDir dir(interface()->projectDir("media"));
       output = dir.filePath(output);
       Run run(QString("kmf_pdf2png \"%1\" \"%2\"").arg(file).arg(output));
@@ -156,7 +250,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
       for(int i = 1; true; ++i)
       {
         Slide slide;
-        QString fileNameTemplate = m_id + "_%1.png";
+        QString fileNameTemplate = id() + "_%1.png";
         QString file = dir.filePath(QString(fileNameTemplate).arg(i));
         QFileInfo fi(file);
 
@@ -335,53 +429,30 @@ bool SlideshowObject::make(QString type)
       job->TODO_REMOVE_ME_START();
       delete job;
     }
-    if(!convertToDVD())
+    QDir dir(interface()->projectDir("media"));
+    QString output = dir.filePath(QString("%1.vob").arg(id()));
+    QFileInfo fio(output);
+    // TODO check properly if it is up to date
+    if(!fio.exists())
+    {
+      SlideshowJob *job = new SlideshowJob(*this);
+      QString mediaDir = interface()->projectDir("media");
+      QString projectType = interface()->projectType();
+      QString dvdslideshowBin = static_cast<SlideshowPlugin*>(plugin())->dvdslideshowBin();
+
+      // TODO Just for testing
+      job->TODO_REMOVE_ME_START();
+      delete job;
+    }
+    else
+    {
+      interface()->message(KMF::PluginInterface::Info,
+          i18n("Slideshow \"%1\" seems to be up to date", title()));
       return false;
+    }
   }
   interface()->progress(TotalPoints);
   return true;
-}
-
-bool SlideshowObject::writeSlideshowFile() const
-{
-  if(m_slides.count() < 1)
-    return false;
-
-  QDir dir(interface()->projectDir("media"));
-  QString output = dir.filePath(QString("%1.slideshow").arg(m_id));
-  QFile file(output);
-  double duration = calculatedSlideDuration();
-
-   if(file.open(QIODevice::WriteOnly | QIODevice::Truncate))
-  {
-    QTextStream ts(&file);
-    ts << QString(
-        "#**************************************************************\n"
-        "#\n"
-        "# This file was made with %1 - %2\n"
-        "# http://www.iki.fi/damu/software/kmediafactory/\n"
-        "# \n"
-        "#**************************************************************\n")
-        .arg(KGlobal::mainComponent().aboutData()->programName())
-        .arg(KGlobal::mainComponent().aboutData()->version());
-
-    ts << "background:0::black\n";
-    ts << "fadein:1\n";
-    foreach(Slide slide, m_slides)
-    {
-      QString comment = slide.comment;
-      comment.replace(":", "\\:");
-      comment.replace("\n", " ");
-      ts << slide.picture << ":" << QString::number(duration, 'f', 2) <<
-          ":" << comment << "\n";
-      if(slide.picture != m_slides.last().picture)
-        ts << "crossfade:1\n";
-    }
-    ts << "fadeout:1\n";
-    file.close();
-    return true;
-  }
-  return false;
 }
 
 void SlideshowObject::clean()
@@ -394,79 +465,6 @@ void SlideshowObject::clean()
   list.append(name + ".slideshow");
   list.append("dvd-slideshow.log");
   plugin()->interface()->cleanFiles("media", list);
-}
-
-void SlideshowObject::output(QString line)
-{
-  bool stopped = false;
-
-  QRegExp re2(" (\\d+)\\/(\\d+) ");
-  int pos = re2.indexIn(line);
-  if(pos > -1)
-  {
-    // Maximu is eg. 6/5
-    interface()->setItemTotalSteps(re2.cap(2).toInt() + 1);
-    stopped = interface()->setItemProgress(re2.cap(1).toInt() - 1);
-  }
-  if(stopped)
-    dvdslideshow->kill();
-}
-
-bool SlideshowObject::convertToDVD()
-{
-  QDir dir(interface()->projectDir("media"));
-  QString output = dir.filePath(QString("%1.vob").arg(m_id));
-  QFileInfo fio(output);
-  SlideshowPlugin* slideshowPlugin = static_cast<SlideshowPlugin*>(plugin());
-  bool result = false;
-
-  if(!fio.exists())
-  {
-    if(writeSlideshowFile() == false)
-    {
-      interface()->message(KMF::PluginInterface::Error,
-          i18n("   Can't write slideshow file."));
-      return false;
-    }
-
-    interface()->message(KMF::PluginInterface::Info, i18n("   Making Slideshow"));
-    dvdslideshow = new KProcess();
-    *dvdslideshow << slideshowPlugin->dvdslideshowBin();
-    if(SlideshowPluginSettings::audioType() == 0)
-      *dvdslideshow << "-mp2";
-    *dvdslideshow << "-o" << interface()->projectDir("media") <<
-        "-n" << m_id <<
-        "-f" << dir.filePath(QString("%1.slideshow").arg(m_id));
-    if(interface()->projectType() == "DVD-PAL")
-      *dvdslideshow << "-p";
-    for(QStringList::ConstIterator it = m_audioFiles.begin();
-        it != m_audioFiles.end(); ++it)
-    {
-      *dvdslideshow << "-a" << *it;
-    }
-    dvdslideshow->setWorkingDirectory(interface()->projectDir("media"));
-    interface()->logger()->connectProcess(dvdslideshow,
-                                            "INFO: \\d+ bytes of data written");
-    connect(interface()->logger(), SIGNAL(line(QString)),
-             this, SLOT(output(QString)));
-    dvdslideshow->execute();
-    if(dvdslideshow->exitCode() == QProcess::NormalExit)
-    {
-      if(dvdslideshow->exitStatus() == 0)
-        result = true;
-    }
-    if(!result)
-      interface()->message(KMF::PluginInterface::Error, i18n("   Slideshow error."));
-  }
-  else
-  {
-    interface()->message(KMF::PluginInterface::Info,
-        i18n("   Slideshow \"%1\" seems to be up to date", title()));
-    result = true;
-  }
-  delete dvdslideshow;
-  dvdslideshow = 0;
-  return result;
 }
 
 int SlideshowObject::timeEstimate() const
@@ -623,18 +621,6 @@ uint64_t SlideshowObject::size() const
   return size;
 }
 
-double SlideshowObject::calculatedSlideDuration() const
-{
-  double duration = m_duration;
-
-  if(duration < 1.0)
-  {
-    duration = KMF::Time(audioDuration());
-    duration = (((duration - 1.0) / m_slides.count()) - 1.0);
-  }
-  return duration;
-}
-
 QTime SlideshowObject::audioDuration() const
 {
   KMF::Time audioDuration = 0.0;
@@ -685,6 +671,18 @@ void SlideshowObject::slotProperties()
     dlg.getData(*this);
     interface()->setDirty(KMF::PluginInterface::DirtyMedia);
   }
+}
+
+double SlideshowObject::calculatedSlideDuration() const
+{
+  double duration = slideDuration();
+
+  if(duration < 1.0)
+  {
+    duration = KMF::Time(audioDuration());
+    duration = (((duration - 1.0) / slides().count()) - 1.0);
+  }
+  return duration;
 }
 
 #include "slideshowobject.moc"
