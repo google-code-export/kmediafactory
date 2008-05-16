@@ -32,8 +32,6 @@ class DvdDirectoryObject : public DvdAuthorObject
   Q_OBJECT
   public:
     enum { TotalPoints = 1000 };
-    enum LastLine { Warning = KMF::PluginInterface::Warning, Error = KMF::PluginInterface::Error,
-      Processing, Vobu, FixingVobu, None };
 
     DvdDirectoryObject(QObject *parent = 0);
     virtual ~DvdDirectoryObject();
@@ -45,22 +43,12 @@ class DvdDirectoryObject : public DvdAuthorObject
     virtual bool make(QString type);
 
   private slots:
-    void output(const QString& line);
     virtual void clean();
 
   private:
     QString m_buffer;
-    bool m_error;
-    LastLine m_lastLine;
-    QString m_warning;
     KAction* dvdCleanDirectory;
     Run m_run;
-    QFileInfo m_currentFile;
-    int m_points;
-    int m_filePoints;
-    bool m_first;
-    int m_lastVobu, m_vobu;
-    int m_lastSize;
 
     void progress(int points);
     bool isUpToDate(QString type);
