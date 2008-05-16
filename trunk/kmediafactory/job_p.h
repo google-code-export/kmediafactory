@@ -23,6 +23,7 @@
 
 #include "plugininterface.h"
 
+// http://api.kde.org/4.0-api/kdelibs-apidocs/threadweaver/html/MainComponents.html
 namespace KMF
 {
   class JobHelper : public QObject
@@ -32,10 +33,16 @@ namespace KMF
       explicit JobHelper(KMF::Job* parent);
       ~JobHelper();
 
+      void message(KMF::PluginInterface::MsgType type, const QString& msg);
+      void log(const QString& msg);
+      void setValue(int value);
+      void setMaximum(int maximum);
+
     signals:
       void newMessage(PluginInterface::MsgType type, const QString& msg);
-      void value(int value);
-      void maximum(int maximum);
+      void newLogMessage(const QString& msg);
+      void valueChanged(int value);
+      void maximumChanged(int maximum);
   };
 } // namespace KMF
 

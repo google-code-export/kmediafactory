@@ -25,12 +25,34 @@ KMF::JobHelper::JobHelper(KMF::Job* parent) : QObject(parent)
 {
   connect(this, SIGNAL(newMessage(PluginInterface::MsgType, const QString&)), 
           parent, SIGNAL(newMessage(PluginInterface::MsgType, const QString&)));
-  connect(this, SIGNAL(value(int)), parent, SIGNAL(value(int)));
-  connect(this, SIGNAL(maximum(int)), parent, SIGNAL(maximum(int)));
+  connect(this, SIGNAL(newLogMessage(const QString&)), 
+          parent, SIGNAL(newLogMessage(const QString&)));
+  connect(this, SIGNAL(valueChanged(int)), parent, SIGNAL(valueChanged(int)));
+  connect(this, SIGNAL(maximumChanged(int)), parent, SIGNAL(maximumChanged(int)));
 }
 
 KMF::JobHelper::~JobHelper()
 {
+}
+
+void KMF::JobHelper::message(PluginInterface::MsgType type, const QString& msg)
+{
+  emit newMessage(type, msg);
+}
+
+void KMF::JobHelper::log(const QString& msg)
+{
+  emit newLogMessage(msg);
+}
+
+void KMF::JobHelper::setValue(int value)
+{
+  emit valueChanged(value);
+}
+
+void KMF::JobHelper::setMaximum(int maximum)
+{
+  emit maximumChanged(maximum);
 }
 
 class KMF::Job::Private
@@ -117,17 +139,22 @@ void KMF::Job::message(PluginInterface::MsgType type, const QString& msg)
   {
     failed(); 
   }
-  //emit d->helper()->newMessage(type, msg);
+  d->helper()->message(type, msg);
+}
+
+void KMF::Job::log(const QString& msg)
+{
+  d->helper()->log(msg);
 }
 
 void KMF::Job::setValue(int value)
 {
-  // emit through helper class
+  d->helper()->setValue(value);
 }
 
 void KMF::Job::setMaximum(int maximum)
 {
-  // emit through helper class
+  d->helper()->setMaximum(maximum);
 }
 
 void KMF::Job::output(const QString& line)
