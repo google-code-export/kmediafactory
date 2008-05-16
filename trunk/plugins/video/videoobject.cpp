@@ -424,7 +424,7 @@ void VideoObject::toXML(QDomElement* element) const
   element->appendChild(video);
 }
 
-QVariant VideoObject::writeDvdAuthorXml(QVariantList args)
+QVariant VideoObject::writeDvdAuthorXml(QVariantList args) const
 {
   QDomDocument doc;
   QString preferredLanguage = args[0].toString();
@@ -624,6 +624,7 @@ bool VideoObject::make(QString type)
             job->type = interface()->projectType();
             // TODO Just for testing
             job->TODO_REMOVE_ME_START();
+            delete job;
           }
           else
           {

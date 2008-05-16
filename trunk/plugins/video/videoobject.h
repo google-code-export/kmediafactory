@@ -116,7 +116,7 @@ class VideoObject : public KMF::MediaObject
     virtual void slotPlayVideo();
     virtual void clean() { };
     // KMF::Object::call slots
-    QVariant writeDvdAuthorXml(QVariantList args);
+    QVariant writeDvdAuthorXml(QVariantList args) const;
 
   protected:
     mutable QDVD::CellList m_cells;

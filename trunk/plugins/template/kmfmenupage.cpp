@@ -56,7 +56,7 @@ public:
 
   void run()
   {
-    message(KMF::PluginInterface::Info, i18n("Making menu: %1").arg(menuPage.objectName()));
+    message(KMF::PluginInterface::Info, i18n("Menu: %1").arg(menuPage.objectName()));
     QSize resolution = menuPage.resolution();
     m_background = QImage(resolution, QImage::Format_ARGB32);
     m_background.fill(KMF::Tools::toColor("#444444FF").rgba());
