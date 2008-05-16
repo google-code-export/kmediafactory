@@ -23,6 +23,7 @@
 #include "outputplugin.h"
 #include <kmediafactory/kmfobject.h>
 #include <kmediafactory/logger.h>
+#include <kmediafactory/job.h>
 #include <KApplication>
 #include <KMimeType>
 #include <KIconLoader>
@@ -41,8 +42,171 @@
 #include <QPixmap>
 #include <limits.h>
 
+class DVDDirectoryJob : public KMF::Job
+{
+  public:
+  enum LastLine { Warning = KMF::PluginInterface::Warning, Error = KMF::PluginInterface::Error,
+    Processing, Vobu, FixingVobu, None };
+
+  QString projectDir;
+
+  void run()
+  {
+    message(KMF::PluginInterface::Start, i18n("Making DVD Directory"));
+    m_error = false;
+    m_lastLine = None;
+    m_first = true;
+    m_warning = "";
+    m_currentFile.setFile("");
+    // TODO
+    m_points = 1000;
+    m_lastVobu = 0;
+    m_vobu = 0;
+    m_lastSize = 0;
+  
+    KMF::DVDAuthorParser da;
+    da.setFile(projectDir + "dvdauthor.xml");
+    int count = da.files().count();
+    if(count > 0)
+      m_filePoints = m_points / count;
+    else
+      m_filePoints = 0;
+  
+    //TODO
+    //clean();
+  
+    KProcess *dvdauthor = process();
+    *dvdauthor << "dvdauthor" << "-x" << "dvdauthor.xml";
+    dvdauthor->setWorkingDirectory(projectDir);
+    dvdauthor->execute();
+    if(!m_error)
+    {
+      message(KMF::PluginInterface::Done);
+      // TODO
+      /*
+      if(type == "dummy")
+        static_cast<OutputPlugin*>(plugin())->play();
+      */
+    }
+    /*TODO
+    else
+      clean();
+    */
+  }
+
+  void output(const QString& line)
+  {
+    //kDebug() << line;
+  
+    if(line.startsWith("\t") &&
+        (m_lastLine == Warning || m_lastLine == Error))
+    {
+      message((KMF::PluginInterface::MsgType)m_lastLine, line.mid(1));
+    }
+    else if(line.startsWith("ERR:"))
+    {
+      m_lastLine = Error;
+      m_error = true;
+      message(KMF::PluginInterface::Error, line.mid(6));
+    }
+    else if(line.startsWith("WARN:"))
+    {
+      m_lastLine = Warning;
+      QString temp = line.mid(6);
+      // Don't print multiple similar warnings. They can be found from the log.
+      if(temp != m_warning)
+      {
+        message(KMF::PluginInterface::Warning, temp);
+        m_warning = temp;
+      }
+    }
+    else if(line.startsWith("STAT: Processing"))
+    {
+      QString previousFile = m_currentFile.filePath();
+      m_lastLine = Processing;
+      m_lastSize += m_currentFile.size() / 1024;
+      m_currentFile.setFile(line.mid(17, line.length() - 20));
+  
+      message(KMF::PluginInterface::Info, i18n("Processing: %1", m_currentFile.fileName()));
+      setMaximum(m_currentFile.size()/1024);
+      /* TODO
+      if(!m_first)
+      {
+        if(previousFile != m_currentFile.filePath())
+          progress(m_filePoints);
+      }
+      else
+        m_first = false;
+      */
+      m_vobu = m_lastVobu;
+    }
+    else if(line.startsWith("STAT: VOBU"))
+    {
+      QRegExp reVobu("VOBU (\\d+) at (\\d+)MB, .*");
+  
+      if(m_lastLine != Vobu && m_lastLine != Processing)
+      {
+        message(KMF::PluginInterface::Info, i18n("Processing: %1",m_currentFile.fileName()));
+        setMaximum(m_currentFile.size() / 1024);
+      }
+      m_lastLine = Vobu;
+      if(reVobu.indexIn(line) > -1)
+      {
+        m_lastVobu = reVobu.cap(1).toInt();
+        if(m_vobu != 0)
+        {
+          if(m_lastVobu < m_vobu)
+            m_lastSize = 0;
+          m_vobu = 0;
+        }
+        setValue(reVobu.cap(2).toInt()*1024 - m_lastSize);
+      }
+    }
+    else if(line.startsWith("STAT: fixing VOBU"))
+    {
+      QRegExp reFix(".* (\\d+)%\\)");
+  
+      if(m_lastLine != FixingVobu)
+      {
+        message(KMF::PluginInterface::Info, i18n("Fixing: %1", m_currentFile.fileName()));
+        setMaximum(100);
+      }
+      m_lastLine = FixingVobu;
+      if(reFix.indexIn(line) > -1)
+        setValue(reFix.cap(1).toInt());
+    }
+    else
+    {
+      if(m_lastLine == Warning || m_lastLine == Error)
+        m_lastLine = None;
+    }
+    if(m_lastLine != Warning)
+      m_warning = "";
+  }
+
+  void progress(int points)
+  {
+    if(points > m_points)
+      points = m_points;
+    m_points -= points;
+    //kDebug() << m_points;
+    //interface()->progress(points);
+  }
+
+private:
+  bool m_error;
+  LastLine m_lastLine;
+  QString m_warning;
+  bool m_first;
+  QFileInfo m_currentFile;
+  int m_points;
+  int m_lastVobu, m_vobu;
+  int m_lastSize;
+  int m_filePoints;
+};
+
 DvdDirectoryObject::DvdDirectoryObject(QObject* parent)
-  : DvdAuthorObject(parent), m_points(0), m_filePoints(0)
+  : DvdAuthorObject(parent)
 {
   setObjectName("dvddir");
   setTitle(i18n("DVD Directory"));
@@ -69,101 +233,6 @@ bool DvdDirectoryObject::fromXML(const QDomElement&)
 int DvdDirectoryObject::timeEstimate() const
 {
   return TotalPoints + DvdAuthorObject::timeEstimate();
-}
-
-void DvdDirectoryObject::output(const QString& line)
-{
-  //kDebug() << line;
-  bool stopped = false;
-
-  if(line.startsWith("\t") &&
-      (m_lastLine == Warning || m_lastLine == Error))
-  {
-    stopped = interface()->message((KMF::PluginInterface::MsgType)m_lastLine, line.mid(1));
-  }
-  else if(line.startsWith("ERR:"))
-  {
-    m_lastLine = Error;
-    m_error = true;
-    stopped = interface()->message(KMF::PluginInterface::Error, line.mid(6));
-  }
-  else if(line.startsWith("WARN:"))
-  {
-    m_lastLine = Warning;
-    QString temp = line.mid(6);
-    // Don't print multiple similar warnings. They can be found from the log.
-    if(temp != m_warning)
-    {
-      stopped = interface()->message(KMF::PluginInterface::Warning, temp);
-      m_warning = temp;
-    }
-  }
-  else if(line.startsWith("STAT: Processing"))
-  {
-    QString previousFile = m_currentFile.filePath();
-    m_lastLine = Processing;
-    m_lastSize += m_currentFile.size() / 1024;
-    m_currentFile.setFile(line.mid(17, line.length() - 20));
-
-    stopped = interface()->message(KMF::PluginInterface::Info,
-        i18n("  Processing: %1", m_currentFile.fileName()));
-    stopped = interface()->setItemTotalSteps(m_currentFile.size()/1024);
-    if(!m_first)
-    {
-      if(previousFile != m_currentFile.filePath())
-        progress(m_filePoints);
-    }
-    else
-      m_first = false;
-    m_vobu = m_lastVobu;
-  }
-  else if(line.startsWith("STAT: VOBU"))
-  {
-    QRegExp reVobu("VOBU (\\d+) at (\\d+)MB, .*");
-
-    if(m_lastLine != Vobu && m_lastLine != Processing)
-    {
-      stopped = interface()->message(KMF::PluginInterface::Info,
-          i18n("  Processing: %1",m_currentFile.fileName()));
-      stopped = interface()->setItemTotalSteps(m_currentFile.size()/1024);
-    }
-    m_lastLine = Vobu;
-    if(reVobu.indexIn(line) > -1)
-    {
-      m_lastVobu = reVobu.cap(1).toInt();
-      if(m_vobu != 0)
-      {
-        if(m_lastVobu < m_vobu)
-          m_lastSize = 0;
-        m_vobu = 0;
-      }
-      stopped = interface()->setItemProgress(
-          reVobu.cap(2).toInt()*1024 - m_lastSize);
-    }
-  }
-  else if(line.startsWith("STAT: fixing VOBU"))
-  {
-    QRegExp reFix(".* (\\d+)%\\)");
-
-    if(m_lastLine != FixingVobu)
-    {
-      stopped = interface()->message(KMF::PluginInterface::Info,
-          i18n("  Fixing: %1", m_currentFile.fileName()));
-      stopped = interface()->setItemTotalSteps(100);
-    }
-    m_lastLine = FixingVobu;
-    if(reFix.indexIn(line) > -1)
-      stopped = interface()->setItemProgress(reFix.cap(1).toInt());
-  }
-  else
-  {
-    if(m_lastLine == Warning || m_lastLine == Error)
-      m_lastLine = None;
-  }
-  if(m_lastLine != Warning)
-    m_warning = "";
-  if(stopped)
-    m_run.kill();
 }
 
 void DvdDirectoryObject::clean()
@@ -209,15 +278,6 @@ bool DvdDirectoryObject::isUpToDate(QString type)
   return true;
 }
 
-void DvdDirectoryObject::progress(int points)
-{
-  if(points > m_points)
-    points = m_points;
-  m_points -= points;
-  //kDebug() << m_points;
-  interface()->progress(points);
-}
-
 bool DvdDirectoryObject::make(QString type)
 {
   if(DvdAuthorObject::make(type) == false)
@@ -229,43 +289,13 @@ bool DvdDirectoryObject::make(QString type)
     interface()->progress(TotalPoints);
     return true;
   }
-  m_error = false;
-  m_lastLine = None;
-  m_first = true;
-  m_warning = "";
-  m_currentFile.setFile("");
-  m_points = TotalPoints;
-  m_lastVobu = 0;
-  m_vobu = 0;
-  m_lastSize = 0;
+  DVDDirectoryJob *job = new DVDDirectoryJob();
 
-  KMF::DVDAuthorParser da;
-  da.setFile(interface()->projectDir() +"dvdauthor.xml");
-  int count = da.files().count();
-  if(count > 0)
-    m_filePoints = m_points / count;
-  else
-    m_filePoints = 0;
+  // TODO Just for testing
+  job->TODO_REMOVE_ME_START();
+  delete job;
 
-  clean();
-  interface()->message(KMF::PluginInterface::Info, i18n("Making DVD Directory"));
-
-  m_run.setCommand("dvdauthor -x dvdauthor.xml");
-  m_run.setWorkingDirectory(interface()->projectDir());
-  connect(&m_run, SIGNAL(line(const QString&)),
-          this, SLOT(output(const QString&)));
-  m_run.run();
-  interface()->logger()->message(m_run.output());
-  if(!m_error)
-  {
-    interface()->message(KMF::PluginInterface::OK, i18n("DVD Directory ready"));
-    if(type == "dummy")
-      static_cast<OutputPlugin*>(plugin())->play();
-  }
-  else
-    clean();
-  progress(TotalPoints);
-  return !m_error;
+  return true;
 }
 
 void DvdDirectoryObject::toXML(QDomElement*) const
