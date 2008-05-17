@@ -257,7 +257,6 @@ void KMFWidget::paint(QImage* layer, bool background) const
     }
     //static int i = 0;
     //temp.save(m_prjIf->projectDir("menus") + QString("%1.png").arg(++i));
-
     QPainter p(layer);
     p.drawImage(QPoint(0, 0), temp);
   }

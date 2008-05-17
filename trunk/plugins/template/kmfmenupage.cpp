@@ -56,7 +56,7 @@ public:
 
   void run()
   {
-    message(KMF::Info, i18n("Menu: %1").arg(menuPage.objectName()));
+    message(KMF::Info, i18n("Menu: %1", KMFTemplateBase::uiText(menuPage.objectName())));
     QSize resolution = menuPage.resolution();
     m_background = QImage(resolution, QImage::Format_ARGB32);
     m_background.fill(KMF::Tools::toColor("#444444FF").rgba());
@@ -78,7 +78,7 @@ public:
     m_subSelect.setDotsPerMeterX(DPM);
     m_subSelect.setDotsPerMeterY(DPM);
     m_subSelect.setText("layer", "select");
-
+    
     if(paint() == false)
     {
       message(KMF::Error, i18n("Could not paint menu."));
@@ -99,6 +99,7 @@ public:
       message(KMF::Error, i18n("Could not make mpeg file."));
       return;
     }
+    message(KMF::Done);
   }
 
   bool paint()

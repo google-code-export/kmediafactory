@@ -623,8 +623,7 @@ bool VideoObject::make(QString type)
           else
           {
             interface()->message(KMF::Info,
-                i18n("Subtitle conversion seems to be up to date: %1")
-                    .arg(videoFile.fileName()));
+                i18n("Subtitle conversion seems to be up to date: %1", videoFile.fileName()));
           }
         }
       }

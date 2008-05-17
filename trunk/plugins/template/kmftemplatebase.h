@@ -39,6 +39,9 @@ class KMFTemplateBase : public QObject
   public:
     KMFTemplateBase(QObject *parent = 0);
     ~KMFTemplateBase();
+
+    static QString uiText(const QString& s);
+
   protected:
     KMF::PluginInterface* m_interface;
 
@@ -46,7 +49,6 @@ class KMFTemplateBase : public QObject
     KMFMenu* menu();
     TemplateObject* templateObject();
     KMF::Plugin* plugin();
-    QString uiText(QString s);
 };
 
 #endif // KMFTEMPLATEBASE_H

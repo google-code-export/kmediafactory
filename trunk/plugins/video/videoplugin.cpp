@@ -143,7 +143,7 @@ void VideoPlugin::slotAddVideo()
       if(!vob->addFile(*filename))
       {
         KMessageBox::error(kapp->activeWindow(),
-                           i18n("Couldn't add file: %1").arg(*filename));
+                           i18n("Couldn't add file: %1", *filename));
         break;
       }
       vob->setTitleFromFileName();

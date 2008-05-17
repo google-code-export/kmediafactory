@@ -149,6 +149,7 @@ void OutputPage::start()
   if (kmfApp->project()->prepare(m_type))
   {
     // Run jobs
+    kmfApp->interface()->message(KMF::Info, i18n("Making files..."));
     ThreadWeaver::Weaver::instance()->resume();
   }
 }
