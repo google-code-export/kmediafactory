@@ -39,7 +39,7 @@ class KMFMenu : public KMFTemplateBase
     QImage makeMenuPreview(QString page = "");
     QImage icon() const { return templateImage("icon.png"); };
     bool addPage(const QString& name, int title, int chapter);
-    QDomElement writeDvdAuthorXml(const QString& type, int titleset);
+    QDomElement writeDvdAuthorXml(const QString& type, int titleset) const;
     bool addMenuMpegJobs();
     KMFTemplate* templateStore() { return &m_template; };
     const QStringList& menus() const { return m_menus; };
@@ -61,7 +61,7 @@ class KMFMenu : public KMFTemplateBase
 
   private:
     void progress(int points);
-    int pages();
+    int pages() const;
 
     QList< QList<KMFMenuPage*> > m_pages;
     KMFTemplate m_template;

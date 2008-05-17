@@ -219,7 +219,7 @@ void TemplatePage::imageContextMenuRequested(const QPoint& pos)
         if(!templatePreview->image().save(url.path(), "PNG", 0))
         {
           KMessageBox::error(kmfApp->activeWindow(),
-              i18n("Could not write to file: %1").arg(url.prettyUrl()));
+              i18n("Could not write to file: %1", url.prettyUrl()));
         }
       }
     }

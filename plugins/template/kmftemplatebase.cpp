@@ -91,10 +91,11 @@ KMFMenu* KMFTemplateBase::menu()
   return 0;
 }
 
-QString KMFTemplateBase::uiText(QString string)
+QString KMFTemplateBase::uiText(const QString& string)
 {
   int i = 0;
-  QString s = string.replace("_", " ");
+  QString s = string;
+  s.replace("_", " ");
   QRegExp rx("\\b\\w");
 
   s = s.trimmed().toLower();

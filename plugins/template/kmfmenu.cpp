@@ -52,7 +52,7 @@ KMFMenu::~KMFMenu()
     qDeleteAll(pages);
 }
 
-QDomElement KMFMenu::writeDvdAuthorXml(const QString& type, int titleset)
+QDomElement KMFMenu::writeDvdAuthorXml(const QString& type, int titleset) const
 {
   if(pages() > 0)
   {
@@ -82,10 +82,9 @@ QDomElement KMFMenu::writeDvdAuthorXml(const QString& type, int titleset)
           ++j;
         }
       }
-      if(!result.hasChildNodes())
+      if(!result.hasChildNodes() && m_pages[0].count() > 0)
       {
-        KMFMenuPage page(this);
-        page.writeDvdAuthorXmlNoMenu(result);
+        m_pages[0][0]->writeDvdAuthorXmlNoMenu(result);
       }
       return result;
     }
@@ -223,7 +222,7 @@ QImage KMFMenu::makeMenuPreview(QString page)
   return QImage();
 }
 
-int KMFMenu::pages()
+int KMFMenu::pages() const
 {
   int result = 0;
 

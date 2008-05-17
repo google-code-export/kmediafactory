@@ -336,7 +336,7 @@ void KMediaFactory::fileSaveAs()
     if(!kmfApp->project()->save(url))
     {
       KMessageBox::error(kmfApp->activeWindow(),
-          i18n("Could not write to file: %1").arg(url.prettyUrl()));
+          i18n("Could not write to file: %1", url.prettyUrl()));
     }
   }
 }

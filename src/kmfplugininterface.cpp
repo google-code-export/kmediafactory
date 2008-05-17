@@ -171,6 +171,8 @@ void KMFPluginInterface::selectOutput(const QString& xml)
 
 void KMFPluginInterface::addJob(KMF::Job *job, KMF::JobDependency dependency)
 {
+  // TODO clear this
+  m_jobs.append(job);
   switch (dependency)
   {
     case KMF::All:
@@ -206,7 +208,7 @@ void KMFPluginInterface::addJob(KMF::Job *job, KMF::Job *dependency)
 
 void KMFPluginInterface::message(KMF::MsgType type, const QString& msg)
 {
-  kDebug() << type << msg;
+  kDebug() << type << msg << sender();
   KMediaFactory* mainWindow = kmfApp->mainWindow();
   QString pixmap;
   QColor color;

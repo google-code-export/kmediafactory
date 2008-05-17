@@ -30,6 +30,8 @@
 #include <QFile>
 #include <QDomElement>
 
+static const char startString[] = I18N_NOOP("DVD Author XML file");
+
 class WriteDVDAuthorXMLJob : public KMF::Job
 {
 public:
@@ -40,7 +42,7 @@ public:
 
   void run()
   {
-    message(KMF::Info, i18n("Generating DVDAuthor xml"));
+    message(KMF::Info, i18n(startString));
   
     QDomDocument doc("");
     doc.appendChild(doc.createProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\""));
@@ -77,7 +79,7 @@ public:
   
     doc.appendChild(doc.createComment(comment));
     doc.appendChild(doc.createTextNode("\n"));
-  
+    
     root.setAttribute("dest", "./DVD");
     doc.appendChild(root);
   
@@ -94,6 +96,7 @@ public:
     if (tempObj->call("directPlay").toBool()) {
         titleset = 1;
     }
+
     fpc.appendChild(doc.createTextNode(QString(
         " { g0 = 0; g1 = 0; g2 = 0; g3 = %1; g4 = 0; g5 = 0; g6 = 0;"
         " jump menu 1; }").arg(titleset)));
@@ -195,7 +198,7 @@ int DvdAuthorObject::timeEstimate() const
 
 bool DvdAuthorObject::make(QString)
 {
-  interface()->message(KMF::Start, i18n("DVD Author XML file"));
+  interface()->message(KMF::Start, i18n(startString));
   WriteDVDAuthorXMLJob *job = new WriteDVDAuthorXMLJob();
   job->tempObj = interface()->templateObject();
   job->mobs =  interface()->mediaObjects();
