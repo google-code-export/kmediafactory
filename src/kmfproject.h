@@ -56,9 +56,9 @@ class KMFProject : public QObject
     KMF::OutputObject* output() const { return m_output; };
     bool make(QString type);
     int timeEstimate() const;
-    void setDirty(KMF::PluginInterface::DirtyType type, bool dirty = true);
+    void setDirty(KMF::DirtyType type, bool dirty = true);
     bool isModified() const { return m_modified; };
-    QDateTime lastModified(KMF::PluginInterface::DirtyType type) const;
+    QDateTime lastModified(KMF::DirtyType type) const;
     const KUrl& url() { return m_url; };
     bool validProject() const;
     const QString& error() const { return m_error; };

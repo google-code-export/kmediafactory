@@ -92,12 +92,12 @@ QDomElement KMFMenu::writeDvdAuthorXml(const QString& type, int titleset)
   }
   else
   {
-    m_interface->message(KMF::PluginInterface::Error, i18n("No pages."));
+    m_interface->message(KMF::Error, i18n("No pages."));
     return QDomElement();
   }
 }
 
-bool KMFMenu::makeMenuMpegs()
+bool KMFMenu::addMenuMpegJobs()
 {
   for(int i=0; i < m_pages.count(); ++i)
   {
@@ -105,13 +105,7 @@ bool KMFMenu::makeMenuMpegs()
     {
       foreach(KMFMenuPage* ob,  m_pages[i])
       {
-        progress(m_pagePoints);
-        if(m_interface->message(KMF::PluginInterface::Info,
-           i18n("   Menu: %1", uiText(ob->objectName()))))
-          return false;
-
-        // TODO just for testing
-        ob->job()->TODO_REMOVE_ME_START();
+        m_interface->addJob(ob->job());
       }
     }
   }
@@ -133,7 +127,7 @@ bool KMFMenu::addPage(const QDomElement& element, int pageSet,
   progress(m_pagePoints);
   if(menuPage)
   {
-    if(m_interface->message(KMF::PluginInterface::Info,
+    if(m_interface->message(KMF::Info,
        i18n("   Menu: %1", uiText(menuPage->objectName()))))
       return false;
     if(pageSet == 0)
@@ -196,7 +190,7 @@ QDomElement KMFMenu::getPage(const QDomNode& node, const QString& name)
     }
     n = n.nextSibling();
   }
-  m_interface->message(KMF::PluginInterface::Error,
+  m_interface->message(KMF::Error,
                   i18n("Cannot find page %1 from template.", name));
   return QDomElement();
 }
@@ -248,7 +242,7 @@ void KMFMenu::progress(int points)
   if(points > m_points)
     points = m_points;
   m_points -= points;
-  m_interface->progress(points);
+  //m_interface->progress(points);
 }
 
 bool KMFMenu::makeMenu()
@@ -259,8 +253,7 @@ bool KMFMenu::makeMenu()
   QDomElement element = m_templateXML.documentElement();
   QString page = element.attribute("first_page");
 
-  if(m_interface->message(KMF::PluginInterface::Info, i18n("Generating menus")))
-    return false;
+  m_interface->message(KMF::Info, i18n("Generating menus"));
   if(addPage(page, 0, 0))
   {
     int p = pages();
@@ -269,12 +262,8 @@ bool KMFMenu::makeMenu()
     if(p > 0)
       m_pagePoints = m_points / p;
     // Generate jpgs
-    m_interface->message(KMF::PluginInterface::Info, i18n("Making menu mpegs"));
-    if(makeMenuMpegs() == false)
-      return false;
-
-    progress(TotalPoints);
-    return true;
+    m_interface->message(KMF::Info, i18n("Making menu mpegs"));
+    return addMenuMpegJobs();
   }
   return false;
 }

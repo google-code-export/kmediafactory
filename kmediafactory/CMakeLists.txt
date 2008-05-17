@@ -3,15 +3,16 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 set(kmediafactoryinterfaces_LIB_SRCS
   plugin.cpp
   plugininterface.cpp
-  kmfobject.cpp
+  object.cpp
   logger.cpp
   job.cpp
 )
 
 set(kmediafactoryinclude_HEADERS
+  kmediafactory.h
   plugin.h
   plugininterface.h
-  kmfobject.h
+  object.h
   logger.h
   job.h
 )

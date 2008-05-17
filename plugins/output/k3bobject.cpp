@@ -44,14 +44,14 @@ public:
 
   void run()
   {
-    message(KMF::PluginInterface::Start, i18n("Making K3b project."));
+    message(KMF::Start, i18n("Making K3b project."));
     saveDocument(KUrl(doc));
     if (!cmd.isEmpty())
     {
       cmd += " " + doc;
       KRun::runCommand(cmd, kapp->activeWindow());
     }
-    message(KMF::PluginInterface::Done);
+    message(KMF::Done);
   }
 
   // All the following are taken from k3b project
@@ -460,9 +460,7 @@ bool K3bObject::make(QString type)
   job->doc = interface()->projectDir() + "dvd.k3b";
   job->dvdDir = interface()->projectDir("DVD");
   job->title = interface()->title();
-  // TODO Just for testing
-  job->TODO_REMOVE_ME_START();
-  delete job;
+  interface()->addJob(job, KMF::Last);
   return true;
 }
 

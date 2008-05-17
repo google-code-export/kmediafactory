@@ -115,9 +115,9 @@ void OutputPage::showLog()
 void OutputPage::stop()
 {
   stopPushBtn->setEnabled(false);
+  // TODO stop threads
   kmfApp->interface()->setStopped(true);
-  kmfApp->interface()->message(KMF::PluginInterface::Error, i18n("User cancelled."));
-  kmfApp->interface()->setItemProgress(-1);
+  kmfApp->interface()->message(KMF::Error, i18n("User cancelled."));
 }
 
 void OutputPage::start(QAction* type)
@@ -144,7 +144,7 @@ void OutputPage::start()
   kmfApp->logger().start();
   if(kmfApp->project()->make(m_type) == false)
     if(!kmfApp->project()->error().isEmpty())
-      kmfApp->interface()->message(KMF::PluginInterface::Error, kmfApp->project()->error());
+      kmfApp->interface()->message(KMF::Error, kmfApp->project()->error());
   m_type = "";
   kmfApp->logger().stop();
   kmfApp->logger().save(kmfApp->project()->directory() + "kmf_log.html");

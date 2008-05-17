@@ -64,7 +64,7 @@ public:
 
   void run()
   {
-    message(KMF::PluginInterface::Info, i18n("   Adding subtitles to %1", videoFile));
+    message(KMF::Info, i18n("   Adding subtitles to %1", videoFile));
 
     QStringList subtitleFiles = subtitle.file().split(";");
   
@@ -89,7 +89,7 @@ public:
     else
     {
       QFile::remove(videoFileWithSubtitles);
-      message(KMF::PluginInterface::Error, i18n("   Conversion error."));
+      message(KMF::Error, i18n("   Conversion error."));
     }
   }
 
@@ -586,7 +586,7 @@ QString VideoObject::videoFileFind(int index, VideoFilePrefix prefixStart) const
 
 bool VideoObject::make(QString type)
 {
-  interface()->message(KMF::PluginInterface::Info, i18n("Preparing file(s) for %1", title()));
+  interface()->message(KMF::Info, i18n("Preparing file(s) for %1", title()));
   QString fileName;
 
   m_type = type;
@@ -618,13 +618,11 @@ bool VideoObject::make(QString type)
             job->videoFileWithSubtitles = videoFileWithSubtitles.fileName();
             job->mediaDir = interface()->projectDir("media");
             job->type = interface()->projectType();
-            // TODO Just for testing
-            job->TODO_REMOVE_ME_START();
-            delete job;
+            interface()->addJob(job);
           }
           else
           {
-            interface()->message(KMF::PluginInterface::Info,
+            interface()->message(KMF::Info,
                 i18n("   Subtitle conversion seems to be up to date: %1")
                     .arg(videoFile.fileName()));
           }
@@ -632,7 +630,6 @@ bool VideoObject::make(QString type)
       }
     }
   }
-  interface()->progress(TotalPoints);
   return true;
 }
 
@@ -643,7 +640,7 @@ void VideoObject::slotProperties()
   if (dlg.exec())
   {
     dlg.getData(*this);
-    interface()->setDirty(KMF::PluginInterface::DirtyMedia);
+    interface()->setDirty(KMF::DirtyMedia);
   }
 }
 

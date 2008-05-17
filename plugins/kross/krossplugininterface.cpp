@@ -52,7 +52,7 @@ QString KrossPluginInterface::projectDir(const QString& subDir)
   return m_interface->projectDir(subDir);
 }
 
-void KrossPluginInterface::setDirty(KMF::PluginInterface::DirtyType type)
+void KrossPluginInterface::setDirty(KMF::DirtyType type)
 {
   return m_interface->setDirty(type);
 }
@@ -67,7 +67,7 @@ QString KrossPluginInterface::lastSubType()
   return m_interface->lastSubType();
 }
 
-QDateTime KrossPluginInterface::lastModified(KMF::PluginInterface::DirtyType type)
+QDateTime KrossPluginInterface::lastModified(KMF::DirtyType type)
 {
   return m_interface->lastModified(type);
 }
@@ -138,24 +138,9 @@ bool KrossPluginInterface::removeOutputObject(Kross::Object::Ptr oob)
   return false;
 }
 
-bool KrossPluginInterface::message(KMF::PluginInterface::MsgType type, const QString& msg)
+bool KrossPluginInterface::message(KMF::MsgType type, const QString& msg)
 {
   return m_interface->message(type, msg);
-}
-
-bool KrossPluginInterface::progress(int advance)
-{
-  return m_interface->progress(advance);
-}
-
-bool KrossPluginInterface::setItemTotalSteps(int totalSteps)
-{
-  return m_interface->setItemTotalSteps(totalSteps);
-}
-
-bool KrossPluginInterface::setItemProgress(int progress)
-{
-  return m_interface->setItemProgress(progress);
 }
 
 QObject* KrossPluginInterface::logger()

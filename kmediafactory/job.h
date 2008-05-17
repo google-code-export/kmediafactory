@@ -21,7 +21,8 @@
 #ifndef KMFJOB_H
 #define KMFJOB_H
 
-#include "plugininterface.h"
+#include "kmediafactory.h"
+#include <KProcess>
 #include <kdemacros.h>
 #include <threadweaver/Job.h>
 
@@ -37,7 +38,7 @@ namespace KMF
       KProcess* process(const QString& filter = "",
                         KProcess::OutputChannelMode mode =
                             KProcess::SeparateChannels);
-      void message(KMF::PluginInterface::MsgType type, const QString& msg = "");
+      void message(KMF::MsgType type, const QString& msg = "");
       void log(const QString& msg);
       void setValue(int value);
       void setMaximum(int maximum);
@@ -52,10 +53,8 @@ namespace KMF
       virtual bool success() const;
       virtual void requestAbort();
 
-      void TODO_REMOVE_ME_START() { run(); };
-
     signals:
-      void newMessage(PluginInterface::MsgType type, const QString& msg);
+      void newMessage(KMF::MsgType type, const QString& msg);
       void newLogMessage(const QString& msg);
       // Howto connect these to list items??
       // Main message?

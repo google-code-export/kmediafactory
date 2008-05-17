@@ -36,10 +36,10 @@ class KrossPluginInterface : public QObject
     QString title();
     void setTitle(QString title);
     QString projectDir(const QString& subDir = "");
-    void setDirty(KMF::PluginInterface::DirtyType type);
+    void setDirty(KMF::DirtyType type);
     QString projectType();
     QString lastSubType();
-    QDateTime lastModified(KMF::PluginInterface::DirtyType type);
+    QDateTime lastModified(KMF::DirtyType type);
     int serial();
     bool addMediaAction(const QString& icon, const QString& text,
                         const QString& shortcut, const QString& name,
@@ -55,10 +55,7 @@ class KrossPluginInterface : public QObject
     void setTemplateFromXML(const QString& xml);
     void setOutputFromXML(const QString& xml);
 
-    bool message(KMF::PluginInterface::MsgType type, const QString& msg);
-    bool progress(int advance);
-    bool setItemTotalSteps(int totalSteps);
-    bool setItemProgress(int progress);
+    bool message(KMF::MsgType type, const QString& msg);
     QObject* logger();
 
     // Plugin helpers
