@@ -417,7 +417,7 @@ void SlideshowObject::actions(QList<QAction*>* actionList) const
 
 bool SlideshowObject::make(QString type)
 {
-  interface()->message(KMF::Info, i18n("Preparing file(s) for %1", title()));
+  interface()->message(KMF::Start, i18n("Media: %1", title()));
   m_type = type;
   if(type != "dummy")
   {
@@ -442,9 +442,9 @@ bool SlideshowObject::make(QString type)
     else
     {
       interface()->message(KMF::Info, i18n("Slideshow \"%1\" seems to be up to date", title()));
-      return true;
     }
   }
+  interface()->message(KMF::Done);
   return true;
 }
 

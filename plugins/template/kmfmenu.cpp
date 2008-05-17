@@ -122,18 +122,20 @@ QList<KMFMenuPage*>* KMFMenu::titlePages(int title)
 bool KMFMenu::addPage(const QDomElement& element, int pageSet,
                       int title, int chapter)
 {
+  bool result = false;
   KMFMenuPage* menuPage = static_cast<KMFMenuPage*>
       (KMFWidgetFactory::createPage(element, this, title, chapter));
   progress(m_pagePoints);
   if(menuPage)
   {
-    m_interface->message(KMF::Info, i18n("Menu: %1", uiText(menuPage->objectName())));
+    m_interface->message(KMF::Start, i18n("Menu: %1", uiText(menuPage->objectName())));
     if(pageSet == 0)
       menuPage->setVmgm(true);
     titlePages(pageSet)->append(menuPage);
-    return menuPage->parseButtons();
+    result = menuPage->parseButtons();
+    m_interface->message(KMF::Done);
   }
-  return false;
+  return result;
 }
 
 bool KMFMenu::addPage(const QString& name, int title, int chapter)
@@ -251,7 +253,6 @@ bool KMFMenu::makeMenu()
   QDomElement element = m_templateXML.documentElement();
   QString page = element.attribute("first_page");
 
-  m_interface->message(KMF::Info, i18n("Generating menus"));
   if(addPage(page, 0, 0))
   {
     int p = pages();
@@ -260,7 +261,6 @@ bool KMFMenu::makeMenu()
     if(p > 0)
       m_pagePoints = m_points / p;
     // Generate jpgs
-    m_interface->message(KMF::Info, i18n("Making menu mpegs"));
     return addMenuMpegJobs();
   }
   return false;
