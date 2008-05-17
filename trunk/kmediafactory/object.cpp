@@ -61,14 +61,13 @@ bool KMF::Object::make(QString)
   return false; 
 }
 
+void KMF::Object::finished()
+{
+}
+
 QMap<QString, QString> KMF::Object::subTypes() const
 { 
   return QMap<QString, QString>(); 
-}
-
-int KMF::Object::timeEstimate() const 
-{ 
-  return 0; 
 }
 
 const QString& KMF::Object::title() const 

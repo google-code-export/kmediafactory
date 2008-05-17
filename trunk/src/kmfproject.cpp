@@ -299,19 +299,14 @@ QString KMFProject::directory(const QString& subDir, bool create) const
   return KMF::Tools::addSlash(result);
 }
 
-bool KMFProject::make(QString type)
+bool KMFProject::prepare(const QString& type)
 {
-  KMF::MediaObject *obj;
-  bool result = true;
-
   if(!validProject())
     return false;
 
-  QDir dir(m_directory);
-  if(!dir.exists())
-    dir.mkpath(dir.path());
+  bool result = true;
 
-  foreach(obj, m_list.list())
+  foreach(KMF::MediaObject *obj, m_list.list())
   {
     if(!obj->make(type))
     {
@@ -323,22 +318,17 @@ bool KMFProject::make(QString type)
     result = false;
   if(result && !m_output->make(type))
     result = false;
+
   m_subType = type;
-  return result;
+  return true;
 }
 
-int KMFProject::timeEstimate() const
+void KMFProject::finished()
 {
-  KMF::MediaObject* obj;
-  int result = 0;
-
-  if(!validProject())
-    return result;
-  foreach(obj, m_list.list())
-    result += obj->timeEstimate();
-  result += m_template->timeEstimate();
-  result += m_output->timeEstimate();
-  return result;
+  foreach(KMF::MediaObject* obj, m_list.list())
+    obj->finished();
+  m_template->finished();
+  m_output->finished();
 }
 
 bool KMFProject::open(const KUrl &url)
