@@ -55,7 +55,7 @@ class KrossPluginInterface : public QObject
     void setTemplateFromXML(const QString& xml);
     void setOutputFromXML(const QString& xml);
 
-    bool message(KMF::MsgType type, const QString& msg);
+    void message(KMF::MsgType type, const QString& msg);
     QObject* logger();
 
     // Plugin helpers

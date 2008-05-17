@@ -121,7 +121,7 @@ namespace KMF
 
       virtual void addJob(KMF::Job *job, JobDependency dependency = KMF::None) = 0;
       virtual void addJob(KMF::Job *job, KMF::Job *dependency) = 0;
-      virtual bool message(MsgType type, const QString& msg) = 0;
+      virtual void message(MsgType type, const QString& msg = QString()) = 0;
       virtual Logger* logger() = 0;
 
       // Plugin helpers

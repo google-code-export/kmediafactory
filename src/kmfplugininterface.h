@@ -74,7 +74,6 @@ class KMFPluginInterface : public KMF::PluginInterface
     virtual void addJob(KMF::Job *job, KMF::JobDependency dependency = KMF::None);
     virtual void addJob(KMF::Job *job, KMF::Job *dependency);
 
-    virtual bool message(KMF::MsgType type, const QString& msg);
     virtual KMF::Logger* logger();
     void setUseMessageBox(bool useMessageBox) { m_useMessageBox = useMessageBox; };
     void setStopped(bool stopped) { m_stopped = stopped; };
@@ -92,6 +91,9 @@ class KMFPluginInterface : public KMF::PluginInterface
 
   public slots:
     void progressDialogDestroyed();
+    void setMaximum(int max);
+    void setValue(int value);
+    virtual void message(KMF::MsgType type, const QString& msg = QString());
 
   private:
     bool m_useMessageBox;

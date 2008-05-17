@@ -39,30 +39,10 @@ namespace KMF
       virtual void stop();
       virtual const QString& log() const;
       virtual void message(const QString& msg, const QColor& color);
-      // TODO move to job
-      virtual void setFilter(const QString& filter);
-      // TODO move to job
-      virtual QString filter() const;
       virtual bool save(QString file) const;
-      // TODO move to job
-      void connectProcess(KProcess* proc,
-                          const QString& filter = "",
-                          KProcess::OutputChannelMode mode =
-                              KProcess::SeparateChannels);
-  
-    signals:
-      void line(QString line);
   
     public slots:
-      // TODO move to job
-      virtual void stdout();
-      // TODO move to job
-      virtual void stderr();
       void message(const QString& msg);
-  
-    protected:
-      // TODO move to job
-      KProcess* currentProcess();
   
     private:
       class Private;

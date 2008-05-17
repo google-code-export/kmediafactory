@@ -127,9 +127,7 @@ bool KMFMenu::addPage(const QDomElement& element, int pageSet,
   progress(m_pagePoints);
   if(menuPage)
   {
-    if(m_interface->message(KMF::Info,
-       i18n("   Menu: %1", uiText(menuPage->objectName()))))
-      return false;
+    m_interface->message(KMF::Info, i18n("Menu: %1", uiText(menuPage->objectName())));
     if(pageSet == 0)
       menuPage->setVmgm(true);
     titlePages(pageSet)->append(menuPage);
