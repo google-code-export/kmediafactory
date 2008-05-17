@@ -21,7 +21,7 @@
 #include "dvddirectoryobject.h"
 #include "dvdauthorparser.h"
 #include "outputplugin.h"
-#include <kmediafactory/kmfobject.h>
+#include <kmediafactory/object.h>
 #include <kmediafactory/logger.h>
 #include <kmediafactory/job.h>
 #include <kmftools.h>
@@ -46,14 +46,14 @@
 class DVDDirectoryJob : public KMF::Job
 {
   public:
-  enum LastLine { Warning = KMF::PluginInterface::Warning, Error = KMF::PluginInterface::Error,
+  enum LastLine { Warning = KMF::Warning, Error = KMF::Error,
     Processing, Vobu, FixingVobu, None };
 
   QString projectDir;
 
   void run()
   {
-    message(KMF::PluginInterface::Start, i18n("Making DVD Directory"));
+    message(KMF::Start, i18n("Making DVD Directory"));
     m_error = false;
     m_lastLine = None;
     m_first = true;
@@ -81,7 +81,7 @@ class DVDDirectoryJob : public KMF::Job
     dvdauthor->execute();
     if(!m_error)
     {
-      message(KMF::PluginInterface::Done);
+      message(KMF::Done);
       // TODO
       /*
       if(type == "dummy")
@@ -99,13 +99,13 @@ class DVDDirectoryJob : public KMF::Job
     if(line.startsWith("\t") &&
         (m_lastLine == Warning || m_lastLine == Error))
     {
-      message((KMF::PluginInterface::MsgType)m_lastLine, line.mid(1));
+      message((KMF::MsgType)m_lastLine, line.mid(1));
     }
     else if(line.startsWith("ERR:"))
     {
       m_lastLine = Error;
       m_error = true;
-      message(KMF::PluginInterface::Error, line.mid(6));
+      message(KMF::Error, line.mid(6));
     }
     else if(line.startsWith("WARN:"))
     {
@@ -114,7 +114,7 @@ class DVDDirectoryJob : public KMF::Job
       // Don't print multiple similar warnings. They can be found from the log.
       if(temp != m_warning)
       {
-        message(KMF::PluginInterface::Warning, temp);
+        message(KMF::Warning, temp);
         m_warning = temp;
       }
     }
@@ -125,7 +125,7 @@ class DVDDirectoryJob : public KMF::Job
       m_lastSize += m_currentFile.size() / 1024;
       m_currentFile.setFile(line.mid(17, line.length() - 20));
   
-      message(KMF::PluginInterface::Info, i18n("Processing: %1", m_currentFile.fileName()));
+      message(KMF::Info, i18n("Processing: %1", m_currentFile.fileName()));
       setMaximum(m_currentFile.size()/1024);
       /* TODO
       if(!m_first)
@@ -144,7 +144,7 @@ class DVDDirectoryJob : public KMF::Job
   
       if(m_lastLine != Vobu && m_lastLine != Processing)
       {
-        message(KMF::PluginInterface::Info, i18n("Processing: %1",m_currentFile.fileName()));
+        message(KMF::Info, i18n("Processing: %1",m_currentFile.fileName()));
         setMaximum(m_currentFile.size() / 1024);
       }
       m_lastLine = Vobu;
@@ -166,7 +166,7 @@ class DVDDirectoryJob : public KMF::Job
   
       if(m_lastLine != FixingVobu)
       {
-        message(KMF::PluginInterface::Info, i18n("Fixing: %1", m_currentFile.fileName()));
+        message(KMF::Info, i18n("Fixing: %1", m_currentFile.fileName()));
         setMaximum(100);
       }
       m_lastLine = FixingVobu;
@@ -246,7 +246,7 @@ bool DvdDirectoryObject::isUpToDate(QString type)
     return false;
 
   QDateTime lastModified = interface()->lastModified(
-      KMF::PluginInterface::DirtyAny);
+      KMF::DirtyAny);
   QDir dir(interface()->projectDir("DVD/VIDEO_TS"));
   if(dir.exists() == false)
     return false;
@@ -277,16 +277,12 @@ bool DvdDirectoryObject::make(QString type)
 
   if(isUpToDate(type))
   {
-    interface()->message(KMF::PluginInterface::OK, i18n("DVD Directory is up to date"));
-    interface()->progress(TotalPoints);
+    interface()->message(KMF::OK, i18n("DVD Directory is up to date"));
     return true;
   }
   DVDDirectoryJob *job = new DVDDirectoryJob();
   job->projectDir = interface()->projectDir();
-  // TODO Just for testing
-  job->TODO_REMOVE_ME_START();
-  delete job;
-
+  interface()->addJob(job, KMF::Last);
   return true;
 }
 

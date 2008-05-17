@@ -40,7 +40,7 @@ class KMFMenu : public KMFTemplateBase
     QImage icon() const { return templateImage("icon.png"); };
     bool addPage(const QString& name, int title, int chapter);
     QDomElement writeDvdAuthorXml(const QString& type, int titleset);
-    bool makeMenuMpegs();
+    bool addMenuMpegJobs();
     KMFTemplate* templateStore() { return &m_template; };
     const QStringList& menus() const { return m_menus; };
     const QString& title() { return m_title; };

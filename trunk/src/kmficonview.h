@@ -20,7 +20,7 @@
 #ifndef KMFTEMPLATEICONVIEW_H
 #define KMFTEMPLATEICONVIEW_H
 
-#include <kmediafactory/kmfobject.h>
+#include <kmediafactory/object.h>
 #include "kmflistmodel.h"
 #include <klocale.h>
 #include <QItemDelegate>

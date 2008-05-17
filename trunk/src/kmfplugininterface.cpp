@@ -27,6 +27,8 @@
 #include "kmfproject.h"
 #include "kmfprogresslistview.h"
 #include "mediapage.h"
+#include <threadweaver/DependencyPolicy.h>
+#include <threadweaver/ThreadWeaver.h>
 #include <KDebug>
 #include <KMessageBox>
 #include <QDomDocument>
@@ -167,7 +169,36 @@ void KMFPluginInterface::selectOutput(const QString& xml)
   kmfApp->project()->outputFromXML(doc.documentElement());
 }
 
-bool KMFPluginInterface::message(KMF::PluginInterface::MsgType type, const QString& msg)
+void KMFPluginInterface::addJob(KMF::Job *job, KMF::JobDependency dependency)
+{
+  switch (dependency)
+  {
+    case KMF::All:
+      foreach(KMF::Job* dep, m_jobs)
+      {
+        ThreadWeaver::DependencyPolicy::instance().addDependency(job, dep);
+      }
+      break;
+
+    case KMF::Last:
+      if (m_jobs.last() != 0)
+        ThreadWeaver::DependencyPolicy::instance().addDependency(job, m_jobs.last());
+      break;
+
+    case KMF::None:
+    default:
+      break;
+  }
+  ThreadWeaver::Weaver::instance()->enqueue(job);
+}
+
+void KMFPluginInterface::addJob(KMF::Job *job, KMF::Job *dependency)
+{
+  ThreadWeaver::DependencyPolicy::instance().addDependency(job, dependency);
+  ThreadWeaver::Weaver::instance()->enqueue(job);
+}
+
+bool KMFPluginInterface::message(KMF::MsgType type, const QString& msg)
 {
   KMediaFactory* mainWindow = kmfApp->mainWindow();
   QString pixmap;
@@ -176,28 +207,28 @@ bool KMFPluginInterface::message(KMF::PluginInterface::MsgType type, const QStri
 
   switch(type)
   {
-    case KMF::PluginInterface::None:
-    case KMF::PluginInterface::Info:
+    case KMF::Info:
       pixmap = "dialog-information";
       color = QColor("darkGreen");
       dlgType = KMessageBox::Information;
       break;
-    case KMF::PluginInterface::Warning:
+    case KMF::Warning:
       pixmap = "dialog-warning";
       color = QColor(211, 183, 98);
       dlgType = KMessageBox::Sorry;
       break;
-    case KMF::PluginInterface::Error:
+    case KMF::Error:
       pixmap = "dialog-error";
       color = QColor("red");
       dlgType = KMessageBox::Error;
       break;
-    case KMF::PluginInterface::OK:
+    case KMF::OK:
       pixmap = "dialog-ok";
       color = QColor("darkGreen");
       dlgType = KMessageBox::Information;
       break;
   }
+  /*
   setItemTotalSteps(0);
   QListView* lv = mainWindow->outputPage->progressListView;
   KMFProgressItemModel* model = static_cast<KMFProgressItemModel*>(lv->model());
@@ -212,59 +243,12 @@ bool KMFPluginInterface::message(KMF::PluginInterface::MsgType type, const QStri
     KMessageBox::messageBox(mainWindow, dlgType, msg);
   kmfApp->processEvents(QEventLoop::AllEvents);
   return m_stopped;
+  */
 }
 
 KMF::Logger* KMFPluginInterface::logger()
 {
   return &kmfApp->logger();
-}
-
-bool KMFPluginInterface::progress(int advance)
-{
-  KMediaFactory* mainWindow =
-      kmfApp->mainWindow();
-
-  if(advance)
-  {
-    /*
-    kDebug()
-        << mainWindow->outputPage->progressBar->value() << " + " << advance
-        << " / " << mainWindow->outputPage->progressBar->maximum()
-       ;
-    */
-    mainWindow->outputPage->progressBar->setValue(
-        mainWindow->outputPage->progressBar->value()+advance);
-  }
-  kmfApp->processEvents(QEventLoop::AllEvents);
-  return m_stopped;
-}
-
-bool KMFPluginInterface::setItemTotalSteps(int totalSteps)
-{
-  QListView* lv = kmfApp->mainWindow()->outputPage->progressListView;
-  KMFProgressItemModel* model = static_cast<KMFProgressItemModel*>(lv->model());
-  int last = model->rowCount() - 1;
-  KMFProgressItem item = model->at(last);
-  if(item.max != totalSteps)
-  {
-    item.max = totalSteps;
-    model->replace(last, item);
-  }
-  return m_stopped;
-}
-
-bool KMFPluginInterface::setItemProgress(int progress)
-{
-  QListView* lv = kmfApp->mainWindow()->outputPage->progressListView;
-  KMFProgressItemModel* model = static_cast<KMFProgressItemModel*>(lv->model());
-  int last = model->rowCount() - 1;
-  KMFProgressItem item = model->at(last);
-  if(item.value != progress)
-  {
-    item.value = progress;
-    model->replace(last, item);
-  }
-  return m_stopped;
 }
 
 void KMFPluginInterface::progressDialogDestroyed()
@@ -368,7 +352,7 @@ QString KMFPluginInterface::projectDir(const QString& subDir)
   return QString();
 }
 
-void KMFPluginInterface::setDirty(KMF::PluginInterface::DirtyType type)
+void KMFPluginInterface::setDirty(KMF::DirtyType type)
 {
   if (kmfApp->project()) {
     kmfApp->project()->setDirty(type);
@@ -392,7 +376,7 @@ QString KMFPluginInterface::lastSubType()
 }
 
 QDateTime KMFPluginInterface::lastModified(
-    KMF::PluginInterface::DirtyType type)
+    KMF::DirtyType type)
 {
   if (kmfApp->project()) {
     return kmfApp->project()->lastModified(type);

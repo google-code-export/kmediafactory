@@ -105,7 +105,7 @@ void TemplatePage::currentPageChanged(KPageWidgetItem* current,
   if (current->parent() == this &&
       (templatePreview->image().size() == QSize(0,0) ||
       m_lastUpdate <
-      kmfApp->project()->lastModified(KMF::PluginInterface::DirtyMedia)))
+      kmfApp->project()->lastModified(KMF::DirtyMedia)))
   {
     QTimer::singleShot(0, this, SLOT(updatePreview()));
   }

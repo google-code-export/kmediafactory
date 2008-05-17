@@ -57,12 +57,11 @@ class KMFPluginInterface : public KMF::PluginInterface
     virtual void setTitle(QString title);
     virtual QString projectDir(const QString& subDir = "");
     virtual QString projectType();
-    virtual void setDirty(KMF::PluginInterface::DirtyType type);
+    virtual void setDirty(KMF::DirtyType type);
     virtual QString lastSubType();
-    virtual QDateTime lastModified(KMF::PluginInterface::DirtyType type);
+    virtual QDateTime lastModified(KMF::DirtyType type);
     virtual int serial();
-    virtual bool addMediaAction(QAction* action,
-                                const QString& group = "") const;
+    virtual bool addMediaAction(QAction* action, const QString& group = "") const;
     virtual bool addMediaObject(KMF::MediaObject* media) const;
     virtual bool addTemplateObject(KMF::TemplateObject* tob);
     virtual bool addOutputObject(KMF::OutputObject* oob);
@@ -72,11 +71,10 @@ class KMFPluginInterface : public KMF::PluginInterface
     virtual void addMediaObject(const QString& xml);
     virtual void selectTemplate(const QString& xml);
     virtual void selectOutput(const QString& xml);
+    virtual void addJob(KMF::Job *job, KMF::JobDependency dependency = KMF::None);
+    virtual void addJob(KMF::Job *job, KMF::Job *dependency);
 
-    virtual bool message(KMF::PluginInterface::MsgType type, const QString& msg);
-    virtual bool progress(int advance);
-    virtual bool setItemTotalSteps(int totalSteps);
-    virtual bool setItemProgress(int progress);
+    virtual bool message(KMF::MsgType type, const QString& msg);
     virtual KMF::Logger* logger();
     void setUseMessageBox(bool useMessageBox) { m_useMessageBox = useMessageBox; };
     void setStopped(bool stopped) { m_stopped = stopped; };
@@ -99,6 +97,7 @@ class KMFPluginInterface : public KMF::PluginInterface
     bool m_useMessageBox;
     bool m_stopped;
     KMF::ProgressDialog* m_pdlg;
+    QList<KMF::Job*> m_jobs;
 };
 
 #endif

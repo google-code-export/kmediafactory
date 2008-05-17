@@ -23,8 +23,8 @@
 
 KMF::JobHelper::JobHelper(KMF::Job* parent) : QObject(parent)
 {
-  connect(this, SIGNAL(newMessage(PluginInterface::MsgType, const QString&)), 
-          parent, SIGNAL(newMessage(PluginInterface::MsgType, const QString&)));
+  connect(this, SIGNAL(newMessage(MsgType, const QString&)), 
+          parent, SIGNAL(newMessage(MsgType, const QString&)));
   connect(this, SIGNAL(newLogMessage(const QString&)), 
           parent, SIGNAL(newLogMessage(const QString&)));
   connect(this, SIGNAL(valueChanged(int)), parent, SIGNAL(valueChanged(int)));
@@ -35,7 +35,7 @@ KMF::JobHelper::~JobHelper()
 {
 }
 
-void KMF::JobHelper::message(PluginInterface::MsgType type, const QString& msg)
+void KMF::JobHelper::message(MsgType type, const QString& msg)
 {
   emit newMessage(type, msg);
 }
@@ -133,9 +133,9 @@ KProcess* KMF::Job::process(const QString& filter, KProcess::OutputChannelMode m
   return d->proc;
 }
 
-void KMF::Job::message(PluginInterface::MsgType type, const QString& msg)
+void KMF::Job::message(MsgType type, const QString& msg)
 {
-  if (type == KMF::PluginInterface::Error)
+  if (type == KMF::Error)
   {
     failed(); 
   }

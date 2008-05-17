@@ -196,8 +196,7 @@ bool TemplateObject::make(QString type)
   // Make menu
   if(isUpToDate(type))
   {
-    interface()->message(KMF::PluginInterface::Info, i18n("Menus are up to date"));
-    interface()->progress(KMFMenu::TotalPoints);
+    interface()->message(KMF::Info, i18n("Menus are up to date"));
     return true;
   }
   else
@@ -276,7 +275,7 @@ void TemplateObject::slotProperties()
   */
 
   if(dialog.result() == QDialog::Accepted)
-    interface()->setDirty(KMF::PluginInterface::DirtyTemplate);
+    interface()->setDirty(KMF::DirtyTemplate);
 
   kapp->removeTranslator(&kmftr);
 }
@@ -349,7 +348,7 @@ bool TemplateObject::isUpToDate(QString type)
     return false;
 
   QDateTime lastModified = interface()->lastModified(
-      KMF::PluginInterface::DirtyMediaOrTemplate);
+      KMF::DirtyMediaOrTemplate);
   QString file = interface()->projectDir() + "dvdauthor.xml";
   QFileInfo fileInfo(file);
 

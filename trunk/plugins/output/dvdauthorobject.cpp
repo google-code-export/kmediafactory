@@ -40,7 +40,7 @@ public:
 
   void run()
   {
-    message(KMF::PluginInterface::Info, i18n("Generating DVDAuthor xml"));
+    message(KMF::Info, i18n("Generating DVDAuthor xml"));
   
     QDomDocument doc("");
     doc.appendChild(doc.createProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\""));
@@ -141,7 +141,7 @@ public:
   
     QFile file(projectDir + "dvdauthor.xml");
     if (!file.open(QIODevice::WriteOnly)) {
-      message(KMF::PluginInterface::Error, i18n("Error in saving dvdauthor.xml"));
+      message(KMF::Error, i18n("Error in saving dvdauthor.xml"));
       return;
     }
     QTextStream stream(&file);
@@ -149,7 +149,7 @@ public:
     doc.save(stream, 1);
     file.close();
   
-    message(KMF::PluginInterface::Done);
+    message(KMF::Done);
   }
 
   QDomElement toElement(const QVariant& element)
@@ -200,10 +200,7 @@ bool DvdAuthorObject::make(QString)
   job->mobs =  interface()->mediaObjects();
   job->title = interface()->title();
   job->projectDir = interface()->projectDir();
-
-  // TODO Just for testing
-  job->TODO_REMOVE_ME_START();
-  delete job;
+  interface()->addJob(job);
   return true;
 }
 

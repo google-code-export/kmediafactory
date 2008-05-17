@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2008 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -18,32 +18,15 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 
-#ifndef KMFJOB_P_H
-#define KMFJOB_P_H
+#ifndef KMF_DEFS_H
+#define KMF_DEFS_H
 
-#include "kmediafactory.h"
-
-// http://api.kde.org/4.0-api/kdelibs-apidocs/threadweaver/html/MainComponents.html
 namespace KMF
 {
-  class JobHelper : public QObject
-  {
-      Q_OBJECT
-    public:
-      explicit JobHelper(KMF::Job* parent);
-      ~JobHelper();
+  enum DirtyType { DirtyMedia = 1, DirtyTemplate = 2, DirtyOutput = 4,
+    DirtyMediaOrTemplate = 3, DirtyAny = 7 };
+  enum MsgType { Info, Start, Warning, Error, Done, OK };
+  enum JobDependency { None, All, Last };
+}
 
-      void message(KMF::MsgType type, const QString& msg);
-      void log(const QString& msg);
-      void setValue(int value);
-      void setMaximum(int maximum);
-
-    signals:
-      void newMessage(MsgType type, const QString& msg);
-      void newLogMessage(const QString& msg);
-      void valueChanged(int value);
-      void maximumChanged(int maximum);
-  };
-} // namespace KMF
-
-#endif // KMFJOB_P_H
+#endif // KMF_DEFS

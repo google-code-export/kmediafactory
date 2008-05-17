@@ -21,7 +21,8 @@
 #ifndef PLUGININTERFACE_H
 #define PLUGININTERFACE_H
 
-#include "kmfobject.h"
+#include "object.h"
+#include "job.h"
 #include "logger.h"
 #include <KProcess>
 #include <kdemacros.h>
@@ -91,13 +92,6 @@ namespace KMF
   class KDE_EXPORT PluginInterface :public QObject
   {
       Q_OBJECT
-      Q_ENUMS(DirtyType)
-      Q_ENUMS(MsgType)
-    public:
-      enum DirtyType { DirtyMedia = 1, DirtyTemplate = 2, DirtyOutput = 4,
-        DirtyMediaOrTemplate = 3, DirtyAny = 7 };
-      enum MsgType { None = -1, Info, Start, Warning, Error, Done, OK };
-
     public:
       explicit PluginInterface(QObject* parent);
       ~PluginInterface();
@@ -125,13 +119,9 @@ namespace KMF
       virtual void selectTemplate(const QString& xml) = 0;
       virtual void selectOutput(const QString& xml) = 0;
 
+      virtual void addJob(KMF::Job *job, JobDependency dependency = KMF::None) = 0;
+      virtual void addJob(KMF::Job *job, KMF::Job *dependency) = 0;
       virtual bool message(MsgType type, const QString& msg) = 0;
-      // TODO remove
-      virtual bool progress(int advance) = 0;
-      // TODO remove
-      virtual bool setItemTotalSteps(int totalSteps) = 0;
-      // TODO remove
-      virtual bool setItemProgress(int progress) = 0;
       virtual Logger* logger() = 0;
 
       // Plugin helpers
@@ -145,7 +135,6 @@ namespace KMF
                                              int maximum) = 0;
       virtual ProgressDialog* progressDialog() = 0;
   };
-
 }
 
 Q_DECLARE_METATYPE(KMF::OutputObject*);

@@ -85,13 +85,13 @@ public:
 
   void run()
   {
-    message(KMF::PluginInterface::Info, i18n("Making Slideshow"));
+    message(KMF::Info, i18n("Making Slideshow"));
     QDir dir(mediaDir);
     QString output = dir.filePath(QString("%1.vob").arg(slideshow.id()));
   
     if(writeSlideshowFile() == false)
     {
-      message(KMF::PluginInterface::Error, i18n("Can't write slideshow file."));
+      message(KMF::Error, i18n("Can't write slideshow file."));
       return;
     }
     KProcess *dvdslideshow = process("INFO: \\d+ bytes of data written");
@@ -112,7 +112,7 @@ public:
 
     if(dvdslideshow->exitCode() != QProcess::NormalExit || dvdslideshow->exitStatus() != 0)
     {
-      message(KMF::PluginInterface::Error, i18n("Slideshow error."));
+      message(KMF::Error, i18n("Slideshow error."));
     }
   }
 
@@ -417,7 +417,7 @@ void SlideshowObject::actions(QList<QAction*>* actionList) const
 
 bool SlideshowObject::make(QString type)
 {
-  interface()->message(KMF::PluginInterface::Info, i18n("Preparing file(s) for %1", title()));
+  interface()->message(KMF::Info, i18n("Preparing file(s) for %1", title()));
   m_type = type;
   if(type != "dummy")
   {
@@ -425,9 +425,7 @@ bool SlideshowObject::make(QString type)
     {
       CopyOriginalsJob *job = new CopyOriginalsJob(slides());
       job->destDir = interface()->projectDir("DVD/PICTURES");
-      // TODO Just for testing
-      job->TODO_REMOVE_ME_START();
-      delete job;
+      interface()->addJob(job);
     }
     QDir dir(interface()->projectDir("media"));
     QString output = dir.filePath(QString("%1.vob").arg(id()));
@@ -439,19 +437,14 @@ bool SlideshowObject::make(QString type)
       QString mediaDir = interface()->projectDir("media");
       QString projectType = interface()->projectType();
       QString dvdslideshowBin = static_cast<SlideshowPlugin*>(plugin())->dvdslideshowBin();
-
-      // TODO Just for testing
-      job->TODO_REMOVE_ME_START();
-      delete job;
+      interface()->addJob(job);
     }
     else
     {
-      interface()->message(KMF::PluginInterface::Info,
-          i18n("Slideshow \"%1\" seems to be up to date", title()));
-      return false;
+      interface()->message(KMF::Info, i18n("Slideshow \"%1\" seems to be up to date", title()));
+      return true;
     }
   }
-  interface()->progress(TotalPoints);
   return true;
 }
 
@@ -669,7 +662,7 @@ void SlideshowObject::slotProperties()
   {
     clean();
     dlg.getData(*this);
-    interface()->setDirty(KMF::PluginInterface::DirtyMedia);
+    interface()->setDirty(KMF::DirtyMedia);
   }
 }
 
