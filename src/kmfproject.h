@@ -54,7 +54,8 @@ class KMFProject : public QObject
     KMF::TemplateObject* templateObj() const { return m_template; };
     void setOutput(KMF::OutputObject* output);
     KMF::OutputObject* output() const { return m_output; };
-    bool make(QString type);
+    bool prepare(const QString& type);
+    void finished();
     int timeEstimate() const;
     void setDirty(KMF::DirtyType type, bool dirty = true);
     bool isModified() const { return m_modified; };

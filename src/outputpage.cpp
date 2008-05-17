@@ -35,6 +35,7 @@
 #include <QToolButton>
 #include <QTimer>
 #include <QStringListModel>
+#include <threadweaver/ThreadWeaver.h>
 
 OutputPage::OutputPage(QWidget *parent) :
   QWidget(parent)
@@ -46,6 +47,7 @@ OutputPage::OutputPage(QWidget *parent) :
           this, SLOT(contextMenuRequested(const QPoint&)));
   connect(&m_startPopup, SIGNAL(triggered(QAction*)),
            this, SLOT(start(QAction*)));
+  connect(ThreadWeaver::Weaver::instance(), SIGNAL(finished()), this, SLOT(finished()));
   progressListView->setModel(new KMFProgressItemModel());
   progressListView->setItemDelegate(new KMFProgressItemDelegate());
 }
@@ -131,20 +133,30 @@ void OutputPage::start(QAction* type)
 
 void OutputPage::start()
 {
+  // TODO check if running ?
+  ThreadWeaver::Weaver::instance()->suspend();
   kmfApp->mainWindow()->enableUi(false);
   showLogPushBtn->setEnabled(false);
   stopPushBtn->setEnabled(true);
   startButton->setEnabled(false);
   kmfApp->interface()->setUseMessageBox(false);
   kmfApp->interface()->setStopped(false);
-  progressBar->setRange(0, kmfApp->project()->timeEstimate());
+  // TODO
+  //progressBar->setRange(0, kmfApp->project()->timeEstimate());
   progressBar->setValue(0);
   static_cast<QStringListModel*>(progressListView->model())->
       setStringList(QStringList());
   kmfApp->logger().start();
-  if(kmfApp->project()->make(m_type) == false)
-    if(!kmfApp->project()->error().isEmpty())
-      kmfApp->interface()->message(KMF::Error, kmfApp->project()->error());
+  if (kmfApp->project()->prepare(m_type))
+  {
+    // Run jobs
+    ThreadWeaver::Weaver::instance()->resume();
+  }
+}
+
+void OutputPage::finished()
+{
+  kmfApp->project()->finished();
   m_type = "";
   kmfApp->logger().stop();
   kmfApp->logger().save(kmfApp->project()->directory() + "kmf_log.html");
