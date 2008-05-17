@@ -586,7 +586,7 @@ QString VideoObject::videoFileFind(int index, VideoFilePrefix prefixStart) const
 
 bool VideoObject::make(QString type)
 {
-  interface()->message(KMF::Info, i18n("Preparing file(s) for %1", title()));
+  interface()->message(KMF::Start, i18n("Media: %1", title()));
   QString fileName;
 
   m_type = type;
@@ -623,13 +623,14 @@ bool VideoObject::make(QString type)
           else
           {
             interface()->message(KMF::Info,
-                i18n("   Subtitle conversion seems to be up to date: %1")
+                i18n("Subtitle conversion seems to be up to date: %1")
                     .arg(videoFile.fileName()));
           }
         }
       }
     }
   }
+  interface()->message(KMF::Done);
   return true;
 }
 

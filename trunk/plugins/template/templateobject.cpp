@@ -196,7 +196,7 @@ bool TemplateObject::make(QString type)
   // Make menu
   if(isUpToDate(type))
   {
-    interface()->message(KMF::Info, i18n("Menus are up to date"));
+    interface()->message(KMF::OK, i18n("Menus are up to date"));
     return true;
   }
   else

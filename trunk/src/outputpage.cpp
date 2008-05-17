@@ -145,6 +145,7 @@ void OutputPage::start()
   //progressBar->setRange(0, kmfApp->project()->timeEstimate());
   progressBar->setValue(0);
   kmfApp->logger().start();
+  kmfApp->interface()->message(KMF::Info, i18n("Preparing files..."));
   if (kmfApp->project()->prepare(m_type))
   {
     // Run jobs

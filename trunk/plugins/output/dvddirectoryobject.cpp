@@ -275,14 +275,16 @@ bool DvdDirectoryObject::make(QString type)
   if(DvdAuthorObject::make(type) == false)
     return false;
 
+  interface()->message(KMF::Start, i18n("DVD Directory"));
   if(isUpToDate(type))
   {
-    interface()->message(KMF::OK, i18n("DVD Directory is up to date"));
-    return true;
+    interface()->message(KMF::Info, i18n("DVD Directory is up to date"));
+  } else {
+    DVDDirectoryJob *job = new DVDDirectoryJob();
+    job->projectDir = interface()->projectDir();
+    interface()->addJob(job, KMF::Last);
   }
-  DVDDirectoryJob *job = new DVDDirectoryJob();
-  job->projectDir = interface()->projectDir();
-  interface()->addJob(job, KMF::Last);
+  interface()->message(KMF::Done);
   return true;
 }
 

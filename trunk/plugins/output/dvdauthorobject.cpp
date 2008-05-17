@@ -195,12 +195,14 @@ int DvdAuthorObject::timeEstimate() const
 
 bool DvdAuthorObject::make(QString)
 {
+  interface()->message(KMF::Start, i18n("DVD Author XML file"));
   WriteDVDAuthorXMLJob *job = new WriteDVDAuthorXMLJob();
   job->tempObj = interface()->templateObject();
   job->mobs =  interface()->mediaObjects();
   job->title = interface()->title();
   job->projectDir = interface()->projectDir();
   interface()->addJob(job);
+  interface()->message(KMF::Done);
   return true;
 }
 
