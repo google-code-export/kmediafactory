@@ -189,16 +189,22 @@ void KMFPluginInterface::addJob(KMF::Job *job, KMF::JobDependency dependency)
     default:
       break;
   }
+  connect(job, SIGNAL(newMessage(KMF::MsgType, const QString&)), 
+          this, SLOT(message(KMF::MsgType, const QString&)));
+  connect(job, SIGNAL(newLogMessage(const QString&)), 
+          &kmfApp->logger(), SLOT(message(const QString&)));
+  connect(job, SIGNAL(maximumChanged(int)), this, SLOT(setMaximum(int)));
+  connect(job, SIGNAL(valueChanged(int)), this, SLOT(setValue(int)));
   ThreadWeaver::Weaver::instance()->enqueue(job);
 }
 
 void KMFPluginInterface::addJob(KMF::Job *job, KMF::Job *dependency)
 {
   ThreadWeaver::DependencyPolicy::instance().addDependency(job, dependency);
-  ThreadWeaver::Weaver::instance()->enqueue(job);
+  addJob(job);
 }
 
-bool KMFPluginInterface::message(KMF::MsgType type, const QString& msg)
+void KMFPluginInterface::message(KMF::MsgType type, const QString& msg)
 {
   KMediaFactory* mainWindow = kmfApp->mainWindow();
   QString pixmap;
@@ -244,6 +250,14 @@ bool KMFPluginInterface::message(KMF::MsgType type, const QString& msg)
   kmfApp->processEvents(QEventLoop::AllEvents);
   return m_stopped;
   */
+}
+
+void KMFPluginInterface::setMaximum(int max)
+{
+}
+
+void KMFPluginInterface::setValue(int value)
+{
 }
 
 KMF::Logger* KMFPluginInterface::logger()

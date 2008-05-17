@@ -138,9 +138,9 @@ bool KrossPluginInterface::removeOutputObject(Kross::Object::Ptr oob)
   return false;
 }
 
-bool KrossPluginInterface::message(KMF::MsgType type, const QString& msg)
+void KrossPluginInterface::message(KMF::MsgType type, const QString& msg)
 {
-  return m_interface->message(type, msg);
+  m_interface->message(type, msg);
 }
 
 QObject* KrossPluginInterface::logger()

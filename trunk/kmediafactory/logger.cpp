@@ -29,28 +29,9 @@
 class KMF::Logger::Private
 {
   public:
-    Private(KMF::Logger *l) : currentProcess(0), logger(l) {};
+    Private(KMF::Logger *l) : logger(l) {};
 
-    void out()
-    {
-      int n;
-      QRegExp re("[\n\r]");
-    
-      while((n = buffer.indexOf(re)) >= 0)
-      {
-        if(!filter.exactMatch(buffer.left(n)))
-          logger->message(buffer.left(n));
-        emit logger->line(buffer.left(n));
-        ++n;
-        buffer.remove(0, n);
-      }
-      //kmfApp->processEvents(QEventLoop::AllEvents);
-    }
-
-    KProcess* currentProcess;
     QString log;
-    QString buffer;
-    QRegExp filter;
     KMF::Logger* logger;
 };
 
@@ -66,26 +47,11 @@ void KMF::Logger::start()
 {
   d->log = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n" \
           "<html><pre style=\"font-size: 9pt;\">";
-  d->buffer = "";
 }
 
 void KMF::Logger::stop()
 {
-  KMF::Logger::message(d->buffer);
-  emit line(d->buffer);
   d->log += "</pre></html>";
-}
-
-void KMF::Logger::stdout()
-{
-  d->buffer += currentProcess()->readAllStandardOutput();
-  d->out();
-}
-
-void KMF::Logger::stderr()
-{
-  d->buffer += currentProcess()->readAllStandardError();
-  d->out();
 }
 
 void KMF::Logger::message(const QString& msg, const QColor& color)
@@ -117,45 +83,14 @@ bool KMF::Logger::save(QString file) const
   return false;
 }
 
-KProcess* KMF::Logger::currentProcess()
-{
-  return d->currentProcess;
-}
-
 void KMF::Logger::message(const QString& msg) 
 { 
   message(msg, QColor("black")); 
 }
 
-void KMF::Logger::connectProcess(KProcess *proc, const QString& filter,
-                                 KProcess::OutputChannelMode mode)
-{
-  proc->setOutputChannelMode(KProcess::SeparateChannels);
-  if(mode != KProcess::OnlyStderrChannel)
-  {
-    connect(proc, SIGNAL(readyReadStandardOutput()), this, SLOT(stdout()));
-  }
-  if(mode != KProcess::OnlyStdoutChannel)
-  {
-    connect(proc, SIGNAL(readyReadStandardError()), this, SLOT(stderr()));
-  }
-  d->currentProcess = proc;
-  setFilter(filter);
-}
-
 const QString& KMF::Logger::log() const 
 { 
   return d->log; 
-}
-
-void KMF::Logger::setFilter(const QString& filter)
-{ 
-  d->filter.setPattern(filter); 
-}
-
-QString KMF::Logger::filter() const 
-{ 
-  return d->filter.pattern(); 
 }
 
 #include "logger.moc"
