@@ -39,7 +39,7 @@ namespace KMF
       void setMaximum(int maximum);
 
     signals:
-      void newMessage(MsgType type, const QString& msg);
+      void newMessage(KMF::MsgType type, const QString& msg);
       void newLogMessage(const QString& msg);
       void valueChanged(int value);
       void maximumChanged(int maximum);

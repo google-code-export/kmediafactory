@@ -20,11 +20,14 @@
 
 #include "job.h"
 #include "job_p.h"
+#include <KDebug>
+#include <QMetaType>
 
-KMF::JobHelper::JobHelper(KMF::Job* parent) : QObject(parent)
+KMF::JobHelper::JobHelper(KMF::Job* parent) : QObject(0)
 {
-  connect(this, SIGNAL(newMessage(MsgType, const QString&)), 
-          parent, SIGNAL(newMessage(MsgType, const QString&)));
+  qRegisterMetaType<KMF::MsgType>("KMF::MsgType");
+  connect(this, SIGNAL(newMessage(KMF::MsgType, const QString&)), 
+          parent, SIGNAL(newMessage(KMF::MsgType, const QString&)));
   connect(this, SIGNAL(newLogMessage(const QString&)), 
           parent, SIGNAL(newLogMessage(const QString&)));
   connect(this, SIGNAL(valueChanged(int)), parent, SIGNAL(valueChanged(int)));

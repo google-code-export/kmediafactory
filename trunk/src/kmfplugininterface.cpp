@@ -206,6 +206,7 @@ void KMFPluginInterface::addJob(KMF::Job *job, KMF::Job *dependency)
 
 void KMFPluginInterface::message(KMF::MsgType type, const QString& msg)
 {
+  kDebug() << type << msg;
   KMediaFactory* mainWindow = kmfApp->mainWindow();
   QString pixmap;
   QColor color;
