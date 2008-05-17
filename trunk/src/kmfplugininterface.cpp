@@ -25,7 +25,7 @@
 #include "kmficonview.h"
 #include "kmfapplication.h"
 #include "kmfproject.h"
-#include "kmfprogresslistview.h"
+#include "kmfprogressitemdelegate.h"
 #include "mediapage.h"
 #include <threadweaver/DependencyPolicy.h>
 #include <threadweaver/ThreadWeaver.h>

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,30 +17,13 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
-#include "kmfprogresslistview.h"
+
+#include "kmfprogressitemdelegate.h"
 #include <kdebug.h>
 #include <kicon.h>
 #include <QPainter>
 #include <QModelIndex>
 #include <QProgressBar>
-
-QVariant KMFProgressItemModel::data(const QModelIndex &index, int role) const
-{
-  int i = index.row();
-
-  if (!isValid(i))
-    return QVariant();
-
-  if (role == Qt::DisplayRole)
-    return at(index).text;
-  else if (role == Qt::DecorationRole)
-    return KIcon(at(index).pixmap);
-  else if (role == Qt::UserRole)
-    return at(index).value;
-  else if (role == Qt::UserRole + 1)
-    return at(index).max;
-  return QVariant();
-}
 
 #define BARW 100
 #define GRADIENTW 40
@@ -49,8 +32,8 @@ void KMFProgressItemDelegate::paint(QPainter* painter,
                                     const QStyleOptionViewItem& option,
                                     const QModelIndex& index) const
 {
-  int value = index.data(Qt::UserRole).toInt();
-  int max = index.data(Qt::UserRole + 1).toInt();
+  int value = index.data(ValueRole).toInt();
+  int max = index.data(MaxRole).toInt();
   QRect rc = option.rect;
   QStyleOptionViewItemV2 v2 = option;
 
@@ -68,7 +51,6 @@ void KMFProgressItemDelegate::paint(QPainter* painter,
     fade.setColorAt(0.9, QColor(255, 255, 255, 255));
     painter->fillRect(rc2, fade);
     // Paint progress bar
-    QProgressBar bar;
     bar.setRange(0, max);
     bar.setValue(value);
     bar.resize(BARW, rc.height());

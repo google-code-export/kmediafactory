@@ -21,7 +21,7 @@
 #include "kmficonview.h"
 #include "kmediafactory.h"
 #include "kmfapplication.h"
-#include "kmfprogresslistview.h"
+#include "kmfprogressitemdelegate.h"
 #include "kmfplugininterface.h"
 #include "kmftoolbutton.h"
 #include "logview.h"
@@ -34,7 +34,7 @@
 #include <kpagedialog.h>
 #include <QToolButton>
 #include <QTimer>
-#include <QStringListModel>
+#include <QStandardItemModel>
 #include <threadweaver/ThreadWeaver.h>
 
 OutputPage::OutputPage(QWidget *parent) :
@@ -48,7 +48,7 @@ OutputPage::OutputPage(QWidget *parent) :
   connect(&m_startPopup, SIGNAL(triggered(QAction*)),
            this, SLOT(start(QAction*)));
   connect(ThreadWeaver::Weaver::instance(), SIGNAL(finished()), this, SLOT(finished()));
-  progressListView->setModel(new KMFProgressItemModel());
+  progressListView->setModel(new QStandardItemModel());
   progressListView->setItemDelegate(new KMFProgressItemDelegate());
 }
 
@@ -144,8 +144,6 @@ void OutputPage::start()
   // TODO
   //progressBar->setRange(0, kmfApp->project()->timeEstimate());
   progressBar->setValue(0);
-  static_cast<QStringListModel*>(progressListView->model())->
-      setStringList(QStringList());
   kmfApp->logger().start();
   if (kmfApp->project()->prepare(m_type))
   {

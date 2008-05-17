@@ -27,7 +27,6 @@
 #include "kmficonview.h"
 #include "projectoptions.h"
 #include "kmfproject.h"
-#include "kmfprogresslistview.h"
 #include "kmfoptions.h"
 #include "tools.h"
 #include "kmediafactorysettings.h"
@@ -71,6 +70,7 @@
 #include <QTimer>
 #include <QDragEnterEvent>
 #include <QDropEvent>
+#include <QStandardItemModel>
 
 KMediaFactory::KMediaFactory()
   : KXmlGuiWindow(0), m_janusIconList(0), m_enabled(true),
@@ -272,7 +272,7 @@ void KMediaFactory::resetGUI()
 {
   templatePage->templatePreview->clear();
   QListView* lv = outputPage->progressListView;
-  KMFProgressItemModel* model = static_cast<KMFProgressItemModel*>(lv->model());
+  QStandardItemModel* model = static_cast<QStandardItemModel*>(lv->model());
   model->clear();
   outputPage->progressBar->reset();
   outputPage->showLogPushBtn->setEnabled(false);
