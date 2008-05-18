@@ -193,14 +193,7 @@ int TemplateObject::timeEstimate() const
 bool TemplateObject::make(QString type)
 {
   m_type = type;
-  // Make menu
-  if(isUpToDate(type))
-  {
-    interface()->message(KMF::OK, "menus", i18n("Menus are up to date"));
-    return true;
-  }
-  else
-    return m_menu.makeMenu();
+  return m_menu.makeMenu();
 }
 
 QStringList TemplateObject::menus()
@@ -340,40 +333,6 @@ void TemplateObject::setProperty(const QString& widget,
       return;
     }
   }
-}
-
-// TODO check this
-bool TemplateObject::isUpToDate(QString type)
-{
-  if(type != interface()->lastSubType())
-    return false;
-
-  QDateTime lastModified = interface()->lastModified(
-      KMF::DirtyMediaOrTemplate);
-  QString file = interface()->projectDir() + "dvdauthor.xml";
-  QFileInfo fileInfo(file);
-
-  if(fileInfo.exists() == false || lastModified > fileInfo.lastModified())
-    return false;
-
-  KMF::DVDAuthorParser da;
-  da.setFile(file);
-  QStringList files = da.files();
-
-  if(files.count() < 1)
-    return false;
-
-  for(QStringList::Iterator it = files.begin(); it != files.end(); ++it)
-  {
-    if((*it).startsWith("./menus/"))
-    {
-      fileInfo.setFile(interface()->projectDir() + *it);
-
-      if(fileInfo.exists() == false || lastModified > fileInfo.lastModified())
-        return false;
-    }
-  }
-  return true;
 }
 
 bool TemplateObject::fileExists()

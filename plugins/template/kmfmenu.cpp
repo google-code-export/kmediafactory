@@ -101,7 +101,7 @@ bool KMFMenu::addMenuMpegJobs()
   {
     if(m_pages[i].count() > 0)
     {
-      foreach(KMFMenuPage* ob,  m_pages[i])
+      foreach(KMFMenuPage* ob, m_pages[i])
       {
         m_interface->addJob(ob->job());
       }
@@ -257,7 +257,6 @@ bool KMFMenu::makeMenu()
     m_points = TotalPoints - (TotalPoints / 4);
     if(p > 0)
       m_pagePoints = m_points / p;
-    // Generate jpgs
     return addMenuMpegJobs();
   }
   return false;
