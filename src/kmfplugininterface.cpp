@@ -191,10 +191,10 @@ void KMFPluginInterface::addJob(KMF::Job *job, KMF::JobDependency dependency)
     default:
       break;
   }
-  connect(job, SIGNAL(newMessage(KMF::MsgType, const QString&)), 
-          this, SLOT(message(KMF::MsgType, const QString&)));
+  connect(job, SIGNAL(newMessage(KMF::MsgType, const QString&, const QString&)), 
+          this, SLOT(message(KMF::MsgType, const QString&, const QString&)));
   connect(job, SIGNAL(newLogMessage(const QString&, const QString&)), 
-          this, SLOT(message(const QString&, const QString&)));
+          this, SLOT(log(const QString&, const QString&)));
   connect(job, SIGNAL(maximumChanged(int, const QString&)), 
           this, SLOT(setMaximum(int, const QString&)));
   connect(job, SIGNAL(valueChanged(int, const QString&)), 
