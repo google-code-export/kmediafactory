@@ -103,4 +103,4 @@ class KMFPluginInterface : public KMF::PluginInterface
     QList<KMF::Job*> m_jobs;
 };
 
-#endif
+#endif // KMFPLUGININTERFACE_H
