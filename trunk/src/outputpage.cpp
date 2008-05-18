@@ -224,7 +224,7 @@ void OutputPage::message(KMF::MsgType type, const QString& txt, const QString& s
       t = txt;
       break;
     case KMF::Info:
-      icon = "dialog-information";
+      icon = "help-about";
       color = QColor("darkGreen");
       break;
     case KMF::Warning:
@@ -256,13 +256,11 @@ void OutputPage::message(KMF::MsgType type, const QString& txt, const QString& s
   else
   {
     item = new QStandardItem(KIcon(icon), t);
+    item->setData("dialog-ok", KMFProgressItemDelegate::ResultRole);
     parent->appendRow(item);
   
-    if (type == KMF::Start) 
-    {
-      m_items[txt] = item;
-    }
-    else if (parent == m_model->invisibleRootItem())
+    m_items[t] = item;
+    if (parent == m_model->invisibleRootItem())
     {
       m_items.clear();
       m_items["last-header"] = item;
