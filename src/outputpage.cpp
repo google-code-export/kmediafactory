@@ -36,6 +36,7 @@
 #include <QTimer>
 #include <QStandardItemModel>
 #include <threadweaver/ThreadWeaver.h>
+#include <KMessageBox>
 
 OutputPage::OutputPage(QWidget *parent) :
   QWidget(parent)
@@ -196,6 +197,49 @@ void OutputPage::currentPageChanged(KPageWidgetItem* current, KPageWidgetItem*)
 
 void OutputPage::message(KMF::MsgType type, const QString& txt, const QString& submsg)
 {
+  QString pixmap;
+  QColor color;
+  KMessageBox::DialogType dlgType = KMessageBox::Information;
+
+  switch(type)
+  {
+    case KMF::Info:
+      pixmap = "dialog-information";
+      color = QColor("darkGreen");
+      dlgType = KMessageBox::Information;
+      break;
+    case KMF::Warning:
+      pixmap = "dialog-warning";
+      color = QColor(211, 183, 98);
+      dlgType = KMessageBox::Sorry;
+      break;
+    case KMF::Error:
+      pixmap = "dialog-error";
+      color = QColor("red");
+      dlgType = KMessageBox::Error;
+      break;
+    case KMF::OK:
+      pixmap = "dialog-ok";
+      color = QColor("darkGreen");
+      dlgType = KMessageBox::Information;
+      break;
+  }
+  /*
+  setItemTotalSteps(0);
+  QListView* lv = mainWindow->outputPage->progressListView;
+  KMFProgressItemModel* model = static_cast<KMFProgressItemModel*>(lv->model());
+  KMFProgressItem item;
+  item.text = msg;
+  item.pixmap = pixmap;
+  model->append(item);
+  lv->scrollTo(model->lastIndex());
+
+  kmfApp->logger().message(msg, color);
+  if(m_useMessageBox)
+    KMessageBox::messageBox(mainWindow, dlgType, msg);
+  kmfApp->processEvents(QEventLoop::AllEvents);
+  return m_stopped;
+  */
 }
 
 void OutputPage::setMaximum(int maximum, const QString& txt)

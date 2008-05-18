@@ -271,8 +271,8 @@ void KMediaFactory::initGUI()
 void KMediaFactory::resetGUI()
 {
   templatePage->templatePreview->clear();
-  QListView* lv = outputPage->progressListView;
-  QStandardItemModel* model = static_cast<QStandardItemModel*>(lv->model());
+  QTreeView* tv = outputPage->progressListView;
+  QStandardItemModel* model = static_cast<QStandardItemModel*>(tv->model());
   model->clear();
   outputPage->progressBar->reset();
   outputPage->showLogPushBtn->setEnabled(false);

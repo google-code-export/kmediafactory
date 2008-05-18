@@ -27,6 +27,7 @@
 #include <QMenu>
 
 class KPageWidgetItem;
+class QStandardItem;
 
 class OutputPage : public QWidget, public Ui::OutputPage
 {
@@ -56,6 +57,7 @@ class OutputPage : public QWidget, public Ui::OutputPage
   private:
     QMenu m_startPopup;
     QMap<QAction*, QString> m_types;
+    QMap<QString, QStandardItem*> m_items;
     QString m_type;
 };
 
