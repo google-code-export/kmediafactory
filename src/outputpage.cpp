@@ -148,11 +148,11 @@ void OutputPage::start()
   // TODO
   //progressBar->setRange(0, kmfApp->project()->timeEstimate());
   progressBar->setValue(0);
-  kmfApp->interface()->message(KMF::Info, i18n("Preparing files..."));
+  message(KMF::Info, QString(), i18n("Preparing files..."));
   if (kmfApp->project()->prepare(m_type))
   {
     // Run jobs
-    kmfApp->interface()->message(KMF::Info, i18n("Making files..."));
+    message(KMF::Info, QString(), i18n("Making files..."));
     ThreadWeaver::Weaver::instance()->resume();
   }
 }
@@ -204,56 +204,72 @@ void OutputPage::message(KMF::MsgType type, const QString& txt, const QString& s
   QColor color;
   KMessageBox::DialogType dlgType = KMessageBox::Information;
   QStandardItem *item = 0;
+  QStandardItem *parent = 0;
+  QString t = submsg;
 
-  /*
-  if (m_items.keys().contains(txt))
-    item = m_items[txt];
+  if (txt.isEmpty())
+    parent = m_model->invisibleRootItem();
+  else if (m_items.keys().contains(txt))
+    parent = m_items[txt];
+  else if (m_items.keys().contains("last-header"))
+    parent = m_items["last-header"];
   else
-    item = m_model->invisibleRootItem();
-  */
+    parent = m_model->invisibleRootItem();
+  
   switch(type)
   {
     case KMF::Start:
+      icon = "application-x-executable";
+      color = QColor("darkGreen");
+      t = txt;
       break;
     case KMF::Info:
       icon = "dialog-information";
       color = QColor("darkGreen");
-      dlgType = KMessageBox::Information;
       break;
     case KMF::Warning:
-      icon = "dialog-warning";
+      icon = "flag-yellow";
+      parent->setData(icon, KMFProgressItemDelegate::ResultRole);
       color = QColor(211, 183, 98);
       dlgType = KMessageBox::Sorry;
       break;
     case KMF::Error:
-      icon = "dialog-error";
+      icon = "process-stop";
+      parent->setData(icon, KMFProgressItemDelegate::ResultRole);
       color = QColor("red");
       dlgType = KMessageBox::Error;
       break;
     case KMF::OK:
       icon = "dialog-ok";
       color = QColor("darkGreen");
-      dlgType = KMessageBox::Information;
       break;
+    case KMF::Done:
+      parent->setData(KIcon(parent->data(KMFProgressItemDelegate::ResultRole).toString()), 
+                      Qt::DecorationRole);
+      return; // We are done here
   }
 
-  item = new QStandardItem(KIcon(icon), txt);
-  m_model->appendRow(item);
-  /*
-  setItemTotalSteps(0);
-  QListView* lv = mainWindow->outputPage->progressListView;
-  KMFProgressItemModel* model = static_cast<KMFProgressItemModel*>(lv->model());
-  KMFProgressItem item;
-  item.text = msg;
-  item.pixmap = pixmap;
-  model->append(item);
-  lv->scrollTo(model->lastIndex());
-
-  kmfApp->logger().message(msg, color);
-  if(m_useMessageBox)
-    KMessageBox::messageBox(mainWindow, dlgType, msg);
-  */
-  kmfApp->processEvents(QEventLoop::AllEvents);
+  if(kmfApp->interface()->useMessageBox())
+  {
+    KMessageBox::messageBox(this, dlgType, t);
+  }
+  else
+  {
+    item = new QStandardItem(KIcon(icon), t);
+    parent->appendRow(item);
+  
+    if (type == KMF::Start) 
+    {
+      m_items[txt] = item;
+    }
+    else if (parent == m_model->invisibleRootItem())
+    {
+      m_items.clear();
+      m_items["last-header"] = item;
+    }
+    progressListView->scrollTo(m_model->indexFromItem(item));
+    kmfApp->processEvents(QEventLoop::AllEvents);
+  }
 }
 
 void OutputPage::setMaximum(int maximum, const QString& txt)

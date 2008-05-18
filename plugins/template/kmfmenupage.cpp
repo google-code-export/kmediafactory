@@ -45,8 +45,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-static const char startString[] = I18N_NOOP("Menu: %1");
-
 class KMFMenuPageJob : public KMF::Job
 {
 public:
@@ -58,7 +56,8 @@ public:
 
   void run()
   {
-    message(KMF::Info, i18n(startString, KMFTemplateBase::uiText(menuPage.objectName())));
+    t = i18n("Menu: %1", KMFTemplateBase::uiText(menuPage.objectName()));
+    message(KMF::Start, t);
     QSize resolution = menuPage.resolution();
     m_background = QImage(resolution, QImage::Format_ARGB32);
     m_background.fill(KMF::Tools::toColor("#444444FF").rgba());
@@ -83,25 +82,25 @@ public:
     
     if(paint() == false)
     {
-      message(KMF::Error, i18n("Could not paint menu."));
+      message(KMF::Error, t, i18n("Could not paint menu."));
       return;
     }
     if(writeSpumuxXml() == false)
     {
-      message(KMF::Error, i18n("Could not write spumux xml file."));
+      message(KMF::Error, t, i18n("Could not write spumux xml file."));
       return;
     }
     if(saveImages() == false)
     {
-      message(KMF::Error, i18n("Could not save images."));
+      message(KMF::Error, t, i18n("Could not save images."));
       return;
     }
     if(makeMpeg() == false)
     {
-      message(KMF::Error, i18n("Could not make mpeg file."));
+      message(KMF::Error, t, i18n("Could not make mpeg file."));
       return;
     }
-    message(KMF::Done, i18n(startString, KMFTemplateBase::uiText(menuPage.objectName())));
+    message(KMF::Done, t);
   }
 
   bool paint()
@@ -320,6 +319,7 @@ private:
   QImage m_subHighlight;
   QImage m_subSelect;
   QString m_sound;
+  QString t;
 };
 
 KMFMenuPage::KMFMenuPage(QObject *parent) :

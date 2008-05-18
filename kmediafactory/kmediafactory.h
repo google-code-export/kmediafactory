@@ -25,7 +25,7 @@ namespace KMF
 {
   enum DirtyType { DirtyMedia = 1, DirtyTemplate = 2, DirtyOutput = 4,
     DirtyMediaOrTemplate = 3, DirtyAny = 7 };
-  enum MsgType { Info, Start, Warning, Error, Done, OK };
+  enum MsgType { Start, Done, Info, Warning, Error, OK };
   enum JobDependency { None, All, Last };
 }
 
