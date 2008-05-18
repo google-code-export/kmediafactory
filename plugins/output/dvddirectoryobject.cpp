@@ -54,7 +54,7 @@ class DVDDirectoryJob : public KMF::Job
 
   void run()
   {
-    t = i18n(startString);
+    t = subt = i18n(startString);
     message(KMF::Start, t);
     m_error = false;
     m_lastLine = None;
@@ -101,13 +101,13 @@ class DVDDirectoryJob : public KMF::Job
     if(line.startsWith("\t") &&
         (m_lastLine == Warning || m_lastLine == Error))
     {
-      message((KMF::MsgType)m_lastLine, t, line.mid(1));
+      message((KMF::MsgType)m_lastLine, subt, line.mid(1));
     }
     else if(line.startsWith("ERR:"))
     {
       m_lastLine = Error;
       m_error = true;
-      message(KMF::Error, t, line.mid(6));
+      message(KMF::Error, subt, line.mid(6));
     }
     else if(line.startsWith("WARN:"))
     {
@@ -116,7 +116,7 @@ class DVDDirectoryJob : public KMF::Job
       // Don't print multiple similar warnings. They can be found from the log.
       if(temp != m_warning)
       {
-        message(KMF::Warning, t, temp);
+        message(KMF::Warning, subt, temp);
         m_warning = temp;
       }
     }
@@ -127,8 +127,9 @@ class DVDDirectoryJob : public KMF::Job
       m_lastSize += m_currentFile.size() / 1024;
       m_currentFile.setFile(line.mid(17, line.length() - 20));
   
-      message(KMF::Info, t, i18n("Processing: %1", m_currentFile.fileName()));
-      //setMaximum(m_currentFile.size() / 1024);
+      subt = i18n("Processing: %1", m_currentFile.fileName());
+      message(KMF::Info, t, subt);
+      setMaximum(m_currentFile.size() / 1024, subt);
       /* TODO
       if(!m_first)
       {
@@ -146,8 +147,9 @@ class DVDDirectoryJob : public KMF::Job
   
       if(m_lastLine != Vobu && m_lastLine != Processing)
       {
-        message(KMF::Info, t, i18n("Processing: %1",m_currentFile.fileName()));
-        //setMaximum(m_currentFile.size() / 1024);
+        subt = i18n("Processing: %1", m_currentFile.fileName());
+        message(KMF::Info, t, subt);
+        setMaximum(m_currentFile.size() / 1024, subt);
       }
       m_lastLine = Vobu;
       if(reVobu.indexIn(line) > -1)
@@ -159,7 +161,7 @@ class DVDDirectoryJob : public KMF::Job
             m_lastSize = 0;
           m_vobu = 0;
         }
-        //setValue(reVobu.cap(2).toInt()*1024 - m_lastSize);
+        setValue(reVobu.cap(2).toInt() * 1024 - m_lastSize, subt);
       }
     }
     else if(line.startsWith("STAT: fixing VOBU"))
@@ -168,12 +170,13 @@ class DVDDirectoryJob : public KMF::Job
   
       if(m_lastLine != FixingVobu)
       {
-        message(KMF::Info, t, i18n("Fixing: %1", m_currentFile.fileName()));
-        //setMaximum(100);
+        subt = i18n("Fixing: %1", m_currentFile.fileName());
+        message(KMF::Info, t, subt);
+        setMaximum(100, subt);
       }
       m_lastLine = FixingVobu;
-      //if(reFix.indexIn(line) > -1)
-        //setValue(reFix.cap(1).toInt());
+      if(reFix.indexIn(line) > -1)
+        setValue(reFix.cap(1).toInt(), subt);
     }
     else
     {
@@ -211,6 +214,7 @@ private:
   int m_lastSize;
   int m_filePoints;
   QString t;
+  QString subt;
 };
 
 DvdDirectoryObject::DvdDirectoryObject(QObject* parent)

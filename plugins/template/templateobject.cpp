@@ -196,7 +196,7 @@ bool TemplateObject::make(QString type)
   // Make menu
   if(isUpToDate(type))
   {
-    interface()->message(KMF::OK, i18n("Menus are up to date"));
+    interface()->message(KMF::OK, "menus", i18n("Menus are up to date"));
     return true;
   }
   else
@@ -342,6 +342,7 @@ void TemplateObject::setProperty(const QString& widget,
   }
 }
 
+// TODO check this
 bool TemplateObject::isUpToDate(QString type)
 {
   if(type != interface()->lastSubType())
