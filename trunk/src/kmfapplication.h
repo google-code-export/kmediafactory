@@ -22,7 +22,6 @@
 
 #include "kmfproject.h"
 #include "kmediafactorysettings.h"
-#include <kmediafactory/logger.h>
 #include <kapplication.h>
 #include <kurl.h>
 #include <QMap>
@@ -56,7 +55,6 @@ class KMFApplication : public KApplication
     KMediaFactory* mainWindow() { return m_mainWin; };
     QWidget* widget() { return (QWidget*)m_mainWin; };
     const KUrl& url() { return m_url; };
-    KMF::Logger& logger() { return m_logger; };
     KMF::PluginList plugins();
     void finalize();
     KConfigBase* config() { return KMediaFactorySettings::self()->config(); };
@@ -76,7 +74,6 @@ class KMFApplication : public KApplication
     QObject* m_pluginInterface;
     KMFPluginInterface* m_interface;
     KUrl m_url;
-    KMF::Logger m_logger;
     QStringList m_supportedProjects;
     KMFDbusInterface* iface;
 };

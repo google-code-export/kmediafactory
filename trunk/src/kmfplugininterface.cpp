@@ -193,10 +193,12 @@ void KMFPluginInterface::addJob(KMF::Job *job, KMF::JobDependency dependency)
   }
   connect(job, SIGNAL(newMessage(KMF::MsgType, const QString&)), 
           this, SLOT(message(KMF::MsgType, const QString&)));
-  connect(job, SIGNAL(newLogMessage(const QString&)), 
-          &kmfApp->logger(), SLOT(message(const QString&)));
-  connect(job, SIGNAL(maximumChanged(int)), this, SLOT(setMaximum(int)));
-  connect(job, SIGNAL(valueChanged(int)), this, SLOT(setValue(int)));
+  connect(job, SIGNAL(newLogMessage(const QString&, const QString&)), 
+          this, SLOT(message(const QString&, const QString&)));
+  connect(job, SIGNAL(maximumChanged(int, const QString&)), 
+          this, SLOT(setMaximum(int, const QString&)));
+  connect(job, SIGNAL(valueChanged(int, const QString&)), 
+          this, SLOT(setValue(int, const QString&)));
   ThreadWeaver::Weaver::instance()->enqueue(job);
 }
 
@@ -206,9 +208,8 @@ void KMFPluginInterface::addJob(KMF::Job *job, KMF::Job *dependency)
   addJob(job);
 }
 
-void KMFPluginInterface::message(KMF::MsgType type, const QString& msg)
+void KMFPluginInterface::message(KMF::MsgType type, const QString& txt, const QString& submsg)
 {
-  kDebug() << type << msg << sender();
   KMediaFactory* mainWindow = kmfApp->mainWindow();
   QString pixmap;
   QColor color;
@@ -255,18 +256,18 @@ void KMFPluginInterface::message(KMF::MsgType type, const QString& msg)
   */
 }
 
-void KMFPluginInterface::setMaximum(int max)
+void KMFPluginInterface::setMaximum(int max, const QString& txt)
 {
 }
 
-void KMFPluginInterface::setValue(int value)
+void KMFPluginInterface::setValue(int value, const QString& txt)
 {
 }
 
-KMF::Logger* KMFPluginInterface::logger()
+void KMFPluginInterface::log(const QString& logtxt, const QString& txt)
 {
-  return &kmfApp->logger();
 }
+
 
 void KMFPluginInterface::progressDialogDestroyed()
 {

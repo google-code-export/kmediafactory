@@ -44,14 +44,15 @@ public:
 
   void run()
   {
-    message(KMF::Start, i18n("Making K3b project."));
+    t = i18n("Making K3b project.");
+    message(KMF::Start, t);
     saveDocument(KUrl(doc));
     if (!cmd.isEmpty())
     {
       cmd += " " + doc;
       KRun::runCommand(cmd, kapp->activeWindow());
     }
-    message(KMF::Done);
+    message(KMF::Done, t);
   }
 
   // All the following are taken from k3b project
@@ -424,6 +425,8 @@ public:
       parent->appendChild(topElem);
     }
   }
+private:
+  QString t;
 };
 
 K3bObject::K3bObject(QObject *parent)
@@ -456,14 +459,15 @@ bool K3bObject::make(QString type)
   if(DvdDirectoryObject::make(type) == false)
     return false;
 
-  interface()->message(KMF::Start, i18n("K3B Project"));
+  QString t = i18n("K3B Project");
+  interface()->message(KMF::Start, t);
   K3bProjectJob *job = new K3bProjectJob();
   job->cmd = KStandardDirs::findExe("k3b");
   job->doc = interface()->projectDir() + "dvd.k3b";
   job->dvdDir = interface()->projectDir("DVD");
   job->title = interface()->title();
   interface()->addJob(job, KMF::Last);
-  interface()->message(KMF::Done);
+  interface()->message(KMF::Done, t);
   return true;
 }
 

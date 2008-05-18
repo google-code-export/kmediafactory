@@ -45,6 +45,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+static const char startString[] = I18N_NOOP("Menu: %1");
+
 class KMFMenuPageJob : public KMF::Job
 {
 public:
@@ -56,7 +58,7 @@ public:
 
   void run()
   {
-    message(KMF::Info, i18n("Menu: %1", KMFTemplateBase::uiText(menuPage.objectName())));
+    message(KMF::Info, i18n(startString, KMFTemplateBase::uiText(menuPage.objectName())));
     QSize resolution = menuPage.resolution();
     m_background = QImage(resolution, QImage::Format_ARGB32);
     m_background.fill(KMF::Tools::toColor("#444444FF").rgba());
@@ -99,7 +101,7 @@ public:
       message(KMF::Error, i18n("Could not make mpeg file."));
       return;
     }
-    message(KMF::Done);
+    message(KMF::Done, i18n(startString, KMFTemplateBase::uiText(menuPage.objectName())));
   }
 
   bool paint()
@@ -281,9 +283,10 @@ public:
       sound = KStandardDirs::locate("data", "kmediafactory/media/silence.mp2");
     }
   
+    // TODO Use process
     Run run(QString("kmf_make_mpeg %1 %2 %3 %4").arg(projectType)
         .arg(KMF::Tools::frames(projectType)).arg(menuPage.objectName()).arg(sound), menuDir);
-    log(run.output());
+    //log(run.output());
 
     if(run.exitStatus() != 0)
     {

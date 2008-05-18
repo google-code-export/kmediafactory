@@ -22,7 +22,6 @@
 #include "dvdauthorparser.h"
 #include "outputplugin.h"
 #include <kmediafactory/object.h>
-#include <kmediafactory/logger.h>
 #include <kmediafactory/job.h>
 #include <kmftools.h>
 #include <KApplication>
@@ -43,6 +42,8 @@
 #include <QPixmap>
 #include <limits.h>
 
+static const char startString[] = I18N_NOOP("DVD Directory");
+
 class DVDDirectoryJob : public KMF::Job
 {
   public:
@@ -53,7 +54,7 @@ class DVDDirectoryJob : public KMF::Job
 
   void run()
   {
-    message(KMF::Start, i18n("Making DVD Directory"));
+    message(KMF::Start, i18n(startString));
     m_error = false;
     m_lastLine = None;
     m_first = true;
@@ -81,7 +82,6 @@ class DVDDirectoryJob : public KMF::Job
     dvdauthor->execute();
     if(!m_error)
     {
-      message(KMF::Done);
       // TODO
       /*
       if(type == "dummy")
@@ -90,6 +90,7 @@ class DVDDirectoryJob : public KMF::Job
     }
     else
       clean(projectDir);
+    message(KMF::Done, i18n(startString));
   }
 
   void output(const QString& line)
@@ -126,7 +127,7 @@ class DVDDirectoryJob : public KMF::Job
       m_currentFile.setFile(line.mid(17, line.length() - 20));
   
       message(KMF::Info, i18n("Processing: %1", m_currentFile.fileName()));
-      setMaximum(m_currentFile.size()/1024);
+      //setMaximum(m_currentFile.size() / 1024);
       /* TODO
       if(!m_first)
       {
@@ -145,7 +146,7 @@ class DVDDirectoryJob : public KMF::Job
       if(m_lastLine != Vobu && m_lastLine != Processing)
       {
         message(KMF::Info, i18n("Processing: %1",m_currentFile.fileName()));
-        setMaximum(m_currentFile.size() / 1024);
+        //setMaximum(m_currentFile.size() / 1024);
       }
       m_lastLine = Vobu;
       if(reVobu.indexIn(line) > -1)
@@ -157,7 +158,7 @@ class DVDDirectoryJob : public KMF::Job
             m_lastSize = 0;
           m_vobu = 0;
         }
-        setValue(reVobu.cap(2).toInt()*1024 - m_lastSize);
+        //setValue(reVobu.cap(2).toInt()*1024 - m_lastSize);
       }
     }
     else if(line.startsWith("STAT: fixing VOBU"))
@@ -167,11 +168,11 @@ class DVDDirectoryJob : public KMF::Job
       if(m_lastLine != FixingVobu)
       {
         message(KMF::Info, i18n("Fixing: %1", m_currentFile.fileName()));
-        setMaximum(100);
+        //setMaximum(100);
       }
       m_lastLine = FixingVobu;
-      if(reFix.indexIn(line) > -1)
-        setValue(reFix.cap(1).toInt());
+      //if(reFix.indexIn(line) > -1)
+        //setValue(reFix.cap(1).toInt());
     }
     else
     {
@@ -274,8 +275,8 @@ bool DvdDirectoryObject::make(QString type)
 {
   if(DvdAuthorObject::make(type) == false)
     return false;
-
-  interface()->message(KMF::Start, i18n("DVD Directory"));
+  QString txt = i18n("DVD Directory");
+  interface()->message(KMF::Start, txt);
   if(isUpToDate(type))
   {
     interface()->message(KMF::Info, i18n("DVD Directory is up to date"));
@@ -284,7 +285,7 @@ bool DvdDirectoryObject::make(QString type)
     job->projectDir = interface()->projectDir();
     interface()->addJob(job, KMF::Last);
   }
-  interface()->message(KMF::Done);
+  interface()->message(KMF::Done, txt);
   return true;
 }
 

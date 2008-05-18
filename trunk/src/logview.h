@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,19 +17,16 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef LOGVIEW_H
 #define LOGVIEW_H
 
 #include "ui_logview.h"
-#include <kmediafactory/logger.h>
 #include <QVBoxLayout>
 
 class QVBoxLayout;
 class KHTMLPart;
 
-/**
-@author Petri Damsten
-*/
 class LogView : public KDialog, public Ui::LogView
 {
     Q_OBJECT
@@ -46,4 +43,4 @@ protected:
     KHTMLPart* m_htmlPart;
 };
 
-#endif
+#endif // LOGVIEW_H

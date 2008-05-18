@@ -56,7 +56,6 @@ class KrossPluginInterface : public QObject
     void setOutputFromXML(const QString& xml);
 
     void message(KMF::MsgType type, const QString& msg);
-    QObject* logger();
 
     // Plugin helpers
     QStringList getOpenFileNames(const QString &startDir, const QString &filter, 

@@ -144,7 +144,6 @@ void OutputPage::start()
   // TODO
   //progressBar->setRange(0, kmfApp->project()->timeEstimate());
   progressBar->setValue(0);
-  kmfApp->logger().start();
   kmfApp->interface()->message(KMF::Info, i18n("Preparing files..."));
   if (kmfApp->project()->prepare(m_type))
   {
@@ -158,8 +157,8 @@ void OutputPage::finished()
 {
   kmfApp->project()->finished();
   m_type = "";
-  kmfApp->logger().stop();
-  kmfApp->logger().save(kmfApp->project()->directory() + "kmf_log.html");
+  // TODO
+  //kmfApp->logger().save(kmfApp->project()->directory() + "kmf_log.html");
   showLogPushBtn->setEnabled(true);
   stopPushBtn->setEnabled(false);
   startButton->setEnabled(true);
@@ -193,6 +192,22 @@ void OutputPage::currentPageChanged(KPageWidgetItem* current, KPageWidgetItem*)
   }
   // Arranges icon in a nice row. Otherwise icons are arranged in one column
   outputs->setViewMode(QListView::IconMode);
+}
+
+void OutputPage::message(KMF::MsgType type, const QString& txt, const QString& submsg)
+{
+}
+
+void OutputPage::setMaximum(int maximum, const QString& txt)
+{
+}
+
+void OutputPage::setValue(int value, const QString& txt)
+{
+}
+
+void OutputPage::log(const QString& logtxt, const QString& txt)
+{
 }
 
 #include "outputpage.moc"

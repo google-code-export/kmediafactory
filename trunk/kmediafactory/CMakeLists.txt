@@ -4,7 +4,6 @@ set(kmediafactoryinterfaces_LIB_SRCS
   plugin.cpp
   plugininterface.cpp
   object.cpp
-  logger.cpp
   job.cpp
 )
 
@@ -13,7 +12,6 @@ set(kmediafactoryinclude_HEADERS
   plugin.h
   plugininterface.h
   object.h
-  logger.h
   job.h
 )
 

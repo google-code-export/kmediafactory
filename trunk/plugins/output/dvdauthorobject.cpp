@@ -152,7 +152,7 @@ public:
     doc.save(stream, 1);
     file.close();
   
-    message(KMF::Done);
+    message(KMF::Done, i18n(startString));
   }
 
   QDomElement toElement(const QVariant& element)
@@ -205,7 +205,7 @@ bool DvdAuthorObject::make(QString)
   job->title = interface()->title();
   job->projectDir = interface()->projectDir();
   interface()->addJob(job);
-  interface()->message(KMF::Done);
+  interface()->message(KMF::Done, i18n(startString));
   return true;
 }
 
