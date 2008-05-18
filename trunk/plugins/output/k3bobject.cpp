@@ -34,6 +34,8 @@
 #include <QTextStream>
 #include <QDomDocument>
 
+static const char startString[] = I18N_NOOP("K3b project");
+
 class K3bProjectJob : public KMF::Job
 {
 public:
@@ -44,7 +46,7 @@ public:
 
   void run()
   {
-    t = i18n("Making K3b project.");
+    t = i18n(startString);
     message(KMF::Start, t);
     saveDocument(KUrl(doc));
     if (!cmd.isEmpty())
@@ -459,7 +461,7 @@ bool K3bObject::make(QString type)
   if(DvdDirectoryObject::make(type) == false)
     return false;
 
-  QString t = i18n("K3B Project");
+  QString t = i18n(startString);
   interface()->message(KMF::Start, t);
   K3bProjectJob *job = new K3bProjectJob();
   job->cmd = KStandardDirs::findExe("k3b");

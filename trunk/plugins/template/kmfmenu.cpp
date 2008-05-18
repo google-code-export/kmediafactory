@@ -91,7 +91,6 @@ QDomElement KMFMenu::writeDvdAuthorXml(const QString& type, int titleset) const
   }
   else
   {
-    m_interface->message(KMF::Error, i18n("No pages."));
     return QDomElement();
   }
 }
@@ -127,13 +126,13 @@ bool KMFMenu::addPage(const QDomElement& element, int pageSet,
   progress(m_pagePoints);
   if(menuPage)
   {
-    QString txt = i18n("Menu: %1", uiText(menuPage->objectName()));
-    m_interface->message(KMF::Start, txt);
+    QString t = i18n("Menu: %1", uiText(menuPage->objectName()));
+    m_interface->message(KMF::Start, t);
     if(pageSet == 0)
       menuPage->setVmgm(true);
     titlePages(pageSet)->append(menuPage);
     result = menuPage->parseButtons();
-    m_interface->message(KMF::Done, txt);
+    m_interface->message(KMF::Done, t);
   }
   return result;
 }
@@ -190,8 +189,6 @@ QDomElement KMFMenu::getPage(const QDomNode& node, const QString& name)
     }
     n = n.nextSibling();
   }
-  m_interface->message(KMF::Error,
-                  i18n("Cannot find page %1 from template.", name));
   return QDomElement();
 }
 

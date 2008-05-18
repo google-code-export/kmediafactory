@@ -66,7 +66,8 @@ public:
 
   void run()
   {
-    message(KMF::Start, i18n(startString, videoFile));
+    t = i18n("Subtitles for: %1", videoFile);
+    message(KMF::Start, t);
 
     QStringList subtitleFiles = subtitle.file().split(";");
   
@@ -87,9 +88,9 @@ public:
     if(spumux->exitCode() != QProcess::NormalExit || spumux->exitStatus() != 0)
     {
       QFile::remove(videoFileWithSubtitles);
-      message(KMF::Error, i18n("Conversion error."));
+      message(KMF::Error, t, i18n("Conversion error."));
     }
-    message(KMF::Done, i18n(startString, videoFile));
+    message(KMF::Done, t);
   }
 
   void writeSpumuxXml()
@@ -172,6 +173,7 @@ public:
   }
 
 private:
+  QString t;
   qulonglong lastUpdate;
   qulonglong half;
 };
@@ -585,7 +587,7 @@ QString VideoObject::videoFileFind(int index, VideoFilePrefix prefixStart) const
 
 bool VideoObject::make(QString type)
 {
-  QString t = i18n("Media: %1", title());
+  QString t = i18n("Video: %1", title());
   interface()->message(KMF::Start, t);
   QString fileName;
 
@@ -622,8 +624,8 @@ bool VideoObject::make(QString type)
           }
           else
           {
-            interface()->message(KMF::Info,
-                i18n("Subtitle conversion seems to be up to date: %1", videoFile.fileName()));
+            interface()->message(KMF::Info, t,
+                i18n("Subtitle conversion seems to be up to date for %1", videoFile.fileName()));
           }
         }
       }

@@ -75,6 +75,7 @@ class KMFPluginInterface : public KMF::PluginInterface
     virtual void addJob(KMF::Job *job, KMF::Job *dependency);
 
     void setUseMessageBox(bool useMessageBox) { m_useMessageBox = useMessageBox; };
+    bool useMessageBox() const { return m_useMessageBox; };
     void setStopped(bool stopped) { m_stopped = stopped; };
 
     // Plugin helpers

@@ -61,6 +61,8 @@ public:
 
   void run()
   {
+    t = i18n("Copying slideshow originals");
+    message(KMF::Start, t);
     KUrl::List files;
   
     foreach(const Slide& slide, slides)
@@ -70,7 +72,10 @@ public:
     KMF::Tools::stripExisting(&files, destDir);
     if(files.count() > 0)
       KIO::copy(files, destDir);
+    message(KMF::Done, t);
   }
+private:
+  QString t;
 };
 
 class SlideshowJob : public KMF::Job
@@ -85,13 +90,14 @@ public:
 
   void run()
   {
-    message(KMF::Info, i18n("Making Slideshow"));
+    t = i18n("Slideshow: %1", slideshow.title());
+    message(KMF::Start, t);
     QDir dir(mediaDir);
     QString output = dir.filePath(QString("%1.vob").arg(slideshow.id()));
   
     if(writeSlideshowFile() == false)
     {
-      message(KMF::Error, i18n("Can't write slideshow file."));
+      message(KMF::Error, t, i18n("Can't write slideshow file."));
       return;
     }
     KProcess *dvdslideshow = process("INFO: \\d+ bytes of data written");
@@ -112,8 +118,9 @@ public:
 
     if(dvdslideshow->exitCode() != QProcess::NormalExit || dvdslideshow->exitStatus() != 0)
     {
-      message(KMF::Error, i18n("Slideshow error."));
+      message(KMF::Error, t, i18n("Slideshow error."));
     }
+    message(KMF::Done, t);
   }
 
   bool writeSlideshowFile() const
@@ -166,6 +173,8 @@ public:
       //setValue(re2.cap(1).toInt() - 1);
     }
   }
+private:
+  QString t;
 };
 
 Slide::Slide() : chapter(true)
@@ -417,7 +426,8 @@ void SlideshowObject::actions(QList<QAction*>* actionList) const
 
 bool SlideshowObject::make(QString type)
 {
-  interface()->message(KMF::Start, i18n("Media: %1", title()));
+  QString t = i18n("Slideshow: %1", title());
+  interface()->message(KMF::Start, t);
   m_type = type;
   if(type != "dummy")
   {
@@ -441,10 +451,10 @@ bool SlideshowObject::make(QString type)
     }
     else
     {
-      interface()->message(KMF::Info, i18n("Slideshow \"%1\" seems to be up to date", title()));
+      interface()->message(KMF::Info, t, i18n("Slideshow \"%1\" seems to be up to date", title()));
     }
   }
-  interface()->message(KMF::Done, i18n("Media: %1", title()));
+  interface()->message(KMF::Done, t);
   return true;
 }
 

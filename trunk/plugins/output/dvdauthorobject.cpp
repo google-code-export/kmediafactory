@@ -42,7 +42,8 @@ public:
 
   void run()
   {
-    message(KMF::Info, i18n(startString));
+    t = i18n(startString);
+    message(KMF::Start, t);
   
     QDomDocument doc("");
     doc.appendChild(doc.createProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\""));
@@ -143,16 +144,19 @@ public:
     }
   
     QFile file(projectDir + "dvdauthor.xml");
-    if (!file.open(QIODevice::WriteOnly)) {
-      message(KMF::Error, i18n("Error in saving dvdauthor.xml"));
-      return;
+    if (file.open(QIODevice::WriteOnly)) 
+    {
+      QTextStream stream(&file);
+      stream.setCodec("UTF-8");
+      doc.save(stream, 1);
+      file.close();
     }
-    QTextStream stream(&file);
-    stream.setCodec("UTF-8");
-    doc.save(stream, 1);
-    file.close();
+    else
+    {
+      message(KMF::Error, t, i18n("Error in saving dvdauthor.xml"));
+    }
   
-    message(KMF::Done, i18n(startString));
+    message(KMF::Done, t);
   }
 
   QDomElement toElement(const QVariant& element)
@@ -165,6 +169,8 @@ public:
       return doc.documentElement();
     }
   }
+private:
+  QString t;
 };
 
 DvdAuthorObject::DvdAuthorObject(QObject* parent)

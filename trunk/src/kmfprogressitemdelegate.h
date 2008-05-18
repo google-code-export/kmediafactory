@@ -26,8 +26,9 @@
 
 class KMFProgressItemDelegate : public QItemDelegate
 {
+public:
     Q_ENUMS(ProgressRoles)
-    enum ProgressRoles { ValueRole = Qt::UserRole, MaxRole };
+    enum ProgressRoles { ValueRole = Qt::UserRole, MaxRole, LogRole, ResultRole };
 
     virtual void paint(QPainter* painter, const QStyleOptionViewItem& option,
                        const QModelIndex& index) const;
