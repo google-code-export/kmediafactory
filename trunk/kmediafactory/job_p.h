@@ -33,13 +33,13 @@ namespace KMF
       explicit JobHelper(KMF::Job* parent);
       ~JobHelper();
 
-      void message(KMF::MsgType type, const QString& txt);
+      void message(KMF::MsgType type, const QString& txt, const QString& submsg = QString());
       void log(const QString& msg, const QString& txt);
       void setValue(int value, const QString& txt);
       void setMaximum(int maximum, const QString& txt);
 
     signals:
-      void newMessage(KMF::MsgType type, const QString& txt);
+      void newMessage(KMF::MsgType type, const QString& txt, const QString& submsg);
       void newLogMessage(const QString& msg, const QString& txt);
       void valueChanged(int value, const QString& txt);
       void maximumChanged(int maximum, const QString& txt);

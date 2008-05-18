@@ -38,7 +38,7 @@ namespace KMF
       KProcess* process(const QString& filter = "",
                         KProcess::OutputChannelMode mode =
                             KProcess::SeparateChannels);
-      void message(KMF::MsgType type, const QString& txt);
+      void message(KMF::MsgType type, const QString& txt, const QString& submsg = QString());
       void log(const QString& msg, const QString& txt);
       void setValue(int value, const QString& txt);
       void setMaximum(int maximum, const QString& txt);
@@ -54,7 +54,7 @@ namespace KMF
       virtual void requestAbort();
 
     signals:
-      void newMessage(KMF::MsgType type, const QString& txt);
+      void newMessage(KMF::MsgType type, const QString& txt, const QString& submsg);
       void newLogMessage(const QString& msg, const QString& txt);
       void valueChanged(int value, const QString& txt);
       void maximumChanged(int maximum, const QString& txt);

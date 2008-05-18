@@ -49,7 +49,8 @@ OutputPage::OutputPage(QWidget *parent) :
   connect(&m_startPopup, SIGNAL(triggered(QAction*)),
            this, SLOT(start(QAction*)));
   connect(ThreadWeaver::Weaver::instance(), SIGNAL(finished()), this, SLOT(finished()));
-  progressListView->setModel(new QStandardItemModel());
+  m_model = new QStandardItemModel();
+  progressListView->setModel(m_model);
   progressListView->setItemDelegate(new KMFProgressItemDelegate());
 }
 
@@ -142,6 +143,8 @@ void OutputPage::start()
   startButton->setEnabled(false);
   kmfApp->interface()->setUseMessageBox(false);
   kmfApp->interface()->setStopped(false);
+  m_items.clear();
+  m_model->clear();
   // TODO
   //progressBar->setRange(0, kmfApp->project()->timeEstimate());
   progressBar->setValue(0);
@@ -197,33 +200,45 @@ void OutputPage::currentPageChanged(KPageWidgetItem* current, KPageWidgetItem*)
 
 void OutputPage::message(KMF::MsgType type, const QString& txt, const QString& submsg)
 {
-  QString pixmap;
+  QString icon;
   QColor color;
   KMessageBox::DialogType dlgType = KMessageBox::Information;
+  QStandardItem *item = 0;
 
+  /*
+  if (m_items.keys().contains(txt))
+    item = m_items[txt];
+  else
+    item = m_model->invisibleRootItem();
+  */
   switch(type)
   {
+    case KMF::Start:
+      break;
     case KMF::Info:
-      pixmap = "dialog-information";
+      icon = "dialog-information";
       color = QColor("darkGreen");
       dlgType = KMessageBox::Information;
       break;
     case KMF::Warning:
-      pixmap = "dialog-warning";
+      icon = "dialog-warning";
       color = QColor(211, 183, 98);
       dlgType = KMessageBox::Sorry;
       break;
     case KMF::Error:
-      pixmap = "dialog-error";
+      icon = "dialog-error";
       color = QColor("red");
       dlgType = KMessageBox::Error;
       break;
     case KMF::OK:
-      pixmap = "dialog-ok";
+      icon = "dialog-ok";
       color = QColor("darkGreen");
       dlgType = KMessageBox::Information;
       break;
   }
+
+  item = new QStandardItem(KIcon(icon), txt);
+  m_model->appendRow(item);
   /*
   setItemTotalSteps(0);
   QListView* lv = mainWindow->outputPage->progressListView;
@@ -237,9 +252,8 @@ void OutputPage::message(KMF::MsgType type, const QString& txt, const QString& s
   kmfApp->logger().message(msg, color);
   if(m_useMessageBox)
     KMessageBox::messageBox(mainWindow, dlgType, msg);
-  kmfApp->processEvents(QEventLoop::AllEvents);
-  return m_stopped;
   */
+  kmfApp->processEvents(QEventLoop::AllEvents);
 }
 
 void OutputPage::setMaximum(int maximum, const QString& txt)

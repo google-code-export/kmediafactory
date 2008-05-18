@@ -26,8 +26,8 @@
 KMF::JobHelper::JobHelper(KMF::Job* parent) : QObject(0)
 {
   qRegisterMetaType<KMF::MsgType>("KMF::MsgType");
-  connect(this, SIGNAL(newMessage(KMF::MsgType, const QString&)), 
-          parent, SIGNAL(newMessage(KMF::MsgType, const QString&)));
+  connect(this, SIGNAL(newMessage(KMF::MsgType, const QString&, const QString&)), 
+          parent, SIGNAL(newMessage(KMF::MsgType, const QString&, const QString&)));
   connect(this, SIGNAL(newLogMessage(const QString&, const QString&)), 
           parent, SIGNAL(newLogMessage(const QString&, const QString&)));
   connect(this, SIGNAL(valueChanged(int, const QString&)), 
@@ -40,9 +40,9 @@ KMF::JobHelper::~JobHelper()
 {
 }
 
-void KMF::JobHelper::message(MsgType type, const QString& txt)
+void KMF::JobHelper::message(MsgType type, const QString& txt, const QString& submsg)
 {
-  emit newMessage(type, txt);
+  emit newMessage(type, txt, submsg);
 }
 
 void KMF::JobHelper::log(const QString& msg, const QString& txt)
@@ -148,7 +148,7 @@ KProcess* KMF::Job::process(const QString& filter, KProcess::OutputChannelMode m
   return d->proc;
 }
 
-void KMF::Job::message(MsgType type, const QString& txt)
+void KMF::Job::message(MsgType type, const QString& txt, const QString& submsg)
 {
   if (type == KMF::Error)
   {
@@ -158,7 +158,7 @@ void KMF::Job::message(MsgType type, const QString& txt)
   {
     d->start = txt; 
   }
-  d->helper()->message(type, txt);
+  d->helper()->message(type, txt, submsg);
 }
 
 void KMF::Job::log(const QString& msg, const QString& txt)

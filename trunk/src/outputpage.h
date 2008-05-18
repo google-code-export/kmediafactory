@@ -28,6 +28,7 @@
 
 class KPageWidgetItem;
 class QStandardItem;
+class QStandardItemModel;
 
 class OutputPage : public QWidget, public Ui::OutputPage
 {
@@ -59,6 +60,7 @@ class OutputPage : public QWidget, public Ui::OutputPage
     QMap<QAction*, QString> m_types;
     QMap<QString, QStandardItem*> m_items;
     QString m_type;
+    QStandardItemModel* m_model;
 };
 
 #endif // OUTPUTPAGE_H
