@@ -23,7 +23,6 @@
 
 #include "object.h"
 #include "job.h"
-#include "logger.h"
 #include <KProcess>
 #include <kdemacros.h>
 #include <QDateTime>
@@ -121,8 +120,12 @@ namespace KMF
 
       virtual void addJob(KMF::Job *job, JobDependency dependency = KMF::None) = 0;
       virtual void addJob(KMF::Job *job, KMF::Job *dependency) = 0;
-      virtual void message(MsgType type, const QString& msg = QString()) = 0;
-      virtual Logger* logger() = 0;
+
+      virtual void message(MsgType type, const QString& txt, 
+                           const QString& submsg = QString()) = 0;
+      virtual void setMaximum(int maximum, const QString& txt) = 0;
+      virtual void setValue(int value, const QString& txt) = 0;
+      virtual void log(const QString& logtxt, const QString& txt) = 0;
 
       // Plugin helpers
       virtual QStringList getOpenFileNames(const QString &startDir,

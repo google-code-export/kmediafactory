@@ -143,11 +143,6 @@ void KrossPluginInterface::message(KMF::MsgType type, const QString& msg)
   m_interface->message(type, msg);
 }
 
-QObject* KrossPluginInterface::logger()
-{
-  return m_interface->logger();
-}
-
 void KrossPluginInterface::addMediaObjectFromXML(const QString& xml)
 {
   kDebug() << xml;

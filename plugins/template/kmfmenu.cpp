@@ -127,12 +127,13 @@ bool KMFMenu::addPage(const QDomElement& element, int pageSet,
   progress(m_pagePoints);
   if(menuPage)
   {
-    m_interface->message(KMF::Start, i18n("Menu: %1", uiText(menuPage->objectName())));
+    QString txt = i18n("Menu: %1", uiText(menuPage->objectName()));
+    m_interface->message(KMF::Start, txt);
     if(pageSet == 0)
       menuPage->setVmgm(true);
     titlePages(pageSet)->append(menuPage);
     result = menuPage->parseButtons();
-    m_interface->message(KMF::Done);
+    m_interface->message(KMF::Done, txt);
   }
   return result;
 }

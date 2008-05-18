@@ -48,6 +48,8 @@
 #include <unistd.h>
 #include <errno.h>
 
+static const char startString[] = I18N_NOOP("Subtitles for: %1");
+
 const char* VideoObject::m_prefixes[] =
   {".sub.mpg", ".mpg", "", ".xml", ".sub"};
 
@@ -64,7 +66,7 @@ public:
 
   void run()
   {
-    message(KMF::Info, i18n("   Adding subtitles to %1", videoFile));
+    message(KMF::Start, i18n(startString, videoFile));
 
     QStringList subtitleFiles = subtitle.file().split(";");
   
@@ -77,20 +79,17 @@ public:
     spumux->setWorkingDirectory(mediaDir);
 
     QFileInfo info(videoFile);
-    setMaximum(info.size() / 1024);
+    //setMaximum(info.size() / 1024);
     lastUpdate = 0;
     half = info.size() / 200;
     spumux->execute();
 
-    if(spumux->exitCode() == QProcess::NormalExit && spumux->exitStatus() == 0)
-    {
-      setValue(info.size() / 1024);
-    }
-    else
+    if(spumux->exitCode() != QProcess::NormalExit || spumux->exitStatus() != 0)
     {
       QFile::remove(videoFileWithSubtitles);
-      message(KMF::Error, i18n("   Conversion error."));
+      message(KMF::Error, i18n("Conversion error."));
     }
+    message(KMF::Done, i18n(startString, videoFile));
   }
 
   void writeSpumuxXml()
@@ -151,7 +150,7 @@ public:
       qulonglong temp = bytes.cap(1).toULongLong();
       if(temp - lastUpdate > half)
       {
-        setValue(temp / 1024);
+        //setValue(temp / 1024);
         lastUpdate = temp;
       }
     }
@@ -586,7 +585,8 @@ QString VideoObject::videoFileFind(int index, VideoFilePrefix prefixStart) const
 
 bool VideoObject::make(QString type)
 {
-  interface()->message(KMF::Start, i18n("Media: %1", title()));
+  QString t = i18n("Media: %1", title());
+  interface()->message(KMF::Start, t);
   QString fileName;
 
   m_type = type;
@@ -629,7 +629,7 @@ bool VideoObject::make(QString type)
       }
     }
   }
-  interface()->message(KMF::Done);
+  interface()->message(KMF::Done, t);
   return true;
 }
 

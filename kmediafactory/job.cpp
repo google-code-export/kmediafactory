@@ -28,34 +28,36 @@ KMF::JobHelper::JobHelper(KMF::Job* parent) : QObject(0)
   qRegisterMetaType<KMF::MsgType>("KMF::MsgType");
   connect(this, SIGNAL(newMessage(KMF::MsgType, const QString&)), 
           parent, SIGNAL(newMessage(KMF::MsgType, const QString&)));
-  connect(this, SIGNAL(newLogMessage(const QString&)), 
-          parent, SIGNAL(newLogMessage(const QString&)));
-  connect(this, SIGNAL(valueChanged(int)), parent, SIGNAL(valueChanged(int)));
-  connect(this, SIGNAL(maximumChanged(int)), parent, SIGNAL(maximumChanged(int)));
+  connect(this, SIGNAL(newLogMessage(const QString&, const QString&)), 
+          parent, SIGNAL(newLogMessage(const QString&, const QString&)));
+  connect(this, SIGNAL(valueChanged(int, const QString&)), 
+          parent, SIGNAL(valueChanged(int, const QString&)));
+  connect(this, SIGNAL(maximumChanged(int, const QString&)), 
+          parent, SIGNAL(maximumChanged(int, const QString&)));
 }
 
 KMF::JobHelper::~JobHelper()
 {
 }
 
-void KMF::JobHelper::message(MsgType type, const QString& msg)
+void KMF::JobHelper::message(MsgType type, const QString& txt)
 {
-  emit newMessage(type, msg);
+  emit newMessage(type, txt);
 }
 
-void KMF::JobHelper::log(const QString& msg)
+void KMF::JobHelper::log(const QString& msg, const QString& txt)
 {
-  emit newLogMessage(msg);
+  emit newLogMessage(msg, txt);
 }
 
-void KMF::JobHelper::setValue(int value)
+void KMF::JobHelper::setValue(int value, const QString& txt)
 {
-  emit valueChanged(value);
+  emit valueChanged(value, txt);
 }
 
-void KMF::JobHelper::setMaximum(int maximum)
+void KMF::JobHelper::setMaximum(int maximum, const QString& txt)
 {
-  emit maximumChanged(maximum);
+  emit maximumChanged(maximum, txt);
 }
 
 class KMF::Job::Private
@@ -84,7 +86,7 @@ public:
     {
       QString tmp = buffer.left(n);
       if(!filter.exactMatch(tmp))
-        job->log(tmp);
+        log += tmp;
       job->output(tmp);
       ++n;
       buffer.remove(0, n);
@@ -108,6 +110,7 @@ public:
   bool result;
   bool aborted;
   KMF::JobHelper *jobHelper;
+  QString start;
 };
 
 KMF::Job::Job(QObject* parent) : ThreadWeaver::Job(parent), d(new KMF::Job::Private(this))
@@ -116,11 +119,20 @@ KMF::Job::Job(QObject* parent) : ThreadWeaver::Job(parent), d(new KMF::Job::Priv
 
 KMF::Job::~Job()
 {
+  if (!d->log.isEmpty()) 
+  {
+    log(d->log, d->start);
+  }
   delete d->proc;
 }
 
 KProcess* KMF::Job::process(const QString& filter, KProcess::OutputChannelMode mode)
 {
+  if (!d->log.isEmpty()) 
+  {
+    log(d->log, d->start);
+    d->log = QString();
+  }
   delete d->proc;
   d->proc = new KProcess(this);
   d->proc->setOutputChannelMode(mode);
@@ -136,28 +148,32 @@ KProcess* KMF::Job::process(const QString& filter, KProcess::OutputChannelMode m
   return d->proc;
 }
 
-void KMF::Job::message(MsgType type, const QString& msg)
+void KMF::Job::message(MsgType type, const QString& txt)
 {
   if (type == KMF::Error)
   {
     failed(); 
   }
-  d->helper()->message(type, msg);
+  else if (type == KMF::Start)
+  {
+    d->start = txt; 
+  }
+  d->helper()->message(type, txt);
 }
 
-void KMF::Job::log(const QString& msg)
+void KMF::Job::log(const QString& msg, const QString& txt)
 {
-  d->helper()->log(msg);
+  d->helper()->log(msg, txt);
 }
 
-void KMF::Job::setValue(int value)
+void KMF::Job::setValue(int value, const QString& txt)
 {
-  d->helper()->setValue(value);
+  d->helper()->setValue(value, txt);
 }
 
-void KMF::Job::setMaximum(int maximum)
+void KMF::Job::setMaximum(int maximum, const QString& txt)
 {
-  d->helper()->setMaximum(maximum);
+  d->helper()->setMaximum(maximum, txt);
 }
 
 void KMF::Job::output(const QString& line)

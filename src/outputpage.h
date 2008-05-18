@@ -35,6 +35,11 @@ class OutputPage : public QWidget, public Ui::OutputPage
     OutputPage(QWidget *parent = 0);
     virtual ~OutputPage();
 
+    void message(KMF::MsgType type, const QString& txt, const QString& submsg = QString());
+    void setMaximum(int maximum, const QString& txt);
+    void setValue(int value, const QString& txt);
+    void log(const QString& logtxt, const QString& txt);
+
   public slots:
     void currentPageChanged(KPageWidgetItem*, KPageWidgetItem*);
     void start();

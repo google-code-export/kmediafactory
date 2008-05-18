@@ -162,8 +162,8 @@ public:
     if(pos > -1)
     {
       // Maximum is eg. 6/5
-      setMaximum(re2.cap(2).toInt() + 1);
-      setValue(re2.cap(1).toInt() - 1);
+      //setMaximum(re2.cap(2).toInt() + 1);
+      //setValue(re2.cap(1).toInt() - 1);
     }
   }
 };
@@ -444,7 +444,7 @@ bool SlideshowObject::make(QString type)
       interface()->message(KMF::Info, i18n("Slideshow \"%1\" seems to be up to date", title()));
     }
   }
-  interface()->message(KMF::Done);
+  interface()->message(KMF::Done, i18n("Media: %1", title()));
   return true;
 }
 
