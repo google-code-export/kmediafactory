@@ -54,8 +54,8 @@ class DVDDirectoryJob : public KMF::Job
 
   void run()
   {
-    t = subt = i18n(startString);
-    message(KMF::Start, t);
+    subid = msgId();
+    message(msgId(), KMF::Start, i18n(startString));
     m_error = false;
     m_lastLine = None;
     m_first = true;
@@ -77,7 +77,7 @@ class DVDDirectoryJob : public KMF::Job
   
     clean(projectDir);
   
-    KProcess *dvdauthor = process();
+    KProcess *dvdauthor = process(msgId());
     *dvdauthor << "dvdauthor" << "-x" << "dvdauthor.xml";
     dvdauthor->setWorkingDirectory(projectDir);
     dvdauthor->execute();
@@ -91,7 +91,7 @@ class DVDDirectoryJob : public KMF::Job
     }
     else
       clean(projectDir);
-    message(KMF::Done, t);
+    message(msgId(), KMF::Done);
   }
 
   void output(const QString& line)
@@ -101,13 +101,13 @@ class DVDDirectoryJob : public KMF::Job
     if(line.startsWith("\t") &&
         (m_lastLine == Warning || m_lastLine == Error))
     {
-      message((KMF::MsgType)m_lastLine, subt, line.mid(1));
+      message(subid, (KMF::MsgType)m_lastLine, line.mid(1));
     }
     else if(line.startsWith("ERR:"))
     {
       m_lastLine = Error;
       m_error = true;
-      message(KMF::Error, subt, line.mid(6));
+      message(subid, KMF::Error, line.mid(6));
     }
     else if(line.startsWith("WARN:"))
     {
@@ -116,7 +116,7 @@ class DVDDirectoryJob : public KMF::Job
       // Don't print multiple similar warnings. They can be found from the log.
       if(temp != m_warning)
       {
-        message(KMF::Warning, subt, temp);
+        message(subid, KMF::Warning, temp);
         m_warning = temp;
       }
     }
@@ -127,9 +127,9 @@ class DVDDirectoryJob : public KMF::Job
       m_lastSize += m_currentFile.size() / 1024;
       m_currentFile.setFile(line.mid(17, line.length() - 20));
   
-      subt = i18n("Processing: %1", m_currentFile.fileName());
-      message(KMF::Info, t, subt);
-      setMaximum(m_currentFile.size() / 1024, subt);
+      subid = KMF::PluginInterface::messageId();
+      message(subid, KMF::Info, i18n("Processing: %1", m_currentFile.fileName()));
+      setMaximum(subid, m_currentFile.size() / 1024);
       /* TODO
       if(!m_first)
       {
@@ -147,9 +147,9 @@ class DVDDirectoryJob : public KMF::Job
   
       if(m_lastLine != Vobu && m_lastLine != Processing)
       {
-        subt = i18n("Processing: %1", m_currentFile.fileName());
-        message(KMF::Info, t, subt);
-        setMaximum(m_currentFile.size() / 1024, subt);
+        subid = KMF::PluginInterface::messageId();
+        message(subid, KMF::Info, i18n("Processing: %1", m_currentFile.fileName()));
+        setMaximum(subid, m_currentFile.size() / 1024);
       }
       m_lastLine = Vobu;
       if(reVobu.indexIn(line) > -1)
@@ -161,7 +161,7 @@ class DVDDirectoryJob : public KMF::Job
             m_lastSize = 0;
           m_vobu = 0;
         }
-        setValue(reVobu.cap(2).toInt() * 1024 - m_lastSize, subt);
+        setValue(subid, reVobu.cap(2).toInt() * 1024 - m_lastSize);
       }
     }
     else if(line.startsWith("STAT: fixing VOBU"))
@@ -170,13 +170,13 @@ class DVDDirectoryJob : public KMF::Job
   
       if(m_lastLine != FixingVobu)
       {
-        subt = i18n("Fixing: %1", m_currentFile.fileName());
-        message(KMF::Info, t, subt);
-        setMaximum(100, subt);
+        subid = KMF::PluginInterface::messageId();
+        message(subid, KMF::Info, i18n("Fixing: %1", m_currentFile.fileName()));
+        setMaximum(subid, 100);
       }
       m_lastLine = FixingVobu;
       if(reFix.indexIn(line) > -1)
-        setValue(reFix.cap(1).toInt(), subt);
+        setValue(subid, reFix.cap(1).toInt());
     }
     else
     {
@@ -213,8 +213,7 @@ private:
   int m_lastVobu, m_vobu;
   int m_lastSize;
   int m_filePoints;
-  QString t;
-  QString subt;
+  uint subid;
 };
 
 DvdDirectoryObject::DvdDirectoryObject(QObject* parent)
@@ -281,16 +280,17 @@ bool DvdDirectoryObject::make(QString type)
 {
   if(DvdAuthorObject::make(type) == false)
     return false;
-  interface()->message(KMF::Start, i18n(startString));
+  uint id = KMF::PluginInterface::messageId();
+  interface()->message(id, KMF::Start, i18n(startString));
   if(isUpToDate(type))
   {
-    interface()->message(KMF::Info, i18n("DVD Directory is up to date"));
+    interface()->message(id, KMF::Info, i18n("DVD Directory is up to date"));
   } else {
     DVDDirectoryJob *job = new DVDDirectoryJob();
     job->projectDir = interface()->projectDir();
     interface()->addJob(job, KMF::Last);
   }
-  interface()->message(KMF::Done, i18n(startString));
+  interface()->message(id, KMF::Done, i18n(startString));
   return true;
 }
 

@@ -56,8 +56,7 @@ public:
 
   void run()
   {
-    t = i18n("Menu: %1", KMFTemplateBase::uiText(menuPage.objectName()));
-    message(KMF::Start, t);
+    message(msgId(), KMF::Start, i18n("Menu: %1", KMFTemplateBase::uiText(menuPage.objectName())));
     QSize resolution = menuPage.resolution();
     m_background = QImage(resolution, QImage::Format_ARGB32);
     m_background.fill(KMF::Tools::toColor("#444444FF").rgba());
@@ -82,25 +81,25 @@ public:
     
     if(paint() == false)
     {
-      message(KMF::Error, t, i18n("Could not paint menu."));
+      message(msgId(), KMF::Error, i18n("Could not paint menu."));
       return;
     }
     if(writeSpumuxXml() == false)
     {
-      message(KMF::Error, t, i18n("Could not write spumux xml file."));
+      message(msgId(), KMF::Error, i18n("Could not write spumux xml file."));
       return;
     }
     if(saveImages() == false)
     {
-      message(KMF::Error, t, i18n("Could not save images."));
+      message(msgId(), KMF::Error, i18n("Could not save images."));
       return;
     }
     if(makeMpeg() == false)
     {
-      message(KMF::Error, t, i18n("Could not make mpeg file."));
+      message(msgId(), KMF::Error, i18n("Could not make mpeg file."));
       return;
     }
-    message(KMF::Done, t);
+    message(msgId(), KMF::Done);
   }
 
   bool paint()
@@ -319,7 +318,6 @@ private:
   QImage m_subHighlight;
   QImage m_subSelect;
   QString m_sound;
-  QString t;
 };
 
 KMFMenuPage::KMFMenuPage(QObject *parent) :

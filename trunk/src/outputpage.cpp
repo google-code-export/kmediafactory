@@ -121,7 +121,7 @@ void OutputPage::stop()
   stopPushBtn->setEnabled(false);
   // TODO stop threads
   kmfApp->interface()->setStopped(true);
-  kmfApp->interface()->message(KMF::Error, i18n("User cancelled."));
+  kmfApp->interface()->message(KMF::Root, KMF::Error, i18n("User cancelled."));
 }
 
 void OutputPage::start(QAction* type)
@@ -148,11 +148,11 @@ void OutputPage::start()
   // TODO
   //progressBar->setRange(0, kmfApp->project()->timeEstimate());
   progressBar->setValue(0);
-  message(KMF::Info, QString(), i18n("Preparing files..."));
+  message(KMF::Root, KMF::Info, i18n("Preparing files..."));
   if (kmfApp->project()->prepare(m_type))
   {
     // Run jobs
-    message(KMF::Info, QString(), i18n("Making files..."));
+    message(KMF::Root, KMF::Info, i18n("Making files..."));
     ThreadWeaver::Weaver::instance()->resume();
   }
 }
@@ -198,21 +198,21 @@ void OutputPage::currentPageChanged(KPageWidgetItem* current, KPageWidgetItem*)
   outputs->setViewMode(QListView::IconMode);
 }
 
-void OutputPage::message(KMF::MsgType type, const QString& txt, const QString& submsg)
+void OutputPage::message(uint id, KMF::MsgType type, const QString& msg)
 {
   QString icon;
   QColor color;
   KMessageBox::DialogType dlgType = KMessageBox::Information;
   QStandardItem *item = 0;
   QStandardItem *parent = 0;
-  QString t = submsg;
 
-  if (txt.isEmpty())
+  kDebug() << id << type << msg;
+  if (id == KMF::Root)
     parent = m_model->invisibleRootItem();
-  else if (m_items.keys().contains(txt))
-    parent = m_items[txt];
-  else if (m_items.keys().contains("last-header"))
-    parent = m_items["last-header"];
+  else if (m_items.keys().contains(id))
+    parent = m_items[id];
+  else if (m_items.keys().contains(KMF::Root))
+    parent = m_items[KMF::Root];
   else
     parent = m_model->invisibleRootItem();
   
@@ -221,7 +221,6 @@ void OutputPage::message(KMF::MsgType type, const QString& txt, const QString& s
     case KMF::Start:
       icon = "application-x-executable";
       color = QColor("darkGreen");
-      t = txt;
       break;
     case KMF::Info:
       icon = "help-about";
@@ -247,38 +246,39 @@ void OutputPage::message(KMF::MsgType type, const QString& txt, const QString& s
       parent->setData(KIcon(parent->data(KMFProgressItemDelegate::ResultRole).toString()), 
                       Qt::DecorationRole);
       return; // We are done here
+    case KMF::Root:
+      return;
   }
 
   if(kmfApp->interface()->useMessageBox())
   {
-    KMessageBox::messageBox(this, dlgType, t);
+    KMessageBox::messageBox(this, dlgType, msg);
   }
   else
   {
-    item = new QStandardItem(KIcon(icon), t);
+    item = new QStandardItem(KIcon(icon), msg);
     item->setData("dialog-ok", KMFProgressItemDelegate::ResultRole);
     parent->appendRow(item);
   
-    m_items[t] = item;
-    if (parent == m_model->invisibleRootItem())
+    if (id == KMF::Root)
     {
       m_items.clear();
-      m_items["last-header"] = item;
     }
+    m_items[id] = item;
     progressListView->scrollTo(m_model->indexFromItem(item));
     kmfApp->processEvents(QEventLoop::AllEvents);
   }
 }
 
-void OutputPage::setMaximum(int maximum, const QString& txt)
+void OutputPage::setMaximum(uint id, int maximum)
 {
 }
 
-void OutputPage::setValue(int value, const QString& txt)
+void OutputPage::setValue(uint id, int value)
 {
 }
 
-void OutputPage::log(const QString& logtxt, const QString& txt)
+void OutputPage::log(uint id, const QString& msg)
 {
 }
 

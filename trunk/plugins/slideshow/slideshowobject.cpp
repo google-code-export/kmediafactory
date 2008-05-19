@@ -61,8 +61,7 @@ public:
 
   void run()
   {
-    t = i18n("Copying slideshow originals");
-    message(KMF::Start, t);
+    message(msgId(), KMF::Start, i18n("Copying slideshow originals"));
     KUrl::List files;
   
     foreach(const Slide& slide, slides)
@@ -72,7 +71,7 @@ public:
     KMF::Tools::stripExisting(&files, destDir);
     if(files.count() > 0)
       KIO::copy(files, destDir);
-    message(KMF::Done, t);
+    message(msgId(), KMF::Done);
   }
 private:
   QString t;
@@ -90,37 +89,38 @@ public:
 
   void run()
   {
-    t = i18n("Slideshow: %1", slideshow.title());
-    message(KMF::Start, t);
+    message(msgId(), KMF::Start, i18n("Slideshow: %1", slideshow.title()));
     QDir dir(mediaDir);
     QString output = dir.filePath(QString("%1.vob").arg(slideshow.id()));
   
-    if(writeSlideshowFile() == false)
+    if(writeSlideshowFile())
     {
-      message(KMF::Error, t, i18n("Can't write slideshow file."));
-      return;
+      KProcess *dvdslideshow = process(msgId(), "INFO: \\d+ bytes of data written");
+      *dvdslideshow << dvdslideshowBin;
+      if(SlideshowPluginSettings::audioType() == 0)
+        *dvdslideshow << "-mp2";
+      *dvdslideshow << "-o" << mediaDir <<
+          "-n" << slideshow.id() <<
+          "-f" << dir.filePath(QString("%1.slideshow").arg(slideshow.id()));
+      if(projectType == "DVD-PAL")
+        *dvdslideshow << "-p";
+      foreach(const QString &audio, slideshow.audioFiles())
+      {
+        *dvdslideshow << "-a" << audio;
+      }
+      dvdslideshow->setWorkingDirectory(mediaDir);
+      dvdslideshow->execute();
+  
+      if(dvdslideshow->exitCode() != QProcess::NormalExit || dvdslideshow->exitStatus() != 0)
+      {
+        message(msgId(), KMF::Error, i18n("Slideshow error."));
+      }
     }
-    KProcess *dvdslideshow = process("INFO: \\d+ bytes of data written");
-    *dvdslideshow << dvdslideshowBin;
-    if(SlideshowPluginSettings::audioType() == 0)
-      *dvdslideshow << "-mp2";
-    *dvdslideshow << "-o" << mediaDir <<
-        "-n" << slideshow.id() <<
-        "-f" << dir.filePath(QString("%1.slideshow").arg(slideshow.id()));
-    if(projectType == "DVD-PAL")
-      *dvdslideshow << "-p";
-    foreach(const QString &audio, slideshow.audioFiles())
+    else
     {
-      *dvdslideshow << "-a" << audio;
+      message(msgId(), KMF::Error, i18n("Can't write slideshow file."));
     }
-    dvdslideshow->setWorkingDirectory(mediaDir);
-    dvdslideshow->execute();
-
-    if(dvdslideshow->exitCode() != QProcess::NormalExit || dvdslideshow->exitStatus() != 0)
-    {
-      message(KMF::Error, t, i18n("Slideshow error."));
-    }
-    message(KMF::Done, t);
+    message(msgId(), KMF::Done);
   }
 
   bool writeSlideshowFile() const
@@ -426,8 +426,7 @@ void SlideshowObject::actions(QList<QAction*>* actionList) const
 
 bool SlideshowObject::make(QString type)
 {
-  QString t = i18n("Slideshow: %1", title());
-  interface()->message(KMF::Start, t);
+  interface()->message(msgId(), KMF::Start, i18n("Slideshow: %1", title()));
   m_type = type;
   if(type != "dummy")
   {
@@ -451,10 +450,11 @@ bool SlideshowObject::make(QString type)
     }
     else
     {
-      interface()->message(KMF::Info, t, i18n("Slideshow \"%1\" seems to be up to date", title()));
+      interface()->message(msgId(), KMF::Info, 
+                           i18n("Slideshow \"%1\" seems to be up to date", title()));
     }
   }
-  interface()->message(KMF::Done, t);
+  interface()->message(msgId(), KMF::Done);
   return true;
 }
 

@@ -55,7 +55,7 @@ class KrossPluginInterface : public QObject
     void setTemplateFromXML(const QString& xml);
     void setOutputFromXML(const QString& xml);
 
-    void message(KMF::MsgType type, const QString& msg);
+    void message(uint id, KMF::MsgType type, const QString& msg);
 
     // Plugin helpers
     QStringList getOpenFileNames(const QString &startDir, const QString &filter, 

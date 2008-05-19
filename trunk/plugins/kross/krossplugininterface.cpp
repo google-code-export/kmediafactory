@@ -138,9 +138,9 @@ bool KrossPluginInterface::removeOutputObject(Kross::Object::Ptr oob)
   return false;
 }
 
-void KrossPluginInterface::message(KMF::MsgType type, const QString& msg)
+void KrossPluginInterface::message(uint id, KMF::MsgType type, const QString& msg)
 {
-  m_interface->message(type, msg);
+  m_interface->message(id, type, msg);
 }
 
 void KrossPluginInterface::addMediaObjectFromXML(const QString& xml)

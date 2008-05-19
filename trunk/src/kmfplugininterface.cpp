@@ -208,24 +208,24 @@ void KMFPluginInterface::addJob(KMF::Job *job, KMF::Job *dependency)
   addJob(job);
 }
 
-void KMFPluginInterface::message(KMF::MsgType type, const QString& txt, const QString& submsg)
+void KMFPluginInterface::message(uint id, KMF::MsgType type, const QString& msg)
 {
-  kmfApp->mainWindow()->outputPage->message(type, txt, submsg);
+  kmfApp->mainWindow()->outputPage->message(id, type, msg);
 }
 
-void KMFPluginInterface::setMaximum(int max, const QString& txt)
+void KMFPluginInterface::setMaximum(uint id, int max)
 {
-  kmfApp->mainWindow()->outputPage->setMaximum(max, txt);
+  kmfApp->mainWindow()->outputPage->setMaximum(id, max);
 }
 
-void KMFPluginInterface::setValue(int value, const QString& txt)
+void KMFPluginInterface::setValue(uint id, int value)
 {
-  kmfApp->mainWindow()->outputPage->setValue(value, txt);
+  kmfApp->mainWindow()->outputPage->setValue(id, value);
 }
 
-void KMFPluginInterface::log(const QString& logtxt, const QString& txt)
+void KMFPluginInterface::log(uint id, const QString& msg)
 {
-  kmfApp->mainWindow()->outputPage->log(logtxt, txt);
+  kmfApp->mainWindow()->outputPage->log(id, msg);
 }
 
 void KMFPluginInterface::progressDialogDestroyed()

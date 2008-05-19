@@ -121,11 +121,11 @@ namespace KMF
       virtual void addJob(KMF::Job *job, JobDependency dependency = KMF::None) = 0;
       virtual void addJob(KMF::Job *job, KMF::Job *dependency) = 0;
 
-      virtual void message(MsgType type, const QString& txt, 
-                           const QString& submsg = QString()) = 0;
-      virtual void setMaximum(int maximum, const QString& txt) = 0;
-      virtual void setValue(int value, const QString& txt) = 0;
-      virtual void log(const QString& logtxt, const QString& txt) = 0;
+      static uint messageId();
+      virtual void message(uint id, MsgType type, const QString& msg = QString()) = 0;
+      virtual void setMaximum(uint id, int maximum) = 0;
+      virtual void setValue(uint id, int value) = 0;
+      virtual void log(uint id, const QString& msg) = 0;
 
       // Plugin helpers
       virtual QStringList getOpenFileNames(const QString &startDir,
