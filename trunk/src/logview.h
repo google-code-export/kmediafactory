@@ -22,10 +22,6 @@
 #define LOGVIEW_H
 
 #include "ui_logview.h"
-#include <QVBoxLayout>
-
-class QVBoxLayout;
-class KHTMLPart;
 
 class LogView : public KDialog, public Ui::LogView
 {
@@ -37,10 +33,6 @@ class LogView : public KDialog, public Ui::LogView
 
 protected:
     void closeEvent(QCloseEvent *);
-
-  private:
-    QVBoxLayout* m_layout;
-    KHTMLPart* m_htmlPart;
 };
 
 #endif // LOGVIEW_H

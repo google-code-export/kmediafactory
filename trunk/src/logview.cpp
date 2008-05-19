@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,23 +17,15 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "logview.h"
 #include "kmfapplication.h"
-#include <QLayout>
-#include <QLabel>
-#include <QVBoxLayout>
-#include <khtml_part.h>
 
 LogView::LogView(QWidget *parent)
  : KDialog(parent)
 {
   setupUi(mainWidget());
   setButtons(KDialog::Close);
-
-  m_layout = new QVBoxLayout(htmlFrame);
-  m_htmlPart = new KHTMLPart(htmlFrame);
-  m_layout->addWidget(m_htmlPart->widget());
-  logLabel->setBuddy(m_htmlPart->widget());
 
   setInitialSize(QSize(640, 420));
   KConfigGroup cg = KGlobal::config()->group("LogView");
@@ -50,13 +42,11 @@ void LogView::closeEvent(QCloseEvent *e)
 
 LogView::~LogView()
 {
-  delete m_htmlPart;
-  delete m_layout;
 }
 
 void LogView::setData(const KUrl& log)
 {
-  m_htmlPart->openUrl(log);
+  htmlFrame->setSource(log);
 }
 
 #include "logview.moc"
