@@ -103,7 +103,7 @@ void KMF::Job::Private::out()
   {
     QString tmp = buffer.left(n);
     if(!filter.exactMatch(tmp))
-      log += tmp;
+      log += tmp + '\n';
     job->output(tmp);
     ++n;
     buffer.remove(0, n);
@@ -141,7 +141,7 @@ KMF::Job::~Job()
 KProcess* KMF::Job::process(uint id, const QString& filter, KProcess::OutputChannelMode mode)
 {
   delete d_func()->proc;
-  d->proc = new KProcess(this);
+  d->proc = new KProcess(d);
   d->proc->setProperty("id", id);
   d->proc->setOutputChannelMode(mode);
   if(mode != KProcess::OnlyStderrChannel)
