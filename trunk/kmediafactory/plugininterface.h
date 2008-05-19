@@ -126,6 +126,9 @@ namespace KMF
       virtual void setMaximum(uint id, int maximum) = 0;
       virtual void setValue(uint id, int value) = 0;
       virtual void log(uint id, const QString& msg) = 0;
+      // sub id hack
+      static uint subId(uint id);
+      static uint parent(uint id);
 
       // Plugin helpers
       virtual QStringList getOpenFileNames(const QString &startDir,

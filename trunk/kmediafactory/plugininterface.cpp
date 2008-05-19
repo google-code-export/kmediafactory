@@ -67,13 +67,30 @@ KMF::PluginInterface::~PluginInterface()
 {
 }
 
+static QMutex mutex;
+static QMap<uint, uint> parents;
+static uint id = 0;
+
 uint KMF::PluginInterface::messageId()
 {
-  static QMutex mutex;
-  static uint id = 0;
   QMutexLocker locker(&mutex);
-
   return ++id;
+}
+
+uint KMF::PluginInterface::subId(uint id)
+{
+  QMutexLocker locker(&mutex);
+  uint subid = ++id;
+  parents[subid] = id;
+  return subid;
+}
+
+uint KMF::PluginInterface::parent(uint id)
+{
+  QMutexLocker locker(&mutex);
+  if (parents.keys().contains(id))
+    return parents[id];
+  return 0;
 }
 
 #include "plugininterface.moc"
