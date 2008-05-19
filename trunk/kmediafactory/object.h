@@ -58,6 +58,7 @@ namespace KMF
       PluginInterface* interface() const;
       QVariant call(const QString& func, QVariantList args = QVariantList());
       uint msgId();
+      uint newMsgId();
 
     public slots:
       virtual void clean() {};

@@ -119,28 +119,38 @@ KMF::JobHelper* KMF::Job::Private::helper()
   return jobHelper;
 }
 
-KMF::Job::Job(QObject* parent) : ThreadWeaver::Job(parent), d(new KMF::Job::Private(this))
+KMF::Job::Private* KMF::Job::d_func()
+{
+  if (!d) 
+  {
+    d = new KMF::Job::Private(this);
+  }
+  return d;
+}
+
+KMF::Job::Job(QObject* parent) : ThreadWeaver::Job(parent), d(0)
 {
 }
 
 KMF::Job::~Job()
 {
-  delete d->proc;
+  if (d)
+    delete d->proc;
 }
 
 KProcess* KMF::Job::process(uint id, const QString& filter, KProcess::OutputChannelMode mode)
 {
-  delete d->proc;
+  delete d_func()->proc;
   d->proc = new KProcess(this);
   d->proc->setProperty("id", id);
   d->proc->setOutputChannelMode(mode);
   if(mode != KProcess::OnlyStderrChannel)
   {
-    connect(d->proc, SIGNAL(readyReadStandardOutput()), d, SLOT(d->stdout()));
+    connect(d->proc, SIGNAL(readyReadStandardOutput()), d, SLOT(stdout()));
   }
   if(mode != KProcess::OnlyStdoutChannel)
   {
-    connect(d->proc, SIGNAL(readyReadStandardError()), d, SLOT(d->stderr()));
+    connect(d->proc, SIGNAL(readyReadStandardError()), d, SLOT(stderr()));
   }
   connect(d->proc, SIGNAL(finished(int, QProcess::ExitStatus)), 
           d, SLOT(finished(int, QProcess::ExitStatus)));
@@ -155,22 +165,22 @@ void KMF::Job::message(uint id, MsgType type, const QString& msg)
   {
     failed(); 
   }
-  d->helper()->message(id, type, msg);
+  d_func()->helper()->message(id, type, msg);
 }
 
 void KMF::Job::log(uint id, const QString& msg)
 {
-  d->helper()->log(id, msg);
+  d_func()->helper()->log(id, msg);
 }
 
 void KMF::Job::setValue(uint id, int value)
 {
-  d->helper()->setValue(id, value);
+  d_func()->helper()->setValue(id, value);
 }
 
 void KMF::Job::setMaximum(uint id, int maximum)
 {
-  d->helper()->setMaximum(id, maximum);
+  d_func()->helper()->setMaximum(id, maximum);
 }
 
 void KMF::Job::output(const QString& line)
@@ -180,32 +190,38 @@ void KMF::Job::output(const QString& line)
 
 void KMF::Job::setFilter(const QString& filter)
 { 
-  d->filter.setPattern(filter); 
+  d_func()->filter.setPattern(filter); 
 }
 
-QString KMF::Job::filter() const 
+QString KMF::Job::filter() const
 { 
-  return d->filter.pattern(); 
+  if (d)
+    return d->filter.pattern(); 
+  return QString();
 }
 
 void KMF::Job::failed()
 {
-  d->result = false;
+  d_func()->result = false;
 }
 
-bool KMF::Job::aborted()
+bool KMF::Job::aborted() const
 {
-  return d->aborted;
+  if (d)
+    return d->aborted;
+  return false;
 }
 
 bool KMF::Job::success() const
 {
-  return d->result;
+  if (d)
+    return d->result;
+  return true;
 }
 
 void KMF::Job::requestAbort()
 {
-  d->aborted = true;
+  d_func()->aborted = true;
   if (d->proc) 
   {
     d->proc->kill();
@@ -214,7 +230,7 @@ void KMF::Job::requestAbort()
 
 uint KMF::Job::msgId()
 {
-  return d->msgid;
+  return d_func()->msgid;
 }
 
 #include "job.moc"
