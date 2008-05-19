@@ -246,6 +246,8 @@ void OutputPage::message(uint id, KMF::MsgType type, const QString& msg)
       color = QColor("darkGreen");
       break;
     case KMF::Done:
+      parent->setData(0, KMFProgressItemDelegate::MaxRole);
+      parent->setData(0, KMFProgressItemDelegate::ValueRole);
       parent->setData(KIcon(parent->data(KMFProgressItemDelegate::ResultRole).toString()), 
                       Qt::DecorationRole);
       return; // We are done here
@@ -279,14 +281,29 @@ void OutputPage::message(uint id, KMF::MsgType type, const QString& msg)
 
 void OutputPage::setMaximum(uint id, int maximum)
 {
+  if (m_items.keys().contains(id))
+  {
+    QStandardItem *item = m_items[id];
+    item->setData(maximum, KMFProgressItemDelegate::MaxRole);
+  }
 }
 
 void OutputPage::setValue(uint id, int value)
 {
+  if (m_items.keys().contains(id))
+  {
+    QStandardItem *item = m_items[id];
+    item->setData(value, KMFProgressItemDelegate::ValueRole);
+  }
 }
 
 void OutputPage::log(uint id, const QString& msg)
 {
+  if (m_items.keys().contains(id))
+  {
+    QStandardItem *item = m_items[id];
+    item->setData(msg, KMFProgressItemDelegate::LogRole);
+  }
 }
 
 #include "outputpage.moc"
