@@ -281,12 +281,13 @@ public:
       sound = KStandardDirs::locate("data", "kmediafactory/media/silence.mp2");
     }
   
-    // TODO Use process
-    Run run(QString("kmf_make_mpeg %1 %2 %3 %4").arg(projectType)
-        .arg(KMF::Tools::frames(projectType)).arg(menuPage.objectName()).arg(sound), menuDir);
-    //log(run.output());
-
-    if(run.exitStatus() != 0)
+    KProcess* kmf_make_mpeg = process(msgId());
+    kmf_make_mpeg->setWorkingDirectory(menuDir);
+    QString exe = KGlobal::dirs()->findResource("data", "kmediafactory/scripts/kmf_make_mpeg");
+    *kmf_make_mpeg << exe << projectType << 
+                      QString(KMF::Tools::frames(projectType)) << menuPage.objectName() << sound;
+    kmf_make_mpeg->execute();
+    if(kmf_make_mpeg->exitStatus() != 0)
     {
       return false;
     }

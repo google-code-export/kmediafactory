@@ -329,7 +329,11 @@ void OutputPage::makeLog()
 
     tmp = item->data(KMFProgressItemDelegate::LogRole).toString().trimmed();
     if(!tmp.isEmpty())
-      s += Qt::escape(tmp);
+    {
+      tmp = Qt::escape(tmp) + "\n";
+      tmp.replace("\n", "<br />");
+      s += tmp;
+    }
   }
   s += "</pre></html>";
 
