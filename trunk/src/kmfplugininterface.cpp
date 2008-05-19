@@ -171,8 +171,6 @@ void KMFPluginInterface::selectOutput(const QString& xml)
 
 void KMFPluginInterface::addJob(KMF::Job *job, KMF::JobDependency dependency)
 {
-  // TODO clear this
-  m_jobs.append(job);
   switch (dependency)
   {
     case KMF::All:
@@ -184,13 +182,18 @@ void KMFPluginInterface::addJob(KMF::Job *job, KMF::JobDependency dependency)
 
     case KMF::Last:
       if (m_jobs.last() != 0)
+      {
         ThreadWeaver::DependencyPolicy::instance().addDependency(job, m_jobs.last());
+      }
       break;
 
     case KMF::None:
     default:
       break;
   }
+  // TODO clear this on start
+  m_jobs.append(job);
+
   connect(job, SIGNAL(newMessage(uint, KMF::MsgType, const QString&)), 
           this, SLOT(message(uint, KMF::MsgType, const QString&)));
   connect(job, SIGNAL(newLogMessage(uint, const QString&)), 
