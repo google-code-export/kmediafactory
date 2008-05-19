@@ -82,6 +82,7 @@ class DVDDirectoryJob : public KMF::Job
     {
       clean(projectDir);
     }
+    message(subid, KMF::Done);
     message(msgId(), KMF::Done);
   }
 
@@ -118,8 +119,8 @@ class DVDDirectoryJob : public KMF::Job
       m_lastSize += m_currentFile.size() / 1024;
       m_currentFile.setFile(line.mid(17, line.length() - 20));
   
-      subid = KMF::PluginInterface::subId(msgId());
-      message(subid, KMF::Info, i18n("Processing: %1", m_currentFile.fileName()));
+      subid = subId();
+      message(subid, KMF::Start, i18n("Processing: %1", m_currentFile.fileName()));
       setMaximum(subid, m_currentFile.size() / 1024);
       m_vobu = m_lastVobu;
     }
@@ -129,8 +130,8 @@ class DVDDirectoryJob : public KMF::Job
   
       if(m_lastLine != Vobu && m_lastLine != Processing)
       {
-        subid = KMF::PluginInterface::subId(msgId());
-        message(subid, KMF::Info, i18n("Processing: %1", m_currentFile.fileName()));
+        subid = subId();
+        message(subid, KMF::Start, i18n("Processing: %1", m_currentFile.fileName()));
         setMaximum(subid, m_currentFile.size() / 1024);
       }
       m_lastLine = Vobu;
@@ -152,8 +153,8 @@ class DVDDirectoryJob : public KMF::Job
   
       if(m_lastLine != FixingVobu)
       {
-        subid = KMF::PluginInterface::subId(msgId());
-        message(subid, KMF::Info, i18n("Fixing: %1", m_currentFile.fileName()));
+        subid = subId();
+        message(subid, KMF::Start, i18n("Fixing: %1", m_currentFile.fileName()));
         setMaximum(subid, 100);
       }
       m_lastLine = FixingVobu;
@@ -174,6 +175,12 @@ class DVDDirectoryJob : public KMF::Job
     KMF::Tools::cleanFiles(projectDir + "DVD/AUDIO_TS");
     KMF::Tools::cleanFiles(projectDir + "DVD/VIDEO_TS", 
                            QStringList() << "*.VOB" << "*.BUP" << "*.IFO");
+  }
+
+  uint subId()
+  {
+    message(subid, KMF::Done);
+    return KMF::PluginInterface::subId(msgId());
   }
 
 private:
@@ -253,17 +260,16 @@ bool DvdDirectoryObject::make(QString type)
 {
   if(DvdAuthorObject::make(type) == false)
     return false;
-  uint id = KMF::PluginInterface::messageId();
-  interface()->message(id, KMF::Start, i18n(startString));
+  interface()->message(newMsgId(), KMF::Start, i18n(startString));
   if(isUpToDate(type))
   {
-    interface()->message(id, KMF::Info, i18n("DVD Directory is up to date"));
+    interface()->message(msgId(), KMF::Info, i18n("DVD Directory is up to date"));
   } else {
     DVDDirectoryJob *job = new DVDDirectoryJob();
     job->projectDir = interface()->projectDir();
     interface()->addJob(job, KMF::Last);
   }
-  interface()->message(id, KMF::Done, i18n(startString));
+  interface()->message(msgId(), KMF::Done);
   return true;
 }
 

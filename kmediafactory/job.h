@@ -47,7 +47,7 @@ namespace KMF
       QString filter() const;
 
       void failed();
-      bool aborted();
+      bool aborted() const;
 
       virtual void output(const QString& line);
       virtual bool success() const;
@@ -61,7 +61,9 @@ namespace KMF
 
     private:
       class Private;
-      Private *const d;
+      Private* d;
+      // Create d on demand (when executing thread) because of thread issues
+      Private* d_func();
   };
 } // namespace KMF
 

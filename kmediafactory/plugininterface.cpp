@@ -77,19 +77,19 @@ uint KMF::PluginInterface::messageId()
   return ++id;
 }
 
-uint KMF::PluginInterface::subId(uint id)
+uint KMF::PluginInterface::subId(uint parentId)
 {
   QMutexLocker locker(&mutex);
   uint subid = ++id;
-  parents[subid] = id;
+  parents[subid] = parentId;
   return subid;
 }
 
-uint KMF::PluginInterface::parent(uint id)
+uint KMF::PluginInterface::parent(uint subid)
 {
   QMutexLocker locker(&mutex);
-  if (parents.keys().contains(id))
-    return parents[id];
+  if (parents.keys().contains(subid))
+    return parents[subid];
   return 0;
 }
 

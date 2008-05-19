@@ -207,7 +207,7 @@ void OutputPage::message(uint id, KMF::MsgType type, const QString& msg)
   QStandardItem *parent = 0;
   uint parentId = KMF::PluginInterface::parent(id);
 
-  kDebug() << id << type << msg;
+  kDebug() << parentId << id << type << msg;
   if (id == KMF::Root)
     parent = m_model->invisibleRootItem();
   else if (m_items.keys().contains(id))
@@ -218,7 +218,7 @@ void OutputPage::message(uint id, KMF::MsgType type, const QString& msg)
     parent = m_items[KMF::Root];
   else
     parent = m_model->invisibleRootItem();
-  
+
   switch(type)
   {
     case KMF::Start:

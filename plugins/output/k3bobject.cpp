@@ -458,7 +458,7 @@ bool K3bObject::make(QString type)
   if(DvdDirectoryObject::make(type) == false)
     return false;
 
-  interface()->message(msgId(), KMF::Start, i18n(startString));
+  interface()->message(newMsgId(), KMF::Start, i18n(startString));
   K3bProjectJob *job = new K3bProjectJob();
   job->cmd = KStandardDirs::findExe("k3b");
   job->doc = interface()->projectDir() + "dvd.k3b";
