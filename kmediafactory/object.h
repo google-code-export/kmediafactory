@@ -36,6 +36,7 @@ namespace KMF
 
   class KDE_EXPORT Object : public QObject
   {
+      Q_OBJECT
       Q_PROPERTY(QString title READ title WRITE setTitle)
       Q_PROPERTY(QPixmap pixmap READ pixmap)
     public:
@@ -56,6 +57,7 @@ namespace KMF
       Plugin* plugin() const;
       PluginInterface* interface() const;
       QVariant call(const QString& func, QVariantList args = QVariantList());
+      uint msgId();
 
     public slots:
       virtual void clean() {};

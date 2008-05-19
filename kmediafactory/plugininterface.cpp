@@ -19,6 +19,7 @@
 //**************************************************************************
 
 #include "plugininterface.h"
+#include <QMutexLocker>
 
 KMF::MediaObject::MediaObject(QObject* parent) :
   Object(parent)
@@ -64,6 +65,15 @@ KMF::PluginInterface::PluginInterface(QObject *parent) :
 
 KMF::PluginInterface::~PluginInterface()
 {
+}
+
+uint KMF::PluginInterface::messageId()
+{
+  static QMutex mutex;
+  static uint id = 0;
+  QMutexLocker locker(&mutex);
+
+  return ++id;
 }
 
 #include "plugininterface.moc"

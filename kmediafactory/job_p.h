@@ -26,24 +26,53 @@
 // http://api.kde.org/4.0-api/kdelibs-apidocs/threadweaver/html/MainComponents.html
 namespace KMF
 {
+  class Job;
+
   class JobHelper : public QObject
   {
       Q_OBJECT
     public:
-      explicit JobHelper(KMF::Job* parent);
+      explicit JobHelper(Job* parent);
       ~JobHelper();
 
-      void message(KMF::MsgType type, const QString& txt, const QString& submsg = QString());
-      void log(const QString& msg, const QString& txt);
-      void setValue(int value, const QString& txt);
-      void setMaximum(int maximum, const QString& txt);
+      void message(uint id, KMF::MsgType type, const QString& msg = QString());
+      void log(uint id, const QString& msg);
+      void setValue(uint id, int value);
+      void setMaximum(uint id, int maximum);
 
     signals:
-      void newMessage(KMF::MsgType type, const QString& txt, const QString& submsg);
-      void newLogMessage(const QString& msg, const QString& txt);
-      void valueChanged(int value, const QString& txt);
-      void maximumChanged(int maximum, const QString& txt);
+      void newMessage(uint id, KMF::MsgType type, const QString& msg);
+      void newLogMessage(uint id, const QString& msg);
+      void valueChanged(uint id, int value);
+      void maximumChanged(uint id, int maximum);
   };
+
+  class Job::Private : public QObject
+  {
+    Q_OBJECT
+  public:
+    explicit Private(KMF::Job *j);
+  
+    void out();
+    JobHelper* helper();
+
+  public slots:
+    void stdout();
+    void stderr();
+    void finished(int exitCode, QProcess::ExitStatus exitStatus);
+  
+  public:
+    QString log;
+    QString buffer;
+    QRegExp filter;
+    KMF::Job *job;
+    KProcess* proc;
+    bool result;
+    bool aborted;
+    KMF::JobHelper *jobHelper;
+    uint msgid;
+  };
+  
 } // namespace KMF
 
 #endif // KMFJOB_P_H

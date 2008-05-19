@@ -91,11 +91,10 @@ class KMFPluginInterface : public KMF::PluginInterface
 
   public slots:
     void progressDialogDestroyed();
-    virtual void message(KMF::MsgType type, const QString& txt, 
-                         const QString& submsg = QString());
-    virtual void setMaximum(int maximum, const QString& txt);
-    virtual void setValue(int value, const QString& txt);
-    virtual void log(const QString& logtxt, const QString& txt);
+    virtual void message(uint id, KMF::MsgType type, const QString& msg = QString());
+    virtual void setMaximum(uint id, int maximum);
+    virtual void setValue(uint id, int value);
+    virtual void log(uint id, const QString& msg);
 
   private:
     bool m_useMessageBox;

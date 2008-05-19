@@ -42,8 +42,7 @@ public:
 
   void run()
   {
-    t = i18n(startString);
-    message(KMF::Start, t);
+    message(msgId(), KMF::Start, i18n(startString));
   
     QDomDocument doc("");
     doc.appendChild(doc.createProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\""));
@@ -153,10 +152,10 @@ public:
     }
     else
     {
-      message(KMF::Error, t, i18n("Error in saving dvdauthor.xml"));
+      message(msgId(), KMF::Error, i18n("Error in saving dvdauthor.xml"));
     }
   
-    message(KMF::Done, t);
+    message(msgId(), KMF::Done);
   }
 
   QDomElement toElement(const QVariant& element)
@@ -169,8 +168,6 @@ public:
       return doc.documentElement();
     }
   }
-private:
-  QString t;
 };
 
 DvdAuthorObject::DvdAuthorObject(QObject* parent)
@@ -204,14 +201,14 @@ int DvdAuthorObject::timeEstimate() const
 
 bool DvdAuthorObject::make(QString)
 {
-  interface()->message(KMF::Start, i18n(startString));
+  interface()->message(msgId(), KMF::Start, i18n(startString));
   WriteDVDAuthorXMLJob *job = new WriteDVDAuthorXMLJob();
   job->tempObj = interface()->templateObject();
   job->mobs =  interface()->mediaObjects();
   job->title = interface()->title();
   job->projectDir = interface()->projectDir();
   interface()->addJob(job);
-  interface()->message(KMF::Done, i18n(startString));
+  interface()->message(msgId(), KMF::Done);
   return true;
 }
 

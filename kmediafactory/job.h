@@ -35,13 +35,13 @@ namespace KMF
       explicit Job(QObject* parent = 0);
       ~Job();
   
-      KProcess* process(const QString& filter = "",
-                        KProcess::OutputChannelMode mode =
-                            KProcess::SeparateChannels);
-      void message(KMF::MsgType type, const QString& txt, const QString& submsg = QString());
-      void log(const QString& msg, const QString& txt);
-      void setValue(int value, const QString& txt);
-      void setMaximum(int maximum, const QString& txt);
+      KProcess* process(uint id, const QString& filter = "", KProcess::OutputChannelMode mode =
+                        KProcess::SeparateChannels);
+      uint msgId();
+      void message(uint id, KMF::MsgType type, const QString& msg = QString());
+      void log(uint id, const QString& msg);
+      void setValue(uint id, int value);
+      void setMaximum(uint id, int maximum);
 
       void setFilter(const QString& filter);
       QString filter() const;
@@ -54,10 +54,10 @@ namespace KMF
       virtual void requestAbort();
 
     signals:
-      void newMessage(KMF::MsgType type, const QString& txt, const QString& submsg);
-      void newLogMessage(const QString& msg, const QString& txt);
-      void valueChanged(int value, const QString& txt);
-      void maximumChanged(int maximum, const QString& txt);
+      void newMessage(uint id, KMF::MsgType type, const QString& msg);
+      void newLogMessage(uint id, const QString& msg);
+      void valueChanged(uint id, int value);
+      void maximumChanged(uint id, int maximum);
 
     private:
       class Private;

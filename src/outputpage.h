@@ -37,10 +37,10 @@ class OutputPage : public QWidget, public Ui::OutputPage
     OutputPage(QWidget *parent = 0);
     virtual ~OutputPage();
 
-    void message(KMF::MsgType type, const QString& txt, const QString& submsg = QString());
-    void setMaximum(int maximum, const QString& txt);
-    void setValue(int value, const QString& txt);
-    void log(const QString& logtxt, const QString& txt);
+    void message(uint id, KMF::MsgType type, const QString& msg = QString());
+    void setMaximum(uint id, int maximum);
+    void setValue(uint id, int value);
+    void log(uint id, const QString& msg);
 
   public slots:
     void currentPageChanged(KPageWidgetItem*, KPageWidgetItem*);
@@ -58,7 +58,7 @@ class OutputPage : public QWidget, public Ui::OutputPage
   private:
     QMenu m_startPopup;
     QMap<QAction*, QString> m_types;
-    QMap<QString, QStandardItem*> m_items;
+    QMap<uint, QStandardItem*> m_items;
     QString m_type;
     QStandardItemModel* m_model;
 };

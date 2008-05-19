@@ -27,11 +27,15 @@ class KMF::Object::Private
   public:
     Private() : 
       plugin(0), 
-      interface(0) {};
+      interface(0) 
+    {
+      msgid = KMF::PluginInterface::messageId();
+    };
 
     QString title;
     Plugin* plugin;
     PluginInterface* interface;
+    uint msgid;
 };
 
 KMF::Object::Object(QObject* parent) : QObject(parent), d(new Private)
@@ -105,3 +109,10 @@ QVariant KMF::Object::call(const QString& func, QVariantList args)
                             Q_ARG(QVariantList, args));
   return result;
 }
+
+uint KMF::Object::msgId()
+{
+  return d->msgid;
+}
+
+#include "object.moc"
