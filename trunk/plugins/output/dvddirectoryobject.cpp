@@ -58,11 +58,8 @@ class DVDDirectoryJob : public KMF::Job
     message(msgId(), KMF::Start, i18n(startString));
     m_error = false;
     m_lastLine = None;
-    m_first = true;
     m_warning = "";
     m_currentFile.setFile("");
-    // TODO
-    m_points = 1000;
     m_lastVobu = 0;
     m_vobu = 0;
     m_lastSize = 0;
@@ -81,16 +78,10 @@ class DVDDirectoryJob : public KMF::Job
     *dvdauthor << "dvdauthor" << "-x" << "dvdauthor.xml";
     dvdauthor->setWorkingDirectory(projectDir);
     dvdauthor->execute();
-    if(!m_error)
+    if(m_error)
     {
-      // TODO
-      /*
-      if(type == "dummy")
-        static_cast<OutputPlugin*>(plugin())->play();
-      */
-    }
-    else
       clean(projectDir);
+    }
     message(msgId(), KMF::Done);
   }
 
@@ -130,15 +121,6 @@ class DVDDirectoryJob : public KMF::Job
       subid = KMF::PluginInterface::subId(msgId());
       message(subid, KMF::Info, i18n("Processing: %1", m_currentFile.fileName()));
       setMaximum(subid, m_currentFile.size() / 1024);
-      /* TODO
-      if(!m_first)
-      {
-        if(previousFile != m_currentFile.filePath())
-          progress(m_filePoints);
-      }
-      else
-        m_first = false;
-      */
       m_vobu = m_lastVobu;
     }
     else if(line.startsWith("STAT: VOBU"))
@@ -185,15 +167,6 @@ class DVDDirectoryJob : public KMF::Job
     }
     if(m_lastLine != Warning)
       m_warning = "";
-  }
-
-  void progress(int points)
-  {
-    if(points > m_points)
-      points = m_points;
-    m_points -= points;
-    //kDebug() << m_points;
-    //interface()->progress(points);
   }
 
   static void clean(const QString& projectDir)
