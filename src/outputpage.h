@@ -61,6 +61,8 @@ class OutputPage : public QWidget, public Ui::OutputPage
     QMap<uint, QStandardItem*> m_items;
     QString m_type;
     QStandardItemModel* m_model;
+
+    void makeLog();
 };
 
 #endif // OUTPUTPAGE_H

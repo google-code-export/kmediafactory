@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,6 +17,7 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "outputpage.h"
 #include "kmficonview.h"
 #include "kmediafactory.h"
@@ -26,17 +27,19 @@
 #include "kmftoolbutton.h"
 #include "logview.h"
 #include <kmftools.h>
-#include <kcursor.h>
-#include <kpushbutton.h>
-#include <klocale.h>
-#include <kdebug.h>
-#include <kxmlguifactory.h>
-#include <kpagedialog.h>
-#include <QToolButton>
-#include <QTimer>
-#include <QStandardItemModel>
 #include <threadweaver/ThreadWeaver.h>
 #include <KMessageBox>
+#include <KCursor>
+#include <KPushButton>
+#include <KLocale>
+#include <KDebug>
+#include <kxmlguifactory.h>
+#include <KPageDialog>
+#include <QToolButton>
+#include <QFile>
+#include <QTimer>
+#include <QStandardItemModel>
+#include <QTextDocument>
 
 OutputPage::OutputPage(QWidget *parent) :
   QWidget(parent)
@@ -161,8 +164,7 @@ void OutputPage::finished()
 {
   kmfApp->project()->finished();
   m_type = "";
-  // TODO
-  //kmfApp->logger().save(kmfApp->project()->directory() + "kmf_log.html");
+  makeLog();
   showLogPushBtn->setEnabled(true);
   stopPushBtn->setEnabled(false);
   startButton->setEnabled(true);
@@ -263,6 +265,7 @@ void OutputPage::message(uint id, KMF::MsgType type, const QString& msg)
   {
     item = new QStandardItem(KIcon(icon), msg);
     item->setData("dialog-ok", KMFProgressItemDelegate::ResultRole);
+    item->setData(color, KMFProgressItemDelegate::ColorRole);
     parent->appendRow(item);
   
     if (id == KMF::Root)
@@ -303,6 +306,40 @@ void OutputPage::log(uint id, const QString& msg)
   {
     QStandardItem *item = m_items[id];
     item->setData(msg, KMFProgressItemDelegate::LogRole);
+  }
+}
+
+void OutputPage::makeLog()
+{
+  QString s = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n" \
+              "<html><pre style=\"font-size: 9pt;\">";
+  QString tmp;
+
+  foreach (const QStandardItem* item, 
+           m_model->findItems("*", Qt::MatchWildcard | Qt::MatchRecursive)) 
+  {
+    tmp = item->text();
+    QColor color = item->data(KMFProgressItemDelegate::ColorRole).value<QColor>();
+    if(color != QColor("black"))
+      s += QString("<font color=%1>").arg(color.name());
+    s += Qt::escape(tmp);
+    if(color != QColor("black"))
+      s += "</font>";
+    s += "\n";
+
+    tmp = item->data(KMFProgressItemDelegate::LogRole).toString().trimmed();
+    if(!tmp.isEmpty())
+      s += Qt::escape(tmp);
+  }
+  s += "</pre></html>";
+
+  QFile f(kmfApp->project()->directory() + "kmf_log.html");
+  if(f.open(QIODevice::WriteOnly | QIODevice::Truncate))
+  {
+    QTextStream t(&f);
+    t.setCodec("UTF-8");
+    t << s;
+    f.close();
   }
 }
 
