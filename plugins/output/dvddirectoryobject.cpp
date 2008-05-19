@@ -127,7 +127,7 @@ class DVDDirectoryJob : public KMF::Job
       m_lastSize += m_currentFile.size() / 1024;
       m_currentFile.setFile(line.mid(17, line.length() - 20));
   
-      subid = KMF::PluginInterface::messageId();
+      subid = KMF::PluginInterface::subId(msgId());
       message(subid, KMF::Info, i18n("Processing: %1", m_currentFile.fileName()));
       setMaximum(subid, m_currentFile.size() / 1024);
       /* TODO
@@ -147,7 +147,7 @@ class DVDDirectoryJob : public KMF::Job
   
       if(m_lastLine != Vobu && m_lastLine != Processing)
       {
-        subid = KMF::PluginInterface::messageId();
+        subid = KMF::PluginInterface::subId(msgId());
         message(subid, KMF::Info, i18n("Processing: %1", m_currentFile.fileName()));
         setMaximum(subid, m_currentFile.size() / 1024);
       }
@@ -170,7 +170,7 @@ class DVDDirectoryJob : public KMF::Job
   
       if(m_lastLine != FixingVobu)
       {
-        subid = KMF::PluginInterface::messageId();
+        subid = KMF::PluginInterface::subId(msgId());
         message(subid, KMF::Info, i18n("Fixing: %1", m_currentFile.fileName()));
         setMaximum(subid, 100);
       }

@@ -205,12 +205,15 @@ void OutputPage::message(uint id, KMF::MsgType type, const QString& msg)
   KMessageBox::DialogType dlgType = KMessageBox::Information;
   QStandardItem *item = 0;
   QStandardItem *parent = 0;
+  uint parentId = KMF::PluginInterface::parent(id);
 
   kDebug() << id << type << msg;
   if (id == KMF::Root)
     parent = m_model->invisibleRootItem();
   else if (m_items.keys().contains(id))
     parent = m_items[id];
+  else if (parentId != 0 && m_items.keys().contains(parentId))
+    parent = m_items[parentId];
   else if (m_items.keys().contains(KMF::Root))
     parent = m_items[KMF::Root];
   else
