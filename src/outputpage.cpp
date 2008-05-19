@@ -263,8 +263,12 @@ void OutputPage::message(uint id, KMF::MsgType type, const QString& msg)
     if (id == KMF::Root)
     {
       m_items.clear();
+      m_items[id] = item;
     }
-    m_items[id] = item;
+    if (type == KMF::Start)
+    {
+      m_items[id] = item;
+    }
     progressListView->scrollTo(m_model->indexFromItem(item));
     kmfApp->processEvents(QEventLoop::AllEvents);
   }
