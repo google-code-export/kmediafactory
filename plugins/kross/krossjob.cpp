@@ -17,15 +17,15 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 
-#include "krossmediaobject.h"
+#include "krossjob.h"
 
-KrossMediaObject::KrossMediaObject(QObject* parent, Kross::Object::Ptr mediaObject)
- : KMF::MediaObject(parent), m_mediaObject(mediaObject)
+KrossJob::KrossJob(QObject* parent, Kross::Object::Ptr job)
+ : KMF::Job(parent), m_job(job)
 {
 }
 
-KrossMediaObject::~KrossMediaObject()
+KrossJob::~KrossJob()
 {
 }
 
-#include "krossmediaobject.moc"
+#include "krossjob.moc"

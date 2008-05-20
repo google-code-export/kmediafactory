@@ -34,7 +34,20 @@ KrossPluginInterface::~KrossPluginInterface()
 
 QList<KMF::MediaObject*> KrossPluginInterface::mediaObjects()
 {
+  // TODO add slots to mediaobject so this works properly in scripts?
   return m_interface->mediaObjects();
+}
+
+KMF::TemplateObject* KrossPluginInterface::templateObject()
+{
+  // TODO add slots to mediaobject so this works properly in scripts?
+  return m_interface->templateObject();
+}
+
+KMF::OutputObject* KrossPluginInterface::outputObject()
+{
+  // TODO add slots to mediaobject so this works properly in scripts?
+  return m_interface->outputObject();
 }
 
 QString KrossPluginInterface::title()
@@ -81,7 +94,7 @@ bool KrossPluginInterface::addMediaAction(const QString& icon, const QString& te
                                       const QString& shortcut, const QString& name,
                                       Kross::Object::Ptr obj, const QString& method)
 {
-  KrossPlugin* plugin = qobject_cast<KrossPlugin*>(parent());
+  KrossPlugin* plugin = qobject_cast<KrossPlugin*>(QObject::parent());
   QAction* act = new KAction(KIcon(icon), text, plugin->parent());
   act->setShortcut(QKeySequence::fromString(shortcut));
   //kDebug() << "addAction" << name << act;
@@ -95,7 +108,7 @@ bool KrossPluginInterface::addMediaAction(const QString& icon, const QString& te
 
 void KrossPluginInterface::setActionEnabled(const QString& name, bool enabled)
 {
-  KrossPlugin* plugin = qobject_cast<KrossPlugin*>(parent());
+  KrossPlugin* plugin = qobject_cast<KrossPlugin*>(QObject::parent());
   QAction* action = plugin->actionCollection()->action(name);
   if(!action)
     return;
@@ -138,9 +151,47 @@ bool KrossPluginInterface::removeOutputObject(Kross::Object::Ptr oob)
   return false;
 }
 
+void KrossPluginInterface::addJob(Kross::Object::Ptr job, KMF::JobDependency dependency)
+{
+}
+
+void KrossPluginInterface::addJob(Kross::Object::Ptr job, Kross::Object::Ptr dependency)
+{
+}
+
+uint KrossPluginInterface::messageId()
+{
+  return m_interface->messageId();
+}
+
 void KrossPluginInterface::message(uint id, KMF::MsgType type, const QString& msg)
 {
   m_interface->message(id, type, msg);
+}
+
+void KrossPluginInterface::setMaximum(uint id, int maximum)
+{
+  m_interface->setMaximum(id, maximum);
+}
+
+void KrossPluginInterface::setValue(uint id, int value)
+{
+  m_interface->setValue(id, value);
+}
+
+void KrossPluginInterface::log(uint id, const QString& msg)
+{
+  m_interface->log(id, msg);
+}
+
+uint KrossPluginInterface::subId(uint id)
+{
+  return m_interface->subId(id);
+}
+
+uint KrossPluginInterface::parent(uint id)
+{
+  return m_interface->parent(id);
 }
 
 void KrossPluginInterface::addMediaObjectFromXML(const QString& xml)

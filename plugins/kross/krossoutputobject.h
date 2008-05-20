@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2008 by Petri Damsten <damu@iki.fi>
+//   Copyright (C) 2008 Petri Damsten <damu@iki.fi>
 //
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License as published by
@@ -17,15 +17,21 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 
-#include "krossmediaobject.h"
+#ifndef KROSSOUTPUTOBJECT_H
+#define KROSSOUTPUTOBJECT_H
 
-KrossMediaObject::KrossMediaObject(QObject* parent, Kross::Object::Ptr mediaObject)
- : KMF::MediaObject(parent), m_mediaObject(mediaObject)
+#include <kmediafactory/plugininterface.h>
+#include <kross/core/object.h>
+
+class KrossOutputObject : public KMF::OutputObject
 {
-}
+  Q_OBJECT
+  public:
+    KrossOutputObject(QObject *parent, Kross::Object::Ptr outputObject);
+    ~KrossOutputObject();
 
-KrossMediaObject::~KrossMediaObject()
-{
-}
+  private:
+    Kross::Object::Ptr m_outputObject;
+};
 
-#include "krossmediaobject.moc"
+#endif // KROSSOUTPUTOBJECT_H
