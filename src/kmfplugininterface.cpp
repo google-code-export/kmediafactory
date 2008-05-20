@@ -191,7 +191,6 @@ void KMFPluginInterface::addJob(KMF::Job *job, KMF::JobDependency dependency)
     default:
       break;
   }
-  // TODO clear this on start
   m_jobs.append(job);
 
   connect(job, SIGNAL(newMessage(uint, KMF::MsgType, const QString&)), 

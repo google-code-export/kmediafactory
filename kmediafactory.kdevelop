@@ -1,8 +1,8 @@
 <?xml version = '1.0'?>
 <kdevelop>
   <general>
-    <author/>
-    <email/>
+    <author></author>
+    <email></email>
     <version>$VERSION$</version>
     <projectmanagement>KDevCustomProject</projectmanagement>
     <primarylanguage>C++</primarylanguage>
@@ -12,9 +12,10 @@
     <secondaryLanguages>
       <language>C</language>
     </secondaryLanguages>
-    <description/>
-    <defaultencoding/>
+    <description></description>
+    <defaultencoding></defaultencoding>
     <projectname>kmediafactory</projectname>
+    <versioncontrol>kdevsubversion</versioncontrol>
   </general>
   <kdevcustomproject>
     <filelistdirectory>/home/damu/files/code/linux/kmediafactory/debug</filelistdirectory>
@@ -37,7 +38,7 @@
         <envvar value="/usr/share/qt4" name="QTDIR" />
         <envvar value="/usr/lib/kde4/lib/kde4/plugins" name="QT_PLUGIN_PATH" />
       </envvars>
-      <globaldebugarguments/>
+      <globaldebugarguments></globaldebugarguments>
       <globalcwd>/home/damu/Development/src/kmediafactory</globalcwd>
       <useglobalprogram>false</useglobalprogram>
       <autoinstall>false</autoinstall>
@@ -51,14 +52,14 @@
       <abortonerror>true</abortonerror>
       <numberofjobs>3</numberofjobs>
       <dontact>false</dontact>
-      <makebin/>
+      <makebin></makebin>
       <selectedenvironment>default</selectedenvironment>
       <environments>
         <default/>
       </environments>
       <prio>0</prio>
-      <defaulttarget/>
-      <makeoptions/>
+      <defaulttarget></defaulttarget>
+      <makeoptions></makeoptions>
     </make>
     <filetypes>
       <filetype>*.java</filetype>
@@ -79,9 +80,9 @@
     <blacklist/>
     <other>
       <prio>0</prio>
-      <otherbin/>
-      <defaulttarget/>
-      <otheroptions/>
+      <otherbin></otherbin>
+      <defaulttarget></defaulttarget>
+      <otheroptions></otheroptions>
       <selectedenvironment>default</selectedenvironment>
       <environments>
         <default/>
@@ -158,7 +159,7 @@
       <designerpluginpaths/>
     </qt>
     <creategettersetter>
-      <prefixGet/>
+      <prefixGet></prefixGet>
       <prefixSet>set</prefixSet>
       <prefixVariable>m_,_</prefixVariable>
       <parameterName>theValue</parameterName>
@@ -177,8 +178,6 @@
       <group pattern="*.h;*.hxx" name="Header" />
       <group pattern="*.cpp;*.c;*.C;*.cxx" name="Sources" />
       <group pattern="*.ui" name="Qt Designer files" />
-      <hidenonprojectfiles>true</hidenonprojectfiles>
-      <hidenonlocation>false</hidenonlocation>
     </groups>
     <tree>
       <hidepatterns>*.o,*.lo,CVS,*~,cmake*</hidepatterns>
@@ -188,11 +187,11 @@
   <kdevdebugger>
     <general>
       <programargs>file:///home/damu/kmf_test/test.kmf</programargs>
-      <gdbpath/>
-      <dbgshell/>
-      <configGdbScript/>
-      <runShellScript/>
-      <runGdbScript/>
+      <gdbpath></gdbpath>
+      <dbgshell></dbgshell>
+      <configGdbScript></configGdbScript>
+      <runShellScript></runShellScript>
+      <runGdbScript></runGdbScript>
       <breakonloadinglibs>true</breakonloadinglibs>
       <separatetty>false</separatetty>
       <floatingtoolbar>false</floatingtoolbar>
@@ -204,4 +203,16 @@
       <outputradix>10</outputradix>
     </display>
   </kdevdebugger>
+  <ctagspart>
+    <customArguments></customArguments>
+    <customTagfilePath>/home/damu/Development/src/kmediafactory/tags</customTagfilePath>
+    <activeTagsFiles/>
+  </ctagspart>
+  <kdevdocumentation>
+    <projectdoc>
+      <docsystem></docsystem>
+      <docurl></docurl>
+      <usermanualurl></usermanualurl>
+    </projectdoc>
+  </kdevdocumentation>
 </kdevelop>

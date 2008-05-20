@@ -64,10 +64,6 @@ public:
     message(msgId(), KMF::Start, i18n("Copying slideshow originals"));
     KUrl::List files;
   
-    foreach(const Slide& slide, slides)
-    {
-      files.append(slide.picture);
-    }
     KMF::Tools::stripExisting(&files, destDir);
     if(files.count() > 0)
       KIO::copy(files, destDir);
@@ -440,8 +436,25 @@ bool SlideshowObject::prepare(QString type)
     QDir dir(interface()->projectDir("media"));
     QString output = dir.filePath(QString("%1.vob").arg(id()));
     QFileInfo fio(output);
-    // TODO check properly if it is up to date
-    if(!fio.exists())
+
+    bool uptodate = true;
+    if(fio.exists())
+    {
+      foreach(const Slide& slide, m_slides)
+      {
+        QFileInfo fi(slide.picture);
+        if (fi.lastModified() > fio.lastModified())
+        {
+          uptodate = false;
+          break;
+        }
+      }
+    }
+    else
+    {
+      uptodate = false;
+    }
+    if(!uptodate)
     {
       SlideshowJob *job = new SlideshowJob(*this);
       QString mediaDir = interface()->projectDir("media");
