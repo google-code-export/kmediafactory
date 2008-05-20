@@ -140,7 +140,7 @@ void OutputPage::start(QAction* type)
 
 void OutputPage::start()
 {
-  ThreadWeaver::Weaver::instance()->finish();
+  ThreadWeaver::Weaver::instance()->dequeue();
   ThreadWeaver::Weaver::instance()->suspend();
   kmfApp->mainWindow()->enableUi(false);
   showLogPushBtn->setEnabled(false);
@@ -177,6 +177,7 @@ void OutputPage::jobDone(ThreadWeaver::Job *)
 
 void OutputPage::finished()
 {
+  ThreadWeaver::Weaver::instance()->dequeue();
   kmfApp->interface()->clearJobs();
   kmfApp->project()->finished();
   m_type = "";
