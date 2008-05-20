@@ -26,6 +26,10 @@
 #include <kdemacros.h>
 #include <threadweaver/Job.h>
 
+#define CHECK_IF_ABORTED(result) { \
+if (aborted()) { return result; }; \
+}
+
 namespace KMF
 {
   class KDE_EXPORT Job : public ThreadWeaver::Job

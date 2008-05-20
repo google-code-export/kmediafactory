@@ -95,6 +95,7 @@ public:
   
     if(writeSlideshowFile())
     {
+      CHECK_IF_ABORTED();
       KProcess *dvdslideshow = process(msgId(), "INFO: \\d+ bytes of data written");
       *dvdslideshow << dvdslideshowBin;
       if(SlideshowPluginSettings::audioType() == 0)

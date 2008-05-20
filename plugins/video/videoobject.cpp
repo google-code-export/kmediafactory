@@ -71,6 +71,7 @@ public:
     QStringList subtitleFiles = subtitle.file().split(";");
   
     writeSpumuxXml();
+    CHECK_IF_ABORTED();
 
     KProcess *spumux = process(msgId(), "INFO: \\d+ bytes of data written",
                                KProcess::OnlyStderrChannel);

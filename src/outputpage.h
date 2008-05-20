@@ -54,6 +54,7 @@ class OutputPage : public QWidget, public Ui::OutputPage
     void stop();
     void showLog();
     void start(QAction* type);
+    void jobDone(ThreadWeaver::Job *);
 
   private:
     QMenu m_startPopup;

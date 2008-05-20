@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,13 +17,16 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef KMFAPPLICATION_H
 #define KMFAPPLICATION_H
 
 #include "kmfproject.h"
 #include "kmediafactorysettings.h"
-#include <kapplication.h>
-#include <kurl.h>
+#include <kmediafactory/plugin.h>
+#include <kmfplugininterface.h>
+#include <KApplication>
+#include <KUrl>
 #include <QMap>
 
 class KMediaFactory;
@@ -39,6 +42,10 @@ class KMFDbusInterface;
 
 #define kmfApp ((KMFApplication*)qApp)
 #define KMFWINID (kmfApp->mainWidget()->winId())
+#define CHECK_IF_STOPPED(result) { \
+kapp->processEvents(); \
+if (kmfApp->interface()->stopped()) { return result; }; \
+}
 
 class KMFApplication : public KApplication
 {

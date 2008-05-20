@@ -21,10 +21,9 @@
 #ifndef KMFPROJECT_H
 #define KMFPROJECT_H
 
-#include <kmediafactory/plugin.h>
 #include <kmediafactory/plugininterface.h>
-#include "kmficonview.h"
-#include <kurl.h>
+#include <kmficonview.h>
+#include <KUrl>
 #include <QString>
 #include <QDateTime>
 
