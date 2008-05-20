@@ -17,24 +17,25 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 
-#ifndef KROSSJOBOBJECT_H
-#define KROSSJOBOBJECT_H
+#ifndef OBJECTMAPPER_H
+#define OBJECTMAPPER_H
 
-#include <kmediafactory/plugininterface.h>
 #include <kross/core/object.h>
-#include <objectmapper.h>
 
-class KrossJob : public KMF::Job, public ObjectMapper
+class ObjectMapper
 {
-  Q_OBJECT
   public:
-    KrossJob(QObject *parent, Kross::Object::Ptr job);
-    ~KrossJob();
-
-    void run();
+    ObjectMapper(const Kross::Object::Ptr krossObject, QObject* qObject);
+    ~ObjectMapper();
+    
+    template<class T> static T qObject(Kross::Object::Ptr krossObject)
+    {
+      return qobject_cast<T>(m_map[krossObject.data()]);
+    }
 
   private:
-    Kross::Object::Ptr m_job;
+    static QMap<const Kross::Object*, QObject*> m_map;
+    const Kross::Object* m_me;
 };
 
-#endif // KROSSJOBOBJECT_H
+#endif // OBJECTMAPPER_H

@@ -20,11 +20,15 @@
 #include "krossjob.h"
 
 KrossJob::KrossJob(QObject* parent, Kross::Object::Ptr job)
- : KMF::Job(parent), m_job(job)
+ : KMF::Job(parent), ObjectMapper(job, this), m_job(job)
 {
 }
 
 KrossJob::~KrossJob()
+{
+}
+
+void KrossJob::run()
 {
 }
 

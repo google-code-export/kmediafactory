@@ -19,6 +19,8 @@
 
 #include "krossplugininterface.h"
 #include "krossplugin.h"
+#include "krossjob.h"
+#include "objectmapper.h"
 #include <KDebug>
 #include <KAction>
 #include <KActionCollection>
@@ -91,8 +93,8 @@ int KrossPluginInterface::serial()
 }
 
 bool KrossPluginInterface::addMediaAction(const QString& icon, const QString& text,
-                                      const QString& shortcut, const QString& name,
-                                      Kross::Object::Ptr obj, const QString& method)
+                                          const QString& shortcut, const QString& name,
+                                          Kross::Object::Ptr obj, const QString& method)
 {
   KrossPlugin* plugin = qobject_cast<KrossPlugin*>(QObject::parent());
   QAction* act = new KAction(KIcon(icon), text, plugin->parent());
@@ -157,6 +159,8 @@ void KrossPluginInterface::addJob(Kross::Object::Ptr job, KMF::JobDependency dep
 
 void KrossPluginInterface::addJob(Kross::Object::Ptr job, Kross::Object::Ptr dependency)
 {
+  KrossJob* depJob = ObjectMapper::qObject<KrossJob*>(dependency);
+  m_interface->addJob(new KrossJob(this, job), depJob);
 }
 
 uint KrossPluginInterface::messageId()
