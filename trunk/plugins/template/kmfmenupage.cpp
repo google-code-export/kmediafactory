@@ -84,16 +84,19 @@ public:
       message(msgId(), KMF::Error, i18n("Could not paint menu."));
       return;
     }
+    CHECK_IF_ABORTED();
     if(writeSpumuxXml() == false)
     {
       message(msgId(), KMF::Error, i18n("Could not write spumux xml file."));
       return;
     }
+    CHECK_IF_ABORTED();
     if(saveImages() == false)
     {
       message(msgId(), KMF::Error, i18n("Could not save images."));
       return;
     }
+    CHECK_IF_ABORTED();
     if(makeMpeg() == false)
     {
       message(msgId(), KMF::Error, i18n("Could not make mpeg file."));

@@ -48,6 +48,7 @@ public:
   {
     message(msgId(), KMF::Start, i18n(startString));
     saveDocument(KUrl(doc));
+    CHECK_IF_ABORTED();
     if (!cmd.isEmpty())
     {
       cmd += " " + doc;

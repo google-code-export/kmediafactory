@@ -52,6 +52,8 @@ OutputPage::OutputPage(QWidget *parent) :
   connect(&m_startPopup, SIGNAL(triggered(QAction*)),
            this, SLOT(start(QAction*)));
   connect(ThreadWeaver::Weaver::instance(), SIGNAL(finished()), this, SLOT(finished()));
+  connect(ThreadWeaver::Weaver::instance(), SIGNAL(jobDone(ThreadWeaver::Job *)), 
+          this, SLOT(jobDone(ThreadWeaver::Job *)));
   m_model = new QStandardItemModel();
   progressListView->setModel(m_model);
   progressListView->setItemDelegate(new KMFProgressItemDelegate());
@@ -122,9 +124,9 @@ void OutputPage::showLog()
 void OutputPage::stop()
 {
   stopPushBtn->setEnabled(false);
-  // TODO stop threads
-  kmfApp->interface()->setStopped(true);
   kmfApp->interface()->message(KMF::Root, KMF::Error, i18n("User cancelled."));
+  kmfApp->interface()->setStopped(true);
+  ThreadWeaver::Weaver::instance()->requestAbort();
 }
 
 void OutputPage::start(QAction* type)
@@ -138,7 +140,7 @@ void OutputPage::start(QAction* type)
 
 void OutputPage::start()
 {
-  // TODO check if running ?
+  ThreadWeaver::Weaver::instance()->finish();
   ThreadWeaver::Weaver::instance()->suspend();
   kmfApp->mainWindow()->enableUi(false);
   showLogPushBtn->setEnabled(false);
@@ -146,22 +148,36 @@ void OutputPage::start()
   startButton->setEnabled(false);
   kmfApp->interface()->setUseMessageBox(false);
   kmfApp->interface()->setStopped(false);
+  kmfApp->interface()->clearJobs();
   m_items.clear();
   m_model->clear();
-  // TODO
-  //progressBar->setRange(0, kmfApp->project()->timeEstimate());
+  progressBar->setRange(0, 0);
   progressBar->setValue(0);
   message(KMF::Root, KMF::Info, i18n("Preparing files..."));
   if (kmfApp->project()->prepare(m_type))
   {
+    int jobs = kmfApp->interface()->jobCount();
+    progressBar->setRange(0, jobs + 1);
+    progressBar->setValue(1);
     // Run jobs
     message(KMF::Root, KMF::Info, i18n("Making files..."));
     ThreadWeaver::Weaver::instance()->resume();
   }
+  else
+  {
+    finished();
+  }
+}
+
+void OutputPage::jobDone(ThreadWeaver::Job *)
+{
+  CHECK_IF_STOPPED();
+  progressBar->setValue(progressBar->value() + 1);
 }
 
 void OutputPage::finished()
 {
+  kmfApp->interface()->clearJobs();
   kmfApp->project()->finished();
   m_type = "";
   makeLog();
@@ -202,6 +218,7 @@ void OutputPage::currentPageChanged(KPageWidgetItem* current, KPageWidgetItem*)
 
 void OutputPage::message(uint id, KMF::MsgType type, const QString& msg)
 {
+  CHECK_IF_STOPPED();
   QString icon;
   QColor color;
   KMessageBox::DialogType dlgType = KMessageBox::Information;

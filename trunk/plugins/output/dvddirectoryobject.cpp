@@ -71,8 +71,10 @@ class DVDDirectoryJob : public KMF::Job
       m_filePoints = m_points / count;
     else
       m_filePoints = 0;
+    CHECK_IF_ABORTED();
   
     clean(projectDir);
+    CHECK_IF_ABORTED();
   
     KProcess *dvdauthor = process(msgId());
     *dvdauthor << "dvdauthor" << "-x" << "dvdauthor.xml";

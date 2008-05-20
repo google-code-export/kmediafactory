@@ -313,11 +313,17 @@ bool KMFProject::prepare(const QString& type)
       result = false;
       break;
     }
+    CHECK_IF_STOPPED(false);
   }
   if(result && !m_template->make(type))
     result = false;
+
+  CHECK_IF_STOPPED(false);
+
   if(result && !m_output->make(type))
     result = false;
+
+  CHECK_IF_STOPPED(false);
 
   m_subType = type;
   return true;

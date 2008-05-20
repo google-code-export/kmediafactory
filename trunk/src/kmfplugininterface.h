@@ -77,6 +77,10 @@ class KMFPluginInterface : public KMF::PluginInterface
     void setUseMessageBox(bool useMessageBox) { m_useMessageBox = useMessageBox; };
     bool useMessageBox() const { return m_useMessageBox; };
     void setStopped(bool stopped) { m_stopped = stopped; };
+    bool stopped() const { return m_stopped; };
+
+    uint jobCount() const { return m_jobs.count(); };
+    void clearJobs() { return m_jobs.clear(); };
 
     // Plugin helpers
     virtual QStringList getOpenFileNames(const QString &startDir,

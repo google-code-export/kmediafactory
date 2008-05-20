@@ -106,6 +106,7 @@ public:
     if(menus.hasChildNodes())
       vmgm.appendChild(menus);
     root.appendChild(vmgm);
+    CHECK_IF_ABORTED();
   
     i=1;
     foreach(KMF::MediaObject *mob, mobs)
@@ -140,6 +141,7 @@ public:
       }
       root.appendChild(titleset);
       ++i;
+      CHECK_IF_ABORTED();
     }
   
     QFile file(projectDir + "dvdauthor.xml");
