@@ -151,13 +151,12 @@ void OutputPage::start()
   kmfApp->interface()->clearJobs();
   m_items.clear();
   m_model->clear();
-  progressBar->setRange(0, 0);
   progressBar->setValue(0);
   message(KMF::Root, KMF::Info, i18n("Preparing files..."));
   if (kmfApp->project()->prepare(m_type))
   {
     int jobs = kmfApp->interface()->jobCount();
-    progressBar->setRange(0, jobs + 1);
+    progressBar->setMaximum(jobs + 1);
     progressBar->setValue(1);
     // Run jobs
     message(KMF::Root, KMF::Info, i18n("Making files..."));

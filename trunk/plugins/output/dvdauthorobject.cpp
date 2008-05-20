@@ -201,7 +201,7 @@ int DvdAuthorObject::timeEstimate() const
   return TotalPoints;
 }
 
-bool DvdAuthorObject::make(QString)
+bool DvdAuthorObject::prepare(QString)
 {
   interface()->message(msgId(), KMF::Start, i18n(startString));
   WriteDVDAuthorXMLJob *job = new WriteDVDAuthorXMLJob();

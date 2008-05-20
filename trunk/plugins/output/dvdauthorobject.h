@@ -37,7 +37,7 @@ class DvdAuthorObject : public KMF::OutputObject
     virtual QPixmap pixmap() const;
     virtual void actions(QList<QAction*>* actionList) const;
     virtual int timeEstimate() const;
-    virtual bool make(QString type);
+    virtual bool prepare(QString type);
 
   public slots:
     virtual void clean() { };

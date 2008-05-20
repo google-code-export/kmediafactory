@@ -425,7 +425,7 @@ void SlideshowObject::actions(QList<QAction*>* actionList) const
   actionList->append(m_slideshowProperties);
 }
 
-bool SlideshowObject::make(QString type)
+bool SlideshowObject::prepare(QString type)
 {
   interface()->message(msgId(), KMF::Start, i18n("Slideshow: %1", title()));
   m_type = type;

@@ -190,7 +190,7 @@ int TemplateObject::timeEstimate() const
   return KMFMenu::TotalPoints;
 }
 
-bool TemplateObject::make(QString type)
+bool TemplateObject::prepare(QString type)
 {
   m_type = type;
   return m_menu.makeMenu();
