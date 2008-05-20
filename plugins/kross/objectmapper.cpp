@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2008 Petri Damsten <damu@iki.fi>
+//   Copyright (C) 2008 by Petri Damsten <damu@iki.fi>
 //
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License as published by
@@ -17,24 +17,18 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 
-#ifndef KROSSJOBOBJECT_H
-#define KROSSJOBOBJECT_H
+#include "objectmapper.h"
 
-#include <kmediafactory/plugininterface.h>
-#include <kross/core/object.h>
-#include <objectmapper.h>
+QMap<const Kross::Object*, QObject*> ObjectMapper::m_map;
 
-class KrossJob : public KMF::Job, public ObjectMapper
+ObjectMapper::ObjectMapper(const Kross::Object::Ptr krossObject, QObject* qObject)
 {
-  Q_OBJECT
-  public:
-    KrossJob(QObject *parent, Kross::Object::Ptr job);
-    ~KrossJob();
+  m_map[krossObject.data()] = qObject;
+  m_me = krossObject.data();
+}
 
-    void run();
+ObjectMapper::~ObjectMapper()
+{
+  m_map.remove(m_me);
+}
 
-  private:
-    Kross::Object::Ptr m_job;
-};
-
-#endif // KROSSJOBOBJECT_H

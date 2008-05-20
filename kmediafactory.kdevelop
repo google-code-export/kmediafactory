@@ -62,19 +62,9 @@
       <makeoptions></makeoptions>
     </make>
     <filetypes>
-      <filetype>*.java</filetype>
       <filetype>*.h</filetype>
-      <filetype>*.H</filetype>
-      <filetype>*.hh</filetype>
-      <filetype>*.hxx</filetype>
-      <filetype>*.hpp</filetype>
       <filetype>*.c</filetype>
-      <filetype>*.C</filetype>
-      <filetype>*.cc</filetype>
       <filetype>*.cpp</filetype>
-      <filetype>*.c++</filetype>
-      <filetype>*.cxx</filetype>
-      <filetype>Makefile</filetype>
       <filetype>CMakeLists.txt</filetype>
     </filetypes>
     <blacklist/>
@@ -178,6 +168,8 @@
       <group pattern="*.h;*.hxx" name="Header" />
       <group pattern="*.cpp;*.c;*.C;*.cxx" name="Sources" />
       <group pattern="*.ui" name="Qt Designer files" />
+      <hidenonprojectfiles>true</hidenonprojectfiles>
+      <hidenonlocation>false</hidenonlocation>
     </groups>
     <tree>
       <hidepatterns>*.o,*.lo,CVS,*~,cmake*</hidepatterns>
