@@ -50,7 +50,7 @@ class SlideshowObject : public KMF::MediaObject
     SlideshowObject(QObject* parent);
     virtual ~SlideshowObject();
     virtual QPixmap pixmap() const;
-    virtual bool make(QString type);
+    virtual bool prepare(QString type);
     virtual int timeEstimate() const;
     virtual void actions(QList<QAction*>*) const;
     virtual QImage preview(int chapter = MainPreview) const;

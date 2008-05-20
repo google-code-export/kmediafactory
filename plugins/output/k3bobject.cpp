@@ -454,9 +454,9 @@ int K3bObject::timeEstimate() const
   return DvdDirectoryObject::timeEstimate() + TotalPoints;
 }
 
-bool K3bObject::make(QString type)
+bool K3bObject::prepare(QString type)
 {
-  if(DvdDirectoryObject::make(type) == false)
+  if(DvdDirectoryObject::prepare(type) == false)
     return false;
 
   interface()->message(newMsgId(), KMF::Start, i18n(startString));

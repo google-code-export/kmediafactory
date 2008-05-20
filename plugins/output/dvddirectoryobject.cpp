@@ -258,9 +258,9 @@ bool DvdDirectoryObject::isUpToDate(QString type)
   return true;
 }
 
-bool DvdDirectoryObject::make(QString type)
+bool DvdDirectoryObject::prepare(QString type)
 {
-  if(DvdAuthorObject::make(type) == false)
+  if(DvdAuthorObject::prepare(type) == false)
     return false;
   interface()->message(newMsgId(), KMF::Start, i18n(startString));
   if(isUpToDate(type))

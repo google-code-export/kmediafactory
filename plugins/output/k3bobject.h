@@ -42,7 +42,7 @@ class K3bObject : public DvdDirectoryObject
     virtual QPixmap pixmap() const;
     virtual void actions(QList<QAction*>* actionList) const;
     virtual int timeEstimate() const;
-    virtual bool make(QString type);
+    virtual bool prepare(QString type);
 
   private:
     bool saveDocument(const KUrl& url);

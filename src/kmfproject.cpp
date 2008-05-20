@@ -304,24 +304,22 @@ bool KMFProject::prepare(const QString& type)
   if(!validProject())
     return false;
 
-  bool result = true;
-
   foreach(KMF::MediaObject *obj, m_list.list())
   {
-    if(!obj->make(type))
+    if(!obj->prepare(type))
     {
-      result = false;
+      return false;
       break;
     }
     CHECK_IF_STOPPED(false);
   }
-  if(result && !m_template->make(type))
-    result = false;
+  if (!m_template->prepare(type))
+    return false;
 
   CHECK_IF_STOPPED(false);
 
-  if(result && !m_output->make(type))
-    result = false;
+  if (!m_output->prepare(type))
+    return false;
 
   CHECK_IF_STOPPED(false);
 

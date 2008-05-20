@@ -47,8 +47,7 @@ namespace KMF
       virtual bool fromXML(const QDomElement&);
       virtual QPixmap pixmap() const = 0;
       virtual void actions(QList<QAction*>*) const;
-      // TODO rename to prepare
-      virtual bool make(QString);
+      virtual bool prepare(QString);
       virtual void finished();
       virtual QMap<QString, QString> subTypes() const;
 

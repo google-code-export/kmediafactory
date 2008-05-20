@@ -585,7 +585,7 @@ QString VideoObject::videoFileFind(int index, VideoFilePrefix prefixStart) const
   return m_files[index];
 }
 
-bool VideoObject::make(QString type)
+bool VideoObject::prepare(QString type)
 {
   interface()->message(msgId(), KMF::Start, i18n("Video: %1", title()));
   QString fileName;

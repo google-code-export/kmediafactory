@@ -60,7 +60,7 @@ void KMF::Object::actions(QList<QAction*>*) const
 {
 }
 
-bool KMF::Object::make(QString) 
+bool KMF::Object::prepare(QString) 
 { 
   return false; 
 }
