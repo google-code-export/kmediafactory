@@ -33,11 +33,13 @@ class KrossPluginInterface : public QObject
 
   public slots:
     QList<KMF::MediaObject*> mediaObjects();
+    KMF::TemplateObject* templateObject();
+    KMF::OutputObject* outputObject();
     QString title();
     void setTitle(QString title);
     QString projectDir(const QString& subDir = "");
-    void setDirty(KMF::DirtyType type);
     QString projectType();
+    void setDirty(KMF::DirtyType type);
     QString lastSubType();
     QDateTime lastModified(KMF::DirtyType type);
     int serial();
@@ -55,7 +57,17 @@ class KrossPluginInterface : public QObject
     void setTemplateFromXML(const QString& xml);
     void setOutputFromXML(const QString& xml);
 
-    void message(uint id, KMF::MsgType type, const QString& msg);
+    void addJob(Kross::Object::Ptr job, KMF::JobDependency dependency = KMF::None);
+    void addJob(Kross::Object::Ptr job, Kross::Object::Ptr dependency);
+
+    uint messageId();
+    void message(uint id, KMF::MsgType type, const QString& msg = QString());
+    void setMaximum(uint id, int maximum);
+    void setValue(uint id, int value);
+    void log(uint id, const QString& msg);
+    // sub id hack
+    uint subId(uint id);
+    uint parent(uint id);
 
     // Plugin helpers
     QStringList getOpenFileNames(const QString &startDir, const QString &filter, 

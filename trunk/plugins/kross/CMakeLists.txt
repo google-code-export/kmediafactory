@@ -9,6 +9,9 @@ set(kmediafactory_plugin_kross_SRCS
   krossplugin.cpp
   krossplugininterface.cpp
   krossmediaobject.cpp
+  krosstemplateobject.cpp
+  krossoutputobject.cpp
+  krossjob.cpp
 )
 
 kde4_add_plugin(kmediafactory_plugin_kross ${kmediafactory_plugin_kross_SRCS})

@@ -21,13 +21,17 @@
 #define KROSSMEDIAOBJECT_H
 
 #include <kmediafactory/plugininterface.h>
+#include <kross/core/object.h>
 
 class KrossMediaObject : public KMF::MediaObject
 {
   Q_OBJECT
   public:
-    KrossMediaObject(QObject *parent);
+    KrossMediaObject(QObject *parent, Kross::Object::Ptr mediaObject);
     ~KrossMediaObject();
+
+  private:
+    Kross::Object::Ptr m_mediaObject;
 };
 
 #endif // KROSSMEDIAOBJECT_H

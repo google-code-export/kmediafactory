@@ -17,15 +17,16 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 
-#include "krossmediaobject.h"
+#include "krosstemplateobject.h"
 
-KrossMediaObject::KrossMediaObject(QObject* parent, Kross::Object::Ptr mediaObject)
- : KMF::MediaObject(parent), m_mediaObject(mediaObject)
+KrossTemplateObject::KrossTemplateObject(QObject* parent, Kross::Object::Ptr templateObject)
+ : KMF::TemplateObject(parent), m_templateObject(templateObject)
 {
 }
 
-KrossMediaObject::~KrossMediaObject()
+KrossTemplateObject::~KrossTemplateObject()
 {
 }
 
-#include "krossmediaobject.moc"
+#include "krosstemplateobject.moc"
+
