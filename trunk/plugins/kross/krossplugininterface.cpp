@@ -95,9 +95,9 @@ int KrossPluginInterface::serial()
   return m_interface->serial();
 }
 
-bool KrossPluginInterface::addMediaAction(const QString& icon, const QString& text,
-                                          const QString& shortcut, const QString& name,
-                                          Kross::Object::Ptr obj, const QString& method)
+QString  KrossPluginInterface::newAction(const QString& name, const QString& icon, 
+                                         const QString& text, const QString& shortcut, 
+                                         Kross::Object::Ptr obj, const QString& method)
 {
   KrossPlugin* plugin = qobject_cast<KrossPlugin*>(QObject::parent());
   QAction* act = new KAction(KIcon(icon), text, plugin->parent());
@@ -108,6 +108,13 @@ bool KrossPluginInterface::addMediaAction(const QString& icon, const QString& te
   QVariant arg;
   arg.setValue(obj);
   plugin->actionMap()->insert(act, QVariantList() << arg << method);
+  return name;
+}
+
+bool KrossPluginInterface::addMediaAction(const QString& name)
+{
+  KrossPlugin* plugin = qobject_cast<KrossPlugin*>(QObject::parent());
+  QAction* act = plugin->actionCollection()->action(name);
   return m_interface->addMediaAction(act);
 }
 

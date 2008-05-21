@@ -20,6 +20,7 @@
 
 #include "dvdauthorobject.h"
 #include "outputplugin.h"
+#include <kmftools.h>
 #include <kmediafactory/job.h>
 #include <KMimeType>
 #include <KIconLoader>
@@ -147,12 +148,13 @@ public:
 
   QDomElement toElement(const QVariant& element)
   {
-    if (element.canConvert<QDomElement>()) {
+    if (element.canConvert<QDomElement>()) 
+    {
       return element.value<QDomElement>();
-    } else {
-      QDomDocument doc;
-      doc.setContent(element.toString());
-      return doc.documentElement();
+    } 
+    else 
+    {
+      return KMF::Tools::string2xmlElement(element.toString());
     }
   }
 };
@@ -186,7 +188,7 @@ int DvdAuthorObject::timeEstimate() const
   return TotalPoints;
 }
 
-bool DvdAuthorObject::prepare(QString)
+bool DvdAuthorObject::prepare(const QString&)
 {
   interface()->message(msgId(), KMF::Start, i18n(startString));
   WriteDVDAuthorXMLJob *job = new WriteDVDAuthorXMLJob();
