@@ -35,7 +35,7 @@ class KrossMediaObject : public KMF::MediaObject, public ObjectMapper
     virtual bool fromXML(const QDomElement&);
     virtual QPixmap pixmap() const;
     virtual void actions(QList<QAction*>*) const;
-    virtual bool prepare(QString);
+    virtual bool prepare(const QString&);
     virtual void finished();
     virtual QMap<QString, QString> subTypes() const;
 

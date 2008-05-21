@@ -258,7 +258,7 @@ bool DvdDirectoryObject::isUpToDate(QString type)
   return true;
 }
 
-bool DvdDirectoryObject::prepare(QString type)
+bool DvdDirectoryObject::prepare(const QString& type)
 {
   if(DvdAuthorObject::prepare(type) == false)
     return false;

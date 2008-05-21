@@ -60,7 +60,7 @@ void KMF::Object::actions(QList<QAction*>*) const
 {
 }
 
-bool KMF::Object::prepare(QString) 
+bool KMF::Object::prepare(const QString&) 
 { 
   return false; 
 }
@@ -74,7 +74,7 @@ QMap<QString, QString> KMF::Object::subTypes() const
   return QMap<QString, QString>(); 
 }
 
-const QString& KMF::Object::title() const 
+QString KMF::Object::title() const 
 { 
   return d->title; 
 }

@@ -66,6 +66,7 @@
       <filetype>*.c</filetype>
       <filetype>*.cpp</filetype>
       <filetype>CMakeLists.txt</filetype>
+      <filetype>*.desktop</filetype>
     </filetypes>
     <blacklist/>
     <other>

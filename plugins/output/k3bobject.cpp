@@ -454,7 +454,7 @@ int K3bObject::timeEstimate() const
   return DvdDirectoryObject::timeEstimate() + TotalPoints;
 }
 
-bool K3bObject::prepare(QString type)
+bool K3bObject::prepare(const QString& type)
 {
   if(DvdDirectoryObject::prepare(type) == false)
     return false;

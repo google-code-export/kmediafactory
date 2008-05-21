@@ -40,7 +40,7 @@ class DvdDirectoryObject : public DvdAuthorObject
     virtual QPixmap pixmap() const;
     virtual void actions(QList<QAction*>* actionList) const;
     virtual int timeEstimate() const;
-    virtual bool prepare(QString type);
+    virtual bool prepare(const QString& type);
 
   private slots:
     virtual void clean();

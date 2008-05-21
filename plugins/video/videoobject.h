@@ -61,7 +61,7 @@ class VideoObject : public KMF::MediaObject
     virtual ~VideoObject();
     virtual void toXML(QDomElement* element) const;
     virtual bool fromXML(const QDomElement& element);
-    virtual bool prepare(QString type);
+    virtual bool prepare(const QString& type);
     virtual QMap<QString, QString> subTypes() const;
     virtual int timeEstimate() const;
     virtual QPixmap pixmap() const;

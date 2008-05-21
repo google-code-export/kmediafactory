@@ -37,6 +37,7 @@
 #include <QItemSelection>
 #include <QStringListModel>
 #include <QPainter>
+#include <QDomElement>
 #include <sys/stat.h>
 #include <errno.h>
 #include <fontconfig/fontconfig.h>
@@ -595,4 +596,43 @@ void KMF::Tools::cleanFiles(const QString& d, const QStringList& files)
   }
 }
 
+QPixmap KMF::Tools::variantList2Pixmap(QVariant v)
+{
+  QByteArray a;
+  foreach (const QVariant& var, v.toList())
+  {
+    a.append(var.toString()[0].cell());
+  }
+  return QPixmap(a);
+}
 
+bool KMF::Tools::saveString2File(const QString& file, const QString& string, bool showFailed)
+{
+}
+
+QString KMF::Tools::xmlElement2String(const QDomElement& elem)
+{
+  QString s;
+  QTextStream ts(&s);
+
+  elem.save(ts, 1);
+  return s;
+}
+
+QDomElement KMF::Tools::string2xmlElement(const QString& s)
+{
+  QDomDocument doc;
+  doc.setContent(s);
+  return doc.documentElement();
+}
+
+QMap<QString, QString> KMF::Tools::variantMap2stringMap(const QMap<QString, QVariant>& map)
+{
+  QMap<QString, QString> result;
+  
+  foreach (const QString& key, map.keys()) 
+  {
+    result[key] = map[key].toString();
+  }
+  return result;
+}

@@ -48,7 +48,7 @@ void KrossMediaObject::actions(QList< QAction * > *) const
 {
 }
 
-bool KrossMediaObject::prepare(QString )
+bool KrossMediaObject::prepare(const QString& type)
 {
 }
 

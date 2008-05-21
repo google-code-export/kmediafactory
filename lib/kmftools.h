@@ -83,6 +83,13 @@ namespace KMF
       static void spy(QObject* obj);
       static uint frames(const QString &type);
       static void cleanFiles(const QString& dir, const QStringList& files = QStringList());
+      
+      static QPixmap variantList2Pixmap(QVariant v);
+      static bool saveString2File(const QString& file, const QString& string, 
+                                  bool showFailed = true);
+      static QString xmlElement2String(const QDomElement& elem);
+      static QDomElement string2xmlElement(const QString& elem);
+      static QMap<QString, QString> variantMap2stringMap(const QMap<QString, QVariant>& map);
   };
 }
 

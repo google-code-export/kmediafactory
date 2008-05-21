@@ -43,9 +43,10 @@ class KrossPluginInterface : public QObject
     QString lastSubType();
     QDateTime lastModified(KMF::DirtyType type);
     int serial();
-    bool addMediaAction(const QString& icon, const QString& text,
-                        const QString& shortcut, const QString& name,
-                        Kross::Object::Ptr obj, const QString& method);
+    QString newAction(const QString& name, const QString& icon, 
+                      const QString& text, const QString& shortcut,
+                      Kross::Object::Ptr obj, const QString& method);
+    bool addMediaAction(const QString& name);
     void setActionEnabled(const QString& name, bool enabled);
     bool addMediaObject(Kross::Object::Ptr media);
     bool addTemplateObject(Kross::Object::Ptr tob);

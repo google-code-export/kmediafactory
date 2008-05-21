@@ -36,12 +36,14 @@ class KrossOutputObject : public KMF::OutputObject, public ObjectMapper
     virtual bool fromXML(const QDomElement&);
     virtual QPixmap pixmap() const;
     virtual void actions(QList<QAction*>*) const;
-    virtual bool prepare(QString);
+    virtual bool prepare(const QString&);
     virtual void finished();
     virtual QMap<QString, QString> subTypes() const;
+    virtual QString title() const;
+    virtual void clean();
 
   private:
-    Kross::Object::Ptr m_object;
+    mutable Kross::Object::Ptr m_object;
 };
 
 #endif // KROSSOUTPUTOBJECT_H

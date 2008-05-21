@@ -18,6 +18,10 @@
 //**************************************************************************
 
 #include "krossoutputobject.h"
+#include "krossplugin.h"
+#include <kmftools.h>
+#include <KActionCollection>
+#include <QTextStream>
 
 KrossOutputObject::KrossOutputObject(QObject* parent, Kross::Object::Ptr object)
  : KMF::OutputObject(parent), ObjectMapper(object, this), m_object(object)
@@ -30,33 +34,59 @@ KrossOutputObject::~KrossOutputObject()
 
 QVariant KrossOutputObject::call(const QString & func, QVariantList args)
 {
+  return m_object->callMethod(func, args);
 }
 
-void KrossOutputObject::toXML(QDomElement *) const
+void KrossOutputObject::toXML(QDomElement *elem) const
 {
+  elem->appendChild(KMF::Tools::string2xmlElement(m_object->callMethod("toXML").toString()));
 }
 
-bool KrossOutputObject::fromXML(const QDomElement &)
+bool KrossOutputObject::fromXML(const QDomElement &elem)
 {
+  return m_object->callMethod("fromXML", QVariantList() <<
+         KMF::Tools::xmlElement2String(elem)).toBool();
 }
 
 QPixmap KrossOutputObject::pixmap() const
 {
+  return KMF::Tools::variantList2Pixmap(m_object->callMethod("pixmap"));
 }
 
-void KrossOutputObject::actions(QList< QAction * > *) const
+void KrossOutputObject::actions(QList<QAction*>* actions) const
 {
+  QStringList acts = m_object->callMethod("actions").toStringList();
+  KrossPlugin* p = qobject_cast<KrossPlugin*>(plugin());
+  foreach (const QString& act, acts)
+  {
+    QAction* a = p->actionCollection()->action(act);
+    actions->append(a);
+  }
 }
 
-bool KrossOutputObject::prepare(QString )
+bool KrossOutputObject::prepare(const QString& type)
 {
+  return m_object->callMethod("prepare", QVariantList() << type).toBool();
 }
 
 void KrossOutputObject::finished()
 {
+  m_object->callMethod("finished");
 }
 
-QMap< QString, QString > KrossOutputObject::subTypes() const
+QMap<QString, QString> KrossOutputObject::subTypes() const
 {
+  return KMF::Tools::variantMap2stringMap(m_object->callMethod("subTypes").toMap());
 }
+
+QString KrossOutputObject::title() const
+{
+  return m_object->callMethod("title").toString();
+}
+
+void KrossOutputObject::clean()
+{
+  m_object->callMethod("clean");
+}
+
 #include "krossoutputobject.moc"

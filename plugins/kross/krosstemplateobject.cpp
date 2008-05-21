@@ -48,7 +48,7 @@ void KrossTemplateObject::actions(QList< QAction * > *) const
 {
 }
 
-bool KrossTemplateObject::prepare(QString )
+bool KrossTemplateObject::prepare(const QString& )
 {
 }
 

@@ -49,11 +49,11 @@ namespace KMF
       virtual bool fromXML(const QDomElement&);
       virtual QPixmap pixmap() const = 0;
       virtual void actions(QList<QAction*>*) const;
-      virtual bool prepare(QString);
+      virtual bool prepare(const QString&);
       virtual void finished();
       virtual QMap<QString, QString> subTypes() const;
+      virtual QString title() const;
 
-      const QString& title() const;
       void setTitle(const QString& title);
       Plugin* plugin() const;
       PluginInterface* interface() const;

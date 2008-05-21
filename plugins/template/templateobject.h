@@ -54,7 +54,7 @@ class TemplateObject : public KMF::TemplateObject
     virtual void toXML(QDomElement* element) const;
     virtual bool fromXML(const QDomElement& element);
     virtual int timeEstimate() const;
-    virtual bool prepare(QString type);
+    virtual bool prepare(const QString& type);
     virtual QPixmap pixmap() const;
     virtual QStringList menus();
     virtual QImage preview(const QString& menu = "");

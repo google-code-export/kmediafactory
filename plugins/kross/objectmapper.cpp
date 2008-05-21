@@ -23,6 +23,7 @@ QMap<const Kross::Object*, QObject*> ObjectMapper::m_map;
 
 ObjectMapper::ObjectMapper(const Kross::Object::Ptr krossObject, QObject* qObject)
 {
+  // TODO does not work krossObject.data() points to a new class at every call
   m_map[krossObject.data()] = qObject;
   m_me = krossObject.data();
 }
