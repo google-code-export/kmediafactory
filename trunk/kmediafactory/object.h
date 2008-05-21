@@ -43,6 +43,8 @@ namespace KMF
       explicit Object(QObject* parent);
       ~Object();
 
+      virtual QVariant call(const QString& func, QVariantList args = QVariantList());
+
       virtual void toXML(QDomElement*) const;
       virtual bool fromXML(const QDomElement&);
       virtual QPixmap pixmap() const = 0;
@@ -55,12 +57,11 @@ namespace KMF
       void setTitle(const QString& title);
       Plugin* plugin() const;
       PluginInterface* interface() const;
-      QVariant call(const QString& func, QVariantList args = QVariantList());
       uint msgId();
       uint newMsgId();
 
     public slots:
-      virtual void clean() {};
+      virtual void clean();
 
     private:
       class Private;

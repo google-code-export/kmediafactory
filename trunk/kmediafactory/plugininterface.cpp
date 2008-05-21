@@ -39,6 +39,21 @@ KMF::TemplateObject::~TemplateObject()
 {
 }
 
+QImage KMF::TemplateObject::preview(const QString&)
+{ 
+  return QImage(); 
+}
+
+QStringList KMF::TemplateObject::menus() 
+{ 
+  return QStringList(); 
+}
+
+bool KMF::TemplateObject::clicked() 
+{ 
+  return false; 
+}
+
 KMF::OutputObject::OutputObject(QObject *parent) :
   Object(parent)
 {

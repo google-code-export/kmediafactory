@@ -19,8 +19,8 @@
 
 #include "krossoutputobject.h"
 
-KrossOutputObject::KrossOutputObject(QObject* parent, Kross::Object::Ptr outputObject)
- : KMF::OutputObject(parent), m_outputObject(outputObject)
+KrossOutputObject::KrossOutputObject(QObject* parent, Kross::Object::Ptr object)
+ : KMF::OutputObject(parent), ObjectMapper(object, this), m_object(object)
 {
 }
 
@@ -28,4 +28,35 @@ KrossOutputObject::~KrossOutputObject()
 {
 }
 
+QVariant KrossOutputObject::call(const QString & func, QVariantList args)
+{
+}
+
+void KrossOutputObject::toXML(QDomElement *) const
+{
+}
+
+bool KrossOutputObject::fromXML(const QDomElement &)
+{
+}
+
+QPixmap KrossOutputObject::pixmap() const
+{
+}
+
+void KrossOutputObject::actions(QList< QAction * > *) const
+{
+}
+
+bool KrossOutputObject::prepare(QString )
+{
+}
+
+void KrossOutputObject::finished()
+{
+}
+
+QMap< QString, QString > KrossOutputObject::subTypes() const
+{
+}
 #include "krossoutputobject.moc"

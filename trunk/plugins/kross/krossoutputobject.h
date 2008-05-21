@@ -22,16 +22,26 @@
 
 #include <kmediafactory/plugininterface.h>
 #include <kross/core/object.h>
+#include "objectmapper.h"
 
-class KrossOutputObject : public KMF::OutputObject
+class KrossOutputObject : public KMF::OutputObject, public ObjectMapper
 {
   Q_OBJECT
   public:
     KrossOutputObject(QObject *parent, Kross::Object::Ptr outputObject);
     ~KrossOutputObject();
 
+    virtual QVariant call(const QString& func, QVariantList args = QVariantList());
+    virtual void toXML(QDomElement*) const;
+    virtual bool fromXML(const QDomElement&);
+    virtual QPixmap pixmap() const;
+    virtual void actions(QList<QAction*>*) const;
+    virtual bool prepare(QString);
+    virtual void finished();
+    virtual QMap<QString, QString> subTypes() const;
+
   private:
-    Kross::Object::Ptr m_outputObject;
+    Kross::Object::Ptr m_object;
 };
 
 #endif // KROSSOUTPUTOBJECT_H

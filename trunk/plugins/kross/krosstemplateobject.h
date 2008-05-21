@@ -22,16 +22,30 @@
 
 #include <kmediafactory/plugininterface.h>
 #include <kross/core/object.h>
+#include "objectmapper.h"
 
-class KrossTemplateObject : public KMF::TemplateObject
+class KrossTemplateObject : public KMF::TemplateObject, public ObjectMapper
 {
   Q_OBJECT
   public:
     KrossTemplateObject(QObject *parent, Kross::Object::Ptr templateObject);
     ~KrossTemplateObject();
 
+    virtual QVariant call(const QString& func, QVariantList args = QVariantList());
+    virtual void toXML(QDomElement*) const;
+    virtual bool fromXML(const QDomElement&);
+    virtual QPixmap pixmap() const;
+    virtual void actions(QList<QAction*>*) const;
+    virtual bool prepare(QString);
+    virtual void finished();
+    virtual QMap<QString, QString> subTypes() const;
+
+    virtual QImage preview(const QString& = "");
+    virtual QStringList menus();
+    virtual bool clicked();
+
   private:
-    Kross::Object::Ptr m_templateObject;
+    Kross::Object::Ptr m_object;
 };
 
 #endif // KROSSTEMPLATEOBJECT_H

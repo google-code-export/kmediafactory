@@ -120,4 +120,8 @@ uint KMF::Object::newMsgId()
   return (d->msgid = KMF::PluginInterface::messageId());
 }
 
+void KMF::Object::clean() 
+{
+}
+
 #include "object.moc"

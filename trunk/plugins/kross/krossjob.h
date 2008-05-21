@@ -22,7 +22,7 @@
 
 #include <kmediafactory/plugininterface.h>
 #include <kross/core/object.h>
-#include <objectmapper.h>
+#include "objectmapper.h"
 
 class KrossJob : public KMF::Job, public ObjectMapper
 {
@@ -31,7 +31,7 @@ class KrossJob : public KMF::Job, public ObjectMapper
     KrossJob(QObject *parent, Kross::Object::Ptr job);
     ~KrossJob();
 
-    void run();
+    virtual void run();
 
   private:
     Kross::Object::Ptr m_job;

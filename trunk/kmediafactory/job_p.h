@@ -23,11 +23,11 @@
 
 #include "kmediafactory.h"
 
-// http://api.kde.org/4.0-api/kdelibs-apidocs/threadweaver/html/MainComponents.html
 namespace KMF
 {
   class Job;
 
+  // http://api.kde.org/4.0-api/kdelibs-apidocs/threadweaver/html/MainComponents.html
   class JobHelper : public QObject
   {
       Q_OBJECT
