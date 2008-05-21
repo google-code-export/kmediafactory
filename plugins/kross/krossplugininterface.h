@@ -47,10 +47,10 @@ class KrossPluginInterface : public QObject
                         const QString& shortcut, const QString& name,
                         Kross::Object::Ptr obj, const QString& method);
     void setActionEnabled(const QString& name, bool enabled);
-    bool addMediaObject(Kross::Object::Ptr media) const;
+    bool addMediaObject(Kross::Object::Ptr media);
     bool addTemplateObject(Kross::Object::Ptr tob);
     bool addOutputObject(Kross::Object::Ptr oob);
-    bool removeMediaObject(Kross::Object::Ptr media) const;
+    bool removeMediaObject(Kross::Object::Ptr media);
     bool removeTemplateObject(Kross::Object::Ptr tob);
     bool removeOutputObject(Kross::Object::Ptr oob);
     void addMediaObjectFromXML(const QString& xml);

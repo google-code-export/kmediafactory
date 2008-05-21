@@ -19,12 +19,56 @@
 
 #include "krosstemplateobject.h"
 
-KrossTemplateObject::KrossTemplateObject(QObject* parent, Kross::Object::Ptr templateObject)
- : KMF::TemplateObject(parent), m_templateObject(templateObject)
+KrossTemplateObject::KrossTemplateObject(QObject* parent, Kross::Object::Ptr object)
+ : KMF::TemplateObject(parent), ObjectMapper(object, this), m_object(object)
 {
 }
 
 KrossTemplateObject::~KrossTemplateObject()
+{
+}
+
+QVariant KrossTemplateObject::call(const QString & func, QVariantList args)
+{
+}
+
+void KrossTemplateObject::toXML(QDomElement *) const
+{
+}
+
+bool KrossTemplateObject::fromXML(const QDomElement &)
+{
+}
+
+QPixmap KrossTemplateObject::pixmap() const
+{
+}
+
+void KrossTemplateObject::actions(QList< QAction * > *) const
+{
+}
+
+bool KrossTemplateObject::prepare(QString )
+{
+}
+
+void KrossTemplateObject::finished()
+{
+}
+
+QMap< QString, QString > KrossTemplateObject::subTypes() const
+{
+}
+
+QImage KrossTemplateObject::preview(const QString &)
+{
+}
+
+QStringList KrossTemplateObject::menus()
+{
+}
+
+bool KrossTemplateObject::clicked()
 {
 }
 

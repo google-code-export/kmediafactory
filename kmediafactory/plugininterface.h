@@ -65,10 +65,9 @@ namespace KMF
       explicit TemplateObject(QObject* parent);
       ~TemplateObject();
 
-      virtual QImage preview(const QString& = "")
-          { return QImage(); };
-      virtual QStringList menus() { return QStringList(); };
-      virtual bool clicked() { return false; };
+      virtual QImage preview(const QString& = "");
+      virtual QStringList menus();
+      virtual bool clicked();
   };
 
   class KDE_EXPORT ProgressDialog : public QObject

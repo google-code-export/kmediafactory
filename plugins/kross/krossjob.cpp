@@ -30,6 +30,9 @@ KrossJob::~KrossJob()
 
 void KrossJob::run()
 {
+  if (m_job) {
+    m_job->callMethod("run", QVariantList() << this);
+  }
 }
 
 #include "krossjob.moc"

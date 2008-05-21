@@ -19,12 +19,68 @@
 
 #include "krossmediaobject.h"
 
-KrossMediaObject::KrossMediaObject(QObject* parent, Kross::Object::Ptr mediaObject)
- : KMF::MediaObject(parent), m_mediaObject(mediaObject)
+KrossMediaObject::KrossMediaObject(QObject* parent, Kross::Object::Ptr object)
+ : KMF::MediaObject(parent), ObjectMapper(object, this), m_object(object)
 {
 }
 
 KrossMediaObject::~KrossMediaObject()
+{
+}
+
+QVariant KrossMediaObject::call(const QString & func, QVariantList args)
+{
+}
+
+void KrossMediaObject::toXML(QDomElement *) const
+{
+}
+
+bool KrossMediaObject::fromXML(const QDomElement &)
+{
+}
+
+QPixmap KrossMediaObject::pixmap() const
+{
+}
+
+void KrossMediaObject::actions(QList< QAction * > *) const
+{
+}
+
+bool KrossMediaObject::prepare(QString )
+{
+}
+
+void KrossMediaObject::finished()
+{
+}
+
+QMap< QString, QString > KrossMediaObject::subTypes() const
+{
+}
+
+QImage KrossMediaObject::preview(int chapter) const
+{
+}
+
+QString KrossMediaObject::text(int chapter) const
+{
+}
+
+int KrossMediaObject::chapters() const
+{
+}
+
+uint64_t KrossMediaObject::size() const
+{
+}
+
+QTime KrossMediaObject::duration() const
+{
+}
+
+QTime KrossMediaObject::chapterTime(int chapter) const
 {
 }
 

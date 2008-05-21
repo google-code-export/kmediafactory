@@ -20,6 +20,9 @@
 #include "krossplugininterface.h"
 #include "krossplugin.h"
 #include "krossjob.h"
+#include "krossmediaobject.h"
+#include "krosstemplateobject.h"
+#include "krossoutputobject.h"
 #include "objectmapper.h"
 #include <KDebug>
 #include <KAction>
@@ -117,44 +120,42 @@ void KrossPluginInterface::setActionEnabled(const QString& name, bool enabled)
   action->setEnabled(enabled);
 }
 
-bool KrossPluginInterface::addMediaObject(Kross::Object::Ptr media) const
+bool KrossPluginInterface::addMediaObject(Kross::Object::Ptr media)
 {
-  Q_UNUSED(media)
-  return false;
+  return m_interface->addMediaObject(new KrossMediaObject(this, media));
 }
 
 bool KrossPluginInterface::addTemplateObject(Kross::Object::Ptr tob)
 {
-  Q_UNUSED(tob)
-  return false;
+  return m_interface->addTemplateObject(new KrossTemplateObject(this, tob));
 }
 
 bool KrossPluginInterface::addOutputObject(Kross::Object::Ptr oob)
 {
-  Q_UNUSED(oob)
-  return false;
+  return m_interface->addOutputObject(new KrossOutputObject(this, oob));
 }
 
-bool KrossPluginInterface::removeMediaObject(Kross::Object::Ptr media) const
+bool KrossPluginInterface::removeMediaObject(Kross::Object::Ptr media)
 {
-  Q_UNUSED(media)
-  return false;
+  KrossMediaObject* obj = ObjectMapper::qObject<KrossMediaObject*>(media);
+  return m_interface->removeMediaObject(obj);
 }
 
 bool KrossPluginInterface::removeTemplateObject(Kross::Object::Ptr tob)
 {
-  Q_UNUSED(tob)
-  return false;
+  KrossTemplateObject* obj = ObjectMapper::qObject<KrossTemplateObject*>(tob);
+  return m_interface->removeTemplateObject(obj);
 }
 
 bool KrossPluginInterface::removeOutputObject(Kross::Object::Ptr oob)
 {
-  Q_UNUSED(oob)
-  return false;
+  KrossOutputObject* obj = ObjectMapper::qObject<KrossOutputObject*>(oob);
+  return m_interface->removeOutputObject(obj);
 }
 
 void KrossPluginInterface::addJob(Kross::Object::Ptr job, KMF::JobDependency dependency)
 {
+  m_interface->addJob(new KrossJob(this, job), dependency);
 }
 
 void KrossPluginInterface::addJob(Kross::Object::Ptr job, Kross::Object::Ptr dependency)

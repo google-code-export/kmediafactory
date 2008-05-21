@@ -39,23 +39,24 @@ namespace KMF
       explicit Job(QObject* parent = 0);
       ~Job();
   
+      virtual void output(const QString& line);
+      virtual bool success() const;
+      virtual void requestAbort();
       KProcess* process(uint id, const QString& filter = "", KProcess::OutputChannelMode mode =
                         KProcess::SeparateChannels);
+      void setFilter(const QString& filter);
+      QString filter() const;
+
+    // Declaring these as slots helps kross plugin
+    public slots:
       uint msgId();
       void message(uint id, KMF::MsgType type, const QString& msg = QString());
       void log(uint id, const QString& msg);
       void setValue(uint id, int value);
       void setMaximum(uint id, int maximum);
 
-      void setFilter(const QString& filter);
-      QString filter() const;
-
       void failed();
       bool aborted() const;
-
-      virtual void output(const QString& line);
-      virtual bool success() const;
-      virtual void requestAbort();
 
     signals:
       void newMessage(uint id, KMF::MsgType type, const QString& msg);
