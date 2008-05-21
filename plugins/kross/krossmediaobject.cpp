@@ -18,6 +18,8 @@
 //**************************************************************************
 
 #include "krossmediaobject.h"
+#include "krossplugin.h"
+#include <kmftools.h>
 
 KrossMediaObject::KrossMediaObject(QObject* parent, Kross::Object::Ptr object)
  : KMF::MediaObject(parent), ObjectMapper(object, this), m_object(object)
@@ -30,34 +32,54 @@ KrossMediaObject::~KrossMediaObject()
 
 QVariant KrossMediaObject::call(const QString & func, QVariantList args)
 {
+  return m_object->callMethod(func, args);
 }
 
-void KrossMediaObject::toXML(QDomElement *) const
+void KrossMediaObject::toXML(QDomElement *elem) const
 {
+  elem->appendChild(KMF::Tools::string2xmlElement(m_object->callMethod("toXML").toString()));
 }
 
-bool KrossMediaObject::fromXML(const QDomElement &)
+bool KrossMediaObject::fromXML(const QDomElement &elem)
 {
+  return m_object->callMethod("fromXML", QVariantList() <<
+         KMF::Tools::xmlElement2String(elem)).toBool();
 }
 
 QPixmap KrossMediaObject::pixmap() const
 {
+  return KMF::Tools::variantList2Pixmap(m_object->callMethod("pixmap"));
 }
 
-void KrossMediaObject::actions(QList< QAction * > *) const
+void KrossMediaObject::actions(QList<QAction*>* actions) const
 {
+  KrossPlugin* p = qobject_cast<KrossPlugin*>(plugin());
+  p->addActions(actions, m_object->callMethod("actions").toStringList());
 }
 
 bool KrossMediaObject::prepare(const QString& type)
 {
+  return m_object->callMethod("prepare", QVariantList() << type).toBool();
 }
 
 void KrossMediaObject::finished()
 {
+  m_object->callMethod("finished");
 }
 
-QMap< QString, QString > KrossMediaObject::subTypes() const
+QMap<QString, QString> KrossMediaObject::subTypes() const
 {
+  return KMF::Tools::variantMap2stringMap(m_object->callMethod("subTypes").toMap());
+}
+
+QString KrossMediaObject::title() const
+{
+  return m_object->callMethod("title").toString();
+}
+
+void KrossMediaObject::clean()
+{
+  m_object->callMethod("clean");
 }
 
 QImage KrossMediaObject::preview(int chapter) const

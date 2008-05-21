@@ -39,13 +39,17 @@ class KrossTemplateObject : public KMF::TemplateObject, public ObjectMapper
     virtual bool prepare(const QString&);
     virtual void finished();
     virtual QMap<QString, QString> subTypes() const;
+    virtual QString title() const;
 
     virtual QImage preview(const QString& = "");
     virtual QStringList menus();
     virtual bool clicked();
 
+  public slots:
+    virtual void clean();
+
   private:
-    Kross::Object::Ptr m_object;
+    mutable Kross::Object::Ptr m_object;
 };
 
 #endif // KROSSTEMPLATEOBJECT_H
