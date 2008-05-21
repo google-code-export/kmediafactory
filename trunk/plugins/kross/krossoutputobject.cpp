@@ -55,13 +55,8 @@ QPixmap KrossOutputObject::pixmap() const
 
 void KrossOutputObject::actions(QList<QAction*>* actions) const
 {
-  QStringList acts = m_object->callMethod("actions").toStringList();
   KrossPlugin* p = qobject_cast<KrossPlugin*>(plugin());
-  foreach (const QString& act, acts)
-  {
-    QAction* a = p->actionCollection()->action(act);
-    actions->append(a);
-  }
+  p->addActions(actions, m_object->callMethod("actions").toStringList());
 }
 
 bool KrossOutputObject::prepare(const QString& type)

@@ -23,6 +23,7 @@
 #include <KDebug>
 #include <KStandardDirs>
 #include <KMessageBox>
+#include <KActionCollection>
 #include <QTimer>
 #include <kross/core/action.h>
 #include <kross/core/interpreter.h>
@@ -108,6 +109,15 @@ void KrossPlugin::actionTriggered()
   if (args.size() == 2) {
     Kross::Object::Ptr obj = args[0].value< Kross::Object::Ptr >();
     obj->callMethod(args[1].toString());
+  }
+}
+
+void KrossPlugin::addActions(QList<QAction*>* actionList, QStringList actions)
+{
+  foreach (const QString& act, actions)
+  {
+    QAction* a = actionCollection()->action(act);
+    actionList->append(a);
   }
 }
 

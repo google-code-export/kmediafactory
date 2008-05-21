@@ -53,6 +53,7 @@ class KrossPlugin : public KMF::Plugin
     virtual KMF::MediaObject* createMediaObject(const QDomElement&);
     virtual const KMF::ConfigPage* configPage() const;
     QMap<QObject*, QVariantList>* actionMap() { return &m_actionMap; };
+    void addActions(QList<QAction*>* actionList, QStringList actions);
 
   public slots: // script functions
     void registerPlugin(Kross::Object::Ptr plugin);

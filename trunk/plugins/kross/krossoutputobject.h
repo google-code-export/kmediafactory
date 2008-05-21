@@ -40,6 +40,8 @@ class KrossOutputObject : public KMF::OutputObject, public ObjectMapper
     virtual void finished();
     virtual QMap<QString, QString> subTypes() const;
     virtual QString title() const;
+
+  public slots:
     virtual void clean();
 
   private:

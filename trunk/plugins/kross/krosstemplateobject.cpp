@@ -18,6 +18,8 @@
 //**************************************************************************
 
 #include "krosstemplateobject.h"
+#include "krossplugin.h"
+#include <kmftools.h>
 
 KrossTemplateObject::KrossTemplateObject(QObject* parent, Kross::Object::Ptr object)
  : KMF::TemplateObject(parent), ObjectMapper(object, this), m_object(object)
@@ -30,34 +32,54 @@ KrossTemplateObject::~KrossTemplateObject()
 
 QVariant KrossTemplateObject::call(const QString & func, QVariantList args)
 {
+  return m_object->callMethod(func, args);
 }
 
-void KrossTemplateObject::toXML(QDomElement *) const
+void KrossTemplateObject::toXML(QDomElement *elem) const
 {
+  elem->appendChild(KMF::Tools::string2xmlElement(m_object->callMethod("toXML").toString()));
 }
 
-bool KrossTemplateObject::fromXML(const QDomElement &)
+bool KrossTemplateObject::fromXML(const QDomElement &elem)
 {
+  return m_object->callMethod("fromXML", QVariantList() <<
+         KMF::Tools::xmlElement2String(elem)).toBool();
 }
 
 QPixmap KrossTemplateObject::pixmap() const
 {
+  return KMF::Tools::variantList2Pixmap(m_object->callMethod("pixmap"));
 }
 
-void KrossTemplateObject::actions(QList< QAction * > *) const
+void KrossTemplateObject::actions(QList<QAction*>* actions) const
 {
+  KrossPlugin* p = qobject_cast<KrossPlugin*>(plugin());
+  p->addActions(actions, m_object->callMethod("actions").toStringList());
 }
 
-bool KrossTemplateObject::prepare(const QString& )
+bool KrossTemplateObject::prepare(const QString& type)
 {
+  return m_object->callMethod("prepare", QVariantList() << type).toBool();
 }
 
 void KrossTemplateObject::finished()
 {
+  m_object->callMethod("finished");
 }
 
-QMap< QString, QString > KrossTemplateObject::subTypes() const
+QMap<QString, QString> KrossTemplateObject::subTypes() const
 {
+  return KMF::Tools::variantMap2stringMap(m_object->callMethod("subTypes").toMap());
+}
+
+QString KrossTemplateObject::title() const
+{
+  return m_object->callMethod("title").toString();
+}
+
+void KrossTemplateObject::clean()
+{
+  m_object->callMethod("clean");
 }
 
 QImage KrossTemplateObject::preview(const QString &)

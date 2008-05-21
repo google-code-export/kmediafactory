@@ -38,6 +38,7 @@ class KrossMediaObject : public KMF::MediaObject, public ObjectMapper
     virtual bool prepare(const QString&);
     virtual void finished();
     virtual QMap<QString, QString> subTypes() const;
+    virtual QString title() const;
 
     virtual QImage preview(int chapter = KMF::MediaObject::MainPreview) const;
     virtual QString text(int chapter = KMF::MediaObject::MainTitle) const;
@@ -46,8 +47,11 @@ class KrossMediaObject : public KMF::MediaObject, public ObjectMapper
     virtual QTime duration() const;
     virtual QTime chapterTime(int chapter) const;
 
+  public slots:
+    virtual void clean();
+
   private:
-    Kross::Object::Ptr m_object;
+    mutable Kross::Object::Ptr m_object;
 };
 
 #endif // KROSSMEDIAOBJECT_H
