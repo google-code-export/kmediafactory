@@ -349,7 +349,7 @@ QVariant TemplateObject::directPlay(QVariantList args)
 QVariant TemplateObject::continueToNextTitle(QVariantList args)
 {
   Q_UNUSED(args);
-  return property("%KMFMenuPage%", "continue_to_next_title");
+  return (property("%KMFMenuPage%", "continue_to_next_title") == 1);
 }
 
 QVariant TemplateObject::language(QVariantList args)

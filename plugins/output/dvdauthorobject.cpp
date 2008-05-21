@@ -116,29 +116,14 @@ public:
       root.appendChild(doc.createTextNode("\n "));
       
       QDomElement titleset = doc.createElement("titleset");
-      QDomElement menus = toElement(tempObj->call("writeDvdAuthorXml", QVariantList() << i));
+
+      menus = toElement(tempObj->call("writeDvdAuthorXml", QVariantList() << i));
       titleset.appendChild(menus);
+
       QDomElement titles = toElement(mob->call("writeDvdAuthorXml", 
-          QVariantList() << tempObj->call("language")));
+          QVariantList() << tempObj->call("language") << i));
+
       titleset.appendChild(titles);
-  
-      if (titles.elementsByTagName("post").count() == 0) {
-        QString postString;
-        if(i < mobs.count() && tempObj->call("continueToNextTitle").toInt() == 1)
-        {
-          postString = QString(" g3 = %1 ; ").arg(i+1);
-        }
-        postString += " call vmgm menu 1 ; ";
-        QDomElement post = doc.createElement("post");
-        QDomText text = doc.createTextNode(postString);
-        post.appendChild(text);
-        QDomNodeList pgcList = titles.elementsByTagName("pgc");
-        if (pgcList.count() > 0) 
-        {
-          QDomElement pgc = pgcList.at(0).toElement();
-          pgc.appendChild(post);
-        }
-      }
       root.appendChild(titleset);
       ++i;
       CHECK_IF_ABORTED();

@@ -425,6 +425,7 @@ QVariant VideoObject::writeDvdAuthorXml(QVariantList args) const
 {
   QDomDocument doc;
   QString preferredLanguage = args[0].toString();
+  int titleset = args[1].toInt();
 
   QDir dir(interface()->projectDir("media"));
   int audioTrack = 0; // First audio track
@@ -537,6 +538,20 @@ QVariant VideoObject::writeDvdAuthorXml(QVariantList args) const
     vob.appendChild(c);
     //kDebug() << "Cell: " << start << ", " << end;
   }
+
+  QString postString;
+  int mobCount = interface()->mediaObjects().count();
+  if(titleset < mobCount && 
+     interface()->templateObject()->call("continueToNextTitle").toBool())
+  {
+    postString = QString(" g3 = %1 ; ").arg(titleset + 1);
+  }
+  postString += " call vmgm menu 1 ; ";
+  QDomElement post = doc.createElement("post");
+  text = doc.createTextNode(postString);
+  post.appendChild(text);
+  pgc.appendChild(post);
+
   titles.appendChild(pgc);
   
   QVariant result;
