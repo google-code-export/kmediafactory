@@ -23,6 +23,7 @@
 
 #include <kmediafactory/object.h>
 #include "kmflistmodel.h"
+#include <KLocale>
 
 template <class T>
 class KMFObjectListModel : public KMFListModel<T>

@@ -24,7 +24,6 @@
 #include "templatepage.h"
 #include "outputpage.h"
 #include "kmfplugininterface.h"
-#include "kmficonview.h"
 #include "projectoptions.h"
 #include "kmfproject.h"
 #include "kmfoptions.h"

@@ -21,7 +21,6 @@
 #include "mediapage.h"
 #include "kmediafactory.h"
 #include "kmfapplication.h"
-#include "kmficonview.h"
 #include "sizewidget.h"
 #include <kmftools.h>
 #include <KXMLGUIFactory>

@@ -13,7 +13,6 @@ set(kmediafactory_SRCS
 	kmediafactory.cpp
 	kmfproject.cpp
 	projectoptions.cpp
-	kmficonview.cpp
 	logview.cpp
 	kmfprogressitemdelegate.cpp
 	kmfdbusinterface.cpp
