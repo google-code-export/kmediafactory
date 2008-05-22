@@ -236,13 +236,7 @@ public:
     doc.appendChild(root);
 
     // Write spumux xml
-    QFile file(menuDir + objectName() + ".xml");
-    if (!file.open(QIODevice::WriteOnly))
-      return false;
-    QTextStream s(&file);
-    doc.save(s, 1);
-    file.close();
-    return true;
+    return KMF::Tools::saveString2File(menuDir + objectName() + ".xml", doc.toString(), false);
   }
 
   bool saveImages()

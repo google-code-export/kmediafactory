@@ -132,14 +132,7 @@ public:
     doc.appendChild(root);
 
     // Write spumux xml
-    QString s;
-    QFile file(subtitleXmlFile);
-    if (file.open(QIODevice::WriteOnly))
-    {
-      QTextStream stream(&file);
-      doc.save(stream, 1);
-      file.close();
-    }
+    KMF::Tools::saveString2File(subtitleXmlFile, doc.toString(), false);
   }
 
   void output(const QString& line)
