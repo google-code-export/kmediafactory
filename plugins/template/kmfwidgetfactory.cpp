@@ -26,7 +26,7 @@
 #include "kmfbutton.h"
 #include "kmflayout.h"
 #include "templateobject.h"
-#include <kdebug.h>
+#include <KDebug>
 #include <QRegExp>
 #include <QVariant>
 

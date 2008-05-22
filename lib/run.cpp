@@ -17,11 +17,12 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "run.h"
-#include <kdebug.h>
-#include <kshell.h>
-#include <kapplication.h>
-#include <kstandarddirs.h>
+#include <KDebug>
+#include <KShell>
+#include <KApplication>
+#include <KStandardDirs>
 #include <QStringList>
 #include <QFileInfo>
 #include <QWidget>

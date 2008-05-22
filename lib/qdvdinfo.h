@@ -18,7 +18,7 @@
 #define QDVDINFO_H
 
 #include "config.h"
-#include <klocale.h>
+#include <KLocale>
 #include <QDateTime>
 #include <QString>
 #include <QStringList>

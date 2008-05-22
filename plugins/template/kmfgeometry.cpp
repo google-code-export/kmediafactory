@@ -20,9 +20,9 @@
 
 #include "kmfgeometry.h"
 #include "kmfwidget.h"
-#include <kdebug.h>
-#include <qstring.h>
-#include <qregexp.h>
+#include <KDebug>
+#include <QString>
+#include <QRegExp>
 
 QSize KMFUnit::m_maxSize = QSize(0, 0);
 

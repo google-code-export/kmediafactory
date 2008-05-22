@@ -21,9 +21,9 @@
 #include "kmfmenu.h"
 #include "kmfmenupage.h"
 #include <kstore/KoStore.h>
-#include <kio/netaccess.h>
-#include <kdebug.h>
-#include <kstandarddirs.h>
+#include <KIO/NetAccess>
+#include <KDebug>
+#include <KStandardDirs>
 #include <QVariant>
 #include <QApplication>
 #include <QPainter>

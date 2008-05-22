@@ -17,17 +17,15 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef CHAPTERS_H
 #define CHAPTERS_H
 
+#include "ui_chapters.h"
 #include <kmf_stddef.h>
-#include <ui_chapters.h>
 #include <videooptions.h>
 #include <kmftime.h>
 
-/**
-@author Petri Damsten
-*/
 class CellListModel;
 
 class Chapters : public KDialog, public Ui::Chapters

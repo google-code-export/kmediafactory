@@ -21,12 +21,12 @@
 #ifndef KMFKMFTOOLS_H
 #define KMFKMFTOOLS_H
 
-#include <qstring.h>
-#include <qsize.h>
-#include <stdint.h>
-#include <kurl.h>
+#include <KUrl>
+#include <QString>
+#include <QSize>
 #include <QModelIndex>
 #include <QStringList>
+#include <stdint.h>
 
 class KXMLGUIClient;
 class QStringList;

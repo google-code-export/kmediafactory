@@ -17,19 +17,19 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "kmfproject.h"
 #include "kmfapplication.h"
 #include "kmediafactorysettings.h"
 #include <kmftools.h>
-#include <kmessagebox.h>
-#include <kio/netaccess.h>
-#include <kio/job.h>
-#include <klocale.h>
-#include <ksavefile.h>
-#include <kstandarddirs.h>
-#include <kdebug.h>
-#include <ksavefile.h>
-#include <ktemporaryfile.h>
+#include <KMessageBox>
+#include <KIO/NetAccess>
+#include <KIO/Job>
+#include <KLocale>
+#include <KSaveFile>
+#include <KStandardDirs>
+#include <KDebug>
+#include <KTemporaryFile>
 #include <QDir>
 #include <QDomElement>
 

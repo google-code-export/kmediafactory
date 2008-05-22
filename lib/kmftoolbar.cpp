@@ -19,7 +19,7 @@
 //**************************************************************************
 #include "kmftoolbar.h"
 #include <kicontheme.h>
-#include <kdebug.h>
+#include <KDebug>
 #include <QToolButton>
 #include <QAction>
 #include <QScrollBar>

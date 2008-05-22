@@ -17,13 +17,14 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "kmftemplatebase.h"
 #include "templateobject.h"
 #include "kmfmenu.h"
 #include "kmfmenupage.h"
 #include <kmediafactory/plugininterface.h>
 #include <kmediafactory/plugin.h>
-#include <qregexp.h>
+#include <QRegExp>
 
 KMFTemplateBase::KMFTemplateBase(QObject *parent) :
   QObject(parent), m_interface(0)

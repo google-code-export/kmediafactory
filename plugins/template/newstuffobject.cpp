@@ -22,10 +22,10 @@
 #include "templateobject.h"
 #include "templateplugin.h"
 #include "templatepluginsettings.h"
-#include <klocale.h>
+#include <KLocale>
 #include <knewstuff2/engine.h>
-#include <kapplication.h>
-#include <kiconloader.h>
+#include <KApplication>
+#include <KIconLoader>
 
 NewStuffObject::NewStuffObject(QObject* parent):
   KMF::TemplateObject(parent), m_newstuff(0)

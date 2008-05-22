@@ -52,8 +52,7 @@ Cambridge, MA 02111-1307, USA.  */
 #include "kmfintl.h"
 #include <config.h>
 
-#include <qglobal.h>
-#include <qiodevice.h>
+#include <QIODevice>
 
 #include <stdlib.h>
 

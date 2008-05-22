@@ -17,16 +17,14 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef KMFIMAGE_H
 #define KMFIMAGE_H
 
 #include "kmfwidget.h"
-#include <kurl.h>
-#include <qimage.h>
+#include <KUrl>
+#include <QImage>
 
-/**
-@author Petri Damsten
-*/
 class KMFImage : public KMFWidget
 {
     Q_OBJECT

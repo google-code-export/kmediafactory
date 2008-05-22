@@ -18,16 +18,16 @@
 
 #ifdef HAVE_LIBDVDREAD
 
-#include <krun.h>
-#include <kglobal.h>
-#include <kconfig.h>
-#include <kdebug.h>
-#include <kapplication.h>
-#include <kurlrequester.h>
-#include <kiconloader.h>
-#include <kfiledialog.h>
-#include <kmessagebox.h>
-#include <kprogressdialog.h>
+#include <KRun>
+#include <KGlobal>
+#include <KConfig>
+#include <KDebug>
+#include <KApplication>
+#include <KUrlRequester>
+#include <KIconLoader>
+#include <KFileDialog>
+#include <KMessageBox>
+#include <KProgressDialog>
 #include <QPainter>
 #include <QSlider>
 #include <QLabel>

@@ -17,14 +17,15 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef KMEDIAFACTORY_DVDAUTHORPARSER_H
 #define KMEDIAFACTORY_DVDAUTHORPARSER_H
 
 #include <kdemacros.h>
-#include <qobject.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qdom.h>
+#include <QObject>
+#include <QString>
+#include <QStringList>
+#include <QDomDocument>
 
 namespace KMF
 {

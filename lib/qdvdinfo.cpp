@@ -37,12 +37,13 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //**************************************************************************
+
 #include "kmf_stddef.h"
 #include "qdvdinfo.h"
-#include <kdebug.h>
-#include <klocale.h>
-#include <kapplication.h>
-#include <qfileinfo.h>
+#include <KDebug>
+#include <KLocale>
+#include <KApplication>
+#include <QFileInfo>
 #include <malloc.h>
 
 namespace QDVD

@@ -23,7 +23,7 @@
 
 #include <kmf_stddef.h>
 #include <kmediafactory/plugin.h>
-#include <kurl.h>
+#include <KUrl>
 
 class Slide
 {

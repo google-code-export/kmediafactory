@@ -29,7 +29,7 @@
 #include <KMessageBox>
 #include <KTemporaryFile>
 #include <KLocale>
-#include <kio/netaccess.h>
+#include <KIO/NetAccess>
 #include <QAction>
 #include <QFileInfo>
 #include <QDir>

@@ -21,7 +21,7 @@
 #ifndef OUTPUTPAGE_H
 #define OUTPUTPAGE_H
 
-#include <ui_outputpage.h>
+#include "ui_outputpage.h"
 #include "kmfplugininterface.h"
 #include <QMenu>
 

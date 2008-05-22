@@ -19,7 +19,7 @@
 //**************************************************************************
 #include "kmfframe.h"
 #include <kmftools.h>
-#include <kdebug.h>
+#include <KDebug>
 #include <QRect>
 #include <QDomElement>
 #include <QPainter>

@@ -22,11 +22,11 @@
 #include "kmfapplication.h"
 #include "kmediafactory.h"
 #include "outputpage.h"
-#include <kdebug.h>
-#include <kpagewidget.h>
-#include <kfiledialog.h>
-#include <kprogressdialog.h>
-#include <kmessagebox.h>
+#include <KDebug>
+#include <KPageWidget>
+#include <KFileDialog>
+#include <KProgressDialog>
+#include <KMessageBox>
 
 KMFDbusInterface::KMFDbusInterface(QObject *parent) :
   QObject(parent)

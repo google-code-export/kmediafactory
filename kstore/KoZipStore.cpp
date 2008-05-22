@@ -24,10 +24,10 @@
 #include <QByteArray>
 
 #include <kzip.h>
-#include <kdebug.h>
+#include <KDebug>
 #include <kdeversion.h>
-#include <kurl.h>
-#include <kio/netaccess.h>
+#include <KUrl>
+#include <KIO/NetAccess>
 
 KoZipStore::KoZipStore( const QString & _filename, Mode _mode, const QByteArray & appIdentification )
 {

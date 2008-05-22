@@ -21,9 +21,9 @@
 #ifndef TEMPLATEPAGE_H
 #define TEMPLATEPAGE_H
 
-#include <ui_templatepage.h>
-#include <qdatetime.h>
+#include "ui_templatepage.h"
 #include "kmfplugininterface.h"
+#include <QDateTime>
 
 class KPageWidgetItem;
 

@@ -36,12 +36,12 @@
 #include <QFile>
 #include <QDir>
 
-#include <kurl.h>
-#include <kdebug.h>
+#include <KUrl>
+#include <KDebug>
 #include <kdeversion.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kio/netaccess.h>
+#include <KLocale>
+#include <KMessageBox>
+#include <KIO/NetAccess>
 
 #define DefaultFormat KoStore::Zip
 

@@ -23,15 +23,15 @@
 #include "kmftools.h"
 #include "kmfdbusinterface.h"
 #include "kmediafactoryadaptor.h"
-#include <kcmdlineargs.h>
-#include <kservicetypetrader.h>
-#include <kstandarddirs.h>
-#include <kdesktopfile.h>
+#include <KCmdLineArgs>
+#include <KServiceTypeTrader>
+#include <KStandardDirs>
+#include <KDesktopFile>
 #include <kparts/componentfactory.h>
-#include <kdebug.h>
-#include <kmainwindow.h>
-#include <klocale.h>
-#include <ktoolinvocation.h>
+#include <KDebug>
+#include <KMainWindow>
+#include <KLocale>
+#include <KToolInvocation>
 #include <klauncher_iface.h>
 #include <QObject>
 #include <QFileInfo>
@@ -39,7 +39,7 @@
 #include <errno.h>
 
 #if defined Q_WS_X11
-#include <kstartupinfo.h>
+#include <KStartupInfo>
 #include <X11/Xlib.h>
 #endif
 

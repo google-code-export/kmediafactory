@@ -24,7 +24,7 @@
 #include "kmediafactory.h"
 #include <KProcess>
 #include <kdemacros.h>
-#include <threadweaver/Job.h>
+#include <ThreadWeaver/Job>
 
 #define CHECK_IF_ABORTED(result) { \
 if (aborted()) { return result; }; \
