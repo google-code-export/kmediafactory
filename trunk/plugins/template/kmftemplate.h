@@ -21,14 +21,11 @@
 #define KMFTEMPLATE_H
 
 #include "kmfintl.h"
-#include <qstring.h>
-#include <qstringlist.h>
+#include <QString>
+#include <QStringList>
 
 class KoStore;
 
-/**
-@author Petri Damsten
-*/
 class KMFTemplate
 {
   public:

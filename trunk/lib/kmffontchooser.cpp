@@ -17,17 +17,18 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
-#include <kdialog.h>
-#include <kfontdialog.h>
-#include <klocale.h>
-#include <kiconloader.h>
+
+#include "kmffontchooser.h"
+#include <KDialog>
+#include <KFontDialog>
+#include <KLocale>
+#include <KIconLoader>
 #include <QLabel>
 #include <QPushButton>
 #include <QLayout>
 #include <QFont>
 #include <QPixmap>
 #include <QHBoxLayout>
-#include "kmffontchooser.h"
 
 KMFFontChooser::KMFFontChooser(QWidget *parent)
  : QWidget(parent)

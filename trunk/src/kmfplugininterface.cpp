@@ -26,12 +26,12 @@
 #include "kmfproject.h"
 #include "kmfprogressitemdelegate.h"
 #include "mediapage.h"
-#include <threadweaver/DependencyPolicy.h>
-#include <threadweaver/ThreadWeaver.h>
+#include <ThreadWeaver/DependencyPolicy>
+#include <ThreadWeaver/Weaver>
 #include <KDebug>
+#include <KFileDialog>
 #include <KMessageBox>
 #include <QDomDocument>
-#include <KFileDialog>
 
 KMFProgressDialog::KMFProgressDialog(QWidget* parent) : KMF::ProgressDialog(parent), m_pdlg(parent)
 {

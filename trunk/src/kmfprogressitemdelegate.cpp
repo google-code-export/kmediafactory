@@ -19,8 +19,8 @@
 //**************************************************************************
 
 #include "kmfprogressitemdelegate.h"
-#include <kdebug.h>
-#include <kicon.h>
+#include <KDebug>
+#include <KIcon>
 #include <QPainter>
 #include <QModelIndex>
 #include <QProgressBar>

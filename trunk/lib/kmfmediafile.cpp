@@ -21,9 +21,9 @@
 #include "kmfmediafile.h"
 #include "run.h"
 #include "kmftime.h"
-#include "kdebug.h"
-#include <qregexp.h>
-#include <qmap.h>
+#include <KDebug>
+#include <QRegExp>
+#include <QMap>
 
 QMap<QString, KMFMediaFile> KMFMediaFile::m_cache;
 

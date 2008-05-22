@@ -17,15 +17,13 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef KMFTOOLBUTTON_H
 #define KMFTOOLBUTTON_H
 
 #include <kdemacros.h>
-#include <qtoolbutton.h>
+#include <QToolButton>
 
-/**
-	@author Petri Damsten <petri.damsten@iki.fi>
-*/
 class KDE_EXPORT KMFToolButton : public QToolButton
 {
     Q_OBJECT

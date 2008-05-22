@@ -21,11 +21,8 @@
 #define KMFRECT_H
 
 #include <kdemacros.h>
-#include <qrect.h>
+#include <QRect>
 
-/**
-@author Petri Damsten
-*/
 namespace KMF
 {
   class KDE_EXPORT Rect : public QRect

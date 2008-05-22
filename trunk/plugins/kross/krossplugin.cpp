@@ -19,17 +19,18 @@
 //**************************************************************************
 
 #include "krossplugin.h"
-#include <ksharedptr.h>
+#include "krossplugininterface.h"
+#include "kmftools.h"
+
+#include <kross/core/action.h>
+#include <kross/core/interpreter.h>
+#include <kross/core/manager.h>
+#include <KSharedPtr>
 #include <KDebug>
 #include <KStandardDirs>
 #include <KMessageBox>
 #include <KActionCollection>
 #include <QTimer>
-#include <kross/core/action.h>
-#include <kross/core/interpreter.h>
-#include <kross/core/manager.h>
-#include "krossplugininterface.h"
-#include "kmftools.h"
 
 K_EXPORT_KMEDIAFACTORY_PLUGIN(kross, KrossPlugin);
 

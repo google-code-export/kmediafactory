@@ -21,13 +21,10 @@
 #define KMFKMFTIME_H
 
 #include <kdemacros.h>
-#include <qdatetime.h>
+#include <QDateTime>
 
 namespace KMF
 {
-  /**
-  @author Petri Damsten
-  */
   class KDE_EXPORT Time : public QTime
   {
     public:

@@ -21,7 +21,7 @@
 #ifndef KMFTEMPLATEBASE_H
 #define KMFTEMPLATEBASE_H
 
-#include <qobject.h>
+#include <QObject>
 
 namespace KMF
 {

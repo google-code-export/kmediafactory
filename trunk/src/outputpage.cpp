@@ -26,14 +26,14 @@
 #include "kmftoolbutton.h"
 #include "logview.h"
 #include <kmftools.h>
-#include <threadweaver/ThreadWeaver.h>
+#include <ThreadWeaver/Weaver>
 #include <KMessageBox>
 #include <KCursor>
 #include <KPushButton>
 #include <KLocale>
 #include <KDebug>
 #include <KFileItemDelegate>
-#include <kxmlguifactory.h>
+#include <KXMLGUIFactory>
 #include <KPageDialog>
 #include <QToolButton>
 #include <QTimer>

@@ -22,7 +22,7 @@
 #include "kmfmenupage.h"
 #include <rect.h>
 #include <kmftools.h>
-#include <kdebug.h>
+#include <KDebug>
 #include <QColor>
 #include <QRegExp>
 #include <QVariant>

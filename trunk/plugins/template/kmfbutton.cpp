@@ -17,10 +17,11 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "kmfbutton.h"
 #include "kmfmenu.h"
 #include "kmfmenupage.h"
-#include <qdom.h>
+#include <QDomDocument>
 
 KMFButton::KMFButton(QObject *parent)
  : KMFWidget(parent)

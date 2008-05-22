@@ -25,10 +25,10 @@
 #include "subtitleoptions.h"
 #include "kmftools.h"
 #include <qdvdinfo.h>
-#include <kapplication.h>
-#include <klocale.h>
-#include <kdebug.h>
-#include <kurlrequester.h>
+#include <KApplication>
+#include <KLocale>
+#include <KDebug>
+#include <KUrlRequester>
 #include <QLineEdit>
 #include <QComboBox>
 #include <QLabel>

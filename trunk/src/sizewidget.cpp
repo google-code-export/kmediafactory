@@ -19,7 +19,7 @@
 //**************************************************************************
 #include "sizewidget.h"
 #include "kmftools.h"
-#include <kdebug.h>
+#include <KDebug>
 #include <QLabel>
 #include <QSplitter>
 

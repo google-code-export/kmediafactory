@@ -20,11 +20,11 @@
 #include <QColorGroup>
 
 #include "kmfmultiurldialog.h"
-#include <kfiledialog.h>
-#include <kapplication.h>
-#include <kmessagebox.h>
-#include <klocale.h>
-#include <kdebug.h>
+#include <KFileDialog>
+#include <KApplication>
+#include <KMessageBox>
+#include <KLocale>
+#include <KDebug>
 #include <QStringList>
 
 KMFMultiURLDialog::KMFMultiURLDialog(const QString& startDir,

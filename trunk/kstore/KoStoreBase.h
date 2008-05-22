@@ -21,7 +21,7 @@
 #ifndef KOSTORE_BASE_H
 #define KOSTORE_BASE_H
 
-#include <kurl.h>
+#include <KUrl>
 
 #include "KoStore.h"
 

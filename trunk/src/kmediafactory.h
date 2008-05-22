@@ -25,8 +25,8 @@
 #include <config.h>
 #endif
 
-#include <kxmlguiwindow.h>
-#include <kdirwatch.h>
+#include <KXmlGuiWindow>
+#include <KDirWatch>
 
 // Define this for the test menu item
 // #define KMF_TEST

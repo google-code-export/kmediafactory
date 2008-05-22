@@ -24,13 +24,10 @@
 #include "kmfmenu.h"
 #include "kconfigxml.h"
 #include <kmediafactory/plugin.h>
-#include <kurl.h>
-#include <kaction.h>
-
-/**
-*/
+#include <KUrl>
 
 class TemplateOptions;
+class KAction;
 
 class KMFConfigXML : public KConfigXML
 {

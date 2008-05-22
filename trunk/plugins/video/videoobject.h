@@ -23,8 +23,8 @@
 #include <kmf_stddef.h>
 #include <kmediafactory/plugin.h>
 #include "rect.h"
-#include <kurl.h>
-#include <kprocess.h>
+#include <KUrl>
+#include <KProcess>
 #include <qdvdinfo.h>
 #include <QPixmap>
 #include <QDateTime>

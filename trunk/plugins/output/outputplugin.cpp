@@ -17,23 +17,24 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "config.h"
 #include "outputplugin.h"
 #include "dvddirectoryobject.h"
 #include "dvdauthorobject.h"
 #include "k3bobject.h"
-#include <kactioncollection.h>
+#include <KActionCollection>
 #include <kdeversion.h>
-#include <kapplication.h>
-#include <kgenericfactory.h>
-#include <kaction.h>
-#include <kfiledialog.h>
-#include <kglobal.h>
-#include <kiconloader.h>
-#include <kaboutdata.h>
-#include <kstandarddirs.h>
-#include <kicon.h>
-#include <krun.h>
+#include <KApplication>
+#include <KGenericFactory>
+#include <KFileDialog>
+#include <KGlobal>
+#include <KIconLoader>
+#include <KAboutData>
+#include <KStandardDirs>
+#include <KIcon>
+#include <KRun>
+#include <KAction>
 #include <QRegExp>
 #include <QPixmap>
 
@@ -54,7 +55,7 @@ OutputPlugin::OutputPlugin(QObject *parent, const QVariantList&) :
   m_kaffeine = KStandardDirs::findExe("kaffeine");
 
 #ifdef HAVE_LIBDVDREAD
-  dvdInfo =new KAction(KIcon("zoom-original"), i18n("DVD Info"), parent);
+  dvdInfo = new KAction(KIcon("zoom-original"), i18n("DVD Info"), parent);
   dvdInfo->setShortcut(Qt::CTRL + Qt::Key_I);
   actionCollection()->addAction("dvd_info", dvdInfo);
   connect(dvdInfo, SIGNAL(triggered()), SLOT(slotDVDInfo()));

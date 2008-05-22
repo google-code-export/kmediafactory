@@ -17,14 +17,11 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef KCONFIGXML_H
 #define KCONFIGXML_H
 
-#include <kconfigskeleton.h>
-
-/**
-@author Petri Damsten
-*/
+#include <KConfigSkeleton>
 
 class QIODevice;
 class QDomElement;

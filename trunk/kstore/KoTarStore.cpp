@@ -24,10 +24,10 @@
 #include <QByteArray>
 
 #include <ktar.h>
-#include <kdebug.h>
-#include <kurl.h>
+#include <KDebug>
+#include <KUrl>
 #include <kdeversion.h>
-#include <kio/netaccess.h>
+#include <KIO/NetAccess>
 
 KoTarStore::KoTarStore( const QString & _filename, Mode _mode, const QByteArray & appIdentification )
 {

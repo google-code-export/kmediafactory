@@ -21,7 +21,7 @@
 #include "kmflayout.h"
 #include "kmfmenupage.h"
 #include <kmftools.h>
-#include <kdebug.h>
+#include <KDebug>
 #include <QObject>
 #include <QVariant>
 #include <QRegExp>

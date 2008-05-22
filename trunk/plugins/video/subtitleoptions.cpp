@@ -20,12 +20,12 @@
 #include "subtitleoptions.h"
 #include "kmflanguagewidgets.h"
 #include "kmffontchooser.h"
-#include <kurlrequester.h>
-#include <kfontdialog.h>
-#include <kmessagebox.h>
-#include <kapplication.h>
-#include <kdebug.h>
-#include <kio/netaccess.h>
+#include <KUrlRequester>
+#include <KFontDialog>
+#include <KMessageBox>
+#include <KApplication>
+#include <KDebug>
+#include <KIO/NetAccess>
 #include <QLabel>
 
 SubtitleOptions::SubtitleOptions(QWidget *parent)

@@ -20,13 +20,13 @@
 #include "projectoptions.h"
 #include "kmfapplication.h"
 #include "kmftools.h"
-#include <kcombobox.h>
-#include <kpushbutton.h>
-#include <kiconloader.h>
-#include <kdebug.h>
-#include <klocale.h>
-#include <kurlrequester.h>
-#include <kmessagebox.h>
+#include <KComboBox>
+#include <KPushButton>
+#include <KIconLoader>
+#include <KDebug>
+#include <KLocale>
+#include <KUrlRequester>
+#include <KMessageBox>
 #include <QComboBox>
 #include <QLineEdit>
 

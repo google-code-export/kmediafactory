@@ -20,7 +20,7 @@
 #include "KoDirectoryStore.h"
 #include <QFile>
 #include <QDir>
-#include <kdebug.h>
+#include <KDebug>
 
 // HMMM... I used QFile and QDir.... but maybe this should be made network transparent?
 

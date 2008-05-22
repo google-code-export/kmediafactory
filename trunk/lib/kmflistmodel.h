@@ -22,7 +22,7 @@
 #define KMFLISTMODEL_H
 
 #include <kdemacros.h>
-#include <kdebug.h>
+#include <KDebug>
 #include <QList>
 #include <QAbstractItemView>
 

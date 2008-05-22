@@ -17,17 +17,17 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "kmftoolbutton.h"
 #include "kglobalsettings.h"
-#include <qpainter.h>
-#include <qstyle.h>
+#include <QPainter>
+#include <QStyle>
 #include <QStyleOption>
 
 KMFToolButton::KMFToolButton(QWidget* parent)
     : QToolButton(parent)
 {
 }
-
 
 KMFToolButton::~KMFToolButton()
 {

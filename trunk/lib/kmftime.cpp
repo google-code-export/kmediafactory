@@ -17,10 +17,11 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "kmftime.h"
-#include <kdebug.h>
-#include <qstringlist.h>
-#include <qregexp.h>
+#include <KDebug>
+#include <QStringList>
+#include <QRegExp>
 #include <math.h>
 
 void KMF::Time::set(int msec)

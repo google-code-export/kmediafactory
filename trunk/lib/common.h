@@ -18,5 +18,5 @@
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
 
-#include "kiconloader.h"
+#include "KIconLoader"
 #define BTN_ICON(x) KGlobal::iconLoader()->loadIconSet((x), KIconLoader::Small)

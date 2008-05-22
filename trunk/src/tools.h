@@ -22,7 +22,7 @@
 
 #include "ui_tools.h"
 #include "kmflistmodel.h"
-#include <kurl.h>
+#include <KUrl>
 #include <QObject>
 
 /**

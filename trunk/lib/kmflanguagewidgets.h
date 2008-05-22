@@ -21,8 +21,8 @@
 #define KMFLANGUAGEWIDGETS_H
 
 #include "kmf_stddef.h"
-#include <kstandarddirs.h>
-#include "kdebug.h"
+#include <KStandardDirs>
+#include "KDebug"
 #include <QComboBox>
 #include <QListView>
 #include <QPixmap>

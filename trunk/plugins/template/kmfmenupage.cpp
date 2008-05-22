@@ -28,11 +28,11 @@
 #include <run.h>
 #include <kmediafactory/plugininterface.h>
 #include <kmediafactory/job.h>
-#include <kapplication.h>
-#include <kstandarddirs.h>
-#include <klocale.h>
-#include <kdebug.h>
-#include <kmessagebox.h>
+#include <KApplication>
+#include <KStandardDirs>
+#include <KLocale>
+#include <KDebug>
+#include <KMessageBox>
 #include <QVariant>
 #include <QObject>
 #include <QImage>
