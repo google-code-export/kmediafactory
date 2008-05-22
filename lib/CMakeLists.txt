@@ -48,7 +48,7 @@ target_link_libraries(kmf ${KDE4_KDECORE_LIBS} ${QT_QTXML_LIBRARY} ${KDE4_KUTILS
 if(LIBDVDREAD_FOUND)
    target_link_libraries(kmf ${LIBDVDREAD_LIBRARY})
 endif(LIBDVDREAD_FOUND)
-set_target_properties(kmf PROPERTIES VERSION 1.0.0 SOVERSION 1)
+set_target_properties(kmf PROPERTIES VERSION ${KMF_LIB_VERSION} SOVERSION ${KMF_LIB_VERSION})
 install(TARGETS kmf DESTINATION ${LIB_INSTALL_DIR})
 
 set(kmfwidgets_PART_SRCS
