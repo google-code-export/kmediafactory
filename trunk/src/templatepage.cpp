@@ -37,7 +37,7 @@
 #include <QMenu>
 
 TemplatePage::TemplatePage(QWidget *parent) :
-  QWidget(parent), m_menu(0), m_settingPrevious(false), m_scaled(false)
+  QWidget(parent), m_menu(0), m_scaled(false)
 {
   setupUi(this);
   templates->setSpacing(5);
@@ -74,11 +74,11 @@ void TemplatePage::selectionChanged(const QItemSelection& selected,
 {
   if (selected.indexes().count() == 0)
   {
-    QTimer::singleShot(0, this, SLOT(cancelSelection()));
+    templates->selectionModel()->select(deselected, QItemSelectionModel::ClearAndSelect);
     return;
   }
 
-  if(!m_settingPrevious && kmfApp->project())
+  if(kmfApp->project())
   {
     QModelIndex index = selected.indexes()[0];
     KMF::TemplateObject* ob = kmfApp->project()->templateObjects()->at(index);
@@ -92,25 +92,15 @@ void TemplatePage::selectionChanged(const QItemSelection& selected,
       }
       else
       {
-        m_previous = deselected;
-        QTimer::singleShot(0, this, SLOT(cancelSelection()));
+        templates->selectionModel()->select(deselected, QItemSelectionModel::ClearAndSelect);
       }
     }
   }
-  m_settingPrevious = false;
-}
-
-void TemplatePage::cancelSelection()
-{
-  m_settingPrevious = true;
-  templates->selectionModel()->select(m_previous, QItemSelectionModel::ClearAndSelect);
 }
 
 void TemplatePage::currentPageChanged(KPageWidgetItem* current,
                                       KPageWidgetItem*)
 {
-  m_previous = templates->selectionModel()->selection();
-
   if (current->parent() == this &&
       (templatePreview->image().size() == QSize(0,0) ||
       m_lastUpdate <

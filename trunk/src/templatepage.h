@@ -44,13 +44,10 @@ class TemplatePage : public QWidget, public Ui::TemplatePage
 
   protected slots:
     virtual void previewClicked();
-    void cancelSelection();
 
   private:
     int m_menu;
     QDateTime m_lastUpdate;
-    QItemSelection m_previous;
-    bool m_settingPrevious;
     bool m_scaled;
 };
 
