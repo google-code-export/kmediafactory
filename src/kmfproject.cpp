@@ -30,7 +30,6 @@
 #include <kdebug.h>
 #include <ksavefile.h>
 #include <ktemporaryfile.h>
-#include <QFile>
 #include <QDir>
 #include <QTextStream>
 #include <QDomElement>
@@ -338,22 +337,14 @@ void KMFProject::finished()
 bool KMFProject::open(const KUrl &url)
 {
   bool result = false;
-  QString tmpFile;
+  QString tmp;
 
   m_loading = true;
-  if(KIO::NetAccess::download(url, tmpFile, kmfApp->widget()))
+  if (KMF::Tools::loadStringFromFile(url, &tmp))
   {
-    QFile file(tmpFile);
-    if(file.open(QIODevice::ReadOnly))
-    {
-      QTextStream stream(&file);
-      fromXML(stream.readAll());
-      file.close();
-      m_url = url;
-      setDirty(KMF::DirtyAny, false);
-      result = true;
-    }
-    KIO::NetAccess::removeTempFile(tmpFile);
+    m_url = url;
+    setDirty(KMF::DirtyAny, false);
+    result = true;
   }
   m_loading = false;
   return result;
@@ -382,36 +373,8 @@ bool KMFProject::save(KUrl url)
     }
   }
 
-  if(url.isLocalFile())
-  {
-    KSaveFile saveFile(url.path());
+  KMF::Tools::saveString2File(url, toXML());
 
-    if(saveFile.open())
-    {
-      QTextStream stream(&saveFile);
-      stream << toXML();
-      stream.flush();
-    }
-    else
-      return false;
-    saveFile.close();
-  }
-  else
-  {
-    KTemporaryFile tempFile;
-
-    if(tempFile.open())
-    {
-      QTextStream stream(&tempFile);
-      stream << toXML();
-      stream.flush();
-      tempFile.close();
-      if (!KIO::NetAccess::upload(tempFile.fileName(), url, kmfApp->widget()))
-        return false;
-    }
-    else
-      return false;
-  }
   m_url = url;
   setDirty(KMF::DirtyAny, false);
   return true;

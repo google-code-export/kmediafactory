@@ -25,6 +25,11 @@
 #include <KStandardDirs>
 #include <KDebug>
 #include <KApplication>
+#include <KSaveFile>
+#include <KMessageBox>
+#include <KTemporaryFile>
+#include <KLocale>
+#include <kio/netaccess.h>
 #include <QAction>
 #include <QFileInfo>
 #include <QDir>
@@ -596,18 +601,86 @@ void KMF::Tools::cleanFiles(const QString& d, const QStringList& files)
   }
 }
 
-QPixmap KMF::Tools::variantList2Pixmap(QVariant v)
+QImage KMF::Tools::variantList2Image(QVariant v)
 {
   QByteArray a;
+  QImage img;
+
   foreach (const QVariant& var, v.toList())
   {
     a.append(var.toString()[0].cell());
   }
-  return QPixmap(a);
+  img.loadFromData(a);
+  return img;
 }
 
-bool KMF::Tools::saveString2File(const QString& file, const QString& string, bool showFailed)
+bool KMF::Tools::saveString2File(const KUrl& url, const QString& string, bool showFailed)
 {
+  bool result = false;
+  QFile *f;
+
+  if (url.isLocalFile())
+  {
+    f = new KSaveFile(url.path());
+  }
+  else
+  {
+    f = new KTemporaryFile();
+  }
+
+  if (f->open(QIODevice::WriteOnly))
+  {
+      QTextStream stream(f);
+      stream.setCodec("UTF-8");
+      stream << string;
+      stream.flush();
+      f->close();
+      if (url.isLocalFile())
+      {
+        result = true;
+      }
+      else
+      {
+        if (KIO::NetAccess::upload(f->fileName(), url, kapp->activeWindow()))
+        {
+          result = true;
+        }
+      }
+  }
+
+  delete f;
+
+  if (showFailed && !result)
+  {
+    KMessageBox::error(kapp->activeWindow(), i18n("Error saving file %1", url.prettyUrl()));
+  }
+  return result;
+}
+
+bool KMF::Tools::loadStringFromFile(const KUrl& url, QString* string, bool showFailed)
+{
+  bool result = false;
+  QString tmpFile;
+
+  if(KIO::NetAccess::download(url, tmpFile, kapp->activeWindow()))
+  {
+    QFile file(tmpFile);
+    if(file.open(QIODevice::ReadOnly))
+    {
+      QTextStream stream(&file);
+      stream.setCodec("UTF-8");
+      *string = stream.readAll();
+      file.close();
+      result = true;
+    }
+    KIO::NetAccess::removeTempFile(tmpFile);
+  }
+
+  if (showFailed && !result)
+  {
+    KMessageBox::error(kapp->activeWindow(), i18n("Error opening file %1", url.prettyUrl()));
+  }
+  return result;
 }
 
 QString KMF::Tools::xmlElement2String(const QDomElement& elem)
@@ -619,20 +692,31 @@ QString KMF::Tools::xmlElement2String(const QDomElement& elem)
   return s;
 }
 
-QDomElement KMF::Tools::string2xmlElement(const QString& s)
+QDomElement KMF::Tools::string2XmlElement(const QString& s)
 {
   QDomDocument doc;
   doc.setContent(s);
   return doc.documentElement();
 }
 
-QMap<QString, QString> KMF::Tools::variantMap2stringMap(const QMap<QString, QVariant>& map)
+QMap<QString, QString> KMF::Tools::variantMap2StringMap(const QMap<QString, QVariant>& map)
 {
   QMap<QString, QString> result;
   
   foreach (const QString& key, map.keys()) 
   {
     result[key] = map[key].toString();
+  }
+  return result;
+}
+
+QStringList KMF::Tools::variantList2StringList(const QVariantList& list)
+{
+  QStringList result;
+  
+  foreach (const QVariant& v, list) 
+  {
+    result.append(v.toString());
   }
   return result;
 }
