@@ -17,7 +17,7 @@ set(kmediafactoryinclude_HEADERS
 
 kde4_add_library(kmediafactoryinterfaces SHARED ${kmediafactoryinterfaces_LIB_SRCS})
 target_link_libraries(kmediafactoryinterfaces ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_THREADWEAVER_LIBRARIES})
-set_target_properties(kmediafactoryinterfaces PROPERTIES VERSION 1.0.0 SOVERSION 1)
+set_target_properties(kmediafactoryinterfaces PROPERTIES VERSION ${KMF_LIB_VERSION} SOVERSION ${KMF_LIB_VERSION})
 install(TARGETS kmediafactoryinterfaces DESTINATION ${LIB_INSTALL_DIR})
 #kde4_install_libtool_file(${LIB_INSTALL_DIR} kmediafactoryinterfaces)
 install(FILES kmediafactoryplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
