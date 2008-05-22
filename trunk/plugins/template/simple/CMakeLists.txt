@@ -15,10 +15,10 @@ set(template_files
   images/next.png
 )
 
-FILE(GLOB dirs "${CMAKE_CURRENT_SOURCE_DIR}/locale/??")
-FOREACH(dir ${dirs})
-  LIST(APPEND po_files ${dir}/LC_MESSAGES/template.po ${dir}/LC_MESSAGES/ui.po)
-ENDFOREACH(dir)
+file(GLOB dirs "${CMAKE_CURRENT_SOURCE_DIR}/locale/??")
+foreach(dir ${dirs})
+  list(APPEND po_files ${dir}/LC_MESSAGES/template.po ${dir}/LC_MESSAGES/ui.po)
+endforeach(dir)
 
 add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${template}
   COMMAND ${CMAKE_COMMAND}
@@ -30,7 +30,7 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${template}
   DEPENDS ${template_files} ${po_files}
 )
 
-add_custom_target(template ALL 
+add_custom_target(simple_template ALL 
   DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${template}
 )
 
