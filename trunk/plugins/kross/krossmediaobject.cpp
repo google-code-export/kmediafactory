@@ -19,6 +19,7 @@
 
 #include "krossmediaobject.h"
 #include "krossplugin.h"
+#include <kmftime.h>
 #include <kmftools.h>
 
 KrossMediaObject::KrossMediaObject(QObject* parent, Kross::Object::Ptr object)
@@ -37,7 +38,7 @@ QVariant KrossMediaObject::call(const QString & func, QVariantList args)
 
 void KrossMediaObject::toXML(QDomElement *elem) const
 {
-  elem->appendChild(KMF::Tools::string2xmlElement(m_object->callMethod("toXML").toString()));
+  elem->appendChild(KMF::Tools::string2XmlElement(m_object->callMethod("toXML").toString()));
 }
 
 bool KrossMediaObject::fromXML(const QDomElement &elem)
@@ -48,7 +49,7 @@ bool KrossMediaObject::fromXML(const QDomElement &elem)
 
 QPixmap KrossMediaObject::pixmap() const
 {
-  return KMF::Tools::variantList2Pixmap(m_object->callMethod("pixmap"));
+  return QPixmap::fromImage(KMF::Tools::variantList2Image(m_object->callMethod("pixmap")));
 }
 
 void KrossMediaObject::actions(QList<QAction*>* actions) const
@@ -69,7 +70,7 @@ void KrossMediaObject::finished()
 
 QMap<QString, QString> KrossMediaObject::subTypes() const
 {
-  return KMF::Tools::variantMap2stringMap(m_object->callMethod("subTypes").toMap());
+  return KMF::Tools::variantMap2StringMap(m_object->callMethod("subTypes").toMap());
 }
 
 QString KrossMediaObject::title() const
@@ -84,26 +85,32 @@ void KrossMediaObject::clean()
 
 QImage KrossMediaObject::preview(int chapter) const
 {
+  return KMF::Tools::variantList2Image(m_object->callMethod("preview", QVariantList() << chapter));
 }
 
 QString KrossMediaObject::text(int chapter) const
 {
+  return m_object->callMethod("text", QVariantList() << chapter).toString();
 }
 
 int KrossMediaObject::chapters() const
 {
+  return m_object->callMethod("chapters").toInt();
 }
 
 uint64_t KrossMediaObject::size() const
 {
+  return m_object->callMethod("size").toULongLong();
 }
 
 QTime KrossMediaObject::duration() const
 {
+  return KMF::Time(m_object->callMethod("duration").toDouble());
 }
 
 QTime KrossMediaObject::chapterTime(int chapter) const
 {
+  return KMF::Time(m_object->callMethod("chapterTime", QVariantList() << chapter).toDouble());
 }
 
 #include "krossmediaobject.moc"

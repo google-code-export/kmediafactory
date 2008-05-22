@@ -84,12 +84,14 @@ namespace KMF
       static uint frames(const QString &type);
       static void cleanFiles(const QString& dir, const QStringList& files = QStringList());
       
-      static QPixmap variantList2Pixmap(QVariant v);
-      static bool saveString2File(const QString& file, const QString& string, 
+      static bool loadStringFromFile(const KUrl& url, QString* string, bool showFailed = true);
+      static bool saveString2File(const KUrl& url, const QString& string, 
                                   bool showFailed = true);
       static QString xmlElement2String(const QDomElement& elem);
-      static QDomElement string2xmlElement(const QString& elem);
-      static QMap<QString, QString> variantMap2stringMap(const QMap<QString, QVariant>& map);
+      static QDomElement string2XmlElement(const QString& elem);
+      static QImage variantList2Image(QVariant v);
+      static QMap<QString, QString> variantMap2StringMap(const QMap<QString, QVariant>& map);
+      static QStringList variantList2StringList(const QVariantList& list);
   };
 }
 

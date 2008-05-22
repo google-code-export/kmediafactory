@@ -37,7 +37,7 @@ QVariant KrossTemplateObject::call(const QString & func, QVariantList args)
 
 void KrossTemplateObject::toXML(QDomElement *elem) const
 {
-  elem->appendChild(KMF::Tools::string2xmlElement(m_object->callMethod("toXML").toString()));
+  elem->appendChild(KMF::Tools::string2XmlElement(m_object->callMethod("toXML").toString()));
 }
 
 bool KrossTemplateObject::fromXML(const QDomElement &elem)
@@ -48,7 +48,7 @@ bool KrossTemplateObject::fromXML(const QDomElement &elem)
 
 QPixmap KrossTemplateObject::pixmap() const
 {
-  return KMF::Tools::variantList2Pixmap(m_object->callMethod("pixmap"));
+  return QPixmap::fromImage(KMF::Tools::variantList2Image(m_object->callMethod("pixmap")));
 }
 
 void KrossTemplateObject::actions(QList<QAction*>* actions) const
@@ -69,7 +69,7 @@ void KrossTemplateObject::finished()
 
 QMap<QString, QString> KrossTemplateObject::subTypes() const
 {
-  return KMF::Tools::variantMap2stringMap(m_object->callMethod("subTypes").toMap());
+  return KMF::Tools::variantMap2StringMap(m_object->callMethod("subTypes").toMap());
 }
 
 QString KrossTemplateObject::title() const
@@ -82,16 +82,19 @@ void KrossTemplateObject::clean()
   m_object->callMethod("clean");
 }
 
-QImage KrossTemplateObject::preview(const QString &)
+QImage KrossTemplateObject::preview(const QString &menu)
 {
+  return KMF::Tools::variantList2Image(m_object->callMethod("preview", QVariantList() << menu));
 }
 
 QStringList KrossTemplateObject::menus()
 {
+  return KMF::Tools::variantList2StringList(m_object->callMethod("menus").toList());
 }
 
 bool KrossTemplateObject::clicked()
 {
+  return m_object->callMethod("clicked").toBool();
 }
 
 #include "krosstemplateobject.moc"

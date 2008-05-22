@@ -39,7 +39,7 @@ QVariant KrossOutputObject::call(const QString & func, QVariantList args)
 
 void KrossOutputObject::toXML(QDomElement *elem) const
 {
-  elem->appendChild(KMF::Tools::string2xmlElement(m_object->callMethod("toXML").toString()));
+  elem->appendChild(KMF::Tools::string2XmlElement(m_object->callMethod("toXML").toString()));
 }
 
 bool KrossOutputObject::fromXML(const QDomElement &elem)
@@ -50,7 +50,7 @@ bool KrossOutputObject::fromXML(const QDomElement &elem)
 
 QPixmap KrossOutputObject::pixmap() const
 {
-  return KMF::Tools::variantList2Pixmap(m_object->callMethod("pixmap"));
+  return QPixmap::fromImage(KMF::Tools::variantList2Image(m_object->callMethod("pixmap")));
 }
 
 void KrossOutputObject::actions(QList<QAction*>* actions) const
@@ -71,7 +71,7 @@ void KrossOutputObject::finished()
 
 QMap<QString, QString> KrossOutputObject::subTypes() const
 {
-  return KMF::Tools::variantMap2stringMap(m_object->callMethod("subTypes").toMap());
+  return KMF::Tools::variantMap2StringMap(m_object->callMethod("subTypes").toMap());
 }
 
 QString KrossOutputObject::title() const

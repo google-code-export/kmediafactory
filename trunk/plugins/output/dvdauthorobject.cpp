@@ -154,7 +154,7 @@ public:
     } 
     else 
     {
-      return KMF::Tools::string2xmlElement(element.toString());
+      return KMF::Tools::string2XmlElement(element.toString());
     }
   }
 };
