@@ -36,11 +36,9 @@
 #include <QVariant>
 #include <QObject>
 #include <QImage>
-#include <QFile>
 #include <QDir>
 #include <QDateTime>
 #include <QRegExp>
-#include <QTextStream>
 #include <QPainter>
 #include <sys/types.h>
 #include <sys/stat.h>

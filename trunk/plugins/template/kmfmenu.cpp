@@ -28,9 +28,7 @@
 #include <KLocale>
 #include <KComponentData>
 #include <QImage>
-#include <QFile>
 #include <QFileInfo>
-#include <QTextStream>
 
 KMFMenu::KMFMenu(const QString& tmplate, QObject *parent)
   : KMFTemplateBase(parent),

@@ -36,7 +36,6 @@
 #include <kxmlguifactory.h>
 #include <KPageDialog>
 #include <QToolButton>
-#include <QFile>
 #include <QTimer>
 #include <QStandardItemModel>
 #include <QTextDocument>
@@ -354,14 +353,7 @@ void OutputPage::makeLog()
   }
   s += "</pre></html>";
 
-  QFile f(kmfApp->project()->directory() + "kmf_log.html");
-  if(f.open(QIODevice::WriteOnly | QIODevice::Truncate))
-  {
-    QTextStream t(&f);
-    t.setCodec("UTF-8");
-    t << s;
-    f.close();
-  }
+  KMF::Tools::saveString2File(kmfApp->project()->directory() + "kmf_log.html", s);
 }
 
 #include "outputpage.moc"

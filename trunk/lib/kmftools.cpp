@@ -35,6 +35,7 @@
 #include <QDir>
 #include <QSet>
 #include <QStringList>
+#include <QFile>
 #include <QTextStream>
 #include <QFont>
 #include <QDomElement>

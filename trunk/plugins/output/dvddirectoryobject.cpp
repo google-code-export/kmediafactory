@@ -34,7 +34,6 @@
 #include <KActionCollection>
 #include <KAction>
 #include <QFileInfo>
-#include <QFile>
 #include <QDir>
 #include <QEventLoop>
 #include <QRegExp>

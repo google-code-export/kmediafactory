@@ -21,7 +21,6 @@
 #include "krossplugin.h"
 #include <kmftools.h>
 #include <KActionCollection>
-#include <QTextStream>
 
 KrossOutputObject::KrossOutputObject(QObject* parent, Kross::Object::Ptr object)
  : KMF::OutputObject(parent), ObjectMapper(object, this), m_object(object)
