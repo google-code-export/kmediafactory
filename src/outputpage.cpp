@@ -67,23 +67,30 @@ void OutputPage::projectInit()
 {
   outputs->setModel(kmfApp->project()->outputObjects());
   connect(outputs->selectionModel(),
-          SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
-          this, SLOT(currentChanged(const QModelIndex&, const QModelIndex&)));
+          SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
+          this, SLOT(selectionChanged(const QItemSelection&, const QItemSelection&)));
   outputs->blockSignals(true);
   KMF::OutputObject* obj = kmfApp->project()->output();
   QModelIndex i = kmfApp->project()->outputObjects()->indexOf(obj);
   if(i == QModelIndex())
     i = kmfApp->project()->outputObjects()->index(0);
-  outputs->setCurrentIndex(i);
+  outputs->selectionModel()->select(i, QItemSelectionModel::ClearAndSelect);
   outputs->blockSignals(false);
 }
 
-void OutputPage::currentChanged(const QModelIndex& index, const QModelIndex&)
+void OutputPage::selectionChanged(const QItemSelection& selected, 
+                                  const QItemSelection& deselected)
 {
+  if (selected.indexes().count() == 0)
+  {
+    outputs->selectionModel()->select(deselected, QItemSelectionModel::ClearAndSelect);
+    return;
+  }
+
   if(kmfApp->project())
   {
-    KMF::OutputObject* ob =
-        kmfApp->project()->outputObjects()->at(index);
+    QModelIndex index = selected.indexes()[0];
+    KMF::OutputObject* ob = kmfApp->project()->outputObjects()->at(index);
     kmfApp->project()->setOutput(ob);
   }
 }
