@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,14 +17,16 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "mediapage.h"
 #include "kmediafactory.h"
 #include "kmfapplication.h"
 #include "kmficonview.h"
-#include <kmftools.h>
 #include "sizewidget.h"
-#include <kxmlguifactory.h>
-#include <kactioncollection.h>
+#include <kmftools.h>
+#include <KXMLGUIFactory>
+#include <KActionCollection>
+#include <KFileItemDelegate>
 #include <QPoint>
 #include <QMenu>
 #include <QTimer>
@@ -35,7 +37,8 @@ MediaPage::MediaPage(QWidget *parent) :
   setupUi(this);
 
   mediaFiles->setSpacing(5);
-  mediaFiles->setItemDelegate(new KMFItemDelegate());
+  mediaFiles->setItemDelegate(new KFileItemDelegate(this));
+  mediaFiles->setIconSize(QSize(KIconLoader::SizeHuge, KIconLoader::SizeHuge));
   connect(mediaFiles, SIGNAL(customContextMenuRequested(const QPoint&)),
           this, SLOT(contextMenuRequested(const QPoint&)));
 }

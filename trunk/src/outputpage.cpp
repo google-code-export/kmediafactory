@@ -33,6 +33,7 @@
 #include <KPushButton>
 #include <KLocale>
 #include <KDebug>
+#include <KFileItemDelegate>
 #include <kxmlguifactory.h>
 #include <KPageDialog>
 #include <QToolButton>
@@ -45,7 +46,8 @@ OutputPage::OutputPage(QWidget *parent) :
 {
   setupUi(this);
   outputs->setSpacing(5);
-  outputs->setItemDelegate(new KMFItemDelegate());
+  outputs->setItemDelegate(new KFileItemDelegate(this));
+  outputs->setIconSize(QSize(KIconLoader::SizeHuge, KIconLoader::SizeHuge));
   connect(outputs, SIGNAL(customContextMenuRequested(const QPoint&)),
           this, SLOT(contextMenuRequested(const QPoint&)));
   connect(&m_startPopup, SIGNAL(triggered(QAction*)),
