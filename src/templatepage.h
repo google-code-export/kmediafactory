@@ -35,8 +35,7 @@ class TemplatePage : public QWidget, public Ui::TemplatePage
     virtual ~TemplatePage();
 
   public slots:
-    void currentChanged(const QModelIndex& index,
-                        const QModelIndex& previous);
+    void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
     void currentPageChanged(KPageWidgetItem*, KPageWidgetItem*);
     void updatePreview(int n = -1);
     void contextMenuRequested(const QPoint &pos);
@@ -50,7 +49,7 @@ class TemplatePage : public QWidget, public Ui::TemplatePage
   private:
     int m_menu;
     QDateTime m_lastUpdate;
-    QModelIndex m_previous;
+    QItemSelection m_previous;
     bool m_settingPrevious;
     bool m_scaled;
 };

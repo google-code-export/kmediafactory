@@ -58,22 +58,29 @@ void TemplatePage::projectInit()
 {
   templates->setModel(kmfApp->project()->templateObjects());
   connect(templates->selectionModel(),
-          SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
-          this, SLOT(currentChanged(const QModelIndex&, const QModelIndex&)));
+          SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
+          this, SLOT(selectionChanged(const QItemSelection&, const QItemSelection&)));
   templates->blockSignals(true);
   KMF::TemplateObject* obj = kmfApp->project()->templateObj();
   QModelIndex i = kmfApp->project()->templateObjects()->indexOf(obj);
   if(i == QModelIndex())
     i = kmfApp->project()->templateObjects()->index(0);
-  templates->setCurrentIndex(i);
+  templates->selectionModel()->select(i, QItemSelectionModel::ClearAndSelect);
   templates->blockSignals(false);
 }
 
-void TemplatePage::currentChanged(const QModelIndex& index,
-                                  const QModelIndex& previous)
+void TemplatePage::selectionChanged(const QItemSelection& selected, 
+                                    const QItemSelection& deselected)
 {
+  if (selected.indexes().count() == 0)
+  {
+    QTimer::singleShot(0, this, SLOT(cancelSelection()));
+    return;
+  }
+
   if(!m_settingPrevious && kmfApp->project())
   {
+    QModelIndex index = selected.indexes()[0];
     KMF::TemplateObject* ob = kmfApp->project()->templateObjects()->at(index);
     if(ob)
     {
@@ -85,7 +92,7 @@ void TemplatePage::currentChanged(const QModelIndex& index,
       }
       else
       {
-        m_previous = previous;
+        m_previous = deselected;
         QTimer::singleShot(0, this, SLOT(cancelSelection()));
       }
     }
@@ -96,13 +103,13 @@ void TemplatePage::currentChanged(const QModelIndex& index,
 void TemplatePage::cancelSelection()
 {
   m_settingPrevious = true;
-  templates->setCurrentIndex(m_previous);
+  templates->selectionModel()->select(m_previous, QItemSelectionModel::ClearAndSelect);
 }
 
 void TemplatePage::currentPageChanged(KPageWidgetItem* current,
                                       KPageWidgetItem*)
 {
-  m_previous = templates->currentIndex();
+  m_previous = templates->selectionModel()->selection();
 
   if (current->parent() == this &&
       (templatePreview->image().size() == QSize(0,0) ||
