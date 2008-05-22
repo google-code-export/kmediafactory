@@ -1,14 +1,30 @@
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories( ${KOSTORE_INCLUDES} )
 
-set(kmediafactorykstore_LIB_SRCS
-   KoStore.cpp
-   KoTarStore.cpp
-   KoDirectoryStore.cpp
-   KoZipStore.cpp
-   KoStoreBase.cpp
-)
+if( QCA2_FOUND )
+include_directories( ${QCA2_INCLUDE_DIR} )
+add_definitions( -DQCA2 )
+endif( QCA2_FOUND )
 
-kde4_add_library(kmediafactorykstore SHARED ${kmediafactorykstore_LIB_SRCS})
+########### next target ###############
+
+set(kstore_LIB_SRCS 
+   KoStore.cpp 
+   KoTarStore.cpp 
+   KoDirectoryStore.cpp 
+   KoZipStore.cpp 
+   KoStoreBase.cpp 
+   KoXmlReader.cpp
+   KoXmlWriter.cpp
+   KoEncryptedStore.cpp
+   )
+
+kde4_add_library(kmediafactorykstore SHARED ${kstore_LIB_SRCS})
+
 target_link_libraries(kmediafactorykstore ${KDE4_KIO_LIBS})
+
+if( QCA2_FOUND )
+target_link_libraries(kmediafactorykstore ${QCA2_LIBRARIES})
+endif( QCA2_FOUND )
+
 set_target_properties(kmediafactorykstore PROPERTIES VERSION 1.0.0 SOVERSION 1)
-install(TARGETS kmediafactorykstore DESTINATION ${LIB_INSTALL_DIR})
+install(TARGETS kmediafactorykstore  DESTINATION ${LIB_INSTALL_DIR})
