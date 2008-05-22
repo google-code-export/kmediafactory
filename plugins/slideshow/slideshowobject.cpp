@@ -47,7 +47,6 @@
 #include <QDir>
 #include <QRegExp>
 #include <QPixmap>
-#include <QTextStream>
 #include <QDomDocument>
 #include <list>
 

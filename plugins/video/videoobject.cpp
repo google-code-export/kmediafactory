@@ -44,7 +44,6 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QPixmap>
-#include <QTextStream>
 #include <unistd.h>
 #include <errno.h>
 

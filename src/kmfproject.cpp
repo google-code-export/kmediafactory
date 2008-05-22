@@ -31,7 +31,6 @@
 #include <ksavefile.h>
 #include <ktemporaryfile.h>
 #include <QDir>
-#include <QTextStream>
 #include <QDomElement>
 
 template <class S, class T>

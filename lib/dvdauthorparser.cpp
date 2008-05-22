@@ -17,21 +17,17 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "dvdauthorparser.h"
-#include <QFile>
-#include <QTextStream>
+#include <kmftools.h>
 
 void KMF::DVDAuthorParser::setFile(const QString& fileName)
 {
   m_file = fileName;
   m_files.clear();
-  QFile file(fileName);
-  if(file.open(QIODevice::ReadOnly))
-  {
-    QTextStream stream(&file);
-    m_doc.setContent(stream.readAll());
-    file.close();
-  }
+  QString s;
+  if (KMF::Tools::loadStringFromFile(fileName, &s))
+    m_doc.setContent(s);
 }
 
 QStringList KMF::DVDAuthorParser::files()

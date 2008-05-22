@@ -38,7 +38,6 @@
 #include <kicon.h>
 #include <kactioncollection.h>
 #include <kconfigdialogmanager.h>
-#include <QFile>
 #include <QFileInfo>
 #include <QImage>
 #include <QBuffer>

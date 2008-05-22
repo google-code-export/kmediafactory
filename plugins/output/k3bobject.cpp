@@ -31,8 +31,8 @@
 #include <KRun>
 #include <QDir>
 #include <QPixmap>
-#include <QTextStream>
 #include <QDomDocument>
+#include <QTextStream>
 
 static const char startString[] = I18N_NOOP("K3b project");
 

@@ -28,7 +28,6 @@
 #include <KDebug>
 #include <KAboutData>
 #include <QPixmap>
-#include <QFile>
 #include <QDomElement>
 
 static const char startString[] = I18N_NOOP("DVD Author XML file");
@@ -130,15 +129,7 @@ public:
       CHECK_IF_ABORTED();
     }
   
-    QFile file(projectDir + "dvdauthor.xml");
-    if (file.open(QIODevice::WriteOnly)) 
-    {
-      QTextStream stream(&file);
-      stream.setCodec("UTF-8");
-      doc.save(stream, 1);
-      file.close();
-    }
-    else
+    if (!KMF::Tools::saveString2File(projectDir + "dvdauthor.xml", doc.toString(), false))
     {
       message(msgId(), KMF::Error, i18n("Error in saving dvdauthor.xml"));
     }
