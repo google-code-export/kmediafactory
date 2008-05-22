@@ -1,10 +1,11 @@
 CHANGED FROM THE LATEST RELEASE (0.6.0)
 ========================================
 Features:
--
+- Full python/ruby(kross) plugins
+- Job based processing (Multi core/processor support)
 
 Bug fixes:
--
+- cmake 2.6.0 support
 
 CHANGED FROM THE PREVIOUS SNAPSHOT
 ===================================
