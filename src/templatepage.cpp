@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,19 +17,21 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #include "templatepage.h"
 #include "kmficonview.h"
 #include "kmediafactory.h"
 #include "kmfapplication.h"
 #include "kmfimageview.h"
 #include <kmftools.h>
-#include <kpagedialog.h>
-#include <kcursor.h>
-#include <klocale.h>
-#include <kfiledialog.h>
-#include <kmessagebox.h>
-#include <kdebug.h>
-#include <kxmlguifactory.h>
+#include <KFileItemDelegate>
+#include <KPageDialog>
+#include <KCursor>
+#include <KLocale>
+#include <KFileDialog>
+#include <KMessageBox>
+#include <KDebug>
+#include <KXMLGUIFactory>
 #include <QTimer>
 #include <QCheckBox>
 #include <QLabel>
@@ -40,7 +42,8 @@ TemplatePage::TemplatePage(QWidget *parent) :
 {
   setupUi(this);
   templates->setSpacing(5);
-  templates->setItemDelegate(new KMFItemDelegate());
+  templates->setItemDelegate(new KFileItemDelegate(this));
+  templates->setIconSize(QSize(KIconLoader::SizeHuge, KIconLoader::SizeHuge));
   connect(templates, SIGNAL(customContextMenuRequested(const QPoint&)),
           this, SLOT(contextMenuRequested(const QPoint&)));
   connect(templatePreview,
