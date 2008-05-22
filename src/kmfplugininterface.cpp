@@ -22,7 +22,6 @@
 #include "kmediafactory.h"
 #include "templatepage.h"
 #include "outputpage.h"
-#include "kmficonview.h"
 #include "kmfapplication.h"
 #include "kmfproject.h"
 #include "kmfprogressitemdelegate.h"

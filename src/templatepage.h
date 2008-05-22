@@ -24,7 +24,6 @@
 #include <ui_templatepage.h>
 #include <qdatetime.h>
 #include "kmfplugininterface.h"
-#include <kmficonview.h>
 
 class KPageWidgetItem;
 

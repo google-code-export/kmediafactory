@@ -21,7 +21,6 @@
 #define MEDIAPAGE_H
 
 #include "ui_mediapage.h"
-#include <kmficonview.h>
 
 class QPoint;
 namespace KMF { class MediaObject; };

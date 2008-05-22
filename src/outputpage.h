@@ -23,7 +23,6 @@
 
 #include <ui_outputpage.h>
 #include "kmfplugininterface.h"
-#include "kmficonview.h"
 #include <QMenu>
 
 class KPageWidgetItem;

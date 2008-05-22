@@ -19,7 +19,6 @@
 //**************************************************************************
 
 #include "templatepage.h"
-#include "kmficonview.h"
 #include "kmediafactory.h"
 #include "kmfapplication.h"
 #include "kmfimageview.h"

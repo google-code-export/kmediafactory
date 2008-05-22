@@ -22,10 +22,10 @@
 #define KMFPROJECT_H
 
 #include <kmediafactory/plugininterface.h>
-#include <kmficonview.h>
 #include <KUrl>
 #include <QString>
 #include <QDateTime>
+#include <kmfobjectlistmodel.h>
 
 class KMFProject : public QObject
 {
