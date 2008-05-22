@@ -115,7 +115,7 @@ void TemplatePage::currentPageChanged(KPageWidgetItem* current,
 
 void TemplatePage::updatePreview(int n)
 {
-  if(n < 0)
+  if(n < 0 && templates->selectionModel())
   {
     QModelIndexList selected = templates->selectionModel()->selectedIndexes();
     if(selected.count() > 0)

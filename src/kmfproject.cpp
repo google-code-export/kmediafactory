@@ -149,7 +149,7 @@ void KMFProject::init()
   m_initializing = true;
   kDebug() << "preinit";
   emit preinit(m_type);
-  kDebug() << "init";
+  kDebug() << "init" << m_type;
   emit init(m_type);
   m_initializing = false;
   setDirty(KMF::DirtyAny, false);
@@ -341,6 +341,7 @@ bool KMFProject::open(const KUrl &url)
   m_loading = true;
   if (KMF::Tools::loadStringFromFile(url, &tmp))
   {
+    fromXML(tmp);
     m_url = url;
     setDirty(KMF::DirtyAny, false);
     result = true;
