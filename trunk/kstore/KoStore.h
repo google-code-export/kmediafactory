@@ -21,12 +21,12 @@
 #ifndef __koStore_h_
 #define __koStore_h_
 
-#include <kdemacros.h>
 #include <QString>
 #include <QStringList>
 #include <QIODevice>
 #include <QStack>
 #include <QByteArray>
+#include "kostore_export.h"
 
 class QWidget;
 
@@ -38,7 +38,7 @@ class KUrl;
  * We call a "store" the file on the hard disk (the one the users sees)
  * and call a "file" a file inside the store.
  */
-class KDE_EXPORT KoStore
+class KOSTORE_EXPORT KoStore
 {
 public:
 
@@ -276,7 +276,7 @@ public:
    *
    * This method only works before opening a file. It might fail when a file
    * has already been opened before calling this method.
-   *
+   * 
    * This method will not function for any store that is not encrypted or
    * can't be encrypted when saving.
    *

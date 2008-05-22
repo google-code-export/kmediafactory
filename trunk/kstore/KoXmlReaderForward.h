@@ -1,6 +1,6 @@
-//
 /* This file is part of the KDE project
-   Copyright 2004 Nicolas GOUTTE <goutte@kde.org>
+   Copyright (C) 2005-2006 Ariya Hidayat <ariya@kde.org>
+   Copyright (C) 2007 Thorsten Zachmann <zachmann@kde.org>
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public
@@ -15,36 +15,35 @@
    You should have received a copy of the GNU Library General Public License
    along with this library; see the file COPYING.LIB.  If not, write to
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301, USA.
+   Boston, MA 02110-1301, USA.
 */
 
-#ifndef KOSTORE_BASE_H
-#define KOSTORE_BASE_H
+#ifndef KOXMLREADERFORWARD_H
+#define KOXMLREADERFORWARD_H
 
-#include <kurl.h>
+// use standard QDom, useful to test KoXml classes against Qt's QDom
+// #define KOXML_USE_QDOM
 
-#include "KoStore.h"
+#ifdef KOXML_USE_QDOM
 
-/**
- * Helper class for KoStore (mainly for remote file support)
- */
-class KoStoreBase : public KoStore
-{
-public:
-    KoStoreBase();
-    virtual ~KoStoreBase(void);
-public:
-    enum FileMode { /*Bad=0,*/ Local=1, RemoteRead, RemoteWrite };
+#include <QtXml/qdom.h>
 
-protected:
-    /**
-     * original URL of the remote file
-     * (undefined for a local file)
-     */
-    KUrl m_url;
-    FileMode m_fileMode;
-    QString m_localFileName;
-    QWidget* m_window;
-};
+typedef QDomNode KoXmlNode;
+typedef QDomElement KoXmlElement;
+typedef QDomText KoXmlText;
+typedef QDomCDATASection KoXmlCDATASection;
+typedef QDomDocumentType KoXmlDocumentType;
+typedef QDomDocument KoXmlDocument;
 
-#endif //KOSTORE_BASE_H
+#else
+
+class KoXmlElement;
+class KoXmlNode;
+class KoXmlText;
+class KoXmlCDATASection;
+class KoXmlDocumentType;
+class KoXmlDocument;
+
+#endif
+
+#endif // KOXMLREADERFORWARD_H
