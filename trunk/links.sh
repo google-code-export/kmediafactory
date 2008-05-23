@@ -3,6 +3,11 @@
 # Generate list from install dir like this:
 # find . -type f -name "*" -printf "\"%P\"\n"
 
+SO=`grep "KMF_MAJOR_VERSION " CMakeLists.txt | sed 's/set(KMF_MAJOR_VERSION "//' | sed 's/")//'`
+mi=`grep "KMF_MINOR_VERSION " CMakeLists.txt | sed 's/set(KMF_MINOR_VERSION "//' | sed 's/")//'`
+bu=`grep "KMF_BUILD_VERSION " CMakeLists.txt | sed 's/set(KMF_BUILD_VERSION "//' | sed 's/")//'`
+VERSION="$SO.$mi.$bu"
+
 if [[ "$1" == "--remove" ]]; then
   REMOVE="1"
 fi
@@ -47,12 +52,12 @@ FILES=(
 "lib/libkmf.so"
 "lib/libkmediafactorykstore.so"
 "lib/libkmediafactoryinterfaces.so"
-"lib/libkmf.so.1"
-"lib/libkmediafactorykstore.so.1"
-"lib/libkmediafactoryinterfaces.so.1"
-"lib/libkmf.so.1.0.0"
-"lib/libkmediafactorykstore.so.1.0.0"
-"lib/libkmediafactoryinterfaces.so.1.0.0"
+"lib/libkmf.so.$SO"
+"lib/libkmediafactorykstore.so.$SO"
+"lib/libkmediafactoryinterfaces.so.$SO"
+"lib/libkmf.so.$VERSION"
+"lib/libkmediafactorykstore.so.$VERSION"
+"lib/libkmediafactoryinterfaces.so.$VERSION"
 "share/apps/kmfwidgets/pics/kmffontchooser.png"
 "share/apps/kmfwidgets/pics/kmfimageview.png"
 "share/apps/kmfwidgets/pics/kmflanguagecombobox.png"
