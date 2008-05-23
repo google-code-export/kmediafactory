@@ -53,6 +53,7 @@ class VideoConfig : public QWidget, public Ui::VideoConfig
 VideoPlugin::VideoPlugin(QObject *parent, const QVariantList&) :
   KMF::Plugin(parent)
 {
+  KGlobal::locale()->insertCatalog("kmediafactory_video");
   setObjectName("KMFImportVideo");
   setupActions();
 }

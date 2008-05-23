@@ -12,8 +12,10 @@ if [[ "$1" == "--remove" ]]; then
   REMOVE="1"
 fi
 
+BUILD="$HOME/Development/build/kmediafactory"
+
 TARGETS=(
-"$HOME/Development/build/kmediafactory"
+"$BUILD"
 "$HOME/Development/src/kmediafactory"
 )
 LINKS="$HOME/.kde"
@@ -93,8 +95,7 @@ FILES=(
 "share/applications/kde4/kmediafactory.desktop"
 "share/mime/packages/kmediafactory.xml"
 "include/kmediafactory/plugin.h"
-"include/kmediafactory/projectinterface.h"
-"include/kmediafactory/uiinterface.h"
+"include/kmediafactory/interface.h"
 "include/kmediafactory/kmfobject.h"
 "bin/kmediafactory"
 )
@@ -146,6 +147,17 @@ function copy()
     echo "NOT FOUND: $1"
   fi
 }
+
+# mo softlinks
+for lang in $BUILD/po/*; do
+    if [ "$lang"!="CMakeFiles" -a -d $lang ]; then
+        la=`basename $lang`
+        for mo in $BUILD/po/$la/*.mo; do
+            tmp=`basename $mo`
+            softlink $mo $LINKS/share/locale/$la/LC_MESSAGES/$tmp
+        done
+    fi
+done
 
 for TARGET in "${TARGETS[@]}"
 do

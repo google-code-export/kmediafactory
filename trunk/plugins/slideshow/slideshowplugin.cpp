@@ -49,6 +49,7 @@ class SlideshowConfig : public QWidget, public Ui::SlideshowConfig
 SlideshowPlugin::SlideshowPlugin(QObject *parent, const QVariantList&) :
   KMF::Plugin(parent)
 {
+  KGlobal::locale()->insertCatalog("kmediafactory_slideshow");
   setObjectName("KMFSlideshow");
   setupActions();
 }
