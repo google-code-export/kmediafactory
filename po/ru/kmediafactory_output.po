@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: damu@iki.fi\n"
-"POT-Creation-Date: 2008-05-23 11:23+0300\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -79,7 +79,9 @@ msgstr ""
 msgid "DVD Directory is up to date"
 msgstr ""
 
-#: dvdinfo.cpp:41 outputplugin.cpp:58
+#. i18n: tag string
+#. i18n: file dvdinfo.ui line 13
+#: dvdinfo.cpp:41 outputplugin.cpp:59 rc.cpp:3
 msgid "DVD Info"
 msgstr ""
 
@@ -236,10 +238,10 @@ msgstr ""
 msgid "K3b Project"
 msgstr ""
 
-#: outputplugin.cpp:66
+#: outputplugin.cpp:67
 msgid "Preview DVD in Xine"
 msgstr ""
 
-#: outputplugin.cpp:74
+#: outputplugin.cpp:75
 msgid "Preview DVD in Kaffeine"
 msgstr ""

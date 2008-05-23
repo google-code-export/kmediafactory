@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libkmf\n"
 "Report-Msgid-Bugs-To: damu@iki.fi\n"
-"POT-Creation-Date: 2008-05-23 11:23+0300\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
 "PO-Revision-Date: 2006-04-16 17:42+0200\n"
 "Last-Translator: Tomil Grabowski <tomig@tomig.com>\n"
 "Language-Team: Polish\n"
@@ -689,29 +689,60 @@ msgstr "Tytuł: %1, %2"
 msgid "unknown"
 msgstr "nieznany"
 
-#~ msgid "Title"
-#~ msgstr "Tytuł"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 13
+#: rc.cpp:3
+msgid "Title"
+msgstr "Tytuł"
 
-#~ msgid "Add (Alt+ Insert)"
-#~ msgstr "Dodaj (Alt+ Insert)"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 72
+#: rc.cpp:6
+msgid "Add (Alt+ Insert)"
+msgstr "Dodaj (Alt+ Insert)"
 
-#~ msgid "Alt+Del"
-#~ msgstr "Alt+Del"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 78
+#: rc.cpp:9
+#, fuzzy
+msgid "Alt+Ins"
+msgstr "Alt+Down"
 
-#~ msgid "Remove (Alt + Delete)"
-#~ msgstr "Usuń (Alt + Delete)"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 88
+#: rc.cpp:12
+msgid "Remove (Alt + Delete)"
+msgstr "Usuń (Alt + Delete)"
 
-#~ msgid "Alt+Up"
-#~ msgstr "Alt+Up"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 94
+#: rc.cpp:15
+msgid "Alt+Del"
+msgstr "Alt+Del"
 
-#~ msgid "Move up (Alt + Up)"
-#~ msgstr "Przesuń w górę (Alt + Up)"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 120
+#: rc.cpp:18
+msgid "Move up (Alt + Up)"
+msgstr "Przesuń w górę (Alt + Up)"
 
-#~ msgid "Alt+Down"
-#~ msgstr "Alt+Down"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 126
+#: rc.cpp:21
+msgid "Alt+Up"
+msgstr "Alt+Up"
 
-#~ msgid "Move down (Alt + Down)"
-#~ msgstr "Przesuń w dół (Alt + Down)"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 136
+#: rc.cpp:24
+msgid "Move down (Alt + Down)"
+msgstr "Przesuń w dół (Alt + Down)"
+
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 142
+#: rc.cpp:27
+msgid "Alt+Down"
+msgstr "Alt+Down"
 
 #~ msgid "Alt+O"
 #~ msgstr "Alt+O"

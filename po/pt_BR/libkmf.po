@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libkmf\n"
 "Report-Msgid-Bugs-To: damu@iki.fi\n"
-"POT-Creation-Date: 2008-05-23 11:23+0300\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
 "PO-Revision-Date: 2006-04-30 22:37-0300\n"
 "Last-Translator: Caio Begotti <caio@ueberalles.net>\n"
 "Language-Team:  <en@li.org>\n"
@@ -689,32 +689,59 @@ msgstr "Título: %1, %2"
 msgid "unknown"
 msgstr "desconhecido"
 
-#~ msgid "Title"
-#~ msgstr "Título"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 13
+#: rc.cpp:3
+msgid "Title"
+msgstr "Título"
 
-#~ msgid "Alt+Ins"
-#~ msgstr "Alt+Ins"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 72
+#: rc.cpp:6
+msgid "Add (Alt+ Insert)"
+msgstr "Adicionar (Alt+Insert)"
 
-#~ msgid "Add (Alt+ Insert)"
-#~ msgstr "Adicionar (Alt+Insert)"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 78
+#: rc.cpp:9
+msgid "Alt+Ins"
+msgstr "Alt+Ins"
 
-#~ msgid "Alt+Del"
-#~ msgstr "Alt+Del"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 88
+#: rc.cpp:12
+msgid "Remove (Alt + Delete)"
+msgstr "Remover (Alt+Delete)"
 
-#~ msgid "Remove (Alt + Delete)"
-#~ msgstr "Remover (Alt+Delete)"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 94
+#: rc.cpp:15
+msgid "Alt+Del"
+msgstr "Alt+Del"
 
-#~ msgid "Alt+Up"
-#~ msgstr "Alt+Up"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 120
+#: rc.cpp:18
+msgid "Move up (Alt + Up)"
+msgstr "Mover para cima (Alt+Up)"
 
-#~ msgid "Move up (Alt + Up)"
-#~ msgstr "Mover para cima (Alt+Up)"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 126
+#: rc.cpp:21
+msgid "Alt+Up"
+msgstr "Alt+Up"
 
-#~ msgid "Alt+Down"
-#~ msgstr "Alt+Down"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 136
+#: rc.cpp:24
+msgid "Move down (Alt + Down)"
+msgstr "Mover para baixo (Alt+Down)"
 
-#~ msgid "Move down (Alt + Down)"
-#~ msgstr "Mover para baixo (Alt+Down)"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 142
+#: rc.cpp:27
+msgid "Alt+Down"
+msgstr "Alt+Down"
 
 #~ msgid "Alt+O"
 #~ msgstr "Alt+O"

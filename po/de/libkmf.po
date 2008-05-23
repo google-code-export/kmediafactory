@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libkmf\n"
 "Report-Msgid-Bugs-To: damu@iki.fi\n"
-"POT-Creation-Date: 2008-05-23 11:23+0300\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
 "PO-Revision-Date: 2006-03-17 13:44+0100\n"
 "Last-Translator: Christoph Lumme <lummi@in-4-matik.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -689,29 +689,60 @@ msgstr "Titel %1, %2"
 msgid "unknown"
 msgstr "unbekannt"
 
-#~ msgid "Title"
-#~ msgstr "Titel"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 13
+#: rc.cpp:3
+msgid "Title"
+msgstr "Titel"
 
-#~ msgid "Add (Alt+ Insert)"
-#~ msgstr "Hunzufügen (Alt+ Einfügen)"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 72
+#: rc.cpp:6
+msgid "Add (Alt+ Insert)"
+msgstr "Hunzufügen (Alt+ Einfügen)"
 
-#~ msgid "Alt+Del"
-#~ msgstr "Alt+Entfernen"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 78
+#: rc.cpp:9
+#, fuzzy
+msgid "Alt+Ins"
+msgstr "Alt+Pfeil nach unten"
 
-#~ msgid "Remove (Alt + Delete)"
-#~ msgstr "Entfernen (Alt + Entfernen)"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 88
+#: rc.cpp:12
+msgid "Remove (Alt + Delete)"
+msgstr "Entfernen (Alt + Entfernen)"
 
-#~ msgid "Alt+Up"
-#~ msgstr "Alt+Pfeil nach oben"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 94
+#: rc.cpp:15
+msgid "Alt+Del"
+msgstr "Alt+Entfernen"
 
-#~ msgid "Move up (Alt + Up)"
-#~ msgstr "Hoch (Alt + Pfeil nach unten)"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 120
+#: rc.cpp:18
+msgid "Move up (Alt + Up)"
+msgstr "Hoch (Alt + Pfeil nach unten)"
 
-#~ msgid "Alt+Down"
-#~ msgstr "Alt+Pfeil nach unten"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 126
+#: rc.cpp:21
+msgid "Alt+Up"
+msgstr "Alt+Pfeil nach oben"
 
-#~ msgid "Move down (Alt + Down)"
-#~ msgstr "Runter (Alt + Pfeil nach unten)"
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 136
+#: rc.cpp:24
+msgid "Move down (Alt + Down)"
+msgstr "Runter (Alt + Pfeil nach unten)"
+
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 142
+#: rc.cpp:27
+msgid "Alt+Down"
+msgstr "Alt+Pfeil nach unten"
 
 #~ msgid "C&ancel"
 #~ msgstr "&Abbrechen"

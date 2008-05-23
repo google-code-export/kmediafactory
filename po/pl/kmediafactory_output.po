@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmediafactory_output\n"
 "Report-Msgid-Bugs-To: damu@iki.fi\n"
-"POT-Creation-Date: 2008-05-23 11:23+0300\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
 "PO-Revision-Date: 2006-04-17 09:30+0200\n"
 "Last-Translator: Tomil Grabowski <tomig@tomig.com>\n"
 "Language-Team: Polish\n"
@@ -81,7 +81,9 @@ msgstr "&Wyczyść katalog"
 msgid "DVD Directory is up to date"
 msgstr "Katalog DVD jest akryalny"
 
-#: dvdinfo.cpp:41 outputplugin.cpp:58
+#. i18n: tag string
+#. i18n: file dvdinfo.ui line 13
+#: dvdinfo.cpp:41 outputplugin.cpp:59 rc.cpp:3
 msgid "DVD Info"
 msgstr ""
 
@@ -239,11 +241,11 @@ msgstr "%1 - Wersja %2"
 msgid "K3b Project"
 msgstr "K3b Projekt"
 
-#: outputplugin.cpp:66
+#: outputplugin.cpp:67
 msgid "Preview DVD in Xine"
 msgstr "Podgląd DVD w Xine"
 
-#: outputplugin.cpp:74
+#: outputplugin.cpp:75
 msgid "Preview DVD in Kaffeine"
 msgstr "Podgląd DVD w Kaffeine"
 

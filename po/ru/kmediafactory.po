@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: damu@iki.fi\n"
-"POT-Creation-Date: 2008-05-23 11:17+0300\n"
+"POT-Creation-Date: 2008-05-23 12:50+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,46 +14,51 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: ENCODING\n"
 
-#: main.cpp:31 kmediafactory.cpp:465 kmediafactory.cpp:466
+#. i18n: tag string
+#. i18n: file mediapage.ui line 19
+#: kmediafactory.cpp:102 kmediafactory.cpp:103 rc.cpp:30
+msgid "Media"
+msgstr ""
+
+#: kmediafactory.cpp:109 kmediafactory.cpp:110
+msgid "Template"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file outputpage.ui line 13
+#: kmediafactory.cpp:120 kmediafactory.cpp:121 rc.cpp:39
+msgid "Output"
+msgstr ""
+
+#: kmediafactory.cpp:164
+msgid "&Options"
+msgstr ""
+
+#: kmediafactory.cpp:169
+msgid "&Get new tools"
+msgstr ""
+
+#: kmediafactory.cpp:184
+msgid "&Delete"
+msgstr ""
+
+#: kmediafactory.cpp:338 templatepage.cpp:221
+#, kde-format
+msgid "Could not write to file: %1"
+msgstr ""
+
+#: kmediafactory.cpp:465 kmediafactory.cpp:466 main.cpp:31
 msgid "KMediaFactory"
 msgstr ""
 
-#: main.cpp:32
-msgid "Template based DVD authoring software."
+#. i18n: tag string
+#. i18n: file tools.ui line 19
+#: kmediafactory.cpp:467 kmediafactory.cpp:468 rc.cpp:123
+msgid "Tools"
 msgstr ""
 
-#: main.cpp:36
-msgid "Petri Damsten"
-msgstr ""
-
-#: main.cpp:36
-msgid "Developer"
-msgstr ""
-
-#: main.cpp:41
-msgid "Document to open"
-msgstr ""
-
-#: tools.cpp:92
-msgid "Name"
-msgstr ""
-
-#: tools.cpp:94
-msgid "Description"
-msgstr ""
-
-#: projectoptions.cpp:76
-msgid "Project"
-msgstr ""
-
-#: projectoptions.cpp:88 kmfproject.cpp:54
-msgid "Untitled"
-msgstr ""
-
-#: projectoptions.cpp:111
-msgid ""
-"Media files will be removed from the project when project type changes. "
-"Continue?"
+#: kmediafactory.cpp:504
+msgid "Save changes to project?"
 msgstr ""
 
 #: kmfapplication.cpp:209
@@ -63,16 +68,14 @@ msgid ""
 "%2\n"
 msgstr ""
 
-#: outputpage.cpp:134
-msgid "User cancelled."
+#. i18n: tag string
+#. i18n: file outputpage.ui line 72
+#: kmfplugininterface.cpp:255 rc.cpp:45
+msgid "Progress:"
 msgstr ""
 
-#: outputpage.cpp:162
-msgid "Preparing files..."
-msgstr ""
-
-#: outputpage.cpp:169
-msgid "Making files..."
+#: kmfproject.cpp:54 projectoptions.cpp:88
+msgid "Untitled"
 msgstr ""
 
 #: kmfproject.cpp:61
@@ -97,6 +100,308 @@ msgstr ""
 msgid "Do you want to overwrite %1"
 msgstr ""
 
+#: main.cpp:32
+msgid "Template based DVD authoring software."
+msgstr ""
+
+#: main.cpp:36
+msgid "Petri Damsten"
+msgstr ""
+
+#: main.cpp:36
+msgid "Developer"
+msgstr ""
+
+#: main.cpp:41
+msgid "Document to open"
+msgstr ""
+
+#: outputpage.cpp:134
+msgid "User cancelled."
+msgstr ""
+
+#: outputpage.cpp:162
+msgid "Preparing files..."
+msgstr ""
+
+#: outputpage.cpp:169
+msgid "Making files..."
+msgstr ""
+
+#: projectoptions.cpp:76
+msgid "Project"
+msgstr ""
+
+#: projectoptions.cpp:111
+msgid ""
+"Media files will be removed from the project when project type changes. "
+"Continue?"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file kmfoptions.ui line 13
+#: rc.cpp:3
+msgid "KMediaFactory Settings"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file kmfoptions.ui line 34
+#: rc.cpp:6
+msgid "Def&ault Project Type:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file kmfoptions.ui line 51
+#: rc.cpp:9
+msgid "DVD-PAL"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file kmfoptions.ui line 56
+#: rc.cpp:12
+msgid "DVD-NTSC"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file kmfoptions.ui line 64
+#: rc.cpp:15
+msgid "Default Project Director&y:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file kmfoptions.ui line 80
+#: rc.cpp:18
+msgid "Show project &options on new project"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file kmfoptions.ui line 83
+#: rc.cpp:21
+msgid "Alt+O"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file logview.ui line 19
+#: rc.cpp:24
+msgid "Log viewer"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file logview.ui line 31
+#: rc.cpp:27
+msgid "&Log:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file mediapage.ui line 40
+#: rc.cpp:33
+msgid "Add media:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file mediapage.ui line 72
+#: rc.cpp:36
+msgid "Selected &media:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file outputpage.ui line 25
+#: rc.cpp:42
+msgid "Select output t&ype:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file outputpage.ui line 153
+#: rc.cpp:48
+msgid "Show &Log"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file outputpage.ui line 156
+#: rc.cpp:51
+msgid "Alt+L"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file outputpage.ui line 178
+#: rc.cpp:54
+msgid "S&top"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file outputpage.ui line 181
+#: rc.cpp:57
+msgid "Alt+T"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file outputpage.ui line 200
+#: rc.cpp:60
+msgid "&Start"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file projectoptions.ui line 19
+#: rc.cpp:63
+msgid "Project Options"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file projectoptions.ui line 40
+#: rc.cpp:66
+msgid "&Title:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file projectoptions.ui line 56
+#: rc.cpp:69
+msgid "T&ype:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file projectoptions.ui line 72
+#: rc.cpp:72
+msgid "Direct&ory:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file sizewidget.ui line 13
+#: rc.cpp:75
+msgid "Size Widget"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file sizewidget.ui line 146
+#: rc.cpp:78
+msgid "0 B"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file sizewidget.ui line 178
+#: rc.cpp:81
+msgid "4.4 GB"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file templatepage.ui line 19
+#: rc.cpp:84
+msgid "Templates"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file templatepage.ui line 37
+#: rc.cpp:87
+msgid "&Templates:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file templatepage.ui line 84
+#: rc.cpp:90
+msgid "&Preview:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file templatepage.ui line 87
+#: rc.cpp:93
+msgid "Alt+P"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file toolproperties.ui line 13
+#: rc.cpp:96
+msgid "Tool Properties"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file toolproperties.ui line 54
+#: rc.cpp:99
+msgid "&Name:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file toolproperties.ui line 73
+#: rc.cpp:102
+msgid "Wor&k path:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file toolproperties.ui line 114
+#: rc.cpp:105
+msgid "&Description:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file toolproperties.ui line 127
+#: rc.cpp:108
+msgid "Co&mmand:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file toolproperties.ui line 142
+#: rc.cpp:111
+msgid "Place in media &button bar"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file toolproperties.ui line 145
+#: rc.cpp:114
+msgid "Alt+B"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file toolproperties.ui line 152
+#: rc.cpp:117
+msgid "Run In Term&inal"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file toolproperties.ui line 155
+#: rc.cpp:120
+msgid "Alt+I"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file tools.ui line 73
+#: rc.cpp:126
+msgid "Add"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file tools.ui line 86
+#: rc.cpp:129
+msgid "Properties"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file tools.ui line 99
+#: rc.cpp:132
+msgid "Remove"
+msgstr ""
+
+#. i18n: tag text
+#. i18n: file kmediafactoryui.rc line 5
+#: rc.cpp:135
+msgid "&Project"
+msgstr ""
+
+#. i18n: tag text
+#. i18n: file kmediafactoryui.rc line 9
+#: rc.cpp:138
+msgid "&Media"
+msgstr ""
+
+#. i18n: tag text
+#. i18n: file kmediafactoryui.rc line 13
+#: rc.cpp:141
+msgid "&Tools"
+msgstr ""
+
+#. i18n: tag text
+#. i18n: file kmediafactoryui.rc line 35
+#: rc.cpp:144
+msgid "Main Toolbar"
+msgstr ""
+
 #: templatepage.cpp:183
 msgid "Save image"
 msgstr ""
@@ -109,93 +414,18 @@ msgstr ""
 msgid "*.png|PNG Graphics file"
 msgstr ""
 
-#: templatepage.cpp:221 kmediafactory.cpp:338
-#, kde-format
-msgid "Could not write to file: %1"
-msgstr ""
-
-#: kmediafactory.cpp:102 kmediafactory.cpp:103
-msgid "Media"
-msgstr ""
-
-#: kmediafactory.cpp:109 kmediafactory.cpp:110
-msgid "Template"
-msgstr ""
-
-#: kmediafactory.cpp:120 kmediafactory.cpp:121
-msgid "Output"
-msgstr ""
-
-#: kmediafactory.cpp:164
-msgid "&Options"
-msgstr ""
-
-#: kmediafactory.cpp:169
-msgid "&Get new tools"
-msgstr ""
-
-#: kmediafactory.cpp:184
-msgid "&Delete"
-msgstr ""
-
-#: kmediafactory.cpp:467 kmediafactory.cpp:468
-msgid "Tools"
-msgstr ""
-
-#: kmediafactory.cpp:504
-msgid "Save changes to project?"
-msgstr ""
-
 #: toolproperties.cpp:31
 msgid "Tool properties"
 msgstr ""
 
-#: kmfplugininterface.cpp:255
-msgid "Progress:"
+#: tools.cpp:92
+msgid "Name"
+msgstr ""
+
+#: tools.cpp:94
+msgid "Description"
 msgstr ""
 
 #: kmfobjectlistmodel.h:49
 msgid "Title"
-msgstr ""
-
-#. i18n: file ./kmediafactory.kcfg line 10
-#: rc.cpp:3
-#, no-c-format
-msgid "Where the projects are saved by default."
-msgstr ""
-
-#. i18n: file ./kmediafactory.kcfg line 14
-#: rc.cpp:6
-#, no-c-format
-msgid "Default project type."
-msgstr ""
-
-#. i18n: file ./kmediafactory.kcfg line 18
-#: rc.cpp:9
-#, no-c-format
-msgid "Show project options when new project is launched."
-msgstr ""
-
-#. i18n: file ./kmediafactoryui.rc line 5
-#: rc.cpp:12
-#, no-c-format
-msgid "&Project"
-msgstr ""
-
-#. i18n: file ./kmediafactoryui.rc line 9
-#: rc.cpp:15
-#, no-c-format
-msgid "&Media"
-msgstr ""
-
-#. i18n: file ./kmediafactoryui.rc line 13
-#: rc.cpp:18
-#, no-c-format
-msgid "&Tools"
-msgstr ""
-
-#. i18n: file ./kmediafactoryui.rc line 35
-#: rc.cpp:21
-#, no-c-format
-msgid "Main Toolbar"
 msgstr ""

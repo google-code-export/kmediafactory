@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmediafactory_video\n"
 "Report-Msgid-Bugs-To: damu@iki.fi\n"
-"POT-Creation-Date: 2008-05-23 11:23+0300\n"
-"PO-Revision-Date: 2008-05-23 11:35+0300\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
+"PO-Revision-Date: 2008-05-23 13:08+0300\n"
 "Last-Translator: Petri Damstén <petri.damsten@iki.fi>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,9 @@ msgstr ""
 msgid "Name"
 msgstr "Nimi"
 
-#: chapters.cpp:107
+#. i18n: tag string
+#. i18n: file chapters.ui line 254
+#: chapters.cpp:107 rc.cpp:45
 msgid "Start"
 msgstr "Alku"
 
@@ -32,7 +34,9 @@ msgstr "Pituus"
 msgid "Add chapters"
 msgstr "&Lisää kappaleita"
 
-#: chapters.cpp:145
+#. i18n: tag string
+#. i18n: file chapters.ui line 19
+#: chapters.cpp:145 rc.cpp:27
 msgid "Chapters"
 msgstr "Kappaleet"
 
@@ -65,9 +69,291 @@ msgstr "Automaattiset kappaleet"
 msgid "You should have atleast one chapter."
 msgstr "Listassa pitää olla ainakin yksi kappale."
 
-#: subtitleoptions.cpp:36
+#. i18n: tag string
+#. i18n: file addchapter.ui line 13
+#. i18n: tag string
+#. i18n: file autochapters.ui line 13
+#: rc.cpp:3 rc.cpp:15
+msgid "KMediaFactory"
+msgstr "KMediaFactory"
+
+#. i18n: tag string
+#. i18n: file addchapter.ui line 31
+#: rc.cpp:6
+msgid "&Name:"
+msgstr "&Nimi:"
+
+#. i18n: tag string
+#. i18n: file addchapter.ui line 51
+#: rc.cpp:9
+msgid "&Position:"
+msgstr "&Paikka:"
+
+#. i18n: tag string
+#. i18n: file addchapter.ui line 70
+#. i18n: tag string
+#. i18n: file autochapters.ui line 54
+#: rc.cpp:12 rc.cpp:24
+msgid "hh:mm:ss"
+msgstr "hh:mm:ss"
+
+#. i18n: tag string
+#. i18n: file autochapters.ui line 31
+#: rc.cpp:18
+msgid "&Name (Use # for digit):"
+msgstr "&Nimi (Käytä # numeron paikalla):"
+
+#. i18n: tag string
+#. i18n: file autochapters.ui line 44
+#: rc.cpp:21
+msgid "&Interval:"
+msgstr "&Väli:"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 54
+#: rc.cpp:30
+msgid "&Chapters:"
+msgstr "&Kappaleet:"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 131
+#. i18n: tag string
+#. i18n: file videooptions.ui line 217
+#: rc.cpp:33 rc.cpp:153
+msgid "Add"
+msgstr "Lisää"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 147
+#. i18n: tag string
+#. i18n: file videooptions.ui line 227
+#: rc.cpp:36 rc.cpp:156
+msgid "Remove"
+msgstr "Poista"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 210
+#: rc.cpp:39
+msgid "&Use as Custom Preview"
+msgstr "&Käytä kuvana"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 213
+#. i18n: tag string
+#. i18n: file videoconfig.ui line 66
+#: rc.cpp:42 rc.cpp:123
+msgid "Alt+U"
+msgstr "Alt+K"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 267
+#: rc.cpp:48
+msgid "Rewind"
+msgstr "Takaisin"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 280
+#: rc.cpp:51
+msgid "Previous frame"
+msgstr "Edellinen kuva"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 293
+#: rc.cpp:54
+msgid "Next frame"
+msgstr "Seuraava kuva"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 306
+#: rc.cpp:57
+msgid "Forward"
+msgstr "Eteenpäin"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 319
+#: rc.cpp:60
+msgid "End"
+msgstr "Loppuun"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 334
+#: rc.cpp:63
+msgid "00:00"
+msgstr "00:00"
+
+#. i18n: tag string
+#. i18n: file languageselection.ui line 13
+#: rc.cpp:66
+msgid "Select language"
+msgstr "Valitse kieli"
+
+#. i18n: tag string
+#. i18n: file languageselection.ui line 31
+#: rc.cpp:69
+msgid "La&nguages:"
+msgstr "&Kielet:"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 13
+#: rc.cpp:72 subtitleoptions.cpp:36
 msgid "Subtitle options"
 msgstr "Tekstityksen ominaisuudet"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 31
+#: rc.cpp:75
+msgid "La&nguage:"
+msgstr "&Kielet:"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 47
+#: rc.cpp:78
+msgid "Su&btitle File:"
+msgstr "&Tekstitys tiedosto:"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 63
+#: rc.cpp:81
+msgid "Subtitle Font:"
+msgstr "Tekstityksen kirjasin:"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 86
+#: rc.cpp:84
+msgid "Hori&zontal Alignment:"
+msgstr "Vaakatasaus:"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 103
+#: rc.cpp:87
+msgid "Default"
+msgstr "Oletus"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 108
+#: rc.cpp:90
+msgid "Left"
+msgstr "Vasen"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 113
+#: rc.cpp:93
+msgid "Right"
+msgstr "Oikea"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 118
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 153
+#: rc.cpp:96 rc.cpp:108
+msgid "Center"
+msgstr "Keskitetty"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 126
+#: rc.cpp:99
+msgid "Vertical &Alignment"
+msgstr "&Pystysuuntainentasaus"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 143
+#: rc.cpp:102
+msgid "Top"
+msgstr "Ylhäällä"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 148
+#: rc.cpp:105
+msgid "Bottom"
+msgstr "Alhaalla"
+
+#. i18n: tag string
+#. i18n: file videoconfig.ui line 13
+#: rc.cpp:111
+msgid "Configure Video Plugin"
+msgstr "Konfikuroi Video lisäosa"
+
+#. i18n: tag string
+#. i18n: file videoconfig.ui line 31
+#: rc.cpp:114
+msgid "Default &Audio Language:"
+msgstr "&Äänen oletuskieli:"
+
+#. i18n: tag string
+#. i18n: file videoconfig.ui line 47
+#: rc.cpp:117
+msgid "Default Subtitle Lan&guage:"
+msgstr "&Tekstityksen oletuskieli:"
+
+#. i18n: tag string
+#. i18n: file videoconfig.ui line 63
+#: rc.cpp:120
+msgid "&Use Image Cache"
+msgstr "Käytä kuvien välimuistia"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 13
+#: rc.cpp:126 videooptions.cpp:65
+msgid "Video Options"
+msgstr "Videon ominaisuudet"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 31
+#: rc.cpp:129
+msgid "Tit&le:"
+msgstr "&Otsikko:"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 47
+#: rc.cpp:132
+msgid "Custom &preview:"
+msgstr "Kuva:"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 63
+#: rc.cpp:135
+msgid "&Aspect ratio:"
+msgstr "&Kuvasuhde:"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 77
+#: rc.cpp:138
+msgid "4:3"
+msgstr "4:3"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 82
+#: rc.cpp:141
+msgid "16:9"
+msgstr "16:9"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 90
+#: rc.cpp:144
+msgid "Audio Trac&ks:"
+msgstr "&Ääniraidat:"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 140
+#. i18n: tag string
+#. i18n: file videooptions.ui line 237
+#. i18n: tag string
+#. i18n: file videooptions.ui line 300
+#: rc.cpp:147 rc.cpp:159 rc.cpp:165
+msgid "Properties"
+msgstr "Ominaisuudet"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 170
+#: rc.cpp:150
+msgid "Subtitles:"
+msgstr "Tekstitys tiedostot:"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 290
+#: rc.cpp:162
+msgid "xx"
+msgstr "xx"
 
 #: subtitleoptions.cpp:67
 msgid "Subtitle files"
@@ -125,10 +411,6 @@ msgstr "Tee esitkatselu DVD jossa on lyhyet videot"
 msgid "Select Language"
 msgstr "Valitse kieli"
 
-#: videooptions.cpp:65
-msgid "Video Options"
-msgstr "Videon ominaisuudet"
-
 #: videooptions.cpp:209
 #, kde-format
 msgid "Video has 1 chapter"
@@ -136,27 +418,27 @@ msgid_plural "Video has %1 chapters"
 msgstr[0] "Videossa on yksi kappale"
 msgstr[1] "Videossa on %1 kappaletta"
 
-#: videoplugin.cpp:69
+#: videoplugin.cpp:70
 msgid "Video plugin"
 msgstr "Video lisäosa"
 
-#: videoplugin.cpp:77
+#: videoplugin.cpp:78
 msgid "Add Video"
 msgstr "Lisää video"
 
-#: videoplugin.cpp:116
+#: videoplugin.cpp:117
 msgid "Multiple files make multiple titles."
 msgstr "Useampi tiedosto muodostaa useamman nimikkeen"
 
-#: videoplugin.cpp:119
+#: videoplugin.cpp:120
 msgid "Open"
 msgstr "Avaa"
 
-#: videoplugin.cpp:138
+#: videoplugin.cpp:139
 msgid "Cannot add directory."
 msgstr "Hakemistoa ei voi lisätä."
 
-#: videoplugin.cpp:146
+#: videoplugin.cpp:147
 #, kde-format
 msgid "Couldn't add file: %1"
 msgstr "Tiedostoa ei saatu lisättyä: %1"

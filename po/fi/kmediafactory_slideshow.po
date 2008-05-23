@@ -7,14 +7,134 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmediafactory_slideshow\n"
 "Report-Msgid-Bugs-To: damu@iki.fi\n"
-"POT-Creation-Date: 2008-05-23 11:23+0300\n"
-"PO-Revision-Date: 2008-05-23 11:40+0300\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
+"PO-Revision-Date: 2008-05-23 13:12+0300\n"
 "Last-Translator: Petri Damstén <petri.damsten@iki.fi>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#. i18n: tag string
+#. i18n: file slideshowconfig.ui line 13
+#: rc.cpp:3
+msgid "Configure Slideshow Plugin"
+msgstr "Konfiguroi kuvaesitys lisäosa"
+
+#. i18n: tag string
+#. i18n: file slideshowconfig.ui line 31
+#: rc.cpp:6
+msgid "Audio &Type:"
+msgstr "Äänitiedoston &tyyppi:"
+
+#. i18n: tag string
+#. i18n: file slideshowconfig.ui line 45
+#: rc.cpp:9
+msgid "MP2"
+msgstr "MP2"
+
+#. i18n: tag string
+#. i18n: file slideshowconfig.ui line 50
+#: rc.cpp:12
+msgid "AC3"
+msgstr "AC3"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 13
+#: rc.cpp:15
+msgid "Slideshow properties"
+msgstr "Kuvaesityksen ominaisuudet"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 51
+#: rc.cpp:18
+msgid "&Title:"
+msgstr "&Otsikko"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 107
+#: rc.cpp:21
+msgid "Add (Alt+ Insert)"
+msgstr "Lisää (Alt+ Insert)"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 113
+#: rc.cpp:24
+msgid "Alt+Ins"
+msgstr "Alt+Ins"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 123
+#: rc.cpp:27
+msgid "Remove (Alt + Delete)"
+msgstr "Poista (Alt + Delete)"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 129
+#: rc.cpp:30
+msgid "Alt+Del"
+msgstr "Alt+Del"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 155
+#: rc.cpp:33
+msgid "Move up (Alt + Up)"
+msgstr "Siirrä ylös (Alt + Up)"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 161
+#: rc.cpp:36
+msgid "Alt+Up"
+msgstr "Alt+Up"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 171
+#: rc.cpp:39
+msgid "Move down (Alt + Down)"
+msgstr "Siirrä alas (Alt + Down)"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 177
+#: rc.cpp:42
+msgid "Alt+Down"
+msgstr "Alt+Down"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 268
+#: rc.cpp:45
+msgid "&Slide duration:"
+msgstr "&Kuvan kesto"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 290
+#: rc.cpp:48
+msgid "fit"
+msgstr "sovita"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 341
+#: rc.cpp:51
+msgid "&Add original pictures to DVD"
+msgstr "&Lisää alkuperäiset kuvat DVD levylle"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 344
+#: rc.cpp:54
+msgid "Alt+A"
+msgstr "Alt+L"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 360
+#: rc.cpp:57
+msgid "&Loop slideshow"
+msgstr "&Looppaa kuvaesitys"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 363
+#: rc.cpp:60
+msgid "Alt+L"
+msgstr "Alt+L"
 
 #: slideshowobject.cpp:63
 msgid "Copying slideshow originals"
@@ -55,15 +175,15 @@ msgstr "Sivu %1"
 msgid "Slideshow \"%1\" seems to be up to date"
 msgstr "Kuvaesitys \"%1\" näyttää olevan ajantasalla"
 
-#: slideshowplugin.cpp:62
+#: slideshowplugin.cpp:63
 msgid "Add Slideshow"
 msgstr "Lisää kuvaesitys"
 
-#: slideshowplugin.cpp:118
+#: slideshowplugin.cpp:119
 msgid "Slideshow"
 msgstr "Kuvaesitys"
 
-#: slideshowplugin.cpp:145
+#: slideshowplugin.cpp:146
 msgid "Slideshow plugin"
 msgstr "Kuvaesitys lisäosa"
 
