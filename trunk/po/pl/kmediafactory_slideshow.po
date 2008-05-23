@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: kmediafactory_slideshow\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-15 23:09+0200\n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2008-05-23 11:23+0300\n"
 "PO-Revision-Date: 2006-04-18 12:49+0200\n"
 "Last-Translator: Tomil Grabowski <tomig@tomig.com>\n"
 "Language-Team: Polish\n"
@@ -15,237 +15,93 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.1\n"
 
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr "Tomił Grabowski"
-
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr "tomig@tomig.com"
-
-#. i18n: file slideshowlayout.ui line 16
-#: rc.cpp:3 slideshowlayout.cpp:190
-#, no-c-format
-msgid "Slideshow properties"
-msgstr "Właściwości pokazu zdjęć"
-
-#. i18n: file slideshowlayout.ui line 35
-#: rc.cpp:6 slideshowlayout.cpp:191
-#, no-c-format
-msgid "&Title:"
-msgstr "&Tytuł:"
-
-#. i18n: file slideshowlayout.ui line 59
-#: rc.cpp:9 slideshowlayout.cpp:58 slideshowlayout.cpp:192
-#, no-c-format
-msgid "Ch"
+#: slideshowobject.cpp:63
+msgid "Copying slideshow originals"
 msgstr ""
 
-#. i18n: file slideshowlayout.ui line 70
-#: rc.cpp:12 slideshowlayout.cpp:61 slideshowlayout.cpp:193
-#, no-c-format
-msgid "Image"
-msgstr "Obraz"
+#: slideshowobject.cpp:87 slideshowobject.cpp:425
+#, fuzzy, kde-format
+msgid "Slideshow: %1"
+msgstr "Pokaz slajdów"
 
-#. i18n: file slideshowlayout.ui line 92
-#: rc.cpp:18 slideshowlayout.cpp:65 slideshowlayout.cpp:195
-#, no-c-format
-msgid "Comment"
-msgstr "Komentarz"
+#: slideshowobject.cpp:112
+#, fuzzy
+msgid "Slideshow error."
+msgstr "   Błąd pokazu slajdów."
 
-#. i18n: file slideshowlayout.ui line 130
-#: rc.cpp:22 slideshowlayout.cpp:197
-#, no-c-format
-msgid "Alt+Ins"
-msgstr "Alt+Ins"
+#: slideshowobject.cpp:117
+#, fuzzy
+msgid "Can't write slideshow file."
+msgstr "   Nie mogę zapisać pokazu slajdów do pliku."
 
-#. i18n: file slideshowlayout.ui line 139
-#: rc.cpp:25 slideshowlayout.cpp:198
-#, no-c-format
-msgid "Add (Alt+ Insert)"
-msgstr "Dodaj (Alt+ Insert)"
-
-#. i18n: file slideshowlayout.ui line 150
-#: rc.cpp:29 slideshowlayout.cpp:200
-#, no-c-format
-msgid "Alt+Del"
-msgstr "Alt+Del"
-
-#. i18n: file slideshowlayout.ui line 159
-#: rc.cpp:32 slideshowlayout.cpp:201
-#, no-c-format
-msgid "Remove (Alt + Delete)"
-msgstr "Usuń (Alt + Delete)"
-
-#. i18n: file slideshowlayout.ui line 187
-#: rc.cpp:36 slideshowlayout.cpp:203
-#, no-c-format
-msgid "Alt+Up"
-msgstr "Alt+Up"
-
-#. i18n: file slideshowlayout.ui line 196
-#: rc.cpp:39 slideshowlayout.cpp:204
-#, no-c-format
-msgid "Move up (Alt + Up)"
-msgstr "Przesuń w górę (Alt + Up)"
-
-#. i18n: file slideshowlayout.ui line 207
-#: rc.cpp:43 slideshowlayout.cpp:206
-#, no-c-format
-msgid "Alt+Down"
-msgstr "Alt+Down"
-
-#. i18n: file slideshowlayout.ui line 216
-#: rc.cpp:46 slideshowlayout.cpp:207
-#, no-c-format
-msgid "Move down (Alt + Down)"
-msgstr "Przesuń w dół (Alt + Down)"
-
-#. i18n: file slideshowlayout.ui line 282
-#: rc.cpp:50 slideshowlayout.cpp:209
-#, no-c-format
-msgid "&Slide duration:"
-msgstr "Czas &slajdu"
-
-#. i18n: file slideshowlayout.ui line 301
-#: rc.cpp:53 slideshowlayout.cpp:210
-#, no-c-format
-msgid "fit"
-msgstr "odpowiedni"
-
-#. i18n: file slideshowlayout.ui line 350
-#: rc.cpp:56 slideshowlayout.cpp:211
-#, no-c-format
-msgid "&Add original pictures to DVD"
-msgstr "Dod&aj orginalny obraz do DVD"
-
-#. i18n: file slideshowlayout.ui line 353
-#: rc.cpp:59 slideshowlayout.cpp:212
-#, no-c-format
-msgid "Alt+A"
-msgstr "Alt+A"
-
-#. i18n: file slideshowlayout.ui line 372
-#: rc.cpp:62 slideshowlayout.cpp:213
-#, no-c-format
-msgid "&Loop slideshow"
-msgstr "Zapęt&l pokaz slajdów"
-
-#. i18n: file slideshowlayout.ui line 375
-#: rc.cpp:65 slideshowlayout.cpp:214
-#, no-c-format
-msgid "Alt+L"
-msgstr "Alt+L"
-
-#. i18n: file slideshowlayout.ui line 449
-#: rc.cpp:72 slideshowlayout.cpp:217
-#, no-c-format
-msgid "Alt+O"
-msgstr "Alt+O"
-
-#. i18n: file slideshowlayout.ui line 466
-#: rc.cpp:75 slideshowlayout.cpp:218
-#, no-c-format
-msgid "Ca&ncel"
-msgstr "A&nuluj"
-
-#. i18n: file slideshowlayout.ui line 469
-#: rc.cpp:78 slideshowlayout.cpp:219
-#, no-c-format
-msgid "Alt+N"
-msgstr "Alt+N"
-
-#. i18n: file slideshowplugin.kcfg line 9
-#: rc.cpp:81
-#, no-c-format
-msgid "Duration to show one slide."
-msgstr "Czas trwania pokazu jednego slajdu."
-
-#. i18n: file slideshowplugin.kcfg line 12
-#: rc.cpp:84
-#, no-c-format
-msgid ""
-"\n"
-"        Default duration to show one slide.\n"
-"      "
-msgstr ""
-"\n"
-"        Domyślny Czas trwania pokazu jednego slajdu.\n"
-"      "
-
-#: slideshowobject.cpp:53
+#: slideshowobject.cpp:185
 msgid "&Properties"
 msgstr "&Właściwości"
 
-#: slideshowobject.cpp:129
+#: slideshowobject.cpp:214
 msgid "Processing slides...\n"
 msgstr "Przetwarzam slajdy...\n"
 
-#: slideshowobject.cpp:135
+#: slideshowobject.cpp:220
 msgid "Cannot add directory."
 msgstr "Nie mogę dodać katalogu."
 
-#: slideshowobject.cpp:217
+#: slideshowobject.cpp:265
+#, kde-format
 msgid "Page %1"
 msgstr "Strona %1"
 
-#: slideshowobject.cpp:379
-msgid "Preparing file(s) for %1"
-msgstr "Przygotowuję plik(i) dla %1"
-
-#: slideshowobject.cpp:487
-msgid "   Can't write slideshow file."
-msgstr "   Nie mogę zapisać pokazu slajdów do pliku."
-
-#: slideshowobject.cpp:493
-msgid "   Making Slideshow"
-msgstr "   Tworzę pokaz slajdów"
-
-#: slideshowobject.cpp:520
-msgid "   Slideshow error."
-msgstr "   Błąd pokazu slajdów."
-
-#: slideshowobject.cpp:525
-msgid "   Slideshow \"%1\" seems to be up to date"
+#: slideshowobject.cpp:467
+#, fuzzy, kde-format
+msgid "Slideshow \"%1\" seems to be up to date"
 msgstr "   Pokaz slajdów \"%1\" wydaje się być aktualny"
 
-#: slideshowplugin.cpp:34
-msgid "Slideshow plugin for KMediaFactory."
-msgstr "Pokaz slajdów plugin dla KMediaFactory."
-
-#: slideshowplugin.cpp:37
-msgid "KMediaFactory Slideshow"
-msgstr "KMediaFactory pokaz slajdów"
-
-#: slideshowplugin.cpp:58
+#: slideshowplugin.cpp:62
 msgid "Add Slideshow"
 msgstr "Dodaj pokaz slajdów"
 
-#: slideshowplugin.cpp:103
+#: slideshowplugin.cpp:118
 msgid "Slideshow"
 msgstr "Pokaz slajdów"
 
-#: slideshowproperties.cpp:164
+#: slideshowplugin.cpp:145
+#, fuzzy
+msgid "Slideshow plugin"
+msgstr "Pokaz slajdów"
+
+#: slideshowproperties.cpp:127
+msgid "Picture"
+msgstr ""
+
+#: slideshowproperties.cpp:129
+msgid "Comment"
+msgstr "Komentarz"
+
+#: slideshowproperties.cpp:152
+#, fuzzy
+msgid "Slideshow Properties"
+msgstr "Właściwości pokazu zdjęć"
+
+#: slideshowproperties.cpp:246
 msgid "Info: "
 msgstr "Informacje:"
 
-#: slideshowproperties.cpp:175
+#: slideshowproperties.cpp:256
+#, kde-format
 msgid "%1 images"
 msgstr "%1 obrazków"
 
-#: slideshowproperties.cpp:177 slideshowproperties.cpp:181
+#: slideshowproperties.cpp:258 slideshowproperties.cpp:262
+#, kde-format
 msgid ", Duration %1"
 msgstr ", czas trwania pokazu %1"
 
-#: slideshowproperties.cpp:184
+#: slideshowproperties.cpp:265
+#, kde-format
 msgid ", Audio duration %1"
 msgstr ", Czas trwania dźwięku %1"
 
-#: slideshowproperties.cpp:214
+#: slideshowproperties.cpp:281
 msgid ""
 "*.jpg *.png *.pdf *.odp *.odt *.ods *.odx *.sxw *.sxc *.sxi             *."
 "ppt *.xls *.doc|Pictures, Presentations\n"
@@ -255,15 +111,105 @@ msgstr ""
 "ppt *.xls *.doc|Obrazy, Prezentacje\n"
 "*.*|Wszystkie pliki"
 
-#: slideshowproperties.cpp:227
+#: slideshowproperties.cpp:294
 msgid "*.mp3 *.wav *.ogg|Audio Files"
 msgstr "*.mp3 *.wav *.ogg|pliki audio"
 
-#: slideshowproperties.cpp:228
+#: slideshowproperties.cpp:295
 msgid "Audio files"
 msgstr "pliki audio"
 
-#: slideshowproperties.cpp:251
+#: slideshowproperties.cpp:318
 msgid "You should have atleast one chapter."
 msgstr "Powinieneś mieć przynajmniej jeden rozdział."
 
+#~ msgid ""
+#~ "_: NAME OF TRANSLATORS\n"
+#~ "Your names"
+#~ msgstr "Tomił Grabowski"
+
+#~ msgid ""
+#~ "_: EMAIL OF TRANSLATORS\n"
+#~ "Your emails"
+#~ msgstr "tomig@tomig.com"
+
+#~ msgid "&Title:"
+#~ msgstr "&Tytuł:"
+
+#~ msgid "Image"
+#~ msgstr "Obraz"
+
+#~ msgid "Alt+Ins"
+#~ msgstr "Alt+Ins"
+
+#~ msgid "Add (Alt+ Insert)"
+#~ msgstr "Dodaj (Alt+ Insert)"
+
+#~ msgid "Alt+Del"
+#~ msgstr "Alt+Del"
+
+#~ msgid "Remove (Alt + Delete)"
+#~ msgstr "Usuń (Alt + Delete)"
+
+#~ msgid "Alt+Up"
+#~ msgstr "Alt+Up"
+
+#~ msgid "Move up (Alt + Up)"
+#~ msgstr "Przesuń w górę (Alt + Up)"
+
+#~ msgid "Alt+Down"
+#~ msgstr "Alt+Down"
+
+#~ msgid "Move down (Alt + Down)"
+#~ msgstr "Przesuń w dół (Alt + Down)"
+
+#~ msgid "&Slide duration:"
+#~ msgstr "Czas &slajdu"
+
+#~ msgid "fit"
+#~ msgstr "odpowiedni"
+
+#~ msgid "&Add original pictures to DVD"
+#~ msgstr "Dod&aj orginalny obraz do DVD"
+
+#~ msgid "Alt+A"
+#~ msgstr "Alt+A"
+
+#~ msgid "&Loop slideshow"
+#~ msgstr "Zapęt&l pokaz slajdów"
+
+#~ msgid "Alt+L"
+#~ msgstr "Alt+L"
+
+#~ msgid "Alt+O"
+#~ msgstr "Alt+O"
+
+#~ msgid "Ca&ncel"
+#~ msgstr "A&nuluj"
+
+#~ msgid "Alt+N"
+#~ msgstr "Alt+N"
+
+#~ msgid "Duration to show one slide."
+#~ msgstr "Czas trwania pokazu jednego slajdu."
+
+#~ msgid ""
+#~ "\n"
+#~ "        Default duration to show one slide.\n"
+#~ "      "
+#~ msgstr ""
+#~ "\n"
+#~ "        Domyślny Czas trwania pokazu jednego slajdu.\n"
+#~ "      "
+
+#~ msgid "Preparing file(s) for %1"
+#~ msgstr "Przygotowuję plik(i) dla %1"
+
+#~ msgid "   Making Slideshow"
+#~ msgstr "   Tworzę pokaz slajdów"
+
+#~ msgid "Slideshow plugin for KMediaFactory."
+#~ msgstr "Pokaz slajdów plugin dla KMediaFactory."
+
+#~ msgid "KMediaFactory Slideshow"
+#~ msgstr "KMediaFactory pokaz slajdów"

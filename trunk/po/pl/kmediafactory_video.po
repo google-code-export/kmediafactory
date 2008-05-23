@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: kmediafactory_video\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-15 23:09+0200\n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2008-05-23 11:23+0300\n"
 "PO-Revision-Date: 2006-04-18 12:48+0200\n"
 "Last-Translator: Tomil Grabowski <tomig@tomig.com>\n"
 "Language-Team: Polish\n"
@@ -15,513 +15,291 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.1\n"
 
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr "Tomił Grabowski"
-
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr "tomig@tomig.com"
-
-#. i18n: file addchapterlayout.ui line 16
-#. i18n: file autochapterslayout.ui line 16
-#: addchapterlayout.cpp:96 autochapterslayout.cpp:99 rc.cpp:3 rc.cpp:25
-#, no-c-format
-msgid "KMediaFactory"
-msgstr ""
-
-#. i18n: file addchapterlayout.ui line 27
-#: addchapterlayout.cpp:97 rc.cpp:6
-#, no-c-format
-msgid "&Name:"
-msgstr "&Nazwa:"
-
-#. i18n: file addchapterlayout.ui line 46
-#: addchapterlayout.cpp:99 rc.cpp:10
-#, no-c-format
-msgid "&Position:"
-msgstr "&Pozycja:"
-
-#. i18n: file addchapterlayout.ui line 126
-#. i18n: file autochapterslayout.ui line 126
-#. i18n: file chapterslayout.ui line 370
-#. i18n: file conversionlayout.ui line 244
-#. i18n: file languageselectionlayout.ui line 80
-#. i18n: file subtitleoptionslayout.ui line 199
-#. i18n: file videooptionslayout.ui line 361
-#: addchapterlayout.cpp:101 autochapterslayout.cpp:104 chapterslayout.cpp:216
-#: conversionlayout.cpp:146 languageselectionlayout.cpp:89 rc.cpp:16 rc.cpp:40
-#: rc.cpp:99 rc.cpp:150 rc.cpp:168 rc.cpp:219 rc.cpp:300
-#: subtitleoptionslayout.cpp:139 videooptionslayout.cpp:210
-#, no-c-format
-msgid "Alt+O"
-msgstr ""
-
-#. i18n: file addchapterlayout.ui line 146
-#. i18n: file conversionlayout.ui line 264
-#. i18n: file languageselectionlayout.ui line 100
-#. i18n: file subtitleoptionslayout.ui line 219
-#. i18n: file videooptionslayout.ui line 381
-#: addchapterlayout.cpp:103 conversionlayout.cpp:148
-#: languageselectionlayout.cpp:91 rc.cpp:22 rc.cpp:156 rc.cpp:174 rc.cpp:225
-#: rc.cpp:306 subtitleoptionslayout.cpp:141 videooptionslayout.cpp:212
-#, no-c-format
-msgid "Alt+C"
-msgstr ""
-
-#. i18n: file autochapterslayout.ui line 27
-#: autochapterslayout.cpp:100 rc.cpp:28
-#, no-c-format
-msgid "&Name (Use %1 for digit):"
-msgstr "&Nazwa (Użuj %1 dla cyfry):"
-
-#. i18n: file autochapterslayout.ui line 38
-#: autochapterslayout.cpp:101 rc.cpp:31 videoobject.cpp:867
-#, no-c-format
-msgid "Chapter %1"
-msgstr "Rozdział %1"
-
-#. i18n: file autochapterslayout.ui line 46
-#: autochapterslayout.cpp:102 rc.cpp:34
-#, no-c-format
-msgid "&Interval:"
-msgstr "&Odstęp:"
-
-#. i18n: file autochapterslayout.ui line 143
-#: autochapterslayout.cpp:105 rc.cpp:43
-#, no-c-format
-msgid "C&ancel"
-msgstr "&Anuluj"
-
-#. i18n: file autochapterslayout.ui line 146
-#: autochapterslayout.cpp:106 rc.cpp:46
-#, no-c-format
-msgid "Alt+A"
-msgstr ""
-
-#: chapters.cpp:221
-msgid "&Delete all"
-msgstr "Skasuj wszystko"
-
-#: chapters.cpp:222
-msgid "&Rename all"
-msgstr "&Zmień wszystkie nazwy"
-
-#: chapters.cpp:223
-msgid "&Auto chapters"
-msgstr "&Automatyczne rozdziały"
-
-#: chapters.cpp:224
-msgid "Import chapter file"
-msgstr "Importuj plik rozdziału"
-
-#: chapters.cpp:328
-msgid "You should have atleast one chapter."
-msgstr "Powinieneś mieć przynajmniej jeden rozdział."
-
-#. i18n: file chapterslayout.ui line 22
-#: chapterslayout.cpp:194 rc.cpp:49
-#, no-c-format
-msgid "Chapters"
-msgstr "Rozdziały"
-
-#. i18n: file chapterslayout.ui line 41
-#: chapterslayout.cpp:195 rc.cpp:52
-#, no-c-format
-msgid "&Chapters:"
-msgstr "&Rozdziały"
-
-#. i18n: file chapterslayout.ui line 184
-#: chapterslayout.cpp:200 rc.cpp:63
-#, no-c-format
-msgid "&Use as Custom Preview"
-msgstr "& Użyj jako dowolny podgląd  "
-
-#. i18n: file chapterslayout.ui line 187
-#. i18n: file videoconfiglayout.ui line 62
-#: chapterslayout.cpp:201 rc.cpp:66 rc.cpp:240 videoconfiglayout.cpp:76
-#, no-c-format
-msgid "Alt+U"
-msgstr ""
-
-#. i18n: file chapterslayout.ui line 220
-#: chapterslayout.cpp:203 kmfchapterlistview.cpp:85 rc.cpp:70
-#, no-c-format
-msgid "Start"
-msgstr ""
-
-#. i18n: file chapterslayout.ui line 237
-#: chapterslayout.cpp:205 rc.cpp:74
-#, no-c-format
-msgid "Rewind"
-msgstr "Przewiń"
-
-#. i18n: file chapterslayout.ui line 254
-#: chapterslayout.cpp:207 rc.cpp:78
-#, no-c-format
-msgid "Previous frame"
-msgstr "Poprzednia ramka"
-
-#. i18n: file chapterslayout.ui line 271
-#: chapterslayout.cpp:209 rc.cpp:82
-#, no-c-format
-msgid "Next frame"
-msgstr "Następna ramka"
-
-#. i18n: file chapterslayout.ui line 288
-#: chapterslayout.cpp:211 rc.cpp:86
-#, no-c-format
-msgid "Forward"
-msgstr "Naprzód"
-
-#. i18n: file chapterslayout.ui line 305
-#: chapterslayout.cpp:213 rc.cpp:90
-#, no-c-format
-msgid "End"
-msgstr "Koniec"
-
-#. i18n: file chapterslayout.ui line 315
-#: chapterslayout.cpp:214 rc.cpp:93
-#, no-c-format
-msgid "00:00"
-msgstr ""
-
-#. i18n: file chapterslayout.ui line 387
-#: chapterslayout.cpp:217 rc.cpp:102
-#, no-c-format
-msgid "Ca&ncel"
-msgstr "A&nuluj"
-
-#. i18n: file chapterslayout.ui line 390
-#: chapterslayout.cpp:218 rc.cpp:105
-#, no-c-format
-msgid "Alt+N"
-msgstr ""
-
-#. i18n: file conversionlayout.ui line 16
-#: conversionlayout.cpp:131 rc.cpp:108
-#, no-c-format
-msgid "Conversion Params"
-msgstr "Parametry konwersji"
-
-#. i18n: file conversionlayout.ui line 27
-#: conversionlayout.cpp:132 rc.cpp:111
-#, no-c-format
-msgid "Higher qualit&y encoding (Two pass)"
-msgstr "Wysoka jakość kodowania (podwójna)"
-
-#. i18n: file conversionlayout.ui line 30
-#: conversionlayout.cpp:133 rc.cpp:114
-#, no-c-format
-msgid "Alt+Y"
-msgstr ""
-
-#. i18n: file conversionlayout.ui line 46
-#: conversionlayout.cpp:134 rc.cpp:117
-#, no-c-format
-msgid "Video &bitrate:"
-msgstr ""
-
-#. i18n: file conversionlayout.ui line 74
-#. i18n: file conversionlayout.ui line 167
-#: conversionlayout.cpp:135 conversionlayout.cpp:143 rc.cpp:120 rc.cpp:141
-#, no-c-format
-msgid "0"
-msgstr ""
-
-#. i18n: file conversionlayout.ui line 82
-#. i18n: file conversionlayout.ui line 175
-#: conversionlayout.cpp:136 conversionlayout.cpp:144 rc.cpp:123 rc.cpp:144
-#, no-c-format
-msgid "kb/s"
-msgstr ""
-
-#. i18n: file conversionlayout.ui line 100
-#: conversionlayout.cpp:137 rc.cpp:126
-#, no-c-format
-msgid "Audio &type:"
-msgstr "&Typ Audio:"
-
-#. i18n: file conversionlayout.ui line 109
-#: conversionlayout.cpp:139 rc.cpp:129
-#, no-c-format
-msgid "AC3"
-msgstr ""
-
-#. i18n: file conversionlayout.ui line 114
-#: conversionlayout.cpp:140 rc.cpp:132
-#, no-c-format
-msgid "MP2"
-msgstr ""
-
-#. i18n: file conversionlayout.ui line 119
-#: conversionlayout.cpp:141 rc.cpp:135
-#, no-c-format
-msgid "PCM"
-msgstr ""
-
-#. i18n: file conversionlayout.ui line 139
-#: conversionlayout.cpp:142 rc.cpp:138
-#, no-c-format
-msgid "&Audio bitrate:"
-msgstr ""
-
-#: kmfchapterlistview.cpp:84
+#: chapters.cpp:105
 msgid "Name"
 msgstr "Nazwa"
 
-#: kmfchapterlistview.cpp:86
+#: chapters.cpp:107
+msgid "Start"
+msgstr ""
+
+#: chapters.cpp:109
 msgid "Length"
 msgstr "Długość"
 
-#. i18n: file languageselectionlayout.ui line 16
-#: languageselectionlayout.cpp:86 rc.cpp:159
-#, no-c-format
-msgid "Select language"
-msgstr "Wybierz język"
+#: chapters.cpp:126
+#, fuzzy
+msgid "Add chapters"
+msgstr "&Automatyczne rozdziały"
 
-#. i18n: file languageselectionlayout.ui line 27
-#: languageselectionlayout.cpp:87 rc.cpp:162
-#, no-c-format
-msgid "La&nguages:"
-msgstr "Ję&zyki:"
+#: chapters.cpp:145
+msgid "Chapters"
+msgstr "Rozdziały"
 
-#. i18n: file subtitleoptionslayout.ui line 16
-#: rc.cpp:177 subtitleoptionslayout.cpp:121
-#, no-c-format
+#: chapters.cpp:319
+msgid "&Delete all"
+msgstr "Skasuj wszystko"
+
+#: chapters.cpp:320
+msgid "&Rename all"
+msgstr "&Zmień wszystkie nazwy"
+
+#: chapters.cpp:321
+msgid "&Auto chapters"
+msgstr "&Automatyczne rozdziały"
+
+#: chapters.cpp:322
+msgctxt "Import chapter file"
+msgid "&Import"
+msgstr ""
+
+#: chapters.cpp:333
+#, fuzzy
+msgid "Rename All"
+msgstr "&Zmień wszystkie nazwy"
+
+#: chapters.cpp:354
+#, fuzzy
+msgid "Auto chapters"
+msgstr "&Automatyczne rozdziały"
+
+#: chapters.cpp:437
+msgid "You should have atleast one chapter."
+msgstr "Powinieneś mieć przynajmniej jeden rozdział."
+
+#: subtitleoptions.cpp:36
 msgid "Subtitle options"
 msgstr "Opcje napisów:"
 
-#. i18n: file subtitleoptionslayout.ui line 27
-#: rc.cpp:180 subtitleoptionslayout.cpp:122
-#, no-c-format
-msgid "La&nguage:"
-msgstr "Ję&zyk:"
-
-#. i18n: file subtitleoptionslayout.ui line 43
-#: rc.cpp:183 subtitleoptionslayout.cpp:123
-#, no-c-format
-msgid "Su&btitle File:"
-msgstr "Plik z &napisami:"
-
-#. i18n: file subtitleoptionslayout.ui line 59
-#: rc.cpp:186 subtitleoptionslayout.cpp:124
-#, no-c-format
-msgid "Subtitle Font:"
-msgstr "Czcionka napisów:"
-
-#. i18n: file subtitleoptionslayout.ui line 75
-#: rc.cpp:189 subtitleoptionslayout.cpp:125
-#, no-c-format
-msgid "Hori&zontal Alignment:"
-msgstr "Ustawienie po&ziome:"
-
-#. i18n: file subtitleoptionslayout.ui line 114
-#: rc.cpp:204 subtitleoptionslayout.cpp:132
-#, no-c-format
-msgid "Vertical &Alignment"
-msgstr "Ust&awienie pionowe"
-
-#. i18n: file videoconfiglayout.ui line 16
-#: rc.cpp:228 videoconfiglayout.cpp:72
-#, no-c-format
-msgid "Configure Video Plugin"
-msgstr "Konfiguracja plugina Video"
-
-#. i18n: file videoconfiglayout.ui line 27
-#: rc.cpp:231 videoconfiglayout.cpp:73
-#, no-c-format
-msgid "Default &Audio Language:"
-msgstr "Domyślny język &Audio:"
-
-#. i18n: file videoconfiglayout.ui line 43
-#: rc.cpp:234 videoconfiglayout.cpp:74
-#, no-c-format
-msgid "Default Subtitle Lan&guage:"
-msgstr "Domyślny język napisów:"
-
-#. i18n: file videoconfiglayout.ui line 59
-#: rc.cpp:237 videoconfiglayout.cpp:75
-#, no-c-format
-msgid "&Use Image Cache"
-msgstr "&Użyj bufora obrazów"
-
-#. i18n: file videooptionslayout.ui line 16
-#: rc.cpp:243 videooptionslayout.cpp:186
-#, no-c-format
-msgid "Video Options"
-msgstr "Opcje Video"
-
-#. i18n: file videooptionslayout.ui line 27
-#: rc.cpp:246 videooptionslayout.cpp:187
-#, no-c-format
-msgid "Tit&le:"
-msgstr "&Tytuł:"
-
-#. i18n: file videooptionslayout.ui line 43
-#: rc.cpp:249 videooptionslayout.cpp:188
-#, no-c-format
-msgid "Custom &preview:"
-msgstr "Dowolny &podgląd:"
-
-#. i18n: file videooptionslayout.ui line 62
-#: rc.cpp:252 videooptionslayout.cpp:189
-#, no-c-format
-msgid "&Aspect ratio:"
-msgstr "&Format Video:"
-
-#. i18n: file videooptionslayout.ui line 71
-#: rc.cpp:255 videooptionslayout.cpp:191
-#, no-c-format
-msgid "4:3"
-msgstr ""
-
-#. i18n: file videooptionslayout.ui line 76
-#: rc.cpp:258 videooptionslayout.cpp:192
-#, no-c-format
-msgid "16:9"
-msgstr ""
-
-#. i18n: file videooptionslayout.ui line 88
-#: rc.cpp:261 videooptionslayout.cpp:193
-#, no-c-format
-msgid "Audio Trac&ks:"
-msgstr "Ścież&ka Audio:"
-
-#. i18n: file videooptionslayout.ui line 155
-#: rc.cpp:268 videooptionslayout.cpp:196
-#, no-c-format
-msgid "Subtitles:"
-msgstr "Napisy:"
-
-#. i18n: file videooptionslayout.ui line 263
-#. i18n: file videooptionslayout.ui line 303
-#: rc.cpp:283 rc.cpp:290 videooptionslayout.cpp:203 videooptionslayout.cpp:206
-#, no-c-format
-msgid "xx"
-msgstr ""
-
-#. i18n: file videoplugin.kcfg line 10
-#: rc.cpp:309
-#, no-c-format
-msgid ""
-"Save preview pictures in menu dir. Usefull when making\n"
-"same DVD multiple times (testing)."
-msgstr ""
-"Zapisz podglądane obrazy w katalogu menu. Przydatne\n"
-"kiedy tworzysz to samo DVD wiele razy (testy)/"
-
-#. i18n: file videoplugin.kcfg line 14
-#: rc.cpp:313
-#, no-c-format
-msgid "Black frame detection offset"
-msgstr ""
-
-#. i18n: file videoplugin.kcfg line 18
-#: rc.cpp:316
-#, no-c-format
-msgid "Use this as a default audio language for new files."
-msgstr "Użyj tego jako domyślny język audio dla nowych plików."
-
-#. i18n: file videoplugin.kcfg line 23
-#: rc.cpp:319
-#, no-c-format
-msgid ""
-"Use this as a default subtitle language for new\n"
-"                 subtitles."
-msgstr ""
-"Użyj tego jako domyślny język napisów dla nowych\n"
-"                 napisów."
-
-#: subtitleoptions.cpp:59
+#: subtitleoptions.cpp:67
 msgid "Subtitle files"
 msgstr "Plik napisów"
 
-#: subtitleoptions.cpp:60
+#: subtitleoptions.cpp:68
 msgid "All files"
 msgstr "Wszystkie pliki"
 
-#: subtitleoptions.cpp:80
+#: subtitleoptions.cpp:116
 msgid "Subtitle file does not exists."
 msgstr "Plik z napisami nie istnieje."
 
-#: videoobject.cpp:52
+#: videoobject.cpp:50 videoobject.cpp:68
+#, fuzzy, kde-format
+msgid "Subtitles for: %1"
+msgstr "Napisy:"
+
+#: videoobject.cpp:91
+#, fuzzy
+msgid "Conversion error."
+msgstr "   Błąd konwersji."
+
+#: videoobject.cpp:178
 msgid "&Properties"
 msgstr "&Właściwości"
 
-#: videoobject.cpp:57
-msgid "Play video"
+#: videoobject.cpp:186
+#, fuzzy
+msgid "&Play Video"
 msgstr "Odtwarzaj video"
 
-#: videoobject.cpp:501
-msgid "   Converting %1 to DVD format%2"
-msgstr "   Konwerjsa %1 do formatu DVD%2"
+#: videoobject.cpp:592
+#, kde-format
+msgid "Video: %1"
+msgstr ""
 
-#: videoobject.cpp:531 videoobject.cpp:688
-msgid "   Conversion error."
-msgstr "   Błąd konwersji."
-
-#: videoobject.cpp:547
-msgid "   Conversion of %1 seems to be up to date"
-msgstr "   Konwersja z %1 wydaje się być aktualna"
-
-#: videoobject.cpp:667
-msgid "   Adding subtitles to %1"
-msgstr "   Dodaję napisy do %1"
-
-#: videoobject.cpp:695
-msgid "   Subtitle conversion seems to be up to date"
+#: videoobject.cpp:629
+#, fuzzy, kde-format
+msgid "Subtitle conversion seems to be up to date for %1"
 msgstr "   Konwersja napisów wydaje się być aktualna"
 
-#: videoobject.cpp:704
-msgid "Preparing file(s) for %1"
-msgstr "Przygotowuję plik(i) %1"
+#: videoobject.cpp:790
+#, kde-format
+msgid "Chapter %1"
+msgstr "Rozdział %1"
 
-#: videoobject.cpp:1005
+#: videoobject.cpp:912
 msgid "Make DVD"
 msgstr "Ttworzę DVD"
 
-#: videoobject.cpp:1006
+#: videoobject.cpp:913
 msgid "Make preview DVD with dummy videos"
 msgstr "Pokaż podgląd DVD za pomocą fikcyjnego video."
 
-#: videooptions.cpp:197
-msgid "Video has %1 chapter"
-msgstr "Video ma %1 rozdział(y)"
+#: videooptions.cpp:43
+#, fuzzy
+msgid "Select Language"
+msgstr "Wybierz język"
 
-#: videooptions.cpp:199
-msgid "Video %1kb/s, Audio %2kb/s"
-msgstr ""
+#: videooptions.cpp:65
+msgid "Video Options"
+msgstr "Opcje Video"
 
-#: videoplugin.cpp:41
-msgid "Video plugin for KMediaFactory."
-msgstr "Plugin video dla KMediaFactory."
+#: videooptions.cpp:209
+#, fuzzy, kde-format
+msgid "Video has 1 chapter"
+msgid_plural "Video has %1 chapters"
+msgstr[0] "Video ma %1 rozdział(y)"
+msgstr[1] "Video ma %1 rozdział(y)"
 
-#: videoplugin.cpp:44
-msgid "KMediaFactory Video"
-msgstr "KMediaFactory Video"
-
-#: videoplugin.cpp:64
-msgid "Add Video"
-msgstr "Dodaj Video"
-
-#: videoplugin.cpp:78
+#: videoplugin.cpp:69
 msgid "Video plugin"
 msgstr "plugin Video"
 
-#: videoplugin.cpp:103
+#: videoplugin.cpp:77
+msgid "Add Video"
+msgstr "Dodaj Video"
+
+#: videoplugin.cpp:116
 msgid "Multiple files make multiple titles."
 msgstr "Z wielu plików trórz wiele tytułów."
 
-#: videoplugin.cpp:124
+#: videoplugin.cpp:119
+msgid "Open"
+msgstr ""
+
+#: videoplugin.cpp:138
 msgid "Cannot add directory."
 msgstr "Nie mogę dodać katalogu."
 
-#: videoplugin.cpp:132
+#: videoplugin.cpp:146
+#, kde-format
 msgid "Couldn't add file: %1"
 msgstr "Nie mogę dodać pliku: %1"
 
+#~ msgid ""
+#~ "_: NAME OF TRANSLATORS\n"
+#~ "Your names"
+#~ msgstr "Tomił Grabowski"
+
+#~ msgid ""
+#~ "_: EMAIL OF TRANSLATORS\n"
+#~ "Your emails"
+#~ msgstr "tomig@tomig.com"
+
+#~ msgid "&Name:"
+#~ msgstr "&Nazwa:"
+
+#~ msgid "&Position:"
+#~ msgstr "&Pozycja:"
+
+#~ msgid "&Name (Use %1 for digit):"
+#~ msgstr "&Nazwa (Użuj %1 dla cyfry):"
+
+#~ msgid "&Interval:"
+#~ msgstr "&Odstęp:"
+
+#~ msgid "C&ancel"
+#~ msgstr "&Anuluj"
+
+#~ msgid "Import chapter file"
+#~ msgstr "Importuj plik rozdziału"
+
+#~ msgid "&Chapters:"
+#~ msgstr "&Rozdziały"
+
+#~ msgid "&Use as Custom Preview"
+#~ msgstr "& Użyj jako dowolny podgląd  "
+
+#~ msgid "Rewind"
+#~ msgstr "Przewiń"
+
+#~ msgid "Previous frame"
+#~ msgstr "Poprzednia ramka"
+
+#~ msgid "Next frame"
+#~ msgstr "Następna ramka"
+
+#~ msgid "Forward"
+#~ msgstr "Naprzód"
+
+#~ msgid "End"
+#~ msgstr "Koniec"
+
+#~ msgid "Ca&ncel"
+#~ msgstr "A&nuluj"
+
+#~ msgid "Conversion Params"
+#~ msgstr "Parametry konwersji"
+
+#~ msgid "Higher qualit&y encoding (Two pass)"
+#~ msgstr "Wysoka jakość kodowania (podwójna)"
+
+#~ msgid "Audio &type:"
+#~ msgstr "&Typ Audio:"
+
+#~ msgid "La&nguages:"
+#~ msgstr "Ję&zyki:"
+
+#~ msgid "La&nguage:"
+#~ msgstr "Ję&zyk:"
+
+#~ msgid "Su&btitle File:"
+#~ msgstr "Plik z &napisami:"
+
+#~ msgid "Subtitle Font:"
+#~ msgstr "Czcionka napisów:"
+
+#~ msgid "Hori&zontal Alignment:"
+#~ msgstr "Ustawienie po&ziome:"
+
+#~ msgid "Vertical &Alignment"
+#~ msgstr "Ust&awienie pionowe"
+
+#~ msgid "Configure Video Plugin"
+#~ msgstr "Konfiguracja plugina Video"
+
+#~ msgid "Default &Audio Language:"
+#~ msgstr "Domyślny język &Audio:"
+
+#~ msgid "Default Subtitle Lan&guage:"
+#~ msgstr "Domyślny język napisów:"
+
+#~ msgid "&Use Image Cache"
+#~ msgstr "&Użyj bufora obrazów"
+
+#~ msgid "Tit&le:"
+#~ msgstr "&Tytuł:"
+
+#~ msgid "Custom &preview:"
+#~ msgstr "Dowolny &podgląd:"
+
+#~ msgid "&Aspect ratio:"
+#~ msgstr "&Format Video:"
+
+#~ msgid "Audio Trac&ks:"
+#~ msgstr "Ścież&ka Audio:"
+
+#~ msgid ""
+#~ "Save preview pictures in menu dir. Usefull when making\n"
+#~ "same DVD multiple times (testing)."
+#~ msgstr ""
+#~ "Zapisz podglądane obrazy w katalogu menu. Przydatne\n"
+#~ "kiedy tworzysz to samo DVD wiele razy (testy)/"
+
+#~ msgid "Use this as a default audio language for new files."
+#~ msgstr "Użyj tego jako domyślny język audio dla nowych plików."
+
+#~ msgid ""
+#~ "Use this as a default subtitle language for new\n"
+#~ "                 subtitles."
+#~ msgstr ""
+#~ "Użyj tego jako domyślny język napisów dla nowych\n"
+#~ "                 napisów."
+
+#~ msgid "   Converting %1 to DVD format%2"
+#~ msgstr "   Konwerjsa %1 do formatu DVD%2"
+
+#~ msgid "   Conversion of %1 seems to be up to date"
+#~ msgstr "   Konwersja z %1 wydaje się być aktualna"
+
+#~ msgid "   Adding subtitles to %1"
+#~ msgstr "   Dodaję napisy do %1"
+
+#~ msgid "Preparing file(s) for %1"
+#~ msgstr "Przygotowuję plik(i) %1"
+
+#~ msgid "Video plugin for KMediaFactory."
+#~ msgstr "Plugin video dla KMediaFactory."
+
+#~ msgid "KMediaFactory Video"
+#~ msgstr "KMediaFactory Video"

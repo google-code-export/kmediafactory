@@ -2,5 +2,5 @@
 
 $EXTRACTRC *.ui >  rc.cpp
 $EXTRACTRC *.rc >> rc.cpp
-$XGETTEXT *.kcfg *.cpp *.h -o $podir/libkmf.pot
+$XGETTEXT *.cpp *.h -o $podir/kmediafactory_interface.pot
 rm -f rc.cpp

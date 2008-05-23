@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: kmediafactory\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-30 17:10-0300\n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2008-05-23 11:17+0300\n"
 "PO-Revision-Date: 2006-04-30 17:36-0300\n"
 "Last-Translator: Caio Begotti <caio@ueberalles.net>\n"
 "Language-Team:  <en@li.org>\n"
@@ -15,109 +15,43 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.2\n"
 
-#: _translatorinfo.cpp:1
-msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr "Caio Begotti"
-
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr "caio@ueberalles.net"
-
-#. i18n: file mediapagelayout.ui line 22
-#: kmediafactory.cpp:103 rc.cpp:48
-#, no-c-format
-msgid "Media"
-msgstr "Mídia"
-
-#: kmediafactory.cpp:113
-msgid "Template"
-msgstr "Modelo"
-
-#. i18n: file outputpagelayout.ui line 16
-#: kmediafactory.cpp:120 rc.cpp:57
-#, no-c-format
-msgid "Output"
-msgstr "Saída de comando"
-
-#: kmediafactory.cpp:168
-msgid "&Get new tools"
-msgstr "Obter novas ferramentas"
-
-#: kmediafactory.cpp:191
-msgid "&Test"
-msgstr "&Testar"
-
-#: kmediafactory.cpp:343 templatepage.cpp:171
-msgid "Could not write to file: %1"
-msgstr "Não foi possível gravar no arquivo: %1"
-
-#: kmediafactory.cpp:463
-msgid "Error in starting %1: %2"
-msgstr "Erro ao iniciar %1: %2"
-
-#: kmediafactory.cpp:486 main.cpp:41
+#: main.cpp:31 kmediafactory.cpp:465 kmediafactory.cpp:466
 msgid "KMediaFactory"
 msgstr "KMediaFactory"
 
-#. i18n: file toolslayout.ui line 22
-#: kmediafactory.cpp:488 rc.cpp:169
-#, no-c-format
-msgid "Tools"
-msgstr "Ferramentas"
-
-#: kmediafactory.cpp:524
-msgid "Save changes to project?"
-msgstr "Salvar alterações do projeto?"
-
-#: kmfapplication.cpp:215
-msgid "Could not register with DCOP.\n"
-msgstr "Não foi possível registrar com DCOP.\n"
-
-#: kmfapplication.cpp:250
-msgid "KLauncher could not be reached via DCOP.\n"
-msgstr "KLauncher está inacessível via DCOP.\n"
-
-#: kmfproject.cpp:72
-msgid "Project%1"
-msgstr "Projeto %1"
-
-#: kmfproject.cpp:94
-msgid "No media files."
-msgstr "Nenhum arquivo de mídia."
-
-#: kmfproject.cpp:99
-msgid "No template selected."
-msgstr "Nenhum modelo selecionado."
-
-#: kmfproject.cpp:104
-msgid "No output type selected."
-msgstr "Nenhum tipo de saída de comando selecionado."
-
-#: kmfproject.cpp:430
-msgid "Do you want to overwrite %1"
-msgstr "Você deseja sobreescrever %1 ?"
-
-#: main.cpp:29
+#: main.cpp:32
 msgid "Template based DVD authoring software."
 msgstr "Software de autoração de DVD baseado em modelos."
 
-#: main.cpp:35
+#: main.cpp:36
+msgid "Petri Damsten"
+msgstr ""
+
+#: main.cpp:36
+msgid "Developer"
+msgstr ""
+
+#: main.cpp:41
 msgid "Document to open"
 msgstr "Documento para abrir"
 
-#: outputpage.cpp:104
-msgid "User cancelled."
-msgstr "Usuário cancelado."
+#: tools.cpp:92
+msgid "Name"
+msgstr "Nome"
 
-#: projectoptions.cpp:70
+#: tools.cpp:94
+msgid "Description"
+msgstr "Descrição"
+
+#: projectoptions.cpp:76
 msgid "Project"
 msgstr "Projeto"
 
-#: projectoptions.cpp:104
+#: projectoptions.cpp:88 kmfproject.cpp:54
+msgid "Untitled"
+msgstr ""
+
+#: projectoptions.cpp:111
 msgid ""
 "Media files will be removed from the project when project type changes. "
 "Continue?"
@@ -125,315 +59,285 @@ msgstr ""
 "Arquivos de mídia serão removidos do projeto quando o tipo dele mudar. "
 "Continuar mesmo assim?"
 
-#. i18n: file kmediafactoryui.rc line 5
-#: rc.cpp:3
-#, no-c-format
-msgid "&Project"
-msgstr "&Projeto"
+#: kmfapplication.cpp:209
+#, fuzzy, kde-format
+msgid ""
+"KLauncher could not be reached via D-Bus, error when calling %1:\n"
+"%2\n"
+msgstr "KLauncher está inacessível via DCOP.\n"
 
-#. i18n: file kmediafactoryui.rc line 9
-#: rc.cpp:6
-#, no-c-format
-msgid "&Media"
-msgstr "&Mídia"
+#: outputpage.cpp:134
+msgid "User cancelled."
+msgstr "Usuário cancelado."
 
-#. i18n: file kmfoptionslayout.ui line 16
-#: rc.cpp:15
-#, no-c-format
-msgid "KMediaFactory Settings"
-msgstr "Configurações do KMediaFactory"
+#: outputpage.cpp:162
+msgid "Preparing files..."
+msgstr ""
 
-#. i18n: file kmfoptionslayout.ui line 27
-#: rc.cpp:18
-#, no-c-format
-msgid "Def&ault Project Type:"
-msgstr "Tipo P&adrão de Projeto:"
+#: outputpage.cpp:169
+msgid "Making files..."
+msgstr ""
 
-#. i18n: file kmfoptionslayout.ui line 36
-#: rc.cpp:21
-#, no-c-format
-msgid "DVD-PAL"
-msgstr "DVD-PAL"
+#: kmfproject.cpp:61
+#, kde-format
+msgid "Project%1"
+msgstr "Projeto %1"
 
-#. i18n: file kmfoptionslayout.ui line 41
-#: rc.cpp:24
-#, no-c-format
-msgid "DVD-NTSC"
-msgstr "DVD-NTSC"
+#: kmfproject.cpp:83
+msgid "No media files."
+msgstr "Nenhum arquivo de mídia."
 
-#. i18n: file kmfoptionslayout.ui line 56
-#: rc.cpp:27
-#, no-c-format
-msgid "Default Project Director&y:"
-msgstr "Diretór&io Padrão de Projeto:"
+#: kmfproject.cpp:88
+msgid "No template selected."
+msgstr "Nenhum modelo selecionado."
 
-#. i18n: file kmfoptionslayout.ui line 75
-#: rc.cpp:30
-#, no-c-format
-msgid "Show project &options on new project"
-msgstr "Exibir &opções em um novo projeto"
+#: kmfproject.cpp:93
+msgid "No output type selected."
+msgstr "Nenhum tipo de saída de comando selecionado."
 
-#. i18n: file kmfoptionslayout.ui line 78
-#. i18n: file projectoptionslayout.ui line 129
-#. i18n: file toolpropertieslayout.ui line 196
-#: rc.cpp:33 rc.cpp:99 rc.cpp:160
-#, no-c-format
-msgid "Alt+O"
-msgstr "Alt+O"
+#: kmfproject.cpp:369
+#, kde-format
+msgid "Do you want to overwrite %1"
+msgstr "Você deseja sobreescrever %1 ?"
 
-#. i18n: file logviewlayout.ui line 22
-#: rc.cpp:36
-#, no-c-format
-msgid "Log viewer"
-msgstr "Visualizador de log"
+#: templatepage.cpp:183
+msgid "Save image"
+msgstr "Salvar imagem"
 
-#. i18n: file logviewlayout.ui line 33
-#: rc.cpp:39
-#, no-c-format
-msgid "&Log:"
-msgstr "&Log:"
+#: templatepage.cpp:184
+msgid "Scaled"
+msgstr ""
 
-#. i18n: file logviewlayout.ui line 100
-#: rc.cpp:45
-#, no-c-format
-msgid "Alt+C"
-msgstr "Alt+C"
+#: templatepage.cpp:215
+msgid "*.png|PNG Graphics file"
+msgstr "*.png|PNG Arquivos gráficos"
 
-#. i18n: file mediapagelayout.ui line 33
-#: rc.cpp:51
-#, no-c-format
-msgid "Add media:"
-msgstr "Adicionar mídia:"
+#: templatepage.cpp:221 kmediafactory.cpp:338
+#, kde-format
+msgid "Could not write to file: %1"
+msgstr "Não foi possível gravar no arquivo: %1"
 
-#. i18n: file mediapagelayout.ui line 59
-#: rc.cpp:54
-#, no-c-format
-msgid "Selected media:"
-msgstr "Mídia selecionada:"
+#: kmediafactory.cpp:102 kmediafactory.cpp:103
+msgid "Media"
+msgstr "Mídia"
 
-#. i18n: file outputpagelayout.ui line 27
-#: rc.cpp:60
-#, no-c-format
-msgid "Select output t&ype:"
-msgstr "Selecione o t&ipo de saída de comando:"
+#: kmediafactory.cpp:109 kmediafactory.cpp:110
+msgid "Template"
+msgstr "Modelo"
 
-#. i18n: file outputpagelayout.ui line 66
-#: rc.cpp:63
-#, no-c-format
+#: kmediafactory.cpp:120 kmediafactory.cpp:121
+msgid "Output"
+msgstr "Saída de comando"
+
+#: kmediafactory.cpp:164
+#, fuzzy
+msgid "&Options"
+msgstr "Opções de Projeto"
+
+#: kmediafactory.cpp:169
+msgid "&Get new tools"
+msgstr "Obter novas ferramentas"
+
+#: kmediafactory.cpp:184
+msgid "&Delete"
+msgstr ""
+
+#: kmediafactory.cpp:467 kmediafactory.cpp:468
+msgid "Tools"
+msgstr "Ferramentas"
+
+#: kmediafactory.cpp:504
+msgid "Save changes to project?"
+msgstr "Salvar alterações do projeto?"
+
+#: toolproperties.cpp:31
+#, fuzzy
+msgid "Tool properties"
+msgstr "Propriedades da ferramenta"
+
+#: kmfplugininterface.cpp:255
 msgid "Progress:"
 msgstr "Progresso:"
 
-#. i18n: file outputpagelayout.ui line 137
-#: rc.cpp:66
-#, no-c-format
-msgid "Show &Log"
-msgstr "Exibir &Log"
-
-#. i18n: file outputpagelayout.ui line 140
-#: rc.cpp:69
-#, no-c-format
-msgid "Alt+L"
-msgstr "Alt+L"
-
-#. i18n: file outputpagelayout.ui line 165
-#: rc.cpp:72
-#, no-c-format
-msgid "S&top"
-msgstr "In&terromper"
-
-#. i18n: file outputpagelayout.ui line 168
-#: rc.cpp:75
-#, no-c-format
-msgid "Alt+T"
-msgstr "Alt+T"
-
-#. i18n: file outputpagelayout.ui line 182
-#: rc.cpp:78
-#, no-c-format
-msgid "Alt+S"
-msgstr "Alt+S"
-
-#. i18n: file outputpagelayout.ui line 185
-#: rc.cpp:81
-#, no-c-format
-msgid "S&tart"
-msgstr "Iniciar"
-
-#. i18n: file projectoptionslayout.ui line 16
-#: rc.cpp:84
-#, no-c-format
-msgid "Project Options"
-msgstr "Opções de Projeto"
-
-#. i18n: file projectoptionslayout.ui line 27
-#: rc.cpp:87
-#, no-c-format
-msgid "&Title:"
+#: kmfobjectlistmodel.h:49
+#, fuzzy
+msgid "Title"
 msgstr "&Título:"
 
-#. i18n: file projectoptionslayout.ui line 43
-#: rc.cpp:90
-#, no-c-format
-msgid "T&ype:"
-msgstr "T&ipo:"
-
-#. i18n: file projectoptionslayout.ui line 59
-#: rc.cpp:93
-#, no-c-format
-msgid "Direct&ory:"
-msgstr "Diretóri&o:"
-
-#. i18n: file projectoptionslayout.ui line 146
-#. i18n: file toolpropertieslayout.ui line 207
-#: rc.cpp:102 rc.cpp:163
-#, no-c-format
-msgid "C&ancel"
-msgstr "C&ancelar"
-
-#. i18n: file projectoptionslayout.ui line 149
-#. i18n: file toolpropertieslayout.ui line 210
-#: rc.cpp:105 rc.cpp:166
-#, no-c-format
-msgid "Alt+A"
-msgstr "Alt+A"
-
-#. i18n: file sizewidgetlayout.ui line 16
-#: rc.cpp:108
-#, no-c-format
-msgid "Size Widget"
-msgstr "Tamanho do widget"
-
-#. i18n: file sizewidgetlayout.ui line 151
-#: rc.cpp:111
-#, no-c-format
-msgid "0 B"
-msgstr "0 B"
-
-#. i18n: file sizewidgetlayout.ui line 184
-#: rc.cpp:114
-#, no-c-format
-msgid "4.4 GB"
-msgstr "4.4 GB"
-
-#. i18n: file templatepagelayout.ui line 22
-#: rc.cpp:117
-#, no-c-format
-msgid "Templates"
-msgstr "Modelos"
-
-#. i18n: file templatepagelayout.ui line 33
-#: rc.cpp:120
-#, no-c-format
-msgid "&Templates:"
-msgstr "Modelos:"
-
-#. i18n: file templatepagelayout.ui line 72
-#: rc.cpp:123
-#, no-c-format
-msgid "&Preview:"
-msgstr "&Preview:"
-
-#. i18n: file templatepagelayout.ui line 75
-#: rc.cpp:126
-#, no-c-format
-msgid "Alt+P"
-msgstr "Alt+P"
-
-#. i18n: file toolpropertieslayout.ui line 16
-#: rc.cpp:129
-#, no-c-format
-msgid "Tool Properties"
-msgstr "Propriedades da ferramenta"
-
-#. i18n: file toolpropertieslayout.ui line 40
-#: rc.cpp:132
-#, no-c-format
-msgid "&Name:"
-msgstr "&Nome:"
-
-#. i18n: file toolpropertieslayout.ui line 61
-#: rc.cpp:135
-#, no-c-format
-msgid "Wor&k path:"
-msgstr "Diretório de trabalho:"
-
-#. i18n: file toolpropertieslayout.ui line 105
-#: rc.cpp:139
-#, no-c-format
-msgid "&Description:"
-msgstr "&Descrição:"
-
-#. i18n: file toolpropertieslayout.ui line 116
-#: rc.cpp:142
-#, no-c-format
-msgid "Co&mmand:"
-msgstr "Co&mando:"
-
-#. i18n: file toolpropertieslayout.ui line 129
-#: rc.cpp:145
-#, no-c-format
-msgid "Place in media &button bar"
-msgstr "Adicionar na barra de &botões de mídia"
-
-#. i18n: file toolpropertieslayout.ui line 132
-#: rc.cpp:148
-#, no-c-format
-msgid "Alt+B"
-msgstr "Alt+B"
-
-#. i18n: file toolpropertieslayout.ui line 140
-#: rc.cpp:151
-#, no-c-format
-msgid "Run In Term&inal"
-msgstr "Executar em um term&inal"
-
-#. i18n: file toolpropertieslayout.ui line 143
-#: rc.cpp:154
-#, no-c-format
-msgid "Alt+I"
-msgstr "Alt+I"
-
-#. i18n: file toolslayout.ui line 31
-#: rc.cpp:172
-#, no-c-format
-msgid "Name"
-msgstr "Nome"
-
-#. i18n: file toolslayout.ui line 42
-#: rc.cpp:175
-#, no-c-format
-msgid "Description"
-msgstr "Descrição"
-
-#. i18n: file kmediafactory.kcfg line 10
-#: rc.cpp:189
-#, no-c-format
-msgid "Where the projects are saved by deafult."
+#. i18n: file ./kmediafactory.kcfg line 10
+#: rc.cpp:3
+#, fuzzy, no-c-format
+msgid "Where the projects are saved by default."
 msgstr "Onde os projetos são salvos por padrão."
 
-#. i18n: file kmediafactory.kcfg line 14
-#: rc.cpp:192
+#. i18n: file ./kmediafactory.kcfg line 14
+#: rc.cpp:6
 #, no-c-format
 msgid "Default project type."
 msgstr "TIpo padrão dos projetos."
 
-#. i18n: file kmediafactory.kcfg line 18
-#: rc.cpp:195
-#, no-c-format
-msgid "Show project options when new project is lanuched."
+#. i18n: file ./kmediafactory.kcfg line 18
+#: rc.cpp:9
+#, fuzzy, no-c-format
+msgid "Show project options when new project is launched."
 msgstr "Exibe as opções de projeto quando um novo é iniciado."
 
-#. i18n: file kmediafactory.kcfg line 24
-#: rc.cpp:198
+#. i18n: file ./kmediafactoryui.rc line 5
+#: rc.cpp:12
 #, no-c-format
-msgid "Providers URL for GHNS"
-msgstr "URL de provedores GHNS"
+msgid "&Project"
+msgstr "&Projeto"
 
-#: templatepage.cpp:152
-msgid "Save image"
-msgstr "Salvar imagem"
+#. i18n: file ./kmediafactoryui.rc line 9
+#: rc.cpp:15
+#, no-c-format
+msgid "&Media"
+msgstr "&Mídia"
 
-#: templatepage.cpp:165
-msgid "*.png|PNG Graphics file"
-msgstr "*.png|PNG Arquivos gráficos"
+#. i18n: file ./kmediafactoryui.rc line 13
+#: rc.cpp:18
+#, fuzzy, no-c-format
+msgid "&Tools"
+msgstr "Ferramentas"
 
+#. i18n: file ./kmediafactoryui.rc line 35
+#: rc.cpp:21
+#, no-c-format
+msgid "Main Toolbar"
+msgstr ""
+
+#~ msgid ""
+#~ "_: NAME OF TRANSLATORS\n"
+#~ "Your names"
+#~ msgstr "Caio Begotti"
+
+#~ msgid ""
+#~ "_: EMAIL OF TRANSLATORS\n"
+#~ "Your emails"
+#~ msgstr "caio@ueberalles.net"
+
+#~ msgid "&Test"
+#~ msgstr "&Testar"
+
+#~ msgid "Error in starting %1: %2"
+#~ msgstr "Erro ao iniciar %1: %2"
+
+#~ msgid "Could not register with DCOP.\n"
+#~ msgstr "Não foi possível registrar com DCOP.\n"
+
+#~ msgid "KMediaFactory Settings"
+#~ msgstr "Configurações do KMediaFactory"
+
+#~ msgid "Def&ault Project Type:"
+#~ msgstr "Tipo P&adrão de Projeto:"
+
+#~ msgid "DVD-PAL"
+#~ msgstr "DVD-PAL"
+
+#~ msgid "DVD-NTSC"
+#~ msgstr "DVD-NTSC"
+
+#~ msgid "Default Project Director&y:"
+#~ msgstr "Diretór&io Padrão de Projeto:"
+
+#~ msgid "Show project &options on new project"
+#~ msgstr "Exibir &opções em um novo projeto"
+
+#~ msgid "Alt+O"
+#~ msgstr "Alt+O"
+
+#~ msgid "Log viewer"
+#~ msgstr "Visualizador de log"
+
+#~ msgid "&Log:"
+#~ msgstr "&Log:"
+
+#~ msgid "Alt+C"
+#~ msgstr "Alt+C"
+
+#~ msgid "Add media:"
+#~ msgstr "Adicionar mídia:"
+
+#~ msgid "Selected media:"
+#~ msgstr "Mídia selecionada:"
+
+#~ msgid "Select output t&ype:"
+#~ msgstr "Selecione o t&ipo de saída de comando:"
+
+#~ msgid "Show &Log"
+#~ msgstr "Exibir &Log"
+
+#~ msgid "Alt+L"
+#~ msgstr "Alt+L"
+
+#~ msgid "S&top"
+#~ msgstr "In&terromper"
+
+#~ msgid "Alt+T"
+#~ msgstr "Alt+T"
+
+#~ msgid "Alt+S"
+#~ msgstr "Alt+S"
+
+#~ msgid "S&tart"
+#~ msgstr "Iniciar"
+
+#~ msgid "T&ype:"
+#~ msgstr "T&ipo:"
+
+#~ msgid "Direct&ory:"
+#~ msgstr "Diretóri&o:"
+
+#~ msgid "C&ancel"
+#~ msgstr "C&ancelar"
+
+#~ msgid "Alt+A"
+#~ msgstr "Alt+A"
+
+#~ msgid "Size Widget"
+#~ msgstr "Tamanho do widget"
+
+#~ msgid "0 B"
+#~ msgstr "0 B"
+
+#~ msgid "4.4 GB"
+#~ msgstr "4.4 GB"
+
+#~ msgid "Templates"
+#~ msgstr "Modelos"
+
+#~ msgid "&Templates:"
+#~ msgstr "Modelos:"
+
+#~ msgid "&Preview:"
+#~ msgstr "&Preview:"
+
+#~ msgid "Alt+P"
+#~ msgstr "Alt+P"
+
+#~ msgid "&Name:"
+#~ msgstr "&Nome:"
+
+#~ msgid "Wor&k path:"
+#~ msgstr "Diretório de trabalho:"
+
+#~ msgid "&Description:"
+#~ msgstr "&Descrição:"
+
+#~ msgid "Co&mmand:"
+#~ msgstr "Co&mando:"
+
+#~ msgid "Place in media &button bar"
+#~ msgstr "Adicionar na barra de &botões de mídia"
+
+#~ msgid "Alt+B"
+#~ msgstr "Alt+B"
+
+#~ msgid "Run In Term&inal"
+#~ msgstr "Executar em um term&inal"
+
+#~ msgid "Alt+I"
+#~ msgstr "Alt+I"
+
+#~ msgid "Providers URL for GHNS"
+#~ msgstr "URL de provedores GHNS"
