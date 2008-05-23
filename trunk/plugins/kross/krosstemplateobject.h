@@ -22,9 +22,8 @@
 
 #include <kmediafactory/plugininterface.h>
 #include <kross/core/object.h>
-#include "objectmapper.h"
 
-class KrossTemplateObject : public KMF::TemplateObject, public ObjectMapper
+class KrossTemplateObject : public KMF::TemplateObject
 {
   Q_OBJECT
   public:

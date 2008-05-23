@@ -12,7 +12,6 @@ set(kmediafactory_plugin_kross_SRCS
   krosstemplateobject.cpp
   krossoutputobject.cpp
   krossjob.cpp
-  objectmapper.cpp
 )
 
 kde4_add_plugin(kmediafactory_plugin_kross ${kmediafactory_plugin_kross_SRCS})

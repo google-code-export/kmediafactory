@@ -21,9 +21,9 @@
 #define KROSSMEDIAOBJECT_H
 
 #include <kmediafactory/plugininterface.h>
-#include "objectmapper.h"
+#include <kross/core/object.h>
 
-class KrossMediaObject : public KMF::MediaObject, public ObjectMapper
+class KrossMediaObject : public KMF::MediaObject
 {
   Q_OBJECT
   public:

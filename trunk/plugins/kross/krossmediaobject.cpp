@@ -23,7 +23,7 @@
 #include <kmftools.h>
 
 KrossMediaObject::KrossMediaObject(QObject* parent, Kross::Object::Ptr object)
- : KMF::MediaObject(parent), ObjectMapper(object, this), m_object(object)
+ : KMF::MediaObject(parent), m_object(object)
 {
 }
 
