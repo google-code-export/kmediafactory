@@ -551,11 +551,6 @@ QVariant VideoObject::writeDvdAuthorXml(QVariantList args) const
   return result;
 }
 
-int VideoObject::timeEstimate() const
-{
-  return TotalPoints;
-}
-
 QString VideoObject::videoFileName(int index, VideoFilePrefix prefix)
 {
   QDir dir(interface()->projectDir("media"));

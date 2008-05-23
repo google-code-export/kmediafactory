@@ -38,19 +38,16 @@ KrossPluginInterface::~KrossPluginInterface()
 
 QList<KMF::MediaObject*> KrossPluginInterface::mediaObjects()
 {
-  // TODO add slots to mediaobject so this works properly in scripts?
   return m_interface->mediaObjects();
 }
 
 KMF::TemplateObject* KrossPluginInterface::templateObject()
 {
-  // TODO add slots to mediaobject so this works properly in scripts?
   return m_interface->templateObject();
 }
 
 KMF::OutputObject* KrossPluginInterface::outputObject()
 {
-  // TODO add slots to mediaobject so this works properly in scripts?
   return m_interface->outputObject();
 }
 

@@ -42,6 +42,8 @@ namespace KMF
       explicit MediaObject(QObject* parent);
       ~MediaObject();
 
+    public slots:
+      // Help Kross plugin declaring these as slots
       virtual QImage preview(int chapter = MainPreview) const = 0;
       virtual QString text(int chapter = MainTitle) const = 0;
       virtual int chapters() const = 0;
@@ -65,9 +67,12 @@ namespace KMF
       explicit TemplateObject(QObject* parent);
       ~TemplateObject();
 
-      virtual QImage preview(const QString& = "");
-      virtual QStringList menus();
       virtual bool clicked();
+      virtual QStringList menus();
+
+    public slots:
+      // Help Kross plugin declaring these as slots
+      virtual QImage preview(const QString& = "");
   };
 
   class KDE_EXPORT ProgressDialog : public QObject

@@ -43,16 +43,11 @@ namespace KMF
       explicit Object(QObject* parent);
       ~Object();
 
-      virtual QVariant call(const QString& func, QVariantList args = QVariantList());
-
       virtual void toXML(QDomElement*) const;
       virtual bool fromXML(const QDomElement&);
-      virtual QPixmap pixmap() const = 0;
       virtual void actions(QList<QAction*>*) const;
       virtual bool prepare(const QString&);
       virtual void finished();
-      virtual QMap<QString, QString> subTypes() const;
-      virtual QString title() const;
 
       void setTitle(const QString& title);
       Plugin* plugin() const;
@@ -61,6 +56,11 @@ namespace KMF
       uint newMsgId();
 
     public slots:
+      // Help Kross plugin declaring these as slots
+      virtual QVariant call(const QString& func, QVariantList args = QVariantList());
+      virtual QString title() const;
+      virtual QPixmap pixmap() const = 0;
+      virtual QMap<QString, QString> subTypes() const;
       virtual void clean();
 
     private:

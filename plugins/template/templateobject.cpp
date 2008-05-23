@@ -184,11 +184,6 @@ void TemplateObject::toXML(QDomElement* element) const
   element->appendChild(tmplate);
 }
 
-int TemplateObject::timeEstimate() const
-{
-  return KMFMenu::TotalPoints;
-}
-
 bool TemplateObject::prepare(const QString& type)
 {
   m_type = type;

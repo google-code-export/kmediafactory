@@ -483,11 +483,6 @@ void SlideshowObject::clean()
   KMF::Tools::cleanFiles(interface()->projectDir("media"), list);
 }
 
-int SlideshowObject::timeEstimate() const
-{
-  return TotalPoints;
-}
-
 QVariant SlideshowObject::writeDvdAuthorXml(QVariantList args) const
 {
   QDomDocument doc;

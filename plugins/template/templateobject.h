@@ -17,6 +17,7 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef TEMPLATEOBJECT_H
 #define TEMPLATEOBJECT_H
 
@@ -50,11 +51,8 @@ class TemplateObject : public KMF::TemplateObject
 
     virtual void toXML(QDomElement* element) const;
     virtual bool fromXML(const QDomElement& element);
-    virtual int timeEstimate() const;
     virtual bool prepare(const QString& type);
-    virtual QPixmap pixmap() const;
     virtual QStringList menus();
-    virtual QImage preview(const QString& menu = "");
     virtual void actions(QList<QAction*>*) const;
     KConfigXML& customProperties() { return m_customProperties; };
     QVariant property(const QString& widget, const QString& name) const;
@@ -64,7 +62,9 @@ class TemplateObject : public KMF::TemplateObject
 
   public slots:
     virtual void slotProperties();
-    virtual void clean() { };
+    // Help Kross plugin declaring these as slots
+    virtual QPixmap pixmap() const;
+    virtual QImage preview(const QString& = "");
     // KMF::Object::call slots
     QVariant directPlay(QVariantList args);
     QVariant continueToNextTitle(QVariantList args);
