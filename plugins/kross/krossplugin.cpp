@@ -37,6 +37,7 @@ K_EXPORT_KMEDIAFACTORY_PLUGIN(kross, KrossPlugin);
 KrossPlugin::KrossPlugin(QObject* parent, const QVariantList& args) :
   KMF::Plugin(parent), m_action(0)
 {
+  KGlobal::locale()->insertCatalog("kmediafactory_kross");
   //KMF::Tools::spy(this);
   KService::Ptr service = args[0].value<KService::Ptr>();
   QString name = service->property("Name").toString();

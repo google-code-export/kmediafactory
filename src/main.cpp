@@ -45,6 +45,7 @@ int main(int argc, char **argv)
 
   // Add catalog for translations
   KGlobal::locale()->insertCatalog("libkmf");
+  KGlobal::locale()->insertCatalog("kmediafactory_kstore");
   // Add resource dirs
   QStringList tools = KGlobal::dirs()->findDirs("data", "kmediafactory/tools");
   foreach(QString tooldir, tools)

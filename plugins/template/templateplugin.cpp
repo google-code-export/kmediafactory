@@ -54,6 +54,7 @@ class TemplateConfig : public QWidget, public Ui::ConfigureTemplatePlugin
 TemplatePlugin::TemplatePlugin(QObject *parent, const QVariantList&) :
   KMF::Plugin(parent)
 {
+  KGlobal::locale()->insertCatalog("kmediafactory_template");
   setObjectName("KMFTemplateEngine");
   // Initialize GUI
   setXMLFile("kmediafactory_templateui.rc");
