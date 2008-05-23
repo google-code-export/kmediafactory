@@ -23,7 +23,7 @@
 #include <KActionCollection>
 
 KrossOutputObject::KrossOutputObject(QObject* parent, Kross::Object::Ptr object)
- : KMF::OutputObject(parent), ObjectMapper(object, this), m_object(object)
+ : KMF::OutputObject(parent), m_object(object)
 {
 }
 

@@ -22,7 +22,7 @@
 #include <kmftools.h>
 
 KrossTemplateObject::KrossTemplateObject(QObject* parent, Kross::Object::Ptr object)
- : KMF::TemplateObject(parent), ObjectMapper(object, this), m_object(object)
+ : KMF::TemplateObject(parent), m_object(object)
 {
 }
 

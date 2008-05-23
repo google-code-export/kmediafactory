@@ -23,7 +23,6 @@
 #include "krossmediaobject.h"
 #include "krosstemplateobject.h"
 #include "krossoutputobject.h"
-#include "objectmapper.h"
 #include <KDebug>
 #include <KAction>
 #include <KActionCollection>
@@ -127,48 +126,60 @@ void KrossPluginInterface::setActionEnabled(const QString& name, bool enabled)
   action->setEnabled(enabled);
 }
 
-bool KrossPluginInterface::addMediaObject(Kross::Object::Ptr media)
+uintptr_t KrossPluginInterface::addMediaObject(Kross::Object::Ptr media)
 {
-  return m_interface->addMediaObject(new KrossMediaObject(this, media));
+  KrossMediaObject* mob = new KrossMediaObject(this, media);
+  
+  if (m_interface->addMediaObject(mob)) 
+    return (uintptr_t)mob;
+  return 0;
 }
 
-bool KrossPluginInterface::addTemplateObject(Kross::Object::Ptr tob)
+uintptr_t KrossPluginInterface::addTemplateObject(Kross::Object::Ptr tob)
 {
-  return m_interface->addTemplateObject(new KrossTemplateObject(this, tob));
+  KrossTemplateObject* mob = new KrossTemplateObject(this, tob);
+  
+  if (m_interface->addTemplateObject(mob)) 
+    return (uintptr_t)mob;
+  return 0;
 }
 
-bool KrossPluginInterface::addOutputObject(Kross::Object::Ptr oob)
+uintptr_t KrossPluginInterface::addOutputObject(Kross::Object::Ptr oob)
 {
-  return m_interface->addOutputObject(new KrossOutputObject(this, oob));
+  KrossOutputObject* mob = new KrossOutputObject(this, oob);
+  
+  if (m_interface->addOutputObject(mob)) 
+    return (uintptr_t)mob;
+  return 0;
 }
 
-bool KrossPluginInterface::removeMediaObject(Kross::Object::Ptr media)
+bool KrossPluginInterface::removeMediaObject(uintptr_t mediaId)
 {
-  KrossMediaObject* obj = ObjectMapper::qObject<KrossMediaObject*>(media);
-  return m_interface->removeMediaObject(obj);
+  return m_interface->removeMediaObject((KMF::MediaObject*)mediaId);
 }
 
-bool KrossPluginInterface::removeTemplateObject(Kross::Object::Ptr tob)
+bool KrossPluginInterface::removeTemplateObject(uintptr_t templateId)
 {
-  KrossTemplateObject* obj = ObjectMapper::qObject<KrossTemplateObject*>(tob);
-  return m_interface->removeTemplateObject(obj);
+  return m_interface->removeTemplateObject((KMF::TemplateObject*)templateId);
 }
 
-bool KrossPluginInterface::removeOutputObject(Kross::Object::Ptr oob)
+bool KrossPluginInterface::removeOutputObject(uintptr_t outputId)
 {
-  KrossOutputObject* obj = ObjectMapper::qObject<KrossOutputObject*>(oob);
-  return m_interface->removeOutputObject(obj);
+  return m_interface->removeOutputObject((KMF::OutputObject*)outputId);
 }
 
-void KrossPluginInterface::addJob(Kross::Object::Ptr job, KMF::JobDependency dependency)
+uintptr_t KrossPluginInterface::addJob(Kross::Object::Ptr job, KMF::JobDependency dependency)
 {
-  m_interface->addJob(new KrossJob(this, job), dependency);
+  KrossJob* j = new KrossJob(this, job);
+  m_interface->addJob(j, dependency);
+  return (uintptr_t)j;
 }
 
-void KrossPluginInterface::addJob(Kross::Object::Ptr job, Kross::Object::Ptr dependency)
+uintptr_t KrossPluginInterface::addJob(Kross::Object::Ptr job, uintptr_t dependency)
 {
-  KrossJob* depJob = ObjectMapper::qObject<KrossJob*>(dependency);
-  m_interface->addJob(new KrossJob(this, job), depJob);
+  KrossJob* j = new KrossJob(this, job);
+  m_interface->addJob(j, (KMF::Job*)dependency);
+  return (uintptr_t)j;
 }
 
 uint KrossPluginInterface::messageId()

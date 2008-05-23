@@ -22,9 +22,8 @@
 
 #include <kmediafactory/plugininterface.h>
 #include <kross/core/object.h>
-#include "objectmapper.h"
 
-class KrossOutputObject : public KMF::OutputObject, public ObjectMapper
+class KrossOutputObject : public KMF::OutputObject
 {
   Q_OBJECT
   public:

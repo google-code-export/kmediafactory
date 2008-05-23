@@ -22,9 +22,8 @@
 
 #include <kmediafactory/plugininterface.h>
 #include <kross/core/object.h>
-#include "objectmapper.h"
 
-class KrossJob : public KMF::Job, public ObjectMapper
+class KrossJob : public KMF::Job
 {
   Q_OBJECT
   public:

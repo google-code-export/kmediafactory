@@ -48,18 +48,18 @@ class KrossPluginInterface : public QObject
                       Kross::Object::Ptr obj, const QString& method);
     bool addMediaAction(const QString& name);
     void setActionEnabled(const QString& name, bool enabled);
-    bool addMediaObject(Kross::Object::Ptr media);
-    bool addTemplateObject(Kross::Object::Ptr tob);
-    bool addOutputObject(Kross::Object::Ptr oob);
-    bool removeMediaObject(Kross::Object::Ptr media);
-    bool removeTemplateObject(Kross::Object::Ptr tob);
-    bool removeOutputObject(Kross::Object::Ptr oob);
+    uintptr_t addMediaObject(Kross::Object::Ptr media);
+    uintptr_t addTemplateObject(Kross::Object::Ptr tob);
+    uintptr_t addOutputObject(Kross::Object::Ptr oob);
+    bool removeMediaObject(uintptr_t mediaId);
+    bool removeTemplateObject(uintptr_t templateId);
+    bool removeOutputObject(uintptr_t outputId);
     void addMediaObjectFromXML(const QString& xml);
     void setTemplateFromXML(const QString& xml);
     void setOutputFromXML(const QString& xml);
 
-    void addJob(Kross::Object::Ptr job, KMF::JobDependency dependency = KMF::None);
-    void addJob(Kross::Object::Ptr job, Kross::Object::Ptr dependency);
+    uintptr_t addJob(Kross::Object::Ptr job, KMF::JobDependency dependency = KMF::None);
+    uintptr_t addJob(Kross::Object::Ptr job, uintptr_t dependency);
 
     uint messageId();
     void message(uint id, KMF::MsgType type, const QString& msg = QString());
