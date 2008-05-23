@@ -26,5 +26,5 @@ if( QCA2_FOUND )
 target_link_libraries(kmediafactorykstore ${QCA2_LIBRARIES})
 endif( QCA2_FOUND )
 
-set_target_properties(kmediafactorykstore PROPERTIES VERSION ${KMF_LIB_VERSION} SOVERSION ${KMF_LIB_VERSION})
+set_target_properties(kmediafactorykstore PROPERTIES VERSION ${GENERIC_KMF_LIB_VERSION} SOVERSION ${GENERIC_KMF_LIB_SOVERSION})
 install(TARGETS kmediafactorykstore  DESTINATION ${LIB_INSTALL_DIR})
