@@ -2,246 +2,268 @@
 # This file is put in the public domain.
 #
 # Petri Damsten <petri.damsten@iki.fi>, 2006.
+# Petri Damstén <petri.damsten@iki.fi>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmediafactory_output\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-10 09:20+0200\n"
-"PO-Revision-Date: 2006-02-10 09:28+0200\n"
-"Last-Translator: Petri Damsten <petri.damsten@iki.fi>\n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2008-05-23 11:23+0300\n"
+"PO-Revision-Date: 2008-05-23 11:49+0300\n"
+"Last-Translator: Petri Damstén <petri.damsten@iki.fi>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.1\n"
+"X-Generator: KBabel 1.11.4\n"
 
-#: _translatorinfo.cpp:1
+#: dvdauthorobject.cpp:33
+msgid "DVD Author XML file"
+msgstr "DVDAuthor XML tiedosto"
+
+#: dvdauthorobject.cpp:56
+#, kde-format
 msgid ""
-"_: NAME OF TRANSLATORS\n"
-"Your names"
-msgstr "Petri Damstén"
+"\n"
+"**********************************************************************\n"
+"\n"
+"This file was made with %1 - %2\n"
+"http://www.iki.fi/damu/software/kmediafactory/\n"
+"\n"
+"**********************************************************************\n"
+"\n"
+"Register usage:\n"
+"================\n"
+"g0: Playing chapter saved here.\n"
+"g1: Play this chapter when entering titleset menu. 0 == show menu.\n"
+"    Also used by Back button.\n"
+"g2: Used vmgm button is saved here\n"
+"g3: Jump to this titleset. Also used for direct play.\n"
+"g4: Used titleset button is saved here\n"
+"g5: vmgm page is saved here\n"
+"g6: titleset page is saved here\n"
+"g7: temporary variable\n"
+"\n"
+"**********************************************************************\n"
+msgstr ""
+"\n"
+"**********************************************************************\n"
+"\n"
+"Tämä tiedosto on tehty ohjelmalla  %1 - %2\n"
+"http://www.iki.fi/damu/software/kmediafactory/\n"
+"\n"
+"**********************************************************************\n"
+"\n"
+"Rekisterien käyttö:\n"
+"================\n"
+"g0: Soitossa oleva kappale.\n"
+"g1: Soita tämä kappale kun tullaan titleset valikkoon. 0 == näytä valikko.\n"
+"    Myös takaisin painike käyttää tätä.\n"
+"g2: Käytetty vmgm painike tallennetaan tähän\n"
+"g3: Hyppää tähän titlesettiin. Käytetään myös suorasoitossa.\n"
+"g4: Käytetty titleset painike tallennetaan tähän\n"
+"g5: vmgm sivu tallennetaan tähän\n"
+"g6: titleset sivu tallennetaan tähän\n"
+"g7: väliaikainen muuttuja\n"
+"\n"
+"**********************************************************************\n"
 
-#: _translatorinfo.cpp:3
-msgid ""
-"_: EMAIL OF TRANSLATORS\n"
-"Your emails"
-msgstr "petri.damsten@iki.fi1"
+#: dvdauthorobject.cpp:87
+#, kde-format
+msgid "Main menu for %1"
+msgstr "Päävalikko %1"
 
-#: dvdauthorobject.cpp:31
+#: dvdauthorobject.cpp:134
+msgid "Error in saving dvdauthor.xml"
+msgstr "Virhe tallennettaessa dvdauthor.xml tiedostoa."
+
+#: dvdauthorobject.cpp:157
 msgid "DVDAuthor project"
 msgstr "DVDAuthor projekti"
 
-#: dvdauthorobject.cpp:57
-msgid "DVDAuthor project ready"
-msgstr "DVDAuthor projekti valmis"
-
-#: dvddirectoryobject.cpp:42
+#: dvddirectoryobject.cpp:44 dvddirectoryobject.cpp:204
 msgid "DVD Directory"
 msgstr "DVD hakemisto"
 
-#: dvddirectoryobject.cpp:43
+#: dvddirectoryobject.cpp:124 dvddirectoryobject.cpp:135
+#, kde-format
+msgid "Processing: %1"
+msgstr "Käsitellään: %1"
+
+#: dvddirectoryobject.cpp:158
+#, kde-format
+msgid "Fixing: %1"
+msgstr "Korjataan: %1"
+
+#: dvddirectoryobject.cpp:206
 msgid "&Clean directory"
 msgstr "&Tyhjennä hakemisto"
 
-#: dvddirectoryobject.cpp:105 dvddirectoryobject.cpp:123
-#, c-format
-msgid "  Processing: %1"
-msgstr "   Käsitellään: %1"
-
-#: dvddirectoryobject.cpp:147
-#, c-format
-msgid "  Fixing: %1"
-msgstr "   Korjataan: %1"
-
-#: dvddirectoryobject.cpp:227
+#: dvddirectoryobject.cpp:262
 msgid "DVD Directory is up to date"
 msgstr "DVD hakemisto on ajan tasalla"
 
-#: dvddirectoryobject.cpp:250
-msgid "Making DVD Directory"
-msgstr "Tehdään DVD hakemistoa"
-
-#: dvddirectoryobject.cpp:261
-msgid "DVD Directory ready"
-msgstr "DVD hakemisto valmis"
-
-#: dvdinfo.cpp:120
-msgid "Analyzing DVD..."
-msgstr "Analysoidaan DVD:tä..."
-
-#: dvdinfo.cpp:161
-msgid "DVD"
-msgstr "DVD"
-
-#: dvdinfo.cpp:162
-msgid "Titles"
-msgstr "Nimikkeet"
-
-#: dvdinfo.cpp:163
-msgid "Longest title"
-msgstr "Pisin nimike"
-
-#. i18n: file dvdinfolayout.ui line 40
-#: dvdinfo.cpp:166 dvdinfolayout.cpp:47 dvdinfolayout.cpp:93 rc.cpp:6
-#, no-c-format
-msgid "Name"
-msgstr "Nimi"
-
-#: dvdinfo.cpp:167
-msgid "VMG Identifier"
-msgstr "VMG tunnus"
-
-#: dvdinfo.cpp:168
-msgid "Provider indentifier"
-msgstr "Julkaisijan tunnus"
-
-#: dvdinfo.cpp:174 dvdinfo.cpp:196
-msgid "Index"
-msgstr "Sisällys"
-
-#: dvdinfo.cpp:175 dvdinfo.cpp:198
-msgid "Length"
-msgstr "Pituus"
-
-#: dvdinfo.cpp:176
-msgid "VTS ID"
-msgstr "VTS ID"
-
-#: dvdinfo.cpp:177
-msgid "VTS"
-msgstr "VTS"
-
-#: dvdinfo.cpp:178
-msgid "TTN"
-msgstr "TTN"
-
-#: dvdinfo.cpp:179
-msgid "PGC"
-msgstr "PGC"
-
-#: dvdinfo.cpp:180 dvdinfo.cpp:199
-msgid "Start sector"
-msgstr "Ensimmäinen sektori"
-
-#: dvdinfo.cpp:181 dvdinfo.cpp:200
-msgid "End sector"
-msgstr "Viimeinen sektori"
-
-#: dvdinfo.cpp:188 dvdinfo.cpp:208
-msgid "Format"
-msgstr "Fromaatti"
-
-#: dvdinfo.cpp:189
-msgid "Aspect ratio"
-msgstr "Kuvasuhde"
-
-#: dvdinfo.cpp:190
-msgid "Frames per second"
-msgstr "Kuvaa sekunnissa"
-
-#: dvdinfo.cpp:191
-msgid "Permitted DF"
-msgstr "Sallittu DF"
-
-#: dvdinfo.cpp:197
-msgid "Start"
-msgstr "Aloita"
-
-#: dvdinfo.cpp:201
-msgid "Is chapter"
-msgstr "Onko kappale"
-
-#: dvdinfo.cpp:202
-msgid "yes"
-msgstr "kyllä"
-
-#: dvdinfo.cpp:202
-msgid "no"
-msgstr "ei"
-
-#: dvdinfo.cpp:207 dvdinfo.cpp:219
-msgid "Language"
-msgstr "Kieli"
-
-#: dvdinfo.cpp:209
-msgid "Channels"
-msgstr "Kanavat"
-
-#: dvdinfo.cpp:210
-msgid "Sample frequency"
-msgstr "Näytteenottotaajuus"
-
-#: dvdinfo.cpp:211
-msgid "Bitrate"
-msgstr "Bittivirta"
-
-#: dvdinfo.cpp:212
-msgid "Quantization"
-msgstr "Kvantisointi"
-
-#: dvdinfo.cpp:213
-msgid "AP Mode"
-msgstr "AP moodi"
-
-#: dvdinfo.cpp:214 dvdinfo.cpp:220
-msgid "Type"
-msgstr "Tyyppi"
-
-#: dvdinfo.cpp:230
-msgid "Not a DVD."
-msgstr "Ei DVD."
-
-#: dvdinfo.cpp:285
-msgid "DVD files and directories"
-msgstr "DVD tiedostot ja hakemistot"
-
-#. i18n: file dvdinfolayout.ui line 51
-#: dvdinfolayout.cpp:48 dvdinfolayout.cpp:94 rc.cpp:9
-#, no-c-format
-msgid "Size"
-msgstr "Koko"
-
-#. i18n: file dvdinfolayout.ui line 16
-#: dvdinfolayout.cpp:92 outputplugin.cpp:70 rc.cpp:3
-#, no-c-format
+#: dvdinfo.cpp:41 outputplugin.cpp:58
 msgid "DVD Info"
 msgstr "DVD tiedot"
 
-#. i18n: file dvdinfolayout.ui line 117
-#: dvdinfolayout.cpp:96 rc.cpp:15
-#, no-c-format
-msgid "Alt+C"
-msgstr "Alt+C"
+#: dvdinfo.cpp:66
+msgid "Analyzing DVD..."
+msgstr "Analysoidaan DVD:tä..."
 
-#: k3bobject.cpp:35
-msgid "K3b Project"
+#: dvdinfo.cpp:108
+msgid "DVD"
+msgstr "DVD"
+
+#: dvdinfo.cpp:109
+msgid "Titles"
+msgstr "Nimikkeet"
+
+#: dvdinfo.cpp:110
+msgid "Longest title"
+msgstr "Pisin nimike"
+
+#: dvdinfo.cpp:113 dvdinfo.cpp:214
+msgid "Name"
+msgstr "Nimi"
+
+#: dvdinfo.cpp:114
+msgid "VMG Identifier"
+msgstr "VMG tunnus"
+
+#: dvdinfo.cpp:115
+msgid "Provider indentifier"
+msgstr "Julkaisijan tunnus"
+
+#: dvdinfo.cpp:121 dvdinfo.cpp:143
+msgid "Index"
+msgstr "Sisällys"
+
+#: dvdinfo.cpp:122 dvdinfo.cpp:145
+msgid "Length"
+msgstr "Pituus"
+
+#: dvdinfo.cpp:123
+msgid "VTS ID"
+msgstr "VTS ID"
+
+#: dvdinfo.cpp:124
+msgid "VTS"
+msgstr "VTS"
+
+#: dvdinfo.cpp:125
+msgid "TTN"
+msgstr "TTN"
+
+#: dvdinfo.cpp:126
+msgid "PGC"
+msgstr "PGC"
+
+#: dvdinfo.cpp:127 dvdinfo.cpp:146
+msgid "Start sector"
+msgstr "Ensimmäinen sektori"
+
+#: dvdinfo.cpp:128 dvdinfo.cpp:147
+msgid "End sector"
+msgstr "Viimeinen sektori"
+
+#: dvdinfo.cpp:133
+msgid "Width"
+msgstr "Leveys"
+
+#: dvdinfo.cpp:134
+msgid "Height"
+msgstr "Korkeus"
+
+#: dvdinfo.cpp:135 dvdinfo.cpp:155
+msgid "Format"
+msgstr "Fromaatti"
+
+#: dvdinfo.cpp:136
+msgid "Aspect ratio"
+msgstr "Kuvasuhde"
+
+#: dvdinfo.cpp:137
+msgid "Frames per second"
+msgstr "Kuvaa sekunnissa"
+
+#: dvdinfo.cpp:138
+msgid "Permitted DF"
+msgstr "Sallittu DF"
+
+#: dvdinfo.cpp:144
+msgid "Start"
+msgstr "Aloita"
+
+#: dvdinfo.cpp:148
+msgid "Is chapter"
+msgstr "Onko kappale"
+
+#: dvdinfo.cpp:149
+msgid "yes"
+msgstr "kyllä"
+
+#: dvdinfo.cpp:149
+msgid "no"
+msgstr "ei"
+
+#: dvdinfo.cpp:154 dvdinfo.cpp:166
+msgid "Language"
+msgstr "Kieli"
+
+#: dvdinfo.cpp:156
+msgid "Channels"
+msgstr "Kanavat"
+
+#: dvdinfo.cpp:157
+msgid "Sample frequency"
+msgstr "Näytteenottotaajuus"
+
+#: dvdinfo.cpp:158
+msgid "Bitrate"
+msgstr "Bittivirta"
+
+#: dvdinfo.cpp:159
+msgid "Quantization"
+msgstr "Kvantisointi"
+
+#: dvdinfo.cpp:160
+msgid "AP Mode"
+msgstr "AP moodi"
+
+#: dvdinfo.cpp:161 dvdinfo.cpp:167
+msgid "Type"
+msgstr "Tyyppi"
+
+#: dvdinfo.cpp:207
+msgid "Not a DVD."
+msgstr "Ei DVD."
+
+#: dvdinfo.cpp:215
+msgid "Size"
+msgstr "Koko"
+
+#: dvdinfo.cpp:255
+msgid "DVD files and directories"
+msgstr "DVD tiedostot ja hakemistot"
+
+#: k3bobject.cpp:37
+msgid "K3b project"
 msgstr "K3b projekti"
 
-#: k3bobject.cpp:62
-msgid "K3b project ready"
-msgstr "K3b projekti valmis"
-
-#: k3bobject.cpp:373
+#: k3bobject.cpp:349
+#, kde-format
 msgid "%1 - Version %2"
 msgstr "%1 - versio %2"
 
-#: outputplugin.cpp:41
-msgid "Output plugin for KMediaFactory."
-msgstr "Lopputulos lisäosa KmediaFactoryyn"
+#: k3bobject.cpp:436
+msgid "K3b Project"
+msgstr "K3b projekti"
 
-#: outputplugin.cpp:44
-msgid "KMediaFactory Output"
-msgstr "KMediaFactory lopputulos"
-
-#: outputplugin.cpp:77
-msgid "Preview DVD"
-msgstr "Esikatsele DVD"
-
-#: outputplugin.cpp:83
+#: outputplugin.cpp:66
 msgid "Preview DVD in Xine"
 msgstr "Esikatsele DVD Xine-ohjelmalla"
 
-#: outputplugin.cpp:89
+#: outputplugin.cpp:74
 msgid "Preview DVD in Kaffeine"
 msgstr "Esikatsele DVD Kaffeine-ohjelmalla"
 
