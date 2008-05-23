@@ -55,7 +55,6 @@ class KMFProject : public QObject
     KMF::OutputObject* output() const { return m_output; };
     bool prepare(const QString& type);
     void finished();
-    int timeEstimate() const;
     void setDirty(KMF::DirtyType type, bool dirty = true);
     bool isModified() const { return m_modified; };
     QDateTime lastModified(KMF::DirtyType type) const;

@@ -30,25 +30,24 @@ class KrossMediaObject : public KMF::MediaObject
     KrossMediaObject(QObject *parent, Kross::Object::Ptr mediaObject);
     ~KrossMediaObject();
 
-    virtual QVariant call(const QString& func, QVariantList args = QVariantList());
     virtual void toXML(QDomElement*) const;
     virtual bool fromXML(const QDomElement&);
-    virtual QPixmap pixmap() const;
     virtual void actions(QList<QAction*>*) const;
     virtual bool prepare(const QString&);
     virtual void finished();
-    virtual QMap<QString, QString> subTypes() const;
-    virtual QString title() const;
 
+  public slots:
+    virtual QVariant call(const QString& func, QVariantList args = QVariantList());
+    virtual QString title() const;
+    virtual QPixmap pixmap() const;
+    virtual QMap<QString, QString> subTypes() const;
+    virtual void clean();
     virtual QImage preview(int chapter = KMF::MediaObject::MainPreview) const;
     virtual QString text(int chapter = KMF::MediaObject::MainTitle) const;
     virtual int chapters() const;
     virtual uint64_t size() const;
     virtual QTime duration() const;
     virtual QTime chapterTime(int chapter) const;
-
-  public slots:
-    virtual void clean();
 
   private:
     mutable Kross::Object::Ptr m_object;

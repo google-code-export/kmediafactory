@@ -34,13 +34,12 @@ class DvdAuthorObject : public KMF::OutputObject
     virtual ~DvdAuthorObject();
     virtual void toXML(QDomElement* element) const;
     virtual bool fromXML(const QDomElement& element);
-    virtual QPixmap pixmap() const;
     virtual void actions(QList<QAction*>* actionList) const;
-    virtual int timeEstimate() const;
     virtual bool prepare(const QString& type);
 
   public slots:
-    virtual void clean() { };
+    // Help Kross plugin declaring these as slots
+    virtual QPixmap pixmap() const;
 
   private:
     //KAction* dvdAuthorProperties;

@@ -37,12 +37,12 @@ class DvdDirectoryObject : public DvdAuthorObject
     virtual ~DvdDirectoryObject();
     virtual void toXML(QDomElement* element) const;
     virtual bool fromXML(const QDomElement& element);
-    virtual QPixmap pixmap() const;
     virtual void actions(QList<QAction*>* actionList) const;
-    virtual int timeEstimate() const;
     virtual bool prepare(const QString& type);
 
-  private slots:
+  public slots:
+    // Help Kross plugin declaring these as slots
+    virtual QPixmap pixmap() const;
     virtual void clean();
 
   private:

@@ -174,11 +174,6 @@ bool DvdAuthorObject::fromXML(const QDomElement&)
   return true;
 }
 
-int DvdAuthorObject::timeEstimate() const
-{
-  return TotalPoints;
-}
-
 bool DvdAuthorObject::prepare(const QString&)
 {
   interface()->message(msgId(), KMF::Start, i18n(startString));

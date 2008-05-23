@@ -222,11 +222,6 @@ bool DvdDirectoryObject::fromXML(const QDomElement&)
   return true;
 }
 
-int DvdDirectoryObject::timeEstimate() const
-{
-  return TotalPoints + DvdAuthorObject::timeEstimate();
-}
-
 bool DvdDirectoryObject::isUpToDate(QString type)
 {
   if(type != interface()->lastSubType())

@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,6 +17,7 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef K3BOBJECT_H
 #define K3BOBJECT_H
 
@@ -25,9 +26,6 @@
 
 class KUrl;
 
-/**
-@author Petri Damsten
-*/
 class K3bObject : public DvdDirectoryObject
 {
     Q_OBJECT
@@ -39,10 +37,12 @@ class K3bObject : public DvdDirectoryObject
 
     virtual void toXML(QDomElement* element) const;
     virtual bool fromXML(const QDomElement& element);
-    virtual QPixmap pixmap() const;
     virtual void actions(QList<QAction*>* actionList) const;
-    virtual int timeEstimate() const;
     virtual bool prepare(const QString& type);
+
+  public slots:
+    // Help Kross plugin declaring these as slots
+    virtual QPixmap pixmap() const;
 
   private:
     bool saveDocument(const KUrl& url);

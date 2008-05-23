@@ -49,17 +49,8 @@ class SlideshowObject : public KMF::MediaObject
 
     SlideshowObject(QObject* parent);
     virtual ~SlideshowObject();
-    virtual QPixmap pixmap() const;
     virtual bool prepare(const QString& type);
-    virtual int timeEstimate() const;
     virtual void actions(QList<QAction*>*) const;
-    virtual QImage preview(int chapter = MainPreview) const;
-    virtual QString text(int chapter = MainTitle) const;
-    virtual int chapters() const;
-    virtual uint64_t size() const;
-    virtual QTime duration() const;
-    virtual QTime chapterTime(int chapter) const;
-
     virtual void toXML(QDomElement* element) const;
     virtual bool fromXML(const QDomElement& element);
 
@@ -82,6 +73,14 @@ class SlideshowObject : public KMF::MediaObject
 
   public slots:
     virtual void slotProperties();
+    // Help Kross plugin declaring these as slots
+    virtual QPixmap pixmap() const;
+    virtual QImage preview(int chapter = MainPreview) const;
+    virtual QString text(int chapter = MainTitle) const;
+    virtual int chapters() const;
+    virtual uint64_t size() const;
+    virtual QTime duration() const;
+    virtual QTime chapterTime(int chapter) const;
     virtual void clean();
     // KMF::Object::call slots
     QVariant writeDvdAuthorXml(QVariantList args) const;

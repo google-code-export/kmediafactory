@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -17,12 +17,13 @@
 //   Free Software Foundation, Inc.,
 //   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //**************************************************************************
+
 #ifndef VIDEOOBJECT_H
 #define VIDEOOBJECT_H
 
 #include <kmf_stddef.h>
 #include <kmediafactory/plugin.h>
-#include "rect.h"
+#include <rect.h>
 #include <KUrl>
 #include <KProcess>
 #include <qdvdinfo.h>
@@ -35,25 +36,10 @@ class QMediaFile;
 namespace QDVD { class Subtitle; class Cell; };
 namespace KMF { class Time; };
 
-class ConversionParams
-{
-  public:
-    ConversionParams() : m_pass(1), m_videoBitrate(8000),
-    m_audioBitrate(192), m_audioType(0) {};
-
-    int m_pass;
-    int m_videoBitrate;
-    int m_audioBitrate;
-    int m_audioType;
-};
-
-/**
-*/
 class VideoObject : public KMF::MediaObject
 {
     Q_OBJECT
   public:
-    enum { TotalPoints = 100 };
     enum VideoFilePrefix { PrefixSub = 0, PrefixMpg,
         PrefixEmpty, PrefixXml, PrefixMicroDVD };
 
@@ -62,13 +48,6 @@ class VideoObject : public KMF::MediaObject
     virtual void toXML(QDomElement* element) const;
     virtual bool fromXML(const QDomElement& element);
     virtual bool prepare(const QString& type);
-    virtual QMap<QString, QString> subTypes() const;
-    virtual int timeEstimate() const;
-    virtual QPixmap pixmap() const;
-    virtual QImage preview(int chapter = MainPreview) const;
-    virtual QString text(int chapter = MainTitle) const;
-    virtual int chapters() const;
-    virtual uint64_t size() const;
 
     const QDVD::CellList& cellList() const { return m_cells; };
     void setCellList(const QDVD::CellList& list);
@@ -99,22 +78,25 @@ class VideoObject : public KMF::MediaObject
     const QString& id() const { return m_id; };
 
     double frameRate() const;
-    virtual QTime duration() const;
-    virtual QTime chapterTime(int chapter) const;
     virtual QStringList files() const;
     QString fileName() const;
     void parseCellLengths();
     QString videoFileName(int index, VideoFilePrefix prefix);
     void printCells();
     bool isDVDCompatible() const;
-    ConversionParams conversion() const { return m_conversion; };
-    void setConversion(const ConversionParams& conversion)
-        { m_conversion = conversion; };
 
   public slots:
     virtual void slotProperties();
     virtual void slotPlayVideo();
-    virtual void clean() { };
+    // Help Kross plugin declaring these as slots
+    virtual QPixmap pixmap() const;
+    virtual QMap<QString, QString> subTypes() const;
+    virtual QImage preview(int chapter = MainPreview) const;
+    virtual QString text(int chapter = MainTitle) const;
+    virtual int chapters() const;
+    virtual uint64_t size() const;
+    virtual QTime duration() const;
+    virtual QTime chapterTime(int chapter) const;
     // KMF::Object::call slots
     QVariant writeDvdAuthorXml(QVariantList args) const;
 
@@ -135,7 +117,6 @@ class VideoObject : public KMF::MediaObject
     bool m_stopped;
     QString m_kmfplayer;
     static const char* m_prefixes[];
-    ConversionParams m_conversion;
     QStringList m_files;
     KProcess* m_spumux;
     QString m_type;
