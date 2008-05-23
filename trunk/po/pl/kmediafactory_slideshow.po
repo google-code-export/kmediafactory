@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmediafactory_slideshow\n"
 "Report-Msgid-Bugs-To: damu@iki.fi\n"
-"POT-Creation-Date: 2008-05-23 11:23+0300\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
 "PO-Revision-Date: 2006-04-18 12:49+0200\n"
 "Last-Translator: Tomil Grabowski <tomig@tomig.com>\n"
 "Language-Team: Polish\n"
@@ -14,6 +14,129 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.1\n"
+
+#. i18n: tag string
+#. i18n: file slideshowconfig.ui line 13
+#: rc.cpp:3
+#, fuzzy
+msgid "Configure Slideshow Plugin"
+msgstr "Pokaz slajdów"
+
+#. i18n: tag string
+#. i18n: file slideshowconfig.ui line 31
+#: rc.cpp:6
+#, fuzzy
+msgid "Audio &Type:"
+msgstr "pliki audio"
+
+#. i18n: tag string
+#. i18n: file slideshowconfig.ui line 45
+#: rc.cpp:9
+msgid "MP2"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowconfig.ui line 50
+#: rc.cpp:12
+msgid "AC3"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 13
+#: rc.cpp:15
+#, fuzzy
+msgid "Slideshow properties"
+msgstr "Właściwości pokazu zdjęć"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 51
+#: rc.cpp:18
+msgid "&Title:"
+msgstr "&Tytuł:"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 107
+#: rc.cpp:21
+msgid "Add (Alt+ Insert)"
+msgstr "Dodaj (Alt+ Insert)"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 113
+#: rc.cpp:24
+msgid "Alt+Ins"
+msgstr "Alt+Ins"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 123
+#: rc.cpp:27
+msgid "Remove (Alt + Delete)"
+msgstr "Usuń (Alt + Delete)"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 129
+#: rc.cpp:30
+msgid "Alt+Del"
+msgstr "Alt+Del"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 155
+#: rc.cpp:33
+msgid "Move up (Alt + Up)"
+msgstr "Przesuń w górę (Alt + Up)"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 161
+#: rc.cpp:36
+msgid "Alt+Up"
+msgstr "Alt+Up"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 171
+#: rc.cpp:39
+msgid "Move down (Alt + Down)"
+msgstr "Przesuń w dół (Alt + Down)"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 177
+#: rc.cpp:42
+msgid "Alt+Down"
+msgstr "Alt+Down"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 268
+#: rc.cpp:45
+msgid "&Slide duration:"
+msgstr "Czas &slajdu"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 290
+#: rc.cpp:48
+msgid "fit"
+msgstr "odpowiedni"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 341
+#: rc.cpp:51
+msgid "&Add original pictures to DVD"
+msgstr "Dod&aj orginalny obraz do DVD"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 344
+#: rc.cpp:54
+msgid "Alt+A"
+msgstr "Alt+A"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 360
+#: rc.cpp:57
+msgid "&Loop slideshow"
+msgstr "Zapęt&l pokaz slajdów"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 363
+#: rc.cpp:60
+msgid "Alt+L"
+msgstr "Alt+L"
 
 #: slideshowobject.cpp:63
 msgid "Copying slideshow originals"
@@ -56,15 +179,15 @@ msgstr "Strona %1"
 msgid "Slideshow \"%1\" seems to be up to date"
 msgstr "   Pokaz slajdów \"%1\" wydaje się być aktualny"
 
-#: slideshowplugin.cpp:62
+#: slideshowplugin.cpp:63
 msgid "Add Slideshow"
 msgstr "Dodaj pokaz slajdów"
 
-#: slideshowplugin.cpp:118
+#: slideshowplugin.cpp:119
 msgid "Slideshow"
 msgstr "Pokaz slajdów"
 
-#: slideshowplugin.cpp:145
+#: slideshowplugin.cpp:146
 #, fuzzy
 msgid "Slideshow plugin"
 msgstr "Pokaz slajdów"
@@ -133,53 +256,8 @@ msgstr "Powinieneś mieć przynajmniej jeden rozdział."
 #~ "Your emails"
 #~ msgstr "tomig@tomig.com"
 
-#~ msgid "&Title:"
-#~ msgstr "&Tytuł:"
-
 #~ msgid "Image"
 #~ msgstr "Obraz"
-
-#~ msgid "Alt+Ins"
-#~ msgstr "Alt+Ins"
-
-#~ msgid "Add (Alt+ Insert)"
-#~ msgstr "Dodaj (Alt+ Insert)"
-
-#~ msgid "Alt+Del"
-#~ msgstr "Alt+Del"
-
-#~ msgid "Remove (Alt + Delete)"
-#~ msgstr "Usuń (Alt + Delete)"
-
-#~ msgid "Alt+Up"
-#~ msgstr "Alt+Up"
-
-#~ msgid "Move up (Alt + Up)"
-#~ msgstr "Przesuń w górę (Alt + Up)"
-
-#~ msgid "Alt+Down"
-#~ msgstr "Alt+Down"
-
-#~ msgid "Move down (Alt + Down)"
-#~ msgstr "Przesuń w dół (Alt + Down)"
-
-#~ msgid "&Slide duration:"
-#~ msgstr "Czas &slajdu"
-
-#~ msgid "fit"
-#~ msgstr "odpowiedni"
-
-#~ msgid "&Add original pictures to DVD"
-#~ msgstr "Dod&aj orginalny obraz do DVD"
-
-#~ msgid "Alt+A"
-#~ msgstr "Alt+A"
-
-#~ msgid "&Loop slideshow"
-#~ msgstr "Zapęt&l pokaz slajdów"
-
-#~ msgid "Alt+L"
-#~ msgstr "Alt+L"
 
 #~ msgid "Alt+O"
 #~ msgstr "Alt+O"

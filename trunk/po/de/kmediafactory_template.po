@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmediafactory_template\n"
 "Report-Msgid-Bugs-To: damu@iki.fi\n"
-"POT-Creation-Date: 2008-05-23 11:23+0300\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
 "PO-Revision-Date: 2006-03-17 13:25+0100\n"
 "Last-Translator: Christoph Lumme <lummi@in-4-matik.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -41,11 +41,23 @@ msgstr ""
 msgid "Get more..."
 msgstr ""
 
+#. i18n: tag string
+#. i18n: file templateconfig.ui line 13
+#: rc.cpp:3
+msgid "Configure Template Plugin"
+msgstr "Vorlagenplugin konfigurieren"
+
+#. i18n: tag string
+#. i18n: file templateconfig.ui line 31
+#: rc.cpp:6
+msgid "Default &Menu Language:"
+msgstr "Standard &Menüsprache"
+
 #: templateobject.cpp:83
 msgid "&Properties"
 msgstr "&Eigenschaften"
 
-#: templateplugin.cpp:67
+#: templateplugin.cpp:68
 msgid "Template plugin"
 msgstr "Vorlagenplugin"
 
@@ -139,12 +151,6 @@ msgstr "Vorlagenplugin"
 
 #~ msgid "ImageMagick error: %1"
 #~ msgstr "ImageMagick Fehler: %1"
-
-#~ msgid "Configure Template Plugin"
-#~ msgstr "Vorlagenplugin konfigurieren"
-
-#~ msgid "Default &Menu Language:"
-#~ msgstr "Standard &Menüsprache"
 
 #~ msgid "Use this as a default menu language for new projects."
 #~ msgstr "Als Standardsprache für Menüs bei neuen Projekten verwenden."

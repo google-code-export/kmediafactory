@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmediafactory_template\n"
 "Report-Msgid-Bugs-To: damu@iki.fi\n"
-"POT-Creation-Date: 2008-05-23 11:23+0300\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
 "PO-Revision-Date: 2006-04-18 12:39+0200\n"
 "Last-Translator: Tomil Grabowski <tomig@tomig.com>\n"
 "Language-Team: Polish\n"
@@ -40,11 +40,23 @@ msgstr ""
 msgid "Get more..."
 msgstr ""
 
+#. i18n: tag string
+#. i18n: file templateconfig.ui line 13
+#: rc.cpp:3
+msgid "Configure Template Plugin"
+msgstr "Konfiguracja pluginu szablonów"
+
+#. i18n: tag string
+#. i18n: file templateconfig.ui line 31
+#: rc.cpp:6
+msgid "Default &Menu Language:"
+msgstr "Domyślny język &Menu:"
+
 #: templateobject.cpp:83
 msgid "&Properties"
 msgstr "&Właściwości"
 
-#: templateplugin.cpp:67
+#: templateplugin.cpp:68
 msgid "Template plugin"
 msgstr "plugin szablon"
 
@@ -87,12 +99,6 @@ msgstr "plugin szablon"
 
 #~ msgid "ImageMagick error: %1"
 #~ msgstr "Błąd ImageMagick: %1"
-
-#~ msgid "Configure Template Plugin"
-#~ msgstr "Konfiguracja pluginu szablonów"
-
-#~ msgid "Default &Menu Language:"
-#~ msgstr "Domyślny język &Menu:"
 
 #~ msgid "Use this as a default menu language for new projects."
 #~ msgstr "Użyj jako domyślny język menu w nowych projektach."

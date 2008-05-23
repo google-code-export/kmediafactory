@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmediafactory_template\n"
 "Report-Msgid-Bugs-To: damu@iki.fi\n"
-"POT-Creation-Date: 2008-05-23 11:23+0300\n"
-"PO-Revision-Date: 2008-05-23 11:39+0300\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
+"PO-Revision-Date: 2008-05-23 13:09+0300\n"
 "Last-Translator: Petri Damstén <petri.damsten@iki.fi>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -41,11 +41,23 @@ msgstr "Video tiedostojen luonti epäonnistui."
 msgid "Get more..."
 msgstr "Hae lisää..."
 
+#. i18n: tag string
+#. i18n: file templateconfig.ui line 13
+#: rc.cpp:3
+msgid "Configure Template Plugin"
+msgstr "Konfikuroi mallipohja lisäosa"
+
+#. i18n: tag string
+#. i18n: file templateconfig.ui line 31
+#: rc.cpp:6
+msgid "Default &Menu Language:"
+msgstr "&Valikon oletuskieli"
+
 #: templateobject.cpp:83
 msgid "&Properties"
 msgstr "&Ominaisuudet"
 
-#: templateplugin.cpp:67
+#: templateplugin.cpp:68
 msgid "Template plugin"
 msgstr "Mallipohja lisäosa"
 
