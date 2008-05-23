@@ -116,7 +116,7 @@ void OutputPlugin::play(const QString& player)
   }
   else
     cmd = player;
-  cmd +=  " dvd:/" + projectDir + "DVD/VIDEO_TS";
+  cmd +=  " \"dvd:/" + projectDir + "DVD/VIDEO_TS\"";
   KRun::runCommand(cmd, kapp->activeWindow());
 }
 
