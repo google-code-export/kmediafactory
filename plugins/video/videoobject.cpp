@@ -79,8 +79,10 @@ public:
     spumux->setStandardOutputFile(videoFileWithSubtitles);
     spumux->setWorkingDirectory(mediaDir);
 
+    //kDebug() << "spumux" << "-P" << subtitleXmlFile << "<" << videoFile << 
+    //                                                   ">" << videoFileWithSubtitles;
     QFileInfo info(videoFile);
-    //setMaximum(info.size() / 1024);
+    setMaximum(msgId(), info.size() / 1024);
     lastUpdate = 0;
     half = info.size() / 200;
     spumux->execute();
@@ -144,7 +146,7 @@ public:
       qulonglong temp = bytes.cap(1).toULongLong();
       if(temp - lastUpdate > half)
       {
-        //setValue(temp / 1024);
+        setValue(msgId(), temp / 1024);
         lastUpdate = temp;
       }
     }
@@ -615,10 +617,10 @@ bool VideoObject::prepare(const QString& type)
           {
             ConvertSubtitlesJob *job = new ConvertSubtitlesJob();
             job->subtitle = subtitle;
-            job->subtitleFile = subtitleFile.fileName();
+            job->subtitleFile = subtitleFile.filePath();
             job->subtitleXmlFile = videoFileName(i, PrefixXml);
-            job->videoFile = videoFile.fileName();
-            job->videoFileWithSubtitles = videoFileWithSubtitles.fileName();
+            job->videoFile = videoFile.filePath();
+            job->videoFileWithSubtitles = videoFileWithSubtitles.filePath();
             job->mediaDir = interface()->projectDir("media");
             job->type = interface()->projectType();
             interface()->addJob(job);
