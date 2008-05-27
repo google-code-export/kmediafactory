@@ -337,6 +337,13 @@ void KMFPluginInterface::setDirty(KMF::DirtyType type)
   }
 }
 
+void KMFPluginInterface::setModified(KMF::DirtyType type)
+{
+  if (kmfApp->project()) {
+    kmfApp->project()->setModified(type);
+  }
+}
+
 QString KMFPluginInterface::projectType()
 {
   if (kmfApp->project()) {

@@ -58,6 +58,7 @@ class KMFPluginInterface : public KMF::PluginInterface
     virtual QString projectDir(const QString& subDir = "");
     virtual QString projectType();
     virtual void setDirty(KMF::DirtyType type);
+    virtual void setModified(KMF::DirtyType type);
     virtual QString lastSubType();
     virtual QDateTime lastModified(KMF::DirtyType type);
     virtual int serial();

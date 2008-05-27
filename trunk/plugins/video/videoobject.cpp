@@ -65,7 +65,7 @@ public:
 
   void run()
   {
-    message(msgId(), KMF::Start, i18n("Subtitles for: %1", videoFile));
+    message(msgId(), KMF::Start, i18n("Subtitles for: %1", QFileInfo(videoFile).fileName()));
 
     QStringList subtitleFiles = subtitle.file().split(";");
   
@@ -623,6 +623,7 @@ bool VideoObject::prepare(const QString& type)
             job->videoFileWithSubtitles = videoFileWithSubtitles.filePath();
             job->mediaDir = interface()->projectDir("media");
             job->type = interface()->projectType();
+            interface()->setModified(KMF::Media);
             interface()->addJob(job);
           }
           else
@@ -645,7 +646,7 @@ void VideoObject::slotProperties()
   if (dlg.exec())
   {
     dlg.getData(*this);
-    interface()->setDirty(KMF::DirtyMedia);
+    interface()->setDirty(KMF::Media);
   }
 }
 

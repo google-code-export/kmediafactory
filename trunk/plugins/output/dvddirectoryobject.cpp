@@ -227,7 +227,7 @@ bool DvdDirectoryObject::isUpToDate(QString type)
   if(type != interface()->lastSubType())
     return false;
 
-  QDateTime lastModified = interface()->lastModified(KMF::DirtyAny);
+  QDateTime lastModified = interface()->lastModified(KMF::Any);
   QDir dir(interface()->projectDir("DVD/VIDEO_TS"));
   if(dir.exists() == false)
     return false;
