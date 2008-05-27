@@ -28,6 +28,7 @@
 #include <kmftools.h>
 #include <ThreadWeaver/Weaver>
 #include <KMessageBox>
+#include <KAboutData>
 #include <KCursor>
 #include <KPushButton>
 #include <KLocale>
@@ -233,7 +234,7 @@ void OutputPage::message(uint id, KMF::MsgType type, const QString& msg)
   QStandardItem *parent = 0;
   uint parentId = KMF::PluginInterface::parent(id);
 
-  kDebug() << parentId << id << type << msg;
+  //kDebug() << parentId << id << type << msg;
   if (id == KMF::Root)
     parent = m_model->invisibleRootItem();
   else if (m_items.keys().contains(id))
@@ -335,8 +336,15 @@ void OutputPage::log(uint id, const QString& msg)
 
 void OutputPage::makeLog()
 {
-  QString s = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n" \
-              "<html><pre style=\"font-size: 9pt;\">";
+  QString s = QString("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n" \
+"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" " \
+"\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n" \
+"<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" \
+"<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n" \
+"<title>%1 - %2 Log</title>\n</head>\n" \
+"<body><div style=\"font-size: 9pt;\">\n")
+      .arg(KGlobal::mainComponent().aboutData()->programName())
+      .arg(KGlobal::mainComponent().aboutData()->version());
   QString tmp;
 
   foreach (const QStandardItem* item, 
@@ -345,21 +353,20 @@ void OutputPage::makeLog()
     tmp = item->text();
     QColor color = item->data(KMFProgressItemDelegate::ColorRole).value<QColor>();
     if(color != QColor("black"))
-      s += QString("<font color=%1>").arg(color.name());
+      s += QString("<div style=\"color: %1;\">").arg(color.name());
     s += Qt::escape(tmp);
     if(color != QColor("black"))
-      s += "</font>";
+      s += "</div>";
     s += "\n";
 
     tmp = item->data(KMFProgressItemDelegate::LogRole).toString().trimmed();
     if(!tmp.isEmpty())
     {
       tmp = Qt::escape(tmp) + "\n";
-      tmp.replace("\n", "<br />");
-      s += tmp;
+      s += "<pre>" + tmp + "</pre>";
     }
   }
-  s += "</pre></html>";
+  s += "</div></body></html>";
 
   KMF::Tools::saveString2File(kmfApp->project()->directory() + "kmf_log.html", s);
 }
