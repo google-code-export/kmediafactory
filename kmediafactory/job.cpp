@@ -21,6 +21,7 @@
 #include "job.h"
 #include "job_p.h"
 #include "plugininterface.h"
+#include <ThreadWeaver/Thread>
 #include <QVariant>
 #include <KDebug>
 #include <QMetaType>
@@ -166,6 +167,8 @@ void KMF::Job::message(uint id, MsgType type, const QString& msg)
     failed(); 
   }
   d_func()->helper()->message(id, type, msg);
+  // Hack to get messages in right order...
+  thread()->msleep(50);
 }
 
 void KMF::Job::log(uint id, const QString& msg)
