@@ -29,6 +29,7 @@
 #include <KAboutData>
 #include <QPixmap>
 #include <QDomElement>
+#include <QFileInfo>
 
 static const char startString[] = I18N_NOOP("DVD Author XML file");
 
@@ -174,15 +175,34 @@ bool DvdAuthorObject::fromXML(const QDomElement&)
   return true;
 }
 
-bool DvdAuthorObject::prepare(const QString&)
+bool DvdAuthorObject::isUpToDate(QString type)
+{
+  if(type != interface()->lastSubType())
+    return false;
+
+  QDateTime lastModified = interface()->lastModified(KMF::DirtyAny);
+  QFileInfo fi(interface()->projectDir() + "dvdauthor.xml");
+  if(fi.exists() == false || lastModified > fi.lastModified())
+    return false;
+  return true;
+}
+
+bool DvdAuthorObject::prepare(const QString& type)
 {
   interface()->message(msgId(), KMF::Start, i18n(startString));
-  WriteDVDAuthorXMLJob *job = new WriteDVDAuthorXMLJob();
-  job->tempObj = interface()->templateObject();
-  job->mobs =  interface()->mediaObjects();
-  job->title = interface()->title();
-  job->projectDir = interface()->projectDir();
-  interface()->addJob(job);
+  if(isUpToDate(type))
+  {
+    interface()->message(msgId(), KMF::Info, i18n("DVD Author XML file is up to date"));
+  }
+  else 
+  {
+    WriteDVDAuthorXMLJob *job = new WriteDVDAuthorXMLJob();
+    job->tempObj = interface()->templateObject();
+    job->mobs =  interface()->mediaObjects();
+    job->title = interface()->title();
+    job->projectDir = interface()->projectDir();
+    interface()->addJob(job);
+  }
   interface()->message(msgId(), KMF::Done);
   return true;
 }

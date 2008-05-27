@@ -193,13 +193,13 @@ public:
   
     spu.setAttribute("end", "00:00:00.00");
     if(m_modifiedLayers & KMFWidget::Sub)
-      spu.setAttribute("image", QString("%1_sub.png").arg(objectName()));
+      spu.setAttribute("image", QString("%1_sub.png").arg(menuPage.objectName()));
     if(m_modifiedLayers & KMFWidget::Highlight)
       spu.setAttribute("highlight",
-                      QString("%1_highlight.png").arg(objectName()));
+                      QString("%1_highlight.png").arg(menuPage.objectName()));
     if(m_modifiedLayers & KMFWidget::Select)
       spu.setAttribute("select",
-                      QString("%1_select.png").arg(objectName()));
+                      QString("%1_select.png").arg(menuPage.objectName()));
     spu.setAttribute("force", "yes");
   
     // We can't search and loop in the same list concurrently
@@ -236,7 +236,8 @@ public:
     doc.appendChild(root);
 
     // Write spumux xml
-    return KMF::Tools::saveString2File(menuDir + objectName() + ".xml", doc.toString(), false);
+    return KMF::Tools::saveString2File(menuDir + menuPage.objectName() + ".xml", 
+                                       doc.toString(), false);
   }
 
   bool saveImages()
@@ -246,23 +247,23 @@ public:
     // Save subpicture files
     if(m_modifiedLayers & KMFWidget::Sub)
     {
-      file = menuDir + QString("%1_sub.png").arg(objectName());
+      file = menuDir + QString("%1_sub.png").arg(menuPage.objectName());
       m_sub.save(file);
     }
   
     if(m_modifiedLayers & KMFWidget::Highlight)
     {
-      file = menuDir + QString("%1_highlight.png").arg(objectName());
+      file = menuDir + QString("%1_highlight.png").arg(menuPage.objectName());
       m_subHighlight.save(file);
     }
   
     if(m_modifiedLayers & KMFWidget::Select)
     {
-      file = menuDir + QString("%1_select.png").arg(objectName());
+      file = menuDir + QString("%1_select.png").arg(menuPage.objectName());
       m_subSelect.save(file);
     }
   
-    file = menuDir + QString("%1.pnm").arg(objectName());
+    file = menuDir + QString("%1.pnm").arg(menuPage.objectName());
     // PNM P6 256
     return m_background.save(file, "PPM");
   }
@@ -571,18 +572,34 @@ void KMFMenuPage::setProperty(const QString& name, QVariant value)
     m_continueToNextTitle = value.toInt();
 }
 
-KMF::Job* KMFMenuPage::job() const
+bool KMFMenuPage::isUpToDate(const QString& type) const
 {
-  KMFMenuPageJob* job = new KMFMenuPageJob(*this);
-  job->menuDir = m_interface->projectDir("menus");
-  job->projectType = m_interface->projectType();
-  return job;
+  if(type != m_interface->lastSubType())
+    return false;
+
+  QDateTime lastModified = m_interface->lastModified(KMF::DirtyAny);
+  QFileInfo fi(m_interface->projectDir("menus") + objectName() + ".mpg");
+  if(fi.exists() == false || lastModified > fi.lastModified())
+    return false;
+  return true;
+}
+
+KMF::Job* KMFMenuPage::job(const QString& type) const
+{
+  if (!isUpToDate(type)) 
+  {
+    KMFMenuPageJob* job = new KMFMenuPageJob(*this);
+    job->menuDir = m_interface->projectDir("menus");
+    job->projectType = m_interface->projectType();
+    return job;
+  }
+  return 0;
 }
 
 QImage KMFMenuPage::preview()
 {
   parseButtons(false);
-  KMFMenuPageJob* j = static_cast<KMFMenuPageJob*>(job());
+  KMFMenuPageJob* j = static_cast<KMFMenuPageJob*>(job("preview"));
   j->paint();
   QImage img = *j->layer(KMFWidget::Background);
   delete j;

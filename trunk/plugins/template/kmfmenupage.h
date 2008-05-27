@@ -76,7 +76,7 @@ class KMFMenuPage : public KMFWidget
     bool directPlay() const { return m_directPlay; };
     QString sound() const { return m_sound; };
 
-    KMF::Job* job() const;
+    KMF::Job* job(const QString& type) const;
     QImage preview();
 
   private:
@@ -100,6 +100,7 @@ class KMFMenuPage : public KMFWidget
     static int m_mjpegtoolsVersion;
 
     void checkDummyVideo() const;
+    bool isUpToDate(const QString& type) const;
 };
 
 #endif

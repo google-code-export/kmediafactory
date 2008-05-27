@@ -187,7 +187,7 @@ void TemplateObject::toXML(QDomElement* element) const
 bool TemplateObject::prepare(const QString& type)
 {
   m_type = type;
-  return m_menu.makeMenu();
+  return m_menu.makeMenu(type);
 }
 
 QStringList TemplateObject::menus()

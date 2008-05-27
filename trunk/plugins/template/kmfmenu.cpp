@@ -93,7 +93,7 @@ QDomElement KMFMenu::writeDvdAuthorXml(const QString& type, int titleset) const
   }
 }
 
-bool KMFMenu::addMenuMpegJobs()
+bool KMFMenu::addMenuMpegJobs(const QString& type)
 {
   for(int i=0; i < m_pages.count(); ++i)
   {
@@ -101,7 +101,11 @@ bool KMFMenu::addMenuMpegJobs()
     {
       foreach(KMFMenuPage* ob, m_pages[i])
       {
-        m_interface->addJob(ob->job());
+        KMF::Job* job = ob->job(type);
+        if (job)
+        {
+          m_interface->addJob(job);
+        }
       }
     }
   }
@@ -240,7 +244,7 @@ void KMFMenu::progress(int points)
   //m_interface->progress(points);
 }
 
-bool KMFMenu::makeMenu()
+bool KMFMenu::makeMenu(const QString& type)
 {
   clear();
   m_points = TotalPoints / 4;
@@ -255,7 +259,7 @@ bool KMFMenu::makeMenu()
     m_points = TotalPoints - (TotalPoints / 4);
     if(p > 0)
       m_pagePoints = m_points / p;
-    return addMenuMpegJobs();
+    return addMenuMpegJobs(type);
   }
   return false;
 }

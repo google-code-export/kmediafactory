@@ -35,12 +35,12 @@ class KMFMenu : public KMFTemplateBase
     KMFMenu(const QString& tmplate, QObject *parent = 0);
     ~KMFMenu();
 
-    bool makeMenu();
+    bool makeMenu(const QString& type);
     QImage makeMenuPreview(QString page = "");
     QImage icon() const { return templateImage("icon.png"); };
     bool addPage(const QString& name, int title, int chapter);
     QDomElement writeDvdAuthorXml(const QString& type, int titleset) const;
-    bool addMenuMpegJobs();
+    bool addMenuMpegJobs(const QString& type);
     KMFTemplate* templateStore() { return &m_template; };
     const QStringList& menus() const { return m_menus; };
     const QString& title() { return m_title; };

@@ -167,13 +167,14 @@ void OutputPage::start()
     progressBar->setMaximum(jobs + 1);
     progressBar->setValue(1);
     // Run jobs
-    message(KMF::Root, KMF::Info, i18n("Making files..."));
-    ThreadWeaver::Weaver::instance()->resume();
+    if (jobs)
+    {
+      message(KMF::Root, KMF::Info, i18n("Making files..."));
+      ThreadWeaver::Weaver::instance()->resume();
+      return;
+    }
   }
-  else
-  {
-    finished();
-  }
+  finished();
 }
 
 void OutputPage::jobDone(ThreadWeaver::Job *)
