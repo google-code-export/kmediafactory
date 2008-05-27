@@ -45,6 +45,8 @@ class K3bObject : public DvdDirectoryObject
     virtual QPixmap pixmap() const;
 
   private:
+    bool isUpToDate(const QString& type);
+
     bool saveDocument(const KUrl& url);
     bool saveDocumentData(QDomElement* docElem);
     bool saveGeneralDocumentData(QDomElement* part);
