@@ -180,7 +180,7 @@ void KMFPluginInterface::addJob(KMF::Job *job, KMF::JobDependency dependency)
       break;
 
     case KMF::Last:
-      if (m_jobs.last() != 0)
+      if (!m_jobs.isEmpty() && m_jobs.last() != 0)
       {
         ThreadWeaver::DependencyPolicy::instance().addDependency(job, m_jobs.last());
       }

@@ -36,10 +36,27 @@
 
 static const char startString[] = I18N_NOOP("K3b project");
 
-class K3bProjectJob : public KMF::Job
+class RunK3bJob : public KMF::Job
 {
 public:
   QString cmd;
+  QString doc;
+
+  void run()
+  {
+    message(msgId(), KMF::Start, i18n("Running K3b"));
+    if (!cmd.isEmpty())
+    {
+      cmd += " \"" + doc + "\"";
+      KRun::runCommand(cmd, kapp->activeWindow());
+    }
+    message(msgId(), KMF::Done);
+  }
+};
+
+class K3bProjectJob : public KMF::Job
+{
+public:
   QString doc;
   QString dvdDir;
   QString title;
@@ -48,12 +65,6 @@ public:
   {
     message(msgId(), KMF::Start, i18n(startString));
     saveDocument(KUrl(doc));
-    CHECK_IF_ABORTED();
-    if (!cmd.isEmpty())
-    {
-      cmd += " " + doc;
-      KRun::runCommand(cmd, kapp->activeWindow());
-    }
     message(msgId(), KMF::Done);
   }
 
@@ -449,17 +460,39 @@ bool K3bObject::fromXML(const QDomElement&)
   return true;
 }
 
+bool K3bObject::isUpToDate(const QString& type)
+{
+  if(type != interface()->lastSubType())
+    return false;
+
+  QDateTime lastModified = interface()->lastModified(KMF::Any);
+  QFileInfo fi(interface()->projectDir() + "dvd.k3b");
+  if(fi.exists() == false || lastModified > fi.lastModified())
+    return false;
+  return true;
+}
+
 bool K3bObject::prepare(const QString& type)
 {
   if(DvdDirectoryObject::prepare(type) == false)
     return false;
 
   interface()->message(newMsgId(), KMF::Start, i18n(startString));
-  K3bProjectJob *job = new K3bProjectJob();
+  if(isUpToDate(type))
+  {
+    interface()->message(msgId(), KMF::Info, i18n("K3b project is up to date"));
+  }
+  else 
+  {
+    K3bProjectJob *job = new K3bProjectJob();
+    job->doc = interface()->projectDir() + "dvd.k3b";
+    job->dvdDir = interface()->projectDir("DVD");
+    job->title = interface()->title();
+    interface()->addJob(job, KMF::Last);
+  }
+  RunK3bJob *job = new RunK3bJob();
   job->cmd = KStandardDirs::findExe("k3b");
   job->doc = interface()->projectDir() + "dvd.k3b";
-  job->dvdDir = interface()->projectDir("DVD");
-  job->title = interface()->title();
   interface()->addJob(job, KMF::Last);
   interface()->message(msgId(), KMF::Done);
   return true;
