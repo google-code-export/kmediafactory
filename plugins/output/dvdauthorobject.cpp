@@ -180,7 +180,7 @@ bool DvdAuthorObject::isUpToDate(QString type)
   if(type != interface()->lastSubType())
     return false;
 
-  QDateTime lastModified = interface()->lastModified(KMF::DirtyAny);
+  QDateTime lastModified = interface()->lastModified(KMF::Any);
   QFileInfo fi(interface()->projectDir() + "dvdauthor.xml");
   if(fi.exists() == false || lastModified > fi.lastModified())
     return false;

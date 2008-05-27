@@ -577,7 +577,7 @@ bool KMFMenuPage::isUpToDate(const QString& type) const
   if(type != m_interface->lastSubType())
     return false;
 
-  QDateTime lastModified = m_interface->lastModified(KMF::DirtyAny);
+  QDateTime lastModified = m_interface->lastModified(KMF::Any);
   QFileInfo fi(m_interface->projectDir("menus") + objectName() + ".mpg");
   if(fi.exists() == false || lastModified > fi.lastModified())
     return false;
@@ -591,6 +591,7 @@ KMF::Job* KMFMenuPage::job(const QString& type) const
     KMFMenuPageJob* job = new KMFMenuPageJob(*this);
     job->menuDir = m_interface->projectDir("menus");
     job->projectType = m_interface->projectType();
+    m_interface->setModified(KMF::Template);
     return job;
   }
   return 0;

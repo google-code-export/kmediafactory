@@ -56,7 +56,8 @@ class KMFProject : public QObject
     bool prepare(const QString& type);
     void finished();
     void setDirty(KMF::DirtyType type, bool dirty = true);
-    bool isModified() const { return m_modified; };
+    void setModified(KMF::DirtyType type);
+    bool isDirty() const { return m_dirty; };
     QDateTime lastModified(KMF::DirtyType type) const;
     const KUrl& url() { return m_url; };
     bool validProject() const;
@@ -96,7 +97,7 @@ class KMFProject : public QObject
     KMF::TemplateObject* m_template;
     KMF::OutputObject* m_output;
     KUrl m_url;
-    bool m_modified;
+    bool m_dirty;
     QDateTime m_lastModified[ModLast];
     bool m_loading;
     bool m_initializing;

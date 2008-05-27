@@ -262,7 +262,7 @@ void TemplateObject::slotProperties()
   */
 
   if(dialog.result() == QDialog::Accepted)
-    interface()->setDirty(KMF::DirtyTemplate);
+    interface()->setDirty(KMF::Template);
 
   kapp->removeTranslator(&kmftr);
 }

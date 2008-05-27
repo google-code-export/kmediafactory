@@ -498,7 +498,7 @@ bool KMediaFactory::checkSaveProject()
   if(m_enabled == false)
     return false;
 
-  if(kmfApp->project() && kmfApp->project()->isModified())
+  if(kmfApp->project() && kmfApp->project()->isDirty())
   {
     switch(KMessageBox::warningYesNoCancel(this,
            i18n("Save changes to project?")))

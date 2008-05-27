@@ -107,6 +107,7 @@ namespace KMF
       virtual QString projectDir(const QString& subDir = "") = 0;
       virtual QString projectType() = 0;
       virtual void setDirty(DirtyType type) = 0;
+      virtual void setModified(DirtyType type) = 0;
       virtual QString lastSubType() = 0;
       virtual QDateTime lastModified(DirtyType type) = 0;
       virtual int serial() = 0;

@@ -475,6 +475,7 @@ bool SlideshowObject::prepare(const QString& type)
       QString mediaDir = interface()->projectDir("media");
       QString projectType = interface()->projectType();
       QString dvdslideshowBin = static_cast<SlideshowPlugin*>(plugin())->dvdslideshowBin();
+      interface()->setModified(KMF::Media);
       interface()->addJob(job);
     }
     else
@@ -696,7 +697,7 @@ void SlideshowObject::slotProperties()
   {
     clean();
     dlg.getData(*this);
-    interface()->setDirty(KMF::DirtyMedia);
+    interface()->setDirty(KMF::Media);
   }
 }
 
