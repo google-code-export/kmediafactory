@@ -44,6 +44,7 @@ class DvdAuthorObject : public KMF::OutputObject
   private:
     //KAction* dvdAuthorProperties;
     QDomElement toElement(const QVariant& element);
+    bool isUpToDate(QString type);
 };
 
 #endif // DVDAUTHOROBJECT_H

@@ -26,7 +26,6 @@
 #include <kmediafactory/job.h>
 #include <qdvdinfo.h>
 #include <kmfmediafile.h>
-#include <KIO/CopyJob>
 #include <KFileItem>
 #include <KStandardDirs>
 #include <KFileMetaInfo>
@@ -53,19 +52,25 @@
 class CopyOriginalsJob : public KMF::Job
 {
 public:
-  CopyOriginalsJob(const SlideList& s) : slides(s) {};
+  CopyOriginalsJob() {};
 
   QString destDir;
-  const SlideList& slides;
+  KUrl::List files;
 
   void run()
   {
     message(msgId(), KMF::Start, i18n("Copying slideshow originals"));
-    KUrl::List files;
-  
-    KMF::Tools::stripExisting(&files, destDir);
-    if(files.count() > 0)
-      KIO::copy(files, destDir);
+    setMaximum(msgId(), files.size());
+    int i = 0;
+    foreach (KUrl file, files)
+    {
+      if (!QFile::copy(file.path(), destDir + QFileInfo(file.path()).fileName()))
+      {
+        message(msgId(), KMF::Error, i18n("Copying originals failed."));
+        return;
+      }
+      setValue(msgId(), ++i);
+    }
     message(msgId(), KMF::Done);
   }
 private:
@@ -428,9 +433,20 @@ bool SlideshowObject::prepare(const QString& type)
   {
     if(m_includeOriginals)
     {
-      CopyOriginalsJob *job = new CopyOriginalsJob(slides());
-      job->destDir = interface()->projectDir("DVD/PICTURES");
-      interface()->addJob(job);
+      KUrl::List files;
+    
+      foreach(const Slide& slide, m_slides)
+      {
+        files.append(slide.picture);
+      }
+      KMF::Tools::stripExisting(&files, interface()->projectDir("DVD/PICTURES"));
+      if(files.count() > 0)
+      {
+        CopyOriginalsJob *job = new CopyOriginalsJob;
+        job->destDir = interface()->projectDir("DVD/PICTURES");
+        job->files = files;
+        interface()->addJob(job);
+      }
     }
     QDir dir(interface()->projectDir("media"));
     QString output = dir.filePath(QString("%1.vob").arg(id()));

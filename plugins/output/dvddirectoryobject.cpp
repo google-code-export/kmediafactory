@@ -227,8 +227,7 @@ bool DvdDirectoryObject::isUpToDate(QString type)
   if(type != interface()->lastSubType())
     return false;
 
-  QDateTime lastModified = interface()->lastModified(
-      KMF::DirtyAny);
+  QDateTime lastModified = interface()->lastModified(KMF::DirtyAny);
   QDir dir(interface()->projectDir("DVD/VIDEO_TS"));
   if(dir.exists() == false)
     return false;
@@ -239,7 +238,7 @@ bool DvdDirectoryObject::isUpToDate(QString type)
 
   files.removeAll(".");
   files.removeAll("..");
-  if(files.count() <= 0)
+  if(files.count() <= 3)
     return false;
 
   for(QStringList::Iterator it=files.begin(); it!=files.end(); ++it )
@@ -260,10 +259,12 @@ bool DvdDirectoryObject::prepare(const QString& type)
   if(isUpToDate(type))
   {
     interface()->message(msgId(), KMF::Info, i18n("DVD Directory is up to date"));
-  } else {
+  } 
+  else 
+  {
     DVDDirectoryJob *job = new DVDDirectoryJob();
     job->projectDir = interface()->projectDir();
-    interface()->addJob(job, KMF::Last);
+    interface()->addJob(job, KMF::All);
   }
   interface()->message(msgId(), KMF::Done);
   return true;

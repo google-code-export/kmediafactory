@@ -617,6 +617,7 @@ QImage KMF::Tools::variantList2Image(QVariant v)
 
 bool KMF::Tools::saveString2File(const KUrl& url, const QString& string, bool showFailed)
 {
+  //kDebug() << url;
   bool result = false;
   QFile *f;
 
