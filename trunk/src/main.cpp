@@ -20,6 +20,7 @@
 
 #include "kmediafactory.h"
 #include "kmfapplication.h"
+#include "svnrev.h"
 #include <KAboutData>
 #include <KCmdLineArgs>
 #include <KLocale>
@@ -28,7 +29,7 @@
 int main(int argc, char **argv)
 {
   KAboutData about(PACKAGE, 0,
-                   ki18n("KMediaFactory"), VERSION,
+                   ki18n("KMediaFactory"), VERSION SVNREV,
                    ki18n("Template based DVD authoring software."),
                    KAboutData::License_GPL,
                    ki18n(COPYRIGHT), KLocalizedString(),

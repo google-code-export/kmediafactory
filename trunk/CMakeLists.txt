@@ -11,24 +11,12 @@ macro(IS_KDE_VERSION version)
   endif (${V1} GREATER ${V2} OR ${V2} EQUAL ${V1})
 endmacro(IS_KDE_VERSION)
 
-set(KMF_WC_REVISION "")
-if(EXISTS ${PROJECT_SOURCE_DIR}/.svn)
-  find_package(Subversion REQUIRED)
-  if(Subversion_FOUND)
-    subversion_wc_info(${PROJECT_SOURCE_DIR} KMF)
-    message("-- SVN revision is ${KMF_WC_REVISION}")
-    set(KMF_WC_REVISION ".svn${KMF_WC_REVISION}")
-  endif(Subversion_FOUND)
-endif(EXISTS ${PROJECT_SOURCE_DIR}/.svn)
-
-
 set(KMF_MAJOR_VERSION "0")
 set(KMF_MINOR_VERSION "6")
 set(KMF_BUILD_VERSION "0")
 set(VERSION "${KMF_MAJOR_VERSION}.${KMF_MINOR_VERSION}.${KMF_BUILD_VERSION}")
 set(GENERIC_KMF_LIB_VERSION ${VERSION})
 set(GENERIC_KMF_LIB_SOVERSION ${KMF_MAJOR_VERSION})
-set(VERSION "${VERSION}${KMF_WC_REVISION}")
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules )
 
@@ -104,6 +92,16 @@ include_directories(
 )
 
 configure_file(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h )
+
+add_custom_command(
+  OUTPUT  ${CMAKE_CURRENT_BINARY_DIR}/svnrev.h
+  DEPENDS ${CMAKE_SOURCE_DIR}/.svn/entries
+  COMMAND ${CMAKE_COMMAND}
+      -DPROJECT_SOURCE_DIR="${PROJECT_SOURCE_DIR}"
+      -DCMAKE_BINARY_DIR="${CMAKE_BINARY_DIR}"
+      -P ${PROJECT_SOURCE_DIR}/svnrev.cmake
+)
+add_custom_target(svnrev ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/svnrev.h)
 
 add_subdirectory(lib)
 add_subdirectory(kstore)
