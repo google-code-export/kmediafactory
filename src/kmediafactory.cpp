@@ -231,7 +231,7 @@ void KMediaFactory::itemDelete()
 {
   QModelIndex i = mediaPage->mediaFiles->currentIndex();
   kmfApp->project()->mediaObjects()->removeAt(i);
-  kmfApp->project()->setDirty(KMF::DirtyMedia);
+  kmfApp->project()->setDirty(KMF::Media);
 }
 
 void KMediaFactory::projectOptions()
