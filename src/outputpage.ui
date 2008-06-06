@@ -183,7 +183,7 @@
       </widget>
      </item>
      <item>
-      <widget class="KMFToolButton" name="startButton" >
+      <widget class="QToolButton" name="startButton" >
        <property name="sizePolicy" >
         <sizepolicy vsizetype="Minimum" hsizetype="Fixed" >
          <horstretch>0</horstretch>
@@ -207,14 +207,6 @@
  </widget>
  <layoutdefault spacing="6" margin="11" />
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
- <customwidgets>
-  <customwidget>
-   <class>KMFToolButton</class>
-   <extends>QToolButton</extends>
-   <header>kmftoolbutton.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>outputs</tabstop>
   <tabstop>showLogPushBtn</tabstop>
@@ -222,7 +214,6 @@
  </tabstops>
  <includes>
   <include location="local" >kpushbutton.h</include>
-  <include location="local" >kmftoolbutton.h</include>
  </includes>
  <resources/>
  <connections>
