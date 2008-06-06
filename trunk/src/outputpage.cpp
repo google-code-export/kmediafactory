@@ -23,7 +23,6 @@
 #include "kmfapplication.h"
 #include "kmfprogressitemdelegate.h"
 #include "kmfplugininterface.h"
-#include "kmftoolbutton.h"
 #include "logview.h"
 #include <kmftools.h>
 #include <ThreadWeaver/Weaver>

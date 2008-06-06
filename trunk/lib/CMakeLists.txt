@@ -14,7 +14,6 @@ set(kmf_LIB_SRCS
   kmffontchooser.cpp
   kmftools.cpp
   kmfmultiurldialog.cpp
-  kmftoolbutton.cpp
   qdvdinfo.cpp
   kmfmediafile.cpp
   run.cpp
@@ -31,7 +30,6 @@ set(kmf_HEADERS
   kmffontchooser.h
   kmftools.h
   kmfmultiurldialog.h
-  kmftoolbutton.h
   qdvdinfo.h
   kmfmediafile.h
   run.h
