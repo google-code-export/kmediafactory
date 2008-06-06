@@ -182,11 +182,13 @@ void TemplatePage::imageContextMenuRequested(const QPoint& pos)
   QAction* action;
   QAction* saveAction = new QAction(i18n("Save image"), this);
   QAction* scaledAction = new QAction(i18n("Scaled"), this);
-  KMF::TemplateObject* ob =
-      kmfApp->project()->templateObjects()->at(templates->currentIndex().row());
-  QStringList menus = ob->menus();
+  int selected = templates->selectionModel()->selection().indexes()[0].row();
+  KMF::TemplateObject* ob = kmfApp->project()->templateObjects()->at(selected);
+  QStringList menus;
   int i = 0;
 
+  if (ob)
+    menus = ob->menus();
   scaledAction->setCheckable(true);
   scaledAction->setChecked(m_scaled);
 
