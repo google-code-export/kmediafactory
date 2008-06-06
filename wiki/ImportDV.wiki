@@ -3,8 +3,7 @@
  * Get the import dvdauthor xml plugin from [http://www.kde-files.org/index.php?xcontentmode=667 kde-files.org].
  * Grab dv:
    {{{
-   $ dvgrab --format raw --opendml --size 0
-   --autosplit --timestamp video-
+   $ dvgrab --format raw --opendml --size 0 --autosplit --timestamp video-
    }}}
  * Edit in kino:
    {{{
