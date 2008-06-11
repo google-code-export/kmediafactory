@@ -1,7 +1,9 @@
 #/bin/bash
 
-VERSION_MM="0.7."
+VERSION_MAJOR="0"
+VERSION_MINOR="7"
 NEXT_VERSION="0" # BUILD_VERSION
+VERSION_MM="$VERSION_MAJOR.$VERSION_MINOR."
 
 HOME=`echo ~`
 SITE="aryhma.oy.cx"
@@ -67,6 +69,10 @@ function fix_versions()
   echo "Fixing CMakeLists.txt for new version: $SNAPSHOT"
   cd $KMF
 
+  S="set(KMF_MAJOR_VERSION"
+  sed -i -e "s/$S \".*\")/$S \"$VERSION_MAJOR\")/" CMakeLists.txt
+  S="set(KMF_MINOR_VERSION"
+  sed -i -e "s/$S \".*\")/$S \"$VERSION_MINOR\")/" CMakeLists.txt
   S="set(KMF_BUILD_VERSION"
   sed -i -e "s/$S \".*\")/$S \"$SNAPSHOT_BUILD\")/" CMakeLists.txt
 
