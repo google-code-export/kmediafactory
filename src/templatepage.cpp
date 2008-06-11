@@ -131,8 +131,9 @@ void TemplatePage::updatePreview(int n)
     if(kmfApp->project()->mediaObjects()->count() > 0 &&
       previewCheckBox->isChecked())
     {
+      QModelIndexList selected = templates->selectionModel()->selectedIndexes();
       KMF::TemplateObject* ob =
-          kmfApp->project()->templateObjects()->at(templates->currentIndex());
+          kmfApp->project()->templateObjects()->at(selected[0].row());
       QStringList menus = ob->menus();
       if(m_menu < menus.count())
         menu = menus[m_menu];

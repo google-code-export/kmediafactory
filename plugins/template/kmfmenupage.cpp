@@ -55,28 +55,8 @@ public:
   void run()
   {
     message(msgId(), KMF::Start, i18n("Menu: %1", KMFTemplateBase::uiText(menuPage.objectName())));
-    QSize resolution = menuPage.resolution();
-    m_background = QImage(resolution, QImage::Format_ARGB32);
-    m_background.fill(KMF::Tools::toColor("#444444FF").rgba());
-    m_background.setDotsPerMeterX(DPM);
-    m_background.setDotsPerMeterY(DPM);
-    m_background.setText("layer", "background");
-    m_sub = QImage(resolution, QImage::Format_ARGB32);
-    m_sub.fill(KMF::Tools::toColor("#00000000").rgba());
-    m_sub.setDotsPerMeterX(DPM);
-    m_sub.setDotsPerMeterY(DPM);
-    m_sub.setText("layer", "sub");
-    m_subHighlight = QImage(resolution, QImage::Format_ARGB32);
-    m_subHighlight.fill(KMF::Tools::toColor("#00000000").rgba());
-    m_subHighlight.setDotsPerMeterX(DPM);
-    m_subHighlight.setDotsPerMeterY(DPM);
-    m_subHighlight.setText("layer", "highlight");
-    m_subSelect = QImage(resolution, QImage::Format_ARGB32);
-    m_subSelect.fill(KMF::Tools::toColor("#00000000").rgba());
-    m_subSelect.setDotsPerMeterX(DPM);
-    m_subSelect.setDotsPerMeterY(DPM);
-    m_subSelect.setText("layer", "select");
-    
+    init();
+    CHECK_IF_ABORTED();
     if(paint() == false)
     {
       message(msgId(), KMF::Error, i18n("Could not paint menu."));
@@ -101,6 +81,31 @@ public:
       return;
     }
     message(msgId(), KMF::Done);
+  }
+
+  void init()
+  {
+    QSize resolution = menuPage.resolution();
+    m_background = QImage(resolution, QImage::Format_ARGB32);
+    m_background.fill(KMF::Tools::toColor("#444444FF").rgba());
+    m_background.setDotsPerMeterX(DPM);
+    m_background.setDotsPerMeterY(DPM);
+    m_background.setText("layer", "background");
+    m_sub = QImage(resolution, QImage::Format_ARGB32);
+    m_sub.fill(KMF::Tools::toColor("#00000000").rgba());
+    m_sub.setDotsPerMeterX(DPM);
+    m_sub.setDotsPerMeterY(DPM);
+    m_sub.setText("layer", "sub");
+    m_subHighlight = QImage(resolution, QImage::Format_ARGB32);
+    m_subHighlight.fill(KMF::Tools::toColor("#00000000").rgba());
+    m_subHighlight.setDotsPerMeterX(DPM);
+    m_subHighlight.setDotsPerMeterY(DPM);
+    m_subHighlight.setText("layer", "highlight");
+    m_subSelect = QImage(resolution, QImage::Format_ARGB32);
+    m_subSelect.fill(KMF::Tools::toColor("#00000000").rgba());
+    m_subSelect.setDotsPerMeterX(DPM);
+    m_subSelect.setDotsPerMeterY(DPM);
+    m_subSelect.setText("layer", "select");
   }
 
   bool paint()
@@ -601,6 +606,7 @@ QImage KMFMenuPage::preview()
 {
   parseButtons(false);
   KMFMenuPageJob* j = static_cast<KMFMenuPageJob*>(job("preview"));
+  j->init();
   j->paint();
   QImage img = *j->layer(KMFWidget::Background);
   delete j;
