@@ -1,7 +1,7 @@
 CHANGED FROM THE LATEST RELEASE (0.6.0)
 ========================================
 Features:
-- Full python/ruby(kross) plugins
+- Full python/ruby(kross) plugins (KDE 4.1)
 - Job based processing (Multi core/processor support)
 
 Bug fixes:
