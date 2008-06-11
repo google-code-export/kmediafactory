@@ -1,0 +1,40 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<kpartgui version="1" name="kmediafactory" >
+ <MenuBar>
+  <Menu name="project" >
+   <text>&amp;Project</text>
+   <Action name="project_options" />
+  </Menu>
+  <Menu name="media" >
+   <text>&amp;Media</text>
+   <ActionList name="media_tools_list" />
+  </Menu>
+  <Menu name="Tools">
+   <text>&amp;Tools</text>
+   <ActionList name="tools_list" />
+   <Separator/>
+   <Action name="newstuff" />
+  </Menu>
+ </MenuBar>
+ <Menu name="media_file_popup" >
+  <Action name="delete" />
+  <ActionList name="media_file_actionlist" />
+ </Menu>
+ <Menu name="template_popup" >
+  <ActionList name="template_actionlist" />
+ </Menu>
+ <Menu name="output_popup" >
+  <ActionList name="output_actionlist" />
+ </Menu>
+ <!--
+ <ToolBar name="mediaButtons">
+   <ActionList name="media_tools_list" />
+ </ToolBar>
+ -->
+ <ToolBar noMerge="1" name="mainToolBar" >
+  <text>Main Toolbar</text>
+  <Action name="file_new" />
+  <Action name="file_open" />
+  <Action name="file_save" />
+ </ToolBar>
+</kpartgui>
