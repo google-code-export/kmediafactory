@@ -12,6 +12,7 @@ US_DATE=`date +%Y-%m-%d`
 SVN="https://kmediafactory.googlecode.com/svn/"
 SNAPSHOT_HTML="snapshot_kde4.html"
 NEWSMAIL="kmediafactory-announce@googlegroups.com"
+BUILDDIR="build"
 
 KMF=`pwd`
 ABC="bcdefghijklmnopqrstuvxyz"
@@ -91,9 +92,8 @@ function make_snapshot()
   find ./ -type f -name "*.tar.bz2" -exec rm {} \;
 
   (
-    source kde4_env.sh
-    cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/kde-debug \
-        -DCMAKE_BUILD_TYPE=debugfull -G KDevelop3
+    #source kde4_env.sh
+    cmake ..
     make package_source
   )
   FILE=`ls --color=none *.tar.bz2`
