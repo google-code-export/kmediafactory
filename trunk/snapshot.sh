@@ -14,6 +14,7 @@ US_DATE=`date +%Y-%m-%d`
 SVN="https://kmediafactory.googlecode.com/svn/"
 SNAPSHOT_HTML="snapshot_kde4.html"
 NEWSMAIL="kmediafactory-announce@googlegroups.com"
+FROMMAIL=`grep EMAIL $HOME/.me | sed 's/EMAIL=//'`
 BUILDDIR="build"
 
 KMF=`pwd`
@@ -166,7 +167,8 @@ function upload()
   echo "Uploading files to web..."
 
   cd $LOCALKMFDIR
-  kioclient copy $BZ2FILE.md5 $BZ2FILE $SNAPSHOT_HTML ftp://$SITE/$WEBDIR/
+  #kioclient copy $BZ2FILE.md5 $BZ2FILE $SNAPSHOT_HTML ftp://$SITE/$WEBDIR/
+  kioclient copy $SNAPSHOT_HTML ftp://$SITE/$WEBDIR/
 }
 
 function mail_to_news()
@@ -175,17 +177,21 @@ function mail_to_news()
   cd $KMF
 
   if [ "$RELEASE" != "1" ]; then
-    mail -s "New snapshot - $SNAPSHOT" $NEWSMAIL < snapshot.changelog
+    mail --from $FROMMAIL -s "New snapshot - $SNAPSHOT" $NEWSMAIL < snapshot.changelog
   else
-    mail -s "New release - $SNAPSHOT" $NEWSMAIL < snapshot.changelog
+    mail --from $FROMMAIL -s "New release - $SNAPSHOT" $NEWSMAIL < snapshot.changelog
   fi
 }
 
 snapshot_name
-fix_versions
-edit_changelog
-./commit.sh $SNAPSHOT
-make_snapshot
+echo -n "Make snapshot (y/N): "
+read ans
+if [ "$ans" == y -o "$ans" == Y ]; then
+  fix_versions
+  edit_changelog
+  ./commit.sh $SNAPSHOT
+  make_snapshot
+fi
 
 echo -n "Tag SVN (y/N): "
 read ans
