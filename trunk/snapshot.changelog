@@ -14,7 +14,7 @@ Features:
 -
 
 Bug fixes:
--
+- Build in non svn directory too.
 
 
 # Dependencies (ubuntu package naming):                                       #
