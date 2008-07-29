@@ -1,0 +1,457 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.1.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+  <!ENTITY kmediafactory "<application>KMediaFactory 0.6</application>">
+  <!ENTITY kappname "&kmediafactory;"><!-- Do *not* replace kappname-->
+  <!ENTITY package "kde-module"><!-- kdebase, kdeadmin, etc -->
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE"><!-- change language only here -->
+
+
+  <!-- Do not define any other entities; instead, use the entities
+       from kde-genent.entities and $LANG/user.entities. -->
+]>
+
+<!-- ................................................................ -->
+
+<!-- The language must NOT be changed here. -->
+
+<book lang="&language;">
+
+<!-- This header contains all of the meta-information for the document such
+as Authors, publish date, the abstract, and Keywords -->
+
+<bookinfo>
+<title>The &kmediafactory; Handbook</title>
+
+<authorgroup>
+<author>
+<firstname></firstname>
+<othername></othername>
+<surname>Petri Damstén</surname>
+<affiliation>
+<address><email>petri.damsten@iki.fi</email></address>
+</affiliation>
+</author>
+</authorgroup>
+
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+
+<copyright>
+<year>2007</year>
+<holder>Petri Damstén</holder>
+</copyright>
+<!-- Translators: put here the copyright notice of the translation -->
+<!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook
+     and in the FDL itself on how to use it. -->
+<legalnotice>&FDLNotice;</legalnotice>
+
+<!-- Date and version information of the documentation
+Don't forget to include this last date and this last revision number, we
+need them for translation coordination !
+Please respect the format of the date (YYYY-MM-DD) and of the version
+(V.MM.LL), it could be used by automation scripts.
+Do NOT change these in the translation. -->
+
+<date>2007-09-09</date>
+<releaseinfo>0.1</releaseinfo>
+
+<!-- Abstract about this handbook -->
+
+<abstract>
+<para>
+&kmediafactory; is  template based DVD authoring tool for KDE.
+</para>
+</abstract>
+
+<!-- This is a set of Keywords for indexing by search engines.
+Please at least include KDE, the KDE package it is in, the name
+ of your application, and a few relevant keywords. -->
+
+<keywordset>
+<keyword>KDE</keyword>
+<keyword>KMediaFactory</keyword>
+<keyword>DVD</keyword>
+</keywordset>
+
+</bookinfo>
+
+<!-- The contents of the documentation begin here.  Label
+each chapter so with the id attribute. This is necessary for two reasons: it
+allows you to easily reference the chapter from other chapters of your
+document, and if there is no ID, the name of the generated HTML files will vary
+from time to time making it hard to manage for maintainers and for the CVS
+system. Any chapter labelled (OPTIONAL) may be left out at the author's
+discretion. Other chapters should not be left out in order to maintain a
+consistent documentation style across all KDE apps. -->
+
+<chapter id="introduction">
+<title>Introduction</title>
+
+<!-- The introduction chapter contains a brief introduction for the
+application that explains what it does and where to report
+problems. Basically a long version of the abstract.  Don't include a
+revision history. (see installation appendix comment) -->
+
+<para>
+&kmediafactory; is easy to use template based dvd authoring tool. You can
+quickly create DVD menus for home videos and TV recordings in three simple
+steps.
+
+Please report any problems or feature requests to the petri.damsten@iki.fi.
+</para>
+</chapter>
+
+<chapter id="using-kmediafactory">
+<title>Using &kmediafactory;</title>
+
+<!-- This chapter should tell the user how to use your app. You should use as
+many sections (Chapter, Sect1, Sect3, etc...) as is necessary to fully document
+your application. -->
+
+<sect1 id="kmediafactory-media">
+<title>Media page</title>
+
+<para>Here you can:
+<itemizedlist>
+<listitem><para>Add DVD compatible MPEG2 videos.</para></listitem>
+<listitem><para>Import JPG, PNG files as slideshows.</para></listitem>
+<listitem><para>Import PDF, ODP and other office documents as slideshows.</para></listitem>
+</itemizedlist>
+
+<screenshot>
+<screeninfo>Media page of &kmediafactory;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="media.png" format="PNG"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Media page</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</para>
+</sect1>
+
+<sect1 id="kmediafactory-template">
+<title>Template page</title>
+
+<para>Here you can select what the menus should look like.
+
+<screenshot>
+<screeninfo>Template page of &kmediafactory;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="template.png" format="PNG"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Template page</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</para>
+</sect1>
+
+<sect1 id="kmediafactory-output">
+<title>Output page</title>
+
+<para>Here you select what the output is:
+<itemizedlist>
+<listitem><para>Output dvdauthor project.</para></listitem>
+<listitem><para>Output DVD video directory. This can be watched with eg.
+Xine or burned to DVD with eg. k3b.</para></listitem>
+<listitem><para>Output k3b project.</para></listitem>
+</itemizedlist>
+
+<screenshot>
+<screeninfo>Output page of &kmediafactory;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="output.png" format="PNG"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Output page</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
+</para>
+</sect1>
+
+</chapter>
+
+<chapter id="commands">
+<title>Command Reference</title>
+
+<!-- (OPTIONAL, BUT RECOMMENDED) This chapter should list all of the
+application windows and their menubar and toolbar commands for easy reference.
+Also include any keys that have a special function but have no equivalent in the
+menus or toolbars. This may not be necessary for small apps or apps with no tool
+or menu bars. -->
+
+<sect1 id="kmediafactory-mainwindow">
+<title>The main &kmediafactory; window</title>
+
+<sect2>
+<title>The File Menu</title>
+<para>
+<variablelist>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>N</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>New</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Creates a new project</action></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>O</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Open</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Open project</action></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>S</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Save</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Saves the project</action></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>A</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Save As</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Saves the project with a different name</action></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>Q</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Quit</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Quits</action> &kmediafactory;</para></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect2>
+
+<sect2>
+<title>The Project Menu</title>
+<para>
+<variablelist>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>O</keycap></keycombo>
+</shortcut>
+<guimenu>Project</guimenu>
+<guimenuitem>Options</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Project Options</action></para></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect2>
+
+<sect2>
+<title>The Media Menu</title>
+<para>
+Same options that are in Media button bar.
+</para>
+
+</sect2>
+
+<sect2>
+<title>The Tools Menu</title>
+<para>
+<variablelist>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>G</keycap></keycombo>
+</shortcut>
+<guimenu>Tools</guimenu>
+<guimenuitem>Get New Tools</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Gets new tools to this menu</action></para></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect2>
+
+<sect2>
+<title>The Settings Menu</title>
+<para>
+<variablelist>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>S</keycap></keycombo>
+</shortcut>
+<guimenu>Settings</guimenu>
+<guimenuitem>Show Toolbar</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Show/Hide the tool bar</action></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>h</keycap></keycombo>
+</shortcut>
+<guimenu>Settings</guimenu>
+<guimenuitem>Configure Shortcuts</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Configure &kmediafactory; Shortcuts</action></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>b</keycap></keycombo>
+</shortcut>
+<guimenu>Settings</guimenu>
+<guimenuitem>Configure Toolbars</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Configure &kmediafactory; Toolbars</action></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>C</keycap></keycombo>
+</shortcut>
+<guimenu>Settings</guimenu>
+<guimenuitem>Configure</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Configure &kmediafactory; and Plugins</action></para></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect2>
+
+<sect2>
+<title>The <guimenu>Help</guimenu> Menu</title>
+
+<!-- Assuming you have a standard help menu (help, what's this, about -->
+<!-- &kmediafactory;, about KDE) then the documentation is already written. -->
+<!-- The following entity is valid anywhere that a variablelist is -->
+<!-- valid.  -->
+
+&help.menu.documentation;
+
+</sect2>
+
+</sect1>
+</chapter>
+
+<chapter id="developers">
+<title>Developer's Guide to &kmediafactory;</title>
+
+<!-- (OPTIONAL) A Programming/Scripting reference chapter should be
+used for apps that use plugins or that provide their own scripting hooks
+and/or development libraries. -->
+
+<para>
+More &kmediafactory; developer info in the web site.
+</para>
+
+</chapter>
+
+<chapter id="credits">
+
+<!-- Include credits for the programmers, documentation writers, and
+contributors here. The license for your software should then be included below
+the credits with a reference to the appropriate license file included in the KDE
+distribution. -->
+
+<title>Credits and License</title>
+
+<para>
+&kmediafactory;
+</para>
+<para>
+Program copyright 2007 Petri Damstén <email>petri.damsten@iki.fi</email>
+</para>
+
+<para>
+Documentation copyright 2007 Petri Damstén <email>petri.damsten@iki.fi</email>
+</para>
+
+<!-- TRANS:CREDIT_FOR_TRANSLATORS -->
+
+&underFDL;               <!-- FDL: do not remove -->
+
+<!-- Determine which license your application is licensed under,
+     and delete all the remaining licenses below:
+
+     (NOTE:  All documentation are licensed under the FDL,
+     regardless of what license the application uses) -->
+
+&underGPL;        	 <!-- GPL License -->
+
+</chapter>
+
+<appendix id="installation">
+<title>Installation</title>
+
+<sect1 id="getting-kmediafactory">
+<title>How to obtain &kmediafactory;</title>
+
+<!-- This first entity contains boiler plate for applications that are
+part of KDE CVS.  You should remove it if you are releasing your
+application -->
+<para>
+Downloading and installation info for various distros can be found from the web site.
+</para>
+</sect1>
+
+</appendix>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->
+
