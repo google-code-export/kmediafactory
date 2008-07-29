@@ -169,6 +169,7 @@ function upload()
   cd $LOCALKMFDIR
   #kioclient copy $BZ2FILE.md5 $BZ2FILE $SNAPSHOT_HTML ftp://$SITE/$WEBDIR/
   kioclient copy $SNAPSHOT_HTML ftp://$SITE/$WEBDIR/
+  googlecode-upload.py -s $SNAPSHOT -p KMediaFactory $BZ2FILE
 }
 
 function mail_to_news()
