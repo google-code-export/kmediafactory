@@ -1,0 +1,5 @@
+[KNewStuff2]
+ProvidersUrl=http://download.kde.org/khotnewstuff/kmediafactorydvdtemplate-providers.xml
+ChecksumPolicy=ifpossible
+SignaturePolicy=ifpossible
+TargetDir=kmediafactory_template
