@@ -39,7 +39,7 @@
 #include <QPixmap>
 #include <QCheckBox>
 
-K_EXPORT_KMEDIAFACTORY_PLUGIN(video, VideoPlugin);
+K_EXPORT_KMEDIAFACTORY_PLUGIN(video, VideoPlugin)
 
 class VideoConfig : public QWidget, public Ui::VideoConfig
 {

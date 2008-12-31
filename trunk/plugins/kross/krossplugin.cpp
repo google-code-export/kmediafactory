@@ -32,7 +32,7 @@
 #include <KActionCollection>
 #include <QTimer>
 
-K_EXPORT_KMEDIAFACTORY_PLUGIN(kross, KrossPlugin);
+K_EXPORT_KMEDIAFACTORY_PLUGIN(kross, KrossPlugin)
 
 KrossPlugin::KrossPlugin(QObject* parent, const QVariantList& args) :
   KMF::Plugin(parent), m_action(0)
@@ -59,7 +59,7 @@ KrossPlugin::KrossPlugin(QObject* parent, const QVariantList& args) :
   //kDebug() << "Running" << script;
   m_action->trigger();
 }
-    
+
 KrossPlugin::~KrossPlugin()
 {
   kDebug();
@@ -100,8 +100,8 @@ void KrossPlugin::registerPlugin(Kross::Object::Ptr plugin)
   m_plugin = plugin;
 }
 
-QObject* KrossPlugin::interface() 
-{ 
+QObject* KrossPlugin::interface()
+{
   return new KrossPluginInterface(this, KMF::Plugin::interface());
 }
 

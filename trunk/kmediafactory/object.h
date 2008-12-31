@@ -67,8 +67,8 @@ namespace KMF
       class Private;
       Private *const d;
   };
-};
+}
 
-Q_DECLARE_METATYPE(QDomElement);
+Q_DECLARE_METATYPE(QDomElement)
 
 #endif // KMFOBJECT_H

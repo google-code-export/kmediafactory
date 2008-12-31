@@ -45,6 +45,6 @@ namespace KMF
       QString m_file;
       QStringList m_files;
   };
-};
+}
 
 #endif // KMEDIAFACTORY_DVDAUTHORPARSER_H

@@ -51,7 +51,7 @@ static QPixmap appIcon(const QString &iconName)
 int ToolListModel::columnCount(const QModelIndex&) const
 {
   return 2;
-};
+}
 
 QVariant ToolListModel::data(const QModelIndex &index, int role) const
 {
@@ -79,7 +79,7 @@ QVariant ToolListModel::data(const QModelIndex &index, int role) const
     }
   }
   return QVariant();
-};
+}
 
 QVariant ToolListModel::headerData(int column, Qt::Orientation, int role) const
 {
@@ -94,7 +94,7 @@ QVariant ToolListModel::headerData(int column, Qt::Orientation, int role) const
       return i18n("Description");
   }
   return "";
-};
+}
 
 Tools::Tools(QWidget* parent) :
     QWidget(parent)

@@ -41,6 +41,6 @@ namespace KMF
       void set(const QRect& maxRect, double aspectRatio);
       void align(const QRect& parentRect, HAlign halign, VAlign valign);
   };
-};
+}
 
 #endif

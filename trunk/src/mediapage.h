@@ -23,7 +23,7 @@
 #include "ui_mediapage.h"
 
 class QPoint;
-namespace KMF { class MediaObject; };
+namespace KMF { class MediaObject; }
 
 /**
  * @short Page for media selection

@@ -394,7 +394,7 @@ namespace QDVD
   };
 }
 
-Q_DECLARE_METATYPE(const QDVD::Base*);
+Q_DECLARE_METATYPE(const QDVD::Base*)
 
 #endif
 

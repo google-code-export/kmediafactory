@@ -36,7 +36,7 @@ namespace QDVD
 {
   class AudioTrack;
   class Subtitle;
-};
+}
 
 class KDE_EXPORT LanguageListModel : public QAbstractListModel
 {
