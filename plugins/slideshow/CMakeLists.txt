@@ -20,7 +20,7 @@ kde4_add_kcfg_files(kmediafactory_slideshow_SRCS
 )
 
 kde4_add_plugin(kmediafactory_slideshow ${kmediafactory_slideshow_SRCS})
-target_link_libraries(kmediafactory_slideshow ${KDE4_KDECORE_LIBS} kmediafactoryinterfaces kmf)
+target_link_libraries(kmediafactory_slideshow ${KDE4_KIO_LIBS} ${KDE4_THREADWEAVER_LIBRARY} kmediafactoryinterfaces kmf)
 
 install(TARGETS kmediafactory_slideshow DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES kmediafactory_slideshowui.rc DESTINATION ${DATA_INSTALL_DIR}/kmediafactory)
