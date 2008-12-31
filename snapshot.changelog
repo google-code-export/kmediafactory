@@ -14,7 +14,8 @@ Features:
 -
 
 Bug fixes:
-- Build in non svn directory too.
+- Build with KDE 4.2
+- Pedantic fixes
 
 
 # Dependencies (ubuntu package naming):                                       #

@@ -99,7 +99,7 @@ function make_snapshot()
   find ./ -type f -name "*.tar.bz2" -exec rm {} \;
 
   (
-    #source kde4_env.sh
+    source ~/.xsessionrc
     cmake ..
     make package_source
   )
@@ -169,7 +169,7 @@ function upload()
   cd $LOCALKMFDIR
   #kioclient copy $BZ2FILE.md5 $BZ2FILE $SNAPSHOT_HTML ftp://$SITE/$WEBDIR/
   kioclient copy $SNAPSHOT_HTML ftp://$SITE/$WEBDIR/
-  googlecode-upload.py -s $SNAPSHOT -p KMediaFactory $BZ2FILE
+  googlecode_upload.py -s "$SNAPSHOT" -p KMediaFactory $BZ2FILE
 }
 
 function mail_to_news()
