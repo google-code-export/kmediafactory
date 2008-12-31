@@ -35,7 +35,7 @@
 #include <KIcon>
 #include <KPluginLoader>
 
-K_EXPORT_KMEDIAFACTORY_PLUGIN(slideshow, SlideshowPlugin);
+K_EXPORT_KMEDIAFACTORY_PLUGIN(slideshow, SlideshowPlugin)
 
 class SlideshowConfig : public QWidget, public Ui::SlideshowConfig
 {

@@ -37,7 +37,7 @@ class Slide
     bool operator <(const Slide &t) const { return (comment < t.comment); }
 };
 
-Q_DECLARE_METATYPE(Slide);
+Q_DECLARE_METATYPE(Slide)
 
 typedef QList<Slide> SlideList;
 

@@ -46,7 +46,7 @@ class ToolItem
     bool operator <(const ToolItem &t) const { return (name < t.name); }
 };
 
-Q_DECLARE_METATYPE(ToolItem);
+Q_DECLARE_METATYPE(ToolItem)
 
 class ToolListModel : public KMFListModel<ToolItem>
 {

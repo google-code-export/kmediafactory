@@ -33,8 +33,8 @@
 class QDir;
 class QMediaFile;
 
-namespace QDVD { class Subtitle; class Cell; };
-namespace KMF { class Time; };
+namespace QDVD { class Subtitle; class Cell; }
+namespace KMF { class Time; }
 
 class VideoObject : public KMF::MediaObject
 {

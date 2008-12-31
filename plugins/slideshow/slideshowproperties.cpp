@@ -41,7 +41,7 @@
 int SlideListModel::columnCount(const QModelIndex&) const
 {
   return 2;
-};
+}
 
 Qt::ItemFlags SlideListModel::flags(const QModelIndex& index) const
 {
@@ -90,7 +90,7 @@ QVariant SlideListModel::data(const QModelIndex &index, int role) const
       return ((at(index).chapter) ? Qt::Checked : Qt::Unchecked);
   }
   return QVariant();
-};
+}
 
 bool SlideListModel::setData(const QModelIndex &index, const QVariant &value,
                              int role)
@@ -129,7 +129,7 @@ QVariant SlideListModel::headerData(int column, Qt::Orientation, int role) const
       return i18n("Comment");
   }
   return "";
-};
+}
 
 void SlideListModel::setPreview(const QString& file, const QPixmap& pixmap)
 {

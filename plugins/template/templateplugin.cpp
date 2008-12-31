@@ -40,7 +40,7 @@
 #include <QPixmap>
 #include <QImage>
 
-K_EXPORT_KMEDIAFACTORY_PLUGIN(template, TemplatePlugin);
+K_EXPORT_KMEDIAFACTORY_PLUGIN(template, TemplatePlugin)
 
 class TemplateConfig : public QWidget, public Ui::ConfigureTemplatePlugin
 {

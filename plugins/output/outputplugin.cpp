@@ -42,7 +42,7 @@
 #include "dvdinfo.h"
 #endif
 
-K_EXPORT_KMEDIAFACTORY_PLUGIN(output, OutputPlugin);
+K_EXPORT_KMEDIAFACTORY_PLUGIN(output, OutputPlugin)
 
 OutputPlugin::OutputPlugin(QObject *parent, const QVariantList&) :
   KMF::Plugin(parent), addPreviewDVDXine(0), addPreviewDVDKaffeine(0)

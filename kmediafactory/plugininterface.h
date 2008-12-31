@@ -78,7 +78,7 @@ namespace KMF
   class KDE_EXPORT ProgressDialog : public QObject
   {
       Q_OBJECT
-    public: 
+    public:
       explicit ProgressDialog(QObject* parent);
       ~ProgressDialog();
 
@@ -148,8 +148,8 @@ namespace KMF
   };
 }
 
-Q_DECLARE_METATYPE(KMF::OutputObject*);
-Q_DECLARE_METATYPE(KMF::TemplateObject*);
-Q_DECLARE_METATYPE(KMF::MediaObject*);
+Q_DECLARE_METATYPE(KMF::OutputObject*)
+Q_DECLARE_METATYPE(KMF::TemplateObject*)
+Q_DECLARE_METATYPE(KMF::MediaObject*)
 
 #endif // PLUGININTERFACE_H
