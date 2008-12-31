@@ -27,11 +27,11 @@
 #if defined _WIN32 || defined _WIN64
 
 #ifndef KOSTORE_EXPORT
-# if defined(MAKE_KSTORE_LIB)
-   /* We are building this library */ 
+# if defined(MAKE_KOSTORE_LIB)
+/* We are building this library */
 #  define KOSTORE_EXPORT KDE_EXPORT
 # else
-   /* We are using this library */ 
+/* We are using this library */
 #  define KOSTORE_EXPORT KDE_IMPORT
 # endif
 #endif
