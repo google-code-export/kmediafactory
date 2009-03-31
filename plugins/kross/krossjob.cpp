@@ -31,7 +31,7 @@ KrossJob::~KrossJob()
 void KrossJob::run()
 {
   if (m_job) {
-    m_job->callMethod("run", QVariantList() << this);
+    m_job->callMethod("run", QVariantList() << qVariantFromValue(qobject_cast<QObject*>(this)));
   }
 }
 
