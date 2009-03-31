@@ -413,7 +413,7 @@ void KoStore::popDirectory()
 bool KoStore::addLocalFile(const QString &fileName, const QString &destName)
 {
     QFileInfo fi(fileName);
-    uint size = fi.size();
+    //uint size = fi.size();
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly)) {
         return false;
