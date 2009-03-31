@@ -1,7 +1,7 @@
 CHANGED FROM THE LATEST RELEASE (0.6.0)
 ========================================
 Features:
-- Full python/ruby(kross) plugins (KDE 4.1)
+- Full python/ruby(kross) plugins
 - Job based processing (Multi core/processor support)
 
 Bug fixes:
@@ -14,8 +14,8 @@ Features:
 -
 
 Bug fixes:
-- Build with KDE 4.2
-- Pedantic fixes
+- Build fix
+- Fix license
 
 
 # Dependencies (ubuntu package naming):                                       #
