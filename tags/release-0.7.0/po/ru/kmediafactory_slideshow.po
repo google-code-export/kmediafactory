@@ -1,0 +1,236 @@
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: ENCODING\n"
+
+#. i18n: tag string
+#. i18n: file slideshowconfig.ui line 13
+#: rc.cpp:3
+msgid "Configure Slideshow Plugin"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowconfig.ui line 31
+#: rc.cpp:6
+msgid "Audio &Type:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowconfig.ui line 45
+#: rc.cpp:9
+msgid "MP2"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowconfig.ui line 50
+#: rc.cpp:12
+msgid "AC3"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 13
+#: rc.cpp:15
+msgid "Slideshow properties"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 51
+#: rc.cpp:18
+msgid "&Title:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 107
+#: rc.cpp:21
+msgid "Add (Alt+ Insert)"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 113
+#: rc.cpp:24
+msgid "Alt+Ins"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 123
+#: rc.cpp:27
+msgid "Remove (Alt + Delete)"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 129
+#: rc.cpp:30
+msgid "Alt+Del"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 155
+#: rc.cpp:33
+msgid "Move up (Alt + Up)"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 161
+#: rc.cpp:36
+msgid "Alt+Up"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 171
+#: rc.cpp:39
+msgid "Move down (Alt + Down)"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 177
+#: rc.cpp:42
+msgid "Alt+Down"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 268
+#: rc.cpp:45
+msgid "&Slide duration:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 290
+#: rc.cpp:48
+msgid "fit"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 341
+#: rc.cpp:51
+msgid "&Add original pictures to DVD"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 344
+#: rc.cpp:54
+msgid "Alt+A"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 360
+#: rc.cpp:57
+msgid "&Loop slideshow"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 363
+#: rc.cpp:60
+msgid "Alt+L"
+msgstr ""
+
+#: slideshowobject.cpp:63
+msgid "Copying slideshow originals"
+msgstr ""
+
+#: slideshowobject.cpp:87 slideshowobject.cpp:425
+#, kde-format
+msgid "Slideshow: %1"
+msgstr ""
+
+#: slideshowobject.cpp:112
+msgid "Slideshow error."
+msgstr ""
+
+#: slideshowobject.cpp:117
+msgid "Can't write slideshow file."
+msgstr ""
+
+#: slideshowobject.cpp:185
+msgid "&Properties"
+msgstr ""
+
+#: slideshowobject.cpp:214
+msgid "Processing slides...\n"
+msgstr ""
+
+#: slideshowobject.cpp:220
+msgid "Cannot add directory."
+msgstr ""
+
+#: slideshowobject.cpp:265
+#, kde-format
+msgid "Page %1"
+msgstr ""
+
+#: slideshowobject.cpp:467
+#, kde-format
+msgid "Slideshow \"%1\" seems to be up to date"
+msgstr ""
+
+#: slideshowplugin.cpp:63
+msgid "Add Slideshow"
+msgstr ""
+
+#: slideshowplugin.cpp:119
+msgid "Slideshow"
+msgstr ""
+
+#: slideshowplugin.cpp:146
+msgid "Slideshow plugin"
+msgstr ""
+
+#: slideshowproperties.cpp:127
+msgid "Picture"
+msgstr ""
+
+#: slideshowproperties.cpp:129
+msgid "Comment"
+msgstr ""
+
+#: slideshowproperties.cpp:152
+msgid "Slideshow Properties"
+msgstr ""
+
+#: slideshowproperties.cpp:246
+msgid "Info: "
+msgstr ""
+
+#: slideshowproperties.cpp:256
+#, kde-format
+msgid "%1 images"
+msgstr ""
+
+#: slideshowproperties.cpp:258 slideshowproperties.cpp:262
+#, kde-format
+msgid ", Duration %1"
+msgstr ""
+
+#: slideshowproperties.cpp:265
+#, kde-format
+msgid ", Audio duration %1"
+msgstr ""
+
+#: slideshowproperties.cpp:281
+msgid ""
+"*.jpg *.png *.pdf *.odp *.odt *.ods *.odx *.sxw *.sxc *.sxi             *."
+"ppt *.xls *.doc|Pictures, Presentations\n"
+"*.*|All files"
+msgstr ""
+
+#: slideshowproperties.cpp:294
+msgid "*.mp3 *.wav *.ogg|Audio Files"
+msgstr ""
+
+#: slideshowproperties.cpp:295
+msgid "Audio files"
+msgstr ""
+
+#: slideshowproperties.cpp:318
+msgid "You should have atleast one chapter."
+msgstr ""
