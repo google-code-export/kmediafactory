@@ -33,4 +33,6 @@ echo "running cmake..."
 cmake -DCMAKE_INSTALL_PREFIX="$KDE4_PREFIX" ..
 
 echo ""
+echo "KMediaFactory is going to be installed to: $KDE4_PREFIX"
+echo ""
 echo "OK you can run make now. (cd build; make)"
