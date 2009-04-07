@@ -136,6 +136,7 @@ SET(CPACK_GENERATOR "TBZ2")
 set(CPACK_SOURCE_GENERATOR "TBZ2")
 set(CPACK_SOURCE_IGNORE_FILES
   ".svn/"
+  "build/"
   "debug/"
   "templates/"
   "distros/"
@@ -149,5 +150,9 @@ set(CPACK_SOURCE_IGNORE_FILES
   "snapshot.changelog"
   ".*.tar.bz2"
   "~$"
+  "build.make"
+  "cmake_clean.cmake"
+  "DependInfo.cmake"
+  "progress.make"
 )
 include(CPack)
