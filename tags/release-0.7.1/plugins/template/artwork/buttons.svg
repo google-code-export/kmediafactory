@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   width="210mm"
+   height="297mm"
+   id="svg1"
+   sodipodi:version="0.32"
+   inkscape:version="0.40"
+   sodipodi:docbase="/home/damu/files/code/linux/kmediafactory/plugins/template/data"
+   sodipodi:docname="buttons.svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:xml="http://www.w3.org/XML/1998/namespace"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient1708">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1.0000000;"
+         offset="0.0000000"
+         id="stop1709" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="1"
+         id="stop1710" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient1693">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1.0000000;"
+         offset="0.0000000"
+         id="stop1694" />
+      <stop
+         style="stop-color:#e6e6e6;stop-opacity:1.0000000;"
+         offset="1.0000000"
+         id="stop1695" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1693"
+       id="linearGradient1696"
+       gradientTransform="matrix(1.821355,0.000000,0.000000,0.549042,-35.25680,-199.7886)"
+       x1="217.61652"
+       y1="800.39441"
+       x2="216.44206"
+       y2="462.51157"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1708"
+       id="linearGradient1711"
+       gradientTransform="matrix(2.293821,0.000000,0.000000,0.435954,-35.25680,-199.7886)"
+       x1="202.31346"
+       y1="825.34070"
+       x2="201.42676"
+       y2="5.1831307"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1708"
+       id="linearGradient1755"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(2.293821,0.000000,0.000000,0.435954,-40.59874,32.58582)"
+       x1="202.31346"
+       y1="825.34070"
+       x2="201.42676"
+       y2="5.1831307" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1693"
+       id="linearGradient1756"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.821355,0.000000,0.000000,0.549042,-40.59874,32.58582)"
+       x1="217.61652"
+       y1="800.39441"
+       x2="216.44206"
+       y2="462.51157" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1708"
+       id="linearGradient1763"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(2.293821,0.000000,0.000000,0.435954,-41.66715,277.2466)"
+       x1="202.31346"
+       y1="825.34070"
+       x2="201.42676"
+       y2="5.1831307" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1693"
+       id="linearGradient1764"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.821355,0.000000,0.000000,0.549042,-41.66715,277.2466)"
+       x1="217.61652"
+       y1="800.39441"
+       x2="216.44206"
+       y2="462.51157" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1693"
+       id="linearGradient1161"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.821355,0.000000,0.000000,0.549042,-35.25682,501.6081)"
+       x1="217.61652"
+       y1="800.39441"
+       x2="216.44206"
+       y2="462.51157" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1708"
+       id="linearGradient1162"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(2.293821,0.000000,0.000000,0.435954,-35.25682,501.6081)"
+       x1="202.31346"
+       y1="825.34070"
+       x2="201.42676"
+       y2="5.1831307" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.1699869"
+     inkscape:cx="297.63780"
+     inkscape:cy="420.94487"
+     inkscape:current-layer="layer1"
+     inkscape:window-width="1534"
+     inkscape:window-height="1168"
+     inkscape:window-x="58"
+     inkscape:window-y="0" />
+  <metadata
+     id="metadata4">
+    <rdf:RDF
+       id="RDF5">
+      <cc:Work
+         rdf:about=""
+         id="Work6">
+        <dc:format
+           id="format7">image/svg+xml</dc:format>
+        <dc:type
+           id="type9"
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#a0a0a0;fill-opacity:1.0000000;fill-rule:evenodd;stroke:none;stroke-width:0.30624514pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000"
+       d="M 152.39537,119.81406 L 111.35399,176.12944 L 193.43675,176.12944 L 152.39537,119.81406 z "
+       id="path1712"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="/home/damu/back.png"
+       inkscape:export-xdpi="20.241674"
+       inkscape:export-ydpi="20.241674" />
+    <path
+       style="fill:#a0a0a0;fill-opacity:1.0000000;fill-rule:evenodd;stroke:none;stroke-width:0.30624514pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000"
+       d="M 118.89572,380.34613 L 175.21110,421.38751 L 175.21110,339.30475 L 118.89572,380.34613 z "
+       id="path1751"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="/home/damu/prev.png"
+       inkscape:export-xdpi="20.241674"
+       inkscape:export-ydpi="20.241674" />
+    <path
+       style="fill:#a0a0a0;fill-opacity:1.0000000;fill-rule:evenodd;stroke:none;stroke-width:0.30624514pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000"
+       d="M 174.14271,625.00697 L 117.82733,583.96559 L 117.82733,666.04835 L 174.14271,625.00697 z "
+       id="path1759"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="/home/damu/next.png"
+       inkscape:export-xdpi="20.241674"
+       inkscape:export-ydpi="20.241674" />
+    <rect
+       style="fill:url(#linearGradient1161);fill-opacity:1.0000000;fill-rule:evenodd;stroke:#6d6d6d;stroke-width:7.0866141;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.0000000;stroke-opacity:1.0000000"
+       id="rect1158"
+       width="615.39154"
+       height="180.55754"
+       x="67.308418"
+       y="759.08972"
+       rx="45.003086"
+       ry="45.003086"
+       inkscape:export-filename="/home/damu/files/code/linux/kmediafactory/plugins/template/template/images/button.png"
+       inkscape:export-xdpi="20.241674"
+       inkscape:export-ydpi="20.241674" />
+    <path
+       style="fill:url(#linearGradient1162);fill-opacity:1.0000000;fill-rule:evenodd;stroke:none;stroke-width:1.0000000pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000"
+       d="M 614.71193,771.20191 C 446.57651,771.28521 278.44110,771.36858 110.30568,771.45191 C 90.418123,772.80492 76.638933,793.56727 79.312623,812.57688 C 79.476973,836.22272 79.641323,859.86856 79.805673,883.51440 C 103.78919,863.97607 136.31007,862.82014 165.83414,861.62921 C 246.60905,859.02964 327.44189,860.84146 408.24316,860.27334 C 481.01509,860.22467 553.82788,860.08734 626.57057,859.07158 C 642.90498,857.12202 660.02651,850.68927 669.96193,836.85815 C 670.41711,820.22882 673.30605,802.06109 665.39987,786.73755 C 657.75788,774.11601 642.09051,770.15638 628.21359,771.18060 C 623.71236,770.93567 619.21496,771.14003 614.71193,771.20191 z "
+       id="path1159"
+       inkscape:export-filename="/home/damu/files/code/linux/kmediafactory/plugins/template/template/images/button.png"
+       inkscape:export-xdpi="20.241674"
+       inkscape:export-ydpi="20.241674" />
+  </g>
+</svg>
