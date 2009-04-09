@@ -46,12 +46,12 @@
 class CellListModel : public QAbstractListModel
 {
   public:
-    CellListModel(const QDVD::CellList& data, QTime total) :
+    CellListModel(QDVD::CellList *data, QTime total) :
       m_data(data), m_total(total) {};
 
     virtual int rowCount(const QModelIndex&) const
     {
-      return m_data.count();
+      return m_data->count();
     };
 
     virtual int columnCount(const QModelIndex&) const
@@ -64,6 +64,32 @@ class CellListModel : public QAbstractListModel
       reset();
     };
 
+    virtual bool setData(const QModelIndex &index, const QVariant &value, int role)
+    {
+      if (!index.isValid())
+        return false;
+
+      if (index.row() >= rowCount(index))
+        return false;
+      
+      if (role == Qt::EditRole && index.column() == 0)
+      {
+         (*m_data)[index.row()].setName(value.toString());
+         emit dataChanged(index, index);
+         return true;
+      }
+      return false;
+    };
+    
+    virtual Qt::ItemFlags flags(const QModelIndex &index) const
+    {
+        Qt::ItemFlags result = QAbstractItemModel::flags(index);
+        if (index.column() == 0) {
+            result |= Qt::ItemIsEditable;
+        }
+        return result;
+    };
+    
     virtual QVariant data(const QModelIndex &index, int role) const
     {
       if (!index.isValid())
@@ -77,18 +103,18 @@ class CellListModel : public QAbstractListModel
         switch(index.column())
         {
           case 0:
-            return m_data.at(index.row()).name();
+            return m_data->at(index.row()).name();
           case 1:
-            return KMF::Time(m_data.at(index.row()).start()).toString();
+            return KMF::Time(m_data->at(index.row()).start()).toString();
           case 2:
-            if(index.row() == m_data.count() - 1)
+            if(index.row() == m_data->count() - 1)
             {
               KMF::Time t(m_total);
-              t -= m_data.at(index.row()).start();
+              t -= m_data->at(index.row()).start();
               return t.toString();
             }
             else
-              return KMF::Time(m_data.at(index.row()).length()).toString();
+              return KMF::Time(m_data->at(index.row()).length()).toString();
         }
       }
       return QVariant();
@@ -112,7 +138,7 @@ class CellListModel : public QAbstractListModel
     };
 
   private:
-    const QDVD::CellList& m_data;
+    QDVD::CellList *m_data;
     QTime m_total;
 };
 
@@ -184,7 +210,7 @@ void Chapters::setData(const QDVD::CellList& cells,
 {
   m_cells = cells;
   m_obj = obj;
-  m_model = new CellListModel(m_cells, m_obj->duration());
+  m_model = new CellListModel(&m_cells, m_obj->duration());
   chaptersView->setModel(m_model);
   timeSlider->setMaximum((int)KMF::Time(m_obj->duration()));
   m_duration = KMF::Time(m_obj->duration()).toString();
