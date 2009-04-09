@@ -67,6 +67,7 @@ void KMFImageView::newImage()
   if(m_imageItem)
   {
     m_scene.removeItem(m_imageItem);
+    delete m_imageItem;
     m_imageItem = 0;
   }
   if(!m_image.isNull())
