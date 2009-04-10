@@ -79,7 +79,7 @@ TemplateObject::TemplateObject(const QString& templateFile, QObject* parent):
   if(m_menu.templateStore()->hasFile("settings.kcfg") &&
      m_menu.templateStore()->hasFile("settings.ui"))
   {
-    m_templateProperties = new KAction(KIcon("pencil"),
+    m_templateProperties = new KAction(KIcon("document-properties"),
                                        i18n("&Properties"),this);
     plugin()->actionCollection()->addAction("tob_properties",
            m_templateProperties);

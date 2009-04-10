@@ -186,7 +186,7 @@ SlideshowObject::SlideshowObject(QObject* parent)
   : MediaObject(parent), m_loop(false), m_includeOriginals(true)
 {
   setObjectName("slideshow");
-  m_slideshowProperties = new KAction(KIcon("pencil"),
+  m_slideshowProperties = new KAction(KIcon("document-properties"),
                                       i18n("&Properties"),this);
   m_slideshowProperties->setShortcut(Qt::CTRL + Qt::Key_W);
   plugin()->actionCollection()->addAction("mob_properties",
