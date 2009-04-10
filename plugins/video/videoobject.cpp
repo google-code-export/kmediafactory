@@ -177,7 +177,7 @@ VideoObject::VideoObject(QObject* parent)
     m_aspect(QDVD::VideoTrack::Aspect_Unknown), m_spumux(0)
 {
   setObjectName("video");
-  m_videoProperties = new KAction(KIcon("pencil"), i18n("&Properties"), this);
+  m_videoProperties = new KAction(KIcon("document-properties"), i18n("&Properties"), this);
   plugin()->actionCollection()->addAction("video", m_videoProperties);
   connect(m_videoProperties, SIGNAL(triggered()), SLOT(slotProperties()));
 
