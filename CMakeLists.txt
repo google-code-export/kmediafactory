@@ -30,6 +30,9 @@ check_function_exists(va_copy VA_COPY)
 find_package(Fontconfig REQUIRED)
 macro_log_feature(FONTCONFIG_FOUND "fontconfig" "Get font information" "http://www.fontconfig.org/" TRUE "" "")
 
+find_package(Phonon REQUIRED)
+macro_log_feature(PHONON_FOUND "phonon" "Video playing" "http://phonon.kde.org/" TRUE "" "")
+
 find_package(MSGFMT REQUIRED)
 macro_log_feature(MSGFMT_FOUND "gettext" "For translations" "http://www.gnu.org/software/gettext/" TRUE "" "")
 find_program(MSGFMT_EXECUTABLE msgfmt)

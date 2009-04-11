@@ -26,7 +26,7 @@ kde4_add_kcfg_files(kmediafactory_video_SRCS
 )
 
 kde4_add_plugin(kmediafactory_video ${kmediafactory_video_SRCS})
-target_link_libraries(kmediafactory_video ${KDE4_KIO_LIBS} ${KDE4_THREADWEAVER_LIBRARY} kmediafactoryinterfaces kmf)
+target_link_libraries(kmediafactory_video ${KDE4_KIO_LIBS} ${KDE4_THREADWEAVER_LIBRARY} ${KDE4_PHONON_LIBS} kmediafactoryinterfaces kmf)
 
 install(TARGETS kmediafactory_video DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES kmediafactory_videoui.rc DESTINATION ${DATA_INSTALL_DIR}/kmediafactory)

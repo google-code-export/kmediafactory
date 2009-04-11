@@ -21,10 +21,14 @@
 #ifndef CHAPTERS_H
 #define CHAPTERS_H
 
-#include "ui_chapters.h"
 #include <kmf_stddef.h>
 #include <videooptions.h>
 #include <kmftime.h>
+
+// How to use namespaces / Phonon in ui files?
+#include "Phonon/VideoPlayer"
+using namespace Phonon;
+#include "ui_chapters.h"
 
 class CellListModel;
 
@@ -39,23 +43,25 @@ class Chapters : public KDialog, public Ui::Chapters
     void setData(const QDVD::CellList& cells, const VideoObject* obj);
 
   protected slots:
-    virtual void slotNextFrame();
-    virtual void slotPrevFrame();
-    virtual void slotForward();
-    virtual void slotRewind();
-    virtual void slotStart();
-    virtual void slotEnd();
-    virtual void slotRemove();
-    virtual void slotAdd();
-    virtual void slotSelectionChanged();
-    virtual void slotSliderMoved(int value);
-    virtual void slotContextMenu(const QPoint& p);
-    virtual void renameAll();
-    virtual void deleteAll();
-    virtual void autoChapters();
-    virtual void import();
-    virtual void saveCustomPreview();
-    virtual void accept();
+    void slotNextFrame();
+    void slotPrevFrame();
+    void slotForward();
+    void slotRewind();
+    void slotStart();
+    void slotEnd();
+    void slotRemove();
+    void slotAdd();
+    void slotSelectionChanged();
+    void slotSliderMoved(int value);
+    void slotContextMenu(const QPoint& p);
+    void renameAll();
+    void deleteAll();
+    void autoChapters();
+    void import();
+    void saveCustomPreview();
+    void accept();
+    void slotPlay();
+    void slotTick(qint64 time);
 
   private:
     const VideoObject* m_obj;
@@ -64,6 +70,8 @@ class Chapters : public KDialog, public Ui::Chapters
     QString m_preview;
     QDVD::CellList m_cells;
     CellListModel* m_model;
+    QString m_lastFile;
+    KMF::Time m_difference;
 
     void moveFrames(int direction);
     void updateVideo();

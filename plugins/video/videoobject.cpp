@@ -679,19 +679,36 @@ bool VideoObject::isBlack(const QImage& img) const
   return true;
 }
 
-QImage VideoObject::getFrame(QTime time, QString file) const
+QString VideoObject::videoFileName(KMF::Time *time) const
+{
+  foreach(const QString &file, m_files)
+  {
+    //kDebug() << *it;
+    const KMFMediaFile& media = KMFMediaFile::mediaFile(file);
+    if(*time <= KMF::Time(media.duration()))
+    {
+      return file;
+    }
+    else
+    {
+      *time -= media.duration();
+    }
+  }
+  return QString();
+}
+
+QImage VideoObject::getFrame(QTime time, QString frameFile) const
 {
   bool ok = false;
   KMF::Time t = time;
 
-  for(QStringList::ConstIterator it = m_files.begin();
-      it != m_files.end(); ++it)
+  foreach(const QString &file, m_files)
   {
     //kDebug() << *it;
-    const KMFMediaFile& media = KMFMediaFile::mediaFile(*it);
+    const KMFMediaFile& media = KMFMediaFile::mediaFile(file);
     if(t <= KMF::Time(media.duration()))
     {
-      media.frame(t, file);
+      media.frame(t, frameFile);
       ok = true;
       break;
     }
@@ -701,7 +718,7 @@ QImage VideoObject::getFrame(QTime time, QString file) const
     }
   }
   if(ok)
-    return QImage(file);
+    return QImage(frameFile);
   else
     return QImage();
 }
