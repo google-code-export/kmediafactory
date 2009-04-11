@@ -37,6 +37,7 @@ class KDE_EXPORT KMFMediaFile
     QDVD::VideoTrack::AspectRatio aspectRatio() const { return m_aspectRatio; };
     bool dvdCompatible() const { return m_dvdCompatible; };
     bool frame(QTime pos, QString output) const;
+    QString fileName() { return m_file; };
 
     static void clearCache() { m_cache.clear(); };
     static const KMFMediaFile& mediaFile(const QString& file);

@@ -82,6 +82,7 @@ class VideoObject : public KMF::MediaObject
     QString fileName() const;
     void parseCellLengths();
     QString videoFileName(int index, VideoFilePrefix prefix);
+    QString videoFileName(KMF::Time *time) const;
     void printCells();
     bool isDVDCompatible() const;
 

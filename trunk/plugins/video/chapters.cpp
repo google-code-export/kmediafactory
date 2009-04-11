@@ -27,6 +27,7 @@
 #include <qdvdinfo.h>
 #include <kmfimageview.h>
 #include <kmediafactory/plugin.h>
+#include <Phonon/MediaObject>
 #include <KApplication>
 #include <KFileDialog>
 #include <KMainWindow>
@@ -181,6 +182,7 @@ Chapters::Chapters(QWidget *parent)
   connect(rewButton, SIGNAL(clicked()), this, SLOT(slotRewind()));
   connect(nextButton, SIGNAL(clicked()), this, SLOT(slotNextFrame()));
   connect(prevButton, SIGNAL(clicked()), this, SLOT(slotPrevFrame()));
+  connect(playButton, SIGNAL(clicked()), this, SLOT(slotPlay()));
   connect(chaptersView, SIGNAL(customContextMenuRequested(const QPoint&)),
           this, SLOT(slotContextMenu(const QPoint&)));
   connect(customPreviewButton, SIGNAL(clicked()),
@@ -188,10 +190,12 @@ Chapters::Chapters(QWidget *parent)
   startButton->setIcon(KIcon("media-skip-backward"));
   rewButton->setIcon(KIcon("media-seek-backward"));
   prevButton->setIcon(KIcon("arrow-left"));
+  playButton->setIcon(KIcon("media-playback-start"));
   nextButton->setIcon(KIcon("arrow-right"));
   fwdButton->setIcon(KIcon("media-seek-forward"));
   endButton->setIcon(KIcon("media-skip-forward"));
-  video->setScaled(true);
+  addButton->setIcon(KIcon("list-add"));
+  removeButton->setIcon(KIcon("list-remove"));
 }
 
 Chapters::~Chapters()
@@ -216,6 +220,7 @@ void Chapters::setData(const QDVD::CellList& cells,
   m_duration = KMF::Time(m_obj->duration()).toString();
   m_pos = 0.0;
   chaptersView->setCurrentIndex(m_model->index(0));
+  m_lastFile.clear();
   updateVideo();
   connect(chaptersView->selectionModel(),
       SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
@@ -224,19 +229,20 @@ void Chapters::setData(const QDVD::CellList& cells,
 
 void Chapters::updateVideo()
 {
-  QDir dir(m_obj->interface()->projectDir("media"));
-  QString file = dir.filePath(QString("%1_frame.pnm") \
-      .arg(m_obj->id()));
-  QImage img = m_obj->getFrame(m_pos, file);
-  video->setImage(img);
-
-  QString s = QString("%1: %2 / %3").
-      arg(m_obj->text()).
-      arg(m_pos.toString()).
-      arg(m_duration);
-  timeLabel->setText(s);
-
-  timeSlider->setValue((int)m_pos);
+  KMF::Time t(m_pos);
+  QString file = m_obj->videoFileName(&t);
+  
+  if (file != m_lastFile) {
+      video->play(file);
+      video->mediaObject()->setTickInterval(10);
+      connect(video->mediaObject(), SIGNAL(tick(qint64)),
+              this, SLOT(slotTick(qint64)));
+      m_lastFile = file;
+      m_difference = m_pos - t;
+  }
+  video->pause();
+  video->seek(t.toMSec());
+  slotTick(t.toMSec());
 }
 
 void Chapters::slotSliderMoved(int value)
@@ -433,11 +439,10 @@ void Chapters::import()
 void Chapters::saveCustomPreview( )
 {
   int serial = m_obj->interface()->serial();
-  QDir dir = m_obj->interface()->projectDir("media");
-
+  QDir dir(m_obj->interface()->projectDir("media"));
   m_preview.sprintf("%3.3d_preview.png", serial);
   m_preview = dir.filePath(m_preview);
-  video->image().save(m_preview, "PNG");
+  m_obj->getFrame(m_pos, m_preview);
 }
 
 void Chapters::checkLengths()
@@ -462,6 +467,30 @@ void Chapters::accept()
     KMessageBox::sorry(this,
                        i18n("You should have atleast one chapter."));
   }
+}
+
+void Chapters::slotPlay()
+{
+    if (video->isPlaying()) {
+        video->pause();
+        playButton->setIcon(KIcon("media-playback-start"));
+    }
+    else
+    {
+        video->play();
+        playButton->setIcon(KIcon("media-playback-pause"));
+    }
+}
+
+void Chapters::slotTick(qint64 time)
+{
+  m_pos = KMF::Time((int)time) + m_difference;
+  QString s = QString("%1: %2 / %3").
+      arg(m_obj->text()).
+      arg(m_pos.toString()).
+      arg(m_duration);
+  timeLabel->setText(s);
+  timeSlider->setValue((int)m_pos);
 }
 
 #include "chapters.moc"
