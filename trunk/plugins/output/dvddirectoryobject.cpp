@@ -106,7 +106,7 @@ class DVDDirectoryJob : public KMF::Job
     {
       m_lastLine = Warning;
       QString temp = line.mid(6);
-      // Don't print multiple similar warnings. They can be found from the log.
+      // Don't print multiple similar warnings.
       if(temp != m_warning)
       {
         message(subid, KMF::Warning, temp);
