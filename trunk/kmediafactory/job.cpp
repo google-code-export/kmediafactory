@@ -24,6 +24,7 @@
 #include <ThreadWeaver/Thread>
 #include <QVariant>
 #include <KDebug>
+#include <KLocale>
 #include <QMetaType>
 
 KMF::JobHelper::JobHelper(KMF::Job* parent) : QObject(0)
@@ -104,7 +105,23 @@ void KMF::Job::Private::out()
   {
     QString tmp = buffer.left(n);
     if(!filter.exactMatch(tmp))
-      log += tmp + '\n';
+    {
+      if (lastLine != tmp) {
+        if (count > 1) {
+          log += tmp + i18n(" (%1 times)\n").arg(count);
+        }
+        else
+        {
+          log += tmp + '\n';
+        }
+        count = 1;
+      }
+      else
+      {
+        ++count;
+      }
+      lastLine = tmp;
+    }
     job->output(tmp);
     ++n;
     buffer.remove(0, n);

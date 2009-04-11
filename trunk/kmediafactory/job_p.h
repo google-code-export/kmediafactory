@@ -71,6 +71,8 @@ namespace KMF
     bool aborted;
     KMF::JobHelper *jobHelper;
     uint msgid;
+    QString lastLine;
+    uint count;
   };
   
 } // namespace KMF
