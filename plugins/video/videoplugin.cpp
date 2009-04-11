@@ -111,7 +111,7 @@ void VideoPlugin::slotAddVideo()
 {
   QCheckBox* multipleFiles = new QCheckBox(0);
   KFileDialog dlg(KUrl("kfiledialog:///<AddVideo>"),
-                  "*.mpg *.mpeg *.vob *.avi *.mov|Video files\n*.*|All files",
+                  "*.mpg *.mpeg *.vob|Video files\n*.*|All files",
                   0, multipleFiles);
 
   multipleFiles->setText(i18n("Multiple files make multiple titles."));
