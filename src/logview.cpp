@@ -46,7 +46,7 @@ LogView::~LogView()
 
 void LogView::setData(const KUrl& log)
 {
-  htmlFrame->setSource(log);
+  htmlFrame->setUrl(log);
 }
 
 #include "logview.moc"
