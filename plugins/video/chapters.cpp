@@ -234,7 +234,7 @@ void Chapters::updateVideo()
   
   if (file != m_lastFile) {
       video->play(file);
-      video->mediaObject()->setTickInterval(10);
+      video->mediaObject()->setTickInterval(25);
       connect(video->mediaObject(), SIGNAL(tick(qint64)),
               this, SLOT(slotTick(qint64)));
       m_lastFile = file;
@@ -483,7 +483,6 @@ void Chapters::slotPlay()
 
 void Chapters::slotTick(qint64 time)
 {
-  //kDebug() << time << KMF::Time((int)time) << m_difference.toString();
   m_pos = KMF::Time((int)time) + m_difference;
   QString s = QString("%1: %2 / %3").
       arg(m_obj->text()).
