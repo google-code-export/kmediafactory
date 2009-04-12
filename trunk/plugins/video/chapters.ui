@@ -179,7 +179,7 @@
          <item>
           <widget class="KPushButton" name="rewButton">
            <property name="toolTip">
-            <string>Rewind</string>
+            <string>Rewind 30s</string>
            </property>
            <property name="text">
             <string/>
@@ -192,7 +192,7 @@
          <item>
           <widget class="KPushButton" name="prevButton">
            <property name="toolTip">
-            <string>Previous frame</string>
+            <string>Rewind 0.5s</string>
            </property>
            <property name="text">
             <string/>
@@ -218,7 +218,7 @@
          <item>
           <widget class="KPushButton" name="nextButton">
            <property name="toolTip">
-            <string>Next frame</string>
+            <string>Forward 0.5s</string>
            </property>
            <property name="text">
             <string/>
@@ -231,7 +231,7 @@
          <item>
           <widget class="KPushButton" name="fwdButton">
            <property name="toolTip">
-            <string>Forward</string>
+            <string>Forward 30s</string>
            </property>
            <property name="text">
             <string/>
