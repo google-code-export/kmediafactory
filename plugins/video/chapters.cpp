@@ -180,8 +180,8 @@ Chapters::Chapters(QWidget *parent)
           this, SLOT(slotSliderMoved(int)));
   connect(fwdButton, SIGNAL(clicked()), this, SLOT(slotForward()));
   connect(rewButton, SIGNAL(clicked()), this, SLOT(slotRewind()));
-  connect(nextButton, SIGNAL(clicked()), this, SLOT(slotNextFrame()));
-  connect(prevButton, SIGNAL(clicked()), this, SLOT(slotPrevFrame()));
+  connect(nextButton, SIGNAL(clicked()), this, SLOT(slotForwardShort()));
+  connect(prevButton, SIGNAL(clicked()), this, SLOT(slotRewindShort()));
   connect(playButton, SIGNAL(clicked()), this, SLOT(slotPlay()));
   connect(chaptersView, SIGNAL(customContextMenuRequested(const QPoint&)),
           this, SLOT(slotContextMenu(const QPoint&)));
@@ -251,10 +251,9 @@ void Chapters::slotSliderMoved(int value)
   updateVideo();
 }
 
-void Chapters::moveFrames(int direction)
+void Chapters::moveMSecs(int direction)
 {
-  double move = (double)((double)direction * (1.0 / m_obj->frameRate()));
-  m_pos += move;
+  m_pos += direction;
   if(m_pos < KMF::Time(0.0))
     m_pos = 0.0;
   else if(m_pos > m_obj->duration())
@@ -262,24 +261,24 @@ void Chapters::moveFrames(int direction)
   updateVideo();
 }
 
-void Chapters::slotNextFrame()
+void Chapters::slotForwardShort()
 {
-  moveFrames(1);
+  moveMSecs(500);
 }
 
-void Chapters::slotPrevFrame()
+void Chapters::slotRewindShort()
 {
-  moveFrames(-1);
+  moveMSecs(-500);
 }
 
 void Chapters::slotForward()
 {
-  moveFrames(120);
+  moveMSecs(30000);
 }
 
 void Chapters::slotRewind()
 {
-  moveFrames(-120);
+  moveMSecs(-30000);
 }
 
 void Chapters::slotStart()
@@ -455,7 +454,7 @@ void Chapters::checkLengths()
     m_cells[i].setLength(next - m_cells[i].start());
   }
   m_cells.last().setLength(QTime(0, 0));
-  m_model->update();;
+  m_model->update();
 }
 
 void Chapters::accept()
@@ -484,6 +483,7 @@ void Chapters::slotPlay()
 
 void Chapters::slotTick(qint64 time)
 {
+  //kDebug() << time << KMF::Time((int)time) << m_difference.toString();
   m_pos = KMF::Time((int)time) + m_difference;
   QString s = QString("%1: %2 / %3").
       arg(m_obj->text()).

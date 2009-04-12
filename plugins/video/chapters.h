@@ -43,8 +43,8 @@ class Chapters : public KDialog, public Ui::Chapters
     void setData(const QDVD::CellList& cells, const VideoObject* obj);
 
   protected slots:
-    void slotNextFrame();
-    void slotPrevFrame();
+    void slotForwardShort();
+    void slotRewindShort();
     void slotForward();
     void slotRewind();
     void slotStart();
@@ -73,7 +73,7 @@ class Chapters : public KDialog, public Ui::Chapters
     QString m_lastFile;
     KMF::Time m_difference;
 
-    void moveFrames(int direction);
+    void moveMSecs(int direction);
     void updateVideo();
     void checkLengths();
 };
