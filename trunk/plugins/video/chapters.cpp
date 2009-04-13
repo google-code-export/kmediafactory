@@ -231,16 +231,20 @@ void Chapters::updateVideo()
 {
   KMF::Time t(m_pos);
   QString file = m_obj->videoFileName(&t);
-  
+
+  if (video->isPlaying()) {
+    slotPlay();
+  }
   if (file != m_lastFile) {
+      //video->load(file);
       video->play(file);
+      video->pause();
       video->mediaObject()->setTickInterval(25);
       connect(video->mediaObject(), SIGNAL(tick(qint64)),
               this, SLOT(slotTick(qint64)));
       m_lastFile = file;
       m_difference = m_pos - t;
   }
-  video->pause();
   video->seek(t.toMSec());
   slotTick(t.toMSec());
 }
