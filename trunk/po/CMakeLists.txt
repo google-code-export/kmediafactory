@@ -1,3 +1,4 @@
+add_subdirectory(cs)
 add_subdirectory(de)
 add_subdirectory(fi)
 add_subdirectory(pl)

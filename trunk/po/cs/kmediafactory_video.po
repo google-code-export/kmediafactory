@@ -1,0 +1,523 @@
+# translation of kmediafactory_video.po to German
+# This file is put in the public domain.
+#
+# FIRST AUTHOR <lummi@in-4-matik.de>, YEAR.
+# Christoph Lumme <lummi@in-4-matik.de>, 2006.
+# Petri Damsten <petri.damsten@iki.fi>, 2006.
+# Michael Kreuzer <michael-kreuzer@gmx.de>, 2007.
+# Pavel Fric <pavelfric@seznam.cz>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmediafactory_video\n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
+"PO-Revision-Date: 2009-04-19 08:26+0200\n"
+"Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: chapters.cpp:105
+msgid "Name"
+msgstr "Název"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 254
+#: chapters.cpp:107 rc.cpp:45
+msgid "Start"
+msgstr "Začátek"
+
+#: chapters.cpp:109
+msgid "Length"
+msgstr "Délka"
+
+#: chapters.cpp:126
+msgid "Add chapters"
+msgstr "Přidat kapitoly"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 19
+#: chapters.cpp:145 rc.cpp:27
+msgid "Chapters"
+msgstr "Kapitoly"
+
+#: chapters.cpp:319
+msgid "&Delete all"
+msgstr "&Vše smazat"
+
+#: chapters.cpp:320
+msgid "&Rename all"
+msgstr "Vše &přejmenovat"
+
+#: chapters.cpp:321
+msgid "&Auto chapters"
+msgstr "&Automaticky zřídit kapitoly"
+
+#: chapters.cpp:322
+msgctxt "Import chapter file"
+msgid "&Import"
+msgstr "&Zavést"
+
+#: chapters.cpp:333
+msgid "Rename All"
+msgstr "Vše přejmenovat"
+
+#: chapters.cpp:354
+msgid "Auto chapters"
+msgstr "Automaticky zřídit kapitoly"
+
+#: chapters.cpp:437
+msgid "You should have atleast one chapter."
+msgstr "Měl byste přiložit alespoň jednu kapitolu."
+
+#. i18n: tag string
+#. i18n: file addchapter.ui line 13
+#. i18n: tag string
+#. i18n: file autochapters.ui line 13
+#: rc.cpp:3 rc.cpp:15
+msgid "KMediaFactory"
+msgstr "KMediaFactory"
+
+#. i18n: tag string
+#. i18n: file addchapter.ui line 31
+#: rc.cpp:6
+msgid "&Name:"
+msgstr "&Název:"
+
+#. i18n: tag string
+#. i18n: file addchapter.ui line 51
+#: rc.cpp:9
+msgid "&Position:"
+msgstr "&Pozice:"
+
+#. i18n: tag string
+#. i18n: file addchapter.ui line 70
+#. i18n: tag string
+#. i18n: file autochapters.ui line 54
+#: rc.cpp:12 rc.cpp:24
+msgid "hh:mm:ss"
+msgstr "hh:mm:ss"
+
+#. i18n: tag string
+#. i18n: file autochapters.ui line 31
+#: rc.cpp:18
+msgid "&Name (Use # for digit):"
+msgstr "&Název (pro číslici použít #)"
+
+#. i18n: tag string
+#. i18n: file autochapters.ui line 44
+#: rc.cpp:21
+msgid "&Interval:"
+msgstr "&Rozmezí:"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 54
+#: rc.cpp:30
+msgid "&Chapters:"
+msgstr "&Kapitoly:"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 131
+#. i18n: tag string
+#. i18n: file videooptions.ui line 217
+#: rc.cpp:33 rc.cpp:153
+msgid "Add"
+msgstr "Přidat"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 147
+#. i18n: tag string
+#. i18n: file videooptions.ui line 227
+#: rc.cpp:36 rc.cpp:156
+msgid "Remove"
+msgstr "Odstranit"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 210
+#: rc.cpp:39
+msgid "&Use as Custom Preview"
+msgstr "&Použít jako uživatelem stanovený náhled"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 213
+#. i18n: tag string
+#. i18n: file videoconfig.ui line 66
+#: rc.cpp:42 rc.cpp:123
+msgid "Alt+U"
+msgstr "Alt+U"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 267
+#: rc.cpp:48
+msgid "Rewind"
+msgstr "Přetočit zpět"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 280
+#: rc.cpp:51
+msgid "Previous frame"
+msgstr "Předchozí snímek"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 293
+#: rc.cpp:54
+msgid "Next frame"
+msgstr "Další snímek"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 306
+#: rc.cpp:57
+msgid "Forward"
+msgstr "Vpřed"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 319
+#: rc.cpp:60
+msgid "End"
+msgstr "Konec"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 334
+#: rc.cpp:63
+msgid "00:00"
+msgstr "00:00"
+
+#. i18n: tag string
+#. i18n: file languageselection.ui line 13
+#: rc.cpp:66
+msgid "Select language"
+msgstr "Vybrat jazyk"
+
+#. i18n: tag string
+#. i18n: file languageselection.ui line 31
+#: rc.cpp:69
+msgid "La&nguages:"
+msgstr "Ja&zyky:"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 13
+#: rc.cpp:72 subtitleoptions.cpp:36
+msgid "Subtitle options"
+msgstr "Volby pro titulky"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 31
+#: rc.cpp:75
+msgid "La&nguage:"
+msgstr "Ja&zyk:"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 47
+#: rc.cpp:78
+msgid "Su&btitle File:"
+msgstr "Sou&bor s titulky:"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 63
+#: rc.cpp:81
+msgid "Subtitle Font:"
+msgstr "Písmo titulků:"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 86
+#: rc.cpp:84
+msgid "Hori&zontal Alignment:"
+msgstr "Vodorovné zarovnání:"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 103
+#: rc.cpp:87
+msgid "Default"
+msgstr "Výchozí"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 108
+#: rc.cpp:90
+msgid "Left"
+msgstr "Vlevo"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 113
+#: rc.cpp:93
+msgid "Right"
+msgstr "Vpravo"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 118
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 153
+#: rc.cpp:96 rc.cpp:108
+msgid "Center"
+msgstr "Na střed"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 126
+#: rc.cpp:99
+msgid "Vertical &Alignment"
+msgstr "Svislé &zarovnání"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 143
+#: rc.cpp:102
+msgid "Top"
+msgstr "Nahoře"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 148
+#: rc.cpp:105
+msgid "Bottom"
+msgstr "Dole"
+
+#. i18n: tag string
+#. i18n: file videoconfig.ui line 13
+#: rc.cpp:111
+msgid "Configure Video Plugin"
+msgstr "Nastavit přídavný modul pro video"
+
+#. i18n: tag string
+#. i18n: file videoconfig.ui line 31
+#: rc.cpp:114
+msgid "Default &Audio Language:"
+msgstr "Výchozí &jazyk zvuku:"
+
+#. i18n: tag string
+#. i18n: file videoconfig.ui line 47
+#: rc.cpp:117
+msgid "Default Subtitle Lan&guage:"
+msgstr "Výchozí ja&zyk titulků:"
+
+#. i18n: tag string
+#. i18n: file videoconfig.ui line 63
+#: rc.cpp:120
+msgid "&Use Image Cache"
+msgstr "&Použít vyrovnávací paměť obrázku"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 13
+#: rc.cpp:126 videooptions.cpp:65
+msgid "Video Options"
+msgstr "Volby pro video"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 31
+#: rc.cpp:129
+msgid "Tit&le:"
+msgstr "Ná&zev:"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 47
+#: rc.cpp:132
+msgid "Custom &preview:"
+msgstr "Uživatelem &stanovený náhled:"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 63
+#: rc.cpp:135
+msgid "&Aspect ratio:"
+msgstr "&Poměr stran:"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 77
+#: rc.cpp:138
+msgid "4:3"
+msgstr "4:3"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 82
+#: rc.cpp:141
+msgid "16:9"
+msgstr "16:9"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 90
+#: rc.cpp:144
+msgid "Audio Trac&ks:"
+msgstr "Audios&topy:"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 140
+#. i18n: tag string
+#. i18n: file videooptions.ui line 237
+#. i18n: tag string
+#. i18n: file videooptions.ui line 300
+#: rc.cpp:147 rc.cpp:159 rc.cpp:165
+msgid "Properties"
+msgstr "Vlastnosti"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 170
+#: rc.cpp:150
+msgid "Subtitles:"
+msgstr "Titulky:"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 290
+#: rc.cpp:162
+msgid "xx"
+msgstr "xx"
+
+#: subtitleoptions.cpp:67
+msgid "Subtitle files"
+msgstr "Soubory s titulky"
+
+#: subtitleoptions.cpp:68
+msgid "All files"
+msgstr "Všechny soubory"
+
+#: subtitleoptions.cpp:116
+msgid "Subtitle file does not exists."
+msgstr "Soubor s titulky neexistuje."
+
+#: videoobject.cpp:50 videoobject.cpp:68, kde-format
+msgid "Subtitles for: %1"
+msgstr "Titulky pro: %1"
+
+#: videoobject.cpp:91
+msgid "Conversion error."
+msgstr "Převod selhal."
+
+#: videoobject.cpp:178
+msgid "&Properties"
+msgstr "&Vlastnosti"
+
+#: videoobject.cpp:186
+msgid "&Play Video"
+msgstr "&Přehrát video"
+
+#: videoobject.cpp:592
+#, kde-format
+msgid "Video: %1"
+msgstr "Video: %1"
+
+#: videoobject.cpp:629, kde-format
+msgid "Subtitle conversion seems to be up to date for %1"
+msgstr "Zdá se, že převod titulků je aktuální pro %1"
+
+#: videoobject.cpp:790
+#, kde-format
+msgid "Chapter %1"
+msgstr "Kapitola %1"
+
+#: videoobject.cpp:912
+msgid "Make DVD"
+msgstr "Zhotovit DVD"
+
+#: videoobject.cpp:913
+msgid "Make preview DVD with dummy videos"
+msgstr "Zhotovit náhled DVD s předstíranými videi"
+
+#: videooptions.cpp:43
+msgid "Select Language"
+msgstr "Vybrat jazyk"
+
+#: videooptions.cpp:209, kde-format
+msgid "Video has 1 chapter"
+msgid_plural "Video has %1 chapters"
+msgstr[0] "Video má jednu kapitolu"
+msgstr[1] "Video má %1 kapitol"
+msgstr[2] "Video má %1 kapitol"
+
+#: videoplugin.cpp:70
+msgid "Video plugin"
+msgstr "Přídavný modul pro Video"
+
+#: videoplugin.cpp:78
+msgid "Add Video"
+msgstr "Přidat video"
+
+#: videoplugin.cpp:117
+msgid "Multiple files make multiple titles."
+msgstr "Více souborů vytvoří více názvů."
+
+#: videoplugin.cpp:120
+msgid "Open"
+msgstr "Otevřít"
+
+#: videoplugin.cpp:139
+msgid "Cannot add directory."
+msgstr "Adresář nelze přidat."
+
+#: videoplugin.cpp:147
+#, kde-format
+msgid "Couldn't add file: %1"
+msgstr "Soubor: %1 nelze přidat"
+
+#~ msgid "C&ancel"
+#~ msgstr "&Abbrechen"
+
+#~ msgid ""
+#~ "_: Import chapter file\n"
+#~ "&Import"
+#~ msgstr ""
+#~ "_: Kapiteldatei &importieren\n"
+#~ "&Import"
+
+#~ msgid "Ca&ncel"
+#~ msgstr "&Abbrechen"
+
+#~ msgid "Conversion Params"
+#~ msgstr "Konvertierungsparameter."
+
+#~ msgid "Higher qualit&y encoding (Two pass)"
+#~ msgstr "Höhere Enkodierungsqualität (Two pass)"
+
+#~ msgid "Video &bitrate:"
+#~ msgstr "Video &Bitrate:"
+
+#~ msgid "Audio &type:"
+#~ msgstr "Audio&typ:"
+
+#~ msgid "&Audio bitrate:"
+#~ msgstr "&Audiobitrate:"
+
+#~ msgid ""
+#~ "Save preview pictures in menu dir. Usefull when making\n"
+#~ "same DVD multiple times (testing)."
+#~ msgstr ""
+#~ "Vorschaubilder im Menüverzeichnis speichern, Nützlich wenn\n"
+#~ "DVD mehrfach erstellt wird (testen)."
+
+#~ msgid "Black frame detection offset"
+#~ msgstr "Schwarz-Bild Erkennungsoffset"
+
+#~ msgid "Use this as a default audio language for new files."
+#~ msgstr "Als Standard Audiosprache für neue Dateien verwenden"
+
+#~ msgid ""
+#~ "Use this as a default subtitle language for new\n"
+#~ " subtitles."
+#~ msgstr ""
+#~ "Als Standard Untertitelsprache für neue\n"
+#~ " Untertitel verwenden."
+
+#~ msgid " Converting %1 to DVD format%2"
+#~ msgstr " Umwandeln %1 in DVD-Format%2"
+
+#~ msgid " Conversion of %1 seems to be up to date"
+#~ msgstr " Umwandlung von %1 scheint aktuell zu sein"
+
+#~ msgid " Adding subtitles to %1"
+#~ msgstr " Füge Untertitel zu %1 hinzu"
+
+#~ msgid "Preparing file(s) for %1"
+#~ msgstr "Bereite Datei(en) vor %1"
+
+#~ msgid ""
+#~ "_n: Video has %1 chapter\n"
+#~ "Video has %1 chapters"
+#~ msgstr ""
+#~ "_n: Video hat %1 Kapitel\n"
+#~ "Video hat %1 Kapitel"
+
+#~ msgid "Video %1kb/s, Audio %2kb/s"
+#~ msgstr "Video %1Kb/s, Audio %2Kb/s"
+
+#~ msgid "Video plugin for KMediaFactory."
+#~ msgstr "Videoplugin für KMediaFactory."
+
+#~ msgid "KMediaFactory Video"
+#~ msgstr "KMediaFactory Video"
+

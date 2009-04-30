@@ -1,0 +1,97 @@
+# Copyright (C) YEAR This_file_is_part_of_KMediaFactory
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Pavel Fric <pavelfric@seznam.cz>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmediafactory_kstore\n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2008-05-23 11:23+0300\n"
+"PO-Revision-Date: 2009-04-18 21:20+0200\n"
+"Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: KoEncryptedStore.cpp:155 KoEncryptedStore.cpp:164
+msgid ""
+"The manifest file seems to be corrupted. The document could not be opened."
+msgstr ""
+"Zdá se, že tento očividný soubor je poškozen. Dokument nemohl být otevřen."
+
+#: KoEncryptedStore.cpp:223
+msgid ""
+"This document contains an unknown checksum. When you give a password it "
+"might not be verified."
+msgstr ""
+"Tento dokument obsahuje neznámý kontrolní součet. Zadáte-li heslo, nebude "
+"možné "
+"je ověřit."
+
+#: KoEncryptedStore.cpp:250 KoEncryptedStore.cpp:267
+msgid ""
+"This document contains an unknown encryption method. Some parts may be "
+"unreadable."
+msgstr ""
+"Tento dokument obsahuje neznámou metodu zakódování. Některé části se nemusí "
+"podařit přečíst."
+
+#: KoEncryptedStore.cpp:282
+msgid ""
+"This document contains incomplete encryption data. Some parts may be "
+"unreadable."
+msgstr ""
+"Tento dokument obsahuje neúplná kódovací data. Některé části se nemusí "
+"podařit přečíst."
+
+#: KoEncryptedStore.cpp:296
+msgid ""
+"QCA has currently no support for SHA1 or PBKDF2 using SHA1. The document can "
+"not be opened."
+msgstr ""
+"QCA aktuálně nemá podporu pro SHA1 nebo PBKDF2 při použití SHA1. Dokument "
+"nelze otevřít."
+
+#: KoEncryptedStore.cpp:326
+msgid ""
+"The manifest file seems to be corrupted. It cannot be modified and the "
+"document will remain unreadable. Please try and save the document again to "
+"prevent losing your work."
+msgstr ""
+"Zdá se, že tento očividný soubor je poškozen. Nelze jej upravovat a dokument "
+"zůstane nečitelný. Pokuste se, prosím, dokument uložit znovu, abyste "
+"předešel ztrátě "
+"své práce."
+
+#: KoEncryptedStore.cpp:429
+msgid ""
+"The manifest file cannot be written. The document will remain unreadable. "
+"Please try and save the document again to prevent losing your work."
+msgstr ""
+"Tento očividný soubor není zapisovatelný. Dokument zůstane nečitelný. "
+"Pokuste se, prosím, dokument uložit znovu, abyste předešel ztrátě "
+"své práce."
+
+#: KoEncryptedStore.cpp:531
+msgid "Please enter the password to open this file."
+msgstr "Zadejte, prosím, heslo pro otevření tohoto souboru."
+
+#: KoEncryptedStore.cpp:692
+msgid "Please enter the password to encrypt the document with."
+msgstr "Zadejte, prosím, heslo, kterým bude dokument zašifrován."
+
+#: KoEncryptedStore.cpp:706
+msgid "Do you want to save the password?"
+msgstr "Chcete, aby heslo bylo uloženo?"
+
+#: KoStore.cpp:196
+msgid "The directory mode is not supported for remote locations."
+msgstr "Režim adresářů není podporován pro vzdálená umístění."
+
+#: KoStore.cpp:197
+msgid "KOffice Storage"
+msgstr "Sklad KOffice"
+
