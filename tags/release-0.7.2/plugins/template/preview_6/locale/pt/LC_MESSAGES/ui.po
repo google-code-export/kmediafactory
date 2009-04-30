@@ -1,0 +1,76 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#: rc.cpp:3
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2006-05-07 12:15+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: ENCODING\n"
+
+#: rc.cpp:6
+msgid "Template Options"
+msgstr ""
+
+#: rc.cpp:9
+msgid "B&ackground Image:"
+msgstr ""
+
+#: rc.cpp:12
+msgid "Back&ground Sound:"
+msgstr ""
+
+#: rc.cpp:15
+msgid "&Main Title Font:"
+msgstr ""
+
+#: rc.cpp:18
+msgid "&Title Font:"
+msgstr ""
+
+#: rc.cpp:21
+msgid "Font C&olor:"
+msgstr ""
+
+#: rc.cpp:24
+msgid "Direct Play"
+msgstr ""
+
+#: rc.cpp:27
+msgid "Pla&y first track when disc entered"
+msgstr ""
+
+#: rc.cpp:30
+msgid "Alt+Y"
+msgstr ""
+
+#: rc.cpp:33
+msgid "Play &movie when chapter menu entered"
+msgstr ""
+
+#: rc.cpp:36
+msgid "Alt+M"
+msgstr ""
+
+#: rc.cpp:39
+msgid "After playing title:"
+msgstr ""
+
+#: rc.cpp:42
+msgid "Jump to main menu"
+msgstr ""
+
+#: rc.cpp:45
+msgid "Jump to next title"
+msgstr ""
+
+#: rc.cpp:48
+msgid "La&nguage:"
+msgstr ""

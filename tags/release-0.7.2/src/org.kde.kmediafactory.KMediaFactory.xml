@@ -1,0 +1,79 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+          "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+    <interface name="org.kde.kmediafactory.KMediaFactory">
+        <method name="openProject">
+            <arg name="file" type="s" direction="in"/>
+        </method>
+        <method name="newProject" />
+        <method name="quit" />
+        <method name="setProjectTitle">
+            <arg name="title" type="s" direction="in"/>
+        </method>
+        <method name="setProjectType">
+            <arg name="type" type="s" direction="in"/>
+        </method>
+        <method name="setProjectDirectory">
+            <arg name="dir" type="s" direction="in"/>
+        </method>
+        <method name="projectTitle">
+            <arg type="s" direction="out"/>
+        </method>
+        <method name="projectType">
+            <arg type="s" direction="out"/>
+        </method>
+        <method name="projectDirectory">
+            <arg name="subdir" type="s" direction="in"/>
+            <arg type="s" direction="out"/>
+        </method>
+        <method name="addMediaObject">
+            <arg name="xml" type="s" direction="in"/>
+        </method>
+        <method name="selectTemplate">
+            <arg name="xml" type="s" direction="in"/>
+        </method>
+        <method name="selectOutput">
+            <arg name="xml" type="s" direction="in"/>
+        </method>
+        <method name="start" />
+
+        <method name="getOpenFileNames">
+            <arg name="startDir" type="s" direction="in"/>
+            <arg name="filter" type="s" direction="in"/>
+            <arg name="caption" type="s" direction="in"/>
+            <arg type="as" direction="out"/>
+        </method>
+        <method name="debug">
+            <arg name="txt" type="s" direction="in"/>
+        </method>
+        <method name="message">
+            <arg name="caption" type="s" direction="in"/>
+            <arg name="txt" type="s" direction="in"/>
+            <arg name="type" type="i" direction="in"/>
+            <arg name="button" type="i" direction="out"/>
+        </method>
+
+        <method name="progressDialog">
+          <arg type="s" name="caption" direction="in"/>
+          <arg type="s" name="label" direction="in"/>
+          <arg type="i" name="maximum" direction="in"/>
+        </method>
+        <method name="pdlgSetMaximum">
+          <arg type="i" name="maximum" direction="in"/>
+        </method>
+        <method name="pdlgSetValue">
+          <arg type="i" name="value" direction="in"/>
+        </method>
+        <method name="pdlgSetLabel">
+          <arg type="s" name="label" direction="in"/>
+        </method>
+        <method name="pdlgShowCancelButton">
+          <arg type="b" name="show" direction="in"/>
+        </method>
+        <method name="pdlgWasCancelled">
+          <arg type="b" direction="out"/>
+        </method>
+        <method name="pdlgClose"/>
+
+    </interface>
+</node>
