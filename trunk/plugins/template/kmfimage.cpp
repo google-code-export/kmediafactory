@@ -21,6 +21,7 @@
 #include "kmfmenu.h"
 #include "kmfmenupage.h"
 #include <kstore/KoStore.h>
+#include <lib/kmftools.h>
 #include <KIO/NetAccess>
 #include <KDebug>
 #include <KStandardDirs>
@@ -123,93 +124,157 @@ QImage KMFImage::mask(const QImage& img, const QRgb& maskColor, bool oneBitMask)
 
 void KMFImage::paintWidget(QImage* layer, bool shdw) const
 {
-  QPoint off = (shdw) ? shadow().offset() : QPoint();
-  QColor clr = (shdw) ? shadow().color() : color();
-  QRect rc = paintRect(off);
-  QPainter p(layer);
-  QImage image;
+    QPoint off = (shdw) ? shadow().offset() : QPoint();
+    QColor clr = (shdw) ? shadow().color() : color();
+    QRect rc = paintRect(off);
+    QPainter p(layer);
+    QImage image;
 
-  if(clr.isValid())
-    image = mask(m_image, clr.rgba(), !shdw);
-  else
-    image = m_image;
+    if (m_image.isNull()) {
+        QSize size;
+        if (!m_scale) {
+            size = svgSize().toSize();
+        } else {
+            if (!m_proportional) {
+                size = QSize(rc.width(), rc.height());
+            } else {
+                size = svgSize().toSize();
+                if (m_aspectRatio > (float)rc.width() / (float)rc.height()) {
+                    size = QSize(rc.width(), size.height() * rc.width() / rc.height());
+                } else {
+                    size = QSize(size.width() * rc.height() / rc.width(), rc.height());
+                }
+            }
+        }
+        QImage img(size, QImage::Format_ARGB32_Premultiplied);
+        QPainter p(&img);
+        if (m_element.isEmpty()) {
+            m_svg.render(&p, QRect(0, 0, size.width(), size.height()));
+        } else {
+            m_svg.render(&p, m_element, QRect(0, 0, size.width(), size.height()));
+        }
+        image = img;
+    } else {
+        image = m_image;
+    }
 
-  if(image.width() == 0 || image.height() == 0)
-    return;
+    if(clr.isValid())
+        image = mask(image, clr.rgba(), !shdw);
+    else
+        image = image;
 
-  if(m_scale)
-  {
-    Qt::AspectRatioMode mode = (m_proportional)?
-        Qt::KeepAspectRatio:Qt::IgnoreAspectRatio;
-    image = image.scaled(rc.width(), rc.height(),
-                         mode, Qt::SmoothTransformation);
-  }
-  //kDebug() << m_url << ": " <<  shdw;
-  p.drawImage(QPoint(rc.left(), rc.top()), image);
+    if(image.width() == 0 || image.height() == 0)
+        return;
+
+    if(m_scale && !m_image.isNull())
+    {
+        Qt::AspectRatioMode mode = (m_proportional) ? Qt::KeepAspectRatio : Qt::IgnoreAspectRatio;
+        image = image.scaled(rc.width(), rc.height(), mode, Qt::SmoothTransformation);
+    }
+    //kDebug() << m_url << ": " <<  shdw;
+    p.drawImage(QPoint(rc.left(), rc.top()), image);
 }
 
 void KMFImage::setImage(KUrl url)
 {
-  bool ok = false;
+    bool ok = false;
+    bool svg = false;
 
-  m_url = url;
-  //kDebug() << url;
-  if(url.protocol() == "project")
-  {
-    QList<KMF::MediaObject*> mobs = m_interface->mediaObjects();
-    int title;
-    int chapter;
+    m_url = url;
+    m_element = url.fragment().mid(1);
+    QString ext = url.path().mid(url.path().lastIndexOf('.') + 1);
+    if (ext == "svg" || ext == "svgz") {
+        svg = true;
+    }
+    kDebug() << url << ext;
+    if(url.protocol() == "project")
+    {
+        QList<KMF::MediaObject*> mobs = m_interface->mediaObjects();
+        int title;
+        int chapter;
 
-    parseTitleChapter(url.path().mid(1), title, chapter);
-    if(title > 0 && title <= (int)mobs.count()
-       && chapter <= (int)mobs.at(title-1)->chapters())
-    {
-      setImage(mobs.at(title-1)->preview(chapter));
-      ok = true;
+        parseTitleChapter(url.path().mid(1), title, chapter);
+        if(title > 0 && title <= (int)mobs.count()
+        && chapter <= (int)mobs.at(title-1)->chapters())
+        {
+            setImage(mobs.at(title-1)->preview(chapter));
+            ok = true;
+        }
     }
-  }
-  else if(url.protocol() == "template")
-  {
-    const KMFTemplate* tmplate = menu()->templateStore();
-    QImage img;
-
-    img.loadFromData(tmplate->readFile(url.path().mid(1)));
-    setImage(img);
-    ok = true;
-  }
-  else if(url.protocol() == "kde")
-  {
-    QString tmpFile = KStandardDirs::locate(url.host().toLocal8Bit(),
-                                            url.path().mid(1));
-    //kDebug() << url.host().toLocal8Bit() << url.path().mid(1) << tmpFile;
-    if(!tmpFile.isEmpty())
+    else if(url.protocol() == "template")
     {
-      ok = true;
-      setImage(QImage(tmpFile));
+        const KMFTemplate* tmplate = menu()->templateStore();
+        if (svg) {
+            setImage(tmplate->readFile(url.path().mid(1)));
+        } else {
+            QImage img;
+            img.loadFromData(tmplate->readFile(url.path().mid(1)));
+            setImage(img);
+        }
+        ok = true;
     }
-  }
-  else
-  {
-    QString tmpFile;
-    if(KIO::NetAccess::download(url, tmpFile, qApp->activeWindow()))
+    else if(url.protocol() == "kde")
     {
-      setImage(QImage(tmpFile));
-      KIO::NetAccess::removeTempFile(tmpFile);
-      ok = true;
+        QString tmpFile = KStandardDirs::locate(url.host().toLocal8Bit(),
+                                                url.path().mid(1));
+        kDebug() << url.host().toLocal8Bit() << url.path().mid(1) << tmpFile;
+        if(!tmpFile.isEmpty())
+        {
+            if (svg) {
+                setImage(KMF::Tools::loadByteArray(tmpFile));
+            } else {
+                setImage(QImage(tmpFile));
+            }
+            ok = true;
+        }
     }
-  }
-  if(!ok)
-  {
-    setImage(m_empty);
-    if(!takeSpace())
-      hide();
-  }
+    else
+    {
+        QString tmpFile;
+        if(url.protocol() != "file") {
+            m_element = "";
+        }
+        if(KIO::NetAccess::download(url, tmpFile, qApp->activeWindow()))
+        {
+            if (svg) {
+                setImage(KMF::Tools::loadByteArray(tmpFile));
+            } else {
+                setImage(QImage(tmpFile));
+            }
+            KIO::NetAccess::removeTempFile(tmpFile);
+            ok = true;
+        }
+    }
+    if(!ok)
+    {
+        setImage(m_empty);
+        if(!takeSpace())
+        hide();
+    }
 }
 
 void KMFImage::setImage(const QImage& image)
 {
+  m_svg.load(QByteArray());
   m_image = image;
   m_aspectRatio = (float)m_image.width() / (float)m_image.height();
+}
+
+QSizeF KMFImage::svgSize() const
+{
+  if (m_element.isEmpty()) {
+      return m_svg.defaultSize();
+  } else {
+      return m_svg.boundsOnElement(m_element).size();
+  }
+}
+
+void KMFImage::setImage(const QByteArray& ba)
+{
+  m_image = QImage();
+  m_svg.load(ba);
+  QSizeF size = svgSize();
+  m_aspectRatio = (float)size.width() / (float)size.height();
 }
 
 void KMFImage::fromXML(const QDomElement& element)

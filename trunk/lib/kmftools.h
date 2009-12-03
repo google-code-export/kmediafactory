@@ -83,9 +83,10 @@ namespace KMF
       static void spy(QObject* obj);
       static uint frames(const QString &type);
       static void cleanFiles(const QString& dir, const QStringList& files = QStringList());
-      
+
+      static QByteArray loadByteArray(const KUrl& url);
       static bool loadStringFromFile(const KUrl& url, QString* string, bool showFailed = true);
-      static bool saveString2File(const KUrl& url, const QString& string, 
+      static bool saveString2File(const KUrl& url, const QString& string,
                                   bool showFailed = true);
       static QString xmlElement2String(const QDomElement& elem);
       static QDomElement string2XmlElement(const QString& elem);
