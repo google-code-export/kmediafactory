@@ -1,3 +1,4 @@
+add_subdirectory(artwork)
 add_subdirectory(simple)
 add_subdirectory(preview_6)
 add_subdirectory(preview_3)

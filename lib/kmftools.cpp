@@ -685,6 +685,24 @@ bool KMF::Tools::loadStringFromFile(const KUrl& url, QString* string, bool showF
   return result;
 }
 
+QByteArray KMF::Tools::loadByteArray(const KUrl& url)
+{
+  QString tmpFile;
+  QByteArray ba;
+
+  if(KIO::NetAccess::download(url, tmpFile, kapp->activeWindow()))
+  {
+    QFile file(tmpFile);
+    if(file.open(QIODevice::ReadOnly))
+    {
+      ba = file.readAll();
+      file.close();
+    }
+    KIO::NetAccess::removeTempFile(tmpFile);
+  }
+  return ba;
+}
+
 QString KMF::Tools::xmlElement2String(const QDomElement& elem)
 {
   QString s;
@@ -704,8 +722,8 @@ QDomElement KMF::Tools::string2XmlElement(const QString& s)
 QMap<QString, QString> KMF::Tools::variantMap2StringMap(const QMap<QString, QVariant>& map)
 {
   QMap<QString, QString> result;
-  
-  foreach (const QString& key, map.keys()) 
+
+  foreach (const QString& key, map.keys())
   {
     result[key] = map[key].toString();
   }
@@ -715,8 +733,8 @@ QMap<QString, QString> KMF::Tools::variantMap2StringMap(const QMap<QString, QVar
 QStringList KMF::Tools::variantList2StringList(const QVariantList& list)
 {
   QStringList result;
-  
-  foreach (const QVariant& v, list) 
+
+  foreach (const QVariant& v, list)
   {
     result.append(v.toString());
   }

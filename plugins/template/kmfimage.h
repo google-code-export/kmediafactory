@@ -23,6 +23,7 @@
 
 #include "kmfwidget.h"
 #include <KUrl>
+#include <KSvgRenderer>
 #include <QImage>
 
 class KMFImage : public KMFWidget
@@ -33,7 +34,6 @@ class KMFImage : public KMFWidget
     ~KMFImage();
 
     const QImage& image() { return m_image; };
-    void setImage(const QImage& image);
     void setImage(KUrl url);
     virtual void fromXML(const QDomElement& element);
     virtual int minimumPaintWidth() const;
@@ -48,14 +48,19 @@ class KMFImage : public KMFWidget
   protected:
     virtual void paintWidget(QImage* layer, bool shdw = false) const;
     QImage mask(const QImage& img, const QRgb& maskColor, bool oneBitMask) const;
+    void setImage(const QImage& image);
+    void setImage(const QByteArray& ba); // svg
+    QSizeF svgSize() const;
 
   private:
     QImage m_image;
+    mutable KSvgRenderer m_svg;
     KUrl m_url;
     bool m_scale;
     bool m_proportional;
     float m_aspectRatio;
     static QImage m_empty;
+    QString m_element;
 };
 
 #endif
