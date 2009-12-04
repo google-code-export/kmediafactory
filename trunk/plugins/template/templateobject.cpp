@@ -219,20 +219,25 @@ void TemplateObject::slotProperties()
                        &m_customProperties);
   dialog.setFaceType(KPageDialog::Plain);
   dialog.setButtons(KDialog::Ok | KDialog::Cancel);
-  QIODevice* di = m_menu.templateStore()->device("settings.ui");
+  // QUiLoader does not seem to work with the device
+  // returned by KoStore/KZipFileEntry (KDE 4.4 beta 1)
+  QByteArray ba = m_menu.templateStore()->readFile("settings.ui");
+  QBuffer io(&ba);
+  // QIODevice* io = m_menu.templateStore()->device("settings.ui");
   QUiLoader loader;
-  QWidget* page = loader.load(di, &dialog);
-  m_menu.templateStore()->close();
-  //KMF::Tools::printChilds(page);
-  //kDebug() << loader.availableWidgets();
-  /*
+  QWidget* page = loader.load(&io, &dialog);
+  // m_menu.templateStore()->close();
+
+/*
+  KMF::Tools::printChilds(page);
+  kDebug() << loader.availableWidgets();
   kDebug() << &m_customProperties;
   KConfigSkeletonItem::List list = m_customProperties.items();
   KConfigSkeletonItem::List::iterator it;
   for(it = list.begin(); it != list.end(); ++it)
     kDebug() << (*it)->group() << " / " <<
         (*it)->key() << " = " << (*it)->property();
-  */
+*/
   if(page)
   {
     // Give special treatment to widget named kcfg_language so we can show only
@@ -251,16 +256,14 @@ void TemplateObject::slotProperties()
   }
 
   dialog.exec();
-
-  /*
+/*
   kDebug() << &m_customProperties;
   KConfigSkeletonItem::List list = m_customProperties.items();
   KConfigSkeletonItem::List::iterator it;
   for(it = list.begin(); it != list.end(); ++it)
     kDebug() << (*it)->group() << " / " <<
         (*it)->key() << " = " << (*it)->property();
-  */
-
+*/
   if(dialog.result() == QDialog::Accepted)
     interface()->setDirty(KMF::Template);
 
