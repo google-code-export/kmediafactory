@@ -46,7 +46,7 @@ class QString;
 class QXmlReader;
 class QXmlInputSource;
 
-class KoXmlElement;
+class KoXmlNode;
 class KoXmlText;
 class KoXmlCDATASection;
 class KoXmlDocumentType;
@@ -63,6 +63,8 @@ class KoXmlNodeData;
 *
 * KoXmlNode implements an explicit sharing, a node shares its data with
 * other copies (if exist).
+*
+* XXX: DO NOT ADD CONVENIENCE API HERE BECAUSE THIS CLASS MUST REMAIN COMPATIBLE WITH QDOMNODE!
 *
 * @author Ariya Hidayat <ariya@kde.org>
 */
@@ -115,7 +117,7 @@ public:
     KoXmlNode nextSibling() const;
     KoXmlNode previousSibling() const;
 
-    // equivalen to node.childNodes().count() if node is a QDomNode instance
+    // equivalent to node.childNodes().count() if node is a QDomNode instance
     int childNodesCount() const;
 
     // workaround to get and iterate over all attributes
@@ -411,6 +413,20 @@ KOSTORE_EXPORT bool setDocument(KoXmlDocument& doc, QIODevice* device,
                                 int* errorLine = 0, int* errorColumn = 0);
 }
 
+/**
+ * \def forEachElement( elem, parent )
+ * \brief Loop through all child elements of \parent.
+ * This convenience macro is used to implement the forEachElement loop.
+ * The \elem parameter is a name of a QDomElement variable and the \parent
+ * is the name of the parent element. For example:
+ *
+ * QDomElement e;
+ * forEachElement( e, parent )
+ * {
+ *     kDebug() << e.localName() << " element found.";
+ *     ...
+ * }
+ */
 #define forEachElement( elem, parent ) \
     for ( KoXmlNode _node = parent.firstChild(); !_node.isNull(); _node = _node.nextSibling() ) \
         if ( ( elem = _node.toElement() ).isNull() ) {} else

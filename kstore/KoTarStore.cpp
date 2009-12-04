@@ -26,7 +26,7 @@
 #include <ktar.h>
 #include <kdebug.h>
 #include <kurl.h>
-#include <kdeversion.h>
+
 #include <kio/netaccess.h>
 
 KoTarStore::KoTarStore(const QString & _filename, Mode _mode, const QByteArray & appIdentification)
@@ -136,7 +136,7 @@ bool KoTarStore::openWrite(const QString& /*name*/)
 bool KoTarStore::openRead(const QString& name)
 {
     const KArchiveEntry * entry = m_pTar->directory()->entry(name);
-    if (entry == 0L) {
+    if (entry == 0) {
         //kWarning(s_area) << "Unknown filename " << name;
         //return KIO::ERR_DOES_NOT_EXIST;
         return false;
