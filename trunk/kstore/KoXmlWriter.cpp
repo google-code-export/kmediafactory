@@ -20,7 +20,6 @@
 
 #include "KoXmlWriter.h"
 
-#include <kglobal.h> // kMin
 #include <kdebug.h>
 #include <QIODevice>
 #include <QByteArray>
@@ -115,6 +114,8 @@ bool KoXmlWriter::prepareForChild()
 
 void KoXmlWriter::prepareForTextNode()
 {
+    if (d->tags.isEmpty())
+        return;
     Tag& parent = d->tags.top();
     if (!parent.hasChildren) {
         closeStartElement(parent);
@@ -129,7 +130,7 @@ void KoXmlWriter::startElement(const char* tagName, bool indentInside)
 
     // Tell parent that it has children
     bool parentIndent = prepareForChild();
-
+    
     d->tags.push(Tag(tagName, parentIndent && indentInside));
     writeChar('<');
     writeCString(tagName);
@@ -169,7 +170,7 @@ void KoXmlWriter::endElement()
         "Please report this bug (by saving the document to another format...)" << endl;
 
     Tag tag = d->tags.pop();
-    //kDebug(s_area) <<" tagName=" << tag.tagName <<" hasChildren=" << tag.hasChildren;
+//kDebug(s_area) <<" tagName=" << tag.tagName <<" hasChildren=" << tag.hasChildren;
     if (!tag.hasChildren) {
         writeCString("/>");
     } else {
@@ -238,7 +239,7 @@ void KoXmlWriter::addAttribute(const char* attrName, const char* value)
 void KoXmlWriter::addAttribute(const char* attrName, double value)
 {
     QByteArray str;
-    str.setNum(value, 'f', DBL_DIG);
+    str.setNum(value, 'f', 11);
     addAttribute(attrName, str.data());
 }
 
@@ -252,7 +253,7 @@ void KoXmlWriter::addAttribute(const char* attrName, float value)
 void KoXmlWriter::addAttributePt(const char* attrName, double value)
 {
     QByteArray str;
-    str.setNum(value, 'f', DBL_DIG);
+    str.setNum(value, 'f', 11);
     str += "pt";
     addAttribute(attrName, str.data());
 }

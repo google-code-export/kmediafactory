@@ -722,7 +722,7 @@ public:
           addCData, addProcessing are all related. These are all necessary
           for stateful manipulation of the document. See also the calls
           to these function from KoXmlHandler.
-        
+
           The state itself is defined by the member variables
           currentDepth and the groups (see above).
      */
@@ -1473,7 +1473,6 @@ bool KoXmlNodeData::setContent(QXmlInputSource* source, bool namespaceProcessing
     reader.setFeature(QLatin1String("http://xml.org/sax/features/namespaces"), namespaceProcessing);
     reader.setFeature(QLatin1String("http://xml.org/sax/features/namespace-prefixes"), !namespaceProcessing);
     reader.setFeature(QLatin1String("http://trolltech.com/xml/features/report-whitespace-only-CharData"), false);
-
     return setContent(source, &reader, errorMsg, errorLine, errorColumn);
 }
 
@@ -2598,7 +2597,7 @@ bool KoXmlDocument::setContent(QIODevice* device, bool namespaceProcessing,
     QXmlSimpleReader reader;
     reader.setFeature("http://xml.org/sax/features/namespaces", namespaceProcessing);
     reader.setFeature("http://xml.org/sax/features/namespace-prefixes", !namespaceProcessing);
-    reader.setFeature("http://trolltech.com/xml/features/report-whitespace-only-CharData", false);
+    reader.setFeature(QLatin1String("http://trolltech.com/xml/features/report-whitespace-only-CharData"), false);
 
     // FIXME this hack is apparently private
     //reader.setUndefEntityInAttrHack(true);
