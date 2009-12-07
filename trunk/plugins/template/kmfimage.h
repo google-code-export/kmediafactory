@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,7 +16,7 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #ifndef KMFIMAGE_H
 #define KMFIMAGE_H
@@ -29,38 +29,42 @@
 class KMFImage : public KMFWidget
 {
     Q_OBJECT
-  public:
-    KMFImage(QObject *parent = 0);
-    ~KMFImage();
 
-    const QImage& image() { return m_image; };
-    void setImage(KUrl url);
-    virtual void fromXML(const QDomElement& element);
-    virtual int minimumPaintWidth() const;
-    virtual int minimumPaintHeight() const;
-    virtual void setProperty(const QString& name, QVariant value);
-    virtual QRect paintRect(const QPoint offset = QPoint(0,0)) const;
-    virtual int paintWidth() const;
-    virtual int paintHeight() const;
-    virtual int paintX() const;
-    virtual int paintY() const;
+    public:
+        KMFImage(QObject *parent = 0);
+        ~KMFImage();
 
-  protected:
-    virtual void paintWidget(QImage* layer, bool shdw = false) const;
-    QImage mask(const QImage& img, const QRgb& maskColor, bool oneBitMask) const;
-    void setImage(const QImage& image);
-    void setImage(const QByteArray& ba); // svg
-    QSizeF svgSize() const;
+        const QImage&image()
+        {
+            return m_image;
+        };
+        void setImage(KUrl url);
+        virtual void fromXML(const QDomElement &element);
+        virtual int minimumPaintWidth() const;
+        virtual int minimumPaintHeight() const;
+        virtual void setProperty(const QString &name, QVariant value);
+        virtual QRect paintRect(const QPoint offset = QPoint(0, 0)) const;
+        virtual int paintWidth() const;
+        virtual int paintHeight() const;
+        virtual int paintX() const;
+        virtual int paintY() const;
 
-  private:
-    QImage m_image;
-    mutable KSvgRenderer m_svg;
-    KUrl m_url;
-    bool m_scale;
-    bool m_proportional;
-    float m_aspectRatio;
-    static QImage m_empty;
-    QString m_element;
+    protected:
+        virtual void paintWidget(QImage *layer, bool shdw = false) const;
+        QImage mask(const QImage &img, const QRgb &maskColor, bool oneBitMask) const;
+        void setImage(const QImage &image);
+        void setImage(const QByteArray &ba); // svg
+        QSizeF svgSize() const;
+
+    private:
+        QImage m_image;
+        mutable KSvgRenderer m_svg;
+        KUrl m_url;
+        bool m_scale;
+        bool m_proportional;
+        float m_aspectRatio;
+        static QImage m_empty;
+        QString m_element;
 };
 
 #endif
