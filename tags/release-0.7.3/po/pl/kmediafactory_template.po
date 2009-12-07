@@ -1,0 +1,137 @@
+# translation of kmediafactory_template.po to Polish
+# This file is put in the public domain.
+#
+# Tomil Grabowski <tomig@tomig.com>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmediafactory_template\n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
+"PO-Revision-Date: 2006-04-18 12:39+0200\n"
+"Last-Translator: Tomil Grabowski <tomig@tomig.com>\n"
+"Language-Team: Polish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.1\n"
+
+#: kmfmenu.cpp:128 kmfmenupage.cpp:57
+#, fuzzy, kde-format
+msgid "Menu: %1"
+msgstr "   Menu: %1"
+
+#: kmfmenupage.cpp:82
+msgid "Could not paint menu."
+msgstr ""
+
+#: kmfmenupage.cpp:88
+msgid "Could not write spumux xml file."
+msgstr ""
+
+#: kmfmenupage.cpp:94
+msgid "Could not save images."
+msgstr ""
+
+#: kmfmenupage.cpp:100
+msgid "Could not make mpeg file."
+msgstr ""
+
+#: newstuffobject.cpp:34
+msgid "Get more..."
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file templateconfig.ui line 13
+#: rc.cpp:3
+msgid "Configure Template Plugin"
+msgstr "Konfiguracja pluginu szablonów"
+
+#. i18n: tag string
+#. i18n: file templateconfig.ui line 31
+#: rc.cpp:6
+msgid "Default &Menu Language:"
+msgstr "Domyślny język &Menu:"
+
+#: templateobject.cpp:83
+msgid "&Properties"
+msgstr "&Właściwości"
+
+#: templateplugin.cpp:68
+msgid "Template plugin"
+msgstr "plugin szablon"
+
+#~ msgid ""
+#~ "_: NAME OF TRANSLATORS\n"
+#~ "Your names"
+#~ msgstr "Tomił Grabowski"
+
+#~ msgid ""
+#~ "_: EMAIL OF TRANSLATORS\n"
+#~ "Your emails"
+#~ msgstr "tomig@tomig.com"
+
+#~ msgid "Main menu for %1"
+#~ msgstr "Menu glowne dla %1"
+
+#~ msgid "No pages."
+#~ msgstr "Brak stron."
+
+#~ msgid "Cannot find page %1 from template."
+#~ msgstr "Nie mogę znaleźć strony %1 z szablonu."
+
+#~ msgid "Generating menus"
+#~ msgstr "Generuję menu"
+
+#~ msgid "Making menu mpegs"
+#~ msgstr "Tworzę plik menu mpeg"
+
+#~ msgid "Generating DVDAuthor xml"
+#~ msgstr "Tworzę DVDAuthor xml"
+
+#~ msgid "   Converting %1 to ac3 format"
+#~ msgstr "   Konwersja %1 do formatu ac3"
+
+#~ msgid "   Conversion error."
+#~ msgstr "   Błąd konwersji."
+
+#~ msgid "   Script file open failed. %1"
+#~ msgstr "   Błędne otwarcie pliku skryptu. %1"
+
+#~ msgid "ImageMagick error: %1"
+#~ msgstr "Błąd ImageMagick: %1"
+
+#~ msgid "Use this as a default menu language for new projects."
+#~ msgstr "Użyj jako domyślny język menu w nowych projektach."
+
+#~ msgid "Image debug. Blue rectangle."
+#~ msgstr "Debuguję obraz. Niebieski prostokąt."
+
+#~ msgid "Label debug. Red rectangle."
+#~ msgstr "Debuguję etykietę. Czerwony prostkąt."
+
+#~ msgid "Frame debug. Green rectangle."
+#~ msgstr "Debuguję ramkę. Zielony prostokąt."
+
+#~ msgid "Button debug. Yellow rectangle."
+#~ msgstr "Debuguję klawisz. Żółty prostokąt."
+
+#~ msgid "Box debug. White rectangle."
+#~ msgstr "Debuguję box. Biały prostokąt."
+
+#~ msgid "Widget debug. Gray rectangle."
+#~ msgstr "Debuguję obiekt. Szary prostokąt."
+
+#~ msgid "Print debug information from widget. "
+#~ msgstr "Drukuję debugowaną informację z obiektu."
+
+#~ msgid "Draw also margin."
+#~ msgstr "Rysuję także krawędź."
+
+#~ msgid "Menus are up to date"
+#~ msgstr "Menu są aktualne."
+
+#~ msgid "Template plugin for KMediaFactory."
+#~ msgstr "Plugin szablony dla KMediaFactory."
+
+#~ msgid "KMediaFactory Template"
+#~ msgstr "KMediaFactory szablon"

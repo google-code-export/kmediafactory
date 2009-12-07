@@ -1,0 +1,10 @@
+add_subdirectory(template)
+add_subdirectory(output)
+add_subdirectory(slideshow)
+add_subdirectory(video)
+is_kde_version(v 4 0 68) # >= 4.1.0
+if (v)
+add_subdirectory(kross)
+else (v)
+message(STATUS "Kross plugin is not build. It needs KDE version 4.1.0 or greater.")
+endif (v)

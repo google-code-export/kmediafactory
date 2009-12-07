@@ -1,0 +1,749 @@
+# translation of libkmf.po to German
+# This file is put in the public domain.
+#
+# Christoph Lumme <lummi@in-4-matik.de>, 2006.
+# Pavel Fric <pavelfric@seznam.cz>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: libkmf\n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
+"PO-Revision-Date: 2009-04-18 23:02+0200\n"
+"Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: kmffontchooser.cpp:45
+msgid "Font..."
+msgstr "Písmo..."
+
+#: kmfmultiurldialog.cpp:102
+msgid "Cannot add directory."
+msgstr "Adresář nelze přidat."
+
+#: kmftools.cpp:656
+#, kde-format
+msgid "Error saving file %1"
+msgstr "Při ukládání souboru %1 došlo k chybě"
+
+#: kmftools.cpp:682
+#, kde-format
+msgid "Error opening file %1"
+msgstr "Při otevírání souboru %1 došlo k chybě"
+
+#: qdvdinfo.cpp:54 qdvdinfo.cpp:56
+msgid "Not Specified"
+msgstr "Nestanoveno"
+
+#: qdvdinfo.cpp:55
+msgid "Unknown"
+msgstr "Neznámý"
+
+#: qdvdinfo.cpp:57
+msgid "Abkhazian"
+msgstr "abcházština"
+
+#: qdvdinfo.cpp:58
+msgid "Afan (Oromo)"
+msgstr "afan (oromoština)"
+
+#: qdvdinfo.cpp:59
+msgid "Afar"
+msgstr "afar"
+
+#: qdvdinfo.cpp:60
+msgid "Afrikaans"
+msgstr "afrikánština"
+
+#: qdvdinfo.cpp:61
+msgid "Albanian"
+msgstr "albánština"
+
+#: qdvdinfo.cpp:62
+msgid "Amharic"
+msgstr "amharština"
+
+#: qdvdinfo.cpp:63
+msgid "Arabic"
+msgstr "arabština"
+
+#: qdvdinfo.cpp:64
+msgid "Armenian"
+msgstr "arménština"
+
+#: qdvdinfo.cpp:65
+msgid "Assamese"
+msgstr "assamština"
+
+#: qdvdinfo.cpp:66
+msgid "Aymara"
+msgstr "aymarština"
+
+#: qdvdinfo.cpp:67
+msgid "Azerbaijani"
+msgstr "ázerbájdžánština"
+
+#: qdvdinfo.cpp:68
+msgid "Bashkir"
+msgstr "baškirština"
+
+#: qdvdinfo.cpp:69
+msgid "Basque"
+msgstr "baskičtina"
+
+#: qdvdinfo.cpp:70
+msgid "Bengali;Bangla"
+msgstr "bengálština; bangladéšština"
+
+#: qdvdinfo.cpp:71
+msgid "Bhutani"
+msgstr "bhutánština"
+
+#: qdvdinfo.cpp:72
+msgid "Bihari"
+msgstr "bihárština"
+
+#: qdvdinfo.cpp:73
+msgid "Bislama"
+msgstr "bislámština"
+
+#: qdvdinfo.cpp:74
+msgid "Breton"
+msgstr "Breton"
+
+#: qdvdinfo.cpp:75
+msgid "Bulgarian"
+msgstr "bulharština"
+
+#: qdvdinfo.cpp:76
+msgid "Burmese"
+msgstr "barmština"
+
+#: qdvdinfo.cpp:77
+msgid "Byelorussian"
+msgstr "běloruština"
+
+#: qdvdinfo.cpp:78
+msgid "Cambodian"
+msgstr "kambodžština"
+
+#: qdvdinfo.cpp:79
+msgid "Catalan"
+msgstr "katalánština"
+
+#: qdvdinfo.cpp:80
+msgid "Chinese"
+msgstr "čínština"
+
+#: qdvdinfo.cpp:81
+msgid "Corsican"
+msgstr "korsičtina"
+
+#: qdvdinfo.cpp:82
+msgid "Croatian"
+msgstr "chorvatština"
+
+#: qdvdinfo.cpp:83
+msgid "Czech"
+msgstr "čeština"
+
+#: qdvdinfo.cpp:84
+msgid "Danish"
+msgstr "dánština"
+
+#: qdvdinfo.cpp:85
+msgid "Dutch"
+msgstr "holandština"
+
+#: qdvdinfo.cpp:86
+msgid "English"
+msgstr "angličtina"
+
+#: qdvdinfo.cpp:87
+msgid "Esperanto"
+msgstr "esperanto"
+
+#: qdvdinfo.cpp:88
+msgid "Estonian"
+msgstr "estonština"
+
+#: qdvdinfo.cpp:89
+msgid "Faroese"
+msgstr "faerština"
+
+#: qdvdinfo.cpp:90
+msgid "Fiji"
+msgstr "fidžština"
+
+#: qdvdinfo.cpp:91
+msgid "Finnish"
+msgstr "finština"
+
+#: qdvdinfo.cpp:92
+msgid "French"
+msgstr "francouzština"
+
+#: qdvdinfo.cpp:93
+msgid "Frisian"
+msgstr "frízsština"
+
+#: qdvdinfo.cpp:94
+msgid "Galician"
+msgstr "galicijština"
+
+#: qdvdinfo.cpp:95
+msgid "Georgian"
+msgstr "gruzínština"
+
+#: qdvdinfo.cpp:96
+msgid "German"
+msgstr "němčina"
+
+#: qdvdinfo.cpp:97
+msgid "Greek"
+msgstr "řečtina"
+
+#: qdvdinfo.cpp:98
+msgid "Greenlandic"
+msgstr "grónština"
+
+#: qdvdinfo.cpp:99
+msgid "Guarani"
+msgstr "guaraní"
+
+#: qdvdinfo.cpp:100
+msgid "Gujarati"
+msgstr "gujarati"
+
+#: qdvdinfo.cpp:101
+msgid "Hausa"
+msgstr "hausa"
+
+#: qdvdinfo.cpp:102
+msgid "Hebrew"
+msgstr "hebrejština"
+
+#: qdvdinfo.cpp:103
+msgid "Hindi"
+msgstr "hindština"
+
+#: qdvdinfo.cpp:104
+msgid "Hungarian"
+msgstr "maďarština"
+
+#: qdvdinfo.cpp:105
+msgid "Icelandic"
+msgstr "islandština"
+
+#: qdvdinfo.cpp:106
+msgid "Indonesian"
+msgstr "indonézština"
+
+#: qdvdinfo.cpp:107
+msgid "Interlingua"
+msgstr "interlingva"
+
+#: qdvdinfo.cpp:108
+msgid "Interlingue"
+msgstr "interlingva"
+
+#: qdvdinfo.cpp:109
+msgid "Inupiak"
+msgstr "inupiak"
+
+#: qdvdinfo.cpp:110
+msgid "Irish"
+msgstr "irština"
+
+#: qdvdinfo.cpp:111
+msgid "Italian"
+msgstr "italština"
+
+#: qdvdinfo.cpp:112
+msgid "Japanese"
+msgstr "japonština"
+
+#: qdvdinfo.cpp:113
+msgid "Javanese"
+msgstr "jávština"
+
+#: qdvdinfo.cpp:114
+msgid "Kannada"
+msgstr "kannadština"
+
+#: qdvdinfo.cpp:115
+msgid "Kashmiri"
+msgstr "kašmírština"
+
+#: qdvdinfo.cpp:116
+msgid "Kazakh"
+msgstr "kazachština"
+
+#: qdvdinfo.cpp:117
+msgid "Kinyarwanda"
+msgstr "kinyarwandština"
+
+#: qdvdinfo.cpp:118
+msgid "Kirghiz"
+msgstr "kyrgyzština"
+
+#: qdvdinfo.cpp:119
+msgid "Kurundi"
+msgstr "kurundi"
+
+#: qdvdinfo.cpp:120
+msgid "Korean"
+msgstr "korejština"
+
+#: qdvdinfo.cpp:121
+msgid "Kurdish"
+msgstr "kurdština"
+
+#: qdvdinfo.cpp:122
+msgid "Laothian"
+msgstr "laoština"
+
+#: qdvdinfo.cpp:123
+msgid "Latin"
+msgstr "latina"
+
+#: qdvdinfo.cpp:124
+msgid "Latvian;Lettish"
+msgstr "lotyšština"
+
+#: qdvdinfo.cpp:125
+msgid "Lingala"
+msgstr "lingala"
+
+#: qdvdinfo.cpp:126
+msgid "Lithuanian"
+msgstr "litevština"
+
+#: qdvdinfo.cpp:127
+msgid "Macedonian"
+msgstr "makedonština"
+
+#: qdvdinfo.cpp:128
+msgid "Malagasy"
+msgstr "malagasy"
+
+#: qdvdinfo.cpp:129
+msgid "Malay"
+msgstr "malajština"
+
+#: qdvdinfo.cpp:130
+msgid "Malayalam"
+msgstr "malayalamština"
+
+#: qdvdinfo.cpp:131
+msgid "Maltese"
+msgstr "maltština"
+
+#: qdvdinfo.cpp:132
+msgid "Maori"
+msgstr "maorština"
+
+#: qdvdinfo.cpp:133
+msgid "Marathi"
+msgstr "marathiština"
+
+#: qdvdinfo.cpp:134
+msgid "Moldavian"
+msgstr "moldavština"
+
+#: qdvdinfo.cpp:135
+msgid "Mongolian"
+msgstr "mongolština"
+
+#: qdvdinfo.cpp:136
+msgid "Nauru"
+msgstr "naurština"
+
+#: qdvdinfo.cpp:137
+msgid "Nepali"
+msgstr "nepálština"
+
+#: qdvdinfo.cpp:138
+msgid "Norwegian"
+msgstr "norština"
+
+#: qdvdinfo.cpp:139
+msgid "Occitan"
+msgstr "occitánština"
+
+#: qdvdinfo.cpp:140
+msgid "Oriya"
+msgstr "oriyanština"
+
+#: qdvdinfo.cpp:141
+msgid "Pashto;Pushto"
+msgstr "afghánština"
+
+#: qdvdinfo.cpp:142
+msgid "Persian (Farsi)"
+msgstr "perština (farsi)"
+
+#: qdvdinfo.cpp:143
+msgid "Polish"
+msgstr "polština"
+
+#: qdvdinfo.cpp:144
+msgid "Portuguese"
+msgstr "portugalština"
+
+#: qdvdinfo.cpp:145
+msgid "Punjabi"
+msgstr "paňdžábština"
+
+#: qdvdinfo.cpp:146
+msgid "Quechua"
+msgstr "kečuánština"
+
+#: qdvdinfo.cpp:147
+msgid "Rhaeto-Romance"
+msgstr "rétorománština"
+
+#: qdvdinfo.cpp:148
+msgid "Romanian"
+msgstr "rumunština"
+
+#: qdvdinfo.cpp:149
+msgid "Russian"
+msgstr "ruština"
+
+#: qdvdinfo.cpp:150
+msgid "Samoan"
+msgstr "samojština"
+
+#: qdvdinfo.cpp:151
+msgid "Sangho"
+msgstr "sanghoština"
+
+#: qdvdinfo.cpp:152
+msgid "Sanskrit"
+msgstr "sanskrt"
+
+#: qdvdinfo.cpp:153
+msgid "Scots Gaelic"
+msgstr "skotská gaelština"
+
+#: qdvdinfo.cpp:154
+msgid "Serbian"
+msgstr "srbština"
+
+#: qdvdinfo.cpp:155
+msgid "Serbo-Croatian"
+msgstr "srbochorvatština"
+
+#: qdvdinfo.cpp:156
+msgid "Sesotho"
+msgstr "sesotština"
+
+#: qdvdinfo.cpp:157
+msgid "Setswana"
+msgstr "setswanština"
+
+#: qdvdinfo.cpp:158
+msgid "Shona"
+msgstr "shonština"
+
+#: qdvdinfo.cpp:159
+msgid "Sindhi"
+msgstr "sindhština"
+
+#: qdvdinfo.cpp:160
+msgid "Singhalese"
+msgstr "singhalese (srílanština)"
+
+#: qdvdinfo.cpp:161
+msgid "Siswati"
+msgstr "siswatština"
+
+#: qdvdinfo.cpp:162
+msgid "Slovak"
+msgstr "slovenština"
+
+#: qdvdinfo.cpp:163
+msgid "Slovenian"
+msgstr "slovinština"
+
+#: qdvdinfo.cpp:164
+msgid "Somali"
+msgstr "somálština"
+
+#: qdvdinfo.cpp:165
+msgid "Spanish"
+msgstr "španělština"
+
+#: qdvdinfo.cpp:166
+msgid "Sundanese"
+msgstr "sundština"
+
+#: qdvdinfo.cpp:167
+msgid "Swahili"
+msgstr "svahilština"
+
+#: qdvdinfo.cpp:168
+msgid "Swedish"
+msgstr "švédština"
+
+#: qdvdinfo.cpp:169
+msgid "Tagalog"
+msgstr "filipínština"
+
+#: qdvdinfo.cpp:170
+msgid "Tajik"
+msgstr "tádžičtina"
+
+#: qdvdinfo.cpp:171
+msgid "Tamil"
+msgstr "tamilština"
+
+#: qdvdinfo.cpp:172
+msgid "Tatar"
+msgstr "tatarština"
+
+#: qdvdinfo.cpp:173
+msgid "Telugu"
+msgstr "telugština"
+
+#: qdvdinfo.cpp:174
+msgid "Thai"
+msgstr "thajština"
+
+#: qdvdinfo.cpp:175
+msgid "Tibetan"
+msgstr "tibetština"
+
+#: qdvdinfo.cpp:176
+msgid "Tigrinya"
+msgstr "tigrinyaština"
+
+#: qdvdinfo.cpp:177
+msgid "Tonga"
+msgstr "tonžština"
+
+#: qdvdinfo.cpp:178
+msgid "Tsonga"
+msgstr "tsonžština"
+
+#: qdvdinfo.cpp:179
+msgid "Turkish"
+msgstr "turečtina"
+
+#: qdvdinfo.cpp:180
+msgid "Turkmen"
+msgstr "turkmenština"
+
+#: qdvdinfo.cpp:181
+msgid "Twi"
+msgstr "twijština"
+
+#: qdvdinfo.cpp:182
+msgid "Ukrainian"
+msgstr "ukrajinština"
+
+#: qdvdinfo.cpp:183
+msgid "Urdu"
+msgstr "urdština"
+
+#: qdvdinfo.cpp:184
+msgid "Uzbek"
+msgstr "uzbečtina"
+
+#: qdvdinfo.cpp:185
+msgid "Vietnamese"
+msgstr "vietnamština"
+
+#: qdvdinfo.cpp:186
+msgid "Volapuk"
+msgstr "volapukština"
+
+#: qdvdinfo.cpp:187
+msgid "Welsh"
+msgstr "welština"
+
+#: qdvdinfo.cpp:188
+msgid "Wolof"
+msgstr "wolofština"
+
+#: qdvdinfo.cpp:189
+msgid "Xhosa"
+msgstr "xhosština"
+
+#: qdvdinfo.cpp:190
+msgid "Yiddish"
+msgstr "jidiš"
+
+#: qdvdinfo.cpp:191
+msgid "Yoruba"
+msgstr "jorubština"
+
+#: qdvdinfo.cpp:192
+msgid "Zulu"
+msgstr "zulština"
+
+#: qdvdinfo.cpp:200 qdvdinfo.cpp:219
+msgid "Undefined"
+msgstr "Nestanoveno"
+
+#: qdvdinfo.cpp:200 qdvdinfo.cpp:219
+msgid "Normal"
+msgstr "Normální"
+
+#: qdvdinfo.cpp:200
+msgid "Large"
+msgstr "Velký"
+
+#: qdvdinfo.cpp:201
+msgid "Children"
+msgstr "Děti"
+
+#: qdvdinfo.cpp:201 qdvdinfo.cpp:203 qdvdinfo.cpp:204 qdvdinfo.cpp:205
+msgid "reserved"
+msgstr "Zamluveno"
+
+#: qdvdinfo.cpp:201
+msgid "Normal Captions"
+msgstr "Obvyklé podtitulky"
+
+#: qdvdinfo.cpp:202
+msgid "Large Captions"
+msgstr "Dlouhé podtitulky"
+
+#: qdvdinfo.cpp:202
+msgid "Children Captions"
+msgstr "Podtitulky pro děti"
+
+#: qdvdinfo.cpp:204
+msgid "Forced"
+msgstr "Vynuceno"
+
+#: qdvdinfo.cpp:205
+msgid "Director"
+msgstr "Režisér"
+
+#: qdvdinfo.cpp:205
+msgid "Large Director"
+msgstr "Velký režisér"
+
+#: qdvdinfo.cpp:206
+msgid "Children Director"
+msgstr "Dětský režisér"
+
+#: qdvdinfo.cpp:219
+msgid "Impaired"
+msgstr "Poškozený"
+
+#: qdvdinfo.cpp:220
+msgid "Comments1"
+msgstr "Poznámky 1"
+
+#: qdvdinfo.cpp:220
+msgid "Comments2"
+msgstr "Poznámky 2"
+
+#: qdvdinfo.cpp:231
+msgid "P&S + Letter"
+msgstr "P&S + písmeno"
+
+#: qdvdinfo.cpp:231
+msgid "Pan&Scan"
+msgstr "Plynule &prohledat film"
+
+#: qdvdinfo.cpp:231
+msgid "Letterbox"
+msgstr "Zobrazený v širokoúhlém formátu"
+
+#: qdvdinfo.cpp:232
+msgid "?"
+msgstr "?"
+
+#: qdvdinfo.cpp:335
+#, kde-format
+msgid "Cell: %1"
+msgstr "Buňka: %1"
+
+#: qdvdinfo.cpp:403
+msgid "Subtitle: %1%4"
+msgstr "Titulky: %1%4"
+
+#: qdvdinfo.cpp:511
+#, kde-format
+msgid "Audio: %1, %2 channels%3"
+msgstr "Audio: %1, %2 Kanály %3"
+
+#: qdvdinfo.cpp:536
+#, kde-format
+msgid "Video: %1, %2x%3, %4"
+msgstr "Video: %1, %2x%3, %4"
+
+#: qdvdinfo.cpp:725
+#, kde-format
+msgid "Title: %1, %2"
+msgstr "Název %1, %2"
+
+#: qdvdinfo.cpp:858 qdvdinfo.cpp:866 qdvdinfo.cpp:874
+msgid "unknown"
+msgstr "neznámý"
+
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 13
+#: rc.cpp:3
+msgid "Title"
+msgstr "Název"
+
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 72
+#: rc.cpp:6
+msgid "Add (Alt+ Insert)"
+msgstr "Přidat (Alt + Insert)"
+
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 78
+#: rc.cpp:9
+msgid "Alt+Ins"
+msgstr "Alt+Insert"
+
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 88
+#: rc.cpp:12
+msgid "Remove (Alt + Delete)"
+msgstr "Odstranit (Alt + Delete)"
+
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 94
+#: rc.cpp:15
+msgid "Alt+Del"
+msgstr "Alt+Delete"
+
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 120
+#: rc.cpp:18
+msgid "Move up (Alt + Up)"
+msgstr "Posunout nahoru (Alt + šipka nahoru)"
+
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 126
+#: rc.cpp:21
+msgid "Alt+Up"
+msgstr "Alt+šipka nahoru"
+
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 136
+#: rc.cpp:24
+msgid "Move down (Alt + Down)"
+msgstr "Posunout dolů (Alt + šipka dolů)"
+
+#. i18n: tag string
+#. i18n: file kmfmultiurldialog.ui line 142
+#: rc.cpp:27
+msgid "Alt+Down"
+msgstr "Alt+šipka dolů"
+
+#~ msgid "C&ancel"
+#~ msgstr "&Abbrechen"
