@@ -9,10 +9,10 @@ set(template_files
   settings.ui
   icon.png
   preview.jpg
-  images/button.png
-  images/prev.png
-  images/back.png
-  images/next.png
+  images/button.svgz
+  images/prev.svgz
+  images/back.svgz
+  images/next.svgz
 )
 
 file(GLOB dirs "${CMAKE_CURRENT_SOURCE_DIR}/locale/??")
@@ -30,7 +30,7 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${template}
   DEPENDS ${template_files} ${po_files}
 )
 
-add_custom_target(simple_template ALL 
+add_custom_target(simple_template ALL
   DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${template}
 )
 
