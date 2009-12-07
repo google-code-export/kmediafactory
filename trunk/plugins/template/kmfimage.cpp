@@ -83,7 +83,12 @@ QRect KMFImage::paintRect(const QPoint offset) const
             rc = KMFWidget::paintRect();
         }
     } else   {
-        rc = QRect(0, 0, m_image.width(), m_image.height());
+        if (!m_image.isNull()) {
+            rc = QRect(0, 0, m_image.width(), m_image.height());
+        } else {
+            QSize size = svgSize().toSize();
+            rc = QRect(0, 0, size.width(), size.height());
+        }
         rc.align(KMFWidget::paintRect(), halign(), valign());
     }
 
@@ -148,24 +153,21 @@ void KMFImage::paintWidget(QImage *layer, bool shdw) const
             }
         }
 
-        QImage img(size, QImage::Format_ARGB32_Premultiplied);
-        QPainter p(&img);
+        image = QImage(size, QImage::Format_ARGB32);
+        image.fill(qRgba(255, 255, 255, 0));
+        QPainter psvg(&image);
 
         if (m_element.isEmpty()) {
-            m_svg.render(&p, QRect(0, 0, size.width(), size.height()));
+            m_svg.render(&psvg, QRect(0, 0, size.width(), size.height()));
         } else {
-            m_svg.render(&p, m_element, QRect(0, 0, size.width(), size.height()));
+            m_svg.render(&psvg, m_element, QRect(0, 0, size.width(), size.height()));
         }
-
-        image = img;
     } else {
         image = m_image;
     }
 
     if (clr.isValid()) {
         image = mask(image, clr.rgba(), !shdw);
-    } else {
-        image = image;
     }
 
     if ((image.width() == 0) || (image.height() == 0)) {
@@ -177,7 +179,7 @@ void KMFImage::paintWidget(QImage *layer, bool shdw) const
         image = image.scaled(rc.width(), rc.height(), mode, Qt::SmoothTransformation);
     }
 
-    // kDebug() << m_url << ": " <<  shdw;
+    // kDebug() << m_url << ": " << shdw << rc;
     p.drawImage(QPoint(rc.left(), rc.top()), image);
 }
 
@@ -193,8 +195,6 @@ void KMFImage::setImage(KUrl url)
     if ((ext == "svg") || (ext == "svgz")) {
         svg = true;
     }
-
-    kDebug() << url << ext;
 
     if (url.protocol() == "project") {
         QList<KMF::MediaObject *> mobs = m_interface->mediaObjects();
@@ -224,7 +224,6 @@ void KMFImage::setImage(KUrl url)
     } else if (url.protocol() == "kde")    {
         QString tmpFile = KStandardDirs::locate(url.host().toLocal8Bit(),
                 url.path().mid(1));
-        kDebug() << url.host().toLocal8Bit() << url.path().mid(1) << tmpFile;
 
         if (!tmpFile.isEmpty()) {
             if (svg) {
@@ -297,8 +296,13 @@ void KMFImage::fromXML(const QDomElement &element)
 
 int KMFImage::minimumPaintWidth() const
 {
-    int result = m_image.width();
+    int result;
 
+    if (!m_image.isNull()) {
+        result = m_image.width();
+    } else {
+        result = svgSize().toSize().width();
+    }
     if (geometry().width().type() == KMFUnit::Absolute) {
         result = geometry().width().value();
     } else if (geometry().width().type() == KMFUnit::Minimum)    {
@@ -315,8 +319,13 @@ int KMFImage::minimumPaintWidth() const
 
 int KMFImage::minimumPaintHeight() const
 {
-    int result = m_image.height();
+    int result;
 
+    if (!m_image.isNull()) {
+        result = m_image.height();
+    } else {
+        result = svgSize().toSize().height();
+    }
     if (geometry().height().type() == KMFUnit::Absolute) {
         result = geometry().height().value();
     } else if (geometry().height().type() == KMFUnit::Minimum)    {
