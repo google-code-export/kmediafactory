@@ -9,10 +9,10 @@ set(template_files
   settings.ui
   icon.png
   preview.jpg
-  images/button.png
-  images/prev.png
-  images/back.png
-  images/next.png
+  images/button.svgz
+  images/prev.svgz
+  images/back.svgz
+  images/next.svgz
 )
 
 file(GLOB dirs "${CMAKE_CURRENT_SOURCE_DIR}/locale/??")

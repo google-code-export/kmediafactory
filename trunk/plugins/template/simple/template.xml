@@ -11,10 +11,10 @@
       <hbox margin="10" x="+0:60" w="100%:60" name="BUTTONS">
         <button h="100%" jump="PREV" name="PREV"
                 up="PREV" left="NEXT" right="PLAY" down="PREV">
-          <image h="100%" url="template:///images/prev.png" scale="0" />
-          <image h="100%" url="template:///images/prev.png" scale="0"
+          <image h="100%" url="template:///images/prev.svgz" scale="0" />
+          <image h="100%" url="template:///images/prev.svgz" scale="0"
                   color="yellow" layer="highlight" />
-          <image h="100%" url="template:///images/prev.png" scale="0"
+          <image h="100%" url="template:///images/prev.svgz" scale="0"
                   color="red" layer="select"  />
         </button>
         <spacer w="47.5%" />
@@ -23,9 +23,9 @@
                 right="CHAPTERS" down="PLAY">
           <hbox w="min">
             <group h="100%">
-              <image url="template:///images/next.png" h="100%" scale="0"
+              <image url="template:///images/next.svgz" h="100%" scale="0"
                      color="yellow" layer="highlight" name="hl_play_1" />
-              <image url="template:///images/next.png" h="100%" scale="0"
+              <image url="template:///images/next.svgz" h="100%" scale="0"
                      color="red" layer="select" name="sl_play_1" />
             </group>
             <label x="+0:10" name="label_title_play" color="#ccccccaa">
@@ -43,9 +43,9 @@
                 right="NEXT,PREV,PLAY" down="CHAPTERS">
           <hbox w="min">
             <group h="100%">
-              <image url="template:///images/next.png" h="100%" scale="0"
+              <image url="template:///images/next.svgz" h="100%" scale="0"
                      color="yellow" layer="highlight" name="hl_chapters_1" />
-              <image url="template:///images/next.png" h="100%" scale="0"
+              <image url="template:///images/next.svgz" h="100%" scale="0"
                      color="red" layer="select" name="sl_chapters_1" />
             </group>
             <label x="+0:10" name="label_title_chapters" color="#ccccccaa">
@@ -59,10 +59,10 @@
         <spacer w="47.5%" />
         <button h="100%" jump="NEXT" name="NEXT"
                 up="NEXT" left="CHAPTERS" right="PREV,PLAY" down="NEXT">
-          <image h="100%" url="template:///images/next.png" scale="0" />
-          <image h="100%" url="template:///images/next.png" scale="0"
+          <image h="100%" url="template:///images/next.svgz" scale="0" />
+          <image h="100%" url="template:///images/next.svgz" scale="0"
                   color="yellow" layer="highlight" />
-          <image h="100%" url="template:///images/next.png" scale="0"
+          <image h="100%" url="template:///images/next.svgz" scale="0"
                   color="red" layer="select"  />
         </button>
       </hbox>
@@ -203,13 +203,13 @@
       <spacer w="16.66%" />
       <button w="min" h="min" jump="PREV" name="PREV"
               up="4,1" left="NEXT,BACK" right="BACK,NEXT" down="1">
-        <image url="template:///images/button.png" scale="0">
+        <image url="template:///images/button.svgz" scale="0">
           <shadow radius="10" offset.x="3" offset.y="3" type="2"
                   color="#00000088" sigma="5" />
-          <image url="template:///images/prev.png" x="+13" y="+12" scale="0" />
-          <image url="template:///images/prev.png" x="+13" y="+12"
+          <image url="template:///images/prev.svgz" x="+13" y="+12" scale="0" />
+          <image url="template:///images/prev.svgz" x="+13" y="+12"
                  color="green" layer="highlight" name="hl_prev" scale="0" />
-          <image url="template:///images/prev.png" x="+13" y="+12"
+          <image url="template:///images/prev.svgz" x="+13" y="+12"
                  color="red" layer="select" name="sl_prev" scale="0" />
           <label x="+28" y="+3" w="108" h="100%" color="#a0a0a0" >
             <font size="28" weight="700" name="Helvetica-Bold" />
@@ -220,13 +220,13 @@
       <spacer w="33.33%" />
       <button w="min" h="min" jump="BACK" name="BACK"
               up="4,1" left="PREV,NEXT" right="NEXT,PREV" down="1">
-        <image url="template:///images/button.png" scale="0">
+        <image url="template:///images/button.svgz" scale="0">
           <shadow radius="10" offset.x="3" offset.y="3" type="2"
                   color="#00000088" sigma="5" />
-          <image url="template:///images/back.png" x="+11" y="+15" scale="0" />
-          <image url="template:///images/back.png" x="+11" y="+15"
+          <image url="template:///images/back.svgz" x="+11" y="+15" scale="0" />
+          <image url="template:///images/back.svgz" x="+11" y="+15"
                  color="green" layer="highlight" name="hl_prev" scale="0" />
-          <image url="template:///images/back.png" x="+11" y="+15"
+          <image url="template:///images/back.svgz" x="+11" y="+15"
                  color="red" layer="select" name="sl_prev" scale="0" />
           <label x="+28" y="+3" w="108" h="100%" color="#a0a0a0" >
             <font size="28" weight="700" name="Helvetica-Bold" />
@@ -237,13 +237,13 @@
       <spacer w="33.33%" />
       <button w="min" h="min" jump="NEXT" name="NEXT"
               up="6,3,2,1" left="BACK,PREV" right="PREV,BACK" down="3,2,1">
-        <image url="template:///images/button.png" scale="0">
+        <image url="template:///images/button.svgz" scale="0">
           <shadow radius="10" offset.x="5" offset.y="5" type="2"
                   color="#00000088" sigma="5" />
-          <image url="template:///images/next.png" x="+13" y="+12" scale="0" />
-          <image url="template:///images/next.png" x="+13" y="+12"
+          <image url="template:///images/next.svgz" x="+13" y="+12" scale="0" />
+          <image url="template:///images/next.svgz" x="+13" y="+12"
                  color="green" layer="highlight" name="hl_next" scale="0" />
-          <image url="template:///images/next.png" x="+13" y="+12"
+          <image url="template:///images/next.svgz" x="+13" y="+12"
                  color="red" layer="select" name="sl_next" scale="0" />
           <label x="+28" y="+3" w="108" h="100%" color="#a0a0a0" >
             <font size="28" weight="700" name="Helvetica-Bold" />
