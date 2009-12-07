@@ -4,19 +4,14 @@ Features:
 - Full python/ruby(kross) plugins
 - Job based processing (Multi core/processor support)
 
-CHANGED FROM THE PREVIOUS MINOR RELEASE (0.7.1)
+CHANGED FROM THE PREVIOUS MINOR RELEASE (0.7.2)
 ================================================
 Features:
-- Phonon player in chapters dialog
-- Czech translation
+- svg support
 
 Bug fixes:
-- don't make enormous log files
-- fix properties icon
-- remove avi mov from file dialog (not supported)
-- fix mem leak in image viewer
-- fix chapter name editing
-- fix configure helper script
+- fix template properties dialogs
+- Use our own default background
 
 
 # Dependencies (ubuntu package naming):                                       #
