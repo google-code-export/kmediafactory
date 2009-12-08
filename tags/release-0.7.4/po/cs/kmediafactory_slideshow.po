@@ -1,0 +1,272 @@
+# translation of kmediafactory_slideshow.po to German
+# This file is put in the public domain.
+#
+# FIRST AUTHOR <Lummi@in-4-matik.de>, YEAR.
+# Christoph Lumme <lummi@in-4-matik.de>, 2006.
+# Pavel Fric <pavelfric@seznam.cz>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmediafactory_slideshow\n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
+"PO-Revision-Date: 2009-04-18 20:33+0200\n"
+"Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#. i18n: tag string
+#. i18n: file slideshowconfig.ui line 13
+#: rc.cpp:3
+msgid "Configure Slideshow Plugin"
+msgstr "Nastavit přídavný modul pro promítání diapozitivů"
+
+#. i18n: tag string
+#. i18n: file slideshowconfig.ui line 31
+#: rc.cpp:6
+msgid "Audio &Type:"
+msgstr "Typ zvu&kového souboru:"
+
+#. i18n: tag string
+#. i18n: file slideshowconfig.ui line 45
+#: rc.cpp:9
+msgid "MP2"
+msgstr "MP2"
+
+#. i18n: tag string
+#. i18n: file slideshowconfig.ui line 50
+#: rc.cpp:12
+msgid "AC3"
+msgstr "AC3"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 13
+#: rc.cpp:15
+msgid "Slideshow properties"
+msgstr "Vlastnosti promítání diapozitivů"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 51
+#: rc.cpp:18
+msgid "&Title:"
+msgstr "&Název:"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 107
+#: rc.cpp:21
+msgid "Add (Alt+ Insert)"
+msgstr "Přidat (Alt + Insert)"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 113
+#: rc.cpp:24
+msgid "Alt+Ins"
+msgstr "Alt+Insert"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 123
+#: rc.cpp:27
+msgid "Remove (Alt + Delete)"
+msgstr "Odstranit (Alt + Delete)"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 129
+#: rc.cpp:30
+msgid "Alt+Del"
+msgstr "Alt+Delete"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 155
+#: rc.cpp:33
+msgid "Move up (Alt + Up)"
+msgstr "Posunout nahoru (Alt + šipka nahoru)"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 161
+#: rc.cpp:36
+msgid "Alt+Up"
+msgstr "Alt+šipka nahoru"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 171
+#: rc.cpp:39
+msgid "Move down (Alt + Down)"
+msgstr "Posunout dolů (Alt + šipka dolů)"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 177
+#: rc.cpp:42
+msgid "Alt+Down"
+msgstr "Alt+šipka dolů"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 268
+#: rc.cpp:45
+msgid "&Slide duration:"
+msgstr "&Délka trvání diapozitivu:"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 290
+#: rc.cpp:48
+msgid "fit"
+msgstr "Přizpůsobit"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 341
+#: rc.cpp:51
+msgid "&Add original pictures to DVD"
+msgstr "&Přidat původní obrázky do DVD"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 344
+#: rc.cpp:54
+msgid "Alt+A"
+msgstr "Alt+A"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 360
+#: rc.cpp:57
+msgid "&Loop slideshow"
+msgstr "Opakovat &promítání diapozitivů"
+
+#. i18n: tag string
+#. i18n: file slideshowproperties.ui line 363
+#: rc.cpp:60
+msgid "Alt+L"
+msgstr "Alt+L"
+
+#: slideshowobject.cpp:63
+msgid "Copying slideshow originals"
+msgstr "Kopírují se původní promítání diapozitivů"
+
+#: slideshowobject.cpp:87 slideshowobject.cpp:425, kde-format
+msgid "Slideshow: %1"
+msgstr "Promítání diapozitivů: %1"
+
+#: slideshowobject.cpp:112
+msgid "Slideshow error."
+msgstr "Promítání diapozitivů selhalo."
+
+#: slideshowobject.cpp:117
+msgid "Can't write slideshow file."
+msgstr "Soubor s promítáním diapozitivů nelze zapsat."
+
+#: slideshowobject.cpp:185
+msgid "&Properties"
+msgstr "&Vlastnosti"
+
+#: slideshowobject.cpp:214
+msgid "Processing slides...\n"
+msgstr "Zpracovávají se diapozitivy...\n"
+
+#: slideshowobject.cpp:220
+msgid "Cannot add directory."
+msgstr "Adresář nelze přidat."
+
+#: slideshowobject.cpp:265
+#, kde-format
+msgid "Page %1"
+msgstr "Strana %1"
+
+#: slideshowobject.cpp:467, kde-format
+msgid "Slideshow \"%1\" seems to be up to date"
+msgstr "Zdá se, že promítání diapozitivů \"%1\" je aktuální"
+
+#: slideshowplugin.cpp:63
+msgid "Add Slideshow"
+msgstr "Přidat promítání diapozitivů"
+
+#: slideshowplugin.cpp:119
+msgid "Slideshow"
+msgstr "Promítání diapozitivů"
+
+#: slideshowplugin.cpp:146
+msgid "Slideshow plugin"
+msgstr "Přídavný modul pro promítání diapozitivů"
+
+#: slideshowproperties.cpp:127
+msgid "Picture"
+msgstr "Obrázek"
+
+#: slideshowproperties.cpp:129
+msgid "Comment"
+msgstr "Poznámka"
+
+#: slideshowproperties.cpp:152
+msgid "Slideshow Properties"
+msgstr "Vlastnosti promítání diapozitivů"
+
+#: slideshowproperties.cpp:246
+msgid "Info: "
+msgstr "Informace:"
+
+#: slideshowproperties.cpp:256
+#, kde-format
+msgid "%1 images"
+msgstr "%1 obrázků"
+
+#: slideshowproperties.cpp:258 slideshowproperties.cpp:262
+#, kde-format
+msgid ", Duration %1"
+msgstr ", Doba trvání %1"
+
+#: slideshowproperties.cpp:265
+#, kde-format
+msgid ", Audio duration %1"
+msgstr ", Doba trvání zvuku %1"
+
+#: slideshowproperties.cpp:281
+msgid ""
+"*.jpg *.png *.pdf *.odp *.odt *.ods *.odx *.sxw *.sxc *.sxi *."
+"ppt *.xls *.doc|Pictures, Presentations\n"
+"*.*|All files"
+msgstr ""
+"*.jpg *.png *.pdf *.odp *.odt *.ods *.odx *.sxw *.sxc *.sxi *."
+"ppt *.xls *.doc|Obrázky, Prezentace\n"
+"*.*|Všechny soubory"
+
+#: slideshowproperties.cpp:294
+msgid "*.mp3 *.wav *.ogg|Audio Files"
+msgstr "*.mp3 *.wav *.ogg|Zvukové soubory"
+
+#: slideshowproperties.cpp:295
+msgid "Audio files"
+msgstr "Zvukové soubory"
+
+#: slideshowproperties.cpp:318
+msgid "You should have atleast one chapter."
+msgstr "Měl byste přiložit alespoň jednu kapitolu."
+
+#~ msgid "Image"
+#~ msgstr "Bild"
+
+#~ msgid "Ca&ncel"
+#~ msgstr "Abb&rechen"
+
+#~ msgid "Duration to show one slide."
+#~ msgstr "Anzeigedauer pro Bild."
+
+#~ msgid ""
+#~ "\n"
+#~ " Default duration to show one slide.\n"
+#~ " "
+#~ msgstr ""
+#~ "\n"
+#~ " Dauer für ein Bild.\n"
+#~ " "
+
+#~ msgid "Preparing file(s) for %1"
+#~ msgstr "Bereite Datei(en) für %1 vor"
+
+#~ msgid " Making Slideshow"
+#~ msgstr " Erstelle Diaschau"
+
+#~ msgid "Slideshow plugin for KMediaFactory."
+#~ msgstr "Diaschauplugin für KMediaFactory."
+
+#~ msgid "KMediaFactory Slideshow"
+#~ msgstr "KMediaFactory Diaschau"
+

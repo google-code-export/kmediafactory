@@ -1,0 +1,559 @@
+# translation of kmediafactory_video.po to
+# This file is put in the public domain.
+#
+# Caio Begotti <caio@ueberalles.net>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmediafactory_video\n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
+"PO-Revision-Date: 2006-05-01 11:21-0300\n"
+"Last-Translator: Caio Begotti <caio@ueberalles.net>\n"
+"Language-Team:  <en@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.2\n"
+
+#: chapters.cpp:105
+msgid "Name"
+msgstr "Nome"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 254
+#: chapters.cpp:107 rc.cpp:45
+msgid "Start"
+msgstr "Iniciar"
+
+#: chapters.cpp:109
+msgid "Length"
+msgstr "Tamanho"
+
+#: chapters.cpp:126
+#, fuzzy
+msgid "Add chapters"
+msgstr "&Auto capíitulos"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 19
+#: chapters.cpp:145 rc.cpp:27
+msgid "Chapters"
+msgstr "Capítulos"
+
+#: chapters.cpp:319
+msgid "&Delete all"
+msgstr "&Deletar todos"
+
+#: chapters.cpp:320
+msgid "&Rename all"
+msgstr "&Renomear todos"
+
+#: chapters.cpp:321
+msgid "&Auto chapters"
+msgstr "&Auto capíitulos"
+
+#: chapters.cpp:322
+msgctxt "Import chapter file"
+msgid "&Import"
+msgstr ""
+
+#: chapters.cpp:333
+#, fuzzy
+msgid "Rename All"
+msgstr "&Renomear todos"
+
+#: chapters.cpp:354
+#, fuzzy
+msgid "Auto chapters"
+msgstr "&Auto capíitulos"
+
+#: chapters.cpp:437
+msgid "You should have atleast one chapter."
+msgstr "Você precisa ter pelo menos um capítulo."
+
+#. i18n: tag string
+#. i18n: file addchapter.ui line 13
+#. i18n: tag string
+#. i18n: file autochapters.ui line 13
+#: rc.cpp:3 rc.cpp:15
+msgid "KMediaFactory"
+msgstr "KMediaFactory"
+
+#. i18n: tag string
+#. i18n: file addchapter.ui line 31
+#: rc.cpp:6
+msgid "&Name:"
+msgstr "&Nome:"
+
+#. i18n: tag string
+#. i18n: file addchapter.ui line 51
+#: rc.cpp:9
+msgid "&Position:"
+msgstr "&Posição:"
+
+#. i18n: tag string
+#. i18n: file addchapter.ui line 70
+#. i18n: tag string
+#. i18n: file autochapters.ui line 54
+#: rc.cpp:12 rc.cpp:24
+msgid "hh:mm:ss"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file autochapters.ui line 31
+#: rc.cpp:18
+#, fuzzy
+msgid "&Name (Use # for digit):"
+msgstr "&Nome (use %1 para dígitos):"
+
+#. i18n: tag string
+#. i18n: file autochapters.ui line 44
+#: rc.cpp:21
+msgid "&Interval:"
+msgstr "&Intervalo:"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 54
+#: rc.cpp:30
+msgid "&Chapters:"
+msgstr "&Capítulos:"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 131
+#. i18n: tag string
+#. i18n: file videooptions.ui line 217
+#: rc.cpp:33 rc.cpp:153
+msgid "Add"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 147
+#. i18n: tag string
+#. i18n: file videooptions.ui line 227
+#: rc.cpp:36 rc.cpp:156
+msgid "Remove"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 210
+#: rc.cpp:39
+msgid "&Use as Custom Preview"
+msgstr "&Usar como preview personalizado"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 213
+#. i18n: tag string
+#. i18n: file videoconfig.ui line 66
+#: rc.cpp:42 rc.cpp:123
+msgid "Alt+U"
+msgstr "Alt+U"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 267
+#: rc.cpp:48
+msgid "Rewind"
+msgstr "Voltar"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 280
+#: rc.cpp:51
+msgid "Previous frame"
+msgstr "Quadro anterior"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 293
+#: rc.cpp:54
+msgid "Next frame"
+msgstr "Próximo quadro"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 306
+#: rc.cpp:57
+msgid "Forward"
+msgstr "Avançar"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 319
+#: rc.cpp:60
+msgid "End"
+msgstr "Fim"
+
+#. i18n: tag string
+#. i18n: file chapters.ui line 334
+#: rc.cpp:63
+msgid "00:00"
+msgstr "00:00"
+
+#. i18n: tag string
+#. i18n: file languageselection.ui line 13
+#: rc.cpp:66
+#, fuzzy
+msgid "Select language"
+msgstr "Seleção de língua"
+
+#. i18n: tag string
+#. i18n: file languageselection.ui line 31
+#: rc.cpp:69
+msgid "La&nguages:"
+msgstr "Lí&nguas:"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 13
+#: rc.cpp:72 subtitleoptions.cpp:36
+msgid "Subtitle options"
+msgstr "Opções de legenda"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 31
+#: rc.cpp:75
+msgid "La&nguage:"
+msgstr "Lí&ngua:"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 47
+#: rc.cpp:78
+msgid "Su&btitle File:"
+msgstr "Arquivo de legenda:"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 63
+#: rc.cpp:81
+msgid "Subtitle Font:"
+msgstr "Fonte de legenda:"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 86
+#: rc.cpp:84
+msgid "Hori&zontal Alignment:"
+msgstr "Alinhamento hori&zontal:"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 103
+#: rc.cpp:87
+msgid "Default"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 108
+#: rc.cpp:90
+#, fuzzy
+msgid "Left"
+msgstr "Tamanho"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 113
+#: rc.cpp:93
+msgid "Right"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 118
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 153
+#: rc.cpp:96 rc.cpp:108
+msgid "Center"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 126
+#: rc.cpp:99
+msgid "Vertical &Alignment"
+msgstr "&Alinhamento vertical:"
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 143
+#: rc.cpp:102
+msgid "Top"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file subtitleoptions.ui line 148
+#: rc.cpp:105
+msgid "Bottom"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file videoconfig.ui line 13
+#: rc.cpp:111
+msgid "Configure Video Plugin"
+msgstr "Configurar plugin de vídeo"
+
+#. i18n: tag string
+#. i18n: file videoconfig.ui line 31
+#: rc.cpp:114
+msgid "Default &Audio Language:"
+msgstr "Áudio de língu&a padrão:"
+
+#. i18n: tag string
+#. i18n: file videoconfig.ui line 47
+#: rc.cpp:117
+msgid "Default Subtitle Lan&guage:"
+msgstr "Legenda de lín&gua padrão:"
+
+#. i18n: tag string
+#. i18n: file videoconfig.ui line 63
+#: rc.cpp:120
+msgid "&Use Image Cache"
+msgstr "&Usar cache de imagem"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 13
+#: rc.cpp:126 videooptions.cpp:65
+msgid "Video Options"
+msgstr "Opções de vídeo"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 31
+#: rc.cpp:129
+msgid "Tit&le:"
+msgstr "Títu&lo:"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 47
+#: rc.cpp:132
+msgid "Custom &preview:"
+msgstr "Preview &personalizado:"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 63
+#: rc.cpp:135
+msgid "&Aspect ratio:"
+msgstr "Proporção visu&al:"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 77
+#: rc.cpp:138
+msgid "4:3"
+msgstr "4:3"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 82
+#: rc.cpp:141
+msgid "16:9"
+msgstr "16:9"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 90
+#: rc.cpp:144
+msgid "Audio Trac&ks:"
+msgstr "Trilhas de áudio:"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 140
+#. i18n: tag string
+#. i18n: file videooptions.ui line 237
+#. i18n: tag string
+#. i18n: file videooptions.ui line 300
+#: rc.cpp:147 rc.cpp:159 rc.cpp:165
+#, fuzzy
+msgid "Properties"
+msgstr "&Propriedades"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 170
+#: rc.cpp:150
+#, fuzzy
+msgid "Subtitles:"
+msgstr "Arquivos de legendas"
+
+#. i18n: tag string
+#. i18n: file videooptions.ui line 290
+#: rc.cpp:162
+msgid "xx"
+msgstr "xx"
+
+#: subtitleoptions.cpp:67
+msgid "Subtitle files"
+msgstr "Arquivos de legendas"
+
+#: subtitleoptions.cpp:68
+msgid "All files"
+msgstr "Todos os arquivos"
+
+#: subtitleoptions.cpp:116
+msgid "Subtitle file does not exists."
+msgstr "Arquivo de legenda não existe."
+
+#: videoobject.cpp:50 videoobject.cpp:68
+#, fuzzy, kde-format
+msgid "Subtitles for: %1"
+msgstr "Legendas:"
+
+#: videoobject.cpp:91
+#, fuzzy
+msgid "Conversion error."
+msgstr "   Erro na conversão."
+
+#: videoobject.cpp:178
+msgid "&Properties"
+msgstr "&Propriedades"
+
+#: videoobject.cpp:186
+#, fuzzy
+msgid "&Play Video"
+msgstr "Tocar vídeo"
+
+#: videoobject.cpp:592
+#, kde-format
+msgid "Video: %1"
+msgstr ""
+
+#: videoobject.cpp:629
+#, fuzzy, kde-format
+msgid "Subtitle conversion seems to be up to date for %1"
+msgstr "   A conversão da legenda parece estar pronta"
+
+#: videoobject.cpp:790
+#, kde-format
+msgid "Chapter %1"
+msgstr "Capítulo %1"
+
+#: videoobject.cpp:912
+msgid "Make DVD"
+msgstr "Criar DVD"
+
+#: videoobject.cpp:913
+msgid "Make preview DVD with dummy videos"
+msgstr "Criar preview de DVD com vídeos nulos"
+
+#: videooptions.cpp:43
+#, fuzzy
+msgid "Select Language"
+msgstr "Seleção de língua"
+
+#: videooptions.cpp:209
+#, fuzzy, kde-format
+msgid "Video has 1 chapter"
+msgid_plural "Video has %1 chapters"
+msgstr[0] "Vídeo tem %1 capítulo(s)"
+msgstr[1] "Vídeo tem %1 capítulo(s)"
+
+#: videoplugin.cpp:70
+msgid "Video plugin"
+msgstr "Plugin de vídeo"
+
+#: videoplugin.cpp:78
+msgid "Add Video"
+msgstr "Adicionar Vídeo"
+
+#: videoplugin.cpp:117
+msgid "Multiple files make multiple titles."
+msgstr "Múltiplos arquivos geram múltiplos títulos."
+
+#: videoplugin.cpp:120
+msgid "Open"
+msgstr ""
+
+#: videoplugin.cpp:139
+msgid "Cannot add directory."
+msgstr "Não foi possível adicionar o diretório."
+
+#: videoplugin.cpp:147
+#, kde-format
+msgid "Couldn't add file: %1"
+msgstr "Não foi possível adicionar o arquivo(s): %1"
+
+#~ msgid ""
+#~ "_: NAME OF TRANSLATORS\n"
+#~ "Your names"
+#~ msgstr "Caio Begotti"
+
+#~ msgid ""
+#~ "_: EMAIL OF TRANSLATORS\n"
+#~ "Your emails"
+#~ msgstr "caio@ueberalles.net"
+
+#~ msgid "Import chapter file"
+#~ msgstr "Importar arquivo de capítulo"
+
+#~ msgid "Alt+O"
+#~ msgstr "Alt+O"
+
+#~ msgid "Alt+C"
+#~ msgstr "Alt+C"
+
+#~ msgid "C&ancel"
+#~ msgstr "C&ncelar"
+
+#~ msgid "Alt+A"
+#~ msgstr "Alt+A"
+
+#~ msgid "Ca&ncel"
+#~ msgstr "Ca&ncelar"
+
+#~ msgid "Alt+N"
+#~ msgstr "Alt+N"
+
+#~ msgid "Conversion Params"
+#~ msgstr "Parâmetroa de conversão"
+
+#~ msgid "Higher qualit&y encoding (Two pass)"
+#~ msgstr "Codificação de alta qual&idade (passo duplo)"
+
+#~ msgid "Alt+Y"
+#~ msgstr "Alt+I"
+
+#~ msgid "Video &bitrate:"
+#~ msgstr "&Bitrate do vídeo:"
+
+#~ msgid "0"
+#~ msgstr "0"
+
+#~ msgid "kb/s"
+#~ msgstr "kb/s"
+
+#~ msgid "Audio &type:"
+#~ msgstr "&Tipo do áudio:"
+
+#~ msgid "AC3"
+#~ msgstr "AC3"
+
+#~ msgid "MP2"
+#~ msgstr "MP2"
+
+#~ msgid "PCM"
+#~ msgstr "PCM"
+
+#~ msgid "&Audio bitrate:"
+#~ msgstr "Bitr&ate do áudio:"
+
+#~ msgid ""
+#~ "Save preview pictures in menu dir. Usefull when making\n"
+#~ "same DVD multiple times (testing)."
+#~ msgstr ""
+#~ "Salvar fotos do preview no diretório do menu. Útil ao se criar\n"
+#~ "o mesmo DVD várias vezes (para teste)."
+
+#~ msgid "Black frame detection offset"
+#~ msgstr "Offset de detecção de um quadro vazio"
+
+#~ msgid "Use this as a default audio language for new files."
+#~ msgstr "Use isso como áudio de língua padrão para novos arquivos."
+
+#~ msgid ""
+#~ "Use this as a default subtitle language for new\n"
+#~ "                 subtitles."
+#~ msgstr ""
+#~ "Use isso como legenda de língua padrão para novas\n"
+#~ "                 legendas."
+
+#~ msgid "   Converting %1 to DVD format%2"
+#~ msgstr "   Convertendo %1 para formato de DVD %2"
+
+#~ msgid "   Conversion of %1 seems to be up to date"
+#~ msgstr "   A conversão de %1 parece estar atualizada agora"
+
+#~ msgid "   Adding subtitles to %1"
+#~ msgstr "   Adicionando legendas em %1"
+
+#~ msgid "Preparing file(s) for %1"
+#~ msgstr "Preparando arquivo(s) para %1"
+
+#~ msgid "Video %1kb/s, Audio %2kb/s"
+#~ msgstr "Vídeo %1kb/s, Áudio %2kb/s"
+
+#~ msgid "Video plugin for KMediaFactory."
+#~ msgstr "Plugin de vídeo do KMediaFactory."
+
+#~ msgid "KMediaFactory Video"
+#~ msgstr "Vídeo do KMediaFactory"

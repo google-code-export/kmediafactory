@@ -1,0 +1,292 @@
+# translation of kmediafactory_output.po to German
+# This file is put in the public domain.
+#
+# FIRST AUTHOR <Lummi@in-4-matik.de>, YEAR.
+# Christoph Lumme <lummi@in-4-matik.de>, 2006.
+# Pavel Fric <pavelfric@seznam.cz>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmediafactory_output\n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
+"PO-Revision-Date: 2009-04-17 21:58+0200\n"
+"Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: dvdauthorobject.cpp:33
+msgid "DVD Author XML file"
+msgstr "DVD Author XML soubor"
+
+#: dvdauthorobject.cpp:56
+#, kde-format
+msgid ""
+"\n"
+"**********************************************************************\n"
+"\n"
+"This file was made with %1 - %2\n"
+"http://www.iki.fi/damu/software/kmediafactory/\n"
+"\n"
+"**********************************************************************\n"
+"\n"
+"Register usage:\n"
+"================\n"
+"g0: Playing chapter saved here.\n"
+"g1: Play this chapter when entering titleset menu. 0 == show menu.\n"
+" Also used by Back button.\n"
+"g2: Used vmgm button is saved here\n"
+"g3: Jump to this titleset. Also used for direct play.\n"
+"g4: Used titleset button is saved here\n"
+"g5: vmgm page is saved here\n"
+"g6: titleset page is saved here\n"
+"g7: temporary variable\n"
+"\n"
+"**********************************************************************\n"
+msgstr ""
+"\n"
+"**********************************************************************\n"
+"\n"
+"Tento soubor byl vytvořen %1 - %2\n"
+"http://www.iki.fi/damu/software/kmediafactory/\n"
+"\n"
+"**********************************************************************\n"
+"\n"
+"Užití rejstříků:\n"
+"================\n"
+"g0: Přehrávaná kapitola uložena zde.\n"
+"g1: Přehrávat tuto kapitolu při vstupu do menu s názvy. 0 == ukázat "
+"menu.\n"
+" Používáno rovněž tlačítkem Back.\n"
+"g2: Použité tlačítko vmgm je uloženo zde\n"
+"g3: Skočit do této sady názvů. Používá se i pro přímé přehrávání.\n"
+"g4: Použité tlačítko sady názvů je uloženo zde\n"
+"g5: vmgm stránka je uložena zde\n"
+"g6: Stránka sady názvů je uložena zde\n"
+"g7: dočasná proměnná\n"
+"\n"
+"**********************************************************************\n"
+
+#: dvdauthorobject.cpp:87
+#, kde-format
+msgid "Main menu for %1"
+msgstr "Hlavní menu pro %1"
+
+#: dvdauthorobject.cpp:134
+msgid "Error in saving dvdauthor.xml"
+msgstr "Selhalo ukládání dvdauthor.xml"
+
+#: dvdauthorobject.cpp:157
+msgid "DVDAuthor project"
+msgstr "DVDAuthor projekt"
+
+#: dvddirectoryobject.cpp:44 dvddirectoryobject.cpp:204
+msgid "DVD Directory"
+msgstr "Adresář DVD"
+
+#: dvddirectoryobject.cpp:124 dvddirectoryobject.cpp:135, kde-format
+msgid "Processing: %1"
+msgstr "Zpracovává se: %1"
+
+#: dvddirectoryobject.cpp:158, kde-format
+msgid "Fixing: %1"
+msgstr "Opravuje se: %1"
+
+#: dvddirectoryobject.cpp:206
+msgid "&Clean directory"
+msgstr "&Smazat obsah adresáře"
+
+#: dvddirectoryobject.cpp:262
+msgid "DVD Directory is up to date"
+msgstr "Adresář DVD je aktuální"
+
+#. i18n: tag string
+#. i18n: file dvdinfo.ui line 13
+#: dvdinfo.cpp:41 outputplugin.cpp:59 rc.cpp:3
+msgid "DVD Info"
+msgstr "DVD Informace"
+
+#: dvdinfo.cpp:66
+msgid "Analyzing DVD..."
+msgstr "Analyzuje se DVD..."
+
+#: dvdinfo.cpp:108
+msgid "DVD"
+msgstr "DVD"
+
+#: dvdinfo.cpp:109
+msgid "Titles"
+msgstr "Názvy"
+
+#: dvdinfo.cpp:110
+msgid "Longest title"
+msgstr "Nejdelší název"
+
+#: dvdinfo.cpp:113 dvdinfo.cpp:214
+msgid "Name"
+msgstr "Název"
+
+#: dvdinfo.cpp:114
+msgid "VMG Identifier"
+msgstr "VMG identifikátor"
+
+#: dvdinfo.cpp:115
+msgid "Provider indentifier"
+msgstr "Identifikátor poskytovatele"
+
+#: dvdinfo.cpp:121 dvdinfo.cpp:143
+msgid "Index"
+msgstr "Index"
+
+#: dvdinfo.cpp:122 dvdinfo.cpp:145
+msgid "Length"
+msgstr "Délka"
+
+#: dvdinfo.cpp:123
+msgid "VTS ID"
+msgstr "VTS ID"
+
+#: dvdinfo.cpp:124
+msgid "VTS"
+msgstr "VTS"
+
+#: dvdinfo.cpp:125
+msgid "TTN"
+msgstr "TTN"
+
+#: dvdinfo.cpp:126
+msgid "PGC"
+msgstr "PGC"
+
+#: dvdinfo.cpp:127 dvdinfo.cpp:146
+msgid "Start sector"
+msgstr "Počáteční sektor"
+
+#: dvdinfo.cpp:128 dvdinfo.cpp:147
+msgid "End sector"
+msgstr "Koncový sektor"
+
+#: dvdinfo.cpp:133
+msgid "Width"
+msgstr "Šířka"
+
+#: dvdinfo.cpp:134
+msgid "Height"
+msgstr "Výška"
+
+#: dvdinfo.cpp:135 dvdinfo.cpp:155
+msgid "Format"
+msgstr "Formát"
+
+#: dvdinfo.cpp:136
+msgid "Aspect ratio"
+msgstr "Poměr stran"
+
+#: dvdinfo.cpp:137
+msgid "Frames per second"
+msgstr "Snímků za sekundu"
+
+#: dvdinfo.cpp:138
+msgid "Permitted DF"
+msgstr "Povolený DF"
+
+#: dvdinfo.cpp:144
+msgid "Start"
+msgstr "Start"
+
+#: dvdinfo.cpp:148
+msgid "Is chapter"
+msgstr "Kapitola je"
+
+#: dvdinfo.cpp:149
+msgid "yes"
+msgstr "ano"
+
+#: dvdinfo.cpp:149
+msgid "no"
+msgstr "ne"
+
+#: dvdinfo.cpp:154 dvdinfo.cpp:166
+msgid "Language"
+msgstr "Jazyk"
+
+#: dvdinfo.cpp:156
+msgid "Channels"
+msgstr "Kanály"
+
+#: dvdinfo.cpp:157
+msgid "Sample frequency"
+msgstr "Vzorkovací kmitočet"
+
+#: dvdinfo.cpp:158
+msgid "Bitrate"
+msgstr "Datový tok"
+
+#: dvdinfo.cpp:159
+msgid "Quantization"
+msgstr "Kvantování"
+
+#: dvdinfo.cpp:160
+msgid "AP Mode"
+msgstr "AP režim"
+
+#: dvdinfo.cpp:161 dvdinfo.cpp:167
+msgid "Type"
+msgstr "Typ"
+
+#: dvdinfo.cpp:207
+msgid "Not a DVD."
+msgstr "Není DVD."
+
+#: dvdinfo.cpp:215
+msgid "Size"
+msgstr "Velikost"
+
+#: dvdinfo.cpp:255
+msgid "DVD files and directories"
+msgstr "DVD soubory a adresáře"
+
+#: k3bobject.cpp:37
+msgid "K3b project"
+msgstr "Projekt K3b"
+
+#: k3bobject.cpp:349
+#, kde-format
+msgid "%1 - Version %2"
+msgstr "%1 - Verze %2"
+
+#: k3bobject.cpp:436
+msgid "K3b Project"
+msgstr "Projekt K3b"
+
+#: outputplugin.cpp:67
+msgid "Preview DVD in Xine"
+msgstr "Náhled DVD v Xine"
+
+#: outputplugin.cpp:75
+msgid "Preview DVD in Kaffeine"
+msgstr "Náhled DVD v Kaffeine"
+
+#~ msgid "DVDAuthor project ready"
+#~ msgstr "DVDAuther Projekt erstellt"
+
+#~ msgid "Making DVD Directory"
+#~ msgstr "DVD Verzeichnis erstellen"
+
+#~ msgid "DVD Directory ready"
+#~ msgstr "DVD Verzeichnis erstellt"
+
+#~ msgid "K3b project ready"
+#~ msgstr "K3b Projekt erstellt"
+
+#~ msgid "Output plugin for KMediaFactory."
+#~ msgstr "Ausgabeplugin für KMediaFactory."
+
+#~ msgid "KMediaFactory Output"
+#~ msgstr "KMediaFactory Ausgabe"
+
+#~ msgid "Preview DVD"
+#~ msgstr "DVD Vorschau"

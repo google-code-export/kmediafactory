@@ -1,0 +1,43 @@
+#/bin/bash
+
+echo "NOTE: This is not proper configure script. It is just a helper script"
+echo "for cmake."
+echo ""
+
+if [ "$1" != "" ]; then
+  echo "Cannot handle any parameters."
+  exit 1
+fi
+
+if [ -d build ]; then
+  rm build/* -fR
+else
+  mkdir build
+fi
+
+cd build
+
+CONFIG=`which kde4-config`
+if [ "$CONFIG" == "" ]; then
+  CONFIG="/usr/lib/kde4/bin/kde4-config"
+fi
+
+KDE4_PREFIX=`$CONFIG --prefix`
+if [ "$KDE4_PREFIX" == "" ]; then   # We don't handle any parameters
+  echo "Cannot find KDE4."
+  exit 1
+fi
+
+echo "running cmake..."
+
+cmake -DCMAKE_INSTALL_PREFIX="$KDE4_PREFIX" ..
+
+echo ""
+echo "KMediaFactory is going to be installed to: $KDE4_PREFIX"
+echo ""
+echo "OK you are now ready to build and install KMediaFactory"
+echo "$ cd build"
+echo "$ make"
+echo "$ sudo make install"
+echo "$ kbuildsycoca4"
+echo "$ kmediafactory"

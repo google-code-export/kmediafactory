@@ -1,0 +1,13 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="kmediafactory-video" version="1">
+  <MenuBar>
+    <Menu name="media">
+      <Action name="video" />
+    </Menu>
+  </MenuBar>
+  <!--
+  <ToolBar name="mediaButtons">
+    <Action name="video"/>
+  </ToolBar>
+  -->
+</kpartgui>

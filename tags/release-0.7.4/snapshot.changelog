@@ -1,0 +1,26 @@
+CHANGED FROM THE LATEST MAJOR RELEASE (0.6.0)
+=============================================
+Features:
+- Full python/ruby(kross) plugins
+- Job based processing (Multi core/processor support)
+
+CHANGED FROM THE PREVIOUS MINOR RELEASE (0.7.3)
+================================================
+Features:
+- 
+
+Bug fixes:
+- fix kross plugin
+
+
+# Dependencies (ubuntu package naming):                                       #
+# =========================================================================== #
+# Build:                  Runtime:                 Optional:                  #
+# --------------------------------------------------------------------------- #
+# g++                     kdelibs5                 k3b                        #
+# make                    ffmpeg                   libdvdread3(-dev)          #
+# cmake                   mplayer                  dvd-slideshow              #
+# zip                     mjpegtools               openoffice.org             #
+# gettext                 dvdauthor                kaffeine                   #
+# kdelibs5-dev                                     xine-ui                    #
+# --------------------------------------------------------------------------- #
