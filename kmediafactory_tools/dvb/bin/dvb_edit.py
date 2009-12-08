@@ -20,52 +20,66 @@
 #   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #**************************************************************************
 
-from kmediafactory import uiInterface, projectInterface
 import os
-from popen2 import Popen4
+from subprocess import *
 import time
+import kmediafactory
 
 APP = 'KMediaFactory'
+PATHS = ['/usr/share/', '/usr/local/share/', '/opt/projectx/']
+SUB_PATHS = ['java', 'projectx', '']
 
 class DVBPlugin:
     def __init__(self):
-        uiInterface().addMediaAction('video-television', # Icon
-                                     'Add DV&B',         # Text
-                                     'Ctrl+B',           # Shortcut
-                                     'dvb_edit',         # Name
-                                     self,               # Object
-                                     'edit'              # Method
+        self.kmf = kmediafactory.interface()
+        action = self.kmf.newAction('dvb_edit',         # Name
+                                    'video-television', # Icon
+                                    'Add DV&B',         # Text
+                                    'Ctrl+B',           # Shortcut
+                                    self,               # Object
+                                    'edit'              # Method
         )
+        self.kmf.addMediaAction(action)
+
+    def initPlugin(self, projectType):
+        self.kmf = kmediafactory.interface()
+        self.kmf.setActionEnabled('dvb_edit', projectType[:3] == 'DVD')
 
     def run(self, cmd):
-        uiInterface().debug(cmd)
-        pipe = Popen4(cmd)
-        result = pipe.wait()
-        output = pipe.fromchild.read()
-        return(result, output.strip())
+        self.kmf.debug(cmd)
+        process = Popen([cmd], shell = True, stdin = PIPE, stdout = PIPE, bufsize = 512 * 1024,
+                        close_fds = True, stderr = STDOUT)
+        process.wait()
+        output = process.stdout.read().strip()
+        self.kmf.debug(output)
+        return (process.returncode, output)
 
     def projectx(self):
         result = self.run('which projectx')
         if result[0] == 0:
             return result[1]
+        for path in PATHS:
+            for sub in SUB_PATHS:
+                bin = os.path.join(path, sub, 'ProjectX.jar')
+                if os.path.exists(bin):
+                    return 'java -jar ' + bin
         result = self.run('locate ProjectX.jar')
         if result[0] == 0:
             return 'java -jar ' + result[1]
-        if os.path.exists('/usr/share/projectx/ProjectX.jar'):
-            return 'java -jar /usr/share/projectx/ProjectX.jar'
         return 'java -jar ProjectX.jar'
 
     def edit(self):
-        ts_files = uiInterface().getOpenFileNames('KMF_DVB',
-                                                  '*.ts *.ps *.mpg *.mpeg|Mpeg files',
-                                                  'Add DVB file')
+        ts_files = self.kmf.getOpenFileNames('KMF_DVB',
+                                             '*.ts *.ps *.mpg *.mpeg *.m2p|Mpeg files',
+                                             'Add DVB file')
 
         if len(ts_files) != 0:
             files = ''
             for f in ts_files:
                 files += '"' + f + '" '
-            projectDir = projectInterface().projectDir('media')
+            projectDir = self.kmf.projectDir('media')
             result = self.run(self.projectx() + ' -gui ' + files + ' -out "' + projectDir + '"')
+            #result = run(projectx() + " -gui '" + ' '.join(ts_files) + "' -out" + projectDir)
             if result[0] == 0:
                 base = os.path.splitext(os.path.basename(ts_files[0]))[0]
                 input_audio_ac3 = projectDir + base + '.ac3'
@@ -80,16 +94,16 @@ class DVBPlugin:
                 try:
                     size = os.path.getsize(input_audio) + os.path.getsize(input_video)
                 except:
-                    uiInterface().messageBox(APP, 'Making %s failed.' % output,
-                                             kmediafactory.Error)
+                    self.kmf.messageBox(APP, 'Making %s failed.' % output, kmediafactory.Error)
                     return
-                dlg = uiInterface().progressDialog(APP, 'Making %s...' % output,
-                                                   (size / 1024))
+                dlg = self.kmf.progressDialog(APP, 'Making %s...' % output, (size / 1024))
 
                 cmd = 'mplex -f 8 -o "' + output + '" "' + input_video + '" "' + \
                       input_audio + '"'
-                pipe = Popen4(cmd)
+                self.kmf.debug(cmd)
+                process = Popen([cmd], shell = True, close_fds = True)
                 while True:
+                    n = 0
                     time.sleep(0.25)
                     try:
                         size = os.path.getsize(output) / 1024
@@ -97,25 +111,24 @@ class DVBPlugin:
                         size = 0
                     dlg.setValue(size)
                     if dlg.wasCancelled():
-                        os.kill(pipe.pid)
+                        self.kmf.debug('Cancelled')
+                        process.kill()
                         break
-                    n = pipe.poll()
-                    if n != -1:
+                    n = process.poll()
+                    if n != None:
+                        self.kmf.debug('Stopped')
                         break
                 dlg.close()
                 if n == 0:
                     xml = '<media plugin="KMFImportVideo" object="video">' + \
                           '<video><file path="' + output + '"></video></media>'
-                    uiInterface().addMediaObjectFromXML(xml)
+                    self.kmf.addMediaObjectFromXML(xml)
                 else:
-                    uiInterface().messageBox(APP, 'Making %s failed.' % output,
+                    self.kmf.messageBox(APP, 'Making %s failed.' % output,
                                              kmediafactory.Error)
             else:
-                uiInterface().messageBox(APP, 'Running ProjectX failed.',
+                self.kmf.messageBox(APP, 'Running ProjectX failed.',
                                          kmediafactory.Error)
-
-    def initPlugin(self, projectType):
-        uiInterface().setActionEnabled('dvb_edit', projectType[:3] == 'DVD')
 
     def supportedProjectTypes(self):
         return ['DVD-PAL', 'DVD-NTSC']
