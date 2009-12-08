@@ -68,7 +68,6 @@ KrossPlugin::~KrossPlugin()
 void KrossPlugin::init(const QString &type)
 {
   kDebug() << type;
-  deleteChildren();
 
   if (m_plugin) {
     // init is reserved word in ?? well in some scripting language
