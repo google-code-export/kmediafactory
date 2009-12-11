@@ -1,16 +1,11 @@
-CHANGED FROM THE LATEST MAJOR RELEASE (0.6.0)
-=============================================
-Features:
-- Full python/ruby(kross) plugins
-- Job based processing (Multi core/processor support)
+CHANGED IN RELEASE 0.7.5
+=========================
 
-CHANGED FROM THE PREVIOUS MINOR RELEASE (0.7.3)
-================================================
 Features:
-- 
+- Add combobox for subtitle encoding
 
 Bug fixes:
-- fix kross plugin
+- Fix K3b plugin crash
 
 
 # Dependencies (ubuntu package naming):                                       #
