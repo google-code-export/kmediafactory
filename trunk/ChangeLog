@@ -1,8 +1,56 @@
-2007-07-15 Petri Damstén <petri.damsten@iki.fi>
+2009-12-11 Petri Damstén <petri.damsten@iki.fi>
 
-  * Version 0.5.3 released
-  * Internal ffmpeg removed
-  * Transparency fixed (>= ImageMagick 6.2.9)
+  * Version 0.7.5 released
+  * Fix K3b plugin crash
+  * Add combobox for subtitle encoding
+
+2009-12-08 Petri Damstén <petri.damsten@iki.fi>
+
+  * Version 0.7.4 released
+  * fix kross plugin
+
+2009-12-07 Petri Damstén <petri.damsten@iki.fi>
+
+  * Version 0.7.3 released
+  * svg support
+  * fix template properties dialogs
+  * Use our own default background
+
+2009-04-30 Petri Damstén <petri.damsten@iki.fi>
+
+  * Version 0.7.2 released
+  * Phonon player in chapters dialog
+  * Czech translation
+  * don't make enormous log files
+  * fix properties icon
+  * remove avi mov from file dialog (not supported)
+  * fix mem leak in image viewer
+  * fix chapter name editing
+  * fix configure helper script
+
+2009-04-07 Petri Damstén <petri.damsten@iki.fi>
+
+  * Version 0.7.1 released
+  * Build fix
+  * Fix package
+
+2009-03-31 Petri Damstén <petri.damsten@iki.fi>
+
+  * Version 0.7.0 released
+  * Full python/ruby(kross) plugins
+  * Job based processing (Multi core/processor support)
+
+2008-02-07 Petri Damstén <petri.damsten@iki.fi>
+
+  * Version 0.6.0 released
+  * KDE4 port
+  * video conversion removed
+  * dv import removed
+  * own video player removed
+  * ImageMagick dependency removed
+  * Uses command line FFMpeg (instead of linking to library)
+  * AC3/MP2 option for slideshow
+  * Scale template preview menu option
 
 2006-06-19 Petri Damstén <petri.damsten@iki.fi>
 
