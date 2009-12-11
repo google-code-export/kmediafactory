@@ -1,0 +1,814 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SubtitleOptions</class>
+ <widget class="QWidget" name="SubtitleOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>357</width>
+    <height>192</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Subtitle options</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="languageLabel">
+     <property name="text">
+      <string>Language:</string>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+     <property name="buddy">
+      <cstring>languageCombo</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="subtitleFileLabel">
+     <property name="text">
+      <string>Subtitle File:</string>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+     <property name="buddy">
+      <cstring>subtitleUrl</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="KUrlRequester" name="subtitleUrl">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="encodingLabel">
+     <property name="text">
+      <string>Encoding:</string>
+     </property>
+     <property name="buddy">
+      <cstring>encodingCombo</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="KComboBox" name="encodingCombo">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>64</number>
+     </property>
+     <item>
+      <property name="text">
+       <string>ASCII</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-8859-1</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-8859-2</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-8859-3</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-8859-4</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-8859-5</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-8859-7</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-8859-9</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-8859-10</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-8859-13</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-8859-14</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-8859-15</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-8859-16</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>KOI8-R</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>KOI8-U</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>KOI8-RU</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP1250</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP1251</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP1252</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP1253</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP1254</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP1257</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP850</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP866</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP1131</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-8859-6</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-8859-8</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP1255</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP1256</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP862</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>EUC-JP</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>SHIFT_JIS</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP932</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-2022-JP</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-2022-JP-2</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-2022-JP-1</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>EUC-CN</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>HZ</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>GBK</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP936</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>GB18030</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>EUC-TW</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>BIG5</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP950</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>BIG5-HKSCS</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>BIG5-HKSCS:2001</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>BIG5-HKSCS:1999</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-2022-CN</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-2022-CN-EXT</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>EUC-KR</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP949</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-2022-KR</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>JOHAB</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ARMSCII-8</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>KOI8-T</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>PT154</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>RK1048</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-8859-11</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>TIS-620</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP874</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP1133</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>VISCII</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>TCVN</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP1258</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>UTF-8</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>UCS-2</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>UCS-2BE</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>UCS-2LE</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>UCS-4</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>UCS-4BE</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>UCS-4LE</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>UTF-16</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>UTF-16BE</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>UTF-16LE</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>UTF-32</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>UTF-32BE</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>UTF-32LE</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>UTF-7</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>C99</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>JAVA</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP437</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP737</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP775</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP852</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP853</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP855</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP857</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP858</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP860</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP861</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP863</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP865</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP869</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP1125</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CP864</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>EUC-JISX0213</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>SHIFT_JISX0213</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ISO-2022-JP-3</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>TDS565</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CSWINDOWS31J</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>WINDOWS-31J</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>WINDOWS-874</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>WINDOWS-936</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>WINDOWS-1250</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>WINDOWS-1251</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>WINDOWS-1252</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>WINDOWS-1253</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>WINDOWS-1254</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>WINDOWS-1255</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>WINDOWS-1256</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>WINDOWS-1257</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>WINDOWS-1258</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="subtitleFontLabel">
+     <property name="text">
+      <string>Subtitle Font:</string>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+     <property name="buddy">
+      <cstring>subtitleFontChooser</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="KMFFontChooser" name="subtitleFontChooser" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::TabFocus</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="horizontalLabel">
+     <property name="text">
+      <string>Horizontal Alignment:</string>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+     <property name="buddy">
+      <cstring>horizontalAlignCombo</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QComboBox" name="horizontalAlignCombo">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>3</number>
+     </property>
+     <item>
+      <property name="text">
+       <string>Default</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Left</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Right</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Center</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="verticalLabel">
+     <property name="text">
+      <string>Vertical Alignment:</string>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+     <property name="buddy">
+      <cstring>verticalAlignCombo</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QComboBox" name="verticalAlignCombo">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <item>
+      <property name="text">
+       <string>Top</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Bottom</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Center</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <spacer>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>16</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="1">
+    <widget class="QComboBox" name="languageCombo">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+ <pixmapfunction>BTN_ICON</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>KUrlRequester</class>
+   <extends>QFrame</extends>
+   <header>kurlrequester.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KMFFontChooser</class>
+   <extends>QWidget</extends>
+   <header>kmffontchooser.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>languageCombo</tabstop>
+  <tabstop>subtitleUrl</tabstop>
+  <tabstop>encodingCombo</tabstop>
+  <tabstop>subtitleFontChooser</tabstop>
+  <tabstop>horizontalAlignCombo</tabstop>
+  <tabstop>verticalAlignCombo</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

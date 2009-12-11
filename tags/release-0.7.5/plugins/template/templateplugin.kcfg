@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0 http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile name="kmediafactory_templatepluginrc"/>
+  <group name="template">
+      <entry name="DefaultMenuLanguage" type="String">
+          <label>Use this as a default menu language for new projects.</label>
+          <default>en</default>
+      </entry>
+  </group>
+  <group name="debug">
+      <entry name="widgetDebug" type="Bool">
+          <label>Debug widgets. Draws rectangles in menu pictures.</label>
+          <default>false</default>
+      </entry>
+      <entry name="widgetDebugImage" type="Bool">
+          <label>Image debug. Blue rectangle.</label>
+          <default>false</default>
+      </entry>
+      <entry name="widgetDebugLabel" type="Bool">
+          <label>Label debug. Red rectangle.</label>
+          <default>false</default>
+      </entry>
+      <entry name="widgetDebugFrame" type="Bool">
+          <label>Frame debug. Green rectangle.</label>
+          <default>false</default>
+      </entry>
+      <entry name="widgetDebugButton" type="Bool">
+          <label>Button debug. Yellow rectangle.</label>
+          <default>false</default>
+      </entry>
+      <entry name="widgetDebugBox" type="Bool">
+          <label>Box debug. White rectangle.</label>
+          <default>false</default>
+      </entry>
+      <entry name="widgetDebugWidget" type="Bool">
+          <label>Widget debug. Gray rectangle.</label>
+          <default>false</default>
+      </entry>
+      <entry name="widgetDebugInfo" type="Bool">
+          <label>Print debug information from widget. </label>
+          <default>false</default>
+      </entry>
+      <entry name="withMargin" type="Bool">
+          <label>Draw also margin.</label>
+          <default>false</default>
+      </entry>
+  </group>
+</kcfg>

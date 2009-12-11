@@ -1,0 +1,21 @@
+CHANGED IN RELEASE 0.7.5
+=========================
+
+Features:
+- Add combobox for subtitle encoding
+
+Bug fixes:
+- Fix K3b plugin crash
+
+
+# Dependencies (ubuntu package naming):                                       #
+# =========================================================================== #
+# Build:                  Runtime:                 Optional:                  #
+# --------------------------------------------------------------------------- #
+# g++                     kdelibs5                 k3b                        #
+# make                    ffmpeg                   libdvdread3(-dev)          #
+# cmake                   mplayer                  dvd-slideshow              #
+# zip                     mjpegtools               openoffice.org             #
+# gettext                 dvdauthor                kaffeine                   #
+# kdelibs5-dev                                     xine-ui                    #
+# --------------------------------------------------------------------------- #
