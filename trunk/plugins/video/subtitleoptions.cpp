@@ -36,6 +36,7 @@ SubtitleOptions::SubtitleOptions(QWidget *parent)
   setCaption(i18n("Subtitle options"));
   m_languageModel.useAllLanguages();
   languageCombo->setModel(&m_languageModel);
+  encodingCombo->model()->sort(0);
 }
 
 SubtitleOptions::~SubtitleOptions()
@@ -52,6 +53,7 @@ void SubtitleOptions::getData(QDVD::Subtitle& obj) const
   obj.setLanguage(m_languageModel.at(n));
   obj.setFile(subtitleUrl->url().pathOrUrl());
   obj.setFont(subtitleFontChooser->font());
+  obj.setEncoding(encodingCombo->currentText());
 
   align =  ver[verticalAlignCombo->currentIndex()];
   align |= hor[horizontalAlignCombo->currentIndex()];
@@ -70,6 +72,7 @@ void SubtitleOptions::setData(const QDVD::Subtitle& obj)
   languageCombo->setCurrentIndex(i.row());
   subtitleUrl->setUrl(obj.file());
   subtitleFontChooser->setFont(obj.font());
+  encodingCombo->setCurrentIndex(encodingCombo->findText(obj.encoding()));
 
   switch(obj.alignment() & Qt::AlignVertical_Mask)
   {

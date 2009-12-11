@@ -68,7 +68,7 @@ public:
     message(msgId(), KMF::Start, i18n("Subtitles for: %1", QFileInfo(videoFile).fileName()));
 
     QStringList subtitleFiles = subtitle.file().split(";");
-  
+
     writeSpumuxXml();
     CHECK_IF_ABORTED();
 
@@ -79,7 +79,7 @@ public:
     spumux->setStandardOutputFile(videoFileWithSubtitles);
     spumux->setWorkingDirectory(mediaDir);
 
-    //kDebug() << "spumux" << "-P" << subtitleXmlFile << "<" << videoFile << 
+    //kDebug() << "spumux" << "-P" << subtitleXmlFile << "<" << videoFile <<
     //                                                   ">" << videoFileWithSubtitles;
     QFileInfo info(videoFile);
     setMaximum(msgId(), info.size() / 1024);
@@ -101,7 +101,7 @@ public:
     QDomElement root = doc.createElement("subpictures");
     QDomElement stream = doc.createElement("stream");
     QDomElement textsub = doc.createElement("textsub");
-  
+
     textsub.setAttribute("filename", subtitleFile);
     textsub.setAttribute("vertical-alignment", subtitle.verticalAlign());
     textsub.setAttribute("horizontal-alignment", subtitle.horizontalAlign());
@@ -110,6 +110,7 @@ public:
     textsub.setAttribute("top-margin", 30);
     textsub.setAttribute("bottom-margin", 40);
     textsub.setAttribute("movie-width", "720");
+    textsub.setAttribute("characterset", subtitle.encoding());
 
     if(type == "DVD-PAL")
     {
@@ -121,14 +122,14 @@ public:
       textsub.setAttribute("movie-fps", "29.97");
       textsub.setAttribute("movie-height", "478");
     }
-  
+
     QFont font(subtitle.font());
     QString fontFile = KMF::Tools::fontFile(font);
     if(!fontFile.isEmpty())
       textsub.setAttribute("font", checkFontFile(fontFile));
     if(subtitle.font().pointSize() > 0)
       textsub.setAttribute("fontsize", subtitle.font().pointSize());
-  
+
     stream.appendChild(textsub);
     root.appendChild(stream);
     doc.appendChild(root);
@@ -140,7 +141,7 @@ public:
   void output(const QString& line)
   {
     QRegExp bytes("INFO: (\\d+) bytes of data written");
-  
+
     if(bytes.indexIn(line) > -1)
     {
       qulonglong temp = bytes.cap(1).toULongLong();
@@ -157,7 +158,7 @@ public:
     QFileInfo fi(file);
     QDir dir(QDir::home().filePath(".spumux"));
     QFileInfo link(dir.absoluteFilePath(fi.fileName()));
-  
+
     if(!dir.exists())
       dir.mkdir(dir.path());
     //kDebug() << link.filePath() << " -> " << file;
@@ -320,6 +321,10 @@ bool VideoObject::fromXML(const QDomElement& element)
               }
               QDVD::Subtitle s;
               s.setFile(e2.attribute("file"));
+              QString encoding = e2.attribute("encoding");
+              if (!encoding.isEmpty()) {
+                s.setEncoding(encoding);
+              }
               s.setLanguage(e2.attribute("language",
                              VideoPluginSettings::defaultSubtitleLanguage()));
               QString a = e2.attribute("align",
@@ -405,6 +410,7 @@ void VideoObject::toXML(QDomElement* element) const
   {
     QDomElement e = doc.createElement("subtitle");
     e.setAttribute("language", (*it).language());
+    e.setAttribute("encoding", (*it).encoding());
     e.setAttribute("file", (*it).file());
     e.setAttribute("align", (int)(*it).alignment());
     QDomElement e2 = doc.createElement("font");
@@ -535,7 +541,7 @@ QVariant VideoObject::writeDvdAuthorXml(QVariantList args) const
 
   QString postString;
   int mobCount = interface()->mediaObjects().count();
-  if(titleset < mobCount && 
+  if(titleset < mobCount &&
      interface()->templateObject()->call("continueToNextTitle").toBool())
   {
     postString = QString(" g3 = %1 ; ").arg(titleset + 1);
@@ -547,7 +553,7 @@ QVariant VideoObject::writeDvdAuthorXml(QVariantList args) const
   pgc.appendChild(post);
 
   titles.appendChild(pgc);
-  
+
   QVariant result;
   result.setValue(titles);
   return result;
@@ -595,9 +601,9 @@ bool VideoObject::prepare(const QString& type)
   QString fileName;
 
   m_type = type;
-  if (type != "dummy") 
+  if (type != "dummy")
   {
-    foreach(const QDVD::Subtitle& subtitle, m_subtitles) 
+    foreach(const QDVD::Subtitle& subtitle, m_subtitles)
     {
       if(!subtitle.file().isEmpty())
       {
