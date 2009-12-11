@@ -335,9 +335,11 @@ QString Cell::toString() const
   return i18n("Cell: %1", start().toString());
 }
 
-Subtitle::Subtitle(QString langCode, QString file) :
-    m_langCode(langCode), m_file(file),
-    m_align(Qt::AlignCenter | Qt::AlignBottom)
+Subtitle::Subtitle(QString langCode, QString file)
+    : m_langCode(langCode)
+    , m_file(file)
+    , m_align(Qt::AlignCenter | Qt::AlignBottom)
+    , m_encoding("UTF-8")
 {
   m_font.setPointSize(28);
 }

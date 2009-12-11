@@ -155,6 +155,8 @@ namespace QDVD
       QString file() const { return m_file; };
       void setFont(QFont font) { m_font = font; };
       QFont font() const { return m_font; };
+      void setEncoding(const QString& encoding) { m_encoding = encoding; };
+      QString encoding() const { return m_encoding; };
       void setAlignment(Qt::Alignment align) { m_align = align; };
       Qt::Alignment alignment() const { return m_align; };
       QString verticalAlign() const;
@@ -171,6 +173,7 @@ namespace QDVD
       QString m_file;
       QFont   m_font;
       Qt::Alignment m_align;
+      QString m_encoding;
   };
 
   class KDE_EXPORT AudioTrack : public Track
