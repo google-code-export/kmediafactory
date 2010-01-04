@@ -4,9 +4,16 @@
 # Usage:
 # kmf_comment /media/photos/photo.jpg
 
-SCRIPTS=`dirname $0`
-. $SCRIPTS/tools
-
-EXIFTIME=`check_executable "exiftime" "exiftime"`
-
-$EXIFTIME -tc "$1" | sed "s/Image Created: //g"
+EXIFTIME=`which exiftime 2>/dev/null` 
+if [ $? -ne 0 ]; then
+    EXIV2=`which exiv2 2>/dev/null`
+    if [ $? -ne 0 ]; then
+        kdialog --caption "KMediaFactory" --icon kmediafactory $EMBED --sorry \
+           "Cannot continue because neither exiftime nor exiv2 were found from your system.\n\Please install one of these."
+        exit -1
+    else
+        $EXIV2 "$1" | grep "Image timestamp" | sed "s/Image timestamp : //g"
+    fi
+else
+    $EXIFTIME -tc "$1" | sed "s/Image Created: //g"
+fi
