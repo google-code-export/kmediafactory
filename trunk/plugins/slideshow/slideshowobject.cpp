@@ -110,11 +110,21 @@ public:
         *dvdslideshow << "-a" << audio;
       }
       dvdslideshow->setWorkingDirectory(mediaDir);
-      dvdslideshow->execute();
-  
-      if(dvdslideshow->exitCode() != QProcess::NormalExit || dvdslideshow->exitStatus() != 0)
+      int exitCode=dvdslideshow->execute();
+ 
+      switch(exitCode)
       {
-        message(msgId(), KMF::Error, i18n("Slideshow error."));
+        case -2:
+          message(msgId(), KMF::Error, i18n("Failed to start dvd-slideshow application."));
+          break;
+        case -1:
+          message(msgId(), KMF::Error, i18n("dvd-slideshow application crashed."));
+          break;
+        default:
+          if(dvdslideshow->exitCode() != QProcess::NormalExit || exitCode != 0)
+          {
+            message(msgId(), KMF::Error, i18n("Slideshow error (%1).").arg(exitCode));
+          }
       }
     }
     else
@@ -472,9 +482,9 @@ bool SlideshowObject::prepare(const QString& type)
     if(!uptodate)
     {
       SlideshowJob *job = new SlideshowJob(*this);
-      QString mediaDir = interface()->projectDir("media");
-      QString projectType = interface()->projectType();
-      QString dvdslideshowBin = static_cast<SlideshowPlugin*>(plugin())->dvdslideshowBin();
+      job->mediaDir = interface()->projectDir("media");
+      job->projectType = interface()->projectType();
+      job->dvdslideshowBin = static_cast<SlideshowPlugin*>(plugin())->dvdslideshowBin();
       interface()->setModified(KMF::Media);
       interface()->addJob(job);
     }
