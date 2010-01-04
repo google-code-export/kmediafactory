@@ -199,10 +199,10 @@ SlideshowObject::~SlideshowObject()
 {
 }
 
-SlideList SlideshowObject::slideList(QStringList list) const
+SlideList SlideshowObject::slideList(QStringList list, QWidget *parent) const
 {
   SlideList result;
-  KProgressDialog dlg(kapp->activeWindow());
+  KProgressDialog dlg(parent);
 
   dlg.progressBar()->setMinimum(0);
   dlg.progressBar()->setMaximum(0);
@@ -222,7 +222,7 @@ SlideList SlideshowObject::slideList(QStringList list) const
     if(fi.isDir())
     {
       KMessageBox::error(kapp->activeWindow(),
-                         i18n("Cannot add directory."));
+                         i18n("Cannot add folder."));
       continue;
     }
 
@@ -318,11 +318,11 @@ SlideList SlideshowObject::slideList(QStringList list) const
   return result;
 }
 
-void SlideshowObject::addPics(QStringList lst)
+void SlideshowObject::addPics(QStringList lst, QWidget *parent)
 {
   if(m_id.isEmpty())
     generateId();
-  m_slides = slideList(lst);
+  m_slides = slideList(lst, parent);
 }
 
 void SlideshowObject::generateId()

@@ -41,7 +41,7 @@
 #include <QPixmap>
 #include <limits.h>
 
-static const char startString[] = I18N_NOOP("DVD Directory");
+static const char startString[] = I18N_NOOP("DVD Folder");
 
 class DVDDirectoryJob : public KMF::Job
 {
@@ -201,9 +201,9 @@ DvdDirectoryObject::DvdDirectoryObject(QObject* parent)
   : DvdAuthorObject(parent)
 {
   setObjectName("dvddir");
-  setTitle(i18n("DVD Directory"));
+  setTitle(i18n("DVD Folder"));
   dvdCleanDirectory = new KAction(KIcon("editdelete"),
-                                  i18n("&Clean directory"),this);
+                                  i18n("&Clean folder"),this);
   plugin()->actionCollection()->addAction("ddob_cleandir", dvdCleanDirectory);
   connect(dvdCleanDirectory, SIGNAL(triggered()), SLOT(clean()));
 }
@@ -258,7 +258,7 @@ bool DvdDirectoryObject::prepare(const QString& type)
   interface()->message(newMsgId(), KMF::Start, i18n(startString));
   if(isUpToDate(type))
   {
-    interface()->message(msgId(), KMF::Info, i18n("DVD Directory is up to date"));
+    interface()->message(msgId(), KMF::Info, i18n("DVD Folder is up to date"));
   } 
   else 
   {

@@ -46,7 +46,7 @@ bool NewStuffObject::clicked()
 {
   KNS::Engine *engine = new KNS::Engine();
   engine->init("kmediafactory_template.knsrc");
-  KNS::Entry::List entries = engine->downloadDialogModal();
+  KNS::Entry::List entries = engine->downloadDialogModal(kapp->activeWindow());
   // Remove uninstalled
   QList< ::TemplateObject* > templates =
       parent()->findChildren< ::TemplateObject* >();

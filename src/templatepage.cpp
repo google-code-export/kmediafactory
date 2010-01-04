@@ -215,7 +215,8 @@ void TemplatePage::imageContextMenuRequested(const QPoint& pos)
     else if(action == saveAction)
     {
       KUrl url = KFileDialog::getSaveUrl(KUrl("kfiledialog:///<KMFPreview>"),
-                                         i18n("*.png|PNG Graphics file"));
+                                         i18n("*.png|PNG Graphics file"),
+                                         kapp->activeWindow());
       if (!url.isEmpty() && url.isValid())
       {
         if(!templatePreview->image().save(url.path(), "PNG", 0))

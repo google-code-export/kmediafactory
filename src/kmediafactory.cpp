@@ -296,7 +296,8 @@ void KMediaFactory::fileOpen()
 {
   KUrl url =
       KFileDialog::getOpenUrl(KUrl("kfiledialog:///<KMFProject>"),
-                                   "*.kmf|KMediaFactory project files");
+                                   "*.kmf|KMediaFactory project files",
+                              kapp->activeWindow());
   if (!url.isEmpty())
     load(url);
 }
@@ -329,7 +330,8 @@ void KMediaFactory::fileSaveAs()
 {
   KUrl url =
       KFileDialog::getSaveUrl(KUrl("kfiledialog:///<KMFProject>"),
-                                   "*.kmf|KMediaFactory project files");
+                                   "*.kmf|KMediaFactory project files",
+                              kapp->activeWindow());
   if (!url.isEmpty() && url.isValid())
   {
     if(!kmfApp->project()->save(url))

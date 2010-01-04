@@ -124,6 +124,10 @@ bool Run::run()
                          "PATH=" + path.left(path.length() - 1) + ":\\1");
   }
   //kDebug() << env;
+  if(kapp->activeWindow())
+    env << QString("KMF_WINID=%1")
+        .arg(kapp->activeWindow()->winId());
+
   setEnvironment(env);
 
   checkIfScript();

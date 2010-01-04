@@ -284,7 +284,7 @@ void SlideshowProperties::add()
 
   if(pics.count() > 0)
   {
-    addSlides(m_sob->slideList(pics));
+    addSlides(m_sob->slideList(pics, this));
   }
 }
 

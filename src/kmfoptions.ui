@@ -61,7 +61,7 @@
    <item>
     <widget class="QLabel" name="directoryLabel" >
      <property name="text" >
-      <string>Default Project Director&amp;y:</string>
+      <string>Default Project Folder:</string>
      </property>
      <property name="wordWrap" >
       <bool>false</bool>
