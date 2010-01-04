@@ -21,7 +21,7 @@ function check_executable
   if [ $? -eq 0 ]; then
     echo $BIN
   else
-    kdialog --title "KMediaFactory" $EMBED --sorry \
+    kdialog --caption "KMediaFactory" --icon kmediafactory $EMBED --sorry \
 "Cannot continue because $1 was not found from your system.\n\
 Please install package $2 (or similar)."
     exit 1

@@ -54,7 +54,7 @@ class SlideshowObject : public KMF::MediaObject
     virtual void toXML(QDomElement* element) const;
     virtual bool fromXML(const QDomElement& element);
 
-    void addPics(QStringList list);
+    void addPics(QStringList list, QWidget *parent);
 
     const SlideList& slides() const { return m_slides; };
     void setSlides(const SlideList& slides) { m_slides = slides; };
@@ -68,7 +68,7 @@ class SlideshowObject : public KMF::MediaObject
     void setAudioFiles(const QStringList& audioFiles) { m_audioFiles = audioFiles; };
     QStringList audioFiles() const { return m_audioFiles; };
     QTime audioDuration() const;
-    SlideList slideList(QStringList list) const;
+    SlideList slideList(QStringList list, QWidget *parent) const;
     QString id() const { return m_id; };
 
   public slots:

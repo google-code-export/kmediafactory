@@ -97,10 +97,12 @@ void SlideshowPlugin::init(const QString &type)
 
 void SlideshowPlugin::slotAddSlideshow()
 {
+  QWidget *parent=kapp->activeWindow();
   QStringList pics = KFileDialog::getOpenFileNames(
       KUrl("kfiledialog:///<AddSlideshow>"),
       "*.jpg *.png *.pdf *.odp *.odt *.ods *.odx *.sxw *.sxc *.sxi \
-       *.ppt *.xls *.doc|Pictures, Presentations\n*.*|All files");
+       *.ppt *.xls *.doc|Pictures, Presentations\n*.*|All files",
+      parent);
 
   if(pics.count() > 0)
   {
@@ -117,7 +119,7 @@ void SlideshowPlugin::slotAddSlideshow()
       sob->setTitle(KMF::Tools::simple2Title(dir.dirName()));
     else
       sob->setTitle(i18n("Slideshow"));
-    sob->addPics(pics);
+    sob->addPics(pics, parent);
     if(sob->slides().count() > 0)
       m->addMediaObject(sob);
   }

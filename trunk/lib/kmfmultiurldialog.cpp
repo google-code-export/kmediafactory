@@ -99,7 +99,7 @@ void KMFMultiURLDialog::addFiles(const QStringList& files)
     if(fi.isDir())
     {
       KMessageBox::error(kapp->activeWindow(),
-                         i18n("Cannot add directory."));
+                         i18n("Cannot add folder."));
       continue;
     }
     m_model.append(*it);
