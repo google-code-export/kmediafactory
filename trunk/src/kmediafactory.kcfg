@@ -13,9 +13,5 @@
           <label>Default project type.</label>
           <default>DVD-PAL</default>
       </entry>
-      <entry name="ShowProjectOptionsOnNew" type="Bool">
-          <label>Show project options when new project is launched.</label>
-          <default>false</default>
-      </entry>
   </group>
 </kcfg>

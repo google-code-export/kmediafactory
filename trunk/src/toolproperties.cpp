@@ -28,7 +28,7 @@ ToolProperties::ToolProperties(QWidget *parent)
 {
   setupUi(mainWidget());
   setButtons(KDialog::Ok | KDialog::Cancel);
-  setCaption(i18n("Tool properties"));
+  setCaption(i18n("Tool Properties"));
   workPathUrl->setMode(KFile::Directory | KFile::LocalOnly);
 }
 

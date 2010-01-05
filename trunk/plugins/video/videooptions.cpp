@@ -62,7 +62,7 @@ VideoOptions::VideoOptions(QWidget *parent)
 {
   setupUi(mainWidget());
   setButtons(KDialog::Ok | KDialog::Cancel);
-  setCaption(i18n("Video Options"));
+  setCaption(i18n("Video Properties"));
   connect(subtitleAddButton, SIGNAL(clicked()),
           this, SLOT(subtitleAddClicked()));
   connect(subtitlePropertiesButton, SIGNAL(clicked()),

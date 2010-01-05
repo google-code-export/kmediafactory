@@ -33,7 +33,7 @@ SubtitleOptions::SubtitleOptions(QWidget *parent)
 {
   setupUi(mainWidget());
   setButtons(KDialog::Ok | KDialog::Cancel);
-  setCaption(i18n("Subtitle options"));
+  setCaption(i18n("Subtitle Options"));
   m_languageModel.useAllLanguages();
   languageCombo->setModel(&m_languageModel);
   encodingCombo->model()->sort(0);

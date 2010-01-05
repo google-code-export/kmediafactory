@@ -35,6 +35,7 @@ namespace KMF
     QWidget* page;
     KConfigSkeleton* config;
     QString itemName;
+    QString itemDescription;
     QString pixmapName;
   };
 

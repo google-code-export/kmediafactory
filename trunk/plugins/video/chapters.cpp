@@ -129,7 +129,7 @@ class CellListModel : public QAbstractListModel
       switch(column)
       {
         case 0:
-          return i18n("Name");
+          return i18n("Chapter Name");
         case 1:
           return i18n("Start");
         case 2:

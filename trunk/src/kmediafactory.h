@@ -31,6 +31,7 @@
 // Define this for the test menu item
 // #define KMF_TEST
 
+class ProjectOptions;
 class MediaPage;
 class TemplatePage;
 class OutputPage;
@@ -70,6 +71,7 @@ class KMediaFactory : public KXmlGuiWindow
     void enableUi(bool enabled);
     void showPage(int page);
 
+    ProjectOptions *projectPage;
     MediaPage *mediaPage;
     TemplatePage *templatePage;
     OutputPage *outputPage;
@@ -105,7 +107,6 @@ class KMediaFactory : public KXmlGuiWindow
 
   private slots:
     void fileOpen();
-    void projectOptions();
     void newStuff();
     void fileSave();
     void fileSaveAs();
@@ -127,6 +128,7 @@ class KMediaFactory : public KXmlGuiWindow
     QWidget* m_janusIconList;
     bool m_enabled;
     KMFNewStuff* m_newStuffDlg;
+    KPageWidgetItem* m_projectPageItem;
     KPageWidgetItem* m_mediaPageItem;
     KPageWidgetItem* m_templatePageItem;
     KPageWidgetItem* m_ouputPageItem;

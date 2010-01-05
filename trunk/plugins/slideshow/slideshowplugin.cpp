@@ -61,7 +61,7 @@ void SlideshowPlugin::setupActions()
   // Add action for menu item
   QAction* addSlideshowAction = new KAction(KIcon("kuickshow"),
                                             i18n("Add Slideshow"), parent());
-  addSlideshowAction->setShortcut(Qt::CTRL + Qt::Key_W);
+  //addSlideshowAction->setShortcut(Qt::CTRL + Qt::Key_W);
   actionCollection()->addAction("slideshow", addSlideshowAction);
   connect(addSlideshowAction, SIGNAL(triggered()), SLOT(slotAddSlideshow()));
   interface()->addMediaAction(addSlideshowAction);
@@ -145,7 +145,8 @@ const KMF::ConfigPage* SlideshowPlugin::configPage() const
   KMF::ConfigPage* configPage = new KMF::ConfigPage;
   configPage->page = new SlideshowConfig;
   configPage->config = SlideshowPluginSettings::self();
-  configPage->itemName = i18n("Slideshow plugin");
+  configPage->itemName = i18n("Slideshow");
+  configPage->itemDescription = i18n("Slideshow Settings");
   configPage->pixmapName = "kuickshow";
   return configPage;
 }
