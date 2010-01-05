@@ -65,7 +65,8 @@ const KMF::ConfigPage* TemplatePlugin::configPage() const
   KMF::ConfigPage* configPage = new KMF::ConfigPage;
   configPage->page = new TemplateConfig;
   configPage->config = TemplatePluginSettings::self();
-  configPage->itemName = i18n("Template plugin");
+  configPage->itemName = i18n("Template");
+  configPage->itemDescription = i18n("Template Settings");
   configPage->pixmapName = "folder-image";
   return configPage;
 }

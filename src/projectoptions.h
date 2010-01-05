@@ -24,19 +24,19 @@
 #include "ui_projectoptions.h"
 #include "kmfproject.h"
 
-class ProjectOptions : public KDialog, public Ui::ProjectOptions
+class ProjectOptions : public QWidget, public Ui::ProjectOptions
 {
     Q_OBJECT
   public:
     ProjectOptions(QWidget* parent = 0);
     ~ProjectOptions();
-    void getData(KMFProject& project) const;
+    void init();
     void setData(const KMFProject& project);
 
   protected slots:
-    void textChanged(const QString&);
-    void slotOk();
-    virtual void slotButtonClicked(int button);
+    void titleChanged(const QString&);
+    void directoryChanged(const QString&);
+    void typeChanged(int);
 
   private:
     bool titleChangesPath;

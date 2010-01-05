@@ -226,7 +226,7 @@ SlideList SlideshowObject::slideList(QStringList list, QWidget *parent) const
     QDir dir(interface()->projectDir("media"));
     KMimeType::Ptr type = KMimeType::findByUrl(file);
 
-    dlg.setLabelText(i18n("Processing slides...\n") + (file));
+    dlg.setLabelText(i18n("Processing files...\n") + (file));
     kapp->processEvents();
 
     if(fi.isDir())

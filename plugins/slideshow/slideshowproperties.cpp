@@ -38,9 +38,18 @@
 #include <QFileInfo>
 #include <QMimeData>
 
+enum Columns
+{
+    COL_IMG,
+    COL_CHAPTER,
+    COL_COMMENT,
+
+    COL_COUNT
+};
+
 int SlideListModel::columnCount(const QModelIndex&) const
 {
-  return 2;
+  return COL_COUNT;
 }
 
 Qt::ItemFlags SlideListModel::flags(const QModelIndex& index) const
@@ -49,9 +58,9 @@ Qt::ItemFlags SlideListModel::flags(const QModelIndex& index) const
   if(!isValid(index))
     return flags;
 
-  if(index.column() == 0)
+  if(COL_CHAPTER==index.column())
     flags |= Qt::ItemIsUserCheckable;
-  else if(index.column() == 1)
+  else if(COL_COMMENT==index.column())
     flags |= Qt::ItemIsEditable;
   return flags;
 }
@@ -65,18 +74,18 @@ QVariant SlideListModel::data(const QModelIndex &index, int role) const
   {
     switch(index.column())
     {
-      case 0:
+      case COL_IMG:
       {
         QFileInfo fi(at(index).picture);
         return fi.fileName();
       }
-      case 1:
+      case COL_COMMENT:
         return at(index).comment;
     }
   }
   if (role == Qt::DecorationRole)
   {
-    if(index.column() == 0)
+    if(COL_IMG==index.column())
     {
       if(m_previews.keys().indexOf(at(index).picture) >= 0)
         return m_previews[at(index).picture];
@@ -86,7 +95,7 @@ QVariant SlideListModel::data(const QModelIndex &index, int role) const
   }
   if (role == Qt::CheckStateRole)
   {
-    if(index.column() == 0)
+    if(COL_CHAPTER==index.column())
       return ((at(index).chapter) ? Qt::Checked : Qt::Unchecked);
   }
   return QVariant();
@@ -103,14 +112,17 @@ bool SlideListModel::setData(const QModelIndex &index, const QVariant &value,
 
   if (role == Qt::EditRole)
   {
-    if(index.column() == 1)
+    if(COL_COMMENT==index.column())
     {
       slide.comment = value.toString();
     }
   }
   else if (role == Qt::CheckStateRole)
   {
-    slide.chapter = value.toBool();
+    if(COL_CHAPTER==index.column())
+    {
+      slide.chapter = value.toBool();
+    }
   }
   replace(index, slide);
   return true;
@@ -123,9 +135,11 @@ QVariant SlideListModel::headerData(int column, Qt::Orientation, int role) const
 
   switch(column)
   {
-    case 0:
-      return i18n("Picture");
-    case 1:
+    case COL_IMG:
+      return i18n("Image");
+    case COL_CHAPTER:
+      return i18n("Chapter");
+    case COL_COMMENT:
       return i18n("Comment");
   }
   return "";
@@ -243,8 +257,6 @@ void SlideshowProperties::moveUp()
 
 void SlideshowProperties::updateInfo()
 {
-  QString info(i18n("Info: "));
-  int count = m_model.count();
   KMF::Time duration = (double)durationSpinBox->value();
   KMF::Time audioDuration = 0.0;
 
@@ -253,18 +265,8 @@ void SlideshowProperties::updateInfo()
     KMFMediaFile audio = KMFMediaFile::mediaFile(file);
     audioDuration += audio.duration();
   }
-  info += i18n("%1 images", count);
-  if(duration < KMF::Time(1.0))
-    info += i18n(", Duration %1", audioDuration.toString("h:mm:ss"));
-  else
-  {
-    duration = (1.0 + duration.toSeconds()) * count + 1.0;
-    info += i18n(", Duration %1", duration.toString("h:mm:ss"));
-  }
-  if(!audioDuration.isNull())
-    info += i18n(", Audio duration %1", audioDuration.toString("h:mm:ss"));
 
-  infoLabel->setText(info);
+  infoLabel->setText(i18n("Images: %1, Duration: %2, Audio duration: %3", m_model.count(), duration.toString("h:mm:ss"), audioDuration.toString("h:mm:ss")));
 }
 
 void SlideshowProperties::remove()
@@ -292,7 +294,7 @@ void SlideshowProperties::audioClicked()
 {
   KMFMultiURLDialog dlg("kfiledialog:///<SlideshowAudioFiles>",
                         i18n("*.mp3 *.wav *.ogg|Audio Files"),
-                        this, i18n("Audio files"));
+                        this, i18n("Audio Files"));
 
   dlg.addFiles(m_audioFiles);
   if(dlg.exec())

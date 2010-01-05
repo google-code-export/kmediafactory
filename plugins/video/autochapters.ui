@@ -1,59 +1,48 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>AutoChapters</class>
- <widget class="QWidget" name="AutoChapters" >
-  <property name="geometry" >
+ <widget class="QWidget" name="AutoChapters">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>291</width>
-    <height>104</height>
+    <width>325</width>
+    <height>76</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>KMediaFactory</string>
   </property>
-  <layout class="QVBoxLayout" >
-   <property name="leftMargin" >
-    <number>0</number>
-   </property>
-   <property name="topMargin" >
-    <number>0</number>
-   </property>
-   <property name="rightMargin" >
-    <number>0</number>
-   </property>
-   <property name="bottomMargin" >
-    <number>0</number>
-   </property>
-   <item>
-    <widget class="QLabel" name="nameLabel" >
-     <property name="text" >
-      <string>&amp;Name (Use # for digit):</string>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="nameLabel">
+     <property name="text">
+      <string>Name (use # for digit):</string>
      </property>
-     <property name="buddy" >
+     <property name="buddy">
       <cstring>nameEdit</cstring>
      </property>
     </widget>
    </item>
-   <item>
-    <widget class="QLineEdit" name="nameEdit" />
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="nameEdit"/>
    </item>
-   <item>
-    <widget class="QLabel" name="intervalLabel" >
-     <property name="text" >
-      <string>&amp;Interval:</string>
+   <item row="1" column="0">
+    <widget class="QLabel" name="intervalLabel">
+     <property name="text">
+      <string>Interval:</string>
      </property>
-     <property name="buddy" >
+     <property name="buddy">
       <cstring>intervalTime</cstring>
      </property>
     </widget>
    </item>
-   <item>
-    <widget class="QTimeEdit" name="intervalTime" >
-     <property name="displayFormat" >
+   <item row="1" column="1">
+    <widget class="QTimeEdit" name="intervalTime">
+     <property name="displayFormat">
       <string>hh:mm:ss</string>
      </property>
-     <property name="time" >
+     <property name="time">
       <time>
        <hour>0</hour>
        <minute>15</minute>
@@ -62,27 +51,11 @@
      </property>
     </widget>
    </item>
-   <item>
-    <spacer>
-     <property name="orientation" >
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType" >
-      <enum>QSizePolicy::Expanding</enum>
-     </property>
-     <property name="sizeHint" >
-      <size>
-       <width>20</width>
-       <height>12</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
   </layout>
  </widget>
- <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
+ <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
  <includes>
-  <include location="global" >kpushbutton.h</include>
+  <include location="global">kpushbutton.h</include>
  </includes>
  <resources/>
  <connections/>

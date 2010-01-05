@@ -31,14 +31,17 @@
 #include <QLineEdit>
 
 ProjectOptions::ProjectOptions(QWidget* parent) :
-  KDialog(parent), titleChangesPath(false)
+  QWidget(parent), titleChangesPath(false)
 {
-  setupUi(mainWidget());
-  setButtons(KDialog::Ok | KDialog::Cancel);
+  setupUi(this);
+}
 
-  connect(titleEdit, SIGNAL(textChanged(const QString&)),
-          this, SLOT(textChanged(const QString&)));
+ProjectOptions::~ProjectOptions()
+{
+}
 
+void ProjectOptions::init()
+{
   QStringList list = kmfApp->supportedProjects();
   directoryUrl->setMode(KFile::Directory);
 
@@ -46,17 +49,12 @@ ProjectOptions::ProjectOptions(QWidget* parent) :
   {
     typeComboBox->addItem(*it);
   }
-}
-
-ProjectOptions::~ProjectOptions()
-{
-}
-
-void ProjectOptions::getData(KMFProject& project) const
-{
-  project.setDirectory(directoryUrl->url().prettyUrl());
-  project.setTitle(titleEdit->text());
-  project.setType(typeComboBox->currentText());
+  connect(titleEdit, SIGNAL(textChanged(const QString&)),
+          this, SLOT(titleChanged(const QString&)));
+  connect(directoryUrl, SIGNAL(textChanged(const QString&)),
+          this, SLOT(directoryChanged(const QString&)));
+  connect(typeComboBox, SIGNAL(currentIndexChanged(int)),
+          this, SLOT(typeChanged(int)));
 }
 
 void ProjectOptions::setData(const KMFProject& project)
@@ -79,9 +77,11 @@ void ProjectOptions::setData(const KMFProject& project)
   m_count = project.mediaObjects().count();
 }
 
-void ProjectOptions::textChanged(const QString& title)
+void ProjectOptions::titleChanged(const QString& title)
 {
   kDebug();
+  kmfApp->project()->setTitle(titleEdit->text());
+
   if(titleChangesPath)
   {
     QDir dir(directoryUrl->url().prettyUrl());
@@ -101,34 +101,37 @@ void ProjectOptions::textChanged(const QString& title)
   }
 }
 
-void ProjectOptions::slotOk()
+void ProjectOptions::directoryChanged(const QString &)
 {
-  if(m_count == 0 || m_type == typeComboBox->currentText())
-    accept();
-  else
-  {
-    switch(KMessageBox::warningYesNo(this,
-           i18n("Media files will be removed from the project"
-                " when project type changes. Continue?")))
-    {
-      case KMessageBox::Yes :
-        accept();
-        break;
-      case KMessageBox::No :
-      default:
-        return;
-        break;
-    }
-  }
+    kmfApp->project()->setDirectory(directoryUrl->url().prettyUrl());
 }
 
-void ProjectOptions::slotButtonClicked(int button)
+void ProjectOptions::typeChanged(int)
 {
-  if(button == KDialog::Ok)
-    slotOk();
-  else
-    KDialog::slotButtonClicked(button);
+    kmfApp->project()->setType(typeComboBox->currentText());
 }
+
+// void ProjectOptions::slotOk()
+// {
+//   if(m_count == 0 || m_type == typeComboBox->currentText())
+//     accept();
+//   else
+//   {
+//     switch(KMessageBox::warningYesNo(this,
+//            i18n("Media files will be removed from the project"
+//                 " when project type changes. Continue?")))
+//     {
+//       case KMessageBox::Yes :
+//         accept();
+//         break;
+//       case KMessageBox::No :
+//       default:
+//         return;
+//         break;
+//     }
+//   }
+// }
+
 
 #include "projectoptions.moc"
 

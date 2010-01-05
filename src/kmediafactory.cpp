@@ -20,6 +20,7 @@
 
 #include "kmediafactory.h"
 #include "kmfapplication.h"
+#include "projectoptions.h"
 #include "mediapage.h"
 #include "templatepage.h"
 #include "outputpage.h"
@@ -96,18 +97,26 @@ KMediaFactory::KMediaFactory()
   }
 
   // Pages
+  // Project
+
+  projectPage = new ProjectOptions;
+  m_projectPageItem = new KPageWidgetItem(projectPage, i18n( "Project"));
+  m_projectPageItem->setHeader(i18n("Project Settings"));
+  m_projectPageItem->setIcon(KIcon("configure"));
+  m_janus->addPage(m_projectPageItem);
+
   // Media
 
   mediaPage = new MediaPage;
   m_mediaPageItem = new KPageWidgetItem(mediaPage, i18n( "Media"));
-  m_mediaPageItem->setHeader(i18n("Media"));
+  m_mediaPageItem->setHeader(i18n("Add Media To Project"));
   m_mediaPageItem->setIcon(KIcon("folder-video"));
   m_janus->addPage(m_mediaPageItem);
 
   // Template
   templatePage = new TemplatePage;
   m_templatePageItem = new KPageWidgetItem(templatePage, i18n("Template"));
-  m_templatePageItem->setHeader(i18n("Template"));
+  m_templatePageItem->setHeader(i18n("Select Project Template"));
   m_templatePageItem->setIcon(KIcon("folder-image"));
   m_janus->addPage(m_templatePageItem);
   connect(m_janus,
@@ -118,7 +127,7 @@ KMediaFactory::KMediaFactory()
   // Output
   outputPage = new OutputPage;
   m_ouputPageItem = new KPageWidgetItem(outputPage, i18n("Output"));
-  m_ouputPageItem->setHeader(i18n("Output"));
+  m_ouputPageItem->setHeader(i18n("Choose Desired Output"));
   m_ouputPageItem->setIcon(KIcon("media-optical"));
   m_janus->addPage(m_ouputPageItem);
   connect(m_janus,
@@ -159,11 +168,6 @@ void KMediaFactory::setupActions()
   KStandardAction::save(this, SLOT(fileSave()), actionCollection());
   KStandardAction::saveAs(this, SLOT(fileSaveAs()), actionCollection());
   KStandardAction::quit(this, SLOT(quit()), actionCollection());
-
-  // Project
-  action = new KAction(KIcon("configure"), i18n("&Options"),this);
-  actionCollection()->addAction("project_options", action);
-  connect(action, SIGNAL(triggered()), SLOT(projectOptions()));
 
   // KNewStuff
   action = new KAction(KIcon("get-hot-new-stuff"), i18n("&Get new tools"),this);
@@ -234,15 +238,6 @@ void KMediaFactory::itemDelete()
   kmfApp->project()->setDirty(KMF::Media);
 }
 
-void KMediaFactory::projectOptions()
-{
-  //kDebug();
-  ProjectOptions dlg(this);
-  dlg.setData(*kmfApp->project());
-  if (dlg.exec())
-    dlg.getData(*kmfApp->project());
-}
-
 void KMediaFactory::newStuff()
 {
   KNS::Engine *engine = new KNS::Engine();
@@ -254,6 +249,7 @@ void KMediaFactory::newStuff()
 void KMediaFactory::initGUI()
 {
   kDebug();
+  projectPage->init();
 
   const QObjectList& l = kmfApp->pluginInterface()->children();
   for(int i = 0; i < l.size(); ++i)
@@ -275,7 +271,7 @@ void KMediaFactory::resetGUI()
   model->clear();
   outputPage->progressBar->reset();
   outputPage->showLogPushBtn->setEnabled(false);
-  m_janus->setCurrentPage(m_mediaPageItem);
+  m_janus->setCurrentPage(m_projectPageItem);
 }
 
 void KMediaFactory::fileNew()
@@ -287,8 +283,7 @@ void KMediaFactory::fileNew()
     kmfApp->newProject();
     connectProject();
     kmfApp->project()->init();
-    if(KMediaFactorySettings::showProjectOptionsOnNew())
-      projectOptions();
+    projectPage->setData(*kmfApp->project());
   }
 }
 
@@ -315,6 +310,7 @@ void KMediaFactory::load(const KUrl& url)
     kmfApp->newProject();
     connectProject();
     kmfApp->project()->open(url);
+    projectPage->setData(*kmfApp->project());
     mediaPage->mediaModified();
     templatePage->updatePreview();
   }
@@ -464,10 +460,10 @@ void KMediaFactory::optionsPreferences()
     //KConfigDialog didn't find an instance of this dialog, so lets create it :
     KConfigDialog* dialog = new KConfigDialog(this, "KMediaFactorySettings",
                                               KMediaFactorySettings::self());
-    dialog->addPage(new KMFOptions(dialog), i18n("KMediaFactory"),
-                    "kmediafactory", i18n("KMediaFactory"));
+    dialog->addPage(new KMFOptions(dialog), i18n("Project"),
+                    "kmediafactory", i18n("Default Project Settings"));
     dialog->addPage(new Tools(dialog), i18n("Tools"),
-                    "configure", i18n("Tools"));
+                    "configure", i18n("External Tools"));
 
     const KMF::PluginList list = kmfApp->plugins();
     for(KMF::PluginList::ConstIterator obj = list.begin();
@@ -477,7 +473,8 @@ void KMediaFactory::optionsPreferences()
       if(page)
       {
         dialog->addPage(page->page, page->config,
-                        page->itemName, page->pixmapName);
+                        page->itemName, page->pixmapName,
+                        page->itemDescription);
         delete page;
       }
     }
@@ -540,7 +537,7 @@ void KMediaFactory::enableUi(bool enabled)
   mediaPage->mediaFiles->setEnabled(enabled);
   mediaPage->mediaButtons->setEnabled(enabled);
   templatePage->templates->setEnabled(enabled);
-  templatePage->previewCheckBox->setEnabled(enabled);
+  //templatePage->previewCheckBox->setEnabled(enabled);
   templatePage->templatePreview->setEnabled(enabled);
   outputPage->outputs->setEnabled(enabled);
   m_enabled = enabled;
@@ -550,9 +547,10 @@ void KMediaFactory::showPage(int page)
 {
   switch(page)
   {
-    case 0: m_janus->setCurrentPage(m_mediaPageItem); break;
-    case 1: m_janus->setCurrentPage(m_templatePageItem); break;
-    case 2: m_janus->setCurrentPage(m_ouputPageItem); break;
+    case 0: m_janus->setCurrentPage(m_projectPageItem); break;
+    case 1: m_janus->setCurrentPage(m_mediaPageItem); break;
+    case 2: m_janus->setCurrentPage(m_templatePageItem); break;
+    case 3: m_janus->setCurrentPage(m_ouputPageItem); break;
   }
 }
 

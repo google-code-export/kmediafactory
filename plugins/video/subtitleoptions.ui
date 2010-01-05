@@ -7,13 +7,16 @@
     <x>0</x>
     <y>0</y>
     <width>357</width>
-    <height>192</height>
+    <height>205</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Subtitle options</string>
   </property>
   <layout class="QFormLayout" name="formLayout">
+   <property name="margin">
+    <number>0</number>
+   </property>
    <item row="0" column="0">
     <widget class="QLabel" name="languageLabel">
      <property name="text">
@@ -636,7 +639,7 @@
    <item row="4" column="0">
     <widget class="QLabel" name="subtitleFontLabel">
      <property name="text">
-      <string>Subtitle Font:</string>
+      <string>Subtitle font:</string>
      </property>
      <property name="wordWrap">
       <bool>false</bool>
@@ -647,7 +650,7 @@
     </widget>
    </item>
    <item row="4" column="1">
-    <widget class="KMFFontChooser" name="subtitleFontChooser" native="true">
+    <widget class="KMFFontChooser" name="subtitleFontChooser">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -668,7 +671,7 @@
    <item row="5" column="0">
     <widget class="QLabel" name="horizontalLabel">
      <property name="text">
-      <string>Horizontal Alignment:</string>
+      <string>Horizontal alignment:</string>
      </property>
      <property name="wordWrap">
       <bool>false</bool>
@@ -714,7 +717,7 @@
    <item row="6" column="0">
     <widget class="QLabel" name="verticalLabel">
      <property name="text">
-      <string>Vertical Alignment:</string>
+      <string>Vertical alignment:</string>
      </property>
      <property name="wordWrap">
       <bool>false</bool>
@@ -788,6 +791,7 @@
    <class>KUrlRequester</class>
    <extends>QFrame</extends>
    <header>kurlrequester.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>KComboBox</class>

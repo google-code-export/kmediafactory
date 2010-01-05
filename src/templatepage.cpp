@@ -128,8 +128,8 @@ void TemplatePage::updatePreview(int n)
     kmfApp->setOverrideCursor(QCursor(Qt::WaitCursor));
     kmfApp->interface()->setUseMessageBox(true);
     kmfApp->interface()->setStopped(false);
-    if(kmfApp->project()->mediaObjects()->count() > 0 &&
-      previewCheckBox->isChecked())
+    if(kmfApp->project()->mediaObjects()->count() > 0 /*&&
+      previewCheckBox->isChecked()*/)
     {
       QModelIndexList selected = templates->selectionModel()->selectedIndexes();
       KMF::TemplateObject* ob =
@@ -229,7 +229,7 @@ void TemplatePage::imageContextMenuRequested(const QPoint& pos)
     else
     {
       m_menu = action->data().toInt();
-      previewCheckBox->setChecked(true);
+      //previewCheckBox->setChecked(true);
       updatePreview();
     }
   }

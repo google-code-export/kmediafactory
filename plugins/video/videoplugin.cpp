@@ -67,7 +67,8 @@ const KMF::ConfigPage* VideoPlugin::configPage() const
   KMF::ConfigPage* configPage = new KMF::ConfigPage;
   configPage->page = new VideoConfig;
   configPage->config = VideoPluginSettings::self();
-  configPage->itemName = i18n("Video plugin");
+  configPage->itemName = i18n("Video");
+  configPage->itemDescription = i18n("Video Settings");
   configPage->pixmapName = "video-mpeg";
   return configPage;
 }
@@ -77,7 +78,7 @@ QAction* VideoPlugin::setupActions()
   // Add action for menu item
   QAction* addVideoAction = new KAction(KIcon("video-mpeg"), i18n("Add Video"),
                                         parent());
-  addVideoAction->setShortcut(Qt::CTRL + Qt::Key_V);
+  //addVideoAction->setShortcut(Qt::CTRL + Qt::Key_V);
   actionCollection()->addAction("video", addVideoAction);
   connect(addVideoAction, SIGNAL(triggered()), SLOT(slotAddVideo()));
 
