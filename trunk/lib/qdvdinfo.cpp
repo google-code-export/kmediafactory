@@ -308,6 +308,7 @@ Cell::Cell(int cell, pgc_t *pgc) : m_cell(cell)
 
 
   m_chapter = false;
+  m_hidden = false;
   for(i=0; i<pgc->nr_of_programs; i++)
   {
     if(m_cell == pgc->program_map[i] - 1)

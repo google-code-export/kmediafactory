@@ -43,7 +43,7 @@ void KMFButton::fromXML(const QDomElement& element)
   m_jumpS = element.attribute("jump").toUpper();
 }
 
-void KMFButton::writeDvdAuthorXml(QDomText& element, QString type)
+void KMFButton::writeDvdAuthorXml(QDomText& element, QString type, const KMF::MediaObject *mob)
 {
   QString s;
   QString preCommand;
@@ -93,7 +93,7 @@ void KMFButton::writeDvdAuthorXml(QDomText& element, QString type)
         chapter = m_jump.chapter();
       else
         chapter = 1;
-      s += QString("title 1 chapter %1 ").arg(chapter);
+      s += QString("title 1 chapter %1 ").arg(chapter+(mob ? mob->chapterAdjust(chapter) : 0));
     }
     else
     {

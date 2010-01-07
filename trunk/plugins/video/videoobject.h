@@ -98,6 +98,7 @@ class VideoObject : public KMF::MediaObject
     virtual uint64_t size() const;
     virtual QTime duration() const;
     virtual QTime chapterTime(int chapter) const;
+    virtual int chapterAdjust(int chapter) const;
     // KMF::Object::call slots
     QVariant writeDvdAuthorXml(QVariantList args) const;
 

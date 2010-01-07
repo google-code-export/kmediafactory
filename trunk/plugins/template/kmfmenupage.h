@@ -72,6 +72,7 @@ class KMFMenuPage : public KMFWidget
     void setIndex(int titleset, int titlesetCount, int index, int count)
         { m_titleset = titleset; m_titlesetCount = titlesetCount;
           m_index = index; m_count = count; };
+    void setMediaObject(const KMF::MediaObject *mob) { m_mob=mob; }
     bool directChapterPlay() const { return m_directChapterPlay; };
     bool directPlay() const { return m_directPlay; };
     QString sound() const { return m_sound; };
@@ -80,6 +81,7 @@ class KMFMenuPage : public KMFWidget
     QImage preview();
 
   private:
+    const KMF::MediaObject *m_mob;
     QList<KMFButton*>* m_buttons;
     QSize m_resolution;
     QString m_language;

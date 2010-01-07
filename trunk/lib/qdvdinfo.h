@@ -71,8 +71,8 @@ namespace QDVD
     public:
       Cell() : m_cell(0), m_chapter(true), m_startSector(0),
           m_endSector(0) {};
-      Cell(QTime start, QTime length, QString name, bool chapter = true) :
-          m_cell(0), m_chapter(chapter),
+      Cell(QTime start, QTime length, QString name, bool chapter = true, bool hidden = false) :
+          m_cell(0), m_chapter(chapter), m_hidden(hidden),
           m_start(start), m_length(length),m_startSector(0),
           m_endSector(0), m_name(name) {};
 #ifdef HAVE_LIBDVDREAD
@@ -87,6 +87,7 @@ namespace QDVD
       int cellNbr() const { return m_cell; };
       QString name() const { return m_name; };
       bool isChapter() const { return m_chapter; };
+      bool isHidden() const { return m_hidden; };
       virtual uint64_t size() const;
       virtual QString toString() const;
       virtual uint rtti() const { return CELL; };
@@ -94,10 +95,12 @@ namespace QDVD
       void setLength(const QTime& length) { m_length = length; };
       void setStart(const QTime& start) { m_start = start; };
       void setName(const QString& name) { m_name = name; };
+      void setHidden(bool h) { m_hidden=h; }
 
     private:
       int m_cell;
       bool m_chapter;
+      bool m_hidden;
       QTime m_start;
       QTime m_length;
       int m_startSector;

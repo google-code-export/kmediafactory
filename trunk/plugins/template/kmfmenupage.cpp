@@ -323,7 +323,7 @@ private:
 };
 
 KMFMenuPage::KMFMenuPage(QObject *parent) :
-  KMFWidget(parent), m_language("en"), m_titles(0),
+  KMFWidget(parent), m_mob(0), m_language("en"), m_titles(0),
   m_chapters(0), m_titleStart(0), m_chapterStart(0), m_index(0), m_titleset(0),
   m_titlesetCount(0), m_count(0), m_vmgm(false),
   m_directPlay(false), m_directChapterPlay(false), m_continueToNextTitle(true)
@@ -477,7 +477,7 @@ void KMFMenuPage::writeDvdAuthorXml(QDomElement& element, QString type) const
     QDomElement button = doc.createElement("button");
     button.setAttribute("name", btn->objectName());
     QDomText text = doc.createTextNode("");
-    btn->writeDvdAuthorXml(text, type);
+    btn->writeDvdAuthorXml(text, type, m_mob);
     button.appendChild(text);
     pgc.appendChild(button);
   }
