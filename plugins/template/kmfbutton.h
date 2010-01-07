@@ -22,6 +22,7 @@
 #define KMFBUTTON_H
 
 #include <kmfwidget.h>
+#include <kmediafactory/plugininterface.h>
 
 class QDomText;
 
@@ -76,7 +77,7 @@ class KMFButton : public KMFWidget
     void setJump(const KMFJump& jump) { m_jump = jump; };
 
     void fromXML(const QDomElement& element);
-    void writeDvdAuthorXml(QDomText& element, QString type);
+    void writeDvdAuthorXml(QDomText& element, QString type, const KMF::MediaObject *mob);
     bool parseJump(bool addPages = true);
     void parseDirections();
 

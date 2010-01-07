@@ -224,6 +224,26 @@ QTime VideoObject::chapterTime(int chap) const
   return chapter(chap).start();
 }
 
+int VideoObject::chapterAdjust(int chapter) const
+{
+  int i = 0;
+  int adjust = 0;
+
+  for(QDVD::CellList::ConstIterator it = m_cells.begin();
+      it != m_cells.end(); ++it)
+  {
+    if((*it).isChapter())
+        if((*it).isHidden())
+            adjust++;
+        else
+            i++;
+    if(i == chapter)
+      break;
+  }
+
+  return adjust;
+}
+
 QStringList VideoObject::files() const
 {
   return m_files;
@@ -280,6 +300,7 @@ bool VideoObject::fromXML(const QDomElement& element)
               KMF::Time length(e2.attribute("length"));
               QString name = e2.attribute("name");
               bool chapter = (e2.attribute("chapter") == "1");
+              bool hidden = (e2.attribute("hidden") == "1");
 
               if(!e2.hasAttribute("length"))
                 parseLengths = true;
@@ -296,7 +317,7 @@ bool VideoObject::fromXML(const QDomElement& element)
               else
                 name = start.toString("h:mm:ss");
 
-              addCell(QDVD::Cell(start, length, name, chapter));
+              addCell(QDVD::Cell(start, length, name, chapter, hidden));
             }
             else if(e2.tagName() == "audio")
             {
@@ -396,6 +417,7 @@ void VideoObject::toXML(QDomElement* element) const
     e.setAttribute("start", KMF::Time((*it).start()).toString());
     e.setAttribute("length", KMF::Time((*it).length()).toString());
     e.setAttribute("chapter", (*it).isChapter());
+    e.setAttribute("hidden", (*it).isHidden());
     video.appendChild(e);
   }
   for(QDVD::AudioList::ConstIterator it = m_audioTracks.begin();
@@ -825,7 +847,7 @@ int VideoObject::chapters() const
   for(QDVD::CellList::ConstIterator it = m_cells.begin();
       it != m_cells.end(); ++it)
   {
-    if((*it).isChapter())
+    if((*it).isChapter() && !(*it).isHidden())
       ++i;
   }
   return i;
@@ -838,7 +860,7 @@ const QDVD::Cell& VideoObject::chapter(int chap) const
   for(QDVD::CellList::ConstIterator it = m_cells.begin();
       it != m_cells.end(); ++it)
   {
-    if((*it).isChapter())
+    if((*it).isChapter() && !(*it).isHidden())
       ++i;
     if(i == chap)
       return *it;

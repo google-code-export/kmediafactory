@@ -44,6 +44,16 @@
 #include <QDir>
 #include <QLineEdit>
 
+enum Columns
+{
+    COL_NAME,
+    COL_HIDDEN,
+    COL_START,
+    COL_LENGTH,
+
+    COL_COUNT
+};
+
 class CellListModel : public QAbstractListModel
 {
   public:
@@ -57,7 +67,7 @@ class CellListModel : public QAbstractListModel
 
     virtual int columnCount(const QModelIndex&) const
     {
-      return 3;
+      return COL_COUNT;
     };
 
     void update()
@@ -73,20 +83,30 @@ class CellListModel : public QAbstractListModel
       if (index.row() >= rowCount(index))
         return false;
       
-      if (role == Qt::EditRole && index.column() == 0)
+      if (role == Qt::EditRole && index.column() == COL_NAME)
       {
          (*m_data)[index.row()].setName(value.toString());
          emit dataChanged(index, index);
          return true;
       }
+      else if (Qt::CheckStateRole==role && COL_HIDDEN==index.column())
+      {
+        (*m_data)[index.row()].setHidden(value.toBool());
+        emit dataChanged(index, index);
+        return true;
+      }
+
       return false;
     };
     
     virtual Qt::ItemFlags flags(const QModelIndex &index) const
     {
         Qt::ItemFlags result = QAbstractItemModel::flags(index);
-        if (index.column() == 0) {
+        if (COL_NAME==index.column()) {
             result |= Qt::ItemIsEditable;
+        }
+        else if(COL_HIDDEN==index.column()) {
+            result |= Qt::ItemIsUserCheckable;
         }
         return result;
     };
@@ -103,11 +123,11 @@ class CellListModel : public QAbstractListModel
       {
         switch(index.column())
         {
-          case 0:
+          case COL_NAME:
             return m_data->at(index.row()).name();
-          case 1:
+          case COL_START:
             return KMF::Time(m_data->at(index.row()).start()).toString();
-          case 2:
+          case COL_LENGTH:
             if(index.row() == m_data->count() - 1)
             {
               KMF::Time t(m_total);
@@ -117,6 +137,10 @@ class CellListModel : public QAbstractListModel
             else
               return KMF::Time(m_data->at(index.row()).length()).toString();
         }
+      }
+      else if (Qt::CheckStateRole==role && COL_HIDDEN==index.column())
+      {
+        return m_data->at(index.row()).isHidden() ? Qt::Checked : Qt::Unchecked;
       }
       return QVariant();
     };
@@ -128,11 +152,13 @@ class CellListModel : public QAbstractListModel
 
       switch(column)
       {
-        case 0:
+        case COL_NAME:
           return i18n("Chapter Name");
-        case 1:
+        case COL_HIDDEN:
+          return i18n("Hidden");
+        case COL_START:
           return i18n("Start");
-        case 2:
+        case COL_LENGTH:
           return i18n("Length");
       }
       return "";
@@ -150,7 +176,7 @@ class AddChapter : public KDialog, public Ui::AddChapter
     {
       setupUi(mainWidget());
       setButtons(KDialog::Ok | KDialog::Cancel);
-      setCaption(i18n("Add chapters"));
+      setCaption(i18n("Add Chapter"));
     };
 };
 
@@ -464,11 +490,30 @@ void Chapters::checkLengths()
 void Chapters::accept()
 {
   if(m_cells.count() > 0)
-    KDialog::accept();
+  {
+    int nonHidden(0);
+    for(int i = 0; i < m_cells.count(); ++i)
+    {
+      if(!m_cells[i].isHidden())
+      {
+        nonHidden++;
+      }
+    }
+
+    if(nonHidden > 0)
+    {
+      KDialog::accept();
+    }
+    else
+    {
+      KMessageBox::sorry(this,
+                         i18n("You should have at least one non-hidden chapter."));
+    }
+  }
   else
   {
     KMessageBox::sorry(this,
-                       i18n("You should have atleast one chapter."));
+                       i18n("You should have at least one chapter."));
   }
 }
 

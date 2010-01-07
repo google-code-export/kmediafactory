@@ -57,7 +57,7 @@ class KMFMenu : public KMFTemplateBase
     QList<KMFMenuPage*>* titlePages(int title);
     QDomElement getPage(const QDomNode& node, const QString& name);
     bool addPage(const QDomElement& element, int pageSet,
-                int title, int chapter);
+                int title, int chapter, const KMF::MediaObject* mob);
 
   private:
     void progress(int points);

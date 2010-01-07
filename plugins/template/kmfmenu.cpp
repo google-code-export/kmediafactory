@@ -120,7 +120,7 @@ QList<KMFMenuPage*>* KMFMenu::titlePages(int title)
 }
 
 bool KMFMenu::addPage(const QDomElement& element, int pageSet,
-                      int title, int chapter)
+                      int title, int chapter, const KMF::MediaObject* mob)
 {
   bool result = false;
   KMFMenuPage* menuPage = static_cast<KMFMenuPage*>
@@ -130,6 +130,7 @@ bool KMFMenu::addPage(const QDomElement& element, int pageSet,
   {
     uint msgid = KMF::PluginInterface::messageId();
     m_interface->message(msgid, KMF::Start, i18n("Menu: %1", uiText(menuPage->objectName())));
+    menuPage->setMediaObject(mob);
     if(pageSet == 0)
       menuPage->setVmgm(true);
     titlePages(pageSet)->append(menuPage);
@@ -144,6 +145,7 @@ bool KMFMenu::addPage(const QString& name, int title, int chapter)
   QDomElement element = m_templateXML.documentElement();
   QDomElement pageElement = getPage(element.firstChild(), name);
   QList<KMF::MediaObject*> mobs = m_interface->mediaObjects();
+  const KMF::MediaObject* mob=title <= mobs.count() ? mobs.at(title-1) : 0;
   KMFMenuPage temp(this);
 
   temp.fromXML(pageElement);
@@ -152,7 +154,7 @@ bool KMFMenu::addPage(const QString& name, int title, int chapter)
   {
     for(int i = 0; i < ((mobs.count() - 1) / temp.titles()) + 1; ++i)
     {
-      if(addPage(pageElement, title, i * temp.titles(), chapter) == false)
+      if(addPage(pageElement, title, i * temp.titles(), chapter, mob) == false)
         return false;
     }
   }
@@ -164,14 +166,14 @@ bool KMFMenu::addPage(const QString& name, int title, int chapter)
           i < ((mediaObjChapterCount(title-1) - 1) / temp.chapters()) + 1;
           ++i)
       {
-        if(addPage(pageElement, title, title - 1, i * temp.chapters()) == false)
+        if(addPage(pageElement, title, title - 1, i * temp.chapters(), mob) == false)
           return false;
       }
     }
   }
   else
   {
-    return addPage(pageElement, title, title, chapter);
+    return addPage(pageElement, title, title, chapter, mob);
   }
   return true;
 }
