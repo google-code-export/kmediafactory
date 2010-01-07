@@ -239,20 +239,26 @@ void SlideshowProperties::gotPreview(const KFileItem& item,
 
 void SlideshowProperties::moveDown()
 {
-  QModelIndex item1 = slideListView->currentIndex();
-  QModelIndex item2 = m_model.index(item1.row() + 1);
-  m_model.swap(item1, item2);
-  slideListView->setCurrentIndex(item2);
-  slideListView->scrollTo(item2);
+  if(m_model.count()>1)
+  {
+    QModelIndex item1 = slideListView->currentIndex();
+    QModelIndex item2 = m_model.index(item1.row() + 1);
+    m_model.swap(item1, item2);
+    slideListView->setCurrentIndex(item2);
+    slideListView->scrollTo(item2);
+  }
 }
 
 void SlideshowProperties::moveUp()
 {
-  QModelIndex item1 = slideListView->currentIndex();
-  QModelIndex item2 = m_model.index(item1.row() - 1);
-  m_model.swap(item1, item2);
-  slideListView->setCurrentIndex(item2);
-  slideListView->scrollTo(item2);
+  if(m_model.count()>1)
+  {
+    QModelIndex item1 = slideListView->currentIndex();
+    QModelIndex item2 = m_model.index(item1.row() - 1);
+    m_model.swap(item1, item2);
+    slideListView->setCurrentIndex(item2);
+    slideListView->scrollTo(item2);
+  }
 }
 
 void SlideshowProperties::updateInfo()
