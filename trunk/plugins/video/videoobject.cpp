@@ -224,7 +224,7 @@ QTime VideoObject::chapterTime(int chap) const
   return chapter(chap).start();
 }
 
-int VideoObject::chapterAdjust(int chapter) const
+int VideoObject::chapterId(int chapter) const
 {
   int i = 0;
   int adjust = 0;
@@ -241,7 +241,7 @@ int VideoObject::chapterAdjust(int chapter) const
       break;
   }
 
-  return adjust;
+  return chapter+adjust;
 }
 
 QStringList VideoObject::files() const

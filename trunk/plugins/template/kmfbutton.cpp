@@ -93,7 +93,7 @@ void KMFButton::writeDvdAuthorXml(QDomText& element, QString type, const KMF::Me
         chapter = m_jump.chapter();
       else
         chapter = 1;
-      s += QString("title 1 chapter %1 ").arg(chapter+(mob ? mob->chapterAdjust(chapter) : 0));
+      s += QString("title 1 chapter %1 ").arg(mob ? mob->chapterId(chapter) : chapter);
     }
     else
     {
