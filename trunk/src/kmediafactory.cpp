@@ -547,10 +547,10 @@ void KMediaFactory::showPage(int page)
 {
   switch(page)
   {
-    case 0: m_janus->setCurrentPage(m_projectPageItem); break;
-    case 1: m_janus->setCurrentPage(m_mediaPageItem); break;
-    case 2: m_janus->setCurrentPage(m_templatePageItem); break;
-    case 3: m_janus->setCurrentPage(m_ouputPageItem); break;
+    case Project: m_janus->setCurrentPage(m_projectPageItem); break;
+    case Media: m_janus->setCurrentPage(m_mediaPageItem); break;
+    case Template: m_janus->setCurrentPage(m_templatePageItem); break;
+    case Output: m_janus->setCurrentPage(m_ouputPageItem); break;
   }
 }
 
