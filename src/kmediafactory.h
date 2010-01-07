@@ -52,7 +52,7 @@ class KMediaFactory : public KXmlGuiWindow
     Q_OBJECT
     friend class KMFApplication;
   public:
-    enum Page { Media = 0 , Template, Output };
+    enum Page { Project=0, Media , Template, Output };
 
     /**
      * Default Constructor
