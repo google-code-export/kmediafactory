@@ -226,22 +226,22 @@ QTime VideoObject::chapterTime(int chap) const
 
 int VideoObject::chapterId(int chapter) const
 {
-  int i = 0;
-  int adjust = 0;
+    int i = 0;
+    int adjust = 0;
 
-  for(QDVD::CellList::ConstIterator it = m_cells.begin();
-      it != m_cells.end(); ++it)
-  {
-    if((*it).isChapter())
-        if((*it).isHidden())
-            adjust++;
-        else
-            i++;
-    if(i == chapter)
-      break;
-  }
-
-  return chapter+adjust;
+    for (QDVD::CellList::ConstIterator it = m_cells.begin(); it != m_cells.end(); ++it) {
+        if ((*it).isChapter()) {
+            if ((*it).isHidden()) {
+                adjust++;
+            } else {
+                i++;
+            }
+        }
+        if (i == chapter) {
+            break;
+        }
+    }
+    return chapter + adjust;
 }
 
 QStringList VideoObject::files() const
