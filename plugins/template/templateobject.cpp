@@ -80,7 +80,7 @@ TemplateObject::TemplateObject(const QString& templateFile, QObject* parent):
      m_menu.templateStore()->hasFile("settings.ui"))
   {
     m_templateProperties = new KAction(KIcon("document-properties"),
-                                       i18n("&Properties"),this);
+                                       i18n("Properties"),this);
     plugin()->actionCollection()->addAction("tob_properties",
            m_templateProperties);
     connect(m_templateProperties, SIGNAL(triggered()), SLOT(slotProperties()));
