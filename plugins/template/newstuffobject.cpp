@@ -31,7 +31,7 @@ NewStuffObject::NewStuffObject(QObject* parent):
   KMF::TemplateObject(parent), m_newstuff(0)
 {
   setObjectName("newstuff");
-  setTitle(i18n("Get more..."));
+  setTitle(i18n("Get More..."));
   interface()->addTemplateObject(this);
 }
 

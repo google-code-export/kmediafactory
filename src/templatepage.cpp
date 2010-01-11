@@ -181,7 +181,7 @@ void TemplatePage::imageContextMenuRequested(const QPoint& pos)
 {
   QMenu popup;
   QAction* action;
-  QAction* saveAction = new QAction(i18n("Save image"), this);
+  QAction* saveAction = new QAction(i18n("Save Image"), this);
   QAction* scaledAction = new QAction(i18n("Scaled"), this);
   int selected = templates->selectionModel()->selection().indexes()[0].row();
   KMF::TemplateObject* ob = kmfApp->project()->templateObjects()->at(selected);
