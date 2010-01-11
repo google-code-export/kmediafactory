@@ -29,6 +29,7 @@
 #include <KMessageBox>
 #include <QComboBox>
 #include <QLineEdit>
+#include <QPainter>
 
 ProjectOptions::ProjectOptions(QWidget* parent) :
   QWidget(parent), titleChangesPath(false)
@@ -132,6 +133,21 @@ void ProjectOptions::typeChanged(int)
 //   }
 // }
 
+void ProjectOptions::paintEvent(QPaintEvent *ev)
+{
+    static const int constBorder=12;
+
+    QWidget::paintEvent(ev);
+    QRect    r(rect());
+    QPainter painter(this);
+    QPixmap  pix(KIcon("kmediafactory").pixmap(256, 256, QIcon::Disabled));
+
+    painter.drawPixmap(Qt::RightToLeft==layoutDirection()
+                        ? r.left()+constBorder
+                        : r.right()-(pix.width()+constBorder),
+                       r.bottom()-(pix.height()+constBorder),
+                       pix);
+}
 
 #include "projectoptions.moc"
 
