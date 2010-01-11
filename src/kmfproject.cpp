@@ -58,6 +58,14 @@ static QString fixType(const QString &type)
     return type;
 }
 
+static QString fixDirectory(const QString &directory)
+{
+  QString dir = KMF::Tools::addSlash(directory);
+  if(dir.startsWith("file://"))
+      dir = dir.mid(7);
+  return dir;
+}
+
 KMFProject::KMFProject(QObject *parent) :
   QObject(parent), m_template(0), m_output(0), m_dirty(false),
   m_loading(false), m_initializing(false), m_serial(0)
@@ -79,7 +87,7 @@ KMFProject::KMFProject(QObject *parent) :
     QDir projectDir(dir.filePath(file));
     if(!projectDir.exists())
     {
-      m_directory = projectDir.path();
+      m_directory = fixDirectory(projectDir.path());
       break;
     }
     ++i;
@@ -137,27 +145,39 @@ void KMFProject::setType(const QString& type)
 
 void KMFProject::setDirectory(const QString& directory)
 {
-  m_directory = KMF::Tools::addSlash(directory);
-  if(m_directory.startsWith("file://")) m_directory = m_directory.mid(7);
-  setDirty(KMF::Any);
+  QString dir = fixDirectory(directory);
+  if(dir!=m_directory)
+  {
+    m_directory=dir;
+    setDirty(KMF::Any);
+  }
 }
 
 void KMFProject::setTitle(const QString& title)
 {
-  m_title = title;
-  setDirty(KMF::Template);
+  if(title!=m_title)
+  {
+    m_title = title;
+    setDirty(KMF::Template);
+  }
 }
 
 void KMFProject::setTemplateObj(KMF::TemplateObject* tmplate)
 {
-  m_template = tmplate;
-  setDirty(KMF::Template);
+  if(tmplate!=m_template)
+  {
+    m_template = tmplate;
+    setDirty(KMF::Template);
+  }
 }
 
 void KMFProject::setOutput(KMF::OutputObject* output)
 {
-  m_output = output;
-  setDirty(KMF::Output);
+  if(output!=m_output)
+  {
+    m_output = output;
+    setDirty(KMF::Output);
+  }
 }
 
 void KMFProject::init()
@@ -217,8 +237,7 @@ void KMFProject::fromXML(QString xml)
   doc.setContent(xml);
   QDomElement element = doc.documentElement();
   m_type = fixType(element.attribute("type"));
-  m_directory = element.attribute("dir");
-  if(m_directory.startsWith("file://")) m_directory = m_directory.mid(7);
+  m_directory = fixDirectory(element.attribute("dir"));
   m_title = element.attribute("title");
   m_serial = element.attribute("serial").toInt();
 
