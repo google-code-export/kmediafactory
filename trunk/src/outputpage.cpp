@@ -134,6 +134,7 @@ void OutputPage::stop()
   kmfApp->interface()->message(KMF::Root, KMF::Error, i18n("User cancelled."));
   kmfApp->interface()->setStopped(true);
   ThreadWeaver::Weaver::instance()->requestAbort();
+  finished();
 }
 
 void OutputPage::start(QAction* type)
