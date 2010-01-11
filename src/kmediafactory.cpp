@@ -92,7 +92,7 @@ KMediaFactory::KMediaFactory()
   for(int i = 0; i < list.size(); ++i)
   {
     QWidget* w = static_cast<QWidget*>(list[i]);
-    if (qstrcmp(w->metaObject()->className(), "QWidget") == 0)
+    if (qstrcmp(w->metaObject()->className(), "KDEPrivate::KPageListView") == 0)
       m_janusIconList = w;
   }
 
@@ -534,6 +534,7 @@ void KMediaFactory::enableUi(bool enabled)
   toolBar()->setEnabled(enabled);
   if(m_janusIconList)
     m_janusIconList->setEnabled(enabled);
+  projectPage->setEnabled(enabled); 
   mediaPage->mediaFiles->setEnabled(enabled);
   mediaPage->mediaButtons->setEnabled(enabled);
   templatePage->templates->setEnabled(enabled);
