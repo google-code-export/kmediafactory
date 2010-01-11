@@ -216,7 +216,7 @@ void OutputPage::currentPageChanged(KPageWidgetItem* current, KPageWidgetItem*)
   else
     startButton->setMenu(0);
 
-  if (current->parent() == this)
+  if (/*current->parent() == this*/ isVisible())
   {
     startButton->setEnabled(kmfApp->project()->mediaObjects()->count() > 0);
     progressBar->setValue(0);

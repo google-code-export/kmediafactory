@@ -101,7 +101,7 @@ void TemplatePage::selectionChanged(const QItemSelection& selected,
 void TemplatePage::currentPageChanged(KPageWidgetItem* current,
                                       KPageWidgetItem*)
 {
-  if (current->parent() == this &&
+  if (/*current->parent() == this &&*/isVisible() &&
       (templatePreview->image().size() == QSize(0,0) ||
       m_lastUpdate <
       kmfApp->project()->lastModified(KMF::Media)))
