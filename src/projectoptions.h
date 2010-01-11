@@ -39,6 +39,9 @@ class ProjectOptions : public QWidget, public Ui::ProjectOptions
     void typeChanged(int);
 
   private:
+    void paintEvent(QPaintEvent *);
+
+  private:
     bool titleChangesPath;
     QString m_type;
     QString m_saved;
