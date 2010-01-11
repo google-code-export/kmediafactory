@@ -87,7 +87,10 @@ void TemplatePage::selectionChanged(const QItemSelection& selected,
       if(ob->clicked() == false)
       {
         m_menu = 0;
-        kmfApp->project()->setTemplateObj(ob);
+        // If signals are blocked, then we're here because of projectInit - and this is called
+        // when a project is loaded, to set the tempate object here.
+        if(templates->signalsBlocked())
+            kmfApp->project()->setTemplateObj(ob);
         updatePreview(index.row());
       }
       else
