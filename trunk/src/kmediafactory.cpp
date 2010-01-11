@@ -170,7 +170,7 @@ void KMediaFactory::setupActions()
   KStandardAction::quit(this, SLOT(quit()), actionCollection());
 
   // KNewStuff
-  action = new KAction(KIcon("get-hot-new-stuff"), i18n("&Get new tools"),this);
+  action = new KAction(KIcon("get-hot-new-stuff"), i18n("Get new tools"),this);
   actionCollection()->addAction("newstuff", action);
   connect(action, SIGNAL(triggered()), SLOT(newStuff()));
 
@@ -185,7 +185,7 @@ void KMediaFactory::setupActions()
   setStandardToolBarMenuEnabled(true);
 
   // Media file menu
-  action = new KAction(KIcon("edit-delete"), i18n("&Delete"), this);
+  action = new KAction(KIcon("edit-delete"), i18n("Delete"), this);
   action->setShortcut(Qt::Key_Delete);
   actionCollection()->addAction("delete", action);
   connect(action, SIGNAL(triggered()), SLOT(itemDelete()));
