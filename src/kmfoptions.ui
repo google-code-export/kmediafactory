@@ -37,12 +37,12 @@
     <widget class="QComboBox" name="kcfg_DefaultProjectType">
      <item>
       <property name="text">
-       <string>DVD-PAL</string>
+       <string>DVD-NTSC</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>DVD-NTSC</string>
+       <string>DVD-PAL</string>
       </property>
      </item>
     </widget>
