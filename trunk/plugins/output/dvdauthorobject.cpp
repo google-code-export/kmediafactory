@@ -155,7 +155,7 @@ DvdAuthorObject::DvdAuthorObject(QObject* parent)
   : OutputObject(parent)
 {
   setObjectName("dvdauthor");
-  setTitle(i18n("DVDAuthor project"));
+  setTitle(i18n("DVDAuthor Project"));
 }
 
 DvdAuthorObject::~DvdAuthorObject()
