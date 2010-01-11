@@ -42,6 +42,22 @@ void addMap(QMap<S, T>* map, const QMap<S, T>& add)
     map->insert(keys[i], add[keys[i]]);
 }
 
+// KConfigXT when used with a combobox, only saves the combos current *index*
+// to the config file - not the current combo text. This causes KMediaFactory
+// headaches, as when the template is initialised (via the preinit signal), it
+// checks if the string starts with "DVD", if not it calls the NewStuff plugin.
+//
+// Therefore, convert '0' to 'DVD-NTSC' (as its the first entry in the combo), and
+// '1' to 'DVD-PAL'
+static QString fixType(const QString &type)
+{
+    if (QString::fromLatin1("0")==type)
+        return QString::fromLatin1("DVD-NTSC");
+    else if (QString::fromLatin1("1")==type)
+        return QString::fromLatin1("DVD-PAL");
+    return type;
+}
+
 KMFProject::KMFProject(QObject *parent) :
   QObject(parent), m_template(0), m_output(0), m_dirty(false),
   m_loading(false), m_initializing(false), m_serial(0)
@@ -50,7 +66,7 @@ KMFProject::KMFProject(QObject *parent) :
   m_lastModified[ModTemplate].setTime_t(0);
   m_lastModified[ModOutput].setTime_t(0);
 
-  m_type = KMediaFactorySettings::defaultProjectType();
+  m_type = fixType(KMediaFactorySettings::defaultProjectType());
   m_title = i18n("Untitled");
 
   QDir dir(KMediaFactorySettings::defaultProjectDirectory().path());
@@ -112,7 +128,7 @@ void KMFProject::setType(const QString& type)
 {
   if(type != m_type)
   {
-    m_type = type;
+    m_type = fixType(type);
     emit preinit(m_type);
     m_list.clear();
     emit init(type);
@@ -200,7 +216,7 @@ void KMFProject::fromXML(QString xml)
   QDomDocument doc("kmf_project");
   doc.setContent(xml);
   QDomElement element = doc.documentElement();
-  m_type = element.attribute("type");
+  m_type = fixType(element.attribute("type"));
   m_directory = element.attribute("dir");
   if(m_directory.startsWith("file://")) m_directory = m_directory.mid(7);
   m_title = element.attribute("title");
