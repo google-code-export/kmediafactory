@@ -26,6 +26,7 @@
 #include <QString>
 #include <QDateTime>
 #include <kmfobjectlistmodel.h>
+#include <qdvdinfo.h>
 
 class KMFProject : public QObject
 {
@@ -45,6 +46,8 @@ class KMFProject : public QObject
     const QString& type() const { return m_type; };
     QMap<QString, QString> subTypes() const;
     void setType(const QString& type);
+    QDVD::VideoTrack::AspectRatio aspectRatio() const { return m_aspectRatio; }
+    void setAspectRatio(QDVD::VideoTrack::AspectRatio ar);
     QString directory(const QString& subDir = "", bool create = true) const;
     void setDirectory(const QString& directory);
     const QString& title() const { return m_title; };
@@ -89,6 +92,7 @@ class KMFProject : public QObject
     enum Modified { ModMedia = 0, ModTemplate = 1, ModOutput = 2, ModLast = 3 };
 
     QString m_type;
+    QDVD::VideoTrack::AspectRatio m_aspectRatio;
     QString m_directory;
     QString m_title;
     KMFObjectListModel<KMF::MediaObject*> m_list;

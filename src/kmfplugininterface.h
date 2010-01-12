@@ -57,6 +57,7 @@ class KMFPluginInterface : public KMF::PluginInterface
     virtual void setTitle(QString title);
     virtual QString projectDir(const QString& subDir = "");
     virtual QString projectType();
+    virtual QDVD::VideoTrack::AspectRatio aspectRatio() const;
     virtual void setDirty(KMF::DirtyType type);
     virtual void setModified(KMF::DirtyType type);
     virtual QString lastSubType();

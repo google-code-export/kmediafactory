@@ -459,6 +459,8 @@ QVariant VideoObject::writeDvdAuthorXml(QVariantList args) const
   QDomElement titles = doc.createElement("titles");
   QDomElement video = doc.createElement("video");
   video.setAttribute("aspect", QDVD::VideoTrack::aspectRatioString(m_aspect));
+  if(QDVD::VideoTrack::Aspect_16_9==m_aspect)
+    video.setAttribute("widescreen", "nopanscan");
   titles.appendChild(video);
 
   i = 0;
@@ -787,7 +789,8 @@ QImage VideoObject::preview(int chap) const
     ++counter;
   }
 
-  QSize templateRatio = QSize(4, 3);
+  QSize templateRatio = (interface()->aspectRatio() == QDVD::VideoTrack::Aspect_4_3) ?
+                          QSize(4, 3) : QSize(16, 9);
   QSize videoRatio = (aspect() == QDVD::VideoTrack::Aspect_4_3) ?
                           QSize(4, 3) : QSize(16, 9);
   QSize imageRatio = KMF::Tools::guessRatio(img.size(), videoRatio);

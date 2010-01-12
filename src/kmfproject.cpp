@@ -42,6 +42,11 @@ void addMap(QMap<S, T>* map, const QMap<S, T>& add)
     map->insert(keys[i], add[keys[i]]);
 }
 
+static QDVD::VideoTrack::AspectRatio toAspectRatio(const QString &ar)
+{
+    return ar==QDVD::VideoTrack::aspectRatioString(QDVD::VideoTrack::Aspect_16_9) ? QDVD::VideoTrack::Aspect_16_9 : QDVD::VideoTrack::Aspect_4_3;
+}
+
 // KConfigXT when used with a combobox, only saves the combos current *index*
 // to the config file - not the current combo text. This causes KMediaFactory
 // headaches, as when the template is initialised (via the preinit signal), it
@@ -67,7 +72,7 @@ static QString fixDirectory(const QString &directory)
 }
 
 KMFProject::KMFProject(QObject *parent) :
-  QObject(parent), m_template(0), m_output(0), m_dirty(false),
+  QObject(parent), m_aspectRatio(QDVD::VideoTrack::Aspect_4_3), m_template(0), m_output(0), m_dirty(false),
   m_loading(false), m_initializing(false), m_serial(0)
 {
   m_lastModified[ModMedia].setTime_t(0);
@@ -140,6 +145,15 @@ void KMFProject::setType(const QString& type)
     emit preinit(m_type);
     m_list.clear();
     emit init(type);
+  }
+}
+
+void KMFProject::setAspectRatio(QDVD::VideoTrack::AspectRatio ar)
+{
+  if(ar!=m_aspectRatio)
+  {
+    m_aspectRatio=ar;
+    setDirty(KMF::Any);
   }
 }
 
@@ -237,6 +251,7 @@ void KMFProject::fromXML(QString xml)
   doc.setContent(xml);
   QDomElement element = doc.documentElement();
   m_type = fixType(element.attribute("type"));
+  m_aspectRatio = toAspectRatio(element.attribute("aspect"));
   m_directory = fixDirectory(element.attribute("dir"));
   m_title = element.attribute("title");
   m_serial = element.attribute("serial").toInt();
@@ -300,6 +315,7 @@ QString KMFProject::toXML()
 
   QDomElement root=doc.createElement("project");
   root.setAttribute("type", m_type);
+  root.setAttribute("aspect", QDVD::VideoTrack::aspectRatioString(m_aspectRatio));
   root.setAttribute("dir", m_directory);
   root.setAttribute("title", m_title);
   root.setAttribute("serial", m_serial);

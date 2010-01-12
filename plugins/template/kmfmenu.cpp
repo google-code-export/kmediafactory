@@ -56,7 +56,12 @@ QDomElement KMFMenu::writeDvdAuthorXml(const QString& type, int titleset) const
   {
     QDomDocument doc;
     QDomElement result = doc.createElement("menus");
+    QDomElement video = doc.createElement("video");
     QList<KMF::MediaObject*> mobs = m_interface->mediaObjects();
+    video.setAttribute("aspect",QDVD::VideoTrack::aspectRatioString(m_interface->aspectRatio()));
+    if(QDVD::VideoTrack::Aspect_16_9==m_interface->aspectRatio())
+        video.setAttribute("widescreen", "nopanscan");
+    result.appendChild(video);
 
     if (titleset == 0) {
       int j = 1;
