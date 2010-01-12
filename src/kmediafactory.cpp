@@ -233,9 +233,23 @@ void KMediaFactory::connectProject()
 
 void KMediaFactory::itemDelete()
 {
-  QModelIndex i = mediaPage->mediaFiles->currentIndex();
-  kmfApp->project()->mediaObjects()->removeAt(i);
-  kmfApp->project()->setDirty(KMF::Media);
+  // Dont delete media object if the media page is not visible!
+  if(mediaPage->isVisible())
+  {
+    QModelIndex i = mediaPage->mediaFiles->currentIndex();
+
+    if(i.isValid())
+    {
+       KMF::MediaObject *mob=kmfApp->project()->mediaObjects()->at(i);
+
+       if(mob && KMessageBox::Yes==KMessageBox::warningYesNo(mediaPage, i18n("Remove \"%1\" from project?", mob->text()),
+                                                             i18n("Remove Media")))
+       {
+         kmfApp->project()->mediaObjects()->removeAt(i);
+         kmfApp->project()->setDirty(KMF::Media);
+       }
+    }
+  }
 }
 
 void KMediaFactory::newStuff()
