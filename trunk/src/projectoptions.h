@@ -37,6 +37,7 @@ class ProjectOptions : public QWidget, public Ui::ProjectOptions
     void titleChanged(const QString&);
     void directoryChanged(const QString&);
     void typeChanged(int);
+    void aspectChanged(int idx);
 
   private:
     void paintEvent(QPaintEvent *);

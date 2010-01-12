@@ -352,6 +352,14 @@ QString KMFPluginInterface::projectType()
   return QString();
 }
 
+QDVD::VideoTrack::AspectRatio KMFPluginInterface::aspectRatio() const
+{
+  if (kmfApp->project()) {
+    return kmfApp->project()->aspectRatio();
+  }
+  return QDVD::VideoTrack::Aspect_4_3;
+}
+
 QString KMFPluginInterface::lastSubType()
 {
   if (kmfApp->project()) {

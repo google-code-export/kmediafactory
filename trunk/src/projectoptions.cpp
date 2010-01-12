@@ -30,6 +30,7 @@
 #include <QComboBox>
 #include <QLineEdit>
 #include <QPainter>
+#include <qdvdinfo.h>
 
 ProjectOptions::ProjectOptions(QWidget* parent) :
   QWidget(parent), titleChangesPath(false)
@@ -56,6 +57,8 @@ void ProjectOptions::init()
           this, SLOT(directoryChanged(const QString&)));
   connect(typeComboBox, SIGNAL(currentIndexChanged(int)),
           this, SLOT(typeChanged(int)));
+  connect(aspectComboBox, SIGNAL(currentIndexChanged(int)),
+          this, SLOT(aspectChanged(int)));
 }
 
 void ProjectOptions::setData(const KMFProject& project)
@@ -70,6 +73,7 @@ void ProjectOptions::setData(const KMFProject& project)
       break;
     }
   }
+  aspectComboBox->setCurrentIndex(project.aspectRatio());
   QDir dir(directoryUrl->url().prettyUrl());
   titleChangesPath = dir.dirName().startsWith(i18n("Project"));
   m_saved = dir.dirName();
@@ -111,26 +115,10 @@ void ProjectOptions::typeChanged(int)
     kmfApp->project()->setType(typeComboBox->currentText());
 }
 
-// void ProjectOptions::slotOk()
-// {
-//   if(m_count == 0 || m_type == typeComboBox->currentText())
-//     accept();
-//   else
-//   {
-//     switch(KMessageBox::warningYesNo(this,
-//            i18n("Media files will be removed from the project"
-//                 " when project type changes. Continue?")))
-//     {
-//       case KMessageBox::Yes :
-//         accept();
-//         break;
-//       case KMessageBox::No :
-//       default:
-//         return;
-//         break;
-//     }
-//   }
-// }
+void ProjectOptions::aspectChanged(int idx)
+{
+    kmfApp->project()->setAspectRatio((QDVD::VideoTrack::AspectRatio)idx);
+}
 
 void ProjectOptions::paintEvent(QPaintEvent *ev)
 {
