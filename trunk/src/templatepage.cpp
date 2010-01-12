@@ -69,7 +69,7 @@ void TemplatePage::projectInit()
   templates->blockSignals(false);
 }
 
-void TemplatePage::selectionChanged(const QItemSelection& selected, 
+void TemplatePage::selectionChanged(const QItemSelection& selected,
                                     const QItemSelection& deselected)
 {
   if (selected.indexes().count() == 0)
@@ -101,6 +101,7 @@ void TemplatePage::selectionChanged(const QItemSelection& selected,
 void TemplatePage::currentPageChanged(KPageWidgetItem* current,
                                       KPageWidgetItem*)
 {
+  Q_UNUSED(current)
   if (/*current->parent() == this &&*/isVisible() &&
       (templatePreview->image().size() == QSize(0,0) ||
       m_lastUpdate <

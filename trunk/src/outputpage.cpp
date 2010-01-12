@@ -52,7 +52,7 @@ OutputPage::OutputPage(QWidget *parent) :
   connect(&m_startPopup, SIGNAL(triggered(QAction*)),
            this, SLOT(start(QAction*)));
   connect(ThreadWeaver::Weaver::instance(), SIGNAL(finished()), this, SLOT(finished()));
-  connect(ThreadWeaver::Weaver::instance(), SIGNAL(jobDone(ThreadWeaver::Job *)), 
+  connect(ThreadWeaver::Weaver::instance(), SIGNAL(jobDone(ThreadWeaver::Job *)),
           this, SLOT(jobDone(ThreadWeaver::Job *)));
   m_model = new QStandardItemModel();
   progressListView->setModel(m_model);
@@ -78,7 +78,7 @@ void OutputPage::projectInit()
   outputs->blockSignals(false);
 }
 
-void OutputPage::selectionChanged(const QItemSelection& selected, 
+void OutputPage::selectionChanged(const QItemSelection& selected,
                                   const QItemSelection& deselected)
 {
   if (selected.indexes().count() == 0)
@@ -198,6 +198,7 @@ void OutputPage::finished()
 
 void OutputPage::currentPageChanged(KPageWidgetItem* current, KPageWidgetItem*)
 {
+  Q_UNUSED(current)
   QMap<QString, QString> types = kmfApp->project()->subTypes();
 
   m_startPopup.clear();
@@ -276,7 +277,7 @@ void OutputPage::message(uint id, KMF::MsgType type, const QString& msg)
     case KMF::Done:
       parent->setData(0, KMFProgressItemDelegate::MaxRole);
       parent->setData(0, KMFProgressItemDelegate::ValueRole);
-      parent->setData(KIcon(parent->data(KMFProgressItemDelegate::ResultRole).toString()), 
+      parent->setData(KIcon(parent->data(KMFProgressItemDelegate::ResultRole).toString()),
                       Qt::DecorationRole);
       return; // We are done here
     case KMF::Root:
@@ -293,7 +294,7 @@ void OutputPage::message(uint id, KMF::MsgType type, const QString& msg)
     item->setData("dialog-ok", KMFProgressItemDelegate::ResultRole);
     item->setData(color, KMFProgressItemDelegate::ColorRole);
     parent->appendRow(item);
-  
+
     if (id == KMF::Root)
     {
       m_items.clear();
@@ -348,8 +349,8 @@ void OutputPage::makeLog()
       .arg(KGlobal::mainComponent().aboutData()->version());
   QString tmp;
 
-  foreach (const QStandardItem* item, 
-           m_model->findItems("*", Qt::MatchWildcard | Qt::MatchRecursive)) 
+  foreach (const QStandardItem* item,
+           m_model->findItems("*", Qt::MatchWildcard | Qt::MatchRecursive))
   {
     tmp = item->text();
     QColor color = item->data(KMFProgressItemDelegate::ColorRole).value<QColor>();
