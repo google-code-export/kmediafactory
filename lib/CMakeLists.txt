@@ -11,7 +11,6 @@ set(kmf_LIB_SRCS
   dvdauthorparser.cpp
   kmfimageview.cpp
   kmftime.cpp
-  kmffontchooser.cpp
   kmftools.cpp
   kmfmultiurldialog.cpp
   qdvdinfo.cpp
@@ -27,7 +26,6 @@ set(kmf_HEADERS
   dvdauthorparser.h
   kmfimageview.h
   kmftime.h
-  kmffontchooser.h
   kmftools.h
   kmfmultiurldialog.h
   qdvdinfo.h

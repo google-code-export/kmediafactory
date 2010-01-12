@@ -8,12 +8,6 @@ WhatsThis=KMediaFactory image viewer
 Group=KMediaFactory (KDE)
 ConstructorArgs=(parent)
 
-[KMFFontChooser]
-ToolTip=Font Chooser Widget (KMF)
-WhatsThis=Font chooser widget
-Group=KMediaFactory (KDE)
-ConstructorArgs=(parent)
-
 [KMFLanguageComboBox]
 ToolTip=Language ComboBox (KMF)
 WhatsThis=KMediaFactory language combobox

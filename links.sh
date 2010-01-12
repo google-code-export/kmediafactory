@@ -60,7 +60,6 @@ FILES=(
 "lib/libkmf.so.$VERSION"
 "lib/libkmediafactorykstore.so.$VERSION"
 "lib/libkmediafactoryinterfaces.so.$VERSION"
-"share/apps/kmfwidgets/pics/kmffontchooser.png"
 "share/apps/kmfwidgets/pics/kmfimageview.png"
 "share/apps/kmfwidgets/pics/kmflanguagecombobox.png"
 "share/apps/kmfwidgets/pics/kmflanguagelistbox.png"
