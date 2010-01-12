@@ -19,7 +19,7 @@
 //**************************************************************************
 #include "subtitleoptions.h"
 #include "kmflanguagewidgets.h"
-#include "kmffontchooser.h"
+#include <KFontRequester>
 #include <KUrlRequester>
 #include <KFontDialog>
 #include <KMessageBox>
@@ -52,7 +52,7 @@ void SubtitleOptions::getData(QDVD::Subtitle& obj) const
 
   obj.setLanguage(m_languageModel.at(n));
   obj.setFile(subtitleUrl->url().pathOrUrl());
-  obj.setFont(subtitleFontChooser->font());
+  obj.setFont(subtitleFont->font());
   obj.setEncoding(encodingCombo->currentText());
 
   align =  ver[verticalAlignCombo->currentIndex()];
@@ -71,7 +71,7 @@ void SubtitleOptions::setData(const QDVD::Subtitle& obj)
   QModelIndex i = m_languageModel.index(obj.language());
   languageCombo->setCurrentIndex(i.row());
   subtitleUrl->setUrl(obj.file());
-  subtitleFontChooser->setFont(obj.font());
+  subtitleFont->setFont(obj.font());
   encodingCombo->setCurrentIndex(encodingCombo->findText(obj.encoding()));
 
   switch(obj.alignment() & Qt::AlignVertical_Mask)

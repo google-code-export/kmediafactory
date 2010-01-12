@@ -1,5 +1,4 @@
 set(kmfwidgets_PICS
-	kmffontchooser.png
 	kmfimageview.png
 	kmflanguagecombobox.png
 	kmflanguagelistbox.png
