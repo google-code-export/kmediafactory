@@ -49,9 +49,6 @@
     </widget>
    </item>
    <item>
-    <widget class="SizeWidget" name="sizeWidget" native="true"/>
-   </item>
-   <item>
     <widget class="QListView" name="mediaFiles">
      <property name="focusPolicy">
       <enum>Qt::StrongFocus</enum>
@@ -72,11 +69,6 @@
  <layoutdefault spacing="6" margin="11"/>
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
  <customwidgets>
-  <customwidget>
-   <class>SizeWidget</class>
-   <extends>QWidget</extends>
-   <header>sizewidget.h</header>
-  </customwidget>
   <customwidget>
    <class>KMFToolBar</class>
    <extends>QFrame</extends>

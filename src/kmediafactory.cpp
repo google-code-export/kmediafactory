@@ -30,6 +30,7 @@
 #include "kmfoptions.h"
 #include "tools.h"
 #include "kmediafactorysettings.h"
+#include "sizewidget.h"
 #include <kmfimageview.h>
 #include <kmftools.h>
 #include <run.h>
@@ -62,6 +63,7 @@
 #include <KToggleAction>
 #include <KShortcutsDialog>
 #include <KToolBar>
+#include <KStatusBar>
 
 #include <QLabel>
 #include <QObject>
@@ -145,6 +147,15 @@ KMediaFactory::KMediaFactory()
 
   // Do some things later
   //QTimer::singleShot(0, this, SLOT(initGUI()));
+
+  KStatusBar *sb=statusBar();
+  QLabel     *details=new QLabel(this);
+  SizeWidget *sw=new SizeWidget(this);
+
+  connect(mediaPage, SIGNAL(details(const QString &)), details, SLOT(setText(const QString &)));
+  connect(mediaPage, SIGNAL(sizes(quint64, quint64)), sw, SLOT(setSizes(quint64, quint64)));
+  sb->addPermanentWidget(details);
+  sb->addPermanentWidget(sw);
 }
 
 KMediaFactory::~KMediaFactory()

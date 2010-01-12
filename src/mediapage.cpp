@@ -48,13 +48,27 @@ MediaPage::~MediaPage()
 
 void MediaPage::projectInit()
 {
-  calculateSizes();
+  mediaModified();
   mediaFiles->setModel(kmfApp->project()->mediaObjects());
 }
 
 void MediaPage::mediaModified()
 {
   calculateSizes();
+
+  QList<KMF::MediaObject*> mobs = kmfApp->project()->mediaObjects()->list();
+  KMF::MediaObject         *mob;
+  QTime                    duration;
+
+  foreach(mob, mobs)
+    duration = duration.addMSecs((mob->duration().hour()*60*60*1000)+
+                                 (mob->duration().minute()*60*1000)+
+                                 (mob->duration().second()*1000)+
+                                  mob->duration().msec());
+
+  emit details(i18n("Titles: %1 Duration: %2",
+                    mobs.count(),
+                    KGlobal::locale()->formatTime(duration, true, true)));
 }
 
 void MediaPage::contextMenuRequested(const QPoint &pos)
@@ -83,8 +97,8 @@ void MediaPage::contextMenuRequested(const QPoint &pos)
 
 void MediaPage::calculateSizes()
 {
-  uint64_t max = 4700372992LL;
-  uint64_t size = 0;
+  quint64 max = 4700372992LL;
+  quint64 size = 0;
 
   if(kmfApp->project())
   {
@@ -95,8 +109,8 @@ void MediaPage::calculateSizes()
       size += mob->size();
     size += mobs.size() * 200 * 1024; // Not very good estimate...
   }
-  sizeWidget->setMax(max);
-  sizeWidget->setSize(size);
+
+  emit sizes(max, size);
 }
 
 #include "mediapage.moc"

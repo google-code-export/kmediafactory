@@ -20,27 +20,32 @@
 #ifndef SIZEWIDGET_H
 #define SIZEWIDGET_H
 
-#include <ui_sizewidget.h>
+#include <KDE/KSqueezedTextLabel>
 #include <stdint.h>
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
 
-class SizeWidget : public QWidget, public Ui::SizeWidget
+class SizeWidget : public KSqueezedTextLabel
 {
     Q_OBJECT
   public:
     SizeWidget(QWidget* parent = 0);
     virtual ~SizeWidget();
 
-    void setMax(uint64_t max) { m_max = max; update(); };
-    void setSize(uint64_t size) { m_size = size; update(); };
-    void update();
+    void paintEvent(QPaintEvent *ev);
+
+  public Q_SLOTS:
+    void setSizes(quint64 max, quint64 size);
 
   private:
-    uint64_t m_max;
-    uint64_t m_size;
+    void updateLabel();
+
+  private:
+    QString m_label;
+    quint64 m_max;
+    quint64 m_size;
 };
 
 #endif

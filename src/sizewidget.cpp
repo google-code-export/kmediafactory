@@ -17,54 +17,130 @@
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
+
 #include "sizewidget.h"
-#include "kmftools.h"
-#include <KDebug>
-#include <QLabel>
-#include <QSplitter>
+#include <KDE/KLocale>
+#include <KDE/KColorScheme>
+#include <KDE/KColorUtils>
+#include <KDE/KGlobal>
+#include <QtGui/QPainter>
+
+static QPainterPath buildPath(const QRectF &r, bool roundLeft=false, bool roundRight=false)
+{
+    QPainterPath path;
+    double       radius=r.height()*0.4,
+                 diameter(radius*2);
+
+    if (roundRight)
+    {
+        path.moveTo(r.x()+r.width(), r.y()+r.height()-radius);
+        path.arcTo(r.x()+r.width()-diameter, r.y(), diameter, diameter, 0, 90);
+    }
+    else
+    {
+        path.moveTo(r.x()+r.width(), r.y()+r.height());
+        path.lineTo(r.x()+r.width(), r.y());
+    }
+
+    if (roundLeft)
+    {
+        path.arcTo(r.x(), r.y(), diameter, diameter, 90, 90);
+        path.arcTo(r.x(), r.y()+r.height()-diameter, diameter, diameter, 180, 90);
+    }
+    else
+    {
+        path.lineTo(r.x(), r.y());
+        path.lineTo(r.x(), r.y()+r.height());
+    }
+
+    if (roundRight)
+        path.arcTo(r.x()+r.width()-diameter, r.y()+r.height()-diameter, diameter, diameter, 270, 90);
+    else
+        path.lineTo(r.x()+r.width(), r.y()+r.height());
+
+    return path;
+}
+
+static void buildGrad(QLinearGradient &grad, const QColor &col)
+{
+    grad.setColorAt(0, KColorUtils::shade(col, 0.35)); // 1.2));
+    grad.setColorAt(0.499, KColorUtils::shade(col, -0.4)); // 0.984));
+    grad.setColorAt(0.5, KColorUtils::shade(col, -0.35)); // 0.9));
+    grad.setColorAt(1.0, col); // KColorUtils::shade(col, 0.12)); // 1.06));
+}
 
 SizeWidget::SizeWidget(QWidget* parent)
-  : QWidget(parent), m_max(0), m_size(0)
+  : KSqueezedTextLabel(parent), m_max(10), m_size(0)
 {
-  setupUi(this);
+    setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
+    setTextElideMode(Qt::RightToLeft==layoutDirection() ? Qt::ElideLeft : Qt::ElideRight);
+    setMinimumSize(128, fontMetrics().height()+2);
 }
 
 SizeWidget::~SizeWidget()
 {
 }
 
-void SizeWidget::update()
+void SizeWidget::paintEvent(QPaintEvent *ev)
 {
-  sizeTakenLabel->setText(KMF::Tools::sizeString(m_size));
-  if(m_size < m_max)
-    sizeLeftLabel->setText(KMF::Tools::sizeString(m_max - m_size));
-  else
-    sizeLeftLabel->setText(KMF::Tools::sizeString(m_size - m_max));
+    QRect           r(rect());
+    QRectF          rf(r.x()+0.5, r.y()+0.5, r.width()-1, r.height()-1);
+    QPainter        painter(this);
+    bool            exceeded=m_size > m_max,
+                    reverse=Qt::RightToLeft==layoutDirection();
+    int             used=exceeded
+                        ? (r.width()*m_max)/m_size
+                        : (r.width()*m_size)/m_max,
+                    other=r.width()-used;
+    QLinearGradient grad(r.topLeft(), r.bottomLeft());
+    KColorScheme    cs(QPalette::Active, KColorScheme::Window);
 
-  QPalette palette1;
-  palette1.setColor(sizeLeftLabel->foregroundRole(),
-                   (m_max > m_size) ? QColor(QPalette::Text) : QColor(Qt::red));
-  sizeLeftLabel->setPalette(palette1);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    if(used)
+    {
+        QColor col=cs.background(KColorScheme::PositiveBackground).color();
+        QRectF rf2(rf);
 
-  QPalette palette2;
-  palette2.setColor(sizeLeft->backgroundRole(),
-      (m_max > m_size)
-      ? sizeTakenLabel->palette().color(sizeLeft->backgroundRole())
-      : QColor(Qt::red));
-  sizeLeft->setPalette(palette2);
+        buildGrad(grad, col);
+        if(other && reverse)
+            rf2.setX(rf2.x()+other);
+        rf2.setWidth(used);
+        painter.fillPath(buildPath(rf2, !other||!reverse, !other||reverse), grad);
+    }
+    if(other)
+    {
+        QColor col=cs.background(exceeded ? KColorScheme::NegativeBackground : KColorScheme::NormalBackground).color();
+        QRectF rf2(rf);
 
-  int n = 0;
-  QList<int> sizes = sizeSplitter->sizes();
-  foreach(int size, sizes)
-  {
-    n += size;
-  }
-  if(m_size < m_max)
-    sizes[0] = (int)((double)n * ((double)m_size / (double)m_max));
-  else
-    sizes[0] = (int)((double)n * ((double)m_max / (double)m_size));
-  sizes[1] = n - sizes[0];
-  sizeSplitter->setSizes(sizes);
+        buildGrad(grad, col);
+        if(!reverse && used)
+            rf2.setX(rf2.x()+used);
+        rf2.setWidth(other);
+        painter.fillPath(buildPath(rf2, !used||reverse, !used||!reverse), grad);
+    }
+
+    KSqueezedTextLabel::paintEvent(ev);
+}
+
+void SizeWidget::setSizes(quint64 max, quint64 size)
+{
+    m_max=max;
+    m_size=size;
+    updateLabel();
+}
+
+void SizeWidget::updateLabel()
+{
+  setText(m_size>m_max
+            ? i18n("<b>Capacity (%1) exceeded by %2</b>",
+//                    KGlobal::locale()->formatByteSize(m_size),
+                   KGlobal::locale()->formatByteSize(m_max),
+//                    (100*m_size)/m_max,
+                   KGlobal::locale()->formatByteSize(m_size-m_max))
+            : i18n("%1 of %2 used (%3%)",
+                   KGlobal::locale()->formatByteSize(m_size),
+                   KGlobal::locale()->formatByteSize(m_max),
+                   (100*m_size)/m_max));
 }
 
 #include "sizewidget.moc"
