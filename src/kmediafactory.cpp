@@ -104,7 +104,7 @@ KMediaFactory::KMediaFactory()
   projectPage = new ProjectOptions;
   m_projectPageItem = new KPageWidgetItem(projectPage, i18n( "Project"));
   m_projectPageItem->setHeader(i18n("Project Settings"));
-  m_projectPageItem->setIcon(KIcon("configure"));
+  m_projectPageItem->setIcon(KIcon("kmediafactory"));
   m_janus->addPage(m_projectPageItem);
 
   // Media
