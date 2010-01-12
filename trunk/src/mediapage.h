@@ -37,7 +37,11 @@ class MediaPage : public QWidget, public Ui::MediaPage
     MediaPage(QWidget* parent = 0);
     virtual ~MediaPage();
 
-  public slots:
+  Q_SIGNALS:
+    void details(const QString &details);
+    void sizes(quint64 max, quint64 size);
+
+  public Q_SLOTS:
     void contextMenuRequested(const QPoint& pos);
     void calculateSizes();
     void projectInit();

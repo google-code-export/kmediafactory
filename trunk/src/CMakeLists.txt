@@ -20,7 +20,6 @@ set(kmediafactory_SRCS
 )
 
 kde4_add_ui_files(kmediafactory_SRCS
-	sizewidget.ui
 	tools.ui
 	kmfoptions.ui
 	mediapage.ui
