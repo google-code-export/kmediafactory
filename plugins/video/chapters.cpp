@@ -119,28 +119,37 @@ class CellListModel : public QAbstractListModel
       if (index.row() >= rowCount(index))
         return QVariant();
 
-      if (role == Qt::DisplayRole)
+      switch(role)
       {
-        switch(index.column())
-        {
-          case COL_NAME:
+        case Qt::DisplayRole:
+          switch(index.column())
+          {
+            case COL_NAME:
+              return m_data->at(index.row()).name();
+            case COL_START:
+              return KMF::Time(m_data->at(index.row()).start()).toString();
+            case COL_LENGTH:
+              if(index.row() == m_data->count() - 1)
+              {
+                KMF::Time t(m_total);
+                t -= m_data->at(index.row()).start();
+                return t.toString();
+              }
+              else
+                return KMF::Time(m_data->at(index.row()).length()).toString();
+            default:
+              break;
+          }
+          break;
+        case Qt::CheckStateRole:
+          if(COL_HIDDEN==index.column())
+            return m_data->at(index.row()).isHidden() ? Qt::Checked : Qt::Unchecked;
+          break;
+        case Qt::EditRole:
+          if(COL_NAME==index.column())
             return m_data->at(index.row()).name();
-          case COL_START:
-            return KMF::Time(m_data->at(index.row()).start()).toString();
-          case COL_LENGTH:
-            if(index.row() == m_data->count() - 1)
-            {
-              KMF::Time t(m_total);
-              t -= m_data->at(index.row()).start();
-              return t.toString();
-            }
-            else
-              return KMF::Time(m_data->at(index.row()).length()).toString();
-        }
-      }
-      else if (Qt::CheckStateRole==role && COL_HIDDEN==index.column())
-      {
-        return m_data->at(index.row()).isHidden() ? Qt::Checked : Qt::Unchecked;
+        default:
+          break;
       }
       return QVariant();
     };

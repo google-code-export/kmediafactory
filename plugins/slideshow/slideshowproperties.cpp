@@ -70,33 +70,40 @@ QVariant SlideListModel::data(const QModelIndex &index, int role) const
   if (!isValid(index))
     return QVariant();
 
-  if (role == Qt::DisplayRole)
+  switch(role)
   {
-    switch(index.column())
-    {
-      case COL_IMG:
+    case Qt::DisplayRole:
+      switch(index.column())
       {
-        QFileInfo fi(at(index).picture);
-        return fi.fileName();
+        case COL_IMG:
+        {
+          QFileInfo fi(at(index).picture);
+          return fi.fileName();
+        }
+        case COL_COMMENT:
+          return at(index).comment;
+        default:
+          break;
       }
-      case COL_COMMENT:
+      break;
+    case Qt::DecorationRole:
+      if(COL_IMG==index.column())
+      {
+        if(m_previews.keys().indexOf(at(index).picture) >= 0)
+          return m_previews[at(index).picture];
+        else
+          return QPixmap();
+      }
+      break;
+    case Qt::CheckStateRole:
+      if(COL_CHAPTER==index.column())
+        return ((at(index).chapter) ? Qt::Checked : Qt::Unchecked);
+      break;
+    case Qt::EditRole:
+      if(COL_COMMENT==index.column())
         return at(index).comment;
-    }
-  }
-  if (role == Qt::DecorationRole)
-  {
-    if(COL_IMG==index.column())
-    {
-      if(m_previews.keys().indexOf(at(index).picture) >= 0)
-        return m_previews[at(index).picture];
-      else
-        return QPixmap();
-    }
-  }
-  if (role == Qt::CheckStateRole)
-  {
-    if(COL_CHAPTER==index.column())
-      return ((at(index).chapter) ? Qt::Checked : Qt::Unchecked);
+    default:
+      break;
   }
   return QVariant();
 }
