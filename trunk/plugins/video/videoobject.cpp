@@ -696,6 +696,8 @@ QPixmap VideoObject::pixmap() const
 {
   if(m_thumbnail.isNull())
     m_thumbnail=QPixmap::fromImage(preview(MainPreview));
+  if(m_thumbnail.isNull())
+    m_thumbnail=KIO::pixmapForUrl(fileName());
   return m_thumbnail;
 }
 
