@@ -432,7 +432,7 @@ QPixmap SlideshowObject::pixmap() const
   if(m_slides.count() > 0)
   {
     if(m_thumbnail.isNull())
-        m_thumbnail=QPixmap::fromImage(preview(MainPreview));
+        m_thumbnail=QPixmap::fromImage(preview(MainPreview).scaled(96, 96, Qt::KeepAspectRatio));
     return m_thumbnail;
   }
   return KIO::pixmapForUrl(KUrl(""));

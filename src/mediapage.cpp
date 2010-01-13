@@ -25,19 +25,95 @@
 #include <kmftools.h>
 #include <KXMLGUIFactory>
 #include <KActionCollection>
-#include <KFileItemDelegate>
 #include <QPoint>
 #include <QMenu>
 #include <QTimer>
+#include <QPainter>
+#include <QStyledItemDelegate>
+
+class MediaItemDelegate : public QStyledItemDelegate
+{
+    public:
+        
+    MediaItemDelegate(QObject *p, QWidget *widget) : QStyledItemDelegate(p), m_widget(widget) { }
+    virtual ~MediaItemDelegate() { }
+    
+    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+    {
+        QSize sz(QStyledItemDelegate::sizeHint(option, index));
+        int   textHeight=m_widget->fontMetrics().height();
+        return QSize(qMax(sz.width(), constIconSize)+(constBorder*2), qMax((textHeight+constBorder)*3, sz.height()+(constBorder*2)));
+    }
+
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+    {
+        if (!index.isValid())
+            return;
+
+        QVariant dec=index.data(Qt::DecorationRole);
+        QVariant disp=index.data(Qt::DisplayRole);
+        QVariant user=index.data(Qt::UserRole);
+
+        if(QVariant::Pixmap==dec.type() && QVariant::String==disp.type() && QVariant::String==user.type())
+        {
+            m_widget->style()->drawPrimitive(QStyle::PE_PanelItemViewItem, &option, painter, 0L);
+
+            QRect                r(option.rect);
+            QFont                fnt(m_widget->font());
+            QPalette::ColorGroup cg = option.state & QStyle::State_Enabled
+                                            ? QPalette::Normal : QPalette::Disabled;
+            QPixmap              pix(dec.value<QPixmap>());
+            int                  textHeight=m_widget->fontMetrics().height(),
+                                 iconPosModX=constBorder+((constIconSize-pix.width())/2),
+                                 iconPosModY=(option.rect.height()-pix.height())/2;
+            
+            painter->drawPixmap(r.adjusted(iconPosModX, iconPosModY, iconPosModX, iconPosModY).topLeft(), pix);
+            
+            fnt.setBold(true);
+            
+            painter->setFont(fnt);
+            
+            if (QPalette::Normal==cg && !(option.state & QStyle::State_Active))
+                cg = QPalette::Inactive;
+
+            r.moveLeft(constIconSize+(constBorder*2));
+            r.moveTop(r.y()+(constBorder+textHeight));
+            painter->setPen(option.palette.color(cg, option.state&QStyle::State_Selected ? QPalette::HighlightedText : QPalette::Text));
+            painter->drawText(r.topLeft(), disp.toString());
+            r.moveTop(r.y()+(constBorder+textHeight));
+            painter->setFont(m_widget->font());
+            painter->drawText(r.topLeft(), user.toString());
+            
+            if (option.state & QStyle::State_HasFocus)
+            {
+                QStyleOptionFocusRect o;
+                o.QStyleOption::operator=(option);
+                o.rect = option.rect; // m_widget->style()->subElementRect(QStyle::SE_ItemViewItemFocusRect, &option, m_widget);
+                o.state |= QStyle::State_KeyboardFocusChange;
+                o.state |= QStyle::State_Item;
+                cg = option.state&QStyle::State_Enabled  ? QPalette::Normal : QPalette::Disabled;
+                o.backgroundColor = option.palette.color(cg, option.state&QStyle::State_Selected ? QPalette::Highlight : QPalette::Window);
+                m_widget->style()->drawPrimitive(QStyle::PE_FrameFocusRect, &o, painter, m_widget);
+            }
+        }
+        else
+            QStyledItemDelegate::paint(painter, option, index);
+    }
+    
+    static const int constIconSize=96;
+    static const int constBorder=6;
+    
+    QWidget *m_widget;
+};
 
 MediaPage::MediaPage(QWidget *parent) :
   QWidget(parent)
 {
   setupUi(this);
 
-  mediaFiles->setSpacing(5);
-  mediaFiles->setItemDelegate(new KFileItemDelegate(this));
-  mediaFiles->setIconSize(QSize(128, 128));
+//   mediaFiles->setSpacing(5);
+  mediaFiles->setItemDelegate(new MediaItemDelegate(this, mediaFiles));
+//   mediaFiles->setIconSize(QSize(128, 128));
   connect(mediaFiles, SIGNAL(customContextMenuRequested(const QPoint&)),
           this, SLOT(contextMenuRequested(const QPoint&)));
 }
