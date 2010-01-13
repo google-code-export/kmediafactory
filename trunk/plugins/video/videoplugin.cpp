@@ -151,6 +151,9 @@ void VideoPlugin::slotAddVideo()
       vob->setTitleFromFileName();
       if(multipleFiles->isChecked() || filename == filenames.end())
         m->addMediaObject(vob);
+
+      if(vob && 1==filenames.count())
+        vob->slotProperties();
     }
   }
 }
