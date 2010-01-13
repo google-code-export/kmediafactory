@@ -425,9 +425,12 @@ bool SlideshowObject::fromXML(const QDomElement& element)
 QPixmap SlideshowObject::pixmap() const
 {
   if(m_slides.count() > 0)
-    return KIO::pixmapForUrl(m_slides[0].picture);
-  else
-    return KIO::pixmapForUrl(KUrl(""));
+  {
+    if(m_thumbnail.isNull())
+        m_thumbnail=QPixmap::fromImage(preview(MainPreview));
+    return m_thumbnail;
+  }
+  return KIO::pixmapForUrl(KUrl(""));
 }
 
 void SlideshowObject::actions(QList<QAction*>* actionList) const

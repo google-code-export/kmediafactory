@@ -682,7 +682,9 @@ void VideoObject::slotProperties()
 
 QPixmap VideoObject::pixmap() const
 {
-  return KIO::pixmapForUrl(fileName());
+  if(m_thumbnail.isNull())
+    m_thumbnail=QPixmap::fromImage(preview(MainPreview));
+  return m_thumbnail;
 }
 
 #define PERCENT 1
