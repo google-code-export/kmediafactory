@@ -70,7 +70,8 @@ class SlideshowObject : public KMF::MediaObject
     QTime audioDuration() const;
     SlideList slideList(QStringList list, QWidget *parent) const;
     QString id() const { return m_id; };
-
+    QString information() const;
+    
   public slots:
     virtual void slotProperties();
     // Help Kross plugin declaring these as slots

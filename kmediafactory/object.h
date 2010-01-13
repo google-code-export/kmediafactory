@@ -60,6 +60,7 @@ namespace KMF
       virtual QVariant call(const QString& func, QVariantList args = QVariantList());
       virtual QString title() const;
       virtual QPixmap pixmap() const = 0;
+      virtual QString information() const { return QString(); }
       virtual QMap<QString, QString> subTypes() const;
       virtual void clean();
 
