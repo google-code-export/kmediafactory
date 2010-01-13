@@ -695,7 +695,7 @@ void VideoObject::slotProperties()
 QPixmap VideoObject::pixmap() const
 {
   if(m_thumbnail.isNull())
-    m_thumbnail=QPixmap::fromImage(preview(MainPreview));
+    m_thumbnail=QPixmap::fromImage(preview(MainPreview).scaled(96, 96, Qt::KeepAspectRatio));
   if(m_thumbnail.isNull())
     m_thumbnail=KIO::pixmapForUrl(fileName());
   return m_thumbnail;
