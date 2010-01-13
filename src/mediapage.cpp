@@ -37,7 +37,7 @@ MediaPage::MediaPage(QWidget *parent) :
 
   mediaFiles->setSpacing(5);
   mediaFiles->setItemDelegate(new KFileItemDelegate(this));
-  mediaFiles->setIconSize(QSize(KIconLoader::SizeHuge, KIconLoader::SizeHuge));
+  mediaFiles->setIconSize(QSize(128, 128));
   connect(mediaFiles, SIGNAL(customContextMenuRequested(const QPoint&)),
           this, SLOT(contextMenuRequested(const QPoint&)));
 }
