@@ -209,6 +209,11 @@ SlideshowObject::~SlideshowObject()
 {
 }
 
+QString SlideshowObject::information() const
+{
+  return i18np("%1 Image (%2)", "%1 Images (%2)", m_slides.count(), KGlobal::locale()->formatTime(duration(), true, true));
+}
+
 SlideList SlideshowObject::slideList(QStringList list, QWidget *parent) const
 {
   SlideList result;

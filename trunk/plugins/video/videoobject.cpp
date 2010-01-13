@@ -197,6 +197,18 @@ VideoObject::~VideoObject()
 {
 }
 
+QString VideoObject::information() const
+{
+  int numChapters(0);
+
+  for (QDVD::CellList::ConstIterator it = m_cells.begin(); it != m_cells.end(); ++it) {
+    if ((*it).isChapter()) {
+      numChapters++;
+    }
+  }
+  return i18np("%1 Chapter (%2)", "%1 Chapters (%2)", numChapters, KGlobal::locale()->formatTime(duration(), true, true));
+}
+
 double VideoObject::frameRate() const
 {
   return KMFMediaFile::mediaFile(m_files[0]).frameRate();

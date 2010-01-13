@@ -76,6 +76,7 @@ class VideoObject : public KMF::MediaObject
     void setPreviewUrl(const KUrl& previewUrl) { m_previewUrl = previewUrl; m_thumbnail=QPixmap(); };
     QImage getFrame(QTime time, QString file) const;
     const QString& id() const { return m_id; };
+    QString information() const;
 
     double frameRate() const;
     virtual QStringList files() const;

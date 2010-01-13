@@ -38,6 +38,8 @@ class KMFObjectListModel : public KMFListModel<T>
         return KMFListModel<T>::at(index)->title();
       else if (role == Qt::DecorationRole)
         return KMFListModel<T>::at(index)->pixmap();
+      else if (role == Qt::ToolTipRole)
+        return KMFListModel<T>::at(index)->information();
       return QVariant();
     }
 
