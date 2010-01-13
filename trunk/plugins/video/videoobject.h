@@ -73,7 +73,7 @@ class VideoObject : public KMF::MediaObject
     virtual bool addFile(QString fileName);
     void setTitleFromFileName();
     const KUrl& previewUrl() const { return m_previewUrl; };
-    void setPreviewUrl(const KUrl& previewUrl) { m_previewUrl = previewUrl; };
+    void setPreviewUrl(const KUrl& previewUrl) { m_previewUrl = previewUrl; m_thumbnail=QPixmap(); };
     QImage getFrame(QTime time, QString file) const;
     const QString& id() const { return m_id; };
 
@@ -122,6 +122,7 @@ class VideoObject : public KMF::MediaObject
     QStringList m_files;
     KProcess* m_spumux;
     QString m_type;
+    mutable QPixmap m_thumbnail;
 
     void generateId();
     void setCellSecs(double secs);

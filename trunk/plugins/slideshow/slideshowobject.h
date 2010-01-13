@@ -57,7 +57,7 @@ class SlideshowObject : public KMF::MediaObject
     void addPics(QStringList list, QWidget *parent);
 
     const SlideList& slides() const { return m_slides; };
-    void setSlides(const SlideList& slides) { m_slides = slides; };
+    void setSlides(const SlideList& slides) { m_slides = slides; m_thumbnail=QPixmap(); };
     double slideDuration() const { return m_duration; };
     void setSlideDuration(double duration) { m_duration = duration; };
     double calculatedSlideDuration() const;
@@ -100,6 +100,7 @@ class SlideshowObject : public KMF::MediaObject
     QStringList m_audioFiles;
     QString m_buffer;
     QString m_type;
+    mutable QPixmap m_thumbnail;
 };
 
 #endif // SLIDESHOWOBJECT_H
