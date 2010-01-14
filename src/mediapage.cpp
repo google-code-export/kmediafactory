@@ -35,6 +35,26 @@
 #define SHOW_ALL_ACTIONS
 #define SHOW_ACTIONS_ON_LEFT
 
+static QPainterPath buildPath(const QRect &rect, int radius)
+{
+  int          dr = radius * 2;
+  QRectF       r  = QRectF(rect.x()+0.5, rect.y()+0.5, rect.width()-1, rect.height()-1);
+  QPainterPath roundRectPath;
+
+  roundRectPath.moveTo(r.right(), r.top() + radius);
+  roundRectPath.arcTo(r.right() - dr, r.top(), dr, dr, 0.0, 90.0);
+  roundRectPath.lineTo(r.left() + radius, r.top());
+  roundRectPath.arcTo(r.left(), r.top(), dr, dr, 90.0, 90.0);
+  roundRectPath.lineTo(r.left(), r.bottom() - radius);
+  roundRectPath.arcTo(r.left(), r.bottom() - dr, dr, dr, 180.0, 90.0);
+  roundRectPath.lineTo(r.right() - radius, r.bottom());
+  roundRectPath.arcTo(r.right() - dr, r.bottom() -dr, dr, dr,
+                      270.0, 90.0);
+  roundRectPath.closeSubpath();
+  
+  return roundRectPath;
+}
+
 class MediaItemDelegate : public QStyledItemDelegate
 {
     public:
@@ -110,27 +130,42 @@ class MediaItemDelegate : public QStyledItemDelegate
                 r=option.rect;
 
                 QSize                          size(constActionIconSize, constActionIconSize);
+                QColor                         col(Qt::black);
+                
+                col.setAlphaF(0.35);
 #ifdef SHOW_ALL_ACTIONS
                 QList<QAction*>::ConstIterator it(actions.begin()),
                                                end(actions.end());
-                int                            yOffset=constBorder,
+                int                            yOffset=constIconBorder,
 #ifdef SHOW_ACTIONS_ON_LEFT
-                                               xPos=r.x()+(constBorder/2);
+                                               xPos=r.x()+constIconBorder;
 #else
-                                               xPos=r.x()+r.width()-(1+(constBorder/2)+constActionIconSize);
+                                               xPos=r.x()+r.width()-(1+constIconBorder+constActionIconSize);
 #endif
+                painter->setRenderHint(QPainter::Antialiasing, true);
                 for(; it!=end && (yOffset+constActionIconSize+constBorder)<r.height(); ++it)
                 {
-                    painter->drawPixmap(QRect(xPos, r.y()+yOffset,
-                                              constActionIconSize, constActionIconSize),
-                                              (*it)->icon().pixmap(size, QIcon::Normal, QIcon::Off));
-                    yOffset+=constActionIconSize;
+                    QVariant prop((*it)->property("hover-action"));
+                    
+                    if(prop.isValid() && QVariant::Bool==prop.type() && prop.toBool())
+                    {
+                        QRect        iconRect(xPos, r.y()+yOffset, constActionIconSize, constActionIconSize);
+                        QPainterPath path(buildPath(iconRect.adjusted(-1, -1, 0, 0), 3));
+
+                        painter->fillPath(path, col);
+                        painter->drawPixmap(iconRect, (*it)->icon().pixmap(size, QIcon::Normal, QIcon::Off));
+                        yOffset+=constActionIconSize+constActionIconGap;
+                    }
                 }
 
                 if((yOffset+constActionIconSize+constBorder)<r.height())
-                        painter->drawPixmap(QRect(xPos, r.y()+yOffset,
-                                                  constActionIconSize, constActionIconSize),
-                                                  KIcon("edit-delete").pixmap(size, QIcon::Normal, QIcon::Off));
+                {
+                    QRect        iconRect(xPos, r.y()+yOffset, constActionIconSize, constActionIconSize);
+                    QPainterPath path(buildPath(iconRect.adjusted(-1, -1, 0, 0), 3));
+
+                    painter->fillPath(path, col);
+                    painter->drawPixmap(iconRect, KIcon("edit-delete").pixmap(size, QIcon::Normal, QIcon::Off));
+                }
 #else
                 if(actions.count())
                     painter->drawPixmap(QRect(option.rect.x()+constBorder, option.rect.y()+constBorder,
@@ -144,6 +179,8 @@ class MediaItemDelegate : public QStyledItemDelegate
     }
 
     static const int constActionIconSize=24;
+    static const int constActionIconGap=2;
+    static const int constIconBorder=2;
     static const int constBorder=6;
     
     QWidget *m_widget;
@@ -214,8 +251,7 @@ void MediaPage::itemClicked(const QModelIndex& index)
 
   QList<QAction*>::ConstIterator it(actions.begin()),
                                  end(actions.end());
-  int                            yOffset=MediaItemDelegate::constBorder,
-                                 actWidth=MediaItemDelegate::constActionIconSize+8,
+  int                            yOffset=MediaItemDelegate::constIconBorder,
 #ifdef SHOW_ACTIONS_ON_LEFT
                                  xPos=r.x()+pos.x()+(MediaItemDelegate::constBorder/2);
 #else
@@ -226,17 +262,17 @@ void MediaPage::itemClicked(const QModelIndex& index)
   for(; it!=end && (yOffset+MediaItemDelegate::constActionIconSize+MediaItemDelegate::constBorder)<r.height(); ++it)
   {
     if(QRect(xPos, r.y()+pos.y()+yOffset,
-             actWidth, MediaItemDelegate::constActionIconSize).contains(QCursor::pos()))
+             MediaItemDelegate::constActionIconSize, MediaItemDelegate::constActionIconSize).contains(QCursor::pos()))
     {
       (*it)->trigger();
       return;
     }
-    yOffset+=MediaItemDelegate::constActionIconSize;
+    yOffset+=MediaItemDelegate::constActionIconSize+MediaItemDelegate::constActionIconGap;
   }
 
   if((yOffset+MediaItemDelegate::constActionIconSize+MediaItemDelegate::constBorder)<r.height() &&
       QRect(xPos, r.y()+pos.y()+yOffset,
-            actWidth, MediaItemDelegate::constActionIconSize).contains(QCursor::pos()))
+            MediaItemDelegate::constActionIconSize, MediaItemDelegate::constActionIconSize).contains(QCursor::pos()))
     kmfApp->mainWindow()->actionCollection()->action("delete")->trigger();
 #else
   r=QRect(r.x()+pos.x()+MediaItemDelegate::constBorder,

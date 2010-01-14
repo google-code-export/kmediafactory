@@ -179,6 +179,7 @@ VideoObject::VideoObject(QObject* parent)
 {
   setObjectName("video");
   m_videoProperties = new KAction(KIcon("document-properties"), i18n("Properties"), this);
+  m_videoProperties->setProperty("hover-action", true);
   plugin()->actionCollection()->addAction("video", m_videoProperties);
   connect(m_videoProperties, SIGNAL(triggered()), SLOT(slotProperties()));
 
