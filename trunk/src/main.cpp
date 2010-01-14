@@ -38,6 +38,8 @@ int main(int argc, char **argv)
                    HOMEPAGE, BUG_EMAIL);
   about.addAuthor(ki18n("Petri Damsten"), ki18n("Developer"),
                   "petri.damsten@iki.fi");
+  about.addAuthor(ki18n("Craig Drummond"), ki18n("Developer"),
+                  "craig.p.drummond@googlemail.com");
   about.setOrganizationDomain("kde.org");
 
   KCmdLineOptions options;
