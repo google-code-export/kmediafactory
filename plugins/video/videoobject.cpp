@@ -695,7 +695,8 @@ void VideoObject::slotProperties()
 QPixmap VideoObject::pixmap() const
 {
   if(m_thumbnail.isNull())
-    m_thumbnail=QPixmap::fromImage(preview(MainPreview).scaled(96, 96, Qt::KeepAspectRatio));
+    m_thumbnail=QPixmap::fromImage(generatePreview(MainPreview, QSize(constIconSize, constIconSize))
+                .scaled(constIconSize, constIconSize, Qt::KeepAspectRatio));
   if(m_thumbnail.isNull())
     m_thumbnail=KIO::pixmapForUrl(fileName());
   return m_thumbnail;
@@ -771,6 +772,11 @@ QImage VideoObject::getFrame(QTime time, QString frameFile) const
 
 QImage VideoObject::preview(int chap) const
 {
+  return generatePreview(chap, QSize(0, 0));
+}
+
+QImage VideoObject::generatePreview(int chap, QSize desiredSize) const
+{
   bool black = true;
   int counter;
   QImage img;
@@ -805,12 +811,14 @@ QImage VideoObject::preview(int chap) const
     ++counter;
   }
 
-  QSize templateRatio = (interface()->aspectRatio() == QDVD::VideoTrack::Aspect_4_3) ?
-                          QSize(4, 3) : QSize(16, 9);
+  QSize templateRatio = desiredSize.width()>0
+                          ? QSize(1, 1)
+                          : (interface()->aspectRatio() == QDVD::VideoTrack::Aspect_4_3)
+                                ? QSize(4, 3) : QSize(16, 9);
   QSize videoRatio = (aspect() == QDVD::VideoTrack::Aspect_4_3) ?
                           QSize(4, 3) : QSize(16, 9);
   QSize imageRatio = KMF::Tools::guessRatio(img.size(), videoRatio);
-  QSize templateSize = KMF::Tools::maxResolution(interface()->projectType());
+  QSize templateSize = desiredSize.width()>0 ? desiredSize : KMF::Tools::maxResolution(interface()->projectType());
   QSize imageSize = img.size();
   QSize res = KMF::Tools::resolution(imageSize, imageRatio,
                                      templateSize, templateRatio);

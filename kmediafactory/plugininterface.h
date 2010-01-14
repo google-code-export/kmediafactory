@@ -52,6 +52,9 @@ namespace KMF
       virtual QTime duration() const = 0;
       virtual QTime chapterTime(int chapter) const = 0;
       virtual int chapterId(int chapter) const { return chapter; }
+
+    public:
+      static const int constIconSize=96;      
   };
 
   class KDE_EXPORT OutputObject :public Object

@@ -103,6 +103,9 @@ class VideoObject : public KMF::MediaObject
     // KMF::Object::call slots
     QVariant writeDvdAuthorXml(QVariantList args) const;
 
+  private:
+    QImage generatePreview(int chapter, QSize desiredSize) const;
+
   protected:
     mutable QDVD::CellList m_cells;
     QDVD::AudioList m_audioTracks;
