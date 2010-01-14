@@ -541,21 +541,25 @@ QMap<QString, QString> KMF::Tools::readIniFile(const QString& ini)
 void KMF::Tools::drawRoundRect(QPainter* painter, const QRect& rect,
                                int radius)
 {
-  int dr = radius * 2;
+  int          dr = radius * 2;
+  QRectF       r  = QRectF(rect.x()+0.5, rect.y()+0.5, rect.width()-1, rect.height()-1);
   QPainterPath roundRectPath;
 
-  roundRectPath.moveTo(rect.right(), rect.top() + radius);
-  roundRectPath.arcTo(rect.right() - dr, rect.top(), dr, dr, 0.0, 90.0);
-  roundRectPath.lineTo(rect.left() + radius, rect.top());
-  roundRectPath.arcTo(rect.left(), rect.top(), dr, dr, 90.0, 90.0);
-  roundRectPath.lineTo(rect.left(), rect.bottom() - radius);
-  roundRectPath.arcTo(rect.left(), rect.bottom() - dr, dr, dr, 180.0, 90.0);
-  roundRectPath.lineTo(rect.right() - radius, rect.bottom());
-  roundRectPath.arcTo(rect.right() - dr, rect.bottom() -dr, dr, dr,
+  roundRectPath.moveTo(r.right(), r.top() + radius);
+  roundRectPath.arcTo(r.right() - dr, r.top(), dr, dr, 0.0, 90.0);
+  roundRectPath.lineTo(r.left() + radius, r.top());
+  roundRectPath.arcTo(r.left(), r.top(), dr, dr, 90.0, 90.0);
+  roundRectPath.lineTo(r.left(), r.bottom() - radius);
+  roundRectPath.arcTo(r.left(), r.bottom() - dr, dr, dr, 180.0, 90.0);
+  roundRectPath.lineTo(r.right() - radius, r.bottom());
+  roundRectPath.arcTo(r.right() - dr, r.bottom() -dr, dr, dr,
                       270.0, 90.0);
   roundRectPath.closeSubpath();
 
+  painter->save();
+  painter->setRenderHint(QPainter::Antialiasing, true);
   painter->drawPath(roundRectPath);
+  painter->restore();
 }
 
 void KMF::Tools::spy(QObject* obj)
