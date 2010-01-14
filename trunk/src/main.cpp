@@ -25,6 +25,8 @@
 #include <KCmdLineArgs>
 #include <KLocale>
 #include <KDebug>
+#include <KMessageBox>
+#include <QMap>
 
 int main(int argc, char **argv)
 {
@@ -43,6 +45,48 @@ int main(int argc, char **argv)
   KCmdLineArgs::init(argc, argv, &about);
   KCmdLineArgs::addCmdLineOptions(options);
   KMFApplication app;
+
+  QMap<QString, QStringList> requiredApps,
+                             missingApps;
+ 
+  requiredApps[i18n("DVD Author")] << "dvdauthor" << "spumux";
+  requiredApps[i18n("FFmpeg")] << "ffmpeg";
+  requiredApps[i18n("MJPEG Tools")] << "mplex" << "ppmtoy4m" << "mpeg2enc";
+
+  QMap<QString, QStringList>::iterator it(requiredApps.begin()),
+                                       end(requiredApps.end());
+
+  for(; it!=end; ++it)
+  {
+    QStringList::iterator app(it.value().begin()),
+                          aEnd(it.value().end());
+
+    for(; app!=aEnd; ++app)
+      if(KStandardDirs::findExe(*app).isEmpty())
+        missingApps[it.key()].append(*app);
+  }
+
+  if(!missingApps.isEmpty())
+  {
+    QStringList apps;
+    it=missingApps.begin();
+    end=missingApps.end();
+
+    for(; it!=end; ++it)
+      if(it.value().count()==1 && 0==(*(it.value().begin())).compare(QString(it.key()).replace(" ", ""), Qt::CaseInsensitive))
+        apps.append(it.key());
+      else
+        apps.append(it.key()+" ("+it.value().join(", ")+')');
+
+    if(apps.count()>1)
+      KMessageBox::errorList(0, i18n("<p>KMediaFactory uses the following packages, and these have not been "
+                                     "found on your system.</p>"
+                                     "<p>You must install them before KMediaFactory can continue.</p>"), apps);
+    else
+      KMessageBox::error(0, i18n("<p>KMediaFactory uses \"%1\", and this has not been found on your system.</p><p>"
+                                 "You must install this before KMediaFactory can continue.</p>", *(apps.begin())));
+    return -1;
+  }
 
   // Add catalog for translations
   KGlobal::locale()->insertCatalog("libkmf");
