@@ -199,7 +199,8 @@ void TemplatePage::imageContextMenuRequested(const QPoint& pos)
 
   popup.addAction(scaledAction);
   popup.addAction(saveAction);
-  popup.addSeparator();
+  if(menus.count())
+    popup.addSeparator();
   for(QStringList::Iterator it = menus.begin();
       it != menus.end(); ++it, ++i)
   {
@@ -209,6 +210,30 @@ void TemplatePage::imageContextMenuRequested(const QPoint& pos)
     action->setChecked(i == m_menu);
     popup.addAction(action);
   }
+
+  QList<QAction*> templateActions;
+
+  if(templates->selectionModel())
+  {
+    QModelIndexList selected = templates->selectionModel()->selectedIndexes();
+    if(selected.count() > 0 && selected[0].row() >= 0 && selected[0].row() < kmfApp->project()->templateObjects()->count())
+    {
+      KMF::TemplateObject* ob = kmfApp->project()->templateObjects()->at(selected[0].row());
+
+      ob->actions(&templateActions);
+
+      if(templateActions.count())
+      {
+        QList<QAction*>::ConstIterator it(templateActions.begin()),
+                                       end(templateActions.end());
+
+        popup.addSeparator();
+        for(; it!=end; ++it)
+          popup.addAction(*it);
+      }
+    }
+  }
+  
   if((action = popup.exec(pos)) != 0)
   {
     if(action == scaledAction)
@@ -230,7 +255,7 @@ void TemplatePage::imageContextMenuRequested(const QPoint& pos)
         }
       }
     }
-    else
+    else if(!templateActions.contains(action))
     {
       m_menu = action->data().toInt();
       //previewCheckBox->setChecked(true);
