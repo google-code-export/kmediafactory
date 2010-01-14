@@ -41,8 +41,8 @@ class MediaItemDelegate : public QStyledItemDelegate
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
     {
         QSize sz(QStyledItemDelegate::sizeHint(option, index));
-        int   textHeight=m_widget->fontMetrics().height();
-        return QSize(qMax(sz.width(), constIconSize)+(constBorder*2), qMax((textHeight+constBorder)*3, sz.height()+(constBorder*2)));
+        int   textHeight=m_widget? m_widget->fontMetrics().height() : QApplication::fontMetrics().height();
+        return QSize(qMax(sz.width(), KMF::MediaObject::constIconSize)+(constBorder*2), qMax((textHeight+constBorder)*3, sz.height()+(constBorder*2)));
     }
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -64,7 +64,7 @@ class MediaItemDelegate : public QStyledItemDelegate
                                             ? QPalette::Normal : QPalette::Disabled;
             QPixmap              pix(dec.value<QPixmap>());
             int                  textHeight=m_widget->fontMetrics().height(),
-                                 iconPosModX=constBorder+((constIconSize-pix.width())/2),
+                                 iconPosModX=constBorder+((KMF::MediaObject::constIconSize-pix.width())/2),
                                  iconPosModY=(option.rect.height()-pix.height())/2;
             
             painter->drawPixmap(r.adjusted(iconPosModX, iconPosModY, iconPosModX, iconPosModY).topLeft(), pix);
@@ -76,7 +76,7 @@ class MediaItemDelegate : public QStyledItemDelegate
             if (QPalette::Normal==cg && !(option.state & QStyle::State_Active))
                 cg = QPalette::Inactive;
 
-            r.moveLeft(constIconSize+(constBorder*2));
+            r.moveLeft(KMF::MediaObject::constIconSize+(constBorder*2));
             r.moveTop(r.y()+(constBorder+textHeight));
             painter->setPen(option.palette.color(cg, option.state&QStyle::State_Selected ? QPalette::HighlightedText : QPalette::Text));
             painter->drawText(r.topLeft(), disp.toString());
@@ -100,7 +100,6 @@ class MediaItemDelegate : public QStyledItemDelegate
             QStyledItemDelegate::paint(painter, option, index);
     }
     
-    static const int constIconSize=96;
     static const int constBorder=6;
     
     QWidget *m_widget;

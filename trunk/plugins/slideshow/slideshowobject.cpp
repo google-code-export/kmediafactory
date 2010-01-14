@@ -432,7 +432,8 @@ QPixmap SlideshowObject::pixmap() const
   if(m_slides.count() > 0)
   {
     if(m_thumbnail.isNull())
-        m_thumbnail=QPixmap::fromImage(preview(MainPreview).scaled(96, 96, Qt::KeepAspectRatio));
+      m_thumbnail=QPixmap::fromImage(generatePreview(MainPreview, QSize(constIconSize, constIconSize))
+                  .scaled(constIconSize, constIconSize, Qt::KeepAspectRatio));
     return m_thumbnail;
   }
   return KIO::pixmapForUrl(KUrl(""));
@@ -527,7 +528,9 @@ QVariant SlideshowObject::writeDvdAuthorXml(QVariantList args) const
   QString preferredLanguage = args[0].toString();
 
   video.setAttribute("aspect",
-      QDVD::VideoTrack::aspectRatioString(QDVD::VideoTrack::Aspect_4_3));
+      QDVD::VideoTrack::aspectRatioString(interface()->aspectRatio()));
+  if(QDVD::VideoTrack::Aspect_16_9==interface()->aspectRatio())
+    video.setAttribute("widescreen", "nopanscan");
   titles.appendChild(video);
 
   QDomElement audioElem = doc.createElement("audio");
@@ -608,9 +611,21 @@ QVariant SlideshowObject::writeDvdAuthorXml(QVariantList args) const
 
 QImage SlideshowObject::preview(int chap) const
 {
+  return generatePreview(chap, QSize(0, 0));
+}
+
+QImage SlideshowObject::generatePreview(int chap, QSize desiredSize) const
+{
   QImage img(chapter(chap).picture);
-  QSize res = KMF::Tools::resolution(img.size(), img.size(),
-      KMF::Tools::maxResolution(interface()->projectType()), QSize(4,3));
+  QSize templateRatio = desiredSize.width()>0
+                          ? QSize(1, 1)
+                          : (interface()->aspectRatio() == QDVD::VideoTrack::Aspect_4_3)
+                            ? QSize(4, 3) : QSize(16, 9);
+  QSize imageRatio = KMF::Tools::guessRatio(img.size(), templateRatio);
+  QSize templateSize = desiredSize.width()>0 ? desiredSize : KMF::Tools::maxResolution(interface()->projectType());
+  QSize imageSize = img.size();
+  QSize res = KMF::Tools::resolution(imageSize, imageRatio,
+                                     templateSize, templateRatio);
   kDebug() << res;
   img = img.scaled(res, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
   return img;

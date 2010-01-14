@@ -87,6 +87,7 @@ class SlideshowObject : public KMF::MediaObject
     QVariant writeDvdAuthorXml(QVariantList args) const;
 
   protected:
+    QImage generatePreview(int chapter, QSize desiredSize) const;
     void generateId();
     const Slide& chapter(int chap) const;
     bool oooConvert(QString* file) const;
