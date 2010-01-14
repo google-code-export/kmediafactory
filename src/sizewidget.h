@@ -22,6 +22,7 @@
 
 #include <KDE/KSqueezedTextLabel>
 #include <stdint.h>
+#include <QStyle>
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
@@ -46,6 +47,7 @@ class SizeWidget : public KSqueezedTextLabel
     QString m_label;
     quint64 m_max;
     quint64 m_size;
+    QStyle::ControlElement m_barElement;
 };
 
 #endif
