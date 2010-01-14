@@ -23,51 +23,12 @@
 #include <KDE/KColorScheme>
 #include <KDE/KColorUtils>
 #include <KDE/KGlobal>
+#include <KDE/KStyle>
+#include <KDebug>
 #include <QtGui/QPainter>
+#include <QStyleOptionProgressBar>
+#include <QPaintEvent>
 
-static QPainterPath buildPath(const QRectF &r, bool roundLeft=false, bool roundRight=false)
-{
-    QPainterPath path;
-    double       radius=r.height()*0.4,
-                 diameter(radius*2);
-
-    if (roundRight)
-    {
-        path.moveTo(r.x()+r.width(), r.y()+r.height()-radius);
-        path.arcTo(r.x()+r.width()-diameter, r.y(), diameter, diameter, 0, 90);
-    }
-    else
-    {
-        path.moveTo(r.x()+r.width(), r.y()+r.height());
-        path.lineTo(r.x()+r.width(), r.y());
-    }
-
-    if (roundLeft)
-    {
-        path.arcTo(r.x(), r.y(), diameter, diameter, 90, 90);
-        path.arcTo(r.x(), r.y()+r.height()-diameter, diameter, diameter, 180, 90);
-    }
-    else
-    {
-        path.lineTo(r.x(), r.y());
-        path.lineTo(r.x(), r.y()+r.height());
-    }
-
-    if (roundRight)
-        path.arcTo(r.x()+r.width()-diameter, r.y()+r.height()-diameter, diameter, diameter, 270, 90);
-    else
-        path.lineTo(r.x()+r.width(), r.y()+r.height());
-
-    return path;
-}
-
-static void buildGrad(QLinearGradient &grad, const QColor &col)
-{
-    grad.setColorAt(0, KColorUtils::shade(col, 0.35)); // 1.2));
-    grad.setColorAt(0.499, KColorUtils::shade(col, -0.4)); // 0.984));
-    grad.setColorAt(0.5, KColorUtils::shade(col, -0.35)); // 0.9));
-    grad.setColorAt(1.0, col); // KColorUtils::shade(col, 0.12)); // 1.06));
-}
 
 SizeWidget::SizeWidget(QWidget* parent)
   : KSqueezedTextLabel(parent), m_max(10), m_size(0)
@@ -75,6 +36,7 @@ SizeWidget::SizeWidget(QWidget* parent)
     setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
     setTextElideMode(Qt::RightToLeft==layoutDirection() ? Qt::ElideLeft : Qt::ElideRight);
     setMinimumSize(128, fontMetrics().height()+2);
+    m_barElement = KStyle::customControlElement("CE_CapacityBar", this);
 }
 
 SizeWidget::~SizeWidget()
@@ -83,42 +45,35 @@ SizeWidget::~SizeWidget()
 
 void SizeWidget::paintEvent(QPaintEvent *ev)
 {
-    QRect           r(rect());
-    QRectF          rf(r.x()+0.5, r.y()+0.5, r.width()-1, r.height()-1);
     QPainter        painter(this);
-    bool            exceeded=m_size > m_max,
-                    reverse=Qt::RightToLeft==layoutDirection();
-    int             used=exceeded
-                        ? (r.width()*m_max)/m_size
-                        : (r.width()*m_size)/m_max,
-                    other=r.width()-used;
-    QLinearGradient grad(r.topLeft(), r.bottomLeft());
+    bool            exceeded = m_size > m_max;
+    int             reverse = (Qt::RightToLeft == layoutDirection());
     KColorScheme    cs(QPalette::Active, KColorScheme::Window);
+    QColor          color = cs.foreground(KColorScheme::NegativeText).color();
+    QStyleOptionProgressBar opt;
+    QRect           rc = rect();
 
-    painter.setRenderHint(QPainter::Antialiasing, true);
-    if(used)
-    {
-        QColor col=cs.background(KColorScheme::PositiveBackground).color();
-        QRectF rf2(rf);
+    opt.initFrom(this);
+    opt.rect = ev->rect();
+    opt.minimum = 0;
+    opt.textVisible = false;
 
-        buildGrad(grad, col);
-        if(other && reverse)
-            rf2.setX(rf2.x()+other);
-        rf2.setWidth(used);
-        painter.fillPath(buildPath(rf2, !other||!reverse, !other||reverse), grad);
+    if (exceeded) {
+        opt.maximum = 100;
+        opt.progress = 100;
+        int v = rc.left() + (int)(m_max * (quint64)rc.width() / m_size);
+        painter.setClipRect(reverse ? v : rc.left(), rc.top(),
+                            reverse ? rc.right() : v, rc.bottom());
+        style()->drawControl(m_barElement, &opt, &painter, this);
+        opt.palette.setColor(QPalette::Active, QPalette::Highlight, color);
+        painter.setClipRect(reverse ? rc.left() : v, rc.top(),
+                            reverse ? v : rc.right(), rc.bottom());
+        style()->drawControl(m_barElement, &opt, &painter, this);
+    } else {
+        opt.maximum = (int)(m_max / 1024);
+        opt.progress = (int)(m_size / 1024);
+        style()->drawControl(m_barElement, &opt, &painter, this);
     }
-    if(other)
-    {
-        QColor col=cs.background(exceeded ? KColorScheme::NegativeBackground : KColorScheme::NormalBackground).color();
-        QRectF rf2(rf);
-
-        buildGrad(grad, col);
-        if(!reverse && used)
-            rf2.setX(rf2.x()+used);
-        rf2.setWidth(other);
-        painter.fillPath(buildPath(rf2, !used||reverse, !used||!reverse), grad);
-    }
-
     KSqueezedTextLabel::paintEvent(ev);
 }
 
