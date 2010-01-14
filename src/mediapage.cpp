@@ -30,6 +30,10 @@
 #include <QTimer>
 #include <QPainter>
 #include <QStyledItemDelegate>
+#include <QCursor>
+
+#define SHOW_ALL_ACTIONS
+#define SHOW_ACTIONS_ON_LEFT
 
 class MediaItemDelegate : public QStyledItemDelegate
 {
@@ -95,11 +99,51 @@ class MediaItemDelegate : public QStyledItemDelegate
                 o.backgroundColor = option.palette.color(cg, option.state&QStyle::State_Selected ? QPalette::Highlight : QPalette::Window);
                 m_widget->style()->drawPrimitive(QStyle::PE_FrameFocusRect, &o, painter, m_widget);
             }
+
+            if (option.state & QStyle::State_MouseOver && kmfApp->project()->mediaObjects()->isValid(index))
+            {
+                KMF::MediaObject* ob = kmfApp->project()->mediaObjects()->at(index);
+                QList<QAction*> actions;
+                
+                ob->actions(&actions);
+
+                r=option.rect;
+
+                QSize                          size(constActionIconSize, constActionIconSize);
+#ifdef SHOW_ALL_ACTIONS
+                QList<QAction*>::ConstIterator it(actions.begin()),
+                                               end(actions.end());
+                int                            yOffset=constBorder,
+#ifdef SHOW_ACTIONS_ON_LEFT
+                                               xPos=r.x()+(constBorder/2);
+#else
+                                               xPos=r.x()+r.width()-(1+(constBorder/2)+constActionIconSize);
+#endif
+                for(; it!=end && (yOffset+constActionIconSize+constBorder)<r.height(); ++it)
+                {
+                    painter->drawPixmap(QRect(xPos, r.y()+yOffset,
+                                              constActionIconSize, constActionIconSize),
+                                              (*it)->icon().pixmap(size, QIcon::Normal, QIcon::Off));
+                    yOffset+=constActionIconSize;
+                }
+
+                if((yOffset+constActionIconSize+constBorder)<r.height())
+                        painter->drawPixmap(QRect(xPos, r.y()+yOffset,
+                                                  constActionIconSize, constActionIconSize),
+                                                  KIcon("edit-delete").pixmap(size, QIcon::Normal, QIcon::Off));
+#else
+                if(actions.count())
+                    painter->drawPixmap(QRect(option.rect.x()+constBorder, option.rect.y()+constBorder,
+                                              constActionIconSize, constActionIconSize),
+                                        KIcon("arrow-down").pixmap(size, QIcon::Normal, QIcon::Off));
+#endif
+            }
         }
         else
             QStyledItemDelegate::paint(painter, option, index);
     }
-    
+
+    static const int constActionIconSize=24;
     static const int constBorder=6;
     
     QWidget *m_widget;
@@ -115,6 +159,8 @@ MediaPage::MediaPage(QWidget *parent) :
 //   mediaFiles->setIconSize(QSize(128, 128));
   connect(mediaFiles, SIGNAL(customContextMenuRequested(const QPoint&)),
           this, SLOT(contextMenuRequested(const QPoint&)));
+  connect(mediaFiles, SIGNAL(clicked(const QModelIndex&)),
+          this, SLOT(itemClicked(const QModelIndex&)));
 }
 
 MediaPage::~MediaPage()
@@ -153,7 +199,58 @@ void MediaPage::contextMenuRequested(const QPoint &pos)
   if(!kmfApp->project()->mediaObjects()->isValid(i))
     return;
 
-  KMF::MediaObject* ob = kmfApp->project()->mediaObjects()->at(i);
+  showMenu(i, mediaFiles->viewport()->mapToGlobal(pos));
+}
+
+void MediaPage::itemClicked(const QModelIndex& index)
+{
+  QRect  r(mediaFiles->visualRect(index));
+  QPoint pos(mediaFiles->viewport()->mapToGlobal(QPoint(0, 0)));
+
+#ifdef SHOW_ALL_ACTIONS
+  KMF::MediaObject* ob = kmfApp->project()->mediaObjects()->at(index);
+  QList<QAction*> actions;
+  ob->actions(&actions);
+
+  QList<QAction*>::ConstIterator it(actions.begin()),
+                                 end(actions.end());
+  int                            yOffset=MediaItemDelegate::constBorder,
+                                 actWidth=MediaItemDelegate::constActionIconSize+8,
+#ifdef SHOW_ACTIONS_ON_LEFT
+                                 xPos=r.x()+pos.x()+(MediaItemDelegate::constBorder/2);
+#else
+                                 xPos=r.x()+pos.x()+r.width()-(1+(MediaItemDelegate::constBorder/2)+
+                                                               MediaItemDelegate::constActionIconSize);
+#endif
+
+  for(; it!=end && (yOffset+MediaItemDelegate::constActionIconSize+MediaItemDelegate::constBorder)<r.height(); ++it)
+  {
+    if(QRect(xPos, r.y()+pos.y()+yOffset,
+             actWidth, MediaItemDelegate::constActionIconSize).contains(QCursor::pos()))
+    {
+      (*it)->trigger();
+      return;
+    }
+    yOffset+=MediaItemDelegate::constActionIconSize;
+  }
+
+  if((yOffset+MediaItemDelegate::constActionIconSize+MediaItemDelegate::constBorder)<r.height() &&
+      QRect(xPos, r.y()+pos.y()+yOffset,
+            actWidth, MediaItemDelegate::constActionIconSize).contains(QCursor::pos()))
+    kmfApp->mainWindow()->actionCollection()->action("delete")->trigger();
+#else
+  r=QRect(r.x()+pos.x()+MediaItemDelegate::constBorder,
+          r.y()+pos.y()+MediaItemDelegate::constBorder,
+          MediaItemDelegate::constActionIconSize, MediaItemDelegate::constActionIconSize);
+
+  if(r.contains(QCursor::pos()))
+    showMenu(index, QCursor::pos());
+#endif
+}
+
+void MediaPage::showMenu(const QModelIndex& index, const QPoint &pos)
+{
+  KMF::MediaObject* ob = kmfApp->project()->mediaObjects()->at(index);
   KMediaFactory* mainWindow = kmfApp->mainWindow();
   KXMLGUIFactory* factory = mainWindow->factory();
 
@@ -165,7 +262,7 @@ void MediaPage::contextMenuRequested(const QPoint &pos)
   if(w)
   {
     QMenu* popup = static_cast<QMenu*>(w);
-    popup->exec(mediaFiles->viewport()->mapToGlobal(pos));
+    popup->exec(pos);
   }
   factory->unplugActionList(mainWindow, "media_file_actionlist");
 }

@@ -43,9 +43,13 @@ class MediaPage : public QWidget, public Ui::MediaPage
 
   public Q_SLOTS:
     void contextMenuRequested(const QPoint& pos);
+    void itemClicked(const QModelIndex& index);
     void calculateSizes();
     void projectInit();
     void mediaModified();
+
+  private:
+    void showMenu(const QModelIndex& index, const QPoint &pos);
 };
 
 #endif
