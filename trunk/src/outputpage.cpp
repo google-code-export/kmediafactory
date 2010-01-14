@@ -115,7 +115,7 @@ void OutputPage::contextMenuRequested(const QPoint &pos)
   {
     QMenu* popup = static_cast<QMenu*>(w);
     if(popup->actions().count() > 0)
-      popup->exec(pos);
+      popup->exec(outputs->viewport()->mapToGlobal(pos));
   }
   factory->unplugActionList(mainWindow, "output_actionlist");
 }
