@@ -21,14 +21,8 @@
 #define SIZEWIDGET_H
 
 #include <kcapacitybar.h>
-#include <stdint.h>
-#include <QStyle>
 
-/**
-	@author Petri Damsten <petri.damsten@iki.fi>
-*/
-
-class SizeWidget : public KCapacityBar
+class SizeWidget : public QWidget
 {
     Q_OBJECT
   public:
@@ -36,6 +30,7 @@ class SizeWidget : public KCapacityBar
     virtual ~SizeWidget();
 
     virtual void paintEvent(QPaintEvent *ev);
+    virtual QSize minimumSizeHint() const;
 
   public Q_SLOTS:
     void setSizes(quint64 max, quint64 size);
@@ -43,7 +38,7 @@ class SizeWidget : public KCapacityBar
   private:
     void updateLabel(quint64 max, quint64 size);
 
-    QStyle::ControlElement m_barElement;
+    KCapacityBar m_bar;
 };
 
 #endif
