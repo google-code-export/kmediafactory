@@ -1,5 +1,5 @@
 //**************************************************************************
-//   Copyright (C) 2004-2006 by Petri Damsten
+//   Copyright (C) 2004-2010 by Petri Damsten
 //   petri.damsten@iki.fi
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -37,6 +37,11 @@ SizeWidget::SizeWidget(QWidget* parent)
     setTextElideMode(Qt::RightToLeft==layoutDirection() ? Qt::ElideLeft : Qt::ElideRight);
     setMinimumSize(128, fontMetrics().height()+2);
     m_barElement = KStyle::customControlElement("CE_CapacityBar", this);
+    kDebug() << "******************************" << m_barElement;
+    if (!m_barElement) {
+        m_barElement = QStyle::CE_ProgressBar;
+        kDebug() << "oooooooooooooooooooooooooooooo" << m_barElement;
+    }
 }
 
 SizeWidget::~SizeWidget()
