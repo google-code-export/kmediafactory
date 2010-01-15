@@ -31,11 +31,8 @@
 
 
 SizeWidget::SizeWidget(QWidget* parent)
-  : KSqueezedTextLabel(parent), m_max(10), m_size(0)
+  : KCapacityBar(KCapacityBar::DrawTextInline, parent)
 {
-    setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
-    setTextElideMode(Qt::RightToLeft==layoutDirection() ? Qt::ElideLeft : Qt::ElideRight);
-    setMinimumSize(128, fontMetrics().height()+2);
     m_barElement = KStyle::customControlElement("CE_CapacityBar", this);
     if (!m_barElement) {
         m_barElement = QStyle::CE_ProgressBar;
@@ -48,23 +45,23 @@ SizeWidget::~SizeWidget()
 
 void SizeWidget::paintEvent(QPaintEvent *ev)
 {
-    QPainter        painter(this);
-    bool            exceeded = m_size > m_max;
-    int             reverse = (Qt::RightToLeft == layoutDirection());
-    KColorScheme    cs(QPalette::Active, KColorScheme::Window);
-    QColor          color = cs.foreground(KColorScheme::NegativeText).color();
-    QStyleOptionProgressBar opt;
-    QRect           rc = rect();
+    if (value() > 100) {
+        QStyleOptionProgressBar opt;
+        KColorScheme cs(QPalette::Active, KColorScheme::Window);
+        QColor color = cs.foreground(KColorScheme::NegativeText).color();
+        bool reverse = (Qt::RightToLeft == layoutDirection());
+        QRect rc = rect();
+        int v = 100 * rc.width() / value();
+        QPainter painter(this);
 
-    opt.initFrom(this);
-    opt.rect = ev->rect();
-    opt.minimum = 0;
-    opt.textVisible = false;
-
-    if (exceeded) {
+        opt.initFrom(this);
+        opt.rect = ev->rect();
+        opt.minimum = 0;
+        opt.textVisible = true;
+        opt.text = text();
+        opt.textAlignment = Qt::AlignCenter;
         opt.maximum = 100;
         opt.progress = 100;
-        int v = rc.left() + (int)(m_max * (quint64)rc.width() / m_size);
         painter.setClipRect(reverse ? v : rc.left(), rc.top(),
                             reverse ? rc.right() : v, rc.bottom());
         style()->drawControl(m_barElement, &opt, &painter, this);
@@ -72,33 +69,34 @@ void SizeWidget::paintEvent(QPaintEvent *ev)
         painter.setClipRect(reverse ? rc.left() : v, rc.top(),
                             reverse ? v : rc.right(), rc.bottom());
         style()->drawControl(m_barElement, &opt, &painter, this);
-    } else {
-        opt.maximum = (int)(m_max / 1024);
-        opt.progress = (int)(m_size / 1024);
-        style()->drawControl(m_barElement, &opt, &painter, this);
+        return;
     }
-    KSqueezedTextLabel::paintEvent(ev);
+    KCapacityBar::paintEvent(ev);
 }
 
 void SizeWidget::setSizes(quint64 max, quint64 size)
 {
-    m_max=max;
-    m_size=size;
-    updateLabel();
+    setValue(size * 100 / max);
+    updateLabel(max, size);
+    updateGeometry();
 }
 
-void SizeWidget::updateLabel()
+void SizeWidget::updateLabel(quint64 max, quint64 size)
 {
-  setText(m_size>m_max
-            ? i18n("<b>Capacity (%1) exceeded by %2</b>",
-//                    KGlobal::locale()->formatByteSize(m_size),
-                   KGlobal::locale()->formatByteSize(m_max),
-//                    (100*m_size)/m_max,
-                   KGlobal::locale()->formatByteSize(m_size-m_max))
-            : i18n("%1 of %2 used (%3%)",
-                   KGlobal::locale()->formatByteSize(m_size),
-                   KGlobal::locale()->formatByteSize(m_max),
-                   (100*m_size)/m_max));
+    QFont f(font());
+    if (size > max) {
+        f.setBold(true);
+        setText(i18n("Capacity (%1) exceeded by %2",
+                KGlobal::locale()->formatByteSize(max),
+                KGlobal::locale()->formatByteSize(size - max)));
+    } else {
+        f.setBold(false);
+        setText(i18n("%1 of %2 used (%3%)",
+                KGlobal::locale()->formatByteSize(size),
+                KGlobal::locale()->formatByteSize(max),
+                (100 * size) / max));
+    }
+    setFont(f);
 }
 
 #include "sizewidget.moc"
