@@ -24,14 +24,17 @@
 #include <kmediafactory/object.h>
 #include "kmflistmodel.h"
 #include <KLocale>
+#include <QMimeData>
 
 template <class T>
 class KMFObjectListModel : public KMFListModel<T>
 {
   public:
+    KMFObjectListModel() : m_itemsDragable(false) { }
+
     QVariant data(const QModelIndex &index, int role) const
     {
-      if(!KMFListModel<T>::isValid(index))
+      if(!KMFListModel<T>::isValid(index) || !KMFListModel<T>::at(index))
         return QVariant();
 
       if (role == Qt::DisplayRole)
@@ -50,6 +53,68 @@ class KMFObjectListModel : public KMFListModel<T>
 
       return ::i18n("Title");
     }
+
+    virtual Qt::ItemFlags flags(const QModelIndex &index) const
+    {
+        Qt::ItemFlags result = QAbstractItemModel::flags(index);
+        return m_itemsDragable ? result|Qt::ItemIsDragEnabled|Qt::ItemIsDropEnabled : result;
+    }
+
+    virtual Qt::DropActions supportedDropActions() const
+    {
+      Qt::DropActions result = QAbstractItemModel::supportedDropActions();
+      return m_itemsDragable ? result|Qt::MoveAction : result;
+    }
+
+    QStringList mimeTypes() const
+    {
+        QStringList types;
+        types << QLatin1String("application/x-kmf-indexlist");
+        return types;
+    }
+
+    QMimeData * mimeData(const QModelIndexList &indexes) const
+    {
+        if (!m_itemsDragable || indexes.count() != 1 || KMFListModel<T>::rowCount()<2)
+            return 0;
+        QMimeData *data = new QMimeData();
+        QByteArray encoded;
+        QDataStream stream(&encoded, QIODevice::WriteOnly);
+        stream << indexes.at(0).row();
+        data->setData(mimeTypes().at(0), encoded);
+        return data;
+    }
+
+    bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
+    {
+        if(!data || !data->hasFormat(mimeTypes().at(0)) || -1!=row || -1!=column)
+            return false;
+
+        if (Qt::IgnoreAction==action)
+            return true;
+        
+        if(parent.isValid())
+        {
+            QByteArray encoded = data->data(mimeTypes().at(0));
+            QDataStream stream(&encoded, QIODevice::ReadOnly);
+            int row;
+            stream >> row;
+            QModelIndex to=KMFListModel<T>::index(row, 0);
+
+            if(to.isValid())
+            {
+                KMFListModel<T>::swap(parent, to);
+                emit KMFListModel<T>::layoutChanged();
+            }
+        }
+        return false;
+    }
+
+    void setDragable() { m_itemsDragable=true; }
+
+    private:
+
+    bool m_itemsDragable;
 };
 
 #endif // KMFTEMPLATEICONVIEW_H
