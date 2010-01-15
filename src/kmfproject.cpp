@@ -85,6 +85,8 @@ KMFProject::KMFProject(QObject *parent) :
   QDir dir(KMediaFactorySettings::defaultProjectDirectory().path());
   int i = 1;
 
+  m_list.setDragable();
+
   while(1)
   {
     QString file = i18n("Project%1", i);
