@@ -20,7 +20,7 @@
 #ifndef SIZEWIDGET_H
 #define SIZEWIDGET_H
 
-#include <KDE/KSqueezedTextLabel>
+#include <kcapacitybar.h>
 #include <stdint.h>
 #include <QStyle>
 
@@ -28,25 +28,21 @@
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
 
-class SizeWidget : public KSqueezedTextLabel
+class SizeWidget : public KCapacityBar
 {
     Q_OBJECT
   public:
     SizeWidget(QWidget* parent = 0);
     virtual ~SizeWidget();
 
-    void paintEvent(QPaintEvent *ev);
+    virtual void paintEvent(QPaintEvent *ev);
 
   public Q_SLOTS:
     void setSizes(quint64 max, quint64 size);
 
   private:
-    void updateLabel();
+    void updateLabel(quint64 max, quint64 size);
 
-  private:
-    QString m_label;
-    quint64 m_max;
-    quint64 m_size;
     QStyle::ControlElement m_barElement;
 };
 
