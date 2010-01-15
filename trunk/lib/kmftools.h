@@ -66,6 +66,7 @@ namespace KMF
                               Qt::AspectRatioMode mode =
                                   Qt::KeepAspectRatioByExpanding);
       static QSize maxResolution(const QString &type);
+      static bool isVideoResolution(const QSize &res);
       static QSize guessRatio(const QSize& image, const QSize& video);
       static void fontToXML(const QFont& font, QDomElement* element);
       static QFont fontFromXML(const QDomElement& element);

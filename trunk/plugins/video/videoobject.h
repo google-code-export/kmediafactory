@@ -42,6 +42,7 @@ class VideoObject : public KMF::MediaObject
   public:
     enum VideoFilePrefix { PrefixSub = 0, PrefixMpg,
         PrefixEmpty, PrefixXml, PrefixMicroDVD };
+    enum VideoFileStatus { StatusOk, StatusInvalidResolution, StatusNonCompataible };
 
     VideoObject(QObject* parent);
     virtual ~VideoObject();
@@ -70,7 +71,7 @@ class VideoObject : public KMF::MediaObject
     void setAspect(QDVD::VideoTrack::AspectRatio aspect) { m_aspect = aspect; };
 
     virtual void actions(QList<QAction*>* actionList) const;
-    virtual bool addFile(QString fileName);
+    virtual VideoFileStatus addFile(QString fileName);
     void setTitleFromFileName();
     const KUrl& previewUrl() const { return m_previewUrl; };
     void setPreviewUrl(const KUrl& previewUrl) { m_previewUrl = previewUrl; m_thumbnail=QPixmap(); };

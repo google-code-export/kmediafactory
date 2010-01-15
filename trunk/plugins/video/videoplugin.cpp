@@ -23,6 +23,7 @@
 #include "videoobject.h"
 #include "videopluginsettings.h"
 #include "ui_videoconfig.h"
+#include "kmfmediafile.h"
 #include <KStandardDirs>
 #include <KGenericFactory>
 #include <KActionCollection>
@@ -142,12 +143,31 @@ void VideoPlugin::slotAddVideo()
       }
       if(multipleFiles->isChecked() || filename == filenames.begin())
         vob = new VideoObject(this);
-      if(!vob->addFile(*filename))
+      switch(vob->addFile(*filename))
       {
-        KMessageBox::error(kapp->activeWindow(),
-                           i18n("Couldn't add file: %1", *filename));
-        break;
+          case VideoObject::StatusOk:
+              break;
+          case VideoObject::StatusInvalidResolution:
+          {
+              QSize res(KMFMediaFile::mediaFile(*filename).resolution());
+              KMessageBox::error(kapp->activeWindow(),
+                                 i18n("Cannot use %1.\n%2x%3 is an invalid resolution",
+                                      *filename, res.width(), res.height()));
+              delete vob;
+              vob=0L;
+              break;
+          }
+          case VideoObject::StatusNonCompataible:
+              KMessageBox::error(kapp->activeWindow(),
+                                 i18n("Cannot use %1.\nIt is not a DVD compatible file.",
+                                      *filename));
+              delete vob;
+              vob=0L;
+              break;
       }
+
+      if(!vob)
+          break;
       vob->setTitleFromFileName();
       if(multipleFiles->isChecked() || filename == filenames.end())
         m->addMediaObject(vob);

@@ -16,7 +16,7 @@ if [ $? -ne 0 ]; then
         VIDEO=$(echo "$OUTPUT" | grep Stream | grep "Video:")
         AUDIO=$(echo "$OUTPUT" | grep "Stream #0.1" | grep "Audio")
         ASPECT=$(echo "$VIDEO" | awk -FDAR '{print $2}' | awk -F' ' '{print $1}' | sed 's^]^^g' | sed 's^,^^g')
-
+        RESOLUTION=$(echo "$VIDEO" | awk -FVideo: '{print $2}' | awk '{print $3}')
         if [ "$ASPECT" = "4:3" ] ; then
             ASPECT=0
         else
@@ -29,6 +29,8 @@ if [ $? -ne 0 ]; then
         echo "FRAME_RATE=$(echo "$VIDEO" |awk -F\, '{print $5}' | sed 's^ tbr^^g' | sed 's^ ^^g')"
         echo "AUDIO_STREAMS=$(echo "$OUTPUT" | grep "Stream " | grep "Audio" | wc -l)"
         echo "ASPECT_RATIO=$ASPECT"
+        echo "WIDTH=$(echo $RESOLUTION | awk -Fx '{print $1}')"
+        echo "HEIGHT=$(echo $RESOLUTION | awk -Fx '{print $2}')"
         echo "DVD_COMPATIBLE=$(echo "$VIDEO" | grep "mpeg2video" | wc -l)"
     fi
 else
@@ -38,6 +40,8 @@ else
     echo "FRAME_RATE=$(echo "$OUTPUT" | grep "ID_VIDEO_FPS" | sed "s/ID_VIDEO_FPS=//g")"
     echo "AUDIO_STREAMS=$(echo "$OUTPUT" | grep "audio stream" | wc -l)"
     echo "ASPECT_RATIO=$(($(echo "$OUTPUT" | grep "aspect" | sed "s/.*aspect //g" | sed "s/).*//g")-2))"
+    echo "WIDTH=$(echo "$OUTPUT" | grep "ID_VIDEO_WIDTH" | sed "s/ID_VIDEO_WIDTH=//g")"
+    echo "HEIGHT=$(echo "$OUTPUT" | grep "ID_VIDEO_HEIGHT" | sed "s/ID_VIDEO_HEIGHT=//g")"
     DEMUXER=$(echo "$OUTPUT" | grep "ID_DEMUXER" | sed "s/ID_DEMUXER=//g")
     if [ "$DEMUXER" = "mpegps" ]; then
         echo "DVD_COMPATIBLE=1"

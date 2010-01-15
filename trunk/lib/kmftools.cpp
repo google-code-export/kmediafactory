@@ -289,31 +289,35 @@ QSize KMF::Tools::maxResolution(const QString &type)
     return QSize(360, 240);
 }
 
-QSize KMF::Tools::guessRatio(const QSize& image, const QSize& video)
+bool KMF::Tools::isVideoResolution(const QSize &res)
 {
   // Common resolutions
-  static int res[][2] = {
-    // PAL VCD
-    { 352, 288 },
-    // PAL SVCD
-    { 480, 576 },
+  static const QSize videoResolutions[] = {
+//     // PAL VCD
+//     QSize( 352, 288 ),
+//     // PAL SVCD
+//     QSize( 480, 576 ),
     // PAL DVD
-    { 720, 576 }, { 704, 576 }, { 544, 576 }, { 352, 576 }, { 352, 288 },
-    // NTSC VCD
-    { 352, 240 },
-    // NTSC SVCD
-    { 480, 480 },
+    QSize( 720, 576 ), QSize( 704, 576 ), QSize( 544, 576 ), QSize( 352, 576 ), QSize( 352, 288 ),
+//     // NTSC VCD
+//     QSize( 352, 240 ),
+//     // NTSC SVCD
+//     QSize( 480, 480 ),
     // NTSC DVD
-    { 720, 480 }, { 352, 480 }, { 352, 240 }
+    QSize( 720, 480 ), QSize( 352, 480 ), QSize( 352, 240 )
   };
 
   for(uint i=0; i < 12; ++i)
   {
-    if(image == QSize(res[i][0], res[i][1]))
-      return video;
+    if(videoResolutions[i]==res)
+      return true;
   }
-  // Square pixels
-  return image;
+  return false;
+}
+
+QSize KMF::Tools::guessRatio(const QSize& image, const QSize& video)
+{
+  return isVideoResolution(image) ? video : image;
 }
 
 void KMF::Tools::fontToXML(const QFont& font, QDomElement* element)
