@@ -56,6 +56,7 @@ bool KMFMediaFile::probe()
     m_audioStreams = info["AUDIO_STREAMS"].toInt();
     m_dvdCompatible = (info["DVD_COMPATIBLE"] == "1");
     m_duration = KMF::Time(info["DURATION"].toDouble());
+    m_resolution = QSize(info["WIDTH"].toInt(), info["HEIGHT"].toInt());
     /*
     kDebug() << "File: " << m_file;
     kDebug() << "Output: " << run.output();

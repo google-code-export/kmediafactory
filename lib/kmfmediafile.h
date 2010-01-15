@@ -21,6 +21,7 @@
 #define QMEDIAFILE_H
 
 #include "qdvdinfo.h"
+#include <QSize>
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
@@ -37,7 +38,8 @@ class KDE_EXPORT KMFMediaFile
     QDVD::VideoTrack::AspectRatio aspectRatio() const { return m_aspectRatio; };
     bool dvdCompatible() const { return m_dvdCompatible; };
     bool frame(QTime pos, QString output) const;
-    QString fileName() { return m_file; };
+    QString fileName() const { return m_file; };
+    QSize resolution() const { return m_resolution; }
 
     static void clearCache() { m_cache.clear(); };
     static const KMFMediaFile& mediaFile(const QString& file);
@@ -57,6 +59,7 @@ class KDE_EXPORT KMFMediaFile
     QString m_type;
     QDVD::VideoTrack::AspectRatio m_aspectRatio;
     bool m_dvdCompatible;
+    QSize m_resolution;
 
     static QMap<QString, KMFMediaFile> m_cache;
 };

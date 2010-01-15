@@ -903,11 +903,20 @@ void VideoObject::generateId()
   m_id.sprintf("%3.3d_%s", serial, (const char*)name.toLocal8Bit());
 }
 
-bool VideoObject::addFile(QString fileName)
+VideoObject::VideoFileStatus VideoObject::addFile(QString fileName)
 {
-  m_files.append(fileName);
-  checkObjectParams();
-  return true;
+  VideoFileStatus status=KMFMediaFile::mediaFile(fileName).dvdCompatible()
+                            ? KMF::Tools::isVideoResolution(KMFMediaFile::mediaFile(fileName).resolution())
+                                ? StatusOk
+                                : StatusInvalidResolution
+                            : StatusNonCompataible;
+
+  if(StatusOk==status)
+  {
+    m_files.append(fileName);
+    checkObjectParams();
+  }
+  return status;
 }
 
 void VideoObject::setTitleFromFileName()
