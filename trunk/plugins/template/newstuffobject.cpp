@@ -23,7 +23,11 @@
 #include "templateplugin.h"
 #include "templatepluginsettings.h"
 #include <KLocale>
+#if KDE_IS_VERSION(4,3,90)
+#include <knewstuff3/downloaddialog.h>
+#else
 #include <knewstuff2/engine.h>
+#endif
 #include <KApplication>
 #include <KIconLoader>
 
@@ -44,17 +48,31 @@ NewStuffObject::~NewStuffObject()
 
 bool NewStuffObject::clicked()
 {
-  KNS::Engine *engine = new KNS::Engine();
-  engine->init("kmediafactory_template.knsrc");
-  KNS::Entry::List entries = engine->downloadDialogModal(kapp->activeWindow());
   // Remove uninstalled
-  QList< ::TemplateObject* > templates =
-      parent()->findChildren< ::TemplateObject* >();
+  QList< ::TemplateObject* > templates = parent()->findChildren< ::TemplateObject* >();
   foreach (::TemplateObject* temp, templates)
   {
     if (!temp->fileExists())
       delete temp;
   }
+
+  #if KDE_IS_VERSION(4,3,90)
+  KNS3::DownloadDialog dialog("kmediafactory_template.knsrc", kapp->activeWindow());
+  dialog.exec();
+  KNS3::Entry::List entries = dialog.changedEntries();
+  // Add installed
+  foreach (const KNS3::Entry& entry, entries)
+  {
+    foreach (QString file, entry.installedFiles())
+    {
+      new ::TemplateObject(file, parent());
+    }
+  }
+  #else
+  KNS::Engine *engine = new KNS::Engine();
+  engine->init("kmediafactory_template.knsrc");
+  KNS::Entry::List entries = engine->downloadDialogModal(kapp->activeWindow());
+  delete engine;
   // Add installed
   foreach (KNS::Entry* entry, entries)
   {
@@ -63,7 +81,7 @@ bool NewStuffObject::clicked()
       new ::TemplateObject(file, parent());
     }
   }
-  delete engine;
+  #endif
   return true;
 }
 

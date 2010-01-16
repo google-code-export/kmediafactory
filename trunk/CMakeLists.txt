@@ -2,6 +2,7 @@ project(kmediafactory)
 
 macro(IS_KDE_VERSION version)
   #message("${KDE_VERSION_MAJOR}.${KDE_VERSION_MINOR}.${KDE_VERSION_RELEASE}")
+  #message("${version} ${ARGV1}.${ARGV2}.${ARGV3}")
   math(EXPR V1 "(((${KDE_VERSION_MAJOR}) << 16) | ((${KDE_VERSION_MINOR}) << 8) | (${KDE_VERSION_RELEASE}))")
   math(EXPR V2 "(((${ARGV1}) << 16) | ((${ARGV2}) << 8) | (${ARGV3}))")
   if (${V1} GREATER ${V2} OR ${V2} EQUAL ${V1})
@@ -23,6 +24,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules )
 find_package(KDE4 REQUIRED)
 include(KDE4Defaults)
 include(MacroLibrary)
+
+#IS_KDE_VERSION(KDE_4_4 4 3 90)
 
 check_function_exists(va_copy VA_COPY)
 
