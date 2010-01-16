@@ -65,6 +65,9 @@
      <property name="dragDropMode">
       <enum>QAbstractItemView::InternalMove</enum>
      </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
   </layout>
