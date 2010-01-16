@@ -200,11 +200,9 @@ class AutoChapters : public KDialog, public Ui::AutoChapters
 };
 
 Chapters::Chapters(QWidget *parent)
-  : KDialog(parent), m_obj(0), m_model(0)
+  : QWidget(parent), m_obj(0), m_model(0)
 {
-  setupUi(mainWidget());
-  setButtons(KDialog::Ok | KDialog::Cancel);
-  setCaption(i18n("Chapters"));
+  setupUi(this);
   chaptersView->setContextMenuPolicy(Qt::CustomContextMenu);
 
   connect(startButton, SIGNAL(clicked()), this, SLOT(slotStart()));
@@ -237,18 +235,13 @@ Chapters::~Chapters()
 {
 }
 
-void Chapters::getData(QDVD::CellList& cells, QString* preview) const
-{
-  cells = m_cells;
-  *preview = m_preview;
-  delete m_model;
-}
-
 void Chapters::setData(const QDVD::CellList& cells,
                        const VideoObject* obj)
 {
   m_cells = cells;
   m_obj = obj;
+  if(m_model)
+      delete m_model;
   m_model = new CellListModel(&m_cells, m_obj->duration());
   chaptersView->setModel(m_model);
   timeSlider->setMaximum((int)KMF::Time(m_obj->duration()));
@@ -496,7 +489,7 @@ void Chapters::checkLengths()
   m_model->update();
 }
 
-void Chapters::accept()
+bool Chapters::ok()
 {
   if(m_cells.count() > 0)
   {
@@ -511,7 +504,7 @@ void Chapters::accept()
 
     if(nonHidden > 0)
     {
-      KDialog::accept();
+      return true;
     }
     else
     {
@@ -524,6 +517,7 @@ void Chapters::accept()
     KMessageBox::sorry(this,
                        i18n("You should have at least one chapter."));
   }
+  return false;
 }
 
 void Chapters::slotPlay()

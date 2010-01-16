@@ -61,6 +61,9 @@ VideoOptions::VideoOptions(QWidget *parent)
   : KDialog(parent)
 {
   setupUi(mainWidget());
+  m_chapters=new Chapters(this);
+  tabWidget->setCurrentIndex(tabWidget->insertTab(0, m_chapters, i18n("Chapters")));
+
   setButtons(KDialog::Ok | KDialog::Cancel);
   setCaption(i18n("Video Properties"));
   connect(subtitleAddButton, SIGNAL(clicked()),
@@ -71,12 +74,18 @@ VideoOptions::VideoOptions(QWidget *parent)
           this, SLOT(subtitleRemoveClicked()));
   connect(audioPropertiesButton, SIGNAL(clicked()),
           this, SLOT(audioPropertiesClicked()));
-  connect(chapterPropertiesButton, SIGNAL(clicked()),
-          this, SLOT(chaptersClicked()));
 }
 
 VideoOptions::~VideoOptions()
 {
+}
+
+void VideoOptions::accept()
+{
+    if(m_chapters->ok())
+        KDialog::accept();
+    else
+        KDialog::reject();
 }
 
 void VideoOptions::setData(const VideoObject& obj)
@@ -85,8 +94,8 @@ void VideoOptions::setData(const VideoObject& obj)
   previewUrl->setUrl(obj.previewUrl().prettyUrl());
   aspectComboBox->setCurrentIndex((int)obj.aspect());
 
-  m_cells = obj.cellList();
   m_obj = &obj;
+  m_chapters->setData(obj.cellList(), m_obj);
   m_audioTracks = obj.audioTracks();
   m_audioModel.setLanguages(&m_audioTracks);
   audioListBox->setModel(&m_audioModel);
@@ -103,13 +112,12 @@ void VideoOptions::setData(const VideoObject& obj)
       SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
       this, SLOT(enableButtons()));
   enableButtons();
-  updateTexts();
 }
 
 void VideoOptions::getData(VideoObject& obj) const
 {
   obj.setTitle(titleEdit->text());
-  obj.setCellList(m_cells);
+  obj.setCellList(m_chapters->cells());
   obj.setPreviewUrl(KUrl(previewUrl->url()));
   obj.setAspect((QDVD::VideoTrack::AspectRatio)aspectComboBox->currentIndex());
   obj.setSubtitles(m_subtitles);
@@ -178,19 +186,20 @@ void VideoOptions::subtitlePropertiesClicked()
   }
 }
 
-void VideoOptions::chaptersClicked()
-{
-  Chapters dlg(this);
-  dlg.setData(m_cells, m_obj);
-  if (dlg.exec())
-  {
-    QString preview;
-    dlg.getData(m_cells, &preview);
-    if(!preview.isEmpty())
-      previewUrl->setUrl(preview);
-    updateTexts();
-  }
-}
+// TODO update preview!!!
+// void VideoOptions::chaptersClicked()
+// {
+//   Chapters dlg(this);
+//   dlg.setData(m_cells, m_obj);
+//   if (dlg.exec())
+//   {
+//     QString preview;
+//     dlg.getData(m_cells, &preview);
+//     if(!preview.isEmpty())
+//       previewUrl->setUrl(preview);
+//     updateTexts();
+//   }
+// }
 
 void VideoOptions::enableButtons()
 {
@@ -200,13 +209,6 @@ void VideoOptions::enableButtons()
   subtitleRemoveButton->setEnabled(m_subtitles.count() > 0 && s > 0 &&
                                    !isSelectedSubtitleInVideo());
   subtitlePropertiesButton->setEnabled(m_subtitles.count() > 0 && s > 0);
-}
-
-void VideoOptions::updateTexts()
-{
-  int chapters = m_cells.count();
-  chapterLabel->setText(
-      i18np("Video has 1 chapter", "Video has %1 chapters", chapters));
 }
 
 bool VideoOptions::isSelectedSubtitleInVideo()

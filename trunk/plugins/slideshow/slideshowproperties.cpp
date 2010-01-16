@@ -179,18 +179,26 @@ SlideshowProperties::SlideshowProperties(QWidget *parent)
   slideListView->setDragDropMode(QAbstractItemView::DragDrop);
   slideListView->setDropIndicatorShown(true);
   slideListView->setDragDropOverwriteMode(false);
+  audioListView->setModel(&m_audioModel);
+  audioListView->setWordWrap(true);
 
-  audioButton->setIcon(KIcon("speaker"));
   addButton->setIcon(KIcon("list-add"));
   removeButton->setIcon(KIcon("list-remove"));
   upButton->setIcon(KIcon("arrow-up"));
   downButton->setIcon(KIcon("arrow-down"));
+  addAudioButton->setIcon(KIcon("list-add"));
+  removeAudioButton->setIcon(KIcon("list-remove"));
+  upAudioButton->setIcon(KIcon("arrow-up"));
+  downAudioButton->setIcon(KIcon("arrow-down"));
 
   connect(downButton, SIGNAL(clicked()), this, SLOT(moveDown()));
   connect(upButton, SIGNAL(clicked()), this, SLOT(moveUp()));
   connect(addButton, SIGNAL(clicked()), this, SLOT(add()));
   connect(removeButton, SIGNAL(clicked()), this, SLOT(remove()));
-  connect(audioButton, SIGNAL(clicked()), this, SLOT(audioClicked()));
+  connect(downAudioButton, SIGNAL(clicked()), this, SLOT(moveDownAudio()));
+  connect(upAudioButton, SIGNAL(clicked()), this, SLOT(moveUpAudio()));
+  connect(addAudioButton, SIGNAL(clicked()), this, SLOT(addAudio()));
+  connect(removeAudioButton, SIGNAL(clicked()), this, SLOT(removeAudio()));
   connect(durationSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateInfo()));
 }
 
@@ -204,7 +212,7 @@ void SlideshowProperties::getData(SlideshowObject& obj) const
   obj.setIncludeOriginals(addOriginalsCheckBox->isChecked());
   obj.setLoop(loopCheckBox->isChecked());
   obj.setTitle(titleEdit->text());
-  obj.setAudioFiles(m_audioFiles);
+  obj.setAudioFiles(m_audioModel.list());
   obj.setSlides(m_model.list());
 }
 
@@ -213,7 +221,7 @@ void SlideshowProperties::setData(const SlideshowObject& obj)
   durationSpinBox->setValue((int)obj.slideDuration());
   addOriginalsCheckBox->setChecked(obj.includeOriginals());
   loopCheckBox->setChecked(obj.loop());
-  m_audioFiles = obj.audioFiles();
+  addAudio(obj.audioFiles());
   titleEdit->setText(obj.title());
 
   addSlides(obj.slides());
@@ -236,6 +244,24 @@ void SlideshowProperties::addSlides(const SlideList& slides)
   connect(job, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
           this, SLOT(gotPreview(const KFileItem&, const QPixmap&)));
   updateInfo();
+}
+
+void SlideshowProperties::addAudio(const QStringList& files)
+{
+  for(QStringList::ConstIterator it = files.begin();
+      it != files.end(); ++it)
+  {
+    QFileInfo fi(*it);
+
+    if(fi.isDir())
+    {
+      KMessageBox::error(kapp->activeWindow(),
+                         i18n("Cannot add folder."));
+      continue;
+    }
+    m_audioModel.append(*it);
+  }
+  audioListView->setCurrentIndex(m_audioModel.index(0));
 }
 
 void SlideshowProperties::gotPreview(const KFileItem& item,
@@ -268,12 +294,37 @@ void SlideshowProperties::moveUp()
   }
 }
 
+void SlideshowProperties::moveDownAudio()
+{
+  if(m_audioModel.count()>1)
+  {
+    QModelIndex item1 = audioListView->currentIndex();
+    QModelIndex item2 = m_audioModel.index(item1.row() + 1);
+    m_audioModel.swap(item1, item2);
+    audioListView->setCurrentIndex(item2);
+    audioListView->scrollTo(item2);
+  }
+}
+
+void SlideshowProperties::moveUpAudio()
+{
+  if(m_audioModel.count()>1)
+  {
+    QModelIndex item1 = audioListView->currentIndex();
+    QModelIndex item2 = m_audioModel.index(item1.row() - 1);
+    m_audioModel.swap(item1, item2);
+    audioListView->setCurrentIndex(item2);
+    audioListView->scrollTo(item2);
+  }
+}
+
 void SlideshowProperties::updateInfo()
 {
   KMF::Time duration = (double)durationSpinBox->value();
   KMF::Time audioDuration = 0.0;
+  QStringList audioFiles=m_audioModel.list();
 
-  foreach(QString file, m_audioFiles)
+  foreach(QString file, audioFiles)
   {
     KMFMediaFile audio = KMFMediaFile::mediaFile(file);
     audioDuration += audio.duration();
@@ -303,16 +354,24 @@ void SlideshowProperties::add()
   }
 }
 
-void SlideshowProperties::audioClicked()
+void SlideshowProperties::removeAudio()
 {
-  KMFMultiURLDialog dlg("kfiledialog:///<SlideshowAudioFiles>",
-                        i18n("*.mp3 *.wav *.ogg|Audio Files"),
-                        this, i18n("Audio Files"));
+  QModelIndexList selected = audioListView->selectionModel()->selectedIndexes();
+  m_audioModel.removeAt(selected);
+  audioListView->setCurrentIndex(m_audioModel.index(0));
+  updateInfo();
+}
 
-  dlg.addFiles(m_audioFiles);
-  if(dlg.exec())
+void SlideshowProperties::addAudio()
+{
+  QStringList files = KFileDialog::getOpenFileNames(
+      KUrl("kfiledialog:///<SlideshowAudioFiles>"),
+      i18n("*.mp3 *.wav *.ogg|Audio Files"),
+      this);
+
+  if(files.count() > 0)
   {
-    m_audioFiles = dlg.files();
+    addAudio(files);
     updateInfo();
   }
 }

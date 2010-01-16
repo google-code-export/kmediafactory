@@ -32,15 +32,19 @@ using namespace Phonon;
 
 class CellListModel;
 
-class Chapters : public KDialog, public Ui::Chapters
+class Chapters : public QWidget, public Ui::Chapters
 {
     Q_OBJECT
   public:
     Chapters(QWidget *parent = 0);
     ~Chapters();
 
-    void getData(QDVD::CellList& cells, QString* preview) const;
     void setData(const QDVD::CellList& cells, const VideoObject* obj);
+
+    const QDVD::CellList & cells() const { return m_cells; }
+    const QString &        preview() const { return m_preview; }
+
+    bool ok();
 
   protected slots:
     void slotForwardShort();
@@ -59,7 +63,6 @@ class Chapters : public KDialog, public Ui::Chapters
     void autoChapters();
     void import();
     void saveCustomPreview();
-    void accept();
     void slotPlay();
     void slotTick(qint64 time);
 
