@@ -55,20 +55,26 @@ KMFMultiURLDialog::~KMFMultiURLDialog()
 
 void KMFMultiURLDialog::moveDown()
 {
-  QModelIndex item1 = fileListView->currentIndex();
-  QModelIndex item2 = m_model.index(item1.row() + 1);
-  m_model.swap(item1, item2);
-  fileListView->setCurrentIndex(item2);
-  fileListView->scrollTo(item2);
+  if(m_model.count()>1)
+  {
+    QModelIndex item1 = fileListView->currentIndex();
+    QModelIndex item2 = m_model.index(item1.row() + 1);
+    m_model.swap(item1, item2);
+    fileListView->setCurrentIndex(item2);
+    fileListView->scrollTo(item2);
+  }
 }
 
 void KMFMultiURLDialog::moveUp()
 {
-  QModelIndex item1 = fileListView->currentIndex();
-  QModelIndex item2 = m_model.index(item1.row() - 1);
-  m_model.swap(item1, item2);
-  fileListView->setCurrentIndex(item2);
-  fileListView->scrollTo(item2);
+  if(m_model.count()>1)
+  {
+    QModelIndex item1 = fileListView->currentIndex();
+    QModelIndex item2 = m_model.index(item1.row() - 1);
+    m_model.swap(item1, item2);
+    fileListView->setCurrentIndex(item2);
+    fileListView->scrollTo(item2);
+  }
 }
 
 void KMFMultiURLDialog::remove()
