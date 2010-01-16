@@ -37,7 +37,11 @@
 #include <kmediafactory/plugin.h>
 
 #include <KIO/NetAccess>
+#if KDE_IS_VERSION(4,3,90)
+#include <knewstuff3/downloaddialog.h>
+#else
 #include <knewstuff2/engine.h>
+#endif
 #include <KRun>
 #include <KService>
 #include <KActionCollection>
@@ -265,10 +269,15 @@ void KMediaFactory::itemDelete()
 
 void KMediaFactory::newStuff()
 {
+  #if KDE_IS_VERSION(4,3,90)
+  KNS3::DownloadDialog dialog("kmediafactory.knsrc", this);
+  dialog.exec();
+  #else
   KNS::Engine *engine = new KNS::Engine();
   engine->init("kmediafactory.knsrc");
-  KNS::Entry::List entries = engine->downloadDialogModal();
+  engine->downloadDialogModal();
   delete engine;
+  #endif
 }
 
 void KMediaFactory::initGUI()
@@ -559,7 +568,7 @@ void KMediaFactory::enableUi(bool enabled)
   toolBar()->setEnabled(enabled);
   if(m_janusIconList)
     m_janusIconList->setEnabled(enabled);
-  projectPage->setEnabled(enabled); 
+  projectPage->setEnabled(enabled);
   mediaPage->mediaFiles->setEnabled(enabled);
   mediaPage->mediaButtons->setEnabled(enabled);
   templatePage->templates->setEnabled(enabled);
