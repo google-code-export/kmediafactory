@@ -60,6 +60,7 @@ class SlideshowProperties : public KDialog, public Ui::SlideshowProperties
 
   protected:
     void addSlides(const SlideList& slides);
+    void addAudio(const QStringList& files);
 
   public slots:
     void gotPreview(const KFileItem& item, const QPixmap& pixmap);
@@ -69,14 +70,17 @@ class SlideshowProperties : public KDialog, public Ui::SlideshowProperties
     virtual void moveDown();
     virtual void add();
     virtual void remove();
-    virtual void audioClicked();
+    virtual void moveUpAudio();
+    virtual void moveDownAudio();
+    virtual void addAudio();
+    virtual void removeAudio();
     virtual void okClicked();
     void updateInfo();
 
   private:
     const SlideshowObject* m_sob;
     SlideListModel m_model;
-    QStringList m_audioFiles;
+    KMFListModel<QString> m_audioModel;
 };
 
 #endif

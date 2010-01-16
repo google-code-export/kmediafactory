@@ -26,6 +26,7 @@
 #include "videoobject.h"
 #include "kmflanguagewidgets.h"
 
+class Chapters;
 class VideoOptions : public KDialog, public Ui::VideoOptions
 {
     Q_OBJECT
@@ -37,17 +38,16 @@ class VideoOptions : public KDialog, public Ui::VideoOptions
     void setData(const VideoObject& obj);
 
   protected slots:
-    virtual void chaptersClicked();
+    virtual void accept();
     virtual void audioPropertiesClicked();
     virtual void subtitleAddClicked();
     virtual void subtitleRemoveClicked();
     virtual void subtitlePropertiesClicked();
     virtual void enableButtons();
-    virtual void updateTexts();
 
   private:
     const VideoObject* m_obj;
-    QDVD::CellList m_cells;
+    Chapters* m_chapters;
     QDVD::SubtitleList m_subtitles;
     LanguageListModel m_subtitleModel;
     QDVD::AudioList m_audioTracks;

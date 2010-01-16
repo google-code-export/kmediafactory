@@ -6,14 +6,17 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>327</width>
-    <height>204</height>
+    <width>318</width>
+    <height>192</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Subtitle options</string>
   </property>
   <layout class="QFormLayout" name="formLayout">
+   <property name="margin">
+    <number>0</number>
+   </property>
    <item row="0" column="0">
     <widget class="QLabel" name="languageLabel">
      <property name="text">
