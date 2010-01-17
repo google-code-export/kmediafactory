@@ -25,7 +25,7 @@ find_package(KDE4 REQUIRED)
 include(KDE4Defaults)
 include(MacroLibrary)
 
-#IS_KDE_VERSION(KDE_4_4 4 3 90)
+IS_KDE_VERSION(KDE_4_4 4 3 90)
 
 check_function_exists(va_copy VA_COPY)
 
