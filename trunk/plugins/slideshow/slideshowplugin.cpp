@@ -121,7 +121,10 @@ void SlideshowPlugin::slotAddSlideshow()
       sob->setTitle(i18n("Slideshow"));
     sob->addPics(pics, parent);
     if(sob->slides().count() > 0)
+    {
       m->addMediaObject(sob);
+      sob->slotProperties();
+    }
   }
 }
 
