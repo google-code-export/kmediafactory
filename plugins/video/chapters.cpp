@@ -21,6 +21,7 @@
 #include "chapters.h"
 #include "videoplugin.h"
 #include "kmftime.h"
+#include "kmfmediafile.h"
 #include "kmftools.h"
 #include "ui_autochapters.h"
 #include "ui_addchapter.h"
@@ -82,7 +83,7 @@ class CellListModel : public QAbstractListModel
 
       if (index.row() >= rowCount(index))
         return false;
-      
+
       if (role == Qt::EditRole && index.column() == COL_NAME)
       {
          (*m_data)[index.row()].setName(value.toString());
@@ -98,7 +99,7 @@ class CellListModel : public QAbstractListModel
 
       return false;
     };
-    
+
     virtual Qt::ItemFlags flags(const QModelIndex &index) const
     {
         Qt::ItemFlags result = QAbstractItemModel::flags(index);
@@ -110,7 +111,7 @@ class CellListModel : public QAbstractListModel
         }
         return result;
     };
-    
+
     virtual QVariant data(const QModelIndex &index, int role) const
     {
       if (!index.isValid())
@@ -270,11 +271,46 @@ void Chapters::updateVideo()
       video->mediaObject()->setTickInterval(25);
       connect(video->mediaObject(), SIGNAL(tick(qint64)),
               this, SLOT(slotTick(qint64)));
+      connect(video->mediaObject(), SIGNAL(totalTimeChanged(qint64)),
+              this, SLOT(slotTotalTime(qint64)));
       m_lastFile = file;
       m_difference = m_pos - t;
+      m_msecPhononRatio = 1.0;
   }
-  video->seek(t.toMSec());
-  slotTick(t.toMSec());
+  seekVideo(t.toMSec());
+  setSliderAndTime(t.toMSec());
+}
+
+void Chapters::seekVideo(int msec)
+{
+    //kDebug() << (qint64)((qreal)msec / m_msecPhononRatio);
+    video->seek((qint64)((qreal)msec / m_msecPhononRatio));
+}
+
+void Chapters::setSliderAndTime(int msec)
+{
+  m_pos = KMF::Time(msec) + m_difference;
+  QString s = QString("%1: %2 / %3").
+      arg(m_obj->text()).
+      arg(m_pos.toString()).
+      arg(m_duration);
+  timeLabel->setText(s);
+  timeSlider->setValue((int)m_pos);
+}
+
+void Chapters::slotTotalTime(qint64 totalTime)
+{
+  const KMFMediaFile& media = KMFMediaFile::mediaFile(m_lastFile);
+  int duration = KMF::Time(media.duration()).toMSec();
+  m_msecPhononRatio = (qreal)duration / (qreal)totalTime;
+  //kDebug() << m_msecPhononRatio << duration << totalTime;
+  slotTick(video->currentTime());
+}
+
+void Chapters::slotTick(qint64 time)
+{
+    //kDebug() << time;
+    setSliderAndTime((int)(m_msecPhononRatio * time));
 }
 
 void Chapters::slotSliderMoved(int value)
@@ -531,17 +567,6 @@ void Chapters::slotPlay()
         video->play();
         playButton->setIcon(KIcon("media-playback-pause"));
     }
-}
-
-void Chapters::slotTick(qint64 time)
-{
-  m_pos = KMF::Time((int)time) + m_difference;
-  QString s = QString("%1: %2 / %3").
-      arg(m_obj->text()).
-      arg(m_pos.toString()).
-      arg(m_duration);
-  timeLabel->setText(s);
-  timeSlider->setValue((int)m_pos);
 }
 
 #include "chapters.moc"
