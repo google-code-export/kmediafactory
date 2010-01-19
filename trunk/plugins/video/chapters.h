@@ -65,6 +65,7 @@ class Chapters : public QWidget, public Ui::Chapters
     void saveCustomPreview();
     void slotPlay();
     void slotTick(qint64 time);
+    void slotTotalTime(qint64 totalTime);
 
   private:
     const VideoObject* m_obj;
@@ -75,7 +76,10 @@ class Chapters : public QWidget, public Ui::Chapters
     CellListModel* m_model;
     QString m_lastFile;
     KMF::Time m_difference;
+    qreal m_msecPhononRatio;
 
+    void seekVideo(int msec);
+    void setSliderAndTime(int msec);
     void moveMSecs(int direction);
     void updateVideo();
     void checkLengths();
