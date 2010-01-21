@@ -19,6 +19,7 @@
 //**************************************************************************
 #include "slideshowproperties.h"
 #include "slideshowobject.h"
+#include "subtitleoptions.h"
 #include <kmftime.h>
 #include <kmfmultiurldialog.h>
 #include <kmfmediafile.h>
@@ -37,6 +38,7 @@
 #include <QLineEdit>
 #include <QFileInfo>
 #include <QMimeData>
+#include <QBoxLayout>
 
 enum Columns
 {
@@ -165,13 +167,20 @@ void SlideListModel::setPreview(const QString& file, const QPixmap& pixmap)
   emit dataChanged(index(i), index(i));
 }
 
-SlideshowProperties::SlideshowProperties(QWidget *parent)
+SlideshowProperties::SlideshowProperties(QWidget *parent, bool showSubPage)
   : KDialog(parent)
 {
   setupUi(mainWidget());
   setButtons(KDialog::Ok | KDialog::Cancel);
   setCaption(i18n("Slideshow Properties"));
 
+  if(showSubPage)
+  {
+      QWidget *widget=new QWidget(tabWidget);
+      QBoxLayout *layout=new QBoxLayout(QBoxLayout::LeftToRight, widget);
+      layout->addWidget(m_subtitleWidget=new SubtitleOptionsWidget(tabWidget, false));
+      tabWidget->insertTab(2, widget, i18n("Subtitles"));
+  }
   slideListView->setModel(&m_model);
   slideListView->setRootIsDecorated(false);
   slideListView->setDragEnabled(true);
@@ -214,6 +223,12 @@ void SlideshowProperties::getData(SlideshowObject& obj) const
   obj.setTitle(titleEdit->text());
   obj.setAudioFiles(m_audioModel.list());
   obj.setSlides(m_model.list());
+  if(m_subtitleWidget)
+  {
+      QDVD::Subtitle sub;
+      m_subtitleWidget->getData(sub);
+      obj.setSubtitleSettings(sub);
+  }
 }
 
 void SlideshowProperties::setData(const SlideshowObject& obj)
@@ -223,6 +238,8 @@ void SlideshowProperties::setData(const SlideshowObject& obj)
   loopCheckBox->setChecked(obj.loop());
   addAudio(obj.audioFiles());
   titleEdit->setText(obj.title());
+  if(m_subtitleWidget)
+      m_subtitleWidget->setData(obj.subtitleSettings());
 
   addSlides(obj.slides());
   m_sob = &obj;

@@ -28,22 +28,28 @@
 #include <KIO/NetAccess>
 #include <QLabel>
 
-SubtitleOptions::SubtitleOptions(QWidget *parent)
- : KDialog(parent)
+SubtitleOptionsWidget::SubtitleOptionsWidget(QWidget *parent, bool wantFile)
+ : QWidget(parent)
 {
-  setupUi(mainWidget());
-  setButtons(KDialog::Ok | KDialog::Cancel);
-  setCaption(i18n("Subtitle Options"));
+  setupUi(this);
   m_languageModel.useAllLanguages();
   languageCombo->setModel(&m_languageModel);
   encodingCombo->model()->sort(0);
+
+  if(!wantFile)
+  {
+    delete subtitleUrl;
+    subtitleUrl=0L;
+    delete subtitleFileLabel;
+    subtitleFileLabel=0L;
+  }
 }
 
-SubtitleOptions::~SubtitleOptions()
+SubtitleOptionsWidget::~SubtitleOptionsWidget()
 {
 }
 
-void SubtitleOptions::getData(QDVD::Subtitle& obj) const
+void SubtitleOptionsWidget::getData(QDVD::Subtitle& obj) const
 {
   int align;
   int n = languageCombo->currentIndex();
@@ -51,7 +57,8 @@ void SubtitleOptions::getData(QDVD::Subtitle& obj) const
   int ver[] = { Qt::AlignTop, Qt::AlignBottom, Qt::AlignVCenter };
 
   obj.setLanguage(m_languageModel.at(n));
-  obj.setFile(subtitleUrl->url().pathOrUrl());
+  if(subtitleUrl)
+    obj.setFile(subtitleUrl->url().pathOrUrl());
   obj.setFont(subtitleFont->font());
   obj.setEncoding(encodingCombo->currentText());
 
@@ -60,17 +67,20 @@ void SubtitleOptions::getData(QDVD::Subtitle& obj) const
   obj.setAlignment(QFlags<Qt::AlignmentFlag>(align));
 }
 
-void SubtitleOptions::setData(const QDVD::Subtitle& obj)
+void SubtitleOptionsWidget::setData(const QDVD::Subtitle& obj)
 {
   int n;
 
-  subtitleUrl->setFilter(
+  QModelIndex i = m_languageModel.index(obj.language());
+  languageCombo->setCurrentIndex(i.row());
+  if(subtitleUrl)
+  {
+    subtitleUrl->setFilter(
       "*.sub *.srt *.ssa *.smi *.rt *.txt *.aqt *.jss *.js *.ass|" +
       i18n("Subtitle files") +
       "\n*.*|" + i18n("All files"));
-  QModelIndex i = m_languageModel.index(obj.language());
-  languageCombo->setCurrentIndex(i.row());
-  subtitleUrl->setUrl(obj.file());
+    subtitleUrl->setUrl(obj.file());
+  }
   subtitleFont->setFont(obj.font());
   encodingCombo->setCurrentIndex(encodingCombo->findText(obj.encoding()));
 
@@ -106,9 +116,21 @@ void SubtitleOptions::setData(const QDVD::Subtitle& obj)
   horizontalAlignCombo->setCurrentIndex(n);
 }
 
+SubtitleOptions::SubtitleOptions(QWidget *parent)
+ : KDialog(parent)
+{
+  setMainWidget(m_widget=new SubtitleOptionsWidget(this, true));
+  setButtons(KDialog::Ok | KDialog::Cancel);
+  setCaption(i18n("Subtitle Options"));
+}
+
+SubtitleOptions::~SubtitleOptions()
+{
+}
+
 void SubtitleOptions::accept()
 {
-  if(KIO::NetAccess::exists(subtitleUrl->url(), KIO::NetAccess::SourceSide,
+  if(KIO::NetAccess::exists(m_widget->url(), KIO::NetAccess::SourceSide,
      kapp->activeWindow()))
   {
     KDialog::accept();

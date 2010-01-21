@@ -47,7 +47,8 @@ class SlideshowConfig : public QWidget, public Ui::SlideshowConfig
 };
 
 SlideshowPlugin::SlideshowPlugin(QObject *parent, const QVariantList&) :
-  KMF::Plugin(parent)
+  KMF::Plugin(parent),
+  m_backend(BACKEND_NOT_FOUND)
 {
   KGlobal::locale()->insertCatalog("kmediafactory_slideshow");
   setObjectName("KMFSlideshow");
@@ -78,16 +79,18 @@ void SlideshowPlugin::init(const QString &type)
 
   if (type.left(3) == "DVD")
   {
+    m_app = KStandardDirs::findExe("melt");
 
-    m_dvdslideshow = KStandardDirs::findExe("dvd-slideshow");
-    if(m_dvdslideshow.isEmpty())
+    if(m_app.isEmpty())
     {
-      action->setEnabled(false);
+        m_app = KStandardDirs::findExe("dvd-slideshow");
+        if(!m_app.isEmpty())
+            m_backend=BACKEND_DVD_SLIDESHOW;
     }
     else
-    {
-      action->setEnabled(true);
-    }
+        m_backend = BACKEND_MELT;
+
+    action->setEnabled(BACKEND_NOT_FOUND!=m_backend);
   }
   else
   {
@@ -146,7 +149,14 @@ QStringList SlideshowPlugin::supportedProjectTypes() const
 const KMF::ConfigPage* SlideshowPlugin::configPage() const
 {
   KMF::ConfigPage* configPage = new KMF::ConfigPage;
-  configPage->page = new SlideshowConfig;
+  SlideshowConfig *slc=new SlideshowConfig;
+  configPage->page = slc;
+
+  if(BACKEND_MELT!=m_backend)
+  {
+    slc->defaultSubtitleLanguageLabel->setVisible(false);
+    slc->kcfg_DefaultSubtitleLanguage->setVisible(false);
+  }
   configPage->config = SlideshowPluginSettings::self();
   configPage->itemName = i18n("Slideshow");
   configPage->itemDescription = i18n("Slideshow Settings");

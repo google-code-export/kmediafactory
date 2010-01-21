@@ -27,6 +27,7 @@
 
 class KFileItem;
 class SlideshowObject;
+class SubtitleOptionsWidget;
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
@@ -52,7 +53,7 @@ class SlideshowProperties : public KDialog, public Ui::SlideshowProperties
 {
     Q_OBJECT
   public:
-    SlideshowProperties(QWidget *parent = 0);
+    SlideshowProperties(QWidget *parent, bool showSubPage);
     ~SlideshowProperties();
 
     void getData(SlideshowObject& obj) const;
@@ -81,6 +82,7 @@ class SlideshowProperties : public KDialog, public Ui::SlideshowProperties
     const SlideshowObject* m_sob;
     SlideListModel m_model;
     KMFListModel<QString> m_audioModel;
+    SubtitleOptionsWidget *m_subtitleWidget;
 };
 
 #endif

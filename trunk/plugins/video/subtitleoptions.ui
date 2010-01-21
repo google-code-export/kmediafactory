@@ -43,7 +43,7 @@
    <item row="1" column="0">
     <widget class="QLabel" name="subtitleFileLabel">
      <property name="text">
-      <string>Subtitle File:</string>
+      <string>File:</string>
      </property>
      <property name="wordWrap">
       <bool>false</bool>
@@ -649,7 +649,7 @@
    <item row="3" column="0">
     <widget class="QLabel" name="subtitleFontLabel">
      <property name="text">
-      <string>Subtitle font:</string>
+      <string>Font:</string>
      </property>
      <property name="wordWrap">
       <bool>false</bool>

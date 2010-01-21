@@ -28,21 +28,40 @@
 /**
 @author Petri Damsten
 */
-class SubtitleOptions : public KDialog, public Ui::SubtitleOptions
+class SubtitleOptionsWidget : public QWidget, public Ui::SubtitleOptions
 {
     Q_OBJECT
   public:
-    SubtitleOptions(QWidget *parent = 0);
-    ~SubtitleOptions();
+    SubtitleOptionsWidget(QWidget *parent, bool wantFile);
+    ~SubtitleOptionsWidget();
 
     void getData(QDVD::Subtitle& obj) const;
     void setData(const QDVD::Subtitle& obj);
 
-  protected slots:
-    virtual void accept();
+    KUrl url() const { return subtitleUrl ? subtitleUrl->url() : KUrl(); }
 
   private:
     LanguageListModel m_languageModel;
+};
+
+class SubtitleOptions : public KDialog, public Ui::SubtitleOptions
+{
+    Q_OBJECT
+
+    public:
+
+    SubtitleOptions(QWidget *parent = 0);
+    ~SubtitleOptions();
+
+    void getData(QDVD::Subtitle& obj) const { return m_widget->getData(obj); }
+    void setData(const QDVD::Subtitle& obj) { m_widget->setData(obj); }
+
+  protected Q_SLOTS:
+    virtual void accept();
+
+    private:
+
+    SubtitleOptionsWidget *m_widget;
 };
 
 #endif

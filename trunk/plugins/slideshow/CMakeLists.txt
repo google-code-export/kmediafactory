@@ -1,5 +1,6 @@
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/../video
   ${CMAKE_SOURCE_DIR}/lib
   ${CMAKE_BINARY_DIR}/lib
 )
@@ -8,11 +9,13 @@ set(kmediafactory_slideshow_SRCS
   slideshowplugin.cpp
   slideshowobject.cpp
   slideshowproperties.cpp
+  ../video/subtitleoptions.cpp
 )
 
 kde4_add_ui_files(kmediafactory_slideshow_SRCS
   slideshowproperties.ui
   slideshowconfig.ui
+  ../video/subtitleoptions.ui
 )
 
 kde4_add_kcfg_files(kmediafactory_slideshow_SRCS
