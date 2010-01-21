@@ -1127,8 +1127,29 @@ uint64_t SlideshowObject::size() const
 
   if(size == 0)
   {
-    double d = (double)KMF::Time(duration());
-    size = (uint64_t)(d * 655415.35);
+    if(SlideshowPlugin::BACKEND_MELT==static_cast<SlideshowPlugin*>(plugin())->backend())
+    {
+        // A 1hr 25min and 30 second PAL slideshow was 1225431040bytes
+        static const double constBytesPerSecond=1225431040/((85*60)+30);
+        
+        size=constBytesPerSecond*(double)KMF::Time(duration());
+    }
+    else
+    {
+      double d = (double)KMF::Time(duration());
+      size = (uint64_t)(d * 655415.35);
+    }
+  }
+  
+  if(m_includeOriginals)
+  {
+    // Include size of image files...
+    foreach(const Slide& slide, m_slides)
+    {
+        KFileItem finfo(KFileItem::Unknown, KFileItem::Unknown, KUrl(slide.picture))s;
+        
+        size+=finfo.size();
+    }
   }
   return size;
 }
