@@ -337,7 +337,7 @@ void SlideshowProperties::moveUpAudio()
 
 void SlideshowProperties::updateInfo()
 {
-  KMF::Time duration = (double)durationSpinBox->value();
+  KMF::Time duration = (double)(durationSpinBox->value()*m_model.count()) ;
   KMF::Time audioDuration = 0.0;
   QStringList audioFiles=m_audioModel.list();
 
@@ -347,7 +347,7 @@ void SlideshowProperties::updateInfo()
     audioDuration += audio.duration();
   }
 
-  infoLabel->setText(i18n("Images: %1, Duration: %2, Audio duration: %3", m_model.count(), duration.toString("h:mm:ss"), audioDuration.toString("h:mm:ss")));
+  infoLabel->setText(i18n("<i>Images: %1, Duration: %2, Audio duration: %3</i>", m_model.count(), duration.toString("h:mm:ss"), audioDuration.toString("h:mm:ss")));
 }
 
 void SlideshowProperties::remove()
