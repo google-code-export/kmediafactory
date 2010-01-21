@@ -1146,7 +1146,7 @@ uint64_t SlideshowObject::size() const
     // Include size of image files...
     foreach(const Slide& slide, m_slides)
     {
-        KFileItem finfo(KFileItem::Unknown, KFileItem::Unknown, KUrl(slide.picture))s;
+        KFileItem finfo(KFileItem::Unknown, KFileItem::Unknown, KUrl(slide.picture));
         
         size+=finfo.size();
     }
