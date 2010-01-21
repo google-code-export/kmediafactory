@@ -1,5 +1,4 @@
 set(kmediafactory_SCRIPTS
-  kmf_comment
   kmf_frame
   kmf_info
   kmf_make_mpeg
