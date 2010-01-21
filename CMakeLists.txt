@@ -86,6 +86,9 @@ macro_log_feature(GS_EXECUTABLE "ghostscript" "For converting pdf to slideshow" 
 # Are we using this?
 find_program(EXTRACTRC_EXECUTABLE extractrc)
 
+find_package(Kexiv2)
+macro_bool_to_01(KEXIV2_FOUND HAVE_KEXIV2)
+
 add_definitions(
     ${QT_DEFINITIONS}
     ${QT_QTDBUS_DEFINITIONS}

@@ -23,6 +23,7 @@
 #include "slideshowpluginsettings.h"
 #include "slideshowproperties.h"
 #include "run.h"
+#include "config.h"
 #include <kmediafactory/job.h>
 #include <qdvdinfo.h>
 #include <kmfmediafile.h>
@@ -50,6 +51,9 @@
 #include <list>
 #include <errno.h>
 #include <unistd.h>
+#ifdef HAVE_KEXIV2
+#include <libkexiv2/kexiv2.h>
+#endif
 
 class CopyOriginalsJob : public KMF::Job
 {
@@ -613,7 +617,7 @@ SlideList SlideshowObject::slideList(QStringList list, QWidget *parent) const
     QString mime;
     QFileInfo fi(file);
     QDir dir(interface()->projectDir("media"));
-    KMimeType::Ptr type = KMimeType::findByUrl(file);
+    KMimeType::Ptr type = KMimeType::findByUrl(QUrl::fromLocalFile(file));
 
     dlg.setLabelText(i18n("Processing files...\n") + (file));
     kapp->processEvents();
@@ -693,12 +697,18 @@ SlideList SlideshowObject::slideList(QStringList list, QWidget *parent) const
       }
       if(slide.comment.isEmpty())
       {
+#ifdef HAVE_KEXIV2
+        QDateTime dt=KExiv2Iface::KExiv2(file).getImageDateTime();
+        
+        slide.comment=dt.isNull() ? QFileInfo(file).fileName() : KGlobal::locale()->formatDateTime(dt, KLocale::ShortDate, true);
+#else
         Run run(QString("kmf_comment \"%1\"").arg(file));
 
         if(run.exitStatus() == 0)
         {
           slide.comment = run.output();
         }
+#endif
       }
       slide.comment = slide.comment.trimmed();
       slide.picture = file;

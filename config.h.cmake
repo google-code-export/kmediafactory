@@ -15,4 +15,7 @@
 /* Define if you have libdvdread */
 #cmakedefine HAVE_LIBDVDREAD 1
 
+/* Define if you have libkexiv2 */
+#cmakedefine HAVE_KEXIV2 1
+
 #endif
