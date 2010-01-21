@@ -71,6 +71,8 @@ class SlideshowObject : public KMF::MediaObject
     SlideList slideList(QStringList list, QWidget *parent) const;
     QString id() const { return m_id; };
     QString information() const;
+    const QDVD::Subtitle & subtitleSettings() const { return m_subtitleSettings; }
+    void setSubtitleSettings(const QDVD::Subtitle &s) { m_subtitleSettings=s; }
     
   public slots:
     virtual void slotProperties();
@@ -102,6 +104,7 @@ class SlideshowObject : public KMF::MediaObject
     QStringList m_audioFiles;
     QString m_buffer;
     QString m_type;
+    QDVD::Subtitle m_subtitleSettings;
     mutable QPixmap m_thumbnail;
 };
 

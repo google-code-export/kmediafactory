@@ -29,9 +29,18 @@ class SlideshowPlugin : public KMF::Plugin
 {
     Q_OBJECT
   public:
+
+    enum EBackend
+    {
+        BACKEND_NOT_FOUND,
+        BACKEND_MELT,
+        BACKEND_DVD_SLIDESHOW
+    };
+    
     SlideshowPlugin(QObject *parent, const QVariantList&);
 
-    QString dvdslideshowBin() { return m_dvdslideshow; };
+    QString app() { return m_app; };
+    EBackend backend() { return m_backend; }
 
   public slots:
     virtual void init(const QString &type);
@@ -48,7 +57,8 @@ class SlideshowPlugin : public KMF::Plugin
     void setupActions();
 
   private:
-    QString  m_dvdslideshow;
+    EBackend m_backend;
+    QString  m_app;
 };
 
 #endif /* SLIDESHOWPLUGIN_H */
