@@ -609,7 +609,7 @@ SlideList SlideshowObject::slideList(QStringList list, QWidget *parent) const
   KProgressDialog dlg(parent);
 
   dlg.progressBar()->setMinimum(0);
-  dlg.progressBar()->setMaximum(0);
+  dlg.progressBar()->setMaximum(list.count());
   dlg.show();
 
   foreach(QString file, list)
@@ -620,13 +620,14 @@ SlideList SlideshowObject::slideList(QStringList list, QWidget *parent) const
     QDir dir(interface()->projectDir("media"));
     KMimeType::Ptr type = KMimeType::findByUrl(QUrl::fromLocalFile(file));
 
-    dlg.setLabelText(i18n("Processing files...\n") + (file));
+    dlg.setLabelText(i18n("Processing %1...", file));
     kapp->processEvents();
 
     if(fi.isDir())
     {
       KMessageBox::error(kapp->activeWindow(),
                          i18n("Cannot add folder."));
+      dlg.progressBar()->setValue(dlg.progressBar()->value()+1);
       continue;
     }
 
@@ -715,6 +716,7 @@ SlideList SlideshowObject::slideList(QStringList list, QWidget *parent) const
       slide.picture = file;
       result.append(slide);
       kapp->processEvents();
+      dlg.progressBar()->setValue(dlg.progressBar()->value()+1);
     }
   }
   int chapter = ((result.count() - 1) / 12) + 1;
