@@ -48,6 +48,7 @@
 #include <QRegExp>
 #include <QPixmap>
 #include <QDomDocument>
+#include <QSet>
 #include <list>
 #include <errno.h>
 #include <unistd.h>
@@ -61,16 +62,16 @@ public:
   CopyOriginalsJob() {};
 
   QString destDir;
-  KUrl::List files;
+  QSet<QString> files;
 
   void run()
   {
     message(msgId(), KMF::Start, i18n("Copying slideshow originals"));
     setMaximum(msgId(), files.size());
     int i = 0;
-    foreach (KUrl file, files)
+    foreach (QString file, files)
     {
-      if (!QFile::copy(file.path(), destDir + QFileInfo(file.path()).fileName()))
+      if (!QFile::copy(file, destDir + QFileInfo(file).fileName()))
       {
         message(msgId(), KMF::Error, i18n("Copying originals failed."));
         return;
@@ -881,17 +882,20 @@ bool SlideshowObject::prepare(const QString& type)
   {
     if(m_includeOriginals)
     {
-      KUrl::List files;
+      QSet<QString> files;
+      QString       dest(interface()->projectDir("DVD/PICTURES"));
+      QDir          destDir(dest);
     
       foreach(const Slide& slide, m_slides)
       {
-        files.append(slide.picture);
+        // Only use if it does not already exist in the destinaiton...
+        if(QFileInfo(destDir.filePath(QFileInfo(slide.picture).fileName())).exists())
+            files.insert(slide.picture);
       }
-      KMF::Tools::stripExisting(&files, interface()->projectDir("DVD/PICTURES"));
       if(files.count() > 0)
       {
         CopyOriginalsJob *job = new CopyOriginalsJob;
-        job->destDir = interface()->projectDir("DVD/PICTURES");
+        job->destDir = dest;
         job->files = files;
         interface()->addJob(job);
       }
@@ -1154,11 +1158,18 @@ uint64_t SlideshowObject::size() const
   if(m_includeOriginals)
   {
     // Include size of image files...
+
+    // Store a set of the files that we've already processed, just in case there are duplicates in the list!
+    QSet<QString> processed;
     foreach(const Slide& slide, m_slides)
     {
-        KFileItem finfo(KFileItem::Unknown, KFileItem::Unknown, KUrl(slide.picture));
+        if(!processed.contains(slide.picture))
+        {        
+            KFileItem finfo(KFileItem::Unknown, KFileItem::Unknown, KUrl(slide.picture));
         
-        size+=finfo.size();
+            size+=finfo.size();
+            processed.insert(slide.picture);
+        }
     }
   }
   return size;
