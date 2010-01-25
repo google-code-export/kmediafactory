@@ -14,7 +14,7 @@
     </entry>
     <entry name="AudioType" type="Int">
        <label>Audio type for slideshow.</label>
-       <default>0</default>
+       <default>1</default> <!-- 0 = MP2, 1 = AC3 -->
     </entry>
     <entry name="DefaultSubtitleLanguage" type="String">
         <label>Use this as a default subtitle language for image comments.</label>
