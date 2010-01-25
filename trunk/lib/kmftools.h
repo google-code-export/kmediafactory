@@ -94,6 +94,7 @@ namespace KMF
       static QImage variantList2Image(QVariant v);
       static QMap<QString, QString> variantMap2StringMap(const QMap<QString, QVariant>& map);
       static QStringList variantList2StringList(const QVariantList& list);
+      static QString changeExt(const QString &f, const QString &newExt);
   };
 }
 

@@ -106,6 +106,7 @@ class VideoObject : public KMF::MediaObject
 
   private:
     QImage generatePreview(int chapter, QSize desiredSize) const;
+    void checkForSubtitleFile(const QString &fileName);
 
   protected:
     mutable QDVD::CellList m_cells;
