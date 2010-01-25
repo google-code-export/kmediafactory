@@ -44,7 +44,14 @@ void addMap(QMap<S, T>* map, const QMap<S, T>& add)
 
 static QDVD::VideoTrack::AspectRatio toAspectRatio(const QString &ar)
 {
-    return ar==QDVD::VideoTrack::aspectRatioString(QDVD::VideoTrack::Aspect_16_9) ? QDVD::VideoTrack::Aspect_16_9 : QDVD::VideoTrack::Aspect_4_3;
+    // As detailed below, KConfigXT only saves combobox index!
+    if (QString::fromLatin1("0")==ar)
+        return QDVD::VideoTrack::Aspect_4_3;
+    else if (QString::fromLatin1("1")==ar)
+        return QDVD::VideoTrack::Aspect_16_9;
+    else
+        return ar==QDVD::VideoTrack::aspectRatioString(QDVD::VideoTrack::Aspect_16_9)
+                    ? QDVD::VideoTrack::Aspect_16_9 : QDVD::VideoTrack::Aspect_4_3;
 }
 
 // KConfigXT when used with a combobox, only saves the combos current *index*
@@ -72,7 +79,7 @@ static QString fixDirectory(const QString &directory)
 }
 
 KMFProject::KMFProject(QObject *parent) :
-  QObject(parent), m_aspectRatio(QDVD::VideoTrack::Aspect_4_3), m_template(0), m_output(0), m_dirty(false),
+  QObject(parent), m_aspectRatio(toAspectRatio(KMediaFactorySettings::defaultAspectRatio())), m_template(0), m_output(0), m_dirty(false),
   m_loading(false), m_initializing(false), m_serial(0)
 {
   m_lastModified[ModMedia].setTime_t(0);
