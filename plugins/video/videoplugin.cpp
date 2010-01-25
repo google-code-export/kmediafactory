@@ -170,7 +170,14 @@ void VideoPlugin::slotAddVideo()
           break;
       vob->setTitleFromFileName();
       if(multipleFiles->isChecked() || filename == filenames.end())
-        m->addMediaObject(vob);
+        if(!m->addMediaObject(vob))
+        {
+          KMessageBox::error(kapp->activeWindow(),
+                             i18n("A DVD can only have a maximum of 99 titles.\n"),
+                             i18n("Too Many Titles"));
+          delete vob;
+          break;
+        }
 
       if(vob && 1==filenames.count())
         vob->slotProperties();

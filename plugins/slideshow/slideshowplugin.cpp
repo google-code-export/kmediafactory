@@ -34,6 +34,7 @@
 #include <KFileDialog>
 #include <KIcon>
 #include <KPluginLoader>
+#include <KMessageBox>
 
 K_EXPORT_KMEDIAFACTORY_PLUGIN(slideshow, SlideshowPlugin)
 
@@ -125,8 +126,15 @@ void SlideshowPlugin::slotAddSlideshow()
     sob->addPics(pics, parent);
     if(sob->slides().count() > 0)
     {
-      m->addMediaObject(sob);
-      sob->slotProperties();
+      if(m->addMediaObject(sob))
+        sob->slotProperties();
+      else
+      {
+        KMessageBox::error(kapp->activeWindow(),
+                           i18n("A DVD can only have a maximum of 99 titles.\n"),
+                           i18n("Too Many Titles"));
+        delete sob;
+      }
     }
   }
 }
