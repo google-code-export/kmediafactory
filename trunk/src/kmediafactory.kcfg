@@ -11,11 +11,11 @@
       </entry>
       <entry name="DefaultProjectType" type="String">
           <label>Default project type.</label>
-          <default>DVD-PAL</default>
+          <default>1</default> <!-- 0 = NTSC, 1 = PAL -->
       </entry>
       <entry name="DefaultAspectRatio" type="String">
           <label>Default project aspect ratio.</label>
-          <default>0</default> <!-- 0 = 4:3, 1 = 16:9 -->
+          <default>1</default> <!-- 0 = 4:3, 1 = 16:9 -->
       </entry>
   </group>
 </kcfg>
