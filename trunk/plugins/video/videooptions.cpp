@@ -84,8 +84,8 @@ void VideoOptions::accept()
 {
     if(m_chapters->ok())
         KDialog::accept();
-    else
-        KDialog::reject();
+//     else
+//         KDialog::reject();
 }
 
 void VideoOptions::setData(const VideoObject& obj)
