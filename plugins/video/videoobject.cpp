@@ -838,6 +838,26 @@ QImage VideoObject::generatePreview(int chap, QSize desiredSize) const
   return img;
 }
 
+void VideoObject::checkForSubtitleFile(const QString &fileName)
+{
+    const char *constExt[]={ "srt", "sub", 0L }; // TODO: Subtitle extensions?
+
+    for(int i=0; constExt[i]; ++i)
+    {
+        QString subName(KMF::Tools::changeExt(fileName, constExt[i]));
+
+        if(QFileInfo(subName).exists())
+        {
+            QDVD::Subtitle s;
+            s.setFile(subName);
+            s.setLanguage(VideoPluginSettings::defaultSubtitleLanguage());
+            s.setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
+            s.setFont(QFont());
+            addSubtitle(s);
+        }
+    }
+}
+
 QString VideoObject::text(int chap) const
 {
   if(chap == MainTitle)
@@ -915,6 +935,7 @@ VideoObject::VideoFileStatus VideoObject::addFile(QString fileName)
   {
     m_files.append(fileName);
     checkObjectParams();
+    checkForSubtitleFile(fileName);
   }
   return status;
 }

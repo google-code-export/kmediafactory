@@ -748,3 +748,18 @@ QStringList KMF::Tools::variantList2StringList(const QVariantList& list)
   }
   return result;
 }
+
+QString KMF::Tools::changeExt(const QString &f, const QString &newExt)
+{
+    QString newStr(f);
+    int dotPos(newStr.lastIndexOf('.'));
+
+    if(-1==dotPos)
+        newStr+=QChar('.')+newExt;
+    else
+    {
+        newStr.remove(dotPos+1, newStr.length());
+        newStr+=newExt;
+    }
+    return newStr;
+}
