@@ -127,10 +127,15 @@ bool KMFProject::validProject() const
   return true;
 }
 
-void KMFProject::addItem(KMF::MediaObject *mob)
+bool KMFProject::addItem(KMF::MediaObject *mob)
 {
-  m_list.append(mob);
-  setDirty(KMF::Media);
+  if(m_list.count()<99)
+  {
+    m_list.append(mob);
+    setDirty(KMF::Media);
+    return true;
+  }
+  return false;
 }
 
 void KMFProject::removeItem(KMF::MediaObject *mob)

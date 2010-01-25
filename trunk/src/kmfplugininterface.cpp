@@ -94,9 +94,7 @@ bool KMFPluginInterface::addMediaObject(KMF::MediaObject *media) const
 {
   KMFProject* project = kmfApp->project();
 
-  if(project)
-    project->addItem(media);
-  return true;
+  return project ? project->addItem(media) : false;
 }
 
 bool KMFPluginInterface::addTemplateObject(KMF::TemplateObject* tob)

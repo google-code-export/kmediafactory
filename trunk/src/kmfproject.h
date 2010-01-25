@@ -36,7 +36,7 @@ class KMFProject : public QObject
     ~KMFProject();
 
   public:
-    void addItem(KMF::MediaObject *mob);
+    bool addItem(KMF::MediaObject *mob);
     void removeItem(KMF::MediaObject *mob);
     bool save(KUrl url = KUrl());
     bool open(const KUrl &url);

@@ -538,20 +538,29 @@ bool Chapters::ok()
       }
     }
 
-    if(nonHidden > 0)
+    if(0==nonHidden)
     {
-      return true;
+      KMessageBox::sorry(this,
+                         i18n("You should have at least one non-hidden chapter."),
+                         i18n("No Chapters"));
+    }
+    else if(m_cells.count()>99)
+    {
+      KMessageBox::sorry(this,
+                         i18n("Each title in a DVD can have a maximum of 99 chapters.\n"
+                              "This title currently has %1.", m_cells.count()),
+                         i18n("Too Many Chapters"));
     }
     else
     {
-      KMessageBox::sorry(this,
-                         i18n("You should have at least one non-hidden chapter."));
+      return true;
     }
   }
   else
   {
     KMessageBox::sorry(this,
-                       i18n("You should have at least one chapter."));
+                       i18n("You should have at least one chapter."),
+                       i18n("No Chapters"));
   }
   return false;
 }

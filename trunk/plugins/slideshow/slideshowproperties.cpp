@@ -396,17 +396,29 @@ void SlideshowProperties::addAudio()
 void SlideshowProperties::okClicked()
 {
   SlideList slides = m_model.list();
+  int       chapterCount(0);
 
   foreach(Slide slide, slides)
   {
     if(slide.chapter)
     {
-      accept();
-      return;
+      chapterCount++;
     }
   }
-  KMessageBox::sorry(this,
-                      i18n("You should have atleast one chapter."));
+
+  if(0==chapterCount)
+    KMessageBox::sorry(this,
+                       i18n("You should have at least one chapter."),
+                       i18n("No Chapters"));
+  else if(chapterCount>99)
+  {
+    KMessageBox::sorry(this,
+                       i18n("Each title in a DVD can have a maximum of 99 chapters.\n"
+                            "This title currently has %1.", chapterCount),
+                       i18n("Too Many Chapters"));
+  }
+  else
+    accept();
 }
 
 #include "slideshowproperties.moc"
