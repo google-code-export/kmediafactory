@@ -30,7 +30,8 @@ kde4_add_ui_files(kmediafactory_SRCS
 	toolproperties.ui
 )
 
-qt4_add_dbus_adaptor(kmediafactory_SRCS org.kde.kmediafactory.KMediaFactory.xml kmfdbusinterface.h KMFDbusInterface)
+qt4_generate_dbus_interface(kmfdbusinterface.h org.kde.kmediafactory.KMediaFactory.xml)
+qt4_add_dbus_adaptor(kmediafactory_SRCS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmediafactory.KMediaFactory.xml kmfdbusinterface.h KMFDbusInterface)
 kde4_add_kcfg_files(kmediafactory_SRCS kmediafactorysettings.kcfgc)
 kde4_add_executable(kmediafactory ${kmediafactory_SRCS})
 if (KDE_4_4)

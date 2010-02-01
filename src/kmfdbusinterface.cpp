@@ -82,6 +82,41 @@ QString KMFDbusInterface::projectDirectory(const QString& subdir)
   return kmfApp->project()->directory(subdir);
 }
 
+QString KMFDbusInterface::projectAspectRatio()
+{
+    return QDVD::VideoTrack::aspectRatioString(kmfApp->project()->aspectRatio());
+}
+
+int KMFDbusInterface::projectDuration()
+{
+    QList<KMF::MediaObject*> mobs = kmfApp->project()->mediaObjects()->list();
+    KMF::MediaObject         *mob;
+    QTime                    duration;
+
+    foreach(mob, mobs)
+        duration = duration.addMSecs((mob->duration().hour()*60*60*1000)+
+                                    (mob->duration().minute()*60*1000)+
+                                    (mob->duration().second()*1000)+
+                                    mob->duration().msec());
+
+    return (duration.hour()*60*60*1000)+
+           (duration.minute()*60*1000)+
+           (duration.second()*1000)+
+           duration.msec();
+}
+
+bool KMFDbusInterface::saveThumbnail(int title, const QString& fileName)
+{
+    QImage img;
+
+    if(kmfApp->project()->mediaObjects()->list().count()>=title)
+        img=kmfApp->project()->mediaObjects()->at(title-1)->preview();
+
+    return img.isNull()
+        ? false
+        : img.save(fileName);
+}
+
 void KMFDbusInterface::addMediaObject(const QString& xml)
 {
   kmfApp->interface()->addMediaObject(xml);
