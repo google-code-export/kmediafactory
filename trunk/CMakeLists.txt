@@ -65,8 +65,8 @@ macro_bool_to_01(LIBDVDREAD_FOUND HAVE_LIBDVDREAD)
 find_program(DVDSLIDESHOW_EXECUTABLE dvd-slideshow)
 macro_log_feature(DVDSLIDESHOW_EXECUTABLE "dvd-slideshow" "For making slideshows" "http://dvd-slideshow.sourceforge.net/wiki/Main_Page" FALSE "" "")
 
-find_program(MPLAYER_EXECUTABLE melt)
-macro_log_feature(MPLAYER_EXECUTABLE "melt" "For making slideshows" "http://www.mltframework.org/" FALSE "" "")
+find_program(MELT_EXECUTABLE melt)
+macro_log_feature(MELT_EXECUTABLE "melt" "For making slideshows" "http://www.mltframework.org/" FALSE "" "")
 
 find_program(K3B_EXECUTABLE k3b)
 macro_log_feature(K3B_EXECUTABLE "k3b" "For burning DVDs" "http://www.k3b.org/" FALSE "" "")
