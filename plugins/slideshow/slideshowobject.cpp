@@ -369,8 +369,11 @@ public:
                 int  aFrames = (int)(((double)KMF::Time(KMFMediaFile::mediaFile(audio).duration()))*fps),
                      framesLeft = totalFrames-totalUsedAFrames,
                      useFrames = aFrames > framesLeft ? framesLeft : aFrames;
-                bool /*first=0==file, */last=(slideshow.audioFiles().count()-1)==file ||
-                                                 ((totalUsedAFrames+aFrames)>=totalFrames);
+                bool last=(slideshow.audioFiles().count()-1)==file ||
+                          ((totalUsedAFrames+aFrames)>=totalFrames);
+
+                // Note: Fade out this track if it is the last one, or its duration+fade would be at the end.
+                bool fade=last || (framesLeft<(aFrames+audioFadeFrames));
 
                 files << "  <producer in=\"0\" out=\"" << endFrame(useFrames) << "\" id=\"a_" << file << "\" >" << endl
                       << "    <property name=\"mlt_type\" >producer</property>" << endl
@@ -385,20 +388,7 @@ public:
                       
                 playlist << "    <entry in=\"0\" out=\"" << endFrame(useFrames)
                                        << "\" producer=\"a_" << file << "\" >" << endl;
-
-// Dont fade in audio?
-//                 if(first && useFrames>audioFadeFrames) // Fade in...
-//                   playlist << "       <filter in=\"0\" out=\"" << endFrame(audioFadeFrames) << "\" id=\"fadein\" >" << endl
-//                            << "         <property name=\"track\" >0</property>" << endl
-//                            << "         <property name=\"window\" >75</property>" << endl
-//                            << "         <property name=\"max_gain\" >20dB</property>" << endl
-//                            << "         <property name=\"mlt_type\" >filter</property>" << endl
-//                            << "         <property name=\"mlt_service\" >volume</property>" << endl
-//                            << "         <property name=\"tag\" >volume</property>" << endl
-//                            << "         <property name=\"gain\" >0</property>" << endl
-//                            << "         <property name=\"end\" >1</property>" << endl
-//                            << "      </filter>" << endl;
-                if(last/* && useFrames>audioFadeFrames*/) // Fade out...
+                if(fade) // Fade out...
                   playlist<< "      <filter in=\"" << (useFrames>audioFadeFrames ? useFrames-audioFadeFrames : 0)
                                         << "\" out=\"" << endFrame(useFrames) << "\" id=\"fadeout\" >" << endl
                            << "        <property name=\"track\" >0</property>" << endl
@@ -412,7 +402,7 @@ public:
                            << "      </filter>" << endl;
                 playlist << "    </entry>" << endl;
                 totalUsedAFrames+=useFrames;
-                if(totalUsedAFrames>=totalFrames)
+                if(totalUsedAFrames>=totalFrames || fade)
                     break;
                 file++;
             }
