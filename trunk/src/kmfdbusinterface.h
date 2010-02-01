@@ -22,6 +22,7 @@
 #define KMFDCOPINTERFACE_H
 
 #include <QObject>
+#include <QStringList>
 
 class KProgressDialog;
 
@@ -30,10 +31,15 @@ class KProgressDialog;
 */
 class KMFDbusInterface : public QObject
 {
+  Q_OBJECT
+  Q_CLASSINFO("D-Bus Interface", "org.kde.kmediafactory.KMediaFactory")
+
   public:
     KMFDbusInterface(QObject* parent);
     virtual ~KMFDbusInterface();
 
+  public Q_SLOTS:
+    
     virtual void openProject(QString file);
     virtual void newProject();
     virtual void quit();
@@ -44,6 +50,10 @@ class KMFDbusInterface : public QObject
     virtual QString projectTitle();
     virtual QString projectType();
     virtual QString projectDirectory(const QString& subdir);
+    virtual QString projectAspectRatio();
+    virtual int projectDuration();
+
+    virtual bool saveThumbnail(int title, const QString& fileName);
 
     virtual void addMediaObject(const QString& xml);
     virtual void selectTemplate(const QString& xml);
