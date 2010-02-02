@@ -62,6 +62,11 @@ void KMFDbusInterface::setProjectType(const QString& type)
   kmfApp->mainWindow()->setProjectType(type);
 }
 
+void KMFDbusInterface::setProjectAspectRatio(const QString& aspect)
+{
+    kmfApp->mainWindow()->setProjectAspectRatio(aspect);
+}
+
 void KMFDbusInterface::setProjectDirectory(const QString& dir)
 {
   kmfApp->mainWindow()->setProjectDirectory(dir);

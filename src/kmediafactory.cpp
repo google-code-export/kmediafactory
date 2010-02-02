@@ -360,6 +360,11 @@ void KMediaFactory::setProjectType(const QString& type)
     projectPage->setProjectType(type);
 }
 
+void KMediaFactory::setProjectAspectRatio(const QString& aspect)
+{
+    projectPage->setProjectAspectRatio(aspect);
+}
+
 void KMediaFactory::setProjectDirectory(const QString& dir)
 {
     projectPage->setProjectDirectory(dir);
