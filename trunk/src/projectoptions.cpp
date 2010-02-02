@@ -63,22 +63,37 @@ void ProjectOptions::init()
 
 void ProjectOptions::setData(const KMFProject& project)
 {
-  directoryUrl->setUrl(project.directory("", false));
-  titleEdit->setText(project.title());
-  for (int i=0; i < typeComboBox->count(); ++i)
-  {
-    if (typeComboBox->itemText(i) == project.type())
-    {
-      typeComboBox->setCurrentIndex(i);
-      break;
-    }
-  }
+  setProjectDirectory(project.directory("", false));
+  setProjectTitle(project.title());
+  setProjectType(project.type());
   aspectComboBox->setCurrentIndex(project.aspectRatio());
   QDir dir(directoryUrl->url().prettyUrl());
   titleChangesPath = dir.dirName().startsWith(i18n("Project"));
   m_saved = dir.dirName();
   m_type = project.type();
   m_count = project.mediaObjects().count();
+}
+
+void ProjectOptions::setProjectTitle(const QString& title)
+{
+  titleEdit->setText(title);
+}
+
+void ProjectOptions::setProjectType(const QString& type)
+{
+  for (int i=0; i < typeComboBox->count(); ++i)
+  {
+    if (typeComboBox->itemText(i) == type)
+    {
+      typeComboBox->setCurrentIndex(i);
+      break;
+    }
+  }
+}
+
+void ProjectOptions::setProjectDirectory(const QString& dir)
+{
+  directoryUrl->setUrl(dir);
 }
 
 void ProjectOptions::titleChanged(const QString& title)
