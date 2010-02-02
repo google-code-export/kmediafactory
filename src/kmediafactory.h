@@ -101,6 +101,9 @@ class KMediaFactory : public KXmlGuiWindow
     void fileNew();
     void quit();
     void load(const KUrl&);
+    void setProjectTitle(const QString& title);
+    void setProjectType(const QString& type);
+    void setProjectDirectory(const QString& dir);
 
   protected slots:
     void initGUI();

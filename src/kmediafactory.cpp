@@ -350,6 +350,21 @@ void KMediaFactory::load(const KUrl& url)
   }
 }
 
+void KMediaFactory::setProjectTitle(const QString& title)
+{
+    projectPage->setProjectTitle(title);
+}
+
+void KMediaFactory::setProjectType(const QString& type)
+{
+    projectPage->setProjectType(type);
+}
+
+void KMediaFactory::setProjectDirectory(const QString& dir)
+{
+    projectPage->setProjectDirectory(dir);
+}
+    
 void KMediaFactory::fileSave()
 {
   if(!kmfApp->project()->save())

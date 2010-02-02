@@ -33,6 +33,10 @@ class ProjectOptions : public QWidget, public Ui::ProjectOptions
     void init();
     void setData(const KMFProject& project);
 
+    void setProjectTitle(const QString& title);
+    void setProjectType(const QString& type);
+    void setProjectDirectory(const QString& dir);
+
   protected slots:
     void titleChanged(const QString&);
     void directoryChanged(const QString&);

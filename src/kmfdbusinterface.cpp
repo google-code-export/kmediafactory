@@ -54,17 +54,17 @@ void KMFDbusInterface::quit()
 
 void KMFDbusInterface::setProjectTitle(const QString& title)
 {
-  kmfApp->project()->setTitle(title);
+  kmfApp->mainWindow()->setProjectTitle(title);
 }
 
 void KMFDbusInterface::setProjectType(const QString& type)
 {
-  kmfApp->project()->setType(type);
+  kmfApp->mainWindow()->setProjectType(type);
 }
 
 void KMFDbusInterface::setProjectDirectory(const QString& dir)
 {
-  kmfApp->project()->setDirectory(dir);
+  kmfApp->mainWindow()->setProjectDirectory(dir);
 }
 
 QString KMFDbusInterface::projectTitle()
