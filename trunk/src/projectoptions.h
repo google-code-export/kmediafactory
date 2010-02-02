@@ -35,6 +35,7 @@ class ProjectOptions : public QWidget, public Ui::ProjectOptions
 
     void setProjectTitle(const QString& title);
     void setProjectType(const QString& type);
+    void setProjectAspectRatio(const QString& aspect);
     void setProjectDirectory(const QString& dir);
 
   protected slots:

@@ -36,6 +36,8 @@ class KMFProject : public QObject
     ~KMFProject();
 
   public:
+    static QDVD::VideoTrack::AspectRatio toAspectRatio(const QString &ar);
+
     bool addItem(KMF::MediaObject *mob);
     void removeItem(KMF::MediaObject *mob);
     bool save(KUrl url = KUrl());

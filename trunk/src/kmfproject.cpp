@@ -42,7 +42,7 @@ void addMap(QMap<S, T>* map, const QMap<S, T>& add)
     map->insert(keys[i], add[keys[i]]);
 }
 
-static QDVD::VideoTrack::AspectRatio toAspectRatio(const QString &ar)
+QDVD::VideoTrack::AspectRatio KMFProject::toAspectRatio(const QString &ar)
 {
     // As detailed below, KConfigXT only saves combobox index!
     if (QString::fromLatin1("0")==ar)

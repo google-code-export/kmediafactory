@@ -91,6 +91,11 @@ void ProjectOptions::setProjectType(const QString& type)
   }
 }
 
+void ProjectOptions::setProjectAspectRatio(const QString& aspect)
+{
+  aspectComboBox->setCurrentIndex(KMFProject::toAspectRatio(aspect));
+}
+
 void ProjectOptions::setProjectDirectory(const QString& dir)
 {
   directoryUrl->setUrl(dir);

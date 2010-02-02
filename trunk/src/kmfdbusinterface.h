@@ -46,6 +46,7 @@ class KMFDbusInterface : public QObject
 
     virtual void setProjectTitle(const QString& title);
     virtual void setProjectType(const QString& type);
+    virtual void setProjectAspectRatio(const QString& aspect);
     virtual void setProjectDirectory(const QString& dir);
     virtual QString projectTitle();
     virtual QString projectType();
