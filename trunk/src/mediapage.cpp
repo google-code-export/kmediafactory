@@ -26,8 +26,10 @@
 #include <QtGui/QMenu>
 #include <QtGui/QPainter>
 #include <QtGui/QStyledItemDelegate>
+#include <QtGui/QTextDocument>
 
 #include <KActionCollection>
+#include <KGlobalSettings>
 #include <KXMLGUIFactory>
 
 #include <kmftools.h>
@@ -114,14 +116,23 @@ class MediaItemDelegate : public QStyledItemDelegate
                     cg = QPalette::Inactive;
                 }
 
-                r.moveLeft(KMF::MediaObject::constIconSize + (constBorder * 2));
-                r.moveTop(r.y() + (constBorder + textHeight));
-                painter->setPen(option.palette.color(cg, option.state &
-                                QStyle::State_Selected ? QPalette::HighlightedText : QPalette::Text));
+                r.adjust(KMF::MediaObject::constIconSize + (constBorder * 2),
+                         constBorder + textHeight, -constBorder, -constBorder);
+                QColor defColor = option.palette.color(cg, option.state &
+                        QStyle::State_Selected ? QPalette::HighlightedText : QPalette::Text);
+                painter->setPen(defColor);
                 painter->drawText(r.topLeft(), disp.toString());
-                r.moveTop(r.y() + (constBorder + textHeight));
-                painter->setFont(m_widget->font());
-                painter->drawText(r.topLeft(), user.toString());
+
+                // Draw info text. Can be rich text
+                r.adjust(0, constBorder, 0, 0);
+                QTextDocument doc;
+                doc.setDefaultFont(KGlobalSettings::smallestReadableFont());
+                doc.setDefaultStyleSheet(QString("body { color: %1; }").arg(defColor.name()));
+                doc.setHtml(user.toString());
+                painter->save();
+                painter->translate(r.topLeft());
+                doc.drawContents(painter, QRect(QPoint(0, 0), r.size()));
+                painter->restore();
 
                 if (option.state & QStyle::State_HasFocus) {
                     QStyleOptionFocusRect o;
