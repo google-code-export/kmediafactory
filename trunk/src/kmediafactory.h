@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,13 +16,13 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
-#ifndef _KMEDIAFACTORY_H_
-#define _KMEDIAFACTORY_H_
+#ifndef KMEDIAFACTORY_H
+#define KMEDIAFACTORY_H
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #include <KDirWatch>
@@ -51,99 +51,98 @@ class KMediaFactory : public KXmlGuiWindow
 {
     Q_OBJECT
     friend class KMFApplication;
-  public:
-    enum Page { Project=0, Media , Template, Output };
 
-    /**
-     * Default Constructor
-     */
-    KMediaFactory();
+    public:
+        enum Page { Project = 0, Media, Template, Output};
 
-    /**
-     * Default Destructor
-     */
-    virtual ~KMediaFactory();
+        /**
+         * Default Constructor
+         */
+        KMediaFactory();
 
-    /**
-     * setup menu actions
-     */
-    void setupActions();
-    void enableUi(bool enabled);
-    void showPage(int page);
+        /**
+         * Default Destructor
+         */
+        virtual ~KMediaFactory();
 
-    ProjectOptions *projectPage;
-    MediaPage *mediaPage;
-    TemplatePage *templatePage;
-    OutputPage *outputPage;
+        /**
+         * setup menu actions
+         */
+        void setupActions();
+        void enableUi(bool enabled);
+        void showPage(int page);
 
-  protected:
-    virtual bool queryClose();
-    /**
-     * Overridden virtuals for Qt drag 'n drop (XDND)
-     */
-    virtual void dragEnterEvent(QDragEnterEvent *event);
-    virtual void dropEvent(QDropEvent *event);
+        ProjectOptions *projectPage;
+        MediaPage *mediaPage;
+        TemplatePage *templatePage;
+        OutputPage *outputPage;
 
-    /**
-     * This function is called when it is time for the app to save its
-     * properties for session management purposes.
-     */
-    void saveProperties(KConfigGroup&);
+    protected:
+        virtual bool queryClose();
 
-    /**
-     * This function is called when this app is restored.  The KConfig
-     * object points to the session management config file that was saved
-     * with @ref saveProperties
-     */
-    void readProperties(const KConfigGroup&);
+        /**
+         * Overridden virtuals for Qt drag 'n drop (XDND)
+         */
+        virtual void dragEnterEvent(QDragEnterEvent *event);
+        virtual void dropEvent(QDropEvent *event);
 
-  public slots:
-    void fileNew();
-    void quit();
-    void load(const KUrl&);
-    void setProjectTitle(const QString& title);
-    void setProjectType(const QString& type);
-    void setProjectAspectRatio(const QString& aspect);
-    void setProjectDirectory(const QString& dir);
+        /**
+         * This function is called when it is time for the app to save its
+         * properties for session management purposes.
+         */
+        void saveProperties(KConfigGroup &);
 
-  protected slots:
-    void initGUI();
+        /**
+         * This function is called when this app is restored.  The KConfig
+         * object points to the session management config file that was saved
+         * with @ref saveProperties
+         */
+        void readProperties(const KConfigGroup &);
 
-  private slots:
-    void fileOpen();
-    void newStuff();
-    void fileSave();
-    void fileSaveAs();
-    void itemDelete();
-    void execTool();
-    void optionsConfigureKeys();
-    void optionsConfigureToolbars();
-    void optionsPreferences();
-    void newToolbarConfig();
-    void optionsShowToolbar();
-    void updateToolsMenu();
+    public slots:
+        void fileNew();
+        void quit();
+        void load(const KUrl &);
+        void setProjectTitle(const QString &title);
+        void setProjectType(const QString &type);
+        void setProjectAspectRatio(const QString &aspect);
+        void setProjectDirectory(const QString &dir);
+
+    protected slots:
+        void initGUI();
+
+    private slots:
+        void fileOpen();
+        void newStuff();
+        void fileSave();
+        void fileSaveAs();
+        void itemDelete();
+        void execTool();
+        void optionsConfigureKeys();
+        void optionsConfigureToolbars();
+        void optionsPreferences();
+        void newToolbarConfig();
+        void optionsShowToolbar();
+        void updateToolsMenu();
 #ifdef KMF_TEST
-    //void test();
+        // void test();
 #endif
 
-  private:
-    KToggleAction* m_toolbarAction;
-    KPageWidget* m_janus;
-    QWidget* m_janusIconList;
-    bool m_enabled;
-    KMFNewStuff* m_newStuffDlg;
-    KPageWidgetItem* m_projectPageItem;
-    KPageWidgetItem* m_mediaPageItem;
-    KPageWidgetItem* m_templatePageItem;
-    KPageWidgetItem* m_ouputPageItem;
-    KDirWatch m_toolsWatch;
+    private:
+        KToggleAction *m_toolbarAction;
+        KPageWidget *m_janus;
+        QWidget *m_janusIconList;
+        bool m_enabled;
+        KMFNewStuff *m_newStuffDlg;
+        KPageWidgetItem *m_projectPageItem;
+        KPageWidgetItem *m_mediaPageItem;
+        KPageWidgetItem *m_templatePageItem;
+        KPageWidgetItem *m_ouputPageItem;
+        KDirWatch m_toolsWatch;
 
-    void connectProject();
-    void resetGUI();
-    bool checkSaveProject();
+        void connectProject();
+        void resetGUI();
+        bool checkSaveProject();
 };
 
 #endif // _KMEDIAFACTORY_H_
-
-
-

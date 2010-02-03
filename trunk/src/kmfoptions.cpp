@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,17 +16,15 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #include "kmfoptions.h"
 
-
-
-
-KMFOptions::KMFOptions(QWidget* parent) : QWidget(parent)
+KMFOptions::KMFOptions(QWidget *parent)
+    : QWidget(parent)
 {
-  setupUi(this);
-  kcfg_DefaultProjectDirectory->setMode(KFile::Directory);
+    setupUi(this);
+    kcfg_DefaultProjectDirectory->setMode(KFile::Directory);
 }
 
 KMFOptions::~KMFOptions()
@@ -34,6 +32,3 @@ KMFOptions::~KMFOptions()
 }
 
 #include "kmfoptions.moc"
-
-
-

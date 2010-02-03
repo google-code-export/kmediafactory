@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,32 +16,25 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #ifndef TOOLPROPERTIES_H
 #define TOOLPROPERTIES_H
-
-
-
-
-
-
 
 #include <ui_toolproperties.h>
 #include "tools.h"
 
-class ToolProperties: public KDialog, public Ui::ToolProperties
+class ToolProperties : public KDialog, public Ui::ToolProperties
 {
     Q_OBJECT
-  public:
-    ToolProperties(QWidget *parent = 0);
-    virtual ~ToolProperties() {};
 
-    void setData(const ToolItem& item);
-    void getData(ToolItem* item);
-    void setReadOnly(bool readonly);
+    public:
+        ToolProperties(QWidget *parent = 0);
+        virtual ~ToolProperties(){};
+
+        void setData(const ToolItem &item);
+        void getData(ToolItem *item);
+        void setReadOnly(bool readonly);
 };
 
 #endif
-
-
-

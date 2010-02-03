@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,41 +16,31 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #ifndef SIZEWIDGET_H
 #define SIZEWIDGET_H
 
-
-
-
-
-
-
 #include <kcapacitybar.h>
-
-
-
 
 class SizeWidget : public QWidget
 {
     Q_OBJECT
-  public:
-    SizeWidget(QWidget* parent = 0);
-    virtual ~SizeWidget();
 
-    virtual void paintEvent(QPaintEvent *ev);
-    virtual QSize minimumSizeHint() const;
+    public:
+        SizeWidget(QWidget *parent = 0);
+        virtual ~SizeWidget();
 
-  public Q_SLOTS:
-    void setSizes(quint64 max, quint64 size);
+        virtual void paintEvent(QPaintEvent *ev);
+        virtual QSize minimumSizeHint() const;
 
-  private:
-    void updateLabel(quint64 max, quint64 size);
+        public Q_SLOTS :
+        void setSizes(quint64 max, quint64 size);
 
-    KCapacityBar m_bar;
+    private:
+        void updateLabel(quint64 max, quint64 size);
+
+        KCapacityBar m_bar;
 };
 
 #endif
-
-
-
