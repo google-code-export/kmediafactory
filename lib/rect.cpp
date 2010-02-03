@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,29 +16,27 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 #include "rect.h"
 
 #include <KDebug>
 
-
 KMF::Rect::Rect()
- : QRect()
+    : QRect()
 {
 }
 
 KMF::Rect::Rect(int left, int top, int width, int height)
-  : QRect(left, top, width, height)
+    : QRect(left, top, width, height)
 {
 }
 
-KMF::Rect::Rect(const QPoint& topLeft, const QSize& size)
-  : QRect(topLeft, size)
+KMF::Rect::Rect(const QPoint &topLeft, const QSize &size)
+    : QRect(topLeft, size)
 {
 }
 
-KMF::Rect::Rect(const QRect& rc)
-  : QRect(rc)
+KMF::Rect::Rect(const QRect &rc) : QRect(rc)
 {
 }
 
@@ -46,60 +44,55 @@ KMF::Rect::~Rect()
 {
 }
 
-void KMF::Rect::set(const QRect& maxRect)
+void KMF::Rect::set(const QRect &maxRect)
 {
-  set(maxRect, (double)width()/(double)height());
+    set(maxRect, (double)width() / (double)height());
 }
 
-void KMF::Rect::set(const QRect& maxRect, double aspectRatio)
+void KMF::Rect::set(const QRect &maxRect, double aspectRatio)
 {
-  //kDebug() << maxRect;
-  if(maxRect.height() * aspectRatio > maxRect.width())
-  {
-    setWidth(maxRect.width());
-    setHeight((int)(maxRect.width() / aspectRatio));
-  }
-  else
-  {
-    setWidth((int)(maxRect.height() * aspectRatio));
-    setHeight(maxRect.height());
-  }
-  //kDebug() << *this;
+    // kDebug() << maxRect;
+    if (maxRect.height() * aspectRatio > maxRect.width()) {
+        setWidth(maxRect.width());
+        setHeight((int)(maxRect.width() / aspectRatio));
+    } else   {
+        setWidth((int)(maxRect.height() * aspectRatio));
+        setHeight(maxRect.height());
+    }
+
+    // kDebug() << *this;
 }
 
-void KMF::Rect::align(const QRect& parentRect, HAlign halign, VAlign valign)
+void KMF::Rect::align(const QRect &parentRect, HAlign halign, VAlign valign)
 {
-  int x = 0, y = 0;
+    int x = 0, y = 0;
 
-  switch(halign)
-  {
+    switch (halign) {
     case Left:
-      x = parentRect.x();
-      break;
+        x = parentRect.x();
+        break;
     case HDefault:
     case Center:
-      x = parentRect.x() + ((parentRect.width() - width()) / 2);
-      break;
+        x = parentRect.x() + ((parentRect.width() - width()) / 2);
+        break;
     case Right:
-      x = parentRect.x() + (parentRect.width() - width());
-      break;
-  }
-  switch(valign)
-  {
+        x = parentRect.x() + (parentRect.width() - width());
+        break;
+    }
+
+    switch (valign) {
     case Top:
-      y = parentRect.y();
-      break;
+        y = parentRect.y();
+        break;
     case VDefault:
     case Middle:
-      y = parentRect.y() + ((parentRect.height() - height()) / 2);
-      break;
+        y = parentRect.y() + ((parentRect.height() - height()) / 2);
+        break;
     case Bottom:
-      y = parentRect.y() + (parentRect.height() - height());
-      break;
-  }
-  translate(x, y);
-  //kDebug() << *this;
+        y = parentRect.y() + (parentRect.height() - height());
+        break;
+    }
+
+    translate(x, y);
+    // kDebug() << *this;
 }
-
-
-

@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,10 +16,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #ifndef KMFIMAGEVIEW_H
 #define KMFIMAGEVIEW_H
-
 
 #include <QtGui/QGraphicsPixmapItem>
 #include <QtGui/QGraphicsScene>
@@ -30,38 +30,40 @@
 
 #include "rect.h"
 
-/**
-@author Petri Damsten
-*/
-
 class KDE_EXPORT KMFImageView : public QGraphicsView
 {
     Q_OBJECT
-  public:
-    KMFImageView(QWidget *parent = 0);
-    virtual ~KMFImageView();
 
-    void setImage(const QImage& image);
-    const QImage& image() { return m_image; };
-    void clear();
-    bool scaled() { return m_scaled; };
-    void setScaled(bool scaled);
+    public:
+        KMFImageView(QWidget * parent = 0);
+        virtual ~KMFImageView();
 
-  protected:
-    void newImage();
-    void scale();
-    virtual void contextMenuEvent(QContextMenuEvent* e);
-    virtual void resizeEvent(QResizeEvent* e);
+        void setImage(const QImage &image);
+        const QImage&image()
+        {
+            return m_image;
+        };
+        void clear();
+        bool scaled()
+        {
+            return m_scaled;
+        };
+        void setScaled(bool scaled);
 
-  signals:
-    void contextMenuRequested(const QPoint &pos);
+    protected:
+        void newImage();
+        void scale();
+        virtual void contextMenuEvent(QContextMenuEvent *e);
+        virtual void resizeEvent(QResizeEvent *e);
 
-  private:
-    QImage m_image;
-    QGraphicsPixmapItem* m_imageItem;
-    QGraphicsScene m_scene;
-    bool m_scaled;
+    signals:
+        void contextMenuRequested(const QPoint &pos);
+
+    private:
+        QImage m_image;
+        QGraphicsPixmapItem *m_imageItem;
+        QGraphicsScene m_scene;
+        bool m_scaled;
 };
 
 #endif
-

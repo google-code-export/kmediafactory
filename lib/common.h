@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,11 +16,8 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
-
-
+// **************************************************************************
 
 #include <KIconLoader>
 
 #define BTN_ICON(x) KGlobal::iconLoader()->loadIconSet((x), KIconLoader::Small)
-

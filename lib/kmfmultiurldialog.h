@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,45 +16,39 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #ifndef KMFMULTIURLDIALOG_H
 #define KMFMULTIURLDIALOG_H
-
-
 
 #include <ui_kmfmultiurldialog.h>
 #include "kmflistmodel.h"
 
-/**
-	@author Petri Damsten <petri.damsten@iki.fi>
-*/
-
 class QStringList;
 
-class KDE_EXPORT KMFMultiURLDialog : public KDialog,
-                                     public Ui::KMFMultiURLDialog
+class KDE_EXPORT KMFMultiURLDialog : public KDialog, public Ui::KMFMultiURLDialog
 {
     Q_OBJECT
-  public:
-    KMFMultiURLDialog(const QString& startDir, const QString& filter,
-                      QWidget* parent, const QString& title);
-    ~KMFMultiURLDialog();
 
-  public:
-    void addFiles(const QStringList& files);
-    QStringList files();
+    public:
+        KMFMultiURLDialog(const QString &startDir, const QString &filter,
+            QWidget * parent, const QString &title);
+        ~KMFMultiURLDialog();
 
-  protected slots:
-    virtual void moveUp();
-    virtual void moveDown();
-    virtual void add();
-    virtual void remove();
+    public:
+        void addFiles(const QStringList &files);
+        QStringList files();
 
-  private:
-    QString m_dir;
-    QString m_filter;
-    KMFListModel<QString> m_model;
+    protected slots:
+        virtual void moveUp();
+        virtual void moveDown();
+        virtual void add();
+        virtual void remove();
+
+    private:
+        QString m_dir;
+        QString m_filter;
+        KMFListModel<QString> m_model;
 };
 
 #endif
-
