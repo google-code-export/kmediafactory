@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,15 +16,14 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #include "plugininterface.h"
 
 #include <QtCore/QMutexLocker>
 
-
-KMF::MediaObject::MediaObject(QObject* parent) :
-  Object(parent)
+KMF::MediaObject::MediaObject(QObject *parent)
+    : Object(parent)
 {
 }
 
@@ -32,8 +31,8 @@ KMF::MediaObject::~MediaObject()
 {
 }
 
-KMF::TemplateObject::TemplateObject(QObject *parent) :
-  Object(parent)
+KMF::TemplateObject::TemplateObject(QObject *parent)
+    : Object(parent)
 {
 }
 
@@ -41,23 +40,23 @@ KMF::TemplateObject::~TemplateObject()
 {
 }
 
-QImage KMF::TemplateObject::preview(const QString&)
-{ 
-  return QImage(); 
+QImage KMF::TemplateObject::preview(const QString &)
+{
+    return QImage();
 }
 
-QStringList KMF::TemplateObject::menus() 
-{ 
-  return QStringList(); 
+QStringList KMF::TemplateObject::menus()
+{
+    return QStringList();
 }
 
-bool KMF::TemplateObject::clicked() 
-{ 
-  return false; 
+bool KMF::TemplateObject::clicked()
+{
+    return false;
 }
 
-KMF::OutputObject::OutputObject(QObject *parent) :
-  Object(parent)
+KMF::OutputObject::OutputObject(QObject *parent)
+    : Object(parent)
 {
 }
 
@@ -65,8 +64,7 @@ KMF::OutputObject::~OutputObject()
 {
 }
 
-KMF::ProgressDialog::ProgressDialog(QObject *parent) :
-  QObject(parent)
+KMF::ProgressDialog::ProgressDialog(QObject *parent) : QObject(parent)
 {
 }
 
@@ -74,10 +72,9 @@ KMF::ProgressDialog::~ProgressDialog()
 {
 }
 
-KMF::PluginInterface::PluginInterface(QObject *parent) :
-  QObject(parent)
+KMF::PluginInterface::PluginInterface(QObject *parent) : QObject(parent)
 {
-  setObjectName("KMF::PluginInterface");
+    setObjectName("KMF::PluginInterface");
 }
 
 KMF::PluginInterface::~PluginInterface()
@@ -90,25 +87,29 @@ static uint id = 0;
 
 uint KMF::PluginInterface::messageId()
 {
-  QMutexLocker locker(&mutex);
-  return ++id;
+    QMutexLocker locker(&mutex);
+
+    return ++id;
 }
 
 uint KMF::PluginInterface::subId(uint parentId)
 {
-  QMutexLocker locker(&mutex);
-  uint subid = ++id;
-  parents[subid] = parentId;
-  return subid;
+    QMutexLocker locker(&mutex);
+    uint subid = ++id;
+
+    parents[subid] = parentId;
+    return subid;
 }
 
 uint KMF::PluginInterface::parent(uint subid)
 {
-  QMutexLocker locker(&mutex);
-  if (parents.keys().contains(subid))
-    return parents[subid];
-  return 0;
+    QMutexLocker locker(&mutex);
+
+    if (parents.keys().contains(subid)) {
+        return parents[subid];
+    }
+
+    return 0;
 }
 
 #include "plugininterface.moc"
-

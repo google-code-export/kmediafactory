@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,19 +16,16 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #ifndef KMF_DEFS_H
 #define KMF_DEFS_H
 
 namespace KMF
 {
-  enum DirtyType { Media = 1, Template = 2, Output = 4, MediaOrTemplate = 3, Any = 7 };
-  enum MsgType { Root = 0, Start, Done, Info, Warning, Error, OK };
-  enum JobDependency { None, All, Last };
+enum DirtyType { Media = 1, Template = 2, Output = 4, MediaOrTemplate = 3, Any = 7};
+enum MsgType { Root = 0, Start, Done, Info, Warning, Error, OK};
+enum JobDependency { None, All, Last};
 }
 
 #endif // KMF_DEFS
-
-
-
