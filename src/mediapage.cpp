@@ -51,8 +51,7 @@ static QPainterPath buildPath(const QRect &rect, int radius)
     roundRectPath.lineTo(r.left(), r.bottom() - radius);
     roundRectPath.arcTo(r.left(), r.bottom() - dr, dr, dr, 180.0, 90.0);
     roundRectPath.lineTo(r.right() - radius, r.bottom());
-    roundRectPath.arcTo(r.right() - dr, r.bottom() - dr, dr, dr,
-            270.0, 90.0);
+    roundRectPath.arcTo(r.right() - dr, r.bottom() - dr, dr, dr, 270.0, 90.0);
     roundRectPath.closeSubpath();
 
     return roundRectPath;
@@ -61,24 +60,25 @@ static QPainterPath buildPath(const QRect &rect, int radius)
 class MediaItemDelegate : public QStyledItemDelegate
 {
     public:
-        MediaItemDelegate(QObject *p, QWidget *widget) : QStyledItemDelegate(p), m_widget(widget){ }
+        MediaItemDelegate(QObject *p, QWidget *widget)
+            : QStyledItemDelegate(p), m_widget(widget)
+        { }
 
-        virtual ~MediaItemDelegate(){ }
+        virtual ~MediaItemDelegate()
+        { }
 
         QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
         {
             QSize sz(QStyledItemDelegate::sizeHint(option, index));
-            int   textHeight =
+            int textHeight =
                 m_widget ? m_widget->fontMetrics().height() : QApplication::fontMetrics().height();
 
-            return QSize(qMax(
-                            sz.width(),
-                            KMF::MediaObject::constIconSize) + (constBorder * 2),
+            return QSize(qMax(sz.width(), KMF::MediaObject::constIconSize) + (constBorder * 2),
                     qMax((textHeight + constBorder) * 3, sz.height() + (constBorder * 2)));
         }
 
         void paint(QPainter *painter, const QStyleOptionViewItem &option,
-            const QModelIndex &index) const
+                   const QModelIndex &index) const
         {
             if (!index.isValid()) {
                 return;
@@ -90,21 +90,21 @@ class MediaItemDelegate : public QStyledItemDelegate
 
             if ((QVariant::Pixmap == dec.type()) && (QVariant::String == disp.type()) &&
                 (QVariant::String == user.type())) {
-                m_widget->style()->drawPrimitive(QStyle::PE_PanelItemViewItem, &option, painter, 0L);
+                m_widget->style()->drawPrimitive(QStyle::PE_PanelItemViewItem, &option,
+                                                 painter, 0L);
 
                 QRect                r(option.rect);
                 QFont                fnt(m_widget->font());
-                QPalette::ColorGroup cg = option.state & QStyle::State_Enabled
-                                          ? QPalette::Normal : QPalette::Disabled;
+                QPalette::ColorGroup cg = option.state & QStyle::State_Enabled ?
+                                                         QPalette::Normal : QPalette::Disabled;
                 QPixmap              pix(dec.value<QPixmap>());
-                int                  textHeight = m_widget->fontMetrics().height(),
-                                     iconPosModX = constBorder +
-                                                   ((KMF::MediaObject::constIconSize -
-                                                     pix.width()) / 2),
-                                     iconPosModY = (option.rect.height() - pix.height()) / 2;
+                int                  textHeight = m_widget->fontMetrics().height();
+                int                  iconPosModX = constBorder + ((KMF::MediaObject::constIconSize -
+                                                                   pix.width()) / 2);
+                int                  iconPosModY = (option.rect.height() - pix.height()) / 2;
 
                 painter->drawPixmap(r.adjusted(iconPosModX, iconPosModY, iconPosModX,
-                                iconPosModY).topLeft(), pix);
+                                    iconPosModY).topLeft(), pix);
 
                 fnt.setBold(true);
 
@@ -126,9 +126,9 @@ class MediaItemDelegate : public QStyledItemDelegate
                 if (option.state & QStyle::State_HasFocus) {
                     QStyleOptionFocusRect o;
                     o.QStyleOption::operator=(option);
-                    o.rect = option.rect; //
-                                          // m_widget->style()->subElementRect(QStyle::SE_ItemViewItemFocusRect,
-                                          // &option, m_widget);
+                    o.rect = option.rect;
+                    // m_widget->style()->subElementRect(QStyle::SE_ItemViewItemFocusRect,
+                    // &option, m_widget);
                     o.state |= QStyle::State_KeyboardFocusChange;
                     o.state |= QStyle::State_Item;
                     cg = option.state &
@@ -146,7 +146,6 @@ class MediaItemDelegate : public QStyledItemDelegate
                     QList<QAction *> actions;
 
                     ob->actions(&actions);
-
                     r = option.rect;
 
                     QSize                          size(constActionIconSize, constActionIconSize);
@@ -182,9 +181,8 @@ class MediaItemDelegate : public QStyledItemDelegate
                     }
 
                     if ((yOffset + constActionIconSize + constBorder) < r.height()) {
-                        QRect        iconRect(xPos,
-                                              r.y() + yOffset, constActionIconSize,
-                                              constActionIconSize);
+                        QRect iconRect(xPos, r.y() + yOffset, constActionIconSize,
+                                       constActionIconSize);
                         QPainterPath path(buildPath(iconRect.adjusted(-1, -1, 0, 0), 3));
 
                         painter->fillPath(path, col);
@@ -194,9 +192,9 @@ class MediaItemDelegate : public QStyledItemDelegate
 
 #else
                     if (actions.count()) {
-                        painter->drawPixmap(QRect(option.rect.x() + constBorder, option.rect.y() +
-                                        constBorder,
-                                        constActionIconSize, constActionIconSize),
+                        painter->drawPixmap(
+                                QRect(option.rect.x() + constBorder, option.rect.y() + constBorder,
+                                      constActionIconSize, constActionIconSize),
                                 KIcon("arrow-down").pixmap(size, QIcon::Normal, QIcon::Off));
                     }
 #endif
@@ -246,12 +244,12 @@ void MediaPage::mediaModified()
     KMF::MediaObject          *mob;
     QTime                     duration;
 
-    foreach(mob, mobs)
-    duration = duration.addMSecs((mob->duration().hour() * 60 * 60 * 1000) +
-            (mob->duration().minute() * 60 * 1000) +
-            (mob->duration().second() * 1000) +
-            mob->duration().msec());
-
+    foreach (mob, mobs) {
+        duration = duration.addMSecs((mob->duration().hour() * 60 * 60 * 1000) +
+                (mob->duration().minute() * 60 * 1000) +
+                (mob->duration().second() * 1000) +
+                mob->duration().msec());
+    }
     emit details(i18n("Titles: %1 Duration: %2",
                          mobs.count(),
                          KGlobal::locale()->formatTime(duration, true, true)));
@@ -288,8 +286,7 @@ void MediaPage::itemClicked(const QModelIndex &index)
                                           MediaItemDelegate::constActionIconSize);
 #endif
 
-    for (;
-         it != end &&
+    for (;it != end &&
          (yOffset + MediaItemDelegate::constActionIconSize + MediaItemDelegate::constBorder) <
          r.height();
          ++it) {
@@ -305,9 +302,8 @@ void MediaPage::itemClicked(const QModelIndex &index)
     }
 
     if (((yOffset + MediaItemDelegate::constActionIconSize + MediaItemDelegate::constBorder) <
-         r.height()) &&
-        QRect(xPos, r.y() + pos.y() + yOffset,
-                MediaItemDelegate::constActionIconSize,
+         r.height()) && QRect(xPos, r.y() + pos.y() + yOffset,
+                              MediaItemDelegate::constActionIconSize,
                 MediaItemDelegate::constActionIconSize).contains(QCursor::pos()))
     {
         kmfApp->mainWindow()->actionCollection()->action("delete")->trigger();
@@ -353,8 +349,9 @@ void MediaPage::calculateSizes()
         QList<KMF::MediaObject *> mobs = kmfApp->project()->mediaObjects()->list();
         KMF::MediaObject *mob;
 
-        foreach(mob, mobs)
-        size += mob->size();
+        foreach (mob, mobs) {
+            size += mob->size();
+        }
         size += mobs.size() * 200 * 1024; // Not very good estimate...
     }
 
