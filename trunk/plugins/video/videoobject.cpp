@@ -212,14 +212,48 @@ VideoObject::~VideoObject()
 QString VideoObject::information() const
 {
     int numChapters(0);
+    QStringList audios;
+    QStringList subs;
 
-    for (QDVD::CellList::ConstIterator it = m_cells.begin(); it != m_cells.end(); ++it) {
-        if ((*it).isChapter()) {
+    foreach (const QDVD::Cell& cell, m_cells) {
+        if (cell.isChapter()) {
             numChapters++;
         }
     }
-    return i18np("%1 Chapter (%2)", "%1 Chapters (%2)", numChapters,
-            KGlobal::locale()->formatTime(duration(), true, true));
+    foreach (const QDVD::AudioTrack& audio, m_audioTracks) {
+        audios.append(audio.language());
+    }
+    foreach (const QDVD::Subtitle &sub, m_subtitles) {
+        subs.append(sub.language());
+    }
+    QSize res = KMFMediaFile::mediaFile(m_files[0]).resolution();
+    QString s;
+    s = "<html><body><table><tr><td>";
+    s += i18n("Resolution:");
+    s += "</td><td>";
+    s += QString("%1x%2").arg(res.width()).arg(res.height());
+    s += "</td><td width=\"20\"></td><td>";
+    s += i18n("Chapters:");
+    s += "</td><td>";
+    s += QString::number(numChapters);
+    s += "</td><td width=\"20\"></td><td>";
+    s += i18n("Audio Tracks:");
+    s += "</td><td>";
+    s += audios.join(", ");
+    s += "</td></tr><tr><td>";
+    s += i18n("Aspect Ratio:");
+    s += "</td><td>";
+    s += QDVD::VideoTrack::aspectRatioString(aspect());
+    s += "</td><td width=\"20\"></td><td>";
+    s += i18n("Length:");
+    s += "</td><td>";
+    s += KGlobal::locale()->formatTime(duration(), true, true);
+    s += "</td><td width=\"20\"></td><td>";
+    s += i18n("Subtitles:");
+    s += "</td><td>";
+    s += subs.join(", ");
+    s += "</td></tr></table></body></html>";
+    return s;
 }
 
 double VideoObject::frameRate() const

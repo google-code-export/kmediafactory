@@ -62,7 +62,7 @@ class VideoObject : public KMF::MediaObject
         virtual bool fromXML(const QDomElement &element);
         virtual bool prepare(const QString &type);
 
-        const QDVD::CellList&cellList() const
+        const QDVD::CellList& cellList() const
         {
             return m_cells;
         };
@@ -72,7 +72,7 @@ class VideoObject : public KMF::MediaObject
             m_cells.append(chapter);
         };
 
-        const QDVD::AudioList&audioTracks() const
+        const QDVD::AudioList& audioTracks() const
         {
             return m_audioTracks;
         };
