@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,7 +16,8 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #include "config.h"
 #include "videoplugin.h"
 
@@ -46,167 +47,176 @@ K_EXPORT_KMEDIAFACTORY_PLUGIN(video, VideoPlugin)
 
 class VideoConfig : public QWidget, public Ui::VideoConfig
 {
-  public:
-    VideoConfig(QWidget* parent = 0) : QWidget(parent)
-    {
-      setupUi(this);
-    };
+    public:
+        VideoConfig(QWidget *parent = 0) : QWidget(parent)
+        {
+            setupUi(this);
+        };
 };
 
-VideoPlugin::VideoPlugin(QObject *parent, const QVariantList&) :
-  KMF::Plugin(parent)
+VideoPlugin::VideoPlugin(QObject *parent, const QVariantList &)
+    : KMF::Plugin(parent)
 {
-  KGlobal::locale()->insertCatalog("kmediafactory_video");
-  setObjectName("KMFImportVideo");
-  setupActions();
+    KGlobal::locale()->insertCatalog("kmediafactory_video");
+    setObjectName("KMFImportVideo");
+    setupActions();
 }
 
 VideoPlugin::~VideoPlugin()
 {
 }
 
-const KMF::ConfigPage* VideoPlugin::configPage() const
+const KMF::ConfigPage *VideoPlugin::configPage() const
 {
-  KMF::ConfigPage* configPage = new KMF::ConfigPage;
-  configPage->page = new VideoConfig;
-  configPage->config = VideoPluginSettings::self();
-  configPage->itemName = i18n("Video");
-  configPage->itemDescription = i18n("Video Settings");
-  configPage->pixmapName = "video-mpeg";
-  return configPage;
+    KMF::ConfigPage *configPage = new KMF::ConfigPage;
+
+    configPage->page = new VideoConfig;
+    configPage->config = VideoPluginSettings::self();
+    configPage->itemName = i18n("Video");
+    configPage->itemDescription = i18n("Video Settings");
+    configPage->pixmapName = "video-mpeg";
+    return configPage;
 }
 
-QAction* VideoPlugin::setupActions()
+QAction *VideoPlugin::setupActions()
 {
-  // Add action for menu item
-  QAction* addVideoAction = new KAction(KIcon("video-mpeg"), i18n("Add Video"),
-                                        parent());
-  //addVideoAction->setShortcut(Qt::CTRL + Qt::Key_V);
-  actionCollection()->addAction("video", addVideoAction);
-  connect(addVideoAction, SIGNAL(triggered()), SLOT(slotAddVideo()));
+    // Add action for menu item
+    QAction *addVideoAction = new KAction(KIcon("video-mpeg"), i18n("Add Video"),
+            parent());
 
-  setXMLFile("kmediafactory_videoui.rc");
+    // addVideoAction->setShortcut(Qt::CTRL + Qt::Key_V);
+    actionCollection()->addAction("video", addVideoAction);
+    connect(addVideoAction, SIGNAL(triggered()), SLOT(slotAddVideo()));
 
-  interface()->addMediaAction(addVideoAction);
+    setXMLFile("kmediafactory_videoui.rc");
 
-  return addVideoAction;
+    interface()->addMediaAction(addVideoAction);
+
+    return addVideoAction;
 }
 
 void VideoPlugin::init(const QString &type)
 {
-  kDebug() << type;
-  deleteChildren();
+    kDebug() << type;
+    deleteChildren();
 
-  QAction* action = actionCollection()->action("video");
-  if(!action)
-    return;
+    QAction *action = actionCollection()->action("video");
 
-  if (type.left(3) == "DVD")
-  {
-    action->setEnabled(true);
-  }
-  else
-  {
-    action->setEnabled(false);
-  }
+    if (!action) {
+        return;
+    }
+
+    if (type.left(3) == "DVD") {
+        action->setEnabled(true);
+    } else   {
+        action->setEnabled(false);
+    }
 }
 
 void VideoPlugin::slotAddVideo()
 {
-  QCheckBox* multipleFiles = new QCheckBox(0);
-  KFileDialog dlg(KUrl("kfiledialog:///<AddVideo>"),
-                  "*.mpg *.mpeg *.vob|Video files\n*.*|All files",
-                  kapp->activeWindow(), multipleFiles);
+    QCheckBox *multipleFiles = new QCheckBox(0);
+    KFileDialog dlg(KUrl("kfiledialog:///<AddVideo>"),
+                    "*.mpg *.mpeg *.vob|Video files\n*.*|All files",
+                    kapp->activeWindow(), multipleFiles);
 
-  multipleFiles->setText(i18n("Multiple files make multiple titles."));
-  multipleFiles->setChecked(true);
-  dlg.setOperationMode(KFileDialog::Opening);
-  dlg.setCaption(i18n("Open"));
-  dlg.setMode(KFile::Files | KFile::ExistingOnly | KFile::LocalOnly);
-  dlg.exec();
+    multipleFiles->setText(i18n("Multiple files make multiple titles."));
+    multipleFiles->setChecked(true);
+    dlg.setOperationMode(KFileDialog::Opening);
+    dlg.setCaption(i18n("Open"));
+    dlg.setMode(KFile::Files | KFile::ExistingOnly | KFile::LocalOnly);
+    dlg.exec();
 
-  QStringList filenames = dlg.selectedFiles();
-  KMF::PluginInterface *m = interface();
+    QStringList filenames = dlg.selectedFiles();
+    KMF::PluginInterface *m = interface();
 
-  kDebug() << m << filenames;
-  if(m && filenames.count() > 0)
-  {
-    VideoObject *vob = 0;
-    for(QStringList::ConstIterator filename = filenames.begin();
-        filename != filenames.end(); ++filename)
-    {
-      QFileInfo fi(*filename);
+    kDebug() << m << filenames;
 
-      if(fi.isDir())
-      {
-        KMessageBox::error(kapp->activeWindow(),
-                           i18n("Cannot add directory."));
-        continue;
-      }
-      if(multipleFiles->isChecked() || filename == filenames.begin())
-        vob = new VideoObject(this);
-      switch(vob->addFile(*filename))
-      {
-          case VideoObject::StatusOk:
-              break;
-          case VideoObject::StatusInvalidResolution:
-          {
-              QSize res(KMFMediaFile::mediaFile(*filename).resolution());
-              KMessageBox::error(kapp->activeWindow(),
-                                 i18n("Cannot use %1.\n%2x%3 is an invalid resolution",
-                                      *filename, res.width(), res.height()));
-              delete vob;
-              vob=0L;
-              break;
-          }
-          case VideoObject::StatusNonCompataible:
-              KMessageBox::error(kapp->activeWindow(),
-                                 i18n("Cannot use %1.\nIt is not a DVD compatible file.",
-                                      *filename));
-              delete vob;
-              vob=0L;
-              break;
-      }
+    if (m && (filenames.count() > 0)) {
+        VideoObject *vob = 0;
 
-      if(!vob)
-          break;
-      vob->setTitleFromFileName();
-      if(multipleFiles->isChecked() || filename == filenames.end())
-        if(!m->addMediaObject(vob))
+        for (QStringList::ConstIterator filename = filenames.begin();
+             filename != filenames.end(); ++filename)
         {
-          KMessageBox::error(kapp->activeWindow(),
-                             i18n("A DVD can only have a maximum of 99 titles.\n"),
-                             i18n("Too Many Titles"));
-          delete vob;
-          break;
-        }
+            QFileInfo fi(*filename);
 
-      if(vob && 1==filenames.count())
-        vob->slotProperties();
+            if (fi.isDir()) {
+                KMessageBox::error(kapp->activeWindow(),
+                        i18n("Cannot add directory."));
+                continue;
+            }
+
+            if (multipleFiles->isChecked() || (filename == filenames.begin())) {
+                vob = new VideoObject(this);
+            }
+
+            switch (vob->addFile(*filename)) {
+                case VideoObject::StatusOk:
+                    break;
+
+                case VideoObject::StatusInvalidResolution:
+                {
+                    QSize res(KMFMediaFile::mediaFile(*filename).resolution());
+                    KMessageBox::error(kapp->activeWindow(),
+                            i18n("Cannot use %1.\n%2x%3 is an invalid resolution",
+                                    *filename, res.width(), res.height()));
+                    delete vob;
+                    vob = 0L;
+                    break;
+                }
+
+                case VideoObject::StatusNonCompataible:
+                    KMessageBox::error(kapp->activeWindow(),
+                        i18n("Cannot use %1.\nIt is not a DVD compatible file.",
+                                *filename));
+                    delete vob;
+                    vob = 0L;
+                    break;
+            }
+
+            if (!vob) {
+                break;
+            }
+
+            vob->setTitleFromFileName();
+
+            if (multipleFiles->isChecked() || (filename == filenames.end())) {
+                if (!m->addMediaObject(vob)) {
+                    KMessageBox::error(kapp->activeWindow(),
+                            i18n("A DVD can only have a maximum of 99 titles.\n"),
+                            i18n("Too Many Titles"));
+                    delete vob;
+                    break;
+                }
+            }
+
+            if (vob && (1 == filenames.count())) {
+                vob->slotProperties();
+            }
+        }
     }
-  }
 }
 
-KMF::MediaObject* VideoPlugin::createMediaObject(const QDomElement& element)
+KMF::MediaObject *VideoPlugin::createMediaObject(const QDomElement &element)
 {
-  KMF::MediaObject *mob = new VideoObject(this);
-  if(mob)
-  {
-    if(!mob->fromXML(element))
-    {
-      delete mob;
-      return 0;
+    KMF::MediaObject *mob = new VideoObject(this);
+
+    if (mob) {
+        if (!mob->fromXML(element)) {
+            delete mob;
+            return 0;
+        }
     }
-  }
-  return mob;
+
+    return mob;
 }
 
 QStringList VideoPlugin::supportedProjectTypes() const
 {
-  QStringList result;
-  result << "DVD-PAL" << "DVD-NTSC";
-  return result;
+    QStringList result;
+
+    result << "DVD-PAL" << "DVD-NTSC";
+    return result;
 }
 
 #include "videoplugin.moc"
-

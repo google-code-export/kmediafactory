@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,12 +16,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #ifndef VIDEOOPTIONS_H
 #define VIDEOOPTIONS_H
-
-
 
 #include <kmf_stddef.h>
 #include <kmflanguagewidgets.h>
@@ -29,34 +27,35 @@
 #include "videoobject.h"
 
 class Chapters;
+
 class VideoOptions : public KDialog, public Ui::VideoOptions
 {
     Q_OBJECT
-  public:
-    VideoOptions(QWidget *parent = 0);
-    ~VideoOptions();
 
-    void getData(VideoObject& obj) const;
-    void setData(const VideoObject& obj);
+    public:
+        VideoOptions(QWidget *parent = 0);
+        ~VideoOptions();
 
-  protected slots:
-    virtual void accept();
-    virtual void audioPropertiesClicked();
-    virtual void subtitleAddClicked();
-    virtual void subtitleRemoveClicked();
-    virtual void subtitlePropertiesClicked();
-    virtual void enableButtons();
+        void getData(VideoObject &obj) const;
+        void setData(const VideoObject &obj);
 
-  private:
-    const VideoObject* m_obj;
-    Chapters* m_chapters;
-    QDVD::SubtitleList m_subtitles;
-    LanguageListModel m_subtitleModel;
-    QDVD::AudioList m_audioTracks;
-    LanguageListModel m_audioModel;
+    protected slots:
+        virtual void accept();
+        virtual void audioPropertiesClicked();
+        virtual void subtitleAddClicked();
+        virtual void subtitleRemoveClicked();
+        virtual void subtitlePropertiesClicked();
+        virtual void enableButtons();
 
-    bool isSelectedSubtitleInVideo();
+    private:
+        const VideoObject *m_obj;
+        Chapters *m_chapters;
+        QDVD::SubtitleList m_subtitles;
+        LanguageListModel m_subtitleModel;
+        QDVD::AudioList m_audioTracks;
+        LanguageListModel m_audioModel;
+
+        bool isSelectedSubtitleInVideo();
 };
 
 #endif
-
