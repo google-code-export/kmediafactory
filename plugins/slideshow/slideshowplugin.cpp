@@ -18,6 +18,7 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 
+#include "config.h"
 #include "slideshowplugin.h"
 
 #include <KAboutData>
@@ -31,8 +32,6 @@
 #include <KPluginFactory>
 #include <KPluginLoader>
 #include <KStandardDirs>
-
-#include <config.h>
 
 #include <kmftools.h>
 #include <slideshowpluginsettings.h>
