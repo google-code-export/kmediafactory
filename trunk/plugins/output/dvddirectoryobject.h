@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,10 +16,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #ifndef DVDDIRECTORYOBJECT_H
 #define DVDDIRECTORYOBJECT_H
-
 
 #include <QtCore/QFileInfo>
 #include <QtGui/QPixmap>
@@ -31,30 +31,30 @@ class KAction;
 
 class DvdDirectoryObject : public DvdAuthorObject
 {
-  Q_OBJECT
-  public:
-    enum { TotalPoints = 1000 };
+    Q_OBJECT
 
-    DvdDirectoryObject(QObject *parent = 0);
-    virtual ~DvdDirectoryObject();
-    virtual void toXML(QDomElement* element) const;
-    virtual bool fromXML(const QDomElement& element);
-    virtual void actions(QList<QAction*>* actionList) const;
-    virtual bool prepare(const QString& type);
+    public:
+        enum { TotalPoints = 1000};
 
-  public slots:
-    // Help Kross plugin declaring these as slots
-    virtual QPixmap pixmap() const;
-    virtual void clean();
+        DvdDirectoryObject(QObject *parent = 0);
+        virtual ~DvdDirectoryObject();
+        virtual void toXML(QDomElement *element) const;
+        virtual bool fromXML(const QDomElement &element);
+        virtual void actions(QList<QAction *> *actionList) const;
+        virtual bool prepare(const QString &type);
 
-  private:
-    QString m_buffer;
-    KAction* dvdCleanDirectory;
-    Run m_run;
+    public slots:
+        // Help Kross plugin declaring these as slots
+        virtual QPixmap pixmap() const;
+        virtual void clean();
 
-    void progress(int points);
-    bool isUpToDate(QString type);
+    private:
+        QString m_buffer;
+        KAction *dvdCleanDirectory;
+        Run m_run;
+
+        void progress(int points);
+        bool isUpToDate(QString type);
 };
 
 #endif // DVDDIRECTORYOBJECT_H
-
