@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,12 +16,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
-#ifndef KMFJOB_H
-#define KMFJOB_H
-
-
+#ifndef KMF_JOB_H
+#define KMF_JOB_H
 
 #include <KProcess>
 #include <kdemacros.h>
@@ -30,50 +28,53 @@
 #include "kmediafactory.h"
 
 #define CHECK_IF_ABORTED(result) { \
-if (aborted()) { return result; }; \
+        if (aborted()) { \
+            return result; \
+        }; \
 }
 
 namespace KMF
 {
-  class KDE_EXPORT Job : public ThreadWeaver::Job
-  {
-      Q_OBJECT
+class KDE_EXPORT Job : public ThreadWeaver::Job
+{
+    Q_OBJECT
+
     public:
-      explicit Job(QObject* parent = 0);
-      ~Job();
-  
-      virtual void output(const QString& line);
-      virtual bool success() const;
-      virtual void requestAbort();
-      KProcess* process(uint id, const QString& filter = "", KProcess::OutputChannelMode mode =
-                        KProcess::SeparateChannels);
-      void setFilter(const QString& filter);
-      QString filter() const;
+        explicit Job(QObject *parent = 0);
+        ~Job();
 
-    // Declaring these as slots helps kross plugin
+        virtual void output(const QString &line);
+        virtual bool success() const;
+        virtual void requestAbort();
+        KProcess*process(uint id, const QString &filter = "", KProcess::OutputChannelMode mode =
+                KProcess::SeparateChannels);
+        void setFilter(const QString &filter);
+        QString filter() const;
+
+        // Declaring these as slots helps kross plugin
+
     public slots:
-      uint msgId();
-      void message(uint id, KMF::MsgType type, const QString& msg = QString());
-      void log(uint id, const QString& msg);
-      void setValue(uint id, int value);
-      void setMaximum(uint id, int maximum);
+        uint msgId();
+        void message(uint id, KMF::MsgType type, const QString &msg = QString());
+        void log(uint id, const QString &msg);
+        void setValue(uint id, int value);
+        void setMaximum(uint id, int maximum);
 
-      void failed();
-      bool aborted() const;
+        void failed();
+        bool aborted() const;
 
     signals:
-      void newMessage(uint id, KMF::MsgType type, const QString& msg);
-      void newLogMessage(uint id, const QString& msg);
-      void valueChanged(uint id, int value);
-      void maximumChanged(uint id, int maximum);
+        void newMessage(uint id, KMF::MsgType type, const QString &msg);
+        void newLogMessage(uint id, const QString &msg);
+        void valueChanged(uint id, int value);
+        void maximumChanged(uint id, int maximum);
 
     private:
-      class Private;
-      Private* d;
-      // Create d on demand (when executing thread) because of thread issues
-      Private* d_func();
-  };
+        class Private;
+        Private *d;
+        // Create d on demand (when executing thread) because of thread issues
+        Private*d_func();
+};
 } // namespace KMF
 
 #endif // KMFJOB_H
-

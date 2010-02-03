@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,11 +16,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
-#ifndef KMFOBJECT_H
-#define KMFOBJECT_H
-
+#ifndef KMF_OBJECT_H
+#define KMF_OBJECT_H
 
 #include <QtCore/QObject>
 #include <QtCore/QVariantList>
@@ -29,51 +28,53 @@
 
 #include <kdemacros.h>
 
-
 class QAction;
 
 namespace KMF
 {
-  class PluginInterface;
-  class Plugin;
+class PluginInterface;
+class Plugin;
 
-  class KDE_EXPORT Object : public QObject
-  {
-      Q_OBJECT
-      Q_PROPERTY(QString title READ title WRITE setTitle)
-      Q_PROPERTY(QPixmap pixmap READ pixmap)
-    public:
-      explicit Object(QObject* parent);
-      ~Object();
+class KDE_EXPORT Object : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(QString title READ title WRITE setTitle)
+    Q_PROPERTY(QPixmap pixmap READ pixmap)
 
-      virtual void toXML(QDomElement*) const;
-      virtual bool fromXML(const QDomElement&);
-      virtual void actions(QList<QAction*>*) const;
-      virtual bool prepare(const QString&);
-      virtual void finished();
+    public : explicit Object(QObject *parent);
+        ~Object();
 
-      void setTitle(const QString& title);
-      Plugin* plugin() const;
-      PluginInterface* interface() const;
-      uint msgId();
-      uint newMsgId();
+        virtual void toXML(QDomElement *) const;
+        virtual bool fromXML(const QDomElement &);
+        virtual void actions(QList<QAction *> *) const;
+        virtual bool prepare(const QString &);
+        virtual void finished();
+
+        void setTitle(const QString &title);
+        Plugin*plugin() const;
+        PluginInterface*interface() const;
+        uint msgId();
+        uint newMsgId();
 
     public slots:
-      // Help Kross plugin declaring these as slots
-      virtual QVariant call(const QString& func, QVariantList args = QVariantList());
-      virtual QString title() const;
-      virtual QPixmap pixmap() const = 0;
-      virtual QString information() const { return QString(); }
-      virtual QMap<QString, QString> subTypes() const;
-      virtual void clean();
+        // Help Kross plugin declaring these as slots
+        virtual QVariant call(const QString &func, QVariantList args = QVariantList());
+        virtual QString title() const;
+        virtual QPixmap pixmap() const = 0;
+        virtual QString information() const
+        {
+            return QString();
+        }
+
+        virtual QMap<QString, QString> subTypes() const;
+        virtual void clean();
 
     private:
-      class Private;
-      Private *const d;
-  };
+        class Private;
+        Private *const d;
+};
 }
 
 Q_DECLARE_METATYPE(QDomElement)
 
 #endif // KMFOBJECT_H
-

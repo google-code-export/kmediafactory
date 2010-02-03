@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,48 +16,48 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #include "plugin.h"
 
-
 KMF::Plugin::Plugin(QObject *parent)
-  : QObject(parent)
+    : QObject(parent)
 {
 }
 
 KMF::Plugin::~Plugin()
 {
-  deleteChildren();
+    deleteChildren();
 }
 
-KMF::PluginInterface* KMF::Plugin::interface() const
+KMF::PluginInterface *KMF::Plugin::interface() const
 {
-  KMF::PluginInterface* obj = 0;
+    KMF::PluginInterface *obj = 0;
 
-  if(parent()) {
-    obj = parent()->findChild<KMF::PluginInterface*>("KMF::PluginInterface");
-  }
-  return obj;
+    if (parent()) {
+        obj = parent()->findChild<KMF::PluginInterface *>("KMF::PluginInterface");
+    }
+
+    return obj;
 }
 
 void KMF::Plugin::deleteChildren()
 {
-  QObjectList list = children();
+    QObjectList list = children();
 
-  while(!list.isEmpty())
-    delete list.takeFirst();
+    while (!list.isEmpty()) {
+        delete list.takeFirst();
+    }
 }
 
-KMF::MediaObject* KMF::Plugin::createMediaObject(const QDomElement&)
-{ 
-  return 0; 
+KMF::MediaObject *KMF::Plugin::createMediaObject(const QDomElement &)
+{
+    return 0;
 }
 
-const KMF::ConfigPage* KMF::Plugin::configPage() const 
-{ 
-  return 0; 
+const KMF::ConfigPage *KMF::Plugin::configPage() const
+{
+    return 0;
 }
 
 #include "plugin.moc"
-
