@@ -18,17 +18,20 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 #include "kmfwidgetfactory.h"
-#include "kmfmenu.h"
-#include "kmfmenupage.h"
+
+#include <QtCore/QRegExp>
+#include <QtCore/QVariant>
+
+#include <KDebug>
+
+#include "kmfbutton.h"
+#include "kmfframe.h"
 #include "kmfimage.h"
 #include "kmflabel.h"
-#include "kmfframe.h"
-#include "kmfbutton.h"
 #include "kmflayout.h"
+#include "kmfmenu.h"
+#include "kmfmenupage.h"
 #include "templateobject.h"
-#include <KDebug>
-#include <QRegExp>
-#include <QVariant>
 
 KMFWidgetFactory::KMFWidgetFactory(QObject *parent)
   : KMFTemplateBase(parent), m_title(0), m_chapter(0),
@@ -140,3 +143,4 @@ KMFWidget* KMFWidgetFactory::create(const QDomElement& element,
 }
 
 #include "kmfwidgetfactory.moc"
+

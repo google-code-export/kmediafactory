@@ -18,16 +18,20 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 #include "kmflabel.h"
+
+#include <QtCore/QRegExp>
+#include <QtCore/QVariant>
+#include <QtGui/QColor>
+#include <QtGui/QPainter>
+
+#include <KDebug>
+
+#include <string>
+
+#include <kmftools.h>
+#include <rect.h>
 #include "kmfmenu.h"
 #include "kmfmenupage.h"
-#include <rect.h>
-#include <kmftools.h>
-#include <KDebug>
-#include <QColor>
-#include <QRegExp>
-#include <QVariant>
-#include <QPainter>
-#include <string>
 
 KMFLabel::KMFLabel(QObject *parent) :
   KMFWidget(parent), m_text("")
@@ -182,3 +186,4 @@ QString KMFLabel::fitText(QString txt, int width) const
 }
 
 #include "kmflabel.moc"
+

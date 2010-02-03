@@ -19,11 +19,14 @@
 //**************************************************************************
 
 #include "kmfmediafile.h"
-#include "run.h"
-#include "kmftime.h"
+
+#include <QtCore/QMap>
+#include <QtCore/QRegExp>
+
 #include <KDebug>
-#include <QRegExp>
-#include <QMap>
+
+#include "kmftime.h"
+#include "run.h"
 
 QMap<QString, KMFMediaFile> KMFMediaFile::m_cache;
 
@@ -86,4 +89,5 @@ const KMFMediaFile& KMFMediaFile::mediaFile(const QString& file)
   }
   return m_cache[file];
 }
+
 

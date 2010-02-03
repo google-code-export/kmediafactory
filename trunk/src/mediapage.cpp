@@ -19,18 +19,21 @@
 //**************************************************************************
 
 #include "mediapage.h"
+
+#include <QtCore/QPoint>
+#include <QtCore/QTimer>
+#include <QtGui/QCursor>
+#include <QtGui/QMenu>
+#include <QtGui/QPainter>
+#include <QtGui/QStyledItemDelegate>
+
+#include <KActionCollection>
+#include <KXMLGUIFactory>
+
+#include <kmftools.h>
 #include "kmediafactory.h"
 #include "kmfapplication.h"
 #include "sizewidget.h"
-#include <kmftools.h>
-#include <KXMLGUIFactory>
-#include <KActionCollection>
-#include <QPoint>
-#include <QMenu>
-#include <QTimer>
-#include <QPainter>
-#include <QStyledItemDelegate>
-#include <QCursor>
 
 #define SHOW_ALL_ACTIONS
 #define SHOW_ACTIONS_ON_LEFT
@@ -322,3 +325,6 @@ void MediaPage::calculateSizes()
 }
 
 #include "mediapage.moc"
+
+
+

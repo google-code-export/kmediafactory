@@ -18,23 +18,26 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 
-#include "config.h"
 #include "slideshowplugin.h"
-#include "ui_slideshowconfig.h"
-#include "slideshowpluginsettings.h"
-#include "slideshowobject.h"
-#include <kmftools.h>
+
+#include <KAboutData>
 #include <KAction>
 #include <KActionCollection>
-#include <KLocale>
-#include <KAboutData>
-#include <KPluginFactory>
-#include <KStandardDirs>
 #include <KApplication>
 #include <KFileDialog>
 #include <KIcon>
-#include <KPluginLoader>
+#include <KLocale>
 #include <KMessageBox>
+#include <KPluginFactory>
+#include <KPluginLoader>
+#include <KStandardDirs>
+
+#include <config.h>
+
+#include <kmftools.h>
+#include <slideshowpluginsettings.h>
+#include <ui_slideshowconfig.h>
+#include "slideshowobject.h"
 
 K_EXPORT_KMEDIAFACTORY_PLUGIN(slideshow, SlideshowPlugin)
 
@@ -173,3 +176,4 @@ const KMF::ConfigPage* SlideshowPlugin::configPage() const
 }
 
 #include "slideshowplugin.moc"
+

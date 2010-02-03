@@ -18,11 +18,14 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 #include "kmfframe.h"
-#include <kmftools.h>
+
+#include <QtCore/QRect>
+#include <QtGui/QPainter>
+#include <QtXml/QDomElement>
+
 #include <KDebug>
-#include <QRect>
-#include <QDomElement>
-#include <QPainter>
+
+#include <kmftools.h>
 
 KMFFrame::KMFFrame(QObject *parent) :
   KMFWidget(parent), m_lineWidth(0), m_rounded(0)
@@ -68,3 +71,4 @@ void KMFFrame::paintWidget(QImage* layer, bool shdw) const
 }
 
 #include "kmfframe.moc"
+

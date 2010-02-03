@@ -17,15 +17,17 @@
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
-#include <QColorGroup>
-
 #include "kmfmultiurldialog.h"
-#include <KFileDialog>
+
+#include <QtCore/QStringList>
+#include <QtGui/QColorGroup>
+
 #include <KApplication>
-#include <KMessageBox>
-#include <KLocale>
 #include <KDebug>
-#include <QStringList>
+#include <KFileDialog>
+#include <KLocale>
+#include <KMessageBox>
+
 
 KMFMultiURLDialog::KMFMultiURLDialog(const QString& startDir,
                                      const QString& filter,
@@ -119,3 +121,4 @@ QStringList KMFMultiURLDialog::files()
 }
 
 #include "kmfmultiurldialog.moc"
+

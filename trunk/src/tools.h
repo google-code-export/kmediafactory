@@ -20,10 +20,15 @@
 #ifndef TOOLS_H
 #define TOOLS_H
 
-#include "ui_tools.h"
-#include "kmflistmodel.h"
+
+
+
+#include <QtCore/QObject>
+
 #include <KUrl>
-#include <QObject>
+
+#include <kmflistmodel.h>
+#include <ui_tools.h>
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
@@ -81,3 +86,6 @@ class Tools : public QWidget, public Ui::Tools
 };
 
 #endif
+
+
+

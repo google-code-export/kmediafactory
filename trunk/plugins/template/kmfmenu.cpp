@@ -19,16 +19,19 @@
 //**************************************************************************
 
 #include "kmfmenu.h"
-#include "kmfwidgetfactory.h"
-#include "kmftime.h"
-#include <kmediafactory/job.h>
+
+#include <QtCore/QFileInfo>
+#include <QtGui/QImage>
+
 #include <KAboutData>
-#include <kstore/KoStore.h>
+#include <KComponentData>
 #include <KDebug>
 #include <KLocale>
-#include <KComponentData>
-#include <QImage>
-#include <QFileInfo>
+
+#include <kmftime.h>
+#include <kmediafactory/job.h>
+#include <kstore/KoStore.h>
+#include "kmfwidgetfactory.h"
 
 KMFMenu::KMFMenu(const QString& tmplate, QObject *parent)
   : KMFTemplateBase(parent),
@@ -291,3 +294,4 @@ int KMFMenu::mediaObjChapterCount(int title)
 }
 
 #include "kmfmenu.moc"
+

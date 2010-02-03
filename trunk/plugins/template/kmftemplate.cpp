@@ -19,12 +19,15 @@
 //**************************************************************************
 
 #include "kmftemplate.h"
-#include "kmftools.h"
-#include <kstore/KoStore.h>
-#include <KZip>
+
+#include <QtCore/QDir>
+#include <QtCore/QFileInfo>
+
 #include <KDebug>
-#include <QFileInfo>
-#include <QDir>
+#include <KZip>
+
+#include <kmftools.h>
+#include <kstore/KoStore.h>
 
 KMFTemplate::KMFTemplate(const QString file) : m_store(0), m_language("en")
 {
@@ -164,3 +167,4 @@ void KMFTemplate::close()
 {
   m_store->close();
 }
+

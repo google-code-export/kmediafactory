@@ -19,15 +19,19 @@
 //**************************************************************************
 
 #include "run.h"
+
+#include <QtCore/QFileInfo>
+#include <QtCore/QStringList>
+#include <QtGui/QWidget>
+
+#include <KApplication>
 #include <KDebug>
 #include <KShell>
-#include <KApplication>
 #include <KStandardDirs>
-#include <QStringList>
-#include <QFileInfo>
-#include <QWidget>
-#include <sys/types.h>
+
 #include <unistd.h>
+#include <sys/types.h>
+
 
 Run::Run(QString command, QString dir)
 {
@@ -172,3 +176,4 @@ void Run::exit(int, QProcess::ExitStatus)
 }
 
 #include "run.moc"
+

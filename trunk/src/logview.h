@@ -21,7 +21,13 @@
 #ifndef LOGVIEW_H
 #define LOGVIEW_H
 
-#include "ui_logview.h"
+
+
+
+
+
+
+#include <ui_logview.h>
 
 class LogView : public KDialog, public Ui::LogView
 {
@@ -36,3 +42,6 @@ protected:
 };
 
 #endif // LOGVIEW_H
+
+
+

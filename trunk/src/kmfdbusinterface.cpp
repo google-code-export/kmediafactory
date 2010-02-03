@@ -19,14 +19,16 @@
 //**************************************************************************
 
 #include "kmfdbusinterface.h"
-#include "kmfapplication.h"
-#include "kmediafactory.h"
-#include "outputpage.h"
+
 #include <KDebug>
-#include <KPageWidget>
 #include <KFileDialog>
-#include <KProgressDialog>
 #include <KMessageBox>
+#include <KPageWidget>
+#include <KProgressDialog>
+
+#include "kmediafactory.h"
+#include "kmfapplication.h"
+#include "outputpage.h"
 
 KMFDbusInterface::KMFDbusInterface(QObject *parent) :
   QObject(parent)
@@ -197,3 +199,6 @@ int KMFDbusInterface::message(const QString &caption, const QString &txt,
 {
   return kmfApp->interface()->messageBox(caption, txt, type);
 }
+
+
+

@@ -18,9 +18,11 @@
 //**************************************************************************
 
 #include "krossoutputobject.h"
-#include "krossplugin.h"
-#include <kmftools.h>
+
 #include <KActionCollection>
+
+#include <kmftools.h>
+#include "krossplugin.h"
 
 KrossOutputObject::KrossOutputObject(QObject* parent, Kross::Object::Ptr object)
  : KMF::OutputObject(parent), m_object(object)
@@ -84,3 +86,4 @@ void KrossOutputObject::clean()
 }
 
 #include "krossoutputobject.moc"
+

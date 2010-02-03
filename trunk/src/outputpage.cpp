@@ -19,26 +19,29 @@
 //**************************************************************************
 
 #include "outputpage.h"
-#include "kmediafactory.h"
-#include "kmfapplication.h"
-#include "kmfprogressitemdelegate.h"
-#include "kmfplugininterface.h"
-#include "logview.h"
-#include <kmftools.h>
-#include <ThreadWeaver/Weaver>
-#include <KMessageBox>
+
+#include <QtCore/QTimer>
+#include <QtGui/QStandardItemModel>
+#include <QtGui/QTextDocument>
+#include <QtGui/QToolButton>
+
 #include <KAboutData>
 #include <KCursor>
-#include <KPushButton>
-#include <KLocale>
 #include <KDebug>
 #include <KFileItemDelegate>
-#include <KXMLGUIFactory>
+#include <KLocale>
+#include <KMessageBox>
 #include <KPageDialog>
-#include <QToolButton>
-#include <QTimer>
-#include <QStandardItemModel>
-#include <QTextDocument>
+#include <KPushButton>
+#include <KXMLGUIFactory>
+#include <ThreadWeaver/Weaver>
+
+#include <kmftools.h>
+#include "kmediafactory.h"
+#include "kmfapplication.h"
+#include "kmfplugininterface.h"
+#include "kmfprogressitemdelegate.h"
+#include "logview.h"
 
 OutputPage::OutputPage(QWidget *parent) :
   QWidget(parent)
@@ -374,3 +377,6 @@ void OutputPage::makeLog()
 }
 
 #include "outputpage.moc"
+
+
+

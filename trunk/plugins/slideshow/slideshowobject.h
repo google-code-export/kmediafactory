@@ -21,9 +21,12 @@
 #ifndef SLIDESHOWOBJECT_H
 #define SLIDESHOWOBJECT_H
 
+
+
+#include <KUrl>
+
 #include <kmf_stddef.h>
 #include <kmediafactory/plugin.h>
-#include <KUrl>
 
 class Slide
 {
@@ -109,3 +112,4 @@ class SlideshowObject : public KMF::MediaObject
 };
 
 #endif // SLIDESHOWOBJECT_H
+

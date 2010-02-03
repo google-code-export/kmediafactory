@@ -18,15 +18,19 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 #include "kmfwidget.h"
+
+#include <QtCore/QObject>
+#include <QtCore/QRegExp>
+#include <QtCore/QVariant>
+#include <QtGui/QPainter>
+
+#include <KDebug>
+
+#include <cmath>
+
+#include <kmftools.h>
 #include "kmflayout.h"
 #include "kmfmenupage.h"
-#include <kmftools.h>
-#include <KDebug>
-#include <QObject>
-#include <QVariant>
-#include <QRegExp>
-#include <QPainter>
-#include <cmath>
 
 // Exponential blur, Jani Huhtanen, 2006
 //
@@ -362,3 +366,4 @@ void KMFWidget::setProperty(const QString& name, QVariant value)
 }
 
 #include "kmfwidget.moc"
+

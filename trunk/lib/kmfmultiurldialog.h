@@ -20,8 +20,10 @@
 #ifndef KMFMULTIURLDIALOG_H
 #define KMFMULTIURLDIALOG_H
 
-#include "ui_kmfmultiurldialog.h"
-#include <kmflistmodel.h>
+
+
+#include <ui_kmfmultiurldialog.h>
+#include "kmflistmodel.h"
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
@@ -55,3 +57,4 @@ class KDE_EXPORT KMFMultiURLDialog : public KDialog,
 };
 
 #endif
+

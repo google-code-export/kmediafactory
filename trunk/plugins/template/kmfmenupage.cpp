@@ -18,30 +18,34 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 #include "kmfmenupage.h"
+
+#include <QtCore/QDateTime>
+#include <QtCore/QDir>
+#include <QtCore/QObject>
+#include <QtCore/QRegExp>
+#include <QtCore/QVariant>
+#include <QtGui/QImage>
+#include <QtGui/QPainter>
+
+#include <KApplication>
+#include <KDebug>
+#include <KLocale>
+#include <KMessageBox>
+#include <KStandardDirs>
+
+#include <sys/stat.h>
+#include <sys/types.h>
+
+#include <kmftime.h>
+#include <kmftools.h>
+#include <run.h>
+#include <templatepluginsettings.h>
+#include <kmediafactory/job.h>
+#include <kmediafactory/plugininterface.h>
 #include "kmfbutton.h"
 #include "kmfgeometry.h"
 #include "kmfmenu.h"
 #include "templateobject.h"
-#include "templatepluginsettings.h"
-#include <kmftime.h>
-#include <kmftools.h>
-#include <run.h>
-#include <kmediafactory/plugininterface.h>
-#include <kmediafactory/job.h>
-#include <KApplication>
-#include <KStandardDirs>
-#include <KLocale>
-#include <KDebug>
-#include <KMessageBox>
-#include <QVariant>
-#include <QObject>
-#include <QImage>
-#include <QDir>
-#include <QDateTime>
-#include <QRegExp>
-#include <QPainter>
-#include <sys/types.h>
-#include <sys/stat.h>
 
 class KMFMenuPageJob : public KMF::Job
 {
@@ -614,3 +618,4 @@ QImage KMFMenuPage::preview()
 }
 
 #include "kmfmenupage.moc"
+

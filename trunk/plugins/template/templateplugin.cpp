@@ -18,27 +18,31 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 
-#include "config.h"
 #include "templateplugin.h"
-#include "templateobject.h"
-#include "newstuffobject.h"
-#include "ui_templateconfig.h"
-#include "templatepluginsettings.h"
-#include "kconfigxml.h"
-#include "kmftools.h"
-#include <kmediafactory/plugininterface.h>
-#include <kdeversion.h>
-#include <KGenericFactory>
-#include <KStandardDirs>
-#include <KFileDialog>
-#include <KGlobal>
-#include <KIconLoader>
+
+#include <QtCore/QRegExp>
+#include <QtGui/QImage>
+#include <QtGui/QPixmap>
+
 #include <KAboutData>
 #include <KDebug>
+#include <KFileDialog>
+#include <KGenericFactory>
+#include <KGlobal>
+#include <KIconLoader>
 #include <KPluginLoader>
-#include <QRegExp>
-#include <QPixmap>
-#include <QImage>
+#include <KStandardDirs>
+#include <kdeversion.h>
+
+#include <config.h>
+
+#include <kmftools.h>
+#include <templatepluginsettings.h>
+#include <ui_templateconfig.h>
+#include <kmediafactory/plugininterface.h>
+#include "kconfigxml.h"
+#include "newstuffobject.h"
+#include "templateobject.h"
 
 K_EXPORT_KMEDIAFACTORY_PLUGIN(template, TemplatePlugin)
 
@@ -97,3 +101,4 @@ QStringList TemplatePlugin::supportedProjectTypes() const
 }
 
 #include "templateplugin.moc"
+

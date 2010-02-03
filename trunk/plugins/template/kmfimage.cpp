@@ -19,16 +19,19 @@
 // **************************************************************************
 
 #include "kmfimage.h"
-#include "kmfmenu.h"
-#include "kmfmenupage.h"
-#include <kstore/KoStore.h>
-#include <lib/kmftools.h>
-#include <KIO/NetAccess>
+
+#include <QtCore/QVariant>
+#include <QtGui/QApplication>
+#include <QtGui/QPainter>
+
 #include <KDebug>
 #include <KStandardDirs>
-#include <QVariant>
-#include <QApplication>
-#include <QPainter>
+#include <KIO/NetAccess>
+
+#include <kstore/KoStore.h>
+#include <lib/kmftools.h>
+#include "kmfmenu.h"
+#include "kmfmenupage.h"
 
 const char *transparent_xpm[] = {
     "1 1 1 1",
@@ -350,3 +353,4 @@ void KMFImage::setProperty(const QString &name, QVariant value)
 }
 
 #include "kmfimage.moc"
+

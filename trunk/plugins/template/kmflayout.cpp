@@ -19,8 +19,11 @@
 //**************************************************************************
 
 #include "kmflayout.h"
+
+#include <QtCore/QObject>
+
 #include <KDebug>
-#include <QObject>
+
 
 bool KMFGrid::isHidden() const
 {
@@ -204,3 +207,4 @@ int KMFHBox::minimumPaintHeight() const
 }
 
 #include "kmflayout.moc"
+

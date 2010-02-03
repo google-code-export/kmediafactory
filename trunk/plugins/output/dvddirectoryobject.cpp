@@ -19,27 +19,31 @@
 //**************************************************************************
 
 #include "dvddirectoryobject.h"
-#include "dvdauthorparser.h"
-#include "outputplugin.h"
-#include <kmediafactory/object.h>
-#include <kmediafactory/job.h>
-#include <kmftools.h>
+
+#include <QtCore/QDir>
+#include <QtCore/QEventLoop>
+#include <QtCore/QFileInfo>
+#include <QtCore/QRegExp>
+#include <QtCore/QStringList>
+#include <QtGui/QPixmap>
+
+#include <KAction>
+#include <KActionCollection>
 #include <KApplication>
-#include <KMimeType>
+#include <KDebug>
+#include <KIcon>
 #include <KIconLoader>
 #include <KLocale>
-#include <KDebug>
 #include <KMessageBox>
-#include <KIcon>
-#include <KActionCollection>
-#include <KAction>
-#include <QFileInfo>
-#include <QDir>
-#include <QEventLoop>
-#include <QRegExp>
-#include <QStringList>
-#include <QPixmap>
+#include <KMimeType>
+
 #include <limits.h>
+
+#include <dvdauthorparser.h>
+#include <kmftools.h>
+#include <kmediafactory/job.h>
+#include <kmediafactory/object.h>
+#include "outputplugin.h"
 
 static const char startString[] = I18N_NOOP("DVD Folder");
 
@@ -287,3 +291,4 @@ void DvdDirectoryObject::DvdDirectoryObject::clean()
 }
 
 #include "dvddirectoryobject.moc"
+

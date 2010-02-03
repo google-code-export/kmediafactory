@@ -21,10 +21,15 @@
 #ifndef KMFTEMPLATEICONVIEW_H
 #define KMFTEMPLATEICONVIEW_H
 
-#include <kmediafactory/object.h>
-#include "kmflistmodel.h"
+
+
+
+#include <QtCore/QMimeData>
+
 #include <KLocale>
-#include <QMimeData>
+
+#include <kmflistmodel.h>
+#include <kmediafactory/object.h>
 
 template <class T>
 class KMFObjectListModel : public KMFListModel<T>
@@ -118,3 +123,6 @@ class KMFObjectListModel : public KMFListModel<T>
 };
 
 #endif // KMFTEMPLATEICONVIEW_H
+
+
+

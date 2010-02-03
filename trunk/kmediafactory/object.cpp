@@ -19,6 +19,7 @@
 //**************************************************************************
 
 #include "object.h"
+
 #include "plugin.h"
 #include "plugininterface.h"
 
@@ -125,3 +126,4 @@ void KMF::Object::clean()
 }
 
 #include "object.moc"
+

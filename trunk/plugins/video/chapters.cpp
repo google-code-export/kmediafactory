@@ -19,31 +19,34 @@
 //**************************************************************************
 
 #include "chapters.h"
-#include "videoplugin.h"
-#include "kmftime.h"
-#include "kmfmediafile.h"
-#include "kmftools.h"
-#include "ui_autochapters.h"
-#include "ui_addchapter.h"
-#include <qdvdinfo.h>
-#include <kmfimageview.h>
-#include <kmediafactory/plugin.h>
-#include <Phonon/MediaObject>
+
+#include <QtCore/QDir>
+#include <QtGui/QImage>
+#include <QtGui/QLabel>
+#include <QtGui/QLineEdit>
+#include <QtGui/QMenu>
+#include <QtGui/QSlider>
+
 #include <KApplication>
-#include <KFileDialog>
-#include <KMainWindow>
-#include <KStandardAction>
-#include <kinputdialog.h>
-#include <KLocale>
-#include <KMessageBox>
-#include <KIcon>
 #include <KDebug>
-#include <QMenu>
-#include <QSlider>
-#include <QImage>
-#include <QLabel>
-#include <QDir>
-#include <QLineEdit>
+#include <KFileDialog>
+#include <KIcon>
+#include <KInputDialog>
+#include <KLocale>
+#include <KMainWindow>
+#include <KMessageBox>
+#include <KStandardAction>
+#include <Phonon/MediaObject>
+
+#include <kmfimageview.h>
+#include <kmfmediafile.h>
+#include <kmftime.h>
+#include <kmftools.h>
+#include <qdvdinfo.h>
+#include <ui_addchapter.h>
+#include <ui_autochapters.h>
+#include <kmediafactory/plugin.h>
+#include "videoplugin.h"
 
 enum Columns
 {
@@ -579,3 +582,4 @@ void Chapters::slotPlay()
 }
 
 #include "chapters.moc"
+

@@ -20,6 +20,9 @@
 
 #include "kmfoptions.h"
 
+
+
+
 KMFOptions::KMFOptions(QWidget* parent) : QWidget(parent)
 {
   setupUi(this);
@@ -31,3 +34,6 @@ KMFOptions::~KMFOptions()
 }
 
 #include "kmfoptions.moc"
+
+
+

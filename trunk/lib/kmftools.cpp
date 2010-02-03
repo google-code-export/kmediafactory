@@ -19,35 +19,39 @@
 //**************************************************************************
 
 #include "kmftools.h"
-#include <KXMLGUIClient>
+
+#include <QtCore/QDir>
+#include <QtCore/QFile>
+#include <QtCore/QFileInfo>
+#include <QtCore/QSet>
+#include <QtCore/QStringList>
+#include <QtCore/QTextStream>
+#include <QtGui/QAbstractItemView>
+#include <QtGui/QAction>
+#include <QtGui/QFont>
+#include <QtGui/QItemSelection>
+#include <QtGui/QPainter>
+#include <QtGui/QStringListModel>
+#include <QtXml/QDomElement>
+#include <QtXml/QDomElement>
+
 #include <KActionCollection>
-#include <KStringHandler>
-#include <KStandardDirs>
-#include <KDebug>
 #include <KApplication>
-#include <KSaveFile>
-#include <KMessageBox>
-#include <KTemporaryFile>
+#include <KDebug>
 #include <KLocale>
+#include <KMessageBox>
+#include <KSaveFile>
+#include <KStandardDirs>
+#include <KStringHandler>
+#include <KTemporaryFile>
+#include <KXMLGUIClient>
 #include <KIO/NetAccess>
-#include <QAction>
-#include <QFileInfo>
-#include <QDir>
-#include <QSet>
-#include <QStringList>
-#include <QFile>
-#include <QTextStream>
-#include <QFont>
-#include <QDomElement>
-#include <QAbstractItemView>
-#include <QItemSelection>
-#include <QStringListModel>
-#include <QPainter>
-#include <QDomElement>
-#include <sys/stat.h>
+
 #include <errno.h>
 #include <fontconfig/fontconfig.h>
-#include <Q4puGenericSignalSpy.h>
+#include <sys/stat.h>
+
+#include "Q4puGenericSignalSpy.h"
 
 KMF::Tools::Tools()
 {
@@ -763,3 +767,4 @@ QString KMF::Tools::changeExt(const QString &f, const QString &newExt)
     }
     return newStr;
 }
+

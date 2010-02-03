@@ -20,12 +20,15 @@
 #ifndef KMFIMAGEVIEW_H
 #define KMFIMAGEVIEW_H
 
-#include "rect.h"
+
+#include <QtGui/QGraphicsPixmapItem>
+#include <QtGui/QGraphicsScene>
+#include <QtGui/QGraphicsView>
+#include <QtGui/QImage>
+
 #include <kdemacros.h>
-#include <QImage>
-#include <QGraphicsView>
-#include <QGraphicsScene>
-#include <QGraphicsPixmapItem>
+
+#include "rect.h"
 
 /**
 @author Petri Damsten
@@ -61,3 +64,4 @@ class KDE_EXPORT KMFImageView : public QGraphicsView
 };
 
 #endif
+

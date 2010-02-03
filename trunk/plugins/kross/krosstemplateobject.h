@@ -20,8 +20,11 @@
 #ifndef KROSSTEMPLATEOBJECT_H
 #define KROSSTEMPLATEOBJECT_H
 
+
+
+#include <Kross/Object>
+
 #include <kmediafactory/plugininterface.h>
-#include <kross/core/object.h>
 
 class KrossTemplateObject : public KMF::TemplateObject
 {
@@ -52,3 +55,4 @@ class KrossTemplateObject : public KMF::TemplateObject
 };
 
 #endif // KROSSTEMPLATEOBJECT_H
+

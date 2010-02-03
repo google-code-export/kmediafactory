@@ -21,7 +21,13 @@
 #ifndef PROJECTOPTIONS_H
 #define PROJECTOPTIONS_H
 
-#include "ui_projectoptions.h"
+
+
+
+
+
+
+#include <ui_projectoptions.h>
 #include "kmfproject.h"
 
 class ProjectOptions : public QWidget, public Ui::ProjectOptions
@@ -55,3 +61,6 @@ class ProjectOptions : public QWidget, public Ui::ProjectOptions
 };
 
 #endif
+
+
+

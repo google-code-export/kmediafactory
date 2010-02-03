@@ -18,19 +18,22 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 #include "projectoptions.h"
-#include "kmfapplication.h"
-#include "kmftools.h"
+
+#include <QtGui/QComboBox>
+#include <QtGui/QLineEdit>
+#include <QtGui/QPainter>
+
 #include <KComboBox>
-#include <KPushButton>
-#include <KIconLoader>
 #include <KDebug>
+#include <KIconLoader>
 #include <KLocale>
-#include <KUrlRequester>
 #include <KMessageBox>
-#include <QComboBox>
-#include <QLineEdit>
-#include <QPainter>
+#include <KPushButton>
+#include <KUrlRequester>
+
+#include <kmftools.h>
 #include <qdvdinfo.h>
+#include "kmfapplication.h"
 
 ProjectOptions::ProjectOptions(QWidget* parent) :
   QWidget(parent), titleChangesPath(false)
@@ -157,4 +160,7 @@ void ProjectOptions::paintEvent(QPaintEvent *ev)
 }
 
 #include "projectoptions.moc"
+
+
+
 

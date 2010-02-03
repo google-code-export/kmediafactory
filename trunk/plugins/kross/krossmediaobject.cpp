@@ -18,9 +18,10 @@
 //**************************************************************************
 
 #include "krossmediaobject.h"
-#include "krossplugin.h"
+
 #include <kmftime.h>
 #include <kmftools.h>
+#include "krossplugin.h"
 
 KrossMediaObject::KrossMediaObject(QObject* parent, Kross::Object::Ptr object)
  : KMF::MediaObject(parent), m_object(object)
@@ -114,3 +115,4 @@ QTime KrossMediaObject::chapterTime(int chapter) const
 }
 
 #include "krossmediaobject.moc"
+

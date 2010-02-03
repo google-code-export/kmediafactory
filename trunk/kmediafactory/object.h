@@ -21,11 +21,14 @@
 #ifndef KMFOBJECT_H
 #define KMFOBJECT_H
 
+
+#include <QtCore/QObject>
+#include <QtCore/QVariantList>
+#include <QtGui/QPixmap>
+#include <QtXml/QDomElement>
+
 #include <kdemacros.h>
-#include <QObject>
-#include <QPixmap>
-#include <QVariantList>
-#include <QDomElement>
+
 
 class QAction;
 
@@ -73,3 +76,4 @@ namespace KMF
 Q_DECLARE_METATYPE(QDomElement)
 
 #endif // KMFOBJECT_H
+

@@ -19,19 +19,22 @@
 //**************************************************************************
 
 #include "kmfplugininterface.h"
-#include "kmediafactory.h"
-#include "templatepage.h"
-#include "outputpage.h"
-#include "kmfapplication.h"
-#include "kmfproject.h"
-#include "kmfprogressitemdelegate.h"
-#include "mediapage.h"
-#include <ThreadWeaver/DependencyPolicy>
-#include <ThreadWeaver/Weaver>
+
+#include <QtXml/QDomDocument>
+
 #include <KDebug>
 #include <KFileDialog>
 #include <KMessageBox>
-#include <QDomDocument>
+#include <ThreadWeaver/DependencyPolicy>
+#include <ThreadWeaver/Weaver>
+
+#include "kmediafactory.h"
+#include "kmfapplication.h"
+#include "kmfprogressitemdelegate.h"
+#include "kmfproject.h"
+#include "mediapage.h"
+#include "outputpage.h"
+#include "templatepage.h"
 
 KMFProgressDialog::KMFProgressDialog(QWidget* parent) : KMF::ProgressDialog(parent), m_pdlg(parent)
 {
@@ -384,3 +387,6 @@ int KMFPluginInterface::serial()
 }
 
 #include "kmfplugininterface.moc"
+
+
+

@@ -19,6 +19,7 @@
 //**************************************************************************
 
 #include "logview.h"
+
 #include "kmfapplication.h"
 
 LogView::LogView(QWidget *parent)
@@ -50,3 +51,6 @@ void LogView::setData(const KUrl& log)
 }
 
 #include "logview.moc"
+
+
+

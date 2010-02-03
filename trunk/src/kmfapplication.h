@@ -21,13 +21,18 @@
 #ifndef KMFAPPLICATION_H
 #define KMFAPPLICATION_H
 
-#include "kmfproject.h"
-#include "kmediafactorysettings.h"
-#include <kmediafactory/plugin.h>
-#include <kmfplugininterface.h>
+
+
+
+#include <QtCore/QMap>
+
 #include <KApplication>
 #include <KUrl>
-#include <QMap>
+
+#include <kmediafactorysettings.h>
+#include <kmediafactory/plugin.h>
+#include "kmfplugininterface.h"
+#include "kmfproject.h"
 
 class KMediaFactory;
 class QObject;
@@ -86,3 +91,6 @@ class KMFApplication : public KApplication
 };
 
 #endif // KMFAPPLICATION_H
+
+
+

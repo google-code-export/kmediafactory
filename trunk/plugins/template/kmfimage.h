@@ -21,10 +21,13 @@
 #ifndef KMFIMAGE_H
 #define KMFIMAGE_H
 
-#include "kmfwidget.h"
-#include <KUrl>
+
+#include <QtGui/QImage>
+
 #include <KSvgRenderer>
-#include <QImage>
+#include <KUrl>
+
+#include "kmfwidget.h"
 
 class KMFImage : public KMFWidget
 {
@@ -68,3 +71,4 @@ class KMFImage : public KMFWidget
 };
 
 #endif
+

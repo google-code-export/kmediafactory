@@ -20,8 +20,10 @@
 #ifndef NEWSTUFFOBJECT_H
 #define NEWSTUFFOBJECT_H
 
+
+#include <QtGui/QPixmap>
+
 #include <kmediafactory/plugin.h>
-#include <QPixmap>
 
 class TemplateNewStuff;
 
@@ -43,3 +45,4 @@ class NewStuffObject : public KMF::TemplateObject
 };
 
 #endif // NEWSTUFFOBJECT_H
+

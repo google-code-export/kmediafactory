@@ -20,8 +20,11 @@
 #ifndef KROSSOUTPUTOBJECT_H
 #define KROSSOUTPUTOBJECT_H
 
+
+
+#include <Kross/Object>
+
 #include <kmediafactory/plugininterface.h>
-#include <kross/core/object.h>
 
 class KrossOutputObject : public KMF::OutputObject
 {
@@ -48,3 +51,4 @@ class KrossOutputObject : public KMF::OutputObject
 };
 
 #endif // KROSSOUTPUTOBJECT_H
+

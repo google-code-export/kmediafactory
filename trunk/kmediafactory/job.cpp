@@ -19,13 +19,16 @@
 //**************************************************************************
 
 #include "job.h"
-#include "job_p.h"
-#include "plugininterface.h"
-#include <ThreadWeaver/Thread>
-#include <QVariant>
+
+#include <QtCore/QMetaType>
+#include <QtCore/QVariant>
+
 #include <KDebug>
 #include <KLocale>
-#include <QMetaType>
+#include <ThreadWeaver/Thread>
+
+#include "job_p.h"
+#include "plugininterface.h"
 
 KMF::JobHelper::JobHelper(KMF::Job* parent) : QObject(0)
 {
@@ -255,3 +258,4 @@ uint KMF::Job::msgId()
 
 #include "job.moc"
 #include "job_p.moc"
+

@@ -18,14 +18,16 @@
 //**************************************************************************
 
 #include "krossplugininterface.h"
-#include "krossplugin.h"
-#include "krossjob.h"
-#include "krossmediaobject.h"
-#include "krosstemplateobject.h"
-#include "krossoutputobject.h"
-#include <KDebug>
+
 #include <KAction>
 #include <KActionCollection>
+#include <KDebug>
+
+#include "krossjob.h"
+#include "krossmediaobject.h"
+#include "krossoutputobject.h"
+#include "krossplugin.h"
+#include "krosstemplateobject.h"
 
 KrossPluginInterface::KrossPluginInterface(QObject *parent, KMF::PluginInterface* interface)
  : QObject(parent), m_interface(interface)
@@ -258,3 +260,4 @@ QObject* KrossPluginInterface::progressDialog()
 }
 
 #include "krossplugininterface.moc"
+

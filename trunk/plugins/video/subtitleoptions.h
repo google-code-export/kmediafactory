@@ -20,10 +20,12 @@
 #ifndef SUBTITLEOPTIONS_H
 #define SUBTITLEOPTIONS_H
 
+
+
 #include <kmf_stddef.h>
-#include <qdvdinfo.h>
 #include <kmflanguagewidgets.h>
-#include "ui_subtitleoptions.h"
+#include <qdvdinfo.h>
+#include <ui_subtitleoptions.h>
 
 /**
 @author Petri Damsten
@@ -65,3 +67,4 @@ class SubtitleOptions : public KDialog, public Ui::SubtitleOptions
 };
 
 #endif
+

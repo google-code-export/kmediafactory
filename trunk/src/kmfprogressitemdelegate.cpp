@@ -19,11 +19,16 @@
 //**************************************************************************
 
 #include "kmfprogressitemdelegate.h"
+
+#include <QtCore/QModelIndex>
+#include <QtGui/QPainter>
+#include <QtGui/QProgressBar>
+
 #include <KDebug>
 #include <KIcon>
-#include <QPainter>
-#include <QModelIndex>
-#include <QProgressBar>
+
+
+
 
 #define BARW 100
 #define GRADIENTW 40
@@ -59,3 +64,6 @@ void KMFProgressItemDelegate::paint(QPainter* painter,
   }
   painter->restore();
 }
+
+
+

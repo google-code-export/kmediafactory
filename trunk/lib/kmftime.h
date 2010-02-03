@@ -20,8 +20,11 @@
 #ifndef KMFKMFTIME_H
 #define KMFKMFTIME_H
 
+
+#include <QtCore/QDateTime>
+
 #include <kdemacros.h>
-#include <QDateTime>
+
 
 namespace KMF
 {
@@ -60,3 +63,4 @@ namespace KMF
 }
 
 #endif
+

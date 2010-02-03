@@ -18,12 +18,15 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 #include "kmftoolbar.h"
-#include <kicontheme.h>
+
+#include <QtCore/QTimer>
+#include <QtGui/QAction>
+#include <QtGui/QScrollBar>
+#include <QtGui/QToolButton>
+
+#include <K3Icon>
 #include <KDebug>
-#include <QToolButton>
-#include <QAction>
-#include <QScrollBar>
-#include <QTimer>
+
 
 KMFToolBar::KMFToolBar(QWidget* parent)
  : QScrollArea(parent)
@@ -91,3 +94,4 @@ void KMFToolBar::removeActions(const QString& group)
 }
 
 #include "kmftoolbar.moc"
+

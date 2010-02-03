@@ -19,22 +19,25 @@
 //**************************************************************************
 
 #include "templatepage.h"
+
+#include <QtCore/QTimer>
+#include <QtGui/QCheckBox>
+#include <QtGui/QLabel>
+#include <QtGui/QMenu>
+
+#include <KCursor>
+#include <KDebug>
+#include <KFileDialog>
+#include <KFileItemDelegate>
+#include <KLocale>
+#include <KMessageBox>
+#include <KPageDialog>
+#include <KXMLGUIFactory>
+
+#include <kmfimageview.h>
+#include <kmftools.h>
 #include "kmediafactory.h"
 #include "kmfapplication.h"
-#include "kmfimageview.h"
-#include <kmftools.h>
-#include <KFileItemDelegate>
-#include <KPageDialog>
-#include <KCursor>
-#include <KLocale>
-#include <KFileDialog>
-#include <KMessageBox>
-#include <KDebug>
-#include <KXMLGUIFactory>
-#include <QTimer>
-#include <QCheckBox>
-#include <QLabel>
-#include <QMenu>
 
 TemplatePage::TemplatePage(QWidget *parent) :
   QWidget(parent), m_menu(0), m_scaled(false)
@@ -270,3 +273,6 @@ void TemplatePage::previewClicked()
 }
 
 #include "templatepage.moc"
+
+
+

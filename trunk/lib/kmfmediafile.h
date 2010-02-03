@@ -20,8 +20,10 @@
 #ifndef QMEDIAFILE_H
 #define QMEDIAFILE_H
 
+
+#include <QtCore/QSize>
+
 #include "qdvdinfo.h"
-#include <QSize>
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
@@ -65,3 +67,4 @@ class KDE_EXPORT KMFMediaFile
 };
 
 #endif
+

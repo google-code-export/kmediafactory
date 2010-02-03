@@ -20,7 +20,16 @@
 #ifndef SIZEWIDGET_H
 #define SIZEWIDGET_H
 
+
+
+
+
+
+
 #include <kcapacitybar.h>
+
+
+
 
 class SizeWidget : public QWidget
 {
@@ -42,3 +51,6 @@ class SizeWidget : public QWidget
 };
 
 #endif
+
+
+

@@ -25,8 +25,8 @@
 #include <config.h>
 #endif
 
-#include <KXmlGuiWindow>
 #include <KDirWatch>
+#include <KXmlGuiWindow>
 
 // Define this for the test menu item
 // #define KMF_TEST
@@ -144,3 +144,6 @@ class KMediaFactory : public KXmlGuiWindow
 };
 
 #endif // _KMEDIAFACTORY_H_
+
+
+

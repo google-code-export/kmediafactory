@@ -19,7 +19,8 @@
 //**************************************************************************
 
 #include "dvdauthorparser.h"
-#include <kmftools.h>
+
+#include "kmftools.h"
 
 void KMF::DVDAuthorParser::setFile(const QString& fileName)
 {
@@ -55,5 +56,6 @@ void KMF::DVDAuthorParser::findFiles(const QDomElement& element)
     n = n.nextSibling();
   }
 }
+
 
 

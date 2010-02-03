@@ -21,7 +21,9 @@
 #ifndef KMFTEMPLATEBASE_H
 #define KMFTEMPLATEBASE_H
 
-#include <QObject>
+
+#include <QtCore/QObject>
+
 
 namespace KMF
 {
@@ -52,3 +54,4 @@ class KMFTemplateBase : public QObject
 };
 
 #endif // KMFTEMPLATEBASE_H
+

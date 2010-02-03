@@ -20,8 +20,11 @@
 #ifndef KMFRECT_H
 #define KMFRECT_H
 
+
+#include <QtCore/QRect>
+
 #include <kdemacros.h>
-#include <QRect>
+
 
 namespace KMF
 {
@@ -44,3 +47,4 @@ namespace KMF
 }
 
 #endif
+

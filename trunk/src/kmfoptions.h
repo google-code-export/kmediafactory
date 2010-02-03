@@ -20,8 +20,12 @@
 #ifndef KMFOPTIONS_H
 #define KMFOPTIONS_H
 
-#include "ui_kmfoptions.h"
-#include <QWidget>
+
+
+
+#include <QtGui/QWidget>
+
+#include <ui_kmfoptions.h>
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
 */
@@ -35,3 +39,6 @@ class KMFOptions : public QWidget, public Ui::KMFOptions
 };
 
 #endif
+
+
+

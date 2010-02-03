@@ -21,8 +21,10 @@
 #ifndef KMFBUTTON_H
 #define KMFBUTTON_H
 
-#include <kmfwidget.h>
+
+
 #include <kmediafactory/plugininterface.h>
+#include "kmfwidget.h"
 
 class QDomText;
 
@@ -91,3 +93,4 @@ class KMFButton : public KMFWidget
 };
 
 #endif // KMFBUTTON_H
+

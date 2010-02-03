@@ -14,24 +14,26 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "dvdinfo.h"
 
 #ifdef HAVE_LIBDVDREAD
 
-#include <KRun>
-#include <KGlobal>
+#include <QtGui/QComboBox>
+#include <QtGui/QLabel>
+#include <QtGui/QPainter>
+#include <QtGui/QSlider>
+
+#include <KApplication>
 #include <KConfig>
 #include <KDebug>
-#include <KApplication>
-#include <KUrlRequester>
-#include <KIconLoader>
 #include <KFileDialog>
+#include <KGlobal>
+#include <KIconLoader>
 #include <KMessageBox>
 #include <KProgressDialog>
-#include <QPainter>
-#include <QSlider>
-#include <QLabel>
-#include <QComboBox>
+#include <KRun>
+#include <KUrlRequester>
 
 DVDInfo::DVDInfo(QWidget *parent, QString device)
  : KDialog(parent), m_info(), m_model(&m_info)
@@ -258,3 +260,4 @@ void DVDInfo::configureFileDialog(KUrlRequester* Url)
 #include "dvdinfo.moc"
 
 #endif // HAVE_LIBDVDREAD
+

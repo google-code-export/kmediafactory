@@ -21,9 +21,12 @@
 #ifndef KMEDIAFACTORY_PLUGIN_H
 #define KMEDIAFACTORY_PLUGIN_H
 
-#include "plugininterface.h"
+
+
 #include <KService>
 #include <KXMLGUIClient>
+
+#include "plugininterface.h"
 
 class KConfigSkeleton;
 
@@ -69,3 +72,4 @@ K_PLUGIN_FACTORY(factory, registerPlugin<classname>();)   \
 K_EXPORT_PLUGIN(factory("kmediafactory_plugin_" #libname))
 
 #endif // KMEDIAFACTORY_PLUGIN_H
+

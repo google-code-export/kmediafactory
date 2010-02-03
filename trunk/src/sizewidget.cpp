@@ -19,15 +19,20 @@
 //**************************************************************************
 
 #include "sizewidget.h"
-#include <KDE/KLocale>
-#include <KDE/KColorScheme>
-#include <KDE/KColorUtils>
-#include <KDE/KGlobal>
-#include <KDE/KStyle>
-#include <KDebug>
+
+#include <QtGui/QPaintEvent>
 #include <QtGui/QPainter>
-#include <QStyleOptionProgressBar>
-#include <QPaintEvent>
+#include <QtGui/QStyleOptionProgressBar>
+
+#include <KColorScheme>
+#include <KColorUtils>
+#include <KDebug>
+#include <KGlobal>
+#include <KLocale>
+#include <KStyle>
+
+
+
 
 
 SizeWidget::SizeWidget(QWidget* parent)
@@ -105,3 +110,6 @@ QSize SizeWidget::minimumSizeHint() const
 }
 
 #include "sizewidget.moc"
+
+
+

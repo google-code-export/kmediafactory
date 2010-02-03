@@ -21,8 +21,14 @@
 #ifndef KMFPROGRESSITEMDELEGATE_H
 #define KMFPROGRESSITEMDELEGATE_H
 
-#include <QItemDelegate>
-#include <QProgressBar>
+
+
+
+#include <QtGui/QItemDelegate>
+#include <QtGui/QProgressBar>
+
+
+
 
 class KMFProgressItemDelegate : public QItemDelegate
 {
@@ -37,3 +43,6 @@ private:
 };
 
 #endif // KMFPROGRESSITEMDELEGATE_H
+
+
+

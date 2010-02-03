@@ -18,15 +18,21 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 
-#include "kmediafactory.h"
-#include "kmfapplication.h"
-#include "svnrev.h"
+
+
+
+#include <QtCore/QMap>
+
 #include <KAboutData>
 #include <KCmdLineArgs>
-#include <KLocale>
 #include <KDebug>
+#include <KLocale>
 #include <KMessageBox>
-#include <QMap>
+
+#include <svnrev.h>
+
+#include "kmediafactory.h"
+#include "kmfapplication.h"
 
 int main(int argc, char **argv)
 {
@@ -117,4 +123,7 @@ int main(int argc, char **argv)
   // mainWin has WDestructiveClose flag by default, so it will delete itself.
   return app.exec();
 }
+
+
+
 

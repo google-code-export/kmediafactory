@@ -20,12 +20,14 @@
 #ifndef KMFMENU_H
 #define KMFMENU_H
 
-#include "kmfmenupage.h"
-#include "kmftemplatebase.h"
-#include "kmftemplate.h"
+
+#include <QtCore/QObject>
+#include <QtGui/QImage>
+
 #include <kmediafactory/plugininterface.h>
-#include <QImage>
-#include <QObject>
+#include "kmfmenupage.h"
+#include "kmftemplate.h"
+#include "kmftemplatebase.h"
 
 class KMFMenu : public KMFTemplateBase
 {
@@ -74,3 +76,4 @@ class KMFMenu : public KMFTemplateBase
 };
 
 #endif
+

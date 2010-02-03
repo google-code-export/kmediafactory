@@ -21,13 +21,17 @@
 #ifndef PLUGININTERFACE_H
 #define PLUGININTERFACE_H
 
-#include "object.h"
-#include "job.h"
+
+#include <QtCore/QDateTime>
+
 #include <KProcess>
 #include <kdemacros.h>
-#include <QDateTime>
+
 #include <stdint.h>
+
 #include <qdvdinfo.h>
+#include "job.h"
+#include "object.h"
 
 class QDomElement;
 
@@ -158,3 +162,4 @@ Q_DECLARE_METATYPE(KMF::TemplateObject*)
 Q_DECLARE_METATYPE(KMF::MediaObject*)
 
 #endif // PLUGININTERFACE_H
+

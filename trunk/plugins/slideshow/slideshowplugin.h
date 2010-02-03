@@ -20,6 +20,8 @@
 #ifndef SLIDESHOWPLUGIN_H
 #define SLIDESHOWPLUGIN_H
 
+
+
 #include <kmf_stddef.h>
 #include <kmediafactory/plugin.h>
 
@@ -62,4 +64,5 @@ class SlideshowPlugin : public KMF::Plugin
 };
 
 #endif /* SLIDESHOWPLUGIN_H */
+
 

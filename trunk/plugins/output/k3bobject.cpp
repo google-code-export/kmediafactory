@@ -19,22 +19,25 @@
 //**************************************************************************
 
 #include "k3bobject.h"
+
+#include <QtCore/QDir>
+#include <QtCore/QTextStream>
+#include <QtGui/QPixmap>
+#include <QtGui/QWidget>
+#include <QtXml/QDomDocument>
+
+#include <KAboutData>
+#include <KApplication>
+#include <KDebug>
+#include <KIconLoader>
+#include <KLocale>
+#include <KRun>
+#include <KStandardDirs>
+#include <KUrl>
+
 #include <kmediafactory/job.h>
 #include <kstore/KoStore.h>
 #include <kstore/KoStoreDevice.h>
-#include <KApplication>
-#include <KAboutData>
-#include <KLocale>
-#include <KStandardDirs>
-#include <KIconLoader>
-#include <KUrl>
-#include <KRun>
-#include <KDebug>
-#include <QDir>
-#include <QPixmap>
-#include <QDomDocument>
-#include <QTextStream>
-#include <QWidget>
 
 static const char startString[] = I18N_NOOP("K3b project");
 
@@ -517,3 +520,4 @@ QPixmap K3bObject::pixmap() const
 }
 
 #include "k3bobject.moc"
+

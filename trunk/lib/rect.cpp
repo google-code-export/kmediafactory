@@ -18,7 +18,9 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 #include "rect.h"
+
 #include <KDebug>
+
 
 KMF::Rect::Rect()
  : QRect()
@@ -98,5 +100,6 @@ void KMF::Rect::align(const QRect& parentRect, HAlign halign, VAlign valign)
   translate(x, y);
   //kDebug() << *this;
 }
+
 
 

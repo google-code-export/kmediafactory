@@ -18,20 +18,23 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 #include "tools.h"
-#include "toolproperties.h"
-#include "kmftools.h"
+
+#include <QtCore/QFileInfo>
+#include <QtGui/QImage>
+#include <QtGui/QPixmap>
+
 #include <KApplication>
 #include <KDebug>
+#include <KDesktopFile>
 #include <KGlobal>
 #include <KIconLoader>
-#include <KIO/Job>
-#include <KStandardDirs>
-#include <KDesktopFile>
 #include <KPushButton>
+#include <KStandardDirs>
 #include <KIO/DeleteJob>
-#include <QImage>
-#include <QFileInfo>
-#include <QPixmap>
+#include <KIO/Job>
+
+#include <kmftools.h>
+#include "toolproperties.h"
 
 // From kmenuedit - treeview.cpp
 static QPixmap appIcon(const QString &iconName)
@@ -256,3 +259,6 @@ void Tools::enableButtons()
 }
 
 #include "tools.moc"
+
+
+

@@ -30,7 +30,9 @@
 #ifndef Q4PU_GENERIC_SIGNAL_SPY
 #define Q4PU_GENERIC_SIGNAL_SPY
 
-#include <QObject>
+
+#include <QtCore/QObject>
+
 
 class Q4puGenericSignalSpyPrivate;
 
@@ -67,3 +69,4 @@ inline void Q4puGenericSignalSpy::emitCaughtSlot(const QString &slot)
 }
 
 #endif
+
