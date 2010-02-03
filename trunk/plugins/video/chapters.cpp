@@ -91,7 +91,7 @@ class CellListModel : public QAbstractListModel
                 emit dataChanged(index, index);
                 return true;
             } else if (Qt::CheckStateRole == role && COL_HIDDEN == index.column())       {
-                (*m_data)[index.row()].setHidden(value.toBool());
+                (*m_data)[index.row()].setHidden(!value.toBool());
                 emit dataChanged(index, index);
                 return true;
             }
@@ -147,7 +147,7 @@ class CellListModel : public QAbstractListModel
 
                 case Qt::CheckStateRole:
                     if (COL_HIDDEN == index.column()) {
-                        return m_data->at(index.row()).isHidden() ? Qt::Checked : Qt::Unchecked;
+                        return m_data->at(index.row()).isHidden() ? Qt::Unchecked : Qt::Checked;
                     }
                     break;
 
@@ -166,22 +166,27 @@ class CellListModel : public QAbstractListModel
 
         virtual QVariant headerData(int column, Qt::Orientation, int role) const
         {
-            if (role != Qt::DisplayRole) {
-                return QVariant();
-            }
+            if (role == Qt::DisplayRole) {
+                switch (column) {
+                    case COL_NAME:
+                        return i18n("Chapter Name");
 
-            switch (column) {
-                case COL_NAME:
-                    return i18n("Chapter Name");
+                    case COL_START:
+                        return i18n("Start");
 
-                case COL_HIDDEN:
-                    return i18n("Hidden");
-
-                case COL_START:
-                    return i18n("Start");
-
-                case COL_LENGTH:
-                    return i18n("Length");
+                    case COL_LENGTH:
+                        return i18n("Length");
+                }
+            } else if (role == Qt::DecorationRole) {
+                switch (column) {
+                    case COL_HIDDEN:
+                        return KIcon("layer-visible-on");
+                }
+            } else if (role == Qt::ToolTipRole) {
+                switch (column) {
+                    case COL_HIDDEN:
+                        return i18n("Visible");
+                }
             }
             return QVariant();
         };
@@ -212,7 +217,10 @@ class AutoChapters : public KDialog, public Ui::AutoChapters
         };
 };
 
-Chapters::Chapters(QWidget *parent) : QWidget(parent), m_obj(0), m_model(0)
+Chapters::Chapters(QWidget *parent)
+    : QWidget(parent)
+    , m_obj(0)
+    , m_model(0)
 {
     setupUi(this);
     chaptersView->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -245,6 +253,20 @@ Chapters::Chapters(QWidget *parent) : QWidget(parent), m_obj(0), m_model(0)
 
 Chapters::~Chapters()
 {
+    KConfigGroup cg = KGlobal::config()->group("ChaptersDlg");
+    cg.writeEntry("splitter", splitter->sizes());
+}
+
+void Chapters::showEvent(QShowEvent *event)
+{
+    Q_UNUSED(event)
+    chaptersView->header()->setResizeMode(0, QHeaderView::Stretch);
+    chaptersView->header()->setResizeMode(1, QHeaderView::ResizeToContents);
+    chaptersView->header()->setResizeMode(2, QHeaderView::ResizeToContents);
+    chaptersView->header()->setResizeMode(3, QHeaderView::ResizeToContents);
+    chaptersView->header()->setStretchLastSection(false);
+    KConfigGroup cg = KGlobal::config()->group("ChaptersDlg");
+    splitter->setSizes(cg.readEntry("splitter", QList<int>() << 330 << 330));
 }
 
 void Chapters::setData(const QDVD::CellList &cells, const VideoObject *obj)
@@ -305,10 +327,7 @@ void Chapters::seekVideo(int msec)
 void Chapters::setSliderAndTime(int msec)
 {
     m_pos = KMF::Time(msec) + m_difference;
-    QString s = QString("%1: %2 / %3").
-                arg(m_obj->text()).
-                arg(m_pos.toString()).
-                arg(m_duration);
+    QString s = QString("%1: %2 / %3").arg(m_obj->text()).arg(m_pos.toString()).arg(m_duration);
     timeLabel->setText(s);
     timeSlider->setValue((int)m_pos);
 }
@@ -399,7 +418,6 @@ void Chapters::slotRemove()
         if (i > 0) {
             --i;
         }
-
         chaptersView->setCurrentIndex(m_model->index(i));
         checkLengths();
     }
@@ -577,15 +595,15 @@ bool Chapters::ok()
             KMessageBox::sorry(this,
                     i18n("You should have at least one non-hidden chapter."),
                     i18n("No Chapters"));
-        } else if (m_cells.count() > 99)      {
+        } else if (m_cells.count() > 99) {
             KMessageBox::sorry(this,
                     i18n("Each title in a DVD can have a maximum of 99 chapters.\n"
                          "This title currently has %1.", m_cells.count()),
                     i18n("Too Many Chapters"));
-        } else   {
+        } else {
             return true;
         }
-    } else   {
+    } else {
         KMessageBox::sorry(this,
                 i18n("You should have at least one chapter."),
                 i18n("No Chapters"));
@@ -599,7 +617,7 @@ void Chapters::slotPlay()
     if (video->isPlaying()) {
         video->pause();
         playButton->setIcon(KIcon("media-playback-start"));
-    } else   {
+    } else {
         video->play();
         playButton->setIcon(KIcon("media-playback-pause"));
     }
