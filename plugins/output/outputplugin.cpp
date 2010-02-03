@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,7 +16,7 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #include "config.h"
 #include "outputplugin.h"
@@ -47,108 +47,111 @@
 
 K_EXPORT_KMEDIAFACTORY_PLUGIN(output, OutputPlugin)
 
-OutputPlugin::OutputPlugin(QObject *parent, const QVariantList&) :
-  KMF::Plugin(parent), addPreviewDVDXine(0), addPreviewDVDKaffeine(0)
+OutputPlugin::OutputPlugin(QObject *parent, const QVariantList &)
+    : KMF::Plugin(parent)
+    , addPreviewDVDXine(0)
+    , addPreviewDVDKaffeine(0)
 {
-  KGlobal::locale()->insertCatalog("kmediafactory_output");
-  setObjectName("KMFOutput");
-  // Initialize GUI
-  setXMLFile("kmediafactory_outputui.rc");
+    KGlobal::locale()->insertCatalog("kmediafactory_output");
+    setObjectName("KMFOutput");
+    // Initialize GUI
+    setXMLFile("kmediafactory_outputui.rc");
 
-  m_xine = KStandardDirs::findExe("xine");
-  m_kaffeine = KStandardDirs::findExe("kaffeine");
+    m_xine = KStandardDirs::findExe("xine");
+    m_kaffeine = KStandardDirs::findExe("kaffeine");
 
 #ifdef HAVE_LIBDVDREAD
-  dvdInfo = new KAction(KIcon("zoom-original"), i18n("DVD Info"), parent);
-  dvdInfo->setShortcut(Qt::CTRL + Qt::Key_I);
-  actionCollection()->addAction("dvd_info", dvdInfo);
-  connect(dvdInfo, SIGNAL(triggered()), SLOT(slotDVDInfo()));
+    dvdInfo = new KAction(KIcon("zoom-original"), i18n("DVD Info"), parent);
+    dvdInfo->setShortcut(Qt::CTRL + Qt::Key_I);
+    actionCollection()->addAction("dvd_info", dvdInfo);
+    connect(dvdInfo, SIGNAL(triggered()), SLOT(slotDVDInfo()));
 #endif
-  if(!m_xine.isEmpty())
-  {
-    addPreviewDVDXine =new KAction(KIcon("xine"),
-                                   i18n("Preview DVD in Xine"), parent);
-    addPreviewDVDXine->setShortcut(Qt::CTRL + Qt::Key_X);
-    actionCollection()->addAction("preview_dvd_xine", addPreviewDVDXine);
-    connect(addPreviewDVDXine, SIGNAL(triggered()), SLOT(slotPreviewDVDXine()));
-  }
-  if(!m_kaffeine.isEmpty())
-  {
-    addPreviewDVDKaffeine =new KAction(KIcon("xine"),
-                                   i18n("Preview DVD in Kaffeine"), parent);
-    addPreviewDVDKaffeine->setShortcut(Qt::CTRL + Qt::Key_K);
-    actionCollection()->addAction("preview_dvd_kaffeine",
-                                  addPreviewDVDKaffeine);
-    connect(addPreviewDVDKaffeine, SIGNAL(triggered()),
-            SLOT(slotPreviewDVDKaffeine()));
-  }
+
+    if (!m_xine.isEmpty()) {
+        addPreviewDVDXine = new KAction(KIcon("xine"),
+                i18n("Preview DVD in Xine"), parent);
+        addPreviewDVDXine->setShortcut(Qt::CTRL + Qt::Key_X);
+        actionCollection()->addAction("preview_dvd_xine", addPreviewDVDXine);
+        connect(addPreviewDVDXine, SIGNAL(triggered()), SLOT(slotPreviewDVDXine()));
+    }
+
+    if (!m_kaffeine.isEmpty()) {
+        addPreviewDVDKaffeine = new KAction(KIcon("xine"),
+                i18n("Preview DVD in Kaffeine"), parent);
+        addPreviewDVDKaffeine->setShortcut(Qt::CTRL + Qt::Key_K);
+        actionCollection()->addAction("preview_dvd_kaffeine",
+                addPreviewDVDKaffeine);
+        connect(addPreviewDVDKaffeine, SIGNAL(triggered()),
+                SLOT(slotPreviewDVDKaffeine()));
+    }
 }
 
 void OutputPlugin::init(const QString &type)
 {
-  kDebug() << type;
-  deleteChildren();
-  if (type.left(3) == "DVD")
-  {
-    KMF::PluginInterface *ui = interface();
-    if(ui)
-    {
-      DvdAuthorObject *daob = new DvdAuthorObject(this);
-      ui->addOutputObject(daob);
-      DvdDirectoryObject *ddob = new DvdDirectoryObject(this);
-      ui->addOutputObject(ddob);
-      DvdAuthorObject *k3bob = new K3bObject(this);
-      ui->addOutputObject(k3bob);
+    kDebug() << type;
+    deleteChildren();
+
+    if (type.left(3) == "DVD") {
+        KMF::PluginInterface *ui = interface();
+
+        if (ui) {
+            DvdAuthorObject *daob = new DvdAuthorObject(this);
+            ui->addOutputObject(daob);
+            DvdDirectoryObject *ddob = new DvdDirectoryObject(this);
+            ui->addOutputObject(ddob);
+            DvdAuthorObject *k3bob = new K3bObject(this);
+            ui->addOutputObject(k3bob);
+        }
     }
-  }
 }
 
-void OutputPlugin::play(const QString& player)
+void OutputPlugin::play(const QString &player)
 {
-  QString cmd;
-  QString projectDir = interface()->projectDir();
+    QString cmd;
+    QString projectDir = interface()->projectDir();
 
-  if(player.isEmpty())
-  {
-    if(!m_xine.isEmpty())
-      cmd = m_xine;
-    else if(!m_kaffeine.isEmpty())
-      cmd = m_kaffeine;
-    else
-      return;
-  }
-  else
-    cmd = player;
-  cmd +=  " \"dvd:/" + projectDir + "DVD/VIDEO_TS\"";
-  KRun::runCommand(cmd, kapp->activeWindow());
+    if (player.isEmpty()) {
+        if (!m_xine.isEmpty()) {
+            cmd = m_xine;
+        } else if (!m_kaffeine.isEmpty()) {
+            cmd = m_kaffeine;
+        } else {
+            return;
+        }
+    } else   {
+        cmd = player;
+    }
+
+    cmd +=  " \"dvd:/" + projectDir + "DVD/VIDEO_TS\"";
+    KRun::runCommand(cmd, kapp->activeWindow());
 }
 
 void OutputPlugin::slotPreviewDVDXine()
 {
-  play(m_xine);
+    play(m_xine);
 }
 
 void OutputPlugin::slotPreviewDVDKaffeine()
 {
-  play(m_kaffeine);
+    play(m_kaffeine);
 }
 
 void OutputPlugin::slotDVDInfo()
 {
 #ifdef HAVE_LIBDVDREAD
-  QString projectDir = interface()->projectDir();
-  DVDInfo dlg(kapp->activeWindow(), projectDir + "DVD/");
+    QString projectDir = interface()->projectDir();
+    DVDInfo dlg(kapp->activeWindow(), projectDir + "DVD/");
 
-  dlg.exec();
+    dlg.exec();
 #endif
 }
 
 QStringList OutputPlugin::supportedProjectTypes() const
 {
-  QStringList result;
-  result << "DVD-PAL" << "DVD-NTSC";
-  return result;
+    QStringList result;
+
+    result << "DVD-PAL" << "DVD-NTSC";
+    return result;
 }
 
 #include "outputplugin.moc"
-
