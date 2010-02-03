@@ -27,9 +27,18 @@
 #include <KMessageBox>
 #include <KSharedPtr>
 #include <KStandardDirs>
+#include <kdeversion.h>
+
+#if KDE_IS_VERSION(4, 4, 0)
 #include <Kross/Action>
 #include <Kross/InterpreterInfo>
 #include <Kross/Manager>
+#else
+#include <kross/core/action.h>
+#include <kross/core/interpreter.h>
+#include <kross/core/manager.h>
+#endif
+
 
 #include <kmftools.h>
 #include "krossplugininterface.h"

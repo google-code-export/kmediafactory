@@ -20,7 +20,13 @@
 #ifndef KROSSJOBOBJECT_H
 #define KROSSJOBOBJECT_H
 
+#include <kdeversion.h>
+
+#if KDE_IS_VERSION(4, 4, 0)
 #include <Kross/Object>
+#else
+#include <kross/core/object.h>
+#endif
 
 #include <kmediafactory/plugininterface.h>
 
