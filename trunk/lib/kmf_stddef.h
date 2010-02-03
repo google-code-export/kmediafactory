@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,22 +16,19 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #ifndef KMF_STDDEF_H
 #define KMF_STDDEF_H
 
-
-
 #include <config.h>
-
 
 // Force define of MIN & MAX macros
 #ifdef HAVE_STDINT_H
-  #ifndef __STDC_LIMIT_MACROS
-    #define __STDC_LIMIT_MACROS
-  #endif
-  #include <stdint.h>
+#ifndef __STDC_LIMIT_MACROS
+#define __STDC_LIMIT_MACROS
+#endif
+#include <stdint.h>
 #endif
 
 #endif // KMF_STDDEF_H
-

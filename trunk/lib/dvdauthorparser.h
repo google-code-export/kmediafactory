@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,11 +16,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
-#ifndef KMEDIAFACTORY_DVDAUTHORPARSER_H
-#define KMEDIAFACTORY_DVDAUTHORPARSER_H
-
+#ifndef KMF_DVDAUTHORPARSER_H
+#define KMF_DVDAUTHORPARSER_H
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
@@ -29,26 +28,27 @@
 
 #include <kdemacros.h>
 
-
 namespace KMF
 {
-  class KDE_EXPORT DVDAuthorParser
-  {
-    public:
-      DVDAuthorParser() {};
-      virtual ~DVDAuthorParser() {};
 
-      void setFile(const QString& fileName);
-      QStringList files();
+class KDE_EXPORT DVDAuthorParser
+{
+    public:
+        DVDAuthorParser()
+        {
+        };
+        virtual ~DVDAuthorParser(){};
+        void setFile(const QString &fileName);
+        QStringList files();
 
     private:
-      void findFiles(const QDomElement& element);
+        void findFiles(const QDomElement &element);
 
-      QDomDocument m_doc;
-      QString m_file;
-      QStringList m_files;
-  };
+        QDomDocument m_doc;
+        QString m_file;
+        QStringList m_files;
+};
+
 }
 
-#endif // KMEDIAFACTORY_DVDAUTHORPARSER_H
-
+#endif // KMF_DVDAUTHORPARSER_H

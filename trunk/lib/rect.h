@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,35 +16,41 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #ifndef KMFRECT_H
 #define KMFRECT_H
-
 
 #include <QtCore/QRect>
 
 #include <kdemacros.h>
 
-
 namespace KMF
 {
-  class KDE_EXPORT Rect : public QRect
-  {
+
+class KDE_EXPORT Rect : public QRect
+{
     public:
-      Rect();
-      Rect(int left, int top, int width, int height);
-      Rect(const QRect& rc);
-      Rect(const QPoint& topLeft, const QSize& size);
-      ~Rect();
+        Rect();
+        Rect(int left, int top, int width, int height);
+        Rect(const QRect &rc);
+        Rect(const QPoint &topLeft, const QSize &size);
+        ~Rect();
 
-      enum VAlign { Top, Middle, Bottom, VDefault };
-      enum HAlign { Left, Center, Right, HDefault };
+        enum VAlign {
+            Top, Middle, Bottom, VDefault
+        };
+        enum HAlign {
+            Left, Center, Right, HDefault
+        };
 
-      void set(const QRect& maxRect);
-      void set(const QRect& maxRect, double aspectRatio);
-      void align(const QRect& parentRect, HAlign halign, VAlign valign);
-  };
+        void set(const QRect &maxRect);
+
+        void set(const QRect &maxRect, double aspectRatio);
+
+        void align(const QRect &parentRect, HAlign halign, VAlign valign);
+};
+
 }
 
 #endif
-

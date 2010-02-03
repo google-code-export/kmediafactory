@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,11 +16,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
-#ifndef KMFKMFTOOLS_H
-#define KMFKMFTOOLS_H
-
+#ifndef KMFTOOLS_H
+#define KMFTOOLS_H
 
 #include <QtCore/QModelIndex>
 #include <QtCore/QSize>
@@ -30,7 +29,6 @@
 #include <KUrl>
 
 #include <stdint.h>
-
 
 class KXMLGUIClient;
 class QStringList;
@@ -42,65 +40,60 @@ class QPainter;
 
 namespace KMF
 {
-  class KDE_EXPORT Tools
-  {
+
+class KDE_EXPORT Tools
+{
     public:
-      Tools();
-      ~Tools();
+        Tools();
+        ~Tools();
 
-      static QString toAscii(QString text);
-      static QString simpleName(QString s);
-      static QString simpleBaseName(QString file);
-      static QString simple2Title(QString s);
-      static void removeDuplicates(QStringList* list);
-      static QString sizeString(uint64_t size);
-      //static uint64_t fileSize(QString file);
-      static void stripExisting(KUrl::List* src, const KUrl& dest);
-      static QString addSlash(QString path);
-      static QString joinPaths(QString path1, QString path2);
-      static QStringList file2List(const QString& file,
-                                   const QString& comment = QString::null,
-                                   const QString& startsWith = QString::null);
-      static QString findExe(const QString& exe, const QStringList& paths,
-                             const QString& extraPrefix = QString::null);
-      static QStringList findAllResources(const char* type,
-                                          const QString& filter=QString::null);
-      static QSize resolution(const QSize& original, const QSize& originalRatio,
-                              const QSize& dest, const QSize& destRatio,
-                              Qt::AspectRatioMode mode =
-                                  Qt::KeepAspectRatioByExpanding);
-      static QSize maxResolution(const QString &type);
-      static bool isVideoResolution(const QSize &res);
-      static QSize guessRatio(const QSize& image, const QSize& video);
-      static void fontToXML(const QFont& font, QDomElement* element);
-      static QFont fontFromXML(const QDomElement& element);
-      static QString fontFile(const QFont& font);
-      static QFont realFont(const QFont& font);
-      static QString longFontName(const QFont& font);
-      static int fcWeight2QtWeight(int fcWeight);
-      static void printChilds(QObject* obj, int level = 0);
-      static int hex2int(QChar hexchar);
-      static QColor toColor(const QString& s);
-      static QMap<QString, QString> readIniFile(const QString& ini);
-      static void drawRoundRect(QPainter* painter, const QRect& rect,
-                                int radius);
-      static void printActions(KXMLGUIClient* client);
-      static void spy(QObject* obj);
-      static uint frames(const QString &type);
-      static void cleanFiles(const QString& dir, const QStringList& files = QStringList());
+        static QString toAscii(QString text);
+        static QString simpleName(QString s);
+        static QString simpleBaseName(QString file);
+        static QString simple2Title(QString s);
+        static void removeDuplicates(QStringList *list);
+        static QString sizeString(uint64_t size);
+        // static uint64_t fileSize(QString file);
+        static void stripExisting(KUrl::List *src, const KUrl &dest);
+        static QString addSlash(QString path);
+        static QString joinPaths(QString path1, QString path2);
+        static QStringList file2List(const QString &file, const QString &comment = QString::null,
+            const QString &startsWith = QString::null);
+        static QString findExe(const QString &exe, const QStringList &paths,
+            const QString &extraPrefix = QString::null);
+        static QStringList findAllResources(const char *type, const QString &filter = QString::null);
+        static QSize resolution(const QSize &original, const QSize &originalRatio,
+            const QSize &dest, const QSize &destRatio, Qt::AspectRatioMode mode =
+                Qt::KeepAspectRatioByExpanding);
+        static QSize maxResolution(const QString &type);
+        static bool isVideoResolution(const QSize &res);
+        static QSize guessRatio(const QSize &image, const QSize &video);
+        static void fontToXML(const QFont &font, QDomElement *element);
+        static QFont fontFromXML(const QDomElement &element);
+        static QString fontFile(const QFont &font);
+        static QFont realFont(const QFont &font);
+        static QString longFontName(const QFont &font);
+        static int fcWeight2QtWeight(int fcWeight);
+        static void printChilds(QObject *obj, int level = 0);
+        static int hex2int(QChar hexchar);
+        static QColor toColor(const QString &s);
+        static QMap<QString, QString> readIniFile(const QString &ini);
+        static void drawRoundRect(QPainter *painter, const QRect &rect, int radius);
+        static void printActions(KXMLGUIClient *client);
+        static void spy(QObject *obj);
+        static uint frames(const QString &type);
+        static void cleanFiles(const QString &dir, const QStringList &files = QStringList());
+        static QByteArray loadByteArray(const KUrl &url);
+        static bool loadStringFromFile(const KUrl &url, QString *string, bool showFailed = true);
+        static bool saveString2File(const KUrl &url, const QString &string, bool showFailed = true);
+        static QString xmlElement2String(const QDomElement &elem);
+        static QDomElement string2XmlElement(const QString &elem);
+        static QImage variantList2Image(QVariant v);
+        static QMap<QString, QString> variantMap2StringMap(const QMap<QString, QVariant> &map);
+        static QStringList variantList2StringList(const QVariantList &list);
+        static QString changeExt(const QString &f, const QString &newExt);
+};
 
-      static QByteArray loadByteArray(const KUrl& url);
-      static bool loadStringFromFile(const KUrl& url, QString* string, bool showFailed = true);
-      static bool saveString2File(const KUrl& url, const QString& string,
-                                  bool showFailed = true);
-      static QString xmlElement2String(const QDomElement& elem);
-      static QDomElement string2XmlElement(const QString& elem);
-      static QImage variantList2Image(QVariant v);
-      static QMap<QString, QString> variantMap2StringMap(const QMap<QString, QVariant>& map);
-      static QStringList variantList2StringList(const QVariantList& list);
-      static QString changeExt(const QString &f, const QString &newExt);
-  };
 }
 
 #endif // KMFKMFTOOLS_H
-
