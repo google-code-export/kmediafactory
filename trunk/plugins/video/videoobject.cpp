@@ -484,44 +484,36 @@ void VideoObject::toXML(QDomElement *element) const
         video.setAttribute("custom_preview", m_previewUrl.prettyUrl());
     }
 
-    for (QStringList::ConstIterator it = m_files.begin();
-         it != m_files.end(); ++it)
-    {
+    foreach (const QString& file, m_files) {
         QDomElement e = doc.createElement("file");
-        e.setAttribute("path", (*it));
+        e.setAttribute("path", file);
         video.appendChild(e);
     }
 
-    for (QDVD::CellList::ConstIterator it = m_cells.begin();
-         it != m_cells.end(); ++it)
-    {
+    foreach (const QDVD::Cell& cell, m_cells) {
         QDomElement e = doc.createElement("cell");
-        e.setAttribute("name", (*it).name());
-        e.setAttribute("start", KMF::Time((*it).start()).toString());
-        e.setAttribute("length", KMF::Time((*it).length()).toString());
-        e.setAttribute("chapter", (*it).isChapter());
-        e.setAttribute("hidden", (*it).isHidden());
+        e.setAttribute("name", cell.name());
+        e.setAttribute("start", KMF::Time(cell.start()).toString());
+        e.setAttribute("length", KMF::Time(cell.length()).toString());
+        e.setAttribute("chapter", cell.isChapter());
+        e.setAttribute("hidden", cell.isHidden());
         video.appendChild(e);
     }
 
-    for (QDVD::AudioList::ConstIterator it = m_audioTracks.begin();
-         it != m_audioTracks.end(); ++it)
-    {
+    foreach (const QDVD::AudioTrack& audio, m_audioTracks) {
         QDomElement e = doc.createElement("audio");
-        e.setAttribute("language", (*it).language());
+        e.setAttribute("language", audio.language());
         video.appendChild(e);
     }
 
-    for (QDVD::SubtitleList::ConstIterator it = m_subtitles.begin();
-         it != m_subtitles.end(); ++it)
-    {
+    foreach (const QDVD::Subtitle& sub, m_subtitles) {
         QDomElement e = doc.createElement("subtitle");
-        e.setAttribute("language", (*it).language());
-        e.setAttribute("encoding", (*it).encoding());
-        e.setAttribute("file", (*it).file());
-        e.setAttribute("align", (int)(*it).alignment());
+        e.setAttribute("language", sub.language());
+        e.setAttribute("encoding", sub.encoding());
+        e.setAttribute("file", sub.file());
+        e.setAttribute("align", (int)sub.alignment());
         QDomElement e2 = doc.createElement("font");
-        KMF::Tools::fontToXML((*it).font(), &e2);
+        KMF::Tools::fontToXML(sub.font(), &e2);
         e.appendChild(e2);
         video.appendChild(e);
     }
@@ -555,27 +547,23 @@ QVariant VideoObject::writeDvdAuthorXml(QVariantList args) const
 
     i = 0;
 
-    for (QDVD::AudioList::ConstIterator it = m_audioTracks.begin();
-         it != m_audioTracks.end(); ++it)
-    {
+    foreach (const QDVD::AudioTrack& audio, m_audioTracks) {
         QDomElement audioElem = doc.createElement("audio");
 
-        if (((*it).language() == preferredLanguage) && (audioFound == false)) {
+        if ((audio.language() == preferredLanguage) && (audioFound == false)) {
             audioTrack = i;
             audioFound = true;
         }
 
-        audioElem.setAttribute("lang", (*it).language());
+        audioElem.setAttribute("lang", audio.language());
         titles.appendChild(audioElem);
         ++i;
     }
 
     i = 0;
 
-    for (QDVD::SubtitleList::ConstIterator it = m_subtitles.begin();
-         it != m_subtitles.end(); ++it)
-    {
-        QString lang = (*it).language();
+    foreach (const QDVD::Subtitle& sub, m_subtitles) {
+        QString lang = sub.language();
 
         if (lang.isEmpty()) {
             lang = "xx";
@@ -669,8 +657,7 @@ QVariant VideoObject::writeDvdAuthorXml(QVariantList args) const
     int mobCount = interface()->mediaObjects().count();
 
     if ((titleset < mobCount) &&
-        interface()->templateObject()->call("continueToNextTitle").toBool())
-    {
+        interface()->templateObject()->call("continueToNextTitle").toBool()) {
         postString = QString(" g3 = %1 ; ").arg(titleset + 1);
     }
 
@@ -996,12 +983,11 @@ int VideoObject::chapters() const
 {
     int i = 0;
 
-    for (QDVD::CellList::ConstIterator it = m_cells.begin(); it != m_cells.end(); ++it) {
-        if ((*it).isChapter() && !(*it).isHidden()) {
+    foreach (const QDVD::Cell& cell, m_cells) {
+        if (cell.isChapter() && !cell.isHidden()) {
             ++i;
         }
     }
-
     return i;
 }
 
@@ -1009,16 +995,14 @@ const QDVD::Cell &VideoObject::chapter(int chap) const
 {
     int i = 0;
 
-    for (QDVD::CellList::ConstIterator it = m_cells.begin(); it != m_cells.end(); ++it) {
-        if ((*it).isChapter() && !(*it).isHidden()) {
+    foreach (const QDVD::Cell& cell, m_cells) {
+        if (cell.isChapter() && !cell.isHidden()) {
             ++i;
         }
-
         if (i == chap) {
-            return *it;
+            return cell;
         }
     }
-
     return m_cells.first();
 }
 
@@ -1032,12 +1016,12 @@ void VideoObject::generateId()
 
 VideoObject::VideoFileStatus VideoObject::addFile(QString fileName)
 {
-    VideoFileStatus status = KMFMediaFile::mediaFile(fileName).dvdCompatible()
-                             ? KMF::Tools::isVideoResolution(KMFMediaFile::mediaFile(
-                    fileName).resolution())
+    VideoFileStatus status =
+            KMFMediaFile::mediaFile(fileName).dvdCompatible()
+                ? KMF::Tools::isVideoResolution(KMFMediaFile::mediaFile(fileName).resolution())
                              ? StatusOk
                              : StatusInvalidResolution
-                             : StatusNonCompataible;
+                : StatusNonCompataible;
 
     if (StatusOk == status) {
         m_files.append(fileName);
@@ -1065,8 +1049,8 @@ void VideoObject::printCells()
     KMF::Time next;
     int i = 1;
 
-    for (QDVD::CellList::Iterator it = m_cells.begin(); it != m_cells.end(); ++it, ++i) {
-        kDebug() << i << ": " << (*it).start() << " / " << (*it).length();
+    foreach (const QDVD::Cell& cell, m_cells) {
+        kDebug() << i << ": " << cell.start() << " / " << cell.length();
     }
 }
 
@@ -1077,15 +1061,12 @@ void VideoObject::parseCellLengths()
     for (QDVD::CellList::Iterator it = m_cells.begin(); it != m_cells.end(); ++it) {
         // kDebug() << (*it).start();
         ++it;
-
         if (it != m_cells.end()) {
             next = (*it).start();
         } else {
             next = QTime();
         }
-
         --it;
-
         if (!next.isNull()) {
             (*it).setLength(next - (*it).start());
         } else {
@@ -1106,13 +1087,11 @@ void VideoObject::setCellList(const QDVD::CellList &list)
 uint64_t VideoObject::size() const
 {
     uint64_t total = 0;
-    int i = 0;
 
-    for (QStringList::ConstIterator it = m_files.begin(); it != m_files.end(); ++it, ++i) {
-        KFileItem finfo(KFileItem::Unknown, KFileItem::Unknown, KUrl(*it));
+    foreach (const QString& file, m_files) {
+        KFileItem finfo(KFileItem::Unknown, KFileItem::Unknown, KUrl(file));
         total += finfo.size();
     }
-
     return total;
 }
 
