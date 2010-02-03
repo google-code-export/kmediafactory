@@ -75,6 +75,9 @@ class Chapters : public QWidget, public Ui::Chapters
         void slotTick(qint64 time);
         void slotTotalTime(qint64 totalTime);
 
+    protected:
+        virtual void showEvent(QShowEvent *event);
+
     private:
         const VideoObject *m_obj;
         KMF::Time m_pos;
