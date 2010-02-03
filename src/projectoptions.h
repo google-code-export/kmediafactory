@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,16 +16,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #ifndef PROJECTOPTIONS_H
 #define PROJECTOPTIONS_H
-
-
-
-
-
-
 
 #include <ui_projectoptions.h>
 #include "kmfproject.h"
@@ -33,34 +27,32 @@
 class ProjectOptions : public QWidget, public Ui::ProjectOptions
 {
     Q_OBJECT
-  public:
-    ProjectOptions(QWidget* parent = 0);
-    ~ProjectOptions();
-    void init();
-    void setData(const KMFProject& project);
 
-    void setProjectTitle(const QString& title);
-    void setProjectType(const QString& type);
-    void setProjectAspectRatio(const QString& aspect);
-    void setProjectDirectory(const QString& dir);
+    public:
+        ProjectOptions(QWidget *parent = 0);
+        ~ProjectOptions();
+        void init();
+        void setData(const KMFProject &project);
 
-  protected slots:
-    void titleChanged(const QString&);
-    void directoryChanged(const QString&);
-    void typeChanged(int);
-    void aspectChanged(int idx);
+        void setProjectTitle(const QString &title);
+        void setProjectType(const QString &type);
+        void setProjectAspectRatio(const QString &aspect);
+        void setProjectDirectory(const QString &dir);
 
-  private:
-    void paintEvent(QPaintEvent *);
+    protected slots:
+        void titleChanged(const QString &);
+        void directoryChanged(const QString &);
+        void typeChanged(int);
+        void aspectChanged(int idx);
 
-  private:
-    bool titleChangesPath;
-    QString m_type;
-    QString m_saved;
-    int m_count;
+    private:
+        void paintEvent(QPaintEvent *);
+
+    private:
+        bool titleChangesPath;
+        QString m_type;
+        QString m_saved;
+        int m_count;
 };
 
 #endif
-
-
-

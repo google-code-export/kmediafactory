@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,13 +16,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #ifndef OUTPUTPAGE_H
 #define OUTPUTPAGE_H
-
-
-
 
 #include <QtGui/QMenu>
 
@@ -36,40 +33,38 @@ class QStandardItemModel;
 class OutputPage : public QWidget, public Ui::OutputPage
 {
     Q_OBJECT
-  public:
-    OutputPage(QWidget *parent = 0);
-    virtual ~OutputPage();
 
-    void message(uint id, KMF::MsgType type, const QString& msg = QString());
-    void setMaximum(uint id, int maximum);
-    void setValue(uint id, int value);
-    void log(uint id, const QString& msg);
+    public:
+        OutputPage(QWidget *parent = 0);
+        virtual ~OutputPage();
 
-  public slots:
-    void currentPageChanged(KPageWidgetItem*, KPageWidgetItem*);
-    void start();
-    void projectInit();
+        void message(uint id, KMF::MsgType type, const QString &msg = QString());
+        void setMaximum(uint id, int maximum);
+        void setValue(uint id, int value);
+        void log(uint id, const QString &msg);
 
-  protected slots:
-    void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-    void contextMenuRequested(const QPoint &pos);
-    void finished();
-    void stop();
-    void showLog();
-    void start(QAction* type);
-    void jobDone(ThreadWeaver::Job *);
+    public slots:
+        void currentPageChanged(KPageWidgetItem *, KPageWidgetItem *);
+        void start();
+        void projectInit();
 
-  private:
-    QMenu m_startPopup;
-    QMap<QAction*, QString> m_types;
-    QMap<uint, QStandardItem*> m_items;
-    QString m_type;
-    QStandardItemModel* m_model;
+    protected slots:
+        void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
+        void contextMenuRequested(const QPoint &pos);
+        void finished();
+        void stop();
+        void showLog();
+        void start(QAction *type);
+        void jobDone(ThreadWeaver::Job *);
 
-    void makeLog();
+    private:
+        QMenu m_startPopup;
+        QMap<QAction *, QString> m_types;
+        QMap<uint, QStandardItem *> m_items;
+        QString m_type;
+        QStandardItemModel *m_model;
+
+        void makeLog();
 };
 
 #endif // OUTPUTPAGE_H
-
-
-

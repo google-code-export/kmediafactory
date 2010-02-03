@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,13 +16,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #ifndef KMFAPPLICATION_H
 #define KMFAPPLICATION_H
-
-
-
 
 #include <QtCore/QMap>
 
@@ -45,52 +42,71 @@ class KMFDbusInterface;
  * @author Petri Damsten <petri.damsten@iki.fi>
  */
 
-#define kmfApp ((KMFApplication*)qApp)
+#define kmfApp ((KMFApplication *)qApp)
 #define KMFWINID (kmfApp->mainWidget()->winId())
 #define CHECK_IF_STOPPED(result) { \
-kapp->processEvents(); \
-if (kmfApp->interface()->stopped()) { return result; }; \
+        kapp->processEvents(); \
+        if (kmfApp->interface()->stopped()) { \
+            return result; \
+        }; \
 }
 
 class KMFApplication : public KApplication
 {
-  public:
-    KMFApplication();
-    ~KMFApplication();
+    public:
+        KMFApplication();
+        ~KMFApplication();
 
-    void init();
-    void loadPlugins();
-    KMFProject* newProject();
-    KMFProject* project() { return m_project; };
-    QObject *pluginInterface() { return m_pluginInterface; };
-    KMFPluginInterface* interface() { return m_interface; };
-    KMediaFactory* mainWindow() { return m_mainWin; };
-    QWidget* widget() { return (QWidget*)m_mainWin; };
-    const KUrl& url() { return m_url; };
-    KMF::PluginList plugins();
-    void finalize();
-    KConfigBase* config() { return KMediaFactorySettings::self()->config(); };
-    const QStringList& supportedProjects() { return m_supportedProjects; };
-    int startServiceByDesktopPath(const QString& _name,
-                                  const QString &URL,
-                                  QStringList& envs,
-                                  QString* error = 0,
-                                  QString* serviceName = 0,
-                                  int* pid = 0,
-                                  const QByteArray& startup_id = "",
-                                  bool noWait = false);
+        void init();
+        void loadPlugins();
+        KMFProject*newProject();
+        KMFProject*project()
+        {
+            return m_project;
+        };
+        QObject*pluginInterface()
+        {
+            return m_pluginInterface;
+        };
+        KMFPluginInterface*interface()
+        {
+            return m_interface;
+        };
+        KMediaFactory*mainWindow()
+        {
+            return m_mainWin;
+        };
+        QWidget*widget()
+        {
+            return (QWidget *)m_mainWin;
+        };
+        const KUrl&url()
+        {
+            return m_url;
+        };
+        KMF::PluginList plugins();
+        void finalize();
+        KConfigBase*config()
+        {
+            return KMediaFactorySettings::self()->config();
+        };
+        const QStringList&supportedProjects()
+        {
+            return m_supportedProjects;
+        };
+        int startServiceByDesktopPath(const QString &_name, const QString &URL, QStringList &envs,
+            QString *error = 0, QString *serviceName = 0, int *pid = 0,
+            const QByteArray &startup_id = "",
+            bool noWait = false);
 
-  private:
-    KMediaFactory* m_mainWin;
-    KMFProject* m_project;
-    QObject* m_pluginInterface;
-    KMFPluginInterface* m_interface;
-    KUrl m_url;
-    QStringList m_supportedProjects;
-    KMFDbusInterface* iface;
+    private:
+        KMediaFactory *m_mainWin;
+        KMFProject *m_project;
+        QObject *m_pluginInterface;
+        KMFPluginInterface *m_interface;
+        KUrl m_url;
+        QStringList m_supportedProjects;
+        KMFDbusInterface *iface;
 };
 
 #endif // KMFAPPLICATION_H
-
-
-

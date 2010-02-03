@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,7 +16,8 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #include "projectoptions.h"
 
 #include <QtGui/QComboBox>
@@ -35,10 +36,11 @@
 #include <qdvdinfo.h>
 #include "kmfapplication.h"
 
-ProjectOptions::ProjectOptions(QWidget* parent) :
-  QWidget(parent), titleChangesPath(false)
+ProjectOptions::ProjectOptions(QWidget *parent)
+    : QWidget(parent)
+    , titleChangesPath(false)
 {
-  setupUi(this);
+    setupUi(this);
 }
 
 ProjectOptions::~ProjectOptions()
@@ -47,85 +49,84 @@ ProjectOptions::~ProjectOptions()
 
 void ProjectOptions::init()
 {
-  QStringList list = kmfApp->supportedProjects();
-  directoryUrl->setMode(KFile::Directory);
+    QStringList list = kmfApp->supportedProjects();
 
-  for(QStringList::Iterator it = list.begin(); it != list.end(); ++it)
-  {
-    typeComboBox->addItem(*it);
-  }
-  connect(titleEdit, SIGNAL(textChanged(const QString&)),
-          this, SLOT(titleChanged(const QString&)));
-  connect(directoryUrl, SIGNAL(textChanged(const QString&)),
-          this, SLOT(directoryChanged(const QString&)));
-  connect(typeComboBox, SIGNAL(currentIndexChanged(int)),
-          this, SLOT(typeChanged(int)));
-  connect(aspectComboBox, SIGNAL(currentIndexChanged(int)),
-          this, SLOT(aspectChanged(int)));
-}
+    directoryUrl->setMode(KFile::Directory);
 
-void ProjectOptions::setData(const KMFProject& project)
-{
-  setProjectDirectory(project.directory("", false));
-  setProjectTitle(project.title());
-  setProjectType(project.type());
-  aspectComboBox->setCurrentIndex(project.aspectRatio());
-  QDir dir(directoryUrl->url().prettyUrl());
-  titleChangesPath = dir.dirName().startsWith(i18n("Project"));
-  m_saved = dir.dirName();
-  m_type = project.type();
-  m_count = project.mediaObjects().count();
-}
-
-void ProjectOptions::setProjectTitle(const QString& title)
-{
-  titleEdit->setText(title);
-}
-
-void ProjectOptions::setProjectType(const QString& type)
-{
-  for (int i=0; i < typeComboBox->count(); ++i)
-  {
-    if (typeComboBox->itemText(i) == type)
-    {
-      typeComboBox->setCurrentIndex(i);
-      break;
+    for (QStringList::Iterator it = list.begin(); it != list.end(); ++it) {
+        typeComboBox->addItem(*it);
     }
-  }
+
+    connect(titleEdit, SIGNAL(textChanged(const QString &)),
+            this, SLOT(titleChanged(const QString &)));
+    connect(directoryUrl, SIGNAL(textChanged(const QString &)),
+            this, SLOT(directoryChanged(const QString &)));
+    connect(typeComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(typeChanged(int)));
+    connect(aspectComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(aspectChanged(int)));
 }
 
-void ProjectOptions::setProjectAspectRatio(const QString& aspect)
+void ProjectOptions::setData(const KMFProject &project)
 {
-  aspectComboBox->setCurrentIndex(KMFProject::toAspectRatio(aspect));
-}
-
-void ProjectOptions::setProjectDirectory(const QString& dir)
-{
-  directoryUrl->setUrl(dir);
-}
-
-void ProjectOptions::titleChanged(const QString& title)
-{
-  kDebug();
-  kmfApp->project()->setTitle(titleEdit->text());
-
-  if(titleChangesPath)
-  {
+    setProjectDirectory(project.directory("", false));
+    setProjectTitle(project.title());
+    setProjectType(project.type());
+    aspectComboBox->setCurrentIndex(project.aspectRatio());
     QDir dir(directoryUrl->url().prettyUrl());
-    if(title != i18n("Untitled"))
-    {
-      int n = dir.path().lastIndexOf(dir.dirName());
-      QString mainDir = dir.path().left(n);
-      QString projectDir;
+    titleChangesPath = dir.dirName().startsWith(i18n("Project"));
+    m_saved = dir.dirName();
+    m_type = project.type();
+    m_count = project.mediaObjects().count();
+}
 
-      if(!title.isEmpty())
-        projectDir = KMF::Tools::simpleName(title);
-      else
-        projectDir = m_saved;
+void ProjectOptions::setProjectTitle(const QString &title)
+{
+    titleEdit->setText(title);
+}
 
-      directoryUrl->setUrl(mainDir + projectDir);
+void ProjectOptions::setProjectType(const QString &type)
+{
+    for (int i = 0; i < typeComboBox->count(); ++i) {
+        if (typeComboBox->itemText(i) == type) {
+            typeComboBox->setCurrentIndex(i);
+            break;
+        }
     }
-  }
+}
+
+void ProjectOptions::setProjectAspectRatio(const QString &aspect)
+{
+    aspectComboBox->setCurrentIndex(KMFProject::toAspectRatio(aspect));
+}
+
+void ProjectOptions::setProjectDirectory(const QString &dir)
+{
+    directoryUrl->setUrl(dir);
+}
+
+void ProjectOptions::titleChanged(const QString &title)
+{
+    kDebug();
+    kmfApp->project()->setTitle(titleEdit->text());
+
+    if (titleChangesPath) {
+        QDir dir(directoryUrl->url().prettyUrl());
+
+        if (title != i18n("Untitled")) {
+            int n = dir.path().lastIndexOf(dir.dirName());
+            QString mainDir = dir.path().left(n);
+            QString projectDir;
+
+            if (!title.isEmpty()) {
+                projectDir = KMF::Tools::simpleName(title);
+            } else {
+                projectDir = m_saved;
+            }
+
+            directoryUrl->setUrl(mainDir + projectDir);
+        }
+    }
 }
 
 void ProjectOptions::directoryChanged(const QString &)
@@ -145,22 +146,18 @@ void ProjectOptions::aspectChanged(int idx)
 
 void ProjectOptions::paintEvent(QPaintEvent *ev)
 {
-    static const int constBorder=12;
+    static const int constBorder = 12;
 
     QWidget::paintEvent(ev);
     QRect    r(rect());
     QPainter painter(this);
     QPixmap  pix(KIcon("kmediafactory").pixmap(256, 256, QIcon::Disabled));
 
-    painter.drawPixmap(Qt::RightToLeft==layoutDirection()
-                        ? r.left()+constBorder
-                        : r.right()-(pix.width()+constBorder),
-                       r.bottom()-(pix.height()+constBorder),
+    painter.drawPixmap(Qt::RightToLeft == layoutDirection()
+                           ? r.left() + constBorder
+                           : r.right() - (pix.width() + constBorder),
+                       r.bottom() - (pix.height() + constBorder),
                        pix);
 }
 
 #include "projectoptions.moc"
-
-
-
-

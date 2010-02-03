@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2010 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,7 +16,7 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #include "sizewidget.h"
 
@@ -31,13 +31,9 @@
 #include <KLocale>
 #include <KStyle>
 
-
-
-
-
-SizeWidget::SizeWidget(QWidget* parent)
-  : QWidget(parent)
-  , m_bar(KCapacityBar::DrawTextInline)
+SizeWidget::SizeWidget(QWidget *parent)
+    : QWidget(parent)
+    , m_bar(KCapacityBar::DrawTextInline)
 {
 }
 
@@ -58,10 +54,12 @@ void SizeWidget::paintEvent(QPaintEvent *ev)
     if (exceeded) {
         m_bar.setValue(100);
         painter.setClipRect(reverse ? v : rc.left(), rc.top(),
-                            reverse ? rc.right() : v, rc.bottom());
+                reverse ? rc.right() : v, rc.bottom());
     }
+
     barPixmap = QPixmap::grabWidget(&m_bar, ev->rect());
     painter.drawPixmap(ev->rect().topLeft(), barPixmap);
+
     if (exceeded) {
         KColorScheme cs(QPalette::Active, KColorScheme::Window);
         QColor color = cs.foreground(KColorScheme::NegativeText).color();
@@ -72,7 +70,7 @@ void SizeWidget::paintEvent(QPaintEvent *ev)
         m_bar.setPalette(palette);
         barPixmap = QPixmap::grabWidget(&m_bar, ev->rect());
         painter.setClipRect(reverse ? rc.left() : v, rc.top(),
-                            reverse ? v : rc.right(), rc.bottom());
+                reverse ? v : rc.right(), rc.bottom());
         painter.drawPixmap(ev->rect().topLeft(), barPixmap);
         m_bar.setPalette(original);
         m_bar.setValue(savedValue);
@@ -89,18 +87,20 @@ void SizeWidget::setSizes(quint64 max, quint64 size)
 void SizeWidget::updateLabel(quint64 max, quint64 size)
 {
     QFont f(m_bar.font());
+
     if (size > max) {
         f.setBold(true);
         m_bar.setText(i18n("Capacity (%1) exceeded by %2",
-                      KGlobal::locale()->formatByteSize(max),
-                      KGlobal::locale()->formatByteSize(size - max)));
+                        KGlobal::locale()->formatByteSize(max),
+                        KGlobal::locale()->formatByteSize(size - max)));
     } else {
         f.setBold(false);
         m_bar.setText(i18n("%1 of %2 used (%3%)",
-                      KGlobal::locale()->formatByteSize(size),
-                      KGlobal::locale()->formatByteSize(max),
-                      (100 * size) / max));
+                        KGlobal::locale()->formatByteSize(size),
+                        KGlobal::locale()->formatByteSize(max),
+                        (100 * size) / max));
     }
+
     m_bar.setFont(f);
 }
 
@@ -110,6 +110,3 @@ QSize SizeWidget::minimumSizeHint() const
 }
 
 #include "sizewidget.moc"
-
-
-

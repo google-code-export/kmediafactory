@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,20 +16,18 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #ifndef MEDIAPAGE_H
 #define MEDIAPAGE_H
-
-
-
-
-
-
 
 #include <ui_mediapage.h>
 
 class QPoint;
-namespace KMF { class MediaObject; }
+namespace KMF
+{
+class MediaObject;
+}
 
 /**
  * @short Page for media selection
@@ -39,26 +37,24 @@ namespace KMF { class MediaObject; }
 class MediaPage : public QWidget, public Ui::MediaPage
 {
     Q_OBJECT
-  public:
-    MediaPage(QWidget* parent = 0);
-    virtual ~MediaPage();
 
-  Q_SIGNALS:
-    void details(const QString &details);
-    void sizes(quint64 max, quint64 size);
+    public:
+        MediaPage(QWidget *parent = 0);
+        virtual ~MediaPage();
 
-  public Q_SLOTS:
-    void contextMenuRequested(const QPoint& pos);
-    void itemClicked(const QModelIndex& index);
-    void calculateSizes();
-    void projectInit();
-    void mediaModified();
+    Q_SIGNALS:
+        void details(const QString &details);
+        void sizes(quint64 max, quint64 size);
 
-  private:
-    void showMenu(const QModelIndex& index, const QPoint &pos);
+        public Q_SLOTS :
+        void contextMenuRequested(const QPoint &pos);
+        void itemClicked(const QModelIndex &index);
+        void calculateSizes();
+        void projectInit();
+        void mediaModified();
+
+    private:
+        void showMenu(const QModelIndex &index, const QPoint &pos);
 };
 
 #endif
-
-
-

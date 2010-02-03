@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,32 +16,24 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #ifndef LOGVIEW_H
 #define LOGVIEW_H
-
-
-
-
-
-
 
 #include <ui_logview.h>
 
 class LogView : public KDialog, public Ui::LogView
 {
     Q_OBJECT
-  public:
-    LogView(QWidget *parent = 0);
-    virtual ~LogView();
-    void setData(const KUrl& log);
 
-protected:
-    void closeEvent(QCloseEvent *);
+    public:
+        LogView(QWidget *parent = 0);
+        virtual ~LogView();
+        void setData(const KUrl &log);
+
+    protected:
+        void closeEvent(QCloseEvent *);
 };
 
 #endif // LOGVIEW_H
-
-
-

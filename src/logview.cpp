@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,41 +16,39 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #include "logview.h"
 
 #include "kmfapplication.h"
 
 LogView::LogView(QWidget *parent)
- : KDialog(parent)
+    : KDialog(parent)
 {
-  setupUi(mainWidget());
-  setButtons(KDialog::Close);
+    setupUi(mainWidget());
+    setButtons(KDialog::Close);
 
-  setInitialSize(QSize(640, 420));
-  KConfigGroup cg = KGlobal::config()->group("LogView");
-  restoreDialogSize(cg);
-}
-
-void LogView::closeEvent(QCloseEvent *e)
-{
-  KConfigGroup cg = KGlobal::config()->group("LogView");
-  KDialog::saveDialogSize(cg);
-  KGlobal::config()->sync();
-  KDialog::closeEvent(e);
+    setInitialSize(QSize(640, 420));
+    KConfigGroup cg = KGlobal::config()->group("LogView");
+    restoreDialogSize(cg);
 }
 
 LogView::~LogView()
 {
 }
 
-void LogView::setData(const KUrl& log)
+void LogView::closeEvent(QCloseEvent *e)
 {
-  htmlFrame->setUrl(log);
+    KConfigGroup cg = KGlobal::config()->group("LogView");
+
+    KDialog::saveDialogSize(cg);
+    KGlobal::config()->sync();
+    KDialog::closeEvent(e);
+}
+
+void LogView::setData(const KUrl &log)
+{
+    htmlFrame->setUrl(log);
 }
 
 #include "logview.moc"
-
-
-

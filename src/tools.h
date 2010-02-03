@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,12 +16,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #ifndef TOOLS_H
 #define TOOLS_H
-
-
-
 
 #include <QtCore/QObject>
 
@@ -30,62 +28,58 @@
 #include <kmflistmodel.h>
 #include <ui_tools.h>
 
-/**
-	@author Petri Damsten <petri.damsten@iki.fi>
-*/
-
 class ToolItem
 {
-  public:
-    ToolItem() :
-      mediaMenu(false), runInTerminal(false) {};
-    QString name;
-    QString description;
-    QString command;
-    QString icon;
-    QString desktopFile;
-    QString workPath;
-    bool mediaMenu;
-    bool runInTerminal;
+    public:
+        ToolItem() : mediaMenu(false), runInTerminal(false){};
+        QString name;
+        QString description;
+        QString command;
+        QString icon;
+        QString desktopFile;
+        QString workPath;
+        bool mediaMenu;
+        bool runInTerminal;
 
-    bool operator <(const ToolItem &t) const { return (name < t.name); }
+        bool operator<(const ToolItem &t) const
+        {
+            return (name < t.name);
+        }
 };
 
 Q_DECLARE_METATYPE(ToolItem)
 
 class ToolListModel : public KMFListModel<ToolItem>
 {
-  virtual int columnCount(const QModelIndex&) const;
-  virtual QVariant data(const QModelIndex &index, int role) const;
-  virtual QVariant headerData(int column, Qt::Orientation, int role) const;
+    virtual int columnCount(const QModelIndex &) const;
+    virtual QVariant data(const QModelIndex &index, int role) const;
+    virtual QVariant headerData(int column, Qt::Orientation, int role) const;
 };
 
 class Tools : public QWidget, public Ui::Tools
 {
     Q_OBJECT
-  public:
-    Tools(QWidget* parent = 0);
-    virtual ~Tools();
 
-  public slots:
-    virtual void save();
-    virtual void load();
+    public:
+        Tools(QWidget *parent = 0);
+        virtual ~Tools();
 
-  protected slots:
-    virtual void addClicked();
-    virtual void propertiesClicked();
-    virtual void removeClicked();
-    virtual void enableButtons();
+    public slots:
+        virtual void save();
+        virtual void load();
 
-  protected:
-    bool writableItem(ToolItem* item);
+    protected slots:
+        virtual void addClicked();
+        virtual void propertiesClicked();
+        virtual void removeClicked();
+        virtual void enableButtons();
 
-  private:
-    KUrl::List m_remove;
-    ToolListModel m_model;
+    protected:
+        bool writableItem(ToolItem *item);
+
+    private:
+        KUrl::List m_remove;
+        ToolListModel m_model;
 };
 
 #endif
-
-
-

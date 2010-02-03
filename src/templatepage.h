@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,13 +16,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #ifndef TEMPLATEPAGE_H
 #define TEMPLATEPAGE_H
-
-
-
 
 #include <QtCore/QDateTime>
 
@@ -34,28 +31,26 @@ class KPageWidgetItem;
 class TemplatePage : public QWidget, public Ui::TemplatePage
 {
     Q_OBJECT
-  public:
-    TemplatePage(QWidget *parent = 0);
-    virtual ~TemplatePage();
 
-  public slots:
-    void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-    void currentPageChanged(KPageWidgetItem*, KPageWidgetItem*);
-    void updatePreview(int n = -1);
-    void contextMenuRequested(const QPoint &pos);
-    void imageContextMenuRequested(const QPoint &pos);
-    void projectInit();
+    public:
+        TemplatePage(QWidget *parent = 0);
+        virtual ~TemplatePage();
 
-  protected slots:
-    virtual void previewClicked();
+    public slots:
+        void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
+        void currentPageChanged(KPageWidgetItem *, KPageWidgetItem *);
+        void updatePreview(int n = -1);
+        void contextMenuRequested(const QPoint &pos);
+        void imageContextMenuRequested(const QPoint &pos);
+        void projectInit();
 
-  private:
-    int m_menu;
-    QDateTime m_lastUpdate;
-    bool m_scaled;
+    protected slots:
+        virtual void previewClicked();
+
+    private:
+        int m_menu;
+        QDateTime m_lastUpdate;
+        bool m_scaled;
 };
 
 #endif // TEMPLATEPAGE_H
-
-
-

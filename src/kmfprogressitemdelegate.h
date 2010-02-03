@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,33 +16,25 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #ifndef KMFPROGRESSITEMDELEGATE_H
 #define KMFPROGRESSITEMDELEGATE_H
 
-
-
-
 #include <QtGui/QItemDelegate>
 #include <QtGui/QProgressBar>
 
-
-
-
 class KMFProgressItemDelegate : public QItemDelegate
 {
-public:
-    Q_ENUMS(ProgressRoles)
-    enum ProgressRoles { ValueRole = Qt::UserRole, MaxRole, LogRole, ResultRole, ColorRole };
+    public:
+        Q_ENUMS(ProgressRoles)
+        enum ProgressRoles { ValueRole = Qt::UserRole, MaxRole, LogRole, ResultRole, ColorRole};
 
-    virtual void paint(QPainter* painter, const QStyleOptionViewItem& option,
-                       const QModelIndex& index) const;
-private:
-    mutable QProgressBar bar;
+        virtual void paint(QPainter *painter, const QStyleOptionViewItem &option,
+            const QModelIndex &index) const;
+
+    private:
+        mutable QProgressBar bar;
 };
 
 #endif // KMFPROGRESSITEMDELEGATE_H
-
-
-

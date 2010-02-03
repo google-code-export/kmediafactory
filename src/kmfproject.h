@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,13 +16,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #ifndef KMFPROJECT_H
 #define KMFPROJECT_H
-
-
-
 
 #include <QtCore/QDateTime>
 #include <QtCore/QString>
@@ -36,93 +33,131 @@
 class KMFProject : public QObject
 {
     Q_OBJECT
-  public:
-    KMFProject(QObject *parent = 0);
-    ~KMFProject();
 
-  public:
-    static QDVD::VideoTrack::AspectRatio toAspectRatio(const QString &ar);
+    public:
+        KMFProject(QObject *parent = 0);
+        ~KMFProject();
 
-    bool addItem(KMF::MediaObject *mob);
-    void removeItem(KMF::MediaObject *mob);
-    bool save(KUrl url = KUrl());
-    bool open(const KUrl &url);
-    QString toXML();
-    void fromXML(QString xml);
+    public:
+        static QDVD::VideoTrack::AspectRatio toAspectRatio(const QString &ar);
 
-    const QString& type() const { return m_type; };
-    QMap<QString, QString> subTypes() const;
-    void setType(const QString& type);
-    QDVD::VideoTrack::AspectRatio aspectRatio() const { return m_aspectRatio; }
-    void setAspectRatio(QDVD::VideoTrack::AspectRatio ar);
-    QString directory(const QString& subDir = "", bool create = true) const;
-    void setDirectory(const QString& directory);
-    const QString& title() const { return m_title; };
-    void setTitle(const QString& title);
-    void setTemplateObj(KMF::TemplateObject* tmplate);
-    KMF::TemplateObject* templateObj() const { return m_template; };
-    void setOutput(KMF::OutputObject* output);
-    KMF::OutputObject* output() const { return m_output; };
-    bool prepare(const QString& type);
-    void finished();
-    void setDirty(KMF::DirtyType type, bool dirty = true);
-    void setModified(KMF::DirtyType type);
-    bool isDirty() const { return m_dirty; };
-    QDateTime lastModified(KMF::DirtyType type) const;
-    const KUrl& url() { return m_url; };
-    bool validProject() const;
-    const QString& error() const { return m_error; };
-    void init();
-    int serial() { return ++m_serial; };
-    void mediaObjFromXML(const QDomElement& e);
-    void templateFromXML(const QDomElement& e);
-    void outputFromXML(const QDomElement& e);
-    QString lastSubType() const { return m_subType; };
-    const KMFObjectListModel<KMF::MediaObject*>& mediaObjects() const
-        { return m_list; };
-    KMFObjectListModel<KMF::MediaObject*>* mediaObjects()
-        { return &m_list; };
-    KMFObjectListModel<KMF::TemplateObject*>* templateObjects()
-        { return &m_templates; };
-    KMFObjectListModel<KMF::OutputObject*>* outputObjects()
-        { return &m_outputs; };
+        bool addItem(KMF::MediaObject *mob);
+        void removeItem(KMF::MediaObject *mob);
+        bool save(KUrl url = KUrl());
+        bool open(const KUrl &url);
+        QString toXML();
+        void fromXML(QString xml);
 
-  signals:
-    void preinit(const QString&);
-    void init(const QString&);
-    void modified(const QString& file, bool modified);
-    void mediaModified();
-    void templatesModified();
-    void outputsModified();
+        const QString&type() const
+        {
+            return m_type;
+        };
+        QMap<QString, QString> subTypes() const;
+        void setType(const QString &type);
+        QDVD::VideoTrack::AspectRatio aspectRatio() const
+        {
+            return m_aspectRatio;
+        }
 
-  private:
-    enum Modified { ModMedia = 0, ModTemplate = 1, ModOutput = 2, ModLast = 3 };
+        void setAspectRatio(QDVD::VideoTrack::AspectRatio ar);
+        QString directory(const QString &subDir = "", bool create = true) const;
+        void setDirectory(const QString &directory);
+        const QString&title() const
+        {
+            return m_title;
+        };
+        void setTitle(const QString &title);
+        void setTemplateObj(KMF::TemplateObject *tmplate);
+        KMF::TemplateObject*templateObj() const
+        {
+            return m_template;
+        };
+        void setOutput(KMF::OutputObject *output);
+        KMF::OutputObject*output() const
+        {
+            return m_output;
+        };
+        bool prepare(const QString &type);
+        void finished();
+        void setDirty(KMF::DirtyType type, bool dirty = true);
+        void setModified(KMF::DirtyType type);
+        bool isDirty() const
+        {
+            return m_dirty;
+        };
+        QDateTime lastModified(KMF::DirtyType type) const;
+        const KUrl&url()
+        {
+            return m_url;
+        };
+        bool validProject() const;
+        const QString&error() const
+        {
+            return m_error;
+        };
+        void init();
+        int serial()
+        {
+            return ++m_serial;
+        };
+        void mediaObjFromXML(const QDomElement &e);
+        void templateFromXML(const QDomElement &e);
+        void outputFromXML(const QDomElement &e);
+        QString lastSubType() const
+        {
+            return m_subType;
+        };
+        const KMFObjectListModel<KMF::MediaObject *>&mediaObjects() const
+        {
+            return m_list;
+        };
+        KMFObjectListModel<KMF::MediaObject *>*mediaObjects()
+        {
+            return &m_list;
+        };
+        KMFObjectListModel<KMF::TemplateObject *>*templateObjects()
+        {
+            return &m_templates;
+        };
+        KMFObjectListModel<KMF::OutputObject *>*outputObjects()
+        {
+            return &m_outputs;
+        };
 
-    QString m_type;
-    QDVD::VideoTrack::AspectRatio m_aspectRatio;
-    QString m_directory;
-    QString m_title;
-    KMFObjectListModel<KMF::MediaObject*> m_list;
-    KMFObjectListModel<KMF::TemplateObject*> m_templates;
-    KMFObjectListModel<KMF::OutputObject*> m_outputs;
-    KMF::TemplateObject* m_template;
-    KMF::OutputObject* m_output;
-    KUrl m_url;
-    bool m_dirty;
-    QDateTime m_lastModified[ModLast];
-    bool m_loading;
-    bool m_initializing;
-    int m_serial;
-    mutable QString m_error;
-    QString m_subType;
+    signals:
+        void preinit(const QString &);
+        void init(const QString &);
+        void modified(const QString &file, bool modified);
+        void mediaModified();
+        void templatesModified();
+        void outputsModified();
 
-    void setError(const QString& error = QString::null) const
-        { m_error = error; };
-    void saveObj(QDomDocument& doc, QDomElement& root,
-                             const char* name, KMF::Object* ob);
+    private:
+        enum Modified { ModMedia = 0, ModTemplate = 1, ModOutput = 2, ModLast = 3};
+
+        QString m_type;
+        QDVD::VideoTrack::AspectRatio m_aspectRatio;
+        QString m_directory;
+        QString m_title;
+        KMFObjectListModel<KMF::MediaObject *> m_list;
+        KMFObjectListModel<KMF::TemplateObject *> m_templates;
+        KMFObjectListModel<KMF::OutputObject *> m_outputs;
+        KMF::TemplateObject *m_template;
+        KMF::OutputObject *m_output;
+        KUrl m_url;
+        bool m_dirty;
+        QDateTime m_lastModified[ModLast];
+        bool m_loading;
+        bool m_initializing;
+        int m_serial;
+        mutable QString m_error;
+        QString m_subType;
+
+        void setError(const QString &error = QString::null) const
+        {
+            m_error = error;
+        };
+        void saveObj(QDomDocument &doc, QDomElement &root, const char *name, KMF::Object *ob);
 };
 
 #endif // KMFPROJECT_H
-
-
-

@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,29 +16,26 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #ifndef KMFOPTIONS_H
 #define KMFOPTIONS_H
-
-
-
 
 #include <QtGui/QWidget>
 
 #include <ui_kmfoptions.h>
+
 /**
-	@author Petri Damsten <petri.damsten@iki.fi>
-*/
+ *  @author Petri Damsten <petri.damsten@iki.fi>
+ */
 
 class KMFOptions : public QWidget, public Ui::KMFOptions
 {
     Q_OBJECT
-  public:
-    KMFOptions(QWidget* parent = 0);
-    virtual ~KMFOptions();
+
+    public:
+        KMFOptions(QWidget *parent = 0);
+        virtual ~KMFOptions();
 };
 
 #endif
-
-
-
