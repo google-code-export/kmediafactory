@@ -18,6 +18,7 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 
+#include "config.h"
 #include "templateplugin.h"
 
 #include <QtCore/QRegExp>
@@ -33,8 +34,6 @@
 #include <KPluginLoader>
 #include <KStandardDirs>
 #include <kdeversion.h>
-
-#include <config.h>
 
 #include <kmftools.h>
 #include <templatepluginsettings.h>
