@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,12 +16,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #ifndef VIDEOPLUGIN_H
 #define VIDEOPLUGIN_H
-
-
 
 #include <kmf_stddef.h>
 #include <kmediafactory/plugin.h>
@@ -30,26 +28,25 @@ class KAction;
 
 class VideoPlugin : public KMF::Plugin
 {
-  Q_OBJECT
-  public:
-    VideoPlugin(QObject *parent, const QVariantList&);
-    ~VideoPlugin();
+    Q_OBJECT
 
-  public slots:
-    virtual void init(const QString &type);
+    public:
+        VideoPlugin(QObject *parent, const QVariantList &);
+        ~VideoPlugin();
 
-  public:
-    virtual KMF::MediaObject* createMediaObject(const QDomElement& element);
-    virtual const KMF::ConfigPage* configPage() const;
-    virtual QStringList supportedProjectTypes() const;
+    public slots:
+        virtual void init(const QString &type);
 
-  public slots:
-    void slotAddVideo();
+    public:
+        virtual KMF::MediaObject*createMediaObject(const QDomElement &element);
+        virtual const KMF::ConfigPage*configPage() const;
+        virtual QStringList supportedProjectTypes() const;
 
-  protected:
-    QAction* setupActions();
+    public slots:
+        void slotAddVideo();
+
+    protected:
+        QAction*setupActions();
 };
 
 #endif // VIDEOPLUGIN_H
-
-

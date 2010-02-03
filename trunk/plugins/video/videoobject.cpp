@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,7 +16,8 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #include "videoobject.h"
 
 #include <QtCore/QDir>
@@ -53,149 +54,155 @@
 
 static const char startString[] = I18N_NOOP("Subtitles for: %1");
 
-const char* VideoObject::m_prefixes[] =
-  {".sub.mpg", ".mpg", "", ".xml", ".sub"};
+const char *VideoObject::m_prefixes[] = { ".sub.mpg", ".mpg", "", ".xml", ".sub"};
 
 class ConvertSubtitlesJob : public KMF::Job
 {
-public:
-  QDVD::Subtitle subtitle;
-  QString subtitleFile;
-  QString subtitleXmlFile;
-  QString videoFile;
-  QString videoFileWithSubtitles;
-  QString mediaDir;
-  QString type;
+    public:
+        QDVD::Subtitle subtitle;
+        QString subtitleFile;
+        QString subtitleXmlFile;
+        QString videoFile;
+        QString videoFileWithSubtitles;
+        QString mediaDir;
+        QString type;
 
-  void run()
-  {
-    message(msgId(), KMF::Start, i18n("Subtitles for: %1", QFileInfo(videoFile).fileName()));
+        void run()
+        {
+            message(msgId(), KMF::Start, i18n("Subtitles for: %1", QFileInfo(videoFile).fileName()));
 
-    QStringList subtitleFiles = subtitle.file().split(";");
+            QStringList subtitleFiles = subtitle.file().split(";");
 
-    writeSpumuxXml();
-    CHECK_IF_ABORTED();
+            writeSpumuxXml();
+            CHECK_IF_ABORTED();
 
-    KProcess *spumux = process(msgId(), "INFO: \\d+ bytes of data written",
-                               KProcess::OnlyStderrChannel);
-    *spumux << "spumux" << "-P" << subtitleXmlFile;
-    spumux->setStandardInputFile(videoFile);
-    spumux->setStandardOutputFile(videoFileWithSubtitles);
-    spumux->setWorkingDirectory(mediaDir);
+            KProcess *spumux = process(msgId(), "INFO: \\d+ bytes of data written",
+                    KProcess::OnlyStderrChannel);
+            *spumux << "spumux" << "-P" << subtitleXmlFile;
+            spumux->setStandardInputFile(videoFile);
+            spumux->setStandardOutputFile(videoFileWithSubtitles);
+            spumux->setWorkingDirectory(mediaDir);
 
-    //kDebug() << "spumux" << "-P" << subtitleXmlFile << "<" << videoFile <<
-    //                                                   ">" << videoFileWithSubtitles;
-    QFileInfo info(videoFile);
-    setMaximum(msgId(), info.size() / 1024);
-    lastUpdate = 0;
-    half = info.size() / 200;
-    spumux->execute();
+            // kDebug() << "spumux" << "-P" << subtitleXmlFile << "<" << videoFile <<
+            //                                                   ">" << videoFileWithSubtitles;
+            QFileInfo info(videoFile);
+            setMaximum(msgId(), info.size() / 1024);
+            lastUpdate = 0;
+            half = info.size() / 200;
+            spumux->execute();
 
-    if(spumux->exitCode() != QProcess::NormalExit || spumux->exitStatus() != 0)
-    {
-      QFile::remove(videoFileWithSubtitles);
-      message(msgId(), KMF::Error, i18n("Conversion error."));
-    }
-    message(msgId(), KMF::Done);
-  }
+            if ((spumux->exitCode() != QProcess::NormalExit) || (spumux->exitStatus() != 0)) {
+                QFile::remove(videoFileWithSubtitles);
+                message(msgId(), KMF::Error, i18n("Conversion error."));
+            }
 
-  void writeSpumuxXml()
-  {
-    QDomDocument doc("");
-    QDomElement root = doc.createElement("subpictures");
-    QDomElement stream = doc.createElement("stream");
-    QDomElement textsub = doc.createElement("textsub");
+            message(msgId(), KMF::Done);
+        }
 
-    textsub.setAttribute("filename", subtitleFile);
-    textsub.setAttribute("vertical-alignment", subtitle.verticalAlign());
-    textsub.setAttribute("horizontal-alignment", subtitle.horizontalAlign());
-    textsub.setAttribute("left-margin", 40);
-    textsub.setAttribute("right-margin", 40);
-    textsub.setAttribute("top-margin", 30);
-    textsub.setAttribute("bottom-margin", 40);
-    textsub.setAttribute("movie-width", "720");
-    textsub.setAttribute("characterset", subtitle.encoding());
+        void writeSpumuxXml()
+        {
+            QDomDocument doc("");
+            QDomElement root = doc.createElement("subpictures");
+            QDomElement stream = doc.createElement("stream");
+            QDomElement textsub = doc.createElement("textsub");
 
-    if(type == "DVD-PAL")
-    {
-      textsub.setAttribute("movie-fps", "25");
-      textsub.setAttribute("movie-height", "574");
-    }
-    else
-    {
-      textsub.setAttribute("movie-fps", "29.97");
-      textsub.setAttribute("movie-height", "478");
-    }
+            textsub.setAttribute("filename", subtitleFile);
+            textsub.setAttribute("vertical-alignment", subtitle.verticalAlign());
+            textsub.setAttribute("horizontal-alignment", subtitle.horizontalAlign());
+            textsub.setAttribute("left-margin", 40);
+            textsub.setAttribute("right-margin", 40);
+            textsub.setAttribute("top-margin", 30);
+            textsub.setAttribute("bottom-margin", 40);
+            textsub.setAttribute("movie-width", "720");
+            textsub.setAttribute("characterset", subtitle.encoding());
 
-    QFont font(subtitle.font());
-    QString fontFile = KMF::Tools::fontFile(font);
-    if(!fontFile.isEmpty())
-      textsub.setAttribute("font", checkFontFile(fontFile));
-    if(subtitle.font().pointSize() > 0)
-      textsub.setAttribute("fontsize", subtitle.font().pointSize());
+            if (type == "DVD-PAL") {
+                textsub.setAttribute("movie-fps", "25");
+                textsub.setAttribute("movie-height", "574");
+            } else   {
+                textsub.setAttribute("movie-fps", "29.97");
+                textsub.setAttribute("movie-height", "478");
+            }
 
-    stream.appendChild(textsub);
-    root.appendChild(stream);
-    doc.appendChild(root);
+            QFont font(subtitle.font());
+            QString fontFile = KMF::Tools::fontFile(font);
 
-    // Write spumux xml
-    KMF::Tools::saveString2File(subtitleXmlFile, doc.toString(), false);
-  }
+            if (!fontFile.isEmpty()) {
+                textsub.setAttribute("font", checkFontFile(fontFile));
+            }
 
-  void output(const QString& line)
-  {
-    QRegExp bytes("INFO: (\\d+) bytes of data written");
+            if (subtitle.font().pointSize() > 0) {
+                textsub.setAttribute("fontsize", subtitle.font().pointSize());
+            }
 
-    if(bytes.indexIn(line) > -1)
-    {
-      qulonglong temp = bytes.cap(1).toULongLong();
-      if(temp - lastUpdate > half)
-      {
-        setValue(msgId(), temp / 1024);
-        lastUpdate = temp;
-      }
-    }
-  }
+            stream.appendChild(textsub);
+            root.appendChild(stream);
+            doc.appendChild(root);
 
-  QString checkFontFile(const QString& file)
-  {
-    QFileInfo fi(file);
-    QDir dir(QDir::home().filePath(".spumux"));
-    QFileInfo link(dir.absoluteFilePath(fi.fileName()));
+            // Write spumux xml
+            KMF::Tools::saveString2File(subtitleXmlFile, doc.toString(), false);
+        }
 
-    if(!dir.exists())
-      dir.mkdir(dir.path());
-    //kDebug() << link.filePath() << " -> " << file;
-    if(!link.exists())
-      if(symlink(file.toLocal8Bit(), link.filePath().toLocal8Bit()) < 0)
-        kDebug() << strerror(errno);
-    return fi.fileName();
-  }
+        void output(const QString &line)
+        {
+            QRegExp bytes("INFO: (\\d+) bytes of data written");
 
-private:
-  qulonglong lastUpdate;
-  qulonglong half;
+            if (bytes.indexIn(line) > -1) {
+                qulonglong temp = bytes.cap(1).toULongLong();
+
+                if (temp - lastUpdate > half) {
+                    setValue(msgId(), temp / 1024);
+                    lastUpdate = temp;
+                }
+            }
+        }
+
+        QString checkFontFile(const QString &file)
+        {
+            QFileInfo fi(file);
+            QDir dir(QDir::home().filePath(".spumux"));
+            QFileInfo link(dir.absoluteFilePath(fi.fileName()));
+
+            if (!dir.exists()) {
+                dir.mkdir(dir.path());
+            }
+
+            // kDebug() << link.filePath() << " -> " << file;
+            if (!link.exists()) {
+                if (symlink(file.toLocal8Bit(), link.filePath().toLocal8Bit()) < 0) {
+                    kDebug() << strerror(errno);
+                }
+            }
+
+            return fi.fileName();
+        }
+
+    private:
+        qulonglong lastUpdate;
+        qulonglong half;
 };
 
-VideoObject::VideoObject(QObject* parent)
-  : MediaObject(parent), m_videoPlay(0),
-    m_aspect(QDVD::VideoTrack::Aspect_Unknown), m_spumux(0)
+VideoObject::VideoObject(QObject *parent)
+    : MediaObject(parent)
+    , m_videoPlay(0)
+    , m_aspect(QDVD::VideoTrack::Aspect_Unknown)
+    , m_spumux(0)
 {
-  setObjectName("video");
-  m_videoProperties = new KAction(KIcon("document-properties"), i18n("Properties"), this);
-  m_videoProperties->setProperty("hover-action", true);
-  plugin()->actionCollection()->addAction("video", m_videoProperties);
-  connect(m_videoProperties, SIGNAL(triggered()), SLOT(slotProperties()));
+    setObjectName("video");
+    m_videoProperties = new KAction(KIcon("document-properties"), i18n("Properties"), this);
+    m_videoProperties->setProperty("hover-action", true);
+    plugin()->actionCollection()->addAction("video", m_videoProperties);
+    connect(m_videoProperties, SIGNAL(triggered()), SLOT(slotProperties()));
 
-  m_kmfplayer = KStandardDirs::findExe("kmediafactoryplayer");
-  if(!m_kmfplayer.isEmpty())
-  {
-    m_videoPlay = new KAction(KIcon("media-playback-start"),
-                              i18n("Play Video"), this);
-    m_videoPlay->setShortcut(Qt::CTRL + Qt::Key_P);
-    plugin()->actionCollection()->addAction("mob_play", m_videoPlay);
-    connect(m_videoPlay, SIGNAL(triggered()), SLOT(slotPlayVideo()));
-  }
+    m_kmfplayer = KStandardDirs::findExe("kmediafactoryplayer");
+
+    if (!m_kmfplayer.isEmpty()) {
+        m_videoPlay = new KAction(KIcon("media-playback-start"),
+                i18n("Play Video"), this);
+        m_videoPlay->setShortcut(Qt::CTRL + Qt::Key_P);
+        plugin()->actionCollection()->addAction("mob_play", m_videoPlay);
+        connect(m_videoPlay, SIGNAL(triggered()), SLOT(slotPlayVideo()));
+    }
 }
 
 VideoObject::~VideoObject()
@@ -204,41 +211,43 @@ VideoObject::~VideoObject()
 
 QString VideoObject::information() const
 {
-  int numChapters(0);
+    int numChapters(0);
 
-  for (QDVD::CellList::ConstIterator it = m_cells.begin(); it != m_cells.end(); ++it) {
-    if ((*it).isChapter()) {
-      numChapters++;
+    for (QDVD::CellList::ConstIterator it = m_cells.begin(); it != m_cells.end(); ++it) {
+        if ((*it).isChapter()) {
+            numChapters++;
+        }
     }
-  }
-  return i18np("%1 Chapter (%2)", "%1 Chapters (%2)", numChapters, KGlobal::locale()->formatTime(duration(), true, true));
+    return i18np("%1 Chapter (%2)", "%1 Chapters (%2)", numChapters,
+            KGlobal::locale()->formatTime(duration(), true, true));
 }
 
 double VideoObject::frameRate() const
 {
-  return KMFMediaFile::mediaFile(m_files[0]).frameRate();
+    return KMFMediaFile::mediaFile(m_files[0]).frameRate();
 }
 
 QTime VideoObject::duration() const
 {
-  KMF::Time result;
+    KMF::Time result;
 
-  for(QStringList::ConstIterator it = m_files.begin();
-      it != m_files.end(); ++it)
-  {
-    result += duration(*it);
-  }
-  return result;
+    for (QStringList::ConstIterator it = m_files.begin();
+         it != m_files.end(); ++it)
+    {
+        result += duration(*it);
+    }
+
+    return result;
 }
 
 QTime VideoObject::duration(QString file) const
 {
-  return KMFMediaFile::mediaFile(file).duration();
+    return KMFMediaFile::mediaFile(file).duration();
 }
 
 QTime VideoObject::chapterTime(int chap) const
 {
-  return chapter(chap).start();
+    return chapter(chap).start();
 }
 
 int VideoObject::chapterId(int chapter) const
@@ -254,604 +263,657 @@ int VideoObject::chapterId(int chapter) const
                 i++;
             }
         }
+
         if (i == chapter) {
             break;
         }
     }
+
     return chapter + adjust;
 }
 
 QStringList VideoObject::files() const
 {
-  return m_files;
+    return m_files;
 }
 
 QString VideoObject::fileName() const
 {
-  return m_files.first();
+    return m_files.first();
 }
 
-void VideoObject::actions(QList<QAction*>* actionList) const
+void VideoObject::actions(QList<QAction *> *actionList) const
 {
-  if(m_videoPlay)
-    actionList->append(m_videoPlay);
-  actionList->append(m_videoProperties);
-}
-
-bool VideoObject::fromXML(const QDomElement& element)
-{
-  m_cells.clear();
-  m_audioTracks.clear();
-  QDomNode n = element.firstChild();
-  bool parseLengths = false;
-
-  while(!n.isNull())
-  {
-    QDomElement e = n.toElement();
-    if(!e.isNull())
-    {
-      if(e.tagName() == "video")
-      {
-        m_id = e.attribute("id");
-        setTitle(e.attribute("title"));
-        setPreviewUrl(e.attribute("custom_preview"));
-        if(e.hasAttribute("auto_chapters"))
-          setCellSecs(e.attribute("auto_chapters").toDouble());
-        setAspect((QDVD::VideoTrack::AspectRatio)
-            e.attribute("aspect", "3").toInt());
-
-        QDomNode m = e.firstChild();
-        while(!m.isNull())
-        {
-          QDomElement e2 = m.toElement();
-          if(!e2.isNull())
-          {
-            if(e2.tagName() == "file")
-            {
-              m_files.append(e2.attribute("path"));
-            }
-            else if(e2.tagName() == "cell")
-            {
-              QDVD::Cell cell;
-              KMF::Time start(e2.attribute("start"));
-              KMF::Time length(e2.attribute("length"));
-              QString name = e2.attribute("name");
-              bool chapter = (e2.attribute("chapter") == "1");
-              bool hidden = (e2.attribute("hidden") == "1");
-
-              if(!e2.hasAttribute("length"))
-                parseLengths = true;
-              int file = e2.attribute("file", 0).toInt();
-              if(file > 1)
-              {
-                for(int i= 0; i < file - 1 && i < m_files.count(); ++i)
-                  start += duration(m_files[i]);
-              }
-              //kDebug() << file  << ", " << start
-              //    << ", " << chapter;
-              if(e2.hasAttribute("name"))
-                name = e2.attribute("name");
-              else
-                name = start.toString("h:mm:ss");
-
-              addCell(QDVD::Cell(start, length, name, chapter, hidden));
-            }
-            else if(e2.tagName() == "audio")
-            {
-              QDVD::AudioTrack a(e2.attribute("language",
-                  VideoPluginSettings::defaultAudioLanguage()));
-              addAudioTrack(a);
-            }
-            else if(e2.tagName() == "subtitle")
-            {
-              QFont font;
-
-              QDomNode m2 = e2.firstChild();
-              while(!m2.isNull())
-              {
-                QDomElement e3 = m2.toElement();
-                if(!e3.isNull())
-                {
-                  if(e3.tagName() == "font")
-                    font = KMF::Tools::fontFromXML(e3);
-                }
-                m2 = m2.nextSibling();
-              }
-              QDVD::Subtitle s;
-              s.setFile(e2.attribute("file"));
-              QString encoding = e2.attribute("encoding");
-              if (!encoding.isEmpty()) {
-                s.setEncoding(encoding);
-              }
-              s.setLanguage(e2.attribute("language",
-                             VideoPluginSettings::defaultSubtitleLanguage()));
-              QString a = e2.attribute("align",
-                  QString("%1").arg(Qt::AlignHCenter | Qt::AlignBottom));
-              s.setAlignment(QFlags<Qt::AlignmentFlag>(a.toInt()));
-              s.setFont(font);
-              addSubtitle(s);
-            }
-          }
-          m = m.nextSibling();
-        }
-      }
+    if (m_videoPlay) {
+        actionList->append(m_videoPlay);
     }
-    n = n.nextSibling();
-  }
-  if(parseLengths)
-    parseCellLengths();
-  return checkObjectParams();
+
+    actionList->append(m_videoProperties);
+}
+
+bool VideoObject::fromXML(const QDomElement &element)
+{
+    m_cells.clear();
+    m_audioTracks.clear();
+    QDomNode n = element.firstChild();
+    bool parseLengths = false;
+
+    while (!n.isNull()) {
+        QDomElement e = n.toElement();
+
+        if (!e.isNull()) {
+            if (e.tagName() == "video") {
+                m_id = e.attribute("id");
+                setTitle(e.attribute("title"));
+                setPreviewUrl(e.attribute("custom_preview"));
+
+                if (e.hasAttribute("auto_chapters")) {
+                    setCellSecs(e.attribute("auto_chapters").toDouble());
+                }
+
+                setAspect((QDVD::VideoTrack::AspectRatio)
+                        e.attribute("aspect", "3").toInt());
+
+                QDomNode m = e.firstChild();
+
+                while (!m.isNull()) {
+                    QDomElement e2 = m.toElement();
+
+                    if (!e2.isNull()) {
+                        if (e2.tagName() == "file") {
+                            m_files.append(e2.attribute("path"));
+                        } else if (e2.tagName() == "cell")    {
+                            QDVD::Cell cell;
+                            KMF::Time start(e2.attribute("start"));
+                            KMF::Time length(e2.attribute("length"));
+                            QString name = e2.attribute("name");
+                            bool chapter = (e2.attribute("chapter") == "1");
+                            bool hidden = (e2.attribute("hidden") == "1");
+
+                            if (!e2.hasAttribute("length")) {
+                                parseLengths = true;
+                            }
+
+                            int file = e2.attribute("file", 0).toInt();
+
+                            if (file > 1) {
+                                for (int i = 0; i < file - 1 && i < m_files.count(); ++i) {
+                                    start += duration(m_files[i]);
+                                }
+                            }
+
+                            // kDebug() << file  << ", " << start
+                            //    << ", " << chapter;
+                            if (e2.hasAttribute("name")) {
+                                name = e2.attribute("name");
+                            } else {
+                                name = start.toString("h:mm:ss");
+                            }
+
+                            addCell(QDVD::Cell(start, length, name, chapter, hidden));
+                        } else if (e2.tagName() == "audio")    {
+                            QDVD::AudioTrack a(e2.attribute("language",
+                                                       VideoPluginSettings::defaultAudioLanguage()));
+                            addAudioTrack(a);
+                        } else if (e2.tagName() == "subtitle")    {
+                            QFont font;
+
+                            QDomNode m2 = e2.firstChild();
+
+                            while (!m2.isNull()) {
+                                QDomElement e3 = m2.toElement();
+
+                                if (!e3.isNull()) {
+                                    if (e3.tagName() == "font") {
+                                        font = KMF::Tools::fontFromXML(e3);
+                                    }
+                                }
+
+                                m2 = m2.nextSibling();
+                            }
+                            QDVD::Subtitle s;
+                            s.setFile(e2.attribute("file"));
+                            QString encoding = e2.attribute("encoding");
+
+                            if (!encoding.isEmpty()) {
+                                s.setEncoding(encoding);
+                            }
+
+                            s.setLanguage(e2.attribute("language",
+                                            VideoPluginSettings::defaultSubtitleLanguage()));
+                            QString a = e2.attribute("align",
+                                    QString("%1").arg(Qt::AlignHCenter | Qt::AlignBottom));
+                            s.setAlignment(QFlags<Qt::AlignmentFlag>(a.toInt()));
+                            s.setFont(font);
+                            addSubtitle(s);
+                        }
+                    }
+
+                    m = m.nextSibling();
+                }
+            }
+        }
+
+        n = n.nextSibling();
+    }
+
+    if (parseLengths) {
+        parseCellLengths();
+    }
+
+    return checkObjectParams();
 }
 
 bool VideoObject::checkObjectParams()
 {
-  //kDebug() << VideoPluginSettings::defaultAudioLanguage();
-  if(m_files.count() > 0)
-  {
-    const KMFMediaFile& media = KMFMediaFile::mediaFile(m_files[0]);
+    // kDebug() << VideoPluginSettings::defaultAudioLanguage();
+    if (m_files.count() > 0) {
+        const KMFMediaFile &media = KMFMediaFile::mediaFile(m_files[0]);
 
-    while(m_audioTracks.count() < (int)media.audioStreams())
-    {
-      addAudioTrack(
-          QDVD::AudioTrack(VideoPluginSettings::defaultAudioLanguage()));
+        while (m_audioTracks.count() < (int)media.audioStreams()) {
+            addAudioTrack(
+                    QDVD::AudioTrack(VideoPluginSettings::defaultAudioLanguage()));
+        }
+
+        if (m_cells.count() < 1) {
+            setCellSecs(900.0);
+        }
+
+        if (m_id.isEmpty()) {
+            generateId();
+        }
+
+        if (title().isEmpty()) {
+            setTitleFromFileName();
+        }
+
+        if (m_aspect == QDVD::VideoTrack::Aspect_Unknown) {
+            m_aspect = media.aspectRatio();
+        }
+
+        return true;
     }
-    if(m_cells.count() < 1)
-      setCellSecs(900.0);
-    if(m_id.isEmpty())
-      generateId();
-    if(title().isEmpty())
-      setTitleFromFileName();
-    if(m_aspect == QDVD::VideoTrack::Aspect_Unknown)
-      m_aspect = media.aspectRatio();
-    return true;
-  }
-  return false;
+
+    return false;
 }
 
-void VideoObject::toXML(QDomElement* element) const
+void VideoObject::toXML(QDomElement *element) const
 {
-  QDomDocument doc = element->ownerDocument();
-  QDomElement video = doc.createElement("video");
-  video.setAttribute("title", title());
-  video.setAttribute("aspect", (int)m_aspect);
-  video.setAttribute("id", m_id);
+    QDomDocument doc = element->ownerDocument();
+    QDomElement video = doc.createElement("video");
 
-  if(m_previewUrl.isValid())
-    video.setAttribute("custom_preview", m_previewUrl.prettyUrl());
+    video.setAttribute("title", title());
+    video.setAttribute("aspect", (int)m_aspect);
+    video.setAttribute("id", m_id);
 
-  for(QStringList::ConstIterator it = m_files.begin();
-      it != m_files.end(); ++it)
-  {
-    QDomElement e = doc.createElement("file");
-    e.setAttribute("path", (*it));
-    video.appendChild(e);
-  }
-  for(QDVD::CellList::ConstIterator it = m_cells.begin();
-      it != m_cells.end(); ++it)
-  {
-    QDomElement e = doc.createElement("cell");
-    e.setAttribute("name", (*it).name());
-    e.setAttribute("start", KMF::Time((*it).start()).toString());
-    e.setAttribute("length", KMF::Time((*it).length()).toString());
-    e.setAttribute("chapter", (*it).isChapter());
-    e.setAttribute("hidden", (*it).isHidden());
-    video.appendChild(e);
-  }
-  for(QDVD::AudioList::ConstIterator it = m_audioTracks.begin();
-      it != m_audioTracks.end(); ++it)
-  {
-    QDomElement e = doc.createElement("audio");
-    e.setAttribute("language", (*it).language());
-    video.appendChild(e);
-  }
-  for(QDVD::SubtitleList::ConstIterator it = m_subtitles.begin();
-      it != m_subtitles.end(); ++it)
-  {
-    QDomElement e = doc.createElement("subtitle");
-    e.setAttribute("language", (*it).language());
-    e.setAttribute("encoding", (*it).encoding());
-    e.setAttribute("file", (*it).file());
-    e.setAttribute("align", (int)(*it).alignment());
-    QDomElement e2 = doc.createElement("font");
-    KMF::Tools::fontToXML((*it).font(), &e2);
-    e.appendChild(e2);
-    video.appendChild(e);
-  }
-  element->appendChild(video);
+    if (m_previewUrl.isValid()) {
+        video.setAttribute("custom_preview", m_previewUrl.prettyUrl());
+    }
+
+    for (QStringList::ConstIterator it = m_files.begin();
+         it != m_files.end(); ++it)
+    {
+        QDomElement e = doc.createElement("file");
+        e.setAttribute("path", (*it));
+        video.appendChild(e);
+    }
+
+    for (QDVD::CellList::ConstIterator it = m_cells.begin();
+         it != m_cells.end(); ++it)
+    {
+        QDomElement e = doc.createElement("cell");
+        e.setAttribute("name", (*it).name());
+        e.setAttribute("start", KMF::Time((*it).start()).toString());
+        e.setAttribute("length", KMF::Time((*it).length()).toString());
+        e.setAttribute("chapter", (*it).isChapter());
+        e.setAttribute("hidden", (*it).isHidden());
+        video.appendChild(e);
+    }
+
+    for (QDVD::AudioList::ConstIterator it = m_audioTracks.begin();
+         it != m_audioTracks.end(); ++it)
+    {
+        QDomElement e = doc.createElement("audio");
+        e.setAttribute("language", (*it).language());
+        video.appendChild(e);
+    }
+
+    for (QDVD::SubtitleList::ConstIterator it = m_subtitles.begin();
+         it != m_subtitles.end(); ++it)
+    {
+        QDomElement e = doc.createElement("subtitle");
+        e.setAttribute("language", (*it).language());
+        e.setAttribute("encoding", (*it).encoding());
+        e.setAttribute("file", (*it).file());
+        e.setAttribute("align", (int)(*it).alignment());
+        QDomElement e2 = doc.createElement("font");
+        KMF::Tools::fontToXML((*it).font(), &e2);
+        e.appendChild(e2);
+        video.appendChild(e);
+    }
+
+    element->appendChild(video);
 }
 
 QVariant VideoObject::writeDvdAuthorXml(QVariantList args) const
 {
-  QDomDocument doc;
-  QString preferredLanguage = args[0].toString();
-  int titleset = args[1].toInt();
+    QDomDocument doc;
+    QString preferredLanguage = args[0].toString();
+    int titleset = args[1].toInt();
 
-  QDir dir(interface()->projectDir("media"));
-  int audioTrack = 0; // First audio track
-  int subTrack = 62; // Let player decide
-  bool audioFound = false;
-  bool subFound = false;
-  int i;
+    QDir dir(interface()->projectDir("media"));
+    int audioTrack = 0; // First audio track
+    int subTrack = 62; // Let player decide
+    bool audioFound = false;
+    bool subFound = false;
+    int i;
 
-  QDomElement titles = doc.createElement("titles");
-  QDomElement video = doc.createElement("video");
-  video.setAttribute("aspect", QDVD::VideoTrack::aspectRatioString(m_aspect));
-  if(QDVD::VideoTrack::Aspect_16_9==m_aspect)
-    video.setAttribute("widescreen", "nopanscan");
-  titles.appendChild(video);
+    QDomElement titles = doc.createElement("titles");
+    QDomElement video = doc.createElement("video");
 
-  i = 0;
-  for(QDVD::AudioList::ConstIterator it = m_audioTracks.begin();
-      it != m_audioTracks.end(); ++it)
-  {
-    QDomElement audioElem = doc.createElement("audio");
-    if((*it).language() == preferredLanguage && audioFound == false)
-    {
-      audioTrack = i;
-      audioFound = true;
-    }
-    audioElem.setAttribute("lang", (*it).language());
-    titles.appendChild(audioElem);
-    ++i;
-  }
+    video.setAttribute("aspect", QDVD::VideoTrack::aspectRatioString(m_aspect));
 
-  i = 0;
-  for(QDVD::SubtitleList::ConstIterator it = m_subtitles.begin();
-      it != m_subtitles.end(); ++it)
-  {
-    QString lang = (*it).language();
-    if(lang.isEmpty())
-      lang = "xx";
-    QDomElement sub = doc.createElement("subpicture");
-    if(lang == preferredLanguage && subFound == false)
-    {
-      subFound = true;
-      subTrack = i;
-    }
-    sub.setAttribute("lang", lang);
-    titles.appendChild(sub);
-    ++i;
-  }
-
-  QDomElement pgc = doc.createElement("pgc");
-  QDomElement pre = doc.createElement("pre");
-  QDomText text = doc.createTextNode("");
-  QString commands = "";
-
-  commands += QString("audio=%1; ").arg(audioTrack);
-  if(!audioFound && subTrack < 32)
-    subTrack += 64; // All subtitles, not just forced ones
-  commands += QString("subtitle=%1; ").arg(subTrack);
-  text.setData(QString(" { %1} ").arg(commands));
-  pre.appendChild(text);
-  pgc.appendChild(pre);
-
-  // Add cells
-  KMF::Time pos;
-  bool open = false;
-  QDomElement vob;
-  QDVD::Cell cell;
-  int file = 0;
-
-  for(i = 0; i <= m_cells.count(); ++i)
-  {
-    if(!open)
-    {
-      vob = doc.createElement("vob");
-      if(m_type != "dummy")
-      {
-        vob.setAttribute("file", videoFileFind(i));
-      }
-      else
-      {
-        vob.setAttribute("file", dir.filePath("dummy.mpg"));
-      }
-      open = true;
-    }
-    if(KMF::Time(cell.start()) > pos + duration(m_files[file]) ||
-       i >= m_cells.count())
-    {
-      pos += duration(m_files[file]);
-      pgc.appendChild(vob);
-      if(i >= m_files.count() || i >= m_cells.count())
-        break;
-      open = false;
-      ++file;
+    if (QDVD::VideoTrack::Aspect_16_9 == m_aspect) {
+        video.setAttribute("widescreen", "nopanscan");
     }
 
-    cell = m_cells[i];
-    KMF::Time start(cell.start());
-    KMF::Time end(cell.start());
+    titles.appendChild(video);
 
-    start -= pos;
-    QDomElement c = vob.ownerDocument().createElement("cell");
+    i = 0;
 
-    c.setAttribute("start", KMF::Time(start).toString());
-    if(cell.length() == KMF::Time())
-      c.setAttribute("end", "-1");
-    else
+    for (QDVD::AudioList::ConstIterator it = m_audioTracks.begin();
+         it != m_audioTracks.end(); ++it)
     {
-      end -= pos;
-      end += cell.length();
-      c.setAttribute("end", end.toString());
+        QDomElement audioElem = doc.createElement("audio");
+
+        if (((*it).language() == preferredLanguage) && (audioFound == false)) {
+            audioTrack = i;
+            audioFound = true;
+        }
+
+        audioElem.setAttribute("lang", (*it).language());
+        titles.appendChild(audioElem);
+        ++i;
     }
-    c.setAttribute("chapter", cell.isChapter());
-    vob.appendChild(c);
-    //kDebug() << "Cell: " << start << ", " << end;
-  }
 
-  QString postString;
-  int mobCount = interface()->mediaObjects().count();
-  if(titleset < mobCount &&
-     interface()->templateObject()->call("continueToNextTitle").toBool())
-  {
-    postString = QString(" g3 = %1 ; ").arg(titleset + 1);
-  }
-  postString += " call vmgm menu 1 ; ";
-  QDomElement post = doc.createElement("post");
-  text = doc.createTextNode(postString);
-  post.appendChild(text);
-  pgc.appendChild(post);
+    i = 0;
 
-  titles.appendChild(pgc);
+    for (QDVD::SubtitleList::ConstIterator it = m_subtitles.begin();
+         it != m_subtitles.end(); ++it)
+    {
+        QString lang = (*it).language();
 
-  QVariant result;
-  result.setValue(titles);
-  return result;
+        if (lang.isEmpty()) {
+            lang = "xx";
+        }
+
+        QDomElement sub = doc.createElement("subpicture");
+
+        if ((lang == preferredLanguage) && (subFound == false)) {
+            subFound = true;
+            subTrack = i;
+        }
+
+        sub.setAttribute("lang", lang);
+        titles.appendChild(sub);
+        ++i;
+    }
+
+    QDomElement pgc = doc.createElement("pgc");
+    QDomElement pre = doc.createElement("pre");
+    QDomText text = doc.createTextNode("");
+    QString commands = "";
+
+    commands += QString("audio=%1; ").arg(audioTrack);
+
+    if (!audioFound && (subTrack < 32)) {
+        subTrack += 64; // All subtitles, not just forced ones
+    }
+
+    commands += QString("subtitle=%1; ").arg(subTrack);
+    text.setData(QString(" { %1} ").arg(commands));
+    pre.appendChild(text);
+    pgc.appendChild(pre);
+
+    // Add cells
+    KMF::Time pos;
+    bool open = false;
+    QDomElement vob;
+    QDVD::Cell cell;
+    int file = 0;
+
+    for (i = 0; i <= m_cells.count(); ++i) {
+        if (!open) {
+            vob = doc.createElement("vob");
+
+            if (m_type != "dummy") {
+                vob.setAttribute("file", videoFileFind(i));
+            } else   {
+                vob.setAttribute("file", dir.filePath("dummy.mpg"));
+            }
+
+            open = true;
+        }
+
+        if ((KMF::Time(cell.start()) > pos + duration(m_files[file])) ||
+            (i >= m_cells.count()))
+        {
+            pos += duration(m_files[file]);
+            pgc.appendChild(vob);
+
+            if ((i >= m_files.count()) || (i >= m_cells.count())) {
+                break;
+            }
+
+            open = false;
+            ++file;
+        }
+
+        cell = m_cells[i];
+        KMF::Time start(cell.start());
+        KMF::Time end(cell.start());
+
+        start -= pos;
+        QDomElement c = vob.ownerDocument().createElement("cell");
+
+        c.setAttribute("start", KMF::Time(start).toString());
+
+        if (cell.length() == KMF::Time()) {
+            c.setAttribute("end", "-1");
+        } else {
+            end -= pos;
+            end += cell.length();
+            c.setAttribute("end", end.toString());
+        }
+
+        c.setAttribute("chapter", cell.isChapter());
+        vob.appendChild(c);
+        // kDebug() << "Cell: " << start << ", " << end;
+    }
+
+    QString postString;
+    int mobCount = interface()->mediaObjects().count();
+
+    if ((titleset < mobCount) &&
+        interface()->templateObject()->call("continueToNextTitle").toBool())
+    {
+        postString = QString(" g3 = %1 ; ").arg(titleset + 1);
+    }
+
+    postString += " call vmgm menu 1 ; ";
+    QDomElement post = doc.createElement("post");
+    text = doc.createTextNode(postString);
+    post.appendChild(text);
+    pgc.appendChild(post);
+
+    titles.appendChild(pgc);
+
+    QVariant result;
+    result.setValue(titles);
+    return result;
 }
 
 QString VideoObject::videoFileName(int index, VideoFilePrefix prefix)
 {
-  QDir dir(interface()->projectDir("media"));
-  QString file = QFileInfo(m_files[index]).fileName();
+    QDir dir(interface()->projectDir("media"));
+    QString file = QFileInfo(m_files[index]).fileName();
 
-  /*
-  kDebug() << dir.filePath(QString("%1_%2")
-      .arg(QString::number(index+1).rightJustify(3, '0'))
-      .arg(file) + m_prefixes[prefix]);
-  */
-  return dir.filePath(QString("%1_%2")
-      .arg(QString::number(index+1).rightJustified(3, '0'))
-      .arg(file) + m_prefixes[prefix]);
+    /*
+     * kDebug() << dir.filePath(QString("%1_%2")
+     *  .arg(QString::number(index+1).rightJustify(3, '0'))
+     *  .arg(file) + m_prefixes[prefix]);
+     */
+    return dir.filePath(QString("%1_%2")
+            .arg(QString::number(index + 1).rightJustified(3, '0'))
+            .arg(file) + m_prefixes[prefix]);
 }
 
 QString VideoObject::videoFileFind(int index, VideoFilePrefix prefixStart) const
 {
-  QDir dir(interface()->projectDir("media"));
-  QString file = QFileInfo(m_files[index]).fileName();
+    QDir dir(interface()->projectDir("media"));
+    QString file = QFileInfo(m_files[index]).fileName();
 
-  for(int i = prefixStart; i < PrefixEmpty; ++i)
-  {
-    QString s = dir.filePath(QString("%1_%2")
-        .arg(QString::number(index+1).rightJustified(3, '0'))
-        .arg(file) + m_prefixes[i]);
-    QFileInfo fi(s);
-    if(fi.exists())
-    {
-      //kDebug() << s;
-      return s;
+    for (int i = prefixStart; i < PrefixEmpty; ++i) {
+        QString s = dir.filePath(QString("%1_%2")
+                .arg(QString::number(index + 1).rightJustified(3, '0'))
+                .arg(file) + m_prefixes[i]);
+        QFileInfo fi(s);
+
+        if (fi.exists()) {
+            // kDebug() << s;
+            return s;
+        }
     }
-  }
-  //kDebug() << m_files()[index].fileName();
-  return m_files[index];
+
+    // kDebug() << m_files()[index].fileName();
+    return m_files[index];
 }
 
-bool VideoObject::prepare(const QString& type)
+bool VideoObject::prepare(const QString &type)
 {
-  interface()->message(msgId(), KMF::Start, i18n("Video: %1", title()));
-  QString fileName;
+    interface()->message(msgId(), KMF::Start, i18n("Video: %1", title()));
+    QString fileName;
 
-  m_type = type;
-  if (type != "dummy")
-  {
-    foreach(const QDVD::Subtitle& subtitle, m_subtitles)
-    {
-      if(!subtitle.file().isEmpty())
-      {
-        QStringList subtitleFiles = subtitle.file().split(";");
+    m_type = type;
 
-        for(int i = 0; i < m_files.count(); ++i)
-        {
-          if(i >= subtitleFiles.count())
-            break;
-          QFileInfo subtitleFile(subtitleFiles[i]);
-          QFileInfo videoFile(videoFileFind(i, PrefixMpg));
-          QFileInfo videoFileWithSubtitles(videoFileName(i, PrefixSub));
+    if (type != "dummy") {
+        foreach (const QDVD::Subtitle & subtitle, m_subtitles) {
+            if (!subtitle.file().isEmpty()) {
+                QStringList subtitleFiles = subtitle.file().split(";");
 
-          if(!videoFileWithSubtitles.exists() ||
-              videoFile.lastModified() > videoFileWithSubtitles.lastModified() ||
-              subtitleFile.lastModified() > videoFileWithSubtitles.lastModified())
-          {
-            ConvertSubtitlesJob *job = new ConvertSubtitlesJob();
-            job->subtitle = subtitle;
-            job->subtitleFile = subtitleFile.filePath();
-            job->subtitleXmlFile = videoFileName(i, PrefixXml);
-            job->videoFile = videoFile.filePath();
-            job->videoFileWithSubtitles = videoFileWithSubtitles.filePath();
-            job->mediaDir = interface()->projectDir("media");
-            job->type = interface()->projectType();
-            interface()->setModified(KMF::Media);
-            interface()->addJob(job);
-          }
-          else
-          {
-            interface()->message(msgId(), KMF::Info,
-                i18n("Subtitle conversion seems to be up to date for %1", videoFile.fileName()));
-          }
+                for (int i = 0; i < m_files.count(); ++i) {
+                    if (i >= subtitleFiles.count()) {
+                        break;
+                    }
+
+                    QFileInfo subtitleFile(subtitleFiles[i]);
+                    QFileInfo videoFile(videoFileFind(i, PrefixMpg));
+                    QFileInfo videoFileWithSubtitles(videoFileName(i, PrefixSub));
+
+                    if (!videoFileWithSubtitles.exists() ||
+                        (videoFile.lastModified() > videoFileWithSubtitles.lastModified()) ||
+                        (subtitleFile.lastModified() > videoFileWithSubtitles.lastModified()))
+                    {
+                        ConvertSubtitlesJob *job = new ConvertSubtitlesJob();
+                        job->subtitle = subtitle;
+                        job->subtitleFile = subtitleFile.filePath();
+                        job->subtitleXmlFile = videoFileName(i, PrefixXml);
+                        job->videoFile = videoFile.filePath();
+                        job->videoFileWithSubtitles = videoFileWithSubtitles.filePath();
+                        job->mediaDir = interface()->projectDir("media");
+                        job->type = interface()->projectType();
+                        interface()->setModified(KMF::Media);
+                        interface()->addJob(job);
+                    } else   {
+                        interface()->message(msgId(), KMF::Info,
+                                i18n("Subtitle conversion seems to be up to date for %1",
+                                        videoFile.fileName()));
+                    }
+                }
+            }
         }
-      }
     }
-  }
-  interface()->message(msgId(), KMF::Done);
-  return true;
+
+    interface()->message(msgId(), KMF::Done);
+    return true;
 }
 
 void VideoObject::slotProperties()
 {
-  VideoOptions dlg(kapp->activeWindow());
-  dlg.setData(*this);
-  if (dlg.exec())
-  {
-    dlg.getData(*this);
-    interface()->setDirty(KMF::Media);
-  }
+    VideoOptions dlg(kapp->activeWindow());
+
+    dlg.setData(*this);
+
+    if (dlg.exec()) {
+        dlg.getData(*this);
+        interface()->setDirty(KMF::Media);
+    }
 }
 
 QPixmap VideoObject::pixmap() const
 {
-  if(m_thumbnail.isNull())
-    m_thumbnail=QPixmap::fromImage(generatePreview(MainPreview, QSize(constIconSize, constIconSize))
-                .scaled(constIconSize, constIconSize, Qt::KeepAspectRatio));
-  if(m_thumbnail.isNull())
-    m_thumbnail=KIO::pixmapForUrl(fileName());
-  return m_thumbnail;
+    if (m_thumbnail.isNull()) {
+        m_thumbnail =
+            QPixmap::fromImage(generatePreview(MainPreview, QSize(constIconSize, constIconSize))
+                    .scaled(constIconSize, constIconSize, Qt::KeepAspectRatio));
+    }
+
+    if (m_thumbnail.isNull()) {
+        m_thumbnail = KIO::pixmapForUrl(fileName());
+    }
+
+    return m_thumbnail;
 }
 
 #define PERCENT 1
 #define LIGHT 50
 
-bool VideoObject::isBlack(const QImage& img) const
+bool VideoObject::isBlack(const QImage &img) const
 {
-  int pixelLimit = (img.height() * img.width() * PERCENT) / 100;
-  int lightLimit = (255 * LIGHT) / 100;
-  int pixel = 0;
+    int pixelLimit = (img.height() * img.width() * PERCENT) / 100;
+    int lightLimit = (255 * LIGHT) / 100;
+    int pixel = 0;
 
-  for (int y = 0; y < img.height(); y++)
-  {
-    for (int x = 0; x < img.width(); x++)
-    {
-      QRgb pix = img.pixel(x, y);
-      if (qRed(pix) > lightLimit || qGreen(pix) > lightLimit ||
-          qBlue(pix) > lightLimit)
-        ++pixel;
-      if(pixel > pixelLimit)
-        return false;
+    for (int y = 0; y < img.height(); y++) {
+        for (int x = 0; x < img.width(); x++) {
+            QRgb pix = img.pixel(x, y);
+
+            if ((qRed(pix) > lightLimit) || (qGreen(pix) > lightLimit) ||
+                (qBlue(pix) > lightLimit))
+            {
+                ++pixel;
+            }
+
+            if (pixel > pixelLimit) {
+                return false;
+            }
+        }
     }
-  }
-  return true;
+
+    return true;
 }
 
 QString VideoObject::videoFileName(KMF::Time *time) const
 {
-  foreach(const QString &file, m_files)
-  {
-    //kDebug() << *it;
-    const KMFMediaFile& media = KMFMediaFile::mediaFile(file);
-    if(*time <= KMF::Time(media.duration()))
-    {
-      return file;
+    foreach (const QString &file, m_files) {
+        // kDebug() << *it;
+        const KMFMediaFile &media = KMFMediaFile::mediaFile(file);
+
+        if (*time <= KMF::Time(media.duration())) {
+            return file;
+        } else   {
+            *time -= media.duration();
+        }
     }
-    else
-    {
-      *time -= media.duration();
-    }
-  }
-  return QString();
+    return QString();
 }
 
 QImage VideoObject::getFrame(QTime time, QString frameFile) const
 {
-  bool ok = false;
-  KMF::Time t = time;
+    bool ok = false;
+    KMF::Time t = time;
 
-  foreach(const QString &file, m_files)
-  {
-    //kDebug() << *it;
-    const KMFMediaFile& media = KMFMediaFile::mediaFile(file);
-    if(t <= KMF::Time(media.duration()))
-    {
-      media.frame(t, frameFile);
-      ok = true;
-      break;
+    foreach (const QString &file, m_files) {
+        // kDebug() << *it;
+        const KMFMediaFile &media = KMFMediaFile::mediaFile(file);
+
+        if (t <= KMF::Time(media.duration())) {
+            media.frame(t, frameFile);
+            ok = true;
+            break;
+        } else   {
+            t -= media.duration();
+        }
     }
-    else
-    {
-      t -= media.duration();
+
+    if (ok) {
+        return QImage(frameFile);
+    } else {
+        return QImage();
     }
-  }
-  if(ok)
-    return QImage(frameFile);
-  else
-    return QImage();
 }
 
 QImage VideoObject::preview(int chap) const
 {
-  return generatePreview(chap, QSize(0, 0));
+    return generatePreview(chap, QSize(0, 0));
 }
 
 QImage VideoObject::generatePreview(int chap, QSize desiredSize) const
 {
-  bool black = true;
-  int counter;
-  QImage img;
-  QString cacheFile;
+    bool black = true;
+    int counter;
+    QImage img;
+    QString cacheFile;
 
-  if (chap == MainPreview)
-  {
-    if(m_previewUrl.isValid())
-    {
-      img.load(m_previewUrl.path());
-      return img;
+    if (chap == MainPreview) {
+        if (m_previewUrl.isValid()) {
+            img.load(m_previewUrl.path());
+            return img;
+        }
     }
-  }
 
-  KMF::Time t = chapter(chap).start();
-  QDir dir(interface()->projectDir("media"));
-  QString s;
-  cacheFile = dir.filePath(s.sprintf("%s_%s.pnm",
-      (const char*)m_id.toLocal8Bit(),
-      (const char*)t.toString().toLocal8Bit()));
-  if(img.load(cacheFile))
-    return img;
+    KMF::Time t = chapter(chap).start();
+    QDir dir(interface()->projectDir("media"));
+    QString s;
+    cacheFile = dir.filePath(s.sprintf("%s_%s.pnm",
+                    (const char *)m_id.toLocal8Bit(),
+                    (const char *)t.toString().toLocal8Bit()));
 
-  counter = 0;
-  while(black && counter < 60)
-  {
-    img = getFrame(t, cacheFile);
-    black = isBlack(img);
-    if(black)
-      kDebug() << "Black frame: " << t.toString();
-    t += VideoPluginSettings::blackFrameJump();
-    ++counter;
-  }
+    if (img.load(cacheFile)) {
+        return img;
+    }
 
-  QSize templateRatio = desiredSize.width()>0
+    counter = 0;
+
+    while (black && counter < 60) {
+        img = getFrame(t, cacheFile);
+        black = isBlack(img);
+
+        if (black) {
+            kDebug() << "Black frame: " << t.toString();
+        }
+
+        t += VideoPluginSettings::blackFrameJump();
+        ++counter;
+    }
+    QSize templateRatio = desiredSize.width() > 0
                           ? QSize(1, 1)
                           : (interface()->aspectRatio() == QDVD::VideoTrack::Aspect_4_3)
-                                ? QSize(4, 3) : QSize(16, 9);
-  QSize videoRatio = (aspect() == QDVD::VideoTrack::Aspect_4_3) ?
-                          QSize(4, 3) : QSize(16, 9);
-  QSize imageRatio = KMF::Tools::guessRatio(img.size(), videoRatio);
-  QSize templateSize = desiredSize.width()>0 ? desiredSize : KMF::Tools::maxResolution(interface()->projectType());
-  QSize imageSize = img.size();
-  QSize res = KMF::Tools::resolution(imageSize, imageRatio,
-                                     templateSize, templateRatio);
+                          ? QSize(4, 3) : QSize(16, 9);
+    QSize videoRatio = (aspect() == QDVD::VideoTrack::Aspect_4_3) ?
+                       QSize(4, 3) : QSize(16, 9);
+    QSize imageRatio = KMF::Tools::guessRatio(img.size(), videoRatio);
+    QSize templateSize = desiredSize.width() > 0 ? desiredSize : KMF::Tools::maxResolution(
+            interface()->projectType());
+    QSize imageSize = img.size();
+    QSize res = KMF::Tools::resolution(imageSize, imageRatio,
+            templateSize, templateRatio);
 
-  img = img.scaled(res, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-  /*
-  kDebug() << "Template size: " << templateSize;
-  kDebug() << "Template ratio:" << templateRatio;
-  kDebug() << "Video ratio:" << videoRatio;
-  kDebug() << "Image size:" << imageSize;
-  kDebug() << "Image ratio:" << imageRatio;
-  kDebug() << "Final resolution:" << res;
-  */
-  if(!VideoPluginSettings::usePreviewCache())
-    QFile::remove(cacheFile);
-  return img;
+    img = img.scaled(res, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+    /*
+     * kDebug() << "Template size: " << templateSize;
+     * kDebug() << "Template ratio:" << templateRatio;
+     * kDebug() << "Video ratio:" << videoRatio;
+     * kDebug() << "Image size:" << imageSize;
+     * kDebug() << "Image ratio:" << imageRatio;
+     * kDebug() << "Final resolution:" << res;
+     */
+    if (!VideoPluginSettings::usePreviewCache()) {
+        QFile::remove(cacheFile);
+    }
+
+    return img;
 }
 
 void VideoObject::checkForSubtitleFile(const QString &fileName)
 {
-    const char *constExt[]={ "srt", "sub", 0L }; // TODO: Subtitle extensions?
+    const char *constExt[] = { "srt", "sub", 0L }; // TODO: Subtitle extensions?
 
-    for(int i=0; constExt[i]; ++i)
-    {
+    for (int i = 0; constExt[i]; ++i) {
         QString subName(KMF::Tools::changeExt(fileName, constExt[i]));
 
-        if(QFileInfo(subName).exists())
-        {
+        if (QFileInfo(subName).exists()) {
             QDVD::Subtitle s;
             s.setFile(subName);
             s.setLanguage(VideoPluginSettings::defaultSubtitleLanguage());
@@ -864,165 +926,174 @@ void VideoObject::checkForSubtitleFile(const QString &fileName)
 
 QString VideoObject::text(int chap) const
 {
-  if(chap == MainTitle)
-    return title();
-  else
-  {
-    return chapter(chap).name();
-  }
+    if (chap == MainTitle) {
+        return title();
+    } else {
+        return chapter(chap).name();
+    }
 }
 
 void VideoObject::setCellSecs(double secs)
 {
-  double d = KMF::Time(duration());
-  int chapters = (int)(d / secs) + 1;
+    double d = KMF::Time(duration());
+    int chapters = (int)(d / secs) + 1;
 
-  // Do not put chapter too close to end
-  if(((double)chapters * secs) + 30.0 > d && chapters > 1)
-    --chapters;
-  m_cells.clear();
-  for(int i=0; i < chapters; ++i)
-  {
-    KMF::Time length(secs);
-    if(i == chapters - 1)
-      length = 0;
-    QDVD::Cell c(KMF::Time(i*secs), length,
-        i18n("Chapter %1", i + 1));
-    addCell(c);
-  }
+    // Do not put chapter too close to end
+    if ((((double)chapters * secs) + 30.0 > d) && (chapters > 1)) {
+        --chapters;
+    }
+
+    m_cells.clear();
+
+    for (int i = 0; i < chapters; ++i) {
+        KMF::Time length(secs);
+
+        if (i == chapters - 1) {
+            length = 0;
+        }
+
+        QDVD::Cell c(KMF::Time(i * secs), length,
+                     i18n("Chapter %1", i + 1));
+        addCell(c);
+    }
 }
 
 int VideoObject::chapters() const
 {
-  int i = 0;
+    int i = 0;
 
-  for(QDVD::CellList::ConstIterator it = m_cells.begin();
-      it != m_cells.end(); ++it)
-  {
-    if((*it).isChapter() && !(*it).isHidden())
-      ++i;
-  }
-  return i;
+    for (QDVD::CellList::ConstIterator it = m_cells.begin(); it != m_cells.end(); ++it) {
+        if ((*it).isChapter() && !(*it).isHidden()) {
+            ++i;
+        }
+    }
+
+    return i;
 }
 
-const QDVD::Cell& VideoObject::chapter(int chap) const
+const QDVD::Cell &VideoObject::chapter(int chap) const
 {
-  int i = 0;
+    int i = 0;
 
-  for(QDVD::CellList::ConstIterator it = m_cells.begin();
-      it != m_cells.end(); ++it)
-  {
-    if((*it).isChapter() && !(*it).isHidden())
-      ++i;
-    if(i == chap)
-      return *it;
-  }
-  return m_cells.first();
+    for (QDVD::CellList::ConstIterator it = m_cells.begin(); it != m_cells.end(); ++it) {
+        if ((*it).isChapter() && !(*it).isHidden()) {
+            ++i;
+        }
+
+        if (i == chap) {
+            return *it;
+        }
+    }
+
+    return m_cells.first();
 }
 
 void VideoObject::generateId()
 {
-  int serial = interface()->serial();
-  QString name = KMF::Tools::simpleBaseName(m_files.first());
-  m_id.sprintf("%3.3d_%s", serial, (const char*)name.toLocal8Bit());
+    int serial = interface()->serial();
+    QString name = KMF::Tools::simpleBaseName(m_files.first());
+
+    m_id.sprintf("%3.3d_%s", serial, (const char *)name.toLocal8Bit());
 }
 
 VideoObject::VideoFileStatus VideoObject::addFile(QString fileName)
 {
-  VideoFileStatus status=KMFMediaFile::mediaFile(fileName).dvdCompatible()
-                            ? KMF::Tools::isVideoResolution(KMFMediaFile::mediaFile(fileName).resolution())
-                                ? StatusOk
-                                : StatusInvalidResolution
-                            : StatusNonCompataible;
+    VideoFileStatus status = KMFMediaFile::mediaFile(fileName).dvdCompatible()
+                             ? KMF::Tools::isVideoResolution(KMFMediaFile::mediaFile(
+                    fileName).resolution())
+                             ? StatusOk
+                             : StatusInvalidResolution
+                             : StatusNonCompataible;
 
-  if(StatusOk==status)
-  {
-    m_files.append(fileName);
-    checkObjectParams();
-    checkForSubtitleFile(fileName);
-  }
-  return status;
+    if (StatusOk == status) {
+        m_files.append(fileName);
+        checkObjectParams();
+        checkForSubtitleFile(fileName);
+    }
+
+    return status;
 }
 
 void VideoObject::setTitleFromFileName()
 {
-  QString name = KUrl(fileName()).fileName();
-  setTitle(KMF::Tools::simple2Title(name));
+    QString name = KUrl(fileName()).fileName();
+
+    setTitle(KMF::Tools::simple2Title(name));
 }
 
 void VideoObject::slotPlayVideo()
 {
-  KRun::runUrl(KUrl(fileName()), "video/mpeg", qApp->activeWindow());
+    KRun::runUrl(KUrl(fileName()), "video/mpeg", qApp->activeWindow());
 }
 
 void VideoObject::printCells()
 {
-  KMF::Time next;
-  int i = 1;
+    KMF::Time next;
+    int i = 1;
 
-  for(QDVD::CellList::Iterator it = m_cells.begin();
-      it != m_cells.end(); ++it, ++i)
-  {
-    kDebug() << i << ": " << (*it).start()
-        << " / " << (*it).length();
-  }
+    for (QDVD::CellList::Iterator it = m_cells.begin(); it != m_cells.end(); ++it, ++i) {
+        kDebug() << i << ": " << (*it).start() << " / " << (*it).length();
+    }
 }
 
 void VideoObject::parseCellLengths()
 {
-  KMF::Time next;
+    KMF::Time next;
 
-  for(QDVD::CellList::Iterator it = m_cells.begin();
-      it != m_cells.end(); ++it)
-  {
-    //kDebug() << (*it).start();
-    ++it;
-    if(it != m_cells.end())
-      next = (*it).start();
-    else
-      next = QTime();
-    --it;
-    if(!next.isNull())
-      (*it).setLength(next - (*it).start());
-    else
-      (*it).setLength(QTime());
-  }
+    for (QDVD::CellList::Iterator it = m_cells.begin(); it != m_cells.end(); ++it) {
+        // kDebug() << (*it).start();
+        ++it;
+
+        if (it != m_cells.end()) {
+            next = (*it).start();
+        } else {
+            next = QTime();
+        }
+
+        --it;
+
+        if (!next.isNull()) {
+            (*it).setLength(next - (*it).start());
+        } else {
+            (*it).setLength(QTime());
+        }
+    }
 }
 
-void VideoObject::setCellList(const QDVD::CellList& list)
+void VideoObject::setCellList(const QDVD::CellList &list)
 {
-  m_cells = list;
-  if(m_cells.count() == 0)
-    m_cells.append(QDVD::Cell(QTime(), QTime(), QString("Chapter 1")));
+    m_cells = list;
+
+    if (m_cells.count() == 0) {
+        m_cells.append(QDVD::Cell(QTime(), QTime(), QString("Chapter 1")));
+    }
 }
 
 uint64_t VideoObject::size() const
 {
-  uint64_t total = 0;
-  int i = 0;
+    uint64_t total = 0;
+    int i = 0;
 
-  for(QStringList::ConstIterator it = m_files.begin();
-      it != m_files.end(); ++it, ++i)
-  {
-    KFileItem finfo(KFileItem::Unknown, KFileItem::Unknown, KUrl(*it));
-    total += finfo.size();
-  }
-  return total;
+    for (QStringList::ConstIterator it = m_files.begin(); it != m_files.end(); ++it, ++i) {
+        KFileItem finfo(KFileItem::Unknown, KFileItem::Unknown, KUrl(*it));
+        total += finfo.size();
+    }
+
+    return total;
 }
 
 bool VideoObject::isDVDCompatible() const
 {
-  return KMFMediaFile::mediaFile(m_files[0]).dvdCompatible();
+    return KMFMediaFile::mediaFile(m_files[0]).dvdCompatible();
 }
 
 QMap<QString, QString> VideoObject::subTypes() const
 {
-  QMap<QString, QString> result;
+    QMap<QString, QString> result;
 
-  result[""] = i18n("Make DVD");
-  result["dummy"] = i18n("Make preview DVD with dummy videos");
-  return result;
+    result[""] = i18n("Make DVD");
+    result["dummy"] = i18n("Make preview DVD with dummy videos");
+    return result;
 }
 
 #include "videoobject.moc"
-
