@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,7 +16,7 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #include "kmftemplatebase.h"
 
@@ -28,88 +28,93 @@
 #include "kmfmenupage.h"
 #include "templateobject.h"
 
-KMFTemplateBase::KMFTemplateBase(QObject *parent) :
-  QObject(parent), m_interface(0)
+KMFTemplateBase::KMFTemplateBase(QObject *parent)
+    : QObject(parent)
+    , m_interface(0)
 {
-  KMF::Plugin* p = plugin();
-  if(p)
-  {
-    m_interface = p->interface();
-  }
+    KMF::Plugin *p = plugin();
+
+    if (p) {
+        m_interface = p->interface();
+    }
 }
 
 KMFTemplateBase::~KMFTemplateBase()
 {
 }
 
-KMF::Plugin* KMFTemplateBase::plugin()
+KMF::Plugin *KMFTemplateBase::plugin()
 {
-  QObject* obj = parent();
+    QObject *obj = parent();
 
-  while(obj)
-  {
-    if(obj->inherits("KMF::Plugin"))
-      return static_cast<KMF::Plugin*>(obj);
-    obj = obj->parent();
-  }
-  return 0;
+    while (obj) {
+        if (obj->inherits("KMF::Plugin")) {
+            return static_cast<KMF::Plugin *>(obj);
+        }
+
+        obj = obj->parent();
+    }
+    return 0;
 }
 
-TemplateObject* KMFTemplateBase::templateObject()
+TemplateObject *KMFTemplateBase::templateObject()
 {
-  QObject* obj = parent();
+    QObject *obj = parent();
 
-  while(obj)
-  {
-    if(obj->inherits("TemplateObject"))
-      return static_cast<TemplateObject*>(obj);
-    obj = obj->parent();
-  }
-  return 0;
+    while (obj) {
+        if (obj->inherits("TemplateObject")) {
+            return static_cast<TemplateObject *>(obj);
+        }
+
+        obj = obj->parent();
+    }
+    return 0;
 }
 
-KMFMenuPage* KMFTemplateBase::page()
+KMFMenuPage *KMFTemplateBase::page()
 {
-  QObject* obj = this;
+    QObject *obj = this;
 
-  while(obj)
-  {
-    if(obj->inherits("KMFMenuPage"))
-      return static_cast<KMFMenuPage*>(obj);
-    obj = obj->parent();
-  }
-  return 0;
+    while (obj) {
+        if (obj->inherits("KMFMenuPage")) {
+            return static_cast<KMFMenuPage *>(obj);
+        }
+
+        obj = obj->parent();
+    }
+    return 0;
 }
 
-KMFMenu* KMFTemplateBase::menu()
+KMFMenu *KMFTemplateBase::menu()
 {
-  QObject* obj = this;
+    QObject *obj = this;
 
-  while(obj)
-  {
-    if(obj->inherits("KMFMenu"))
-      return static_cast<KMFMenu*>(obj);
-    obj = obj->parent();
-  }
-  return 0;
+    while (obj) {
+        if (obj->inherits("KMFMenu")) {
+            return static_cast<KMFMenu *>(obj);
+        }
+
+        obj = obj->parent();
+    }
+    return 0;
 }
 
-QString KMFTemplateBase::uiText(const QString& string)
+QString KMFTemplateBase::uiText(const QString &string)
 {
-  int i = 0;
-  QString s = string;
-  s.replace("_", " ");
-  QRegExp rx("\\b\\w");
+    int i = 0;
+    QString s = string;
 
-  s = s.trimmed().toLower();
-  while(i!=-1)
-  {
-    QChar ch = s.at(i);
-    s[i] = ch.toUpper();
-    i = s.indexOf(rx, i+1);
-  }
-  return s;
+    s.replace("_", " ");
+    QRegExp rx("\\b\\w");
+
+    s = s.trimmed().toLower();
+
+    while (i != -1) {
+        QChar ch = s.at(i);
+        s[i] = ch.toUpper();
+        i = s.indexOf(rx, i + 1);
+    }
+    return s;
 }
 
 #include "kmftemplatebase.moc"
-

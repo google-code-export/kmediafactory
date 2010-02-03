@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,7 +16,7 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #include "kmflayout.h"
 
@@ -24,144 +24,155 @@
 
 #include <KDebug>
 
-
 bool KMFGrid::isHidden() const
 {
-  foreach(QObject* ob, children())
-  {
-    KMFWidget* widget = static_cast<KMFWidget*>(ob);
-    if(!widget->isHidden())
-      return false;
-  }
-  return true;
+    foreach (QObject * ob, children()) {
+        KMFWidget *widget = static_cast<KMFWidget *>(ob);
+
+        if (!widget->isHidden()) {
+            return false;
+        }
+    }
+    return true;
 }
 
-int KMFGrid::childY(const KMFWidget* child) const
+int KMFGrid::childY(const KMFWidget *child) const
 {
-  int result = paintY();
+    int result = paintY();
 
-  foreach(QObject* ob, children())
-  {
-    KMFWidget* widget = static_cast<KMFWidget*>(ob);
-    //kDebug() << child->className()
-    //    << " (" << child->name() << "): " << result;
-    if(widget == child)
-      return result;
-    if(child->column() == widget->column())
-    {
-      result += widget->height();
-      //kDebug() << widget->className()
-      //    << " (" << widget->name() << "): " << widget->height();
+    foreach (QObject * ob, children()) {
+        KMFWidget *widget = static_cast<KMFWidget *>(ob);
+
+        // kDebug() << child->className()
+        //    << " (" << child->name() << "): " << result;
+        if (widget == child) {
+            return result;
+        }
+
+        if (child->column() == widget->column()) {
+            result += widget->height();
+            // kDebug() << widget->className()
+            //    << " (" << widget->name() << "): " << widget->height();
+        }
     }
-  }
-  return result;
+    return result;
 }
 
 int KMFGrid::childHeight() const
 {
-  int result = 0;
+    int result = 0;
 
-  foreach(QObject* ob, children())
-  {
-    KMFWidget* widget = static_cast<KMFWidget*>(ob);
-    if(widget->geometry().height().type() != KMFUnit::Percentage)
-      if(widget->column() == 0)
-        result += widget->height();
-  }
-  return paintHeight() - result;
+    foreach (QObject * ob, children()) {
+        KMFWidget *widget = static_cast<KMFWidget *>(ob);
+
+        if (widget->geometry().height().type() != KMFUnit::Percentage) {
+            if (widget->column() == 0) {
+                result += widget->height();
+            }
+        }
+    }
+    return paintHeight() - result;
 }
 
 int KMFGrid::childHeightPercentage() const
 {
-  int result = 0;
+    int result = 0;
 
-  foreach(QObject* ob, children())
-  {
-    KMFWidget* widget = static_cast<KMFWidget*>(ob);
-    if(widget->geometry().height().type() == KMFUnit::Percentage &&
-        (!widget->isHidden() || widget->takeSpace()))
-    {
-      if(widget->column() == 0)
-        result += widget->geometry().height().value();
+    foreach (QObject * ob, children()) {
+        KMFWidget *widget = static_cast<KMFWidget *>(ob);
+
+        if ((widget->geometry().height().type() == KMFUnit::Percentage) &&
+            (!widget->isHidden() || widget->takeSpace()))
+        {
+            if (widget->column() == 0) {
+                result += widget->geometry().height().value();
+            }
+        }
     }
-  }
-  return result;
+    return result;
 }
 
-int KMFGrid::childX(const KMFWidget* child) const
+int KMFGrid::childX(const KMFWidget *child) const
 {
-  int result = paintX();
+    int result = paintX();
 
-  foreach(QObject* ob, children())
-  {
-    KMFWidget* widget = static_cast<KMFWidget*>(ob);
-    if(widget == child)
-      return result;
-    if(child->row() == widget->row())
-      result += widget->width();
-  }
-  return result;
+    foreach (QObject * ob, children()) {
+        KMFWidget *widget = static_cast<KMFWidget *>(ob);
+
+        if (widget == child) {
+            return result;
+        }
+
+        if (child->row() == widget->row()) {
+            result += widget->width();
+        }
+    }
+    return result;
 }
 
 int KMFGrid::childWidth() const
 {
-  int result = 0;
+    int result = 0;
 
-  foreach(QObject* ob, children())
-  {
-    KMFWidget* widget = static_cast<KMFWidget*>(ob);
-    if(widget->geometry().width().type() != KMFUnit::Percentage)
-      if(widget->row() == 0)
-        result += widget->width();
-  }
-  return paintWidth() - result;
+    foreach (QObject * ob, children()) {
+        KMFWidget *widget = static_cast<KMFWidget *>(ob);
+
+        if (widget->geometry().width().type() != KMFUnit::Percentage) {
+            if (widget->row() == 0) {
+                result += widget->width();
+            }
+        }
+    }
+    return paintWidth() - result;
 }
 
 int KMFGrid::childWidthPercentage() const
 {
-  int result = 0;
+    int result = 0;
 
-  foreach(QObject* ob, children())
-  {
-    KMFWidget* widget = static_cast<KMFWidget*>(ob);
-    if(widget->geometry().width().type() == KMFUnit::Percentage &&
-        (!widget->isHidden() || widget->takeSpace()))
-    {
-      if(widget->row() == 0)
-        result += widget->geometry().width().value();
+    foreach (QObject * ob, children()) {
+        KMFWidget *widget = static_cast<KMFWidget *>(ob);
+
+        if ((widget->geometry().width().type() == KMFUnit::Percentage) &&
+            (!widget->isHidden() || widget->takeSpace()))
+        {
+            if (widget->row() == 0) {
+                result += widget->geometry().width().value();
+            }
+        }
     }
-  }
-  return result;
+    return result;
 }
 
 int KMFGrid::minimumPaintWidth() const
 {
-  int result = 0;
+    int result = 0;
 
-  foreach(QObject* ob, children())
-  {
-    KMFWidget* widget = static_cast<KMFWidget*>(ob);
-    if(widget->row() == 0 && !widget->isHidden())
-      result += widget->minimumWidth();
-  }
-  return result;
+    foreach (QObject * ob, children()) {
+        KMFWidget *widget = static_cast<KMFWidget *>(ob);
+
+        if ((widget->row() == 0) && !widget->isHidden()) {
+            result += widget->minimumWidth();
+        }
+    }
+    return result;
 }
 
 int KMFGrid::minimumPaintHeight() const
 {
-  int result = 0;
+    int result = 0;
 
-  foreach(QObject* ob, children())
-  {
-    KMFWidget* widget = static_cast<KMFWidget*>(ob);
-    if(widget->column() == 0 && !widget->isHidden())
-      result += widget->minimumHeight();
-  }
-  return result;
+    foreach (QObject * ob, children()) {
+        KMFWidget *widget = static_cast<KMFWidget *>(ob);
+
+        if ((widget->column() == 0) && !widget->isHidden()) {
+            result += widget->minimumHeight();
+        }
+    }
+    return result;
 }
 
-KMFVBox::KMFVBox(QObject *parent)
-  : KMFGrid(parent)
+KMFVBox::KMFVBox(QObject *parent) : KMFGrid(parent)
 {
 }
 
@@ -171,19 +182,19 @@ KMFVBox::~KMFVBox()
 
 int KMFVBox::minimumPaintWidth() const
 {
-  int result = 0;
+    int result = 0;
 
-  foreach(QObject* ob, children())
-  {
-    KMFWidget* widget = static_cast<KMFWidget*>(ob);
-    if(!widget->isHidden())
-      result = qMax(widget->minimumWidth(), result);
-  }
-  return result;
+    foreach (QObject * ob, children()) {
+        KMFWidget *widget = static_cast<KMFWidget *>(ob);
+
+        if (!widget->isHidden()) {
+            result = qMax(widget->minimumWidth(), result);
+        }
+    }
+    return result;
 }
 
-KMFHBox::KMFHBox(QObject *parent)
-  : KMFGrid(parent)
+KMFHBox::KMFHBox(QObject *parent) : KMFGrid(parent)
 {
 }
 
@@ -193,18 +204,18 @@ KMFHBox::~KMFHBox()
 
 int KMFHBox::minimumPaintHeight() const
 {
-  int result = 0;
+    int result = 0;
 
-  foreach(QObject* ob, children())
-  {
-    KMFWidget* widget = static_cast<KMFWidget*>(ob);
-    //kDebug() << widget->className() << ": "
-    //    << widget->minimumHeight();
-    if(!widget->isHidden())
-      result = qMax(widget->minimumHeight(), result);
-  }
-  return result;
+    foreach (QObject * ob, children()) {
+        KMFWidget *widget = static_cast<KMFWidget *>(ob);
+
+        // kDebug() << widget->className() << ": "
+        //    << widget->minimumHeight();
+        if (!widget->isHidden()) {
+            result = qMax(widget->minimumHeight(), result);
+        }
+    }
+    return result;
 }
 
 #include "kmflayout.moc"
-

@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,42 +16,48 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #ifndef KMFLABEL_H
 #define KMFLABEL_H
-
 
 #include <QtGui/QFont>
 
 #include "kmfwidget.h"
 
-/**
-@author Petri Damsten
-*/
 class KMFLabel : public KMFWidget
 {
     Q_OBJECT
-  public:
-    KMFLabel(QObject *parent = 0);
-    ~KMFLabel();
 
-    const QString& text() const { return m_text; };
-    void setText(const QString& text);
-    const QFont& font() const { return m_font; };
-    void setFont(const QFont& font) { m_font = font; };
-    virtual void fromXML(const QDomElement& element);
-    virtual int minimumPaintWidth() const;
-    virtual int minimumPaintHeight() const;
-    virtual void setProperty(const QString& name, QVariant value);
+    public:
+        KMFLabel(QObject *parent = 0);
+        ~KMFLabel();
 
-  protected:
-    virtual void paintWidget(QImage* layer, bool shdw = false) const;
-    QString fitText(QString txt, int width) const;
+        const QString&text() const
+        {
+            return m_text;
+        };
+        void setText(const QString &text);
+        const QFont&font() const
+        {
+            return m_font;
+        };
+        void setFont(const QFont &font)
+        {
+            m_font = font;
+        };
+        virtual void fromXML(const QDomElement &element);
+        virtual int minimumPaintWidth() const;
+        virtual int minimumPaintHeight() const;
+        virtual void setProperty(const QString &name, QVariant value);
 
-  private:
-    QString m_text;
-    QFont m_font;
+    protected:
+        virtual void paintWidget(QImage *layer, bool shdw = false) const;
+        QString fitText(QString txt, int width) const;
+
+    private:
+        QString m_text;
+        QFont m_font;
 };
 
 #endif
-

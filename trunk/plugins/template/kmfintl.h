@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   modified kde gettext implementation to read mo from QIODevice
 //
 //   libintl.cpp -- gettext related functions from glibc-2.0.5
@@ -24,30 +24,24 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #ifndef KMFINTL_H
 #define KMFINTL_H
 
 class QIODevice;
 struct loaded_domain;
 
-struct kmf_loaded_l10nfile
-{
-  int decided;
+struct kmf_loaded_l10nfile {
+    int decided;
 
-  const void *data;
+    const void *data;
 
-  kmf_loaded_l10nfile() : decided(0), data(0) {}
+    kmf_loaded_l10nfile() : decided(0), data(0){}
 };
 
-
-void kmf_nl_load_domain(QIODevice* device, int size,
-                        struct kmf_loaded_l10nfile *domain_file);
-char* kmf_nl_find_msg(const struct kmf_loaded_l10nfile *domain_file,
-                      const char *msgid);
+void kmf_nl_load_domain(QIODevice *device, int size, struct kmf_loaded_l10nfile *domain_file);
+char*kmf_nl_find_msg(const struct kmf_loaded_l10nfile *domain_file, const char *msgid);
 void kmf_nl_unload_domain(struct loaded_domain *domain);
 
 #endif // KMFINTL_H
-
-
-
