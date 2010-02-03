@@ -50,9 +50,9 @@
 
 enum Columns {
     COL_NAME,
-    COL_HIDDEN,
     COL_START,
     COL_LENGTH,
+    COL_HIDDEN,
     COL_COUNT
 };
 
