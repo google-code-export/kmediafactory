@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2008 Petri Damsten <damu@iki.fi>
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -15,12 +15,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #ifndef KROSSTEMPLATEOBJECT_H
 #define KROSSTEMPLATEOBJECT_H
-
-
 
 #include <Kross/Object>
 
@@ -28,31 +26,31 @@
 
 class KrossTemplateObject : public KMF::TemplateObject
 {
-  Q_OBJECT
-  public:
-    KrossTemplateObject(QObject *parent, Kross::Object::Ptr templateObject);
-    ~KrossTemplateObject();
+    Q_OBJECT
 
-    virtual QVariant call(const QString& func, QVariantList args = QVariantList());
-    virtual void toXML(QDomElement*) const;
-    virtual bool fromXML(const QDomElement&);
-    virtual QPixmap pixmap() const;
-    virtual void actions(QList<QAction*>*) const;
-    virtual bool prepare(const QString&);
-    virtual void finished();
-    virtual QMap<QString, QString> subTypes() const;
-    virtual QString title() const;
+    public:
+        KrossTemplateObject(QObject *parent, Kross::Object::Ptr templateObject);
+        ~KrossTemplateObject();
 
-    virtual QImage preview(const QString& = "");
-    virtual QStringList menus();
-    virtual bool clicked();
+        virtual QVariant call(const QString &func, QVariantList args = QVariantList());
+        virtual void toXML(QDomElement *) const;
+        virtual bool fromXML(const QDomElement &);
+        virtual QPixmap pixmap() const;
+        virtual void actions(QList<QAction *> *) const;
+        virtual bool prepare(const QString &);
+        virtual void finished();
+        virtual QMap<QString, QString> subTypes() const;
+        virtual QString title() const;
 
-  public slots:
-    virtual void clean();
+        virtual QImage preview(const QString & = "");
+        virtual QStringList menus();
+        virtual bool clicked();
 
-  private:
-    mutable Kross::Object::Ptr m_object;
+    public slots:
+        virtual void clean();
+
+    private:
+        mutable Kross::Object::Ptr m_object;
 };
 
 #endif // KROSSTEMPLATEOBJECT_H
-

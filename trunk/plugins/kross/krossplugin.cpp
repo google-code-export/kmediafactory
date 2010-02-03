@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,7 +16,7 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #include "krossplugin.h"
 
@@ -36,93 +36,96 @@
 
 K_EXPORT_KMEDIAFACTORY_PLUGIN(kross, KrossPlugin)
 
-KrossPlugin::KrossPlugin(QObject* parent, const QVariantList& args) :
-  KMF::Plugin(parent), m_action(0)
+KrossPlugin::KrossPlugin(QObject *parent, const QVariantList &args)
+    : KMF::Plugin(parent)
+    , m_action(0)
 {
-  KGlobal::locale()->insertCatalog("kmediafactory_kross");
-  //KMF::Tools::spy(this);
-  KService::Ptr service = args[0].value<KService::Ptr>();
-  QString name = service->property("Name").toString();
-  QString script = service->property("X-KMediaFactory-Script").toString();
-  QString uirc = service->property("X-KMediaFactory-UiRcFile").toString();
+    KGlobal::locale()->insertCatalog("kmediafactory_kross");
+    // KMF::Tools::spy(this);
+    KService::Ptr service = args[0].value<KService::Ptr>();
+    QString name = service->property("Name").toString();
+    QString script = service->property("X-KMediaFactory-Script").toString();
+    QString uirc = service->property("X-KMediaFactory-UiRcFile").toString();
 
-  //kDebug() << name << script << uirc;
-  setObjectName(name);
-  m_action = new Kross::Action(this, script);
+    // kDebug() << name << script << uirc;
+    setObjectName(name);
+    m_action = new Kross::Action(this, script);
 
-  script = KGlobal::dirs()->locate("appdata", "tools/bin/" + script);
-  m_action->setFile(script);
+    script = KGlobal::dirs()->locate("appdata", "tools/bin/" + script);
+    m_action->setFile(script);
 
-  m_action->addObject(this, "kmediafactory");
-  if (!uirc.isEmpty()) {
-    setXMLFile(uirc);
-  }
+    m_action->addObject(this, "kmediafactory");
 
-  //kDebug() << "Running" << script;
-  m_action->trigger();
+    if (!uirc.isEmpty()) {
+        setXMLFile(uirc);
+    }
+
+    // kDebug() << "Running" << script;
+    m_action->trigger();
 }
 
 KrossPlugin::~KrossPlugin()
 {
-  kDebug();
+    kDebug();
 }
 
 void KrossPlugin::init(const QString &type)
 {
-  kDebug() << type;
+    kDebug() << type;
 
-  if (m_plugin) {
-    // init is reserved word in ?? well in some scripting language
-    m_plugin->callMethod("initPlugin", QVariantList() << type);
-  }
+    if (m_plugin) {
+        // init is reserved word in ?? well in some scripting language
+        m_plugin->callMethod("initPlugin", QVariantList() << type);
+    }
 }
 
 QStringList KrossPlugin::supportedProjectTypes() const
 {
-  kDebug();
-  if (m_plugin) {
-    return m_plugin->callMethod("supportedProjectTypes").toStringList();
-  }
-  return QStringList();
+    kDebug();
+
+    if (m_plugin) {
+        return m_plugin->callMethod("supportedProjectTypes").toStringList();
+    }
+
+    return QStringList();
 }
 
-KMF::MediaObject* KrossPlugin::createMediaObject(const QDomElement&)
+KMF::MediaObject *KrossPlugin::createMediaObject(const QDomElement &)
 {
-  return 0;
+    return 0;
 }
 
-const KMF::ConfigPage* KrossPlugin::configPage() const
+const KMF::ConfigPage *KrossPlugin::configPage() const
 {
-  return 0;
+    return 0;
 }
 
 void KrossPlugin::registerPlugin(Kross::Object::Ptr plugin)
 {
-  m_plugin = plugin;
+    m_plugin = plugin;
 }
 
-QObject* KrossPlugin::interface()
+QObject *KrossPlugin::interface()
 {
-  return new KrossPluginInterface(this, KMF::Plugin::interface());
+    return new KrossPluginInterface(this, KMF::Plugin::interface());
 }
 
 void KrossPlugin::actionTriggered()
 {
-  QVariantList args = m_actionMap[sender()];
-  if (args.size() == 2) {
-    Kross::Object::Ptr obj = args[0].value< Kross::Object::Ptr >();
-    obj->callMethod(args[1].toString());
-  }
+    QVariantList args = m_actionMap[sender()];
+
+    if (args.size() == 2) {
+        Kross::Object::Ptr obj = args[0].value<Kross::Object::Ptr>();
+        obj->callMethod(args[1].toString());
+    }
 }
 
-void KrossPlugin::addActions(QList<QAction*>* actionList, QStringList actions)
+void KrossPlugin::addActions(QList<QAction *> *actionList, QStringList actions)
 {
-  foreach (const QString& act, actions)
-  {
-    QAction* a = actionCollection()->action(act);
-    actionList->append(a);
-  }
+    foreach (const QString &act, actions) {
+        QAction *a = actionCollection()->action(act);
+        actionList->append(a);
+    }
 }
 
 #include "krossplugin.moc"
-
