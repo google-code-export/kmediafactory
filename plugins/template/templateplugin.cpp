@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,7 +16,7 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #include "config.h"
 #include "templateplugin.h"
@@ -47,57 +47,59 @@ K_EXPORT_KMEDIAFACTORY_PLUGIN(template, TemplatePlugin)
 
 class TemplateConfig : public QWidget, public Ui::ConfigureTemplatePlugin
 {
-  public:
-    TemplateConfig(QWidget* parent = 0) : QWidget(parent)
-    {
-      setupUi(this);
-    };
+    public:
+        TemplateConfig(QWidget *parent = 0) : QWidget(parent)
+        {
+            setupUi(this);
+        };
 };
 
-TemplatePlugin::TemplatePlugin(QObject *parent, const QVariantList&) :
-  KMF::Plugin(parent)
+TemplatePlugin::TemplatePlugin(QObject *parent, const QVariantList &)
+    : KMF::Plugin(parent)
 {
-  KGlobal::locale()->insertCatalog("kmediafactory_template");
-  setObjectName("KMFTemplateEngine");
-  // Initialize GUI
-  setXMLFile("kmediafactory_templateui.rc");
+    KGlobal::locale()->insertCatalog("kmediafactory_template");
+    setObjectName("KMFTemplateEngine");
+    // Initialize GUI
+    setXMLFile("kmediafactory_templateui.rc");
 }
 
-const KMF::ConfigPage* TemplatePlugin::configPage() const
+const KMF::ConfigPage *TemplatePlugin::configPage() const
 {
-  KMF::ConfigPage* configPage = new KMF::ConfigPage;
-  configPage->page = new TemplateConfig;
-  configPage->config = TemplatePluginSettings::self();
-  configPage->itemName = i18n("Template");
-  configPage->itemDescription = i18n("Template Settings");
-  configPage->pixmapName = "folder-image";
-  return configPage;
+    KMF::ConfigPage *configPage = new KMF::ConfigPage;
+
+    configPage->page = new TemplateConfig;
+    configPage->config = TemplatePluginSettings::self();
+    configPage->itemName = i18n("Template");
+    configPage->itemDescription = i18n("Template Settings");
+    configPage->pixmapName = "folder-image";
+    return configPage;
 }
 
 void TemplatePlugin::init(const QString &type)
 {
-  kDebug() << type;
-  deleteChildren();
-  if (type.left(3) == "DVD")
-  {
-    kDebug() << "Trying to find templates from: "
-        << KGlobal::dirs()->resourceDirs("data");
-    QStringList list =
-        KMF::Tools::findAllResources("data", "kmediafactory_template/*.kmft");
-    kDebug() << "Found templates: " << list;
+    kDebug() << type;
+    deleteChildren();
 
-    for(QStringList::Iterator it = list.begin(); it != list.end(); ++it)
-      new TemplateObject(*it, this);
-  }
-  new NewStuffObject(this);
+    if (type.left(3) == "DVD") {
+        kDebug() << "Trying to find templates from: " <<
+        KGlobal::dirs()->resourceDirs("data");
+        QStringList list = KMF::Tools::findAllResources("data", "kmediafactory_template/*.kmft");
+        kDebug() << "Found templates: " << list;
+
+        foreach (const QString& temp, list) {
+            new TemplateObject(temp, this);
+        }
+    }
+
+    new NewStuffObject(this);
 }
 
 QStringList TemplatePlugin::supportedProjectTypes() const
 {
-  QStringList result;
-  result << "DVD-PAL" << "DVD-NTSC";
-  return result;
+    QStringList result;
+
+    result << "DVD-PAL" << "DVD-NTSC";
+    return result;
 }
 
 #include "templateplugin.moc"
-

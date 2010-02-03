@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,11 +16,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #ifndef KMFWIDGETFACTORY_H
 #define KMFWIDGETFACTORY_H
-
-
 
 #include "kmftemplatebase.h"
 #include "templateobject.h"
@@ -29,27 +28,23 @@ class QDomElement;
 class KMFWidget;
 class KConfigXML;
 
-/**
-@author Petri Damsten
-*/
 class KMFWidgetFactory : public KMFTemplateBase
 {
     Q_OBJECT
-  public:
-    KMFWidgetFactory(QObject *parent = 0);
-    ~KMFWidgetFactory();
 
-    KMFWidget* create(const QDomElement& element, QObject* parent = 0);
-    static KMFWidget* createPage(const QDomElement& element,
-                                 QObject* parent = 0,
-                                 int title = 0, int chapter = 0);
+    public:
+        KMFWidgetFactory(QObject *parent = 0);
+        ~KMFWidgetFactory();
 
-  private:
-    KMFWidget* newWidget(QString type, QObject* parent = 0);
-    int m_title;
-    int m_chapter;
-    const KConfigXML* m_customProperties;
+        KMFWidget*create(const QDomElement &element, QObject *parent = 0);
+        static KMFWidget*createPage(const QDomElement &element, QObject *parent = 0, int title = 0,
+            int chapter = 0);
+
+    private:
+        KMFWidget*newWidget(QString type, QObject *parent = 0);
+        int m_title;
+        int m_chapter;
+        const KConfigXML *m_customProperties;
 };
 
 #endif
-

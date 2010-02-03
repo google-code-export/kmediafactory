@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,28 +16,26 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #ifndef TEMPLATEPLUGIN_H
 #define TEMPLATEPLUGIN_H
 
-
-
 #include <kmediafactory/plugin.h>
 
-class TemplatePlugin :public KMF::Plugin
+class TemplatePlugin : public KMF::Plugin
 {
     Q_OBJECT
-  public:
-    TemplatePlugin(QObject *parent, const QVariantList&);
 
-  public slots:
-    virtual void init(const QString &type);
+    public:
+        TemplatePlugin(QObject *parent, const QVariantList &);
 
-  public:
-    virtual const KMF::ConfigPage* configPage() const;
-    virtual QStringList supportedProjectTypes() const;
+    public slots:
+        virtual void init(const QString &type);
+
+    public:
+        virtual const KMF::ConfigPage*configPage() const;
+        virtual QStringList supportedProjectTypes() const;
 };
 
 #endif /* TEMPLATEPLUGIN_H */
-
-

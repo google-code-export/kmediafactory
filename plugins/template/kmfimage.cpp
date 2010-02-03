@@ -82,16 +82,17 @@ QRect KMFImage::paintRect(const QPoint offset) const
         if (m_proportional) {
             rc.set(KMFWidget::paintRect(), m_aspectRatio);
             rc.align(KMFWidget::paintRect(), halign(), valign());
-        } else   {
+        } else {
             rc = KMFWidget::paintRect();
         }
-    } else   {
+    } else {
         if (!m_image.isNull()) {
             rc = QRect(0, 0, m_image.width(), m_image.height());
         } else {
             QSize size = svgSize().toSize();
             rc = QRect(0, 0, size.width(), size.height());
         }
+
         rc.align(KMFWidget::paintRect(), halign(), valign());
     }
 
@@ -117,7 +118,7 @@ QImage KMFImage::mask(const QImage &img, const QRgb &maskColor, bool oneBitMask)
                 } else {
                     pix = qRgba(qRed(maskColor), qGreen(maskColor), qBlue(maskColor), 0);
                 }
-            } else   {
+            } else {
                 pix = qRgba(qRed(maskColor), qGreen(maskColor), qBlue(maskColor),
                         (int)(alphaScale * qAlpha(pix)));
             }
@@ -212,7 +213,7 @@ void KMFImage::setImage(KUrl url)
             setImage(mobs.at(title - 1)->preview(chapter));
             ok = true;
         }
-    } else if (url.protocol() == "template")    {
+    } else if (url.protocol() == "template") {
         const KMFTemplate *tmplate = menu()->templateStore();
 
         if (svg) {
@@ -224,7 +225,7 @@ void KMFImage::setImage(KUrl url)
         }
 
         ok = true;
-    } else if (url.protocol() == "kde")    {
+    } else if (url.protocol() == "kde") {
         QString tmpFile = KStandardDirs::locate(url.host().toLocal8Bit(),
                 url.path().mid(1));
 
@@ -237,7 +238,7 @@ void KMFImage::setImage(KUrl url)
 
             ok = true;
         }
-    } else   {
+    } else {
         QString tmpFile;
 
         if (url.protocol() != "file") {
@@ -306,12 +307,13 @@ int KMFImage::minimumPaintWidth() const
     } else {
         result = svgSize().toSize().width();
     }
+
     if (geometry().width().type() == KMFUnit::Absolute) {
         result = geometry().width().value();
-    } else if (geometry().width().type() == KMFUnit::Minimum)    {
+    } else if (geometry().width().type() == KMFUnit::Minimum) {
         if (geometry().height().type() == KMFUnit::Absolute) {
             result = (int)((double)geometry().height().value() * m_aspectRatio);
-        } else if (geometry().height().type() == KMFUnit::Percentage)    {
+        } else if (geometry().height().type() == KMFUnit::Percentage) {
             result = (int)((double)geometry().h() * m_aspectRatio);
         }
     }
@@ -329,12 +331,13 @@ int KMFImage::minimumPaintHeight() const
     } else {
         result = svgSize().toSize().height();
     }
+
     if (geometry().height().type() == KMFUnit::Absolute) {
         result = geometry().height().value();
-    } else if (geometry().height().type() == KMFUnit::Minimum)    {
+    } else if (geometry().height().type() == KMFUnit::Minimum) {
         if (geometry().width().type() == KMFUnit::Absolute) {
             result = (int)((double)geometry().width().value() / m_aspectRatio);
-        } else if (geometry().width().type() == KMFUnit::Percentage)    {
+        } else if (geometry().width().type() == KMFUnit::Percentage) {
             result = (int)((double)geometry().w() / m_aspectRatio);
         }
     }
@@ -353,4 +356,3 @@ void KMFImage::setProperty(const QString &name, QVariant value)
 }
 
 #include "kmfimage.moc"
-

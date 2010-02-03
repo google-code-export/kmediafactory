@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2008 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,19 +16,17 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #ifndef KMFTEMPLATEBASE_H
 #define KMFTEMPLATEBASE_H
 
-
 #include <QtCore/QObject>
-
 
 namespace KMF
 {
-  class PluginInterface;
-  class Plugin;
+class PluginInterface;
+class Plugin;
 }
 
 class TemplateObject;
@@ -38,20 +36,20 @@ class KMFMenuPage;
 class KMFTemplateBase : public QObject
 {
     Q_OBJECT
-  public:
-    KMFTemplateBase(QObject *parent = 0);
-    ~KMFTemplateBase();
 
-    static QString uiText(const QString& s);
+    public:
+        KMFTemplateBase(QObject *parent = 0);
+        ~KMFTemplateBase();
 
-  protected:
-    KMF::PluginInterface* m_interface;
+        static QString uiText(const QString &s);
 
-    KMFMenuPage* page();
-    KMFMenu* menu();
-    TemplateObject* templateObject();
-    KMF::Plugin* plugin();
+    protected:
+        KMF::PluginInterface *m_interface;
+
+        KMFMenuPage*page();
+        KMFMenu*menu();
+        TemplateObject*templateObject();
+        KMF::Plugin*plugin();
 };
 
 #endif // KMFTEMPLATEBASE_H
-

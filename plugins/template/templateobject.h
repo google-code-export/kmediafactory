@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,12 +16,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #ifndef TEMPLATEOBJECT_H
 #define TEMPLATEOBJECT_H
-
-
 
 #include <KUrl>
 
@@ -35,58 +33,63 @@ class KAction;
 
 class KMFConfigXML : public KConfigXML
 {
-  public:
-    KMFConfigXML() : KConfigXML() {};
-    ~KMFConfigXML() {};
+    public:
+        KMFConfigXML() : KConfigXML(){};
+        ~KMFConfigXML(){};
 
-  protected:
-    virtual QString parseCode(QString code);
+    protected:
+        virtual QString parseCode(QString code);
 };
 
 class TemplateObject : public KMF::TemplateObject
 {
-  friend class TemplateOptions;
+    friend class TemplateOptions;
 
     Q_OBJECT
-  public:
-    TemplateObject(const QString& templateFile, QObject* parent);
-    virtual ~TemplateObject();
 
-    virtual void toXML(QDomElement* element) const;
-    virtual bool fromXML(const QDomElement& element);
-    virtual bool prepare(const QString& type);
-    virtual QStringList menus();
-    virtual void actions(QList<QAction*>*) const;
-    KConfigXML& customProperties() { return m_customProperties; };
-    QVariant property(const QString& widget, const QString& name) const;
-    void setProperty(const QString& widget, const QString& name,
-                     const QVariant& value);
-    bool fileExists();
+    public:
+        TemplateObject(const QString &templateFile, QObject *parent);
+        virtual ~TemplateObject();
 
-  public slots:
-    virtual void slotProperties();
-    // Help Kross plugin declaring these as slots
-    virtual QPixmap pixmap() const;
-    virtual QImage preview(const QString& = "");
-    // KMF::Object::call slots
-    QVariant directPlay(QVariantList args);
-    QVariant continueToNextTitle(QVariantList args);
-    QVariant writeDvdAuthorXml(QVariantList args);
-    QVariant language(QVariantList args);
+        virtual void toXML(QDomElement *element) const;
+        virtual bool fromXML(const QDomElement &element);
+        virtual bool prepare(const QString &type);
+        virtual QStringList menus();
+        virtual void actions(QList<QAction *> *) const;
+        KConfigXML&customProperties()
+        {
+            return m_customProperties;
+        };
+        QVariant property(const QString &widget, const QString &name) const;
+        void setProperty(const QString &widget, const QString &name, const QVariant &value);
+        bool fileExists();
 
-  protected:
-    const KMFMenu& menu() const { return m_menu; }
+    public slots:
+        virtual void slotProperties();
+        // Help Kross plugin declaring these as slots
+        virtual QPixmap pixmap() const;
+        virtual QImage preview(const QString & = "");
+        // KMF::Object::call slots
+        QVariant directPlay(QVariantList args);
+        QVariant continueToNextTitle(QVariantList args);
+        QVariant writeDvdAuthorXml(QVariantList args);
+        QVariant language(QVariantList args);
 
-  private:
-    KAction* m_templateProperties;
-    KMFConfigXML m_customProperties;
-    KMFMenu m_menu;
-    QString m_file;
-    QString m_type;
+    protected:
+        const KMFMenu&menu() const
+        {
+            return m_menu;
+        }
 
-    QString propertyString(KConfigSkeletonItem* item) const;
-    bool isUpToDate(QString type);
+    private:
+        KAction *m_templateProperties;
+        KMFConfigXML m_customProperties;
+        KMFMenu m_menu;
+        QString m_file;
+        QString m_type;
+
+        QString propertyString(KConfigSkeletonItem *item) const;
+        bool isUpToDate(QString type);
 };
 
 #endif // TEMPLATEOBJECT_H
-

@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,33 +16,38 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #ifndef KMFFRAME_H
 #define KMFFRAME_H
-
-
 
 #include "kmfwidget.h"
 
 class KMFFrame : public KMFWidget
 {
     Q_OBJECT
-  public:
-    KMFFrame(QObject *parent = 0);
-    ~KMFFrame();
 
-    const int& lineWidth() const { return m_lineWidth; };
-    void setLineWidth(const int& lineWidth) { m_lineWidth = lineWidth; };
-    void fromXML(const QDomElement& element);
+    public:
+        KMFFrame(QObject *parent = 0);
+        ~KMFFrame();
 
-  protected:
-    virtual void paintWidget(QImage* layer, bool shdw = false) const;
+        const int&lineWidth() const
+        {
+            return m_lineWidth;
+        };
+        void setLineWidth(const int &lineWidth)
+        {
+            m_lineWidth = lineWidth;
+        };
+        void fromXML(const QDomElement &element);
 
-  private:
-    int m_lineWidth;
-    QColor m_fillColor;
-    int m_rounded;
+    protected:
+        virtual void paintWidget(QImage *layer, bool shdw = false) const;
+
+    private:
+        int m_lineWidth;
+        QColor m_fillColor;
+        int m_rounded;
 };
 
 #endif
-

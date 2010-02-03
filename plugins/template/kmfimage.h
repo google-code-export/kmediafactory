@@ -21,7 +21,6 @@
 #ifndef KMFIMAGE_H
 #define KMFIMAGE_H
 
-
 #include <QtGui/QImage>
 
 #include <KSvgRenderer>
@@ -71,4 +70,3 @@ class KMFImage : public KMFWidget
 };
 
 #endif
-

@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,14 +16,14 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #include "newstuffobject.h"
 
 #include <KApplication>
 #include <KIconLoader>
 #include <KLocale>
-#if KDE_IS_VERSION(4,3,90)
+#if KDE_IS_VERSION(4, 3, 90)
 #include <KNS3/DownloadDialog>
 #else
 #include <KNS/Engine>
@@ -33,65 +33,61 @@
 #include "templateobject.h"
 #include "templateplugin.h"
 
-NewStuffObject::NewStuffObject(QObject* parent):
-  KMF::TemplateObject(parent), m_newstuff(0)
+NewStuffObject::NewStuffObject(QObject *parent) : KMF::TemplateObject(parent), m_newstuff(0)
 {
-  setObjectName("newstuff");
-  setTitle(i18n("Get More..."));
-  interface()->addTemplateObject(this);
+    setObjectName("newstuff");
+    setTitle(i18n("Get More..."));
+    interface()->addTemplateObject(this);
 }
 
 NewStuffObject::~NewStuffObject()
 {
-  KMF::PluginInterface *ui = interface();
-  if(ui)
-    interface()->removeTemplateObject(this);
+    KMF::PluginInterface *ui = interface();
+
+    if (ui) {
+        interface()->removeTemplateObject(this);
+    }
 }
 
 bool NewStuffObject::clicked()
 {
-  // Remove uninstalled
-  QList< ::TemplateObject* > templates = parent()->findChildren< ::TemplateObject* >();
-  foreach (::TemplateObject* temp, templates)
-  {
-    if (!temp->fileExists())
-      delete temp;
-  }
+    // Remove uninstalled
+    QList< ::TemplateObject* > templates = parent()->findChildren< ::TemplateObject* >();
+    foreach (::TemplateObject *temp, templates) {
+        if (!temp->fileExists()) {
+            delete temp;
+        }
+    }
 
-  #if KDE_IS_VERSION(4,3,90)
-  KNS3::DownloadDialog dialog("kmediafactory_template.knsrc", kapp->activeWindow());
-  dialog.exec();
-  KNS3::Entry::List entries = dialog.changedEntries();
-  // Add installed
-  foreach (const KNS3::Entry& entry, entries)
-  {
-    foreach (QString file, entry.installedFiles())
-    {
-      new ::TemplateObject(file, parent());
+#if KDE_IS_VERSION(4, 3, 90)
+    KNS3::DownloadDialog dialog("kmediafactory_template.knsrc", kapp->activeWindow());
+    dialog.exec();
+    KNS3::Entry::List entries = dialog.changedEntries();
+    // Add installed
+    foreach (const KNS3::Entry & entry, entries) {
+        foreach (QString file, entry.installedFiles()) {
+            new ::TemplateObject(file, parent());
+        }
     }
-  }
-  #else
-  KNS::Engine *engine = new KNS::Engine();
-  engine->init("kmediafactory_template.knsrc");
-  KNS::Entry::List entries = engine->downloadDialogModal(kapp->activeWindow());
-  delete engine;
-  // Add installed
-  foreach (KNS::Entry* entry, entries)
-  {
-    foreach (QString file, entry->installedFiles())
-    {
-      new ::TemplateObject(file, parent());
+#else
+    KNS::Engine *engine = new KNS::Engine();
+    engine->init("kmediafactory_template.knsrc");
+    KNS::Entry::List entries = engine->downloadDialogModal(kapp->activeWindow());
+    delete engine;
+    // Add installed
+    foreach (KNS::Entry * entry, entries) {
+        foreach (QString file, entry->installedFiles()) {
+            new ::TemplateObject(file, parent());
+        }
     }
-  }
-  #endif
-  return true;
+#endif
+    return true;
 }
 
 QPixmap NewStuffObject::pixmap() const
 {
-  return KIconLoader::global()->loadIcon("get-hot-new-stuff",
-      KIconLoader::NoGroup, KIconLoader::SizeLarge);
+    return KIconLoader::global()->loadIcon("get-hot-new-stuff",
+            KIconLoader::NoGroup, KIconLoader::SizeLarge);
 }
 
 #include "newstuffobject.moc"
-

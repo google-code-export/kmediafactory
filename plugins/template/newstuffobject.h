@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,10 +16,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #ifndef NEWSTUFFOBJECT_H
 #define NEWSTUFFOBJECT_H
-
 
 #include <QtGui/QPixmap>
 
@@ -27,22 +27,19 @@
 
 class TemplateNewStuff;
 
-/**
-*/
-
 class NewStuffObject : public KMF::TemplateObject
 {
-  Q_OBJECT
-  public:
-    NewStuffObject(QObject* parent);
-    virtual ~NewStuffObject();
+    Q_OBJECT
 
-    virtual bool clicked();
-    virtual QPixmap pixmap() const;
-    
-  private:
-    TemplateNewStuff* m_newstuff;
+    public:
+        NewStuffObject(QObject *parent);
+        virtual ~NewStuffObject();
+
+        virtual bool clicked();
+        virtual QPixmap pixmap() const;
+
+    private:
+        TemplateNewStuff *m_newstuff;
 };
 
 #endif // NEWSTUFFOBJECT_H
-
