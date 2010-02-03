@@ -20,6 +20,7 @@
 
 #include "plugin.h"
 
+
 KMF::Plugin::Plugin(QObject *parent)
   : QObject(parent)
 {
@@ -59,3 +60,4 @@ const KMF::ConfigPage* KMF::Plugin::configPage() const
 }
 
 #include "plugin.moc"
+

@@ -20,9 +20,12 @@
 #ifndef KROSSPLUGININTERFACE_H
 #define KROSSPLUGININTERFACE_H
 
-#include <QObject>
-#include "kmediafactory/plugininterface.h"
-#include <kross/core/object.h>
+
+#include <QtCore/QObject>
+
+#include <Kross/Object>
+
+#include <kmediafactory/plugininterface.h>
 
 class KrossPluginInterface : public QObject
 {
@@ -83,3 +86,4 @@ class KrossPluginInterface : public QObject
 };
 
 #endif // KROSSPLUGININTERFACE_H
+

@@ -19,10 +19,13 @@
 //**************************************************************************
 
 #include "kmfgeometry.h"
-#include "kmfwidget.h"
+
+#include <QtCore/QRegExp>
+#include <QtCore/QString>
+
 #include <KDebug>
-#include <QString>
-#include <QRegExp>
+
+#include "kmfwidget.h"
 
 QSize KMFUnit::m_maxSize = QSize(0, 0);
 
@@ -282,3 +285,4 @@ void KMFGeometry::setMargin(QString margin)
       << m_left.margin();
   */
 }
+

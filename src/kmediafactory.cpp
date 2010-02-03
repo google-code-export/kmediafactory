@@ -19,64 +19,65 @@
 //**************************************************************************
 
 #include "kmediafactory.h"
-#include "kmfapplication.h"
-#include "projectoptions.h"
-#include "mediapage.h"
-#include "templatepage.h"
-#include "outputpage.h"
-#include "kmfplugininterface.h"
-#include "projectoptions.h"
-#include "kmfproject.h"
-#include "kmfoptions.h"
-#include "tools.h"
-#include "kmediafactorysettings.h"
-#include "sizewidget.h"
+
+#include <QtCore/QObject>
+#include <QtCore/QPoint>
+#include <QtCore/QTimer>
+#include <QtGui/QDragEnterEvent>
+#include <QtGui/QDropEvent>
+#include <QtGui/QLabel>
+#include <QtGui/QStandardItemModel>
+#include <QtGui/QToolButton>
+
+#include <KActionCollection>
+#include <KCmdLineArgs>
+#include <KConfig>
+#include <KConfigDialog>
+#include <KDebug>
+#include <KDesktopFile>
+#include <KDialog>
+#include <KEditToolBar>
+#include <KFileDialog>
+#include <KIcon>
+#include <KIconLoader>
+#include <KLocale>
+#include <KMainWindow>
+#include <KMenuBar>
+#include <KMessageBox>
+#include <KPageWidget>
+#include <KPushButton>
+#include <KRun>
+#include <KService>
+#include <KShortcutsDialog>
+#include <KStandardAction>
+#include <KStandardDirs>
+#include <KStatusBar>
+#include <KToggleAction>
+#include <KToolBar>
+#include <KXMLGUIFactory>
+#include <KIO/NetAccess>
+#if KDE_IS_VERSION(4,3,90)
+#include <KNS3/DownloadDialog>
+#else
+#include <KNS/Engine>
+#endif
+
+#include <kmediafactorysettings.h>
 #include <kmfimageview.h>
 #include <kmftools.h>
 #include <run.h>
 #include <kmediafactory/plugin.h>
-
-#include <KIO/NetAccess>
-#if KDE_IS_VERSION(4,3,90)
-#include <knewstuff3/downloaddialog.h>
-#else
-#include <knewstuff2/engine.h>
-#endif
-#include <KRun>
-#include <KService>
-#include <KActionCollection>
-#include <KMainWindow>
-#include <KConfigDialog>
-#include <KLocale>
-#include <KStandardAction>
-#include <KPageWidget>
-#include <KDialog>
-#include <KDebug>
-#include <KFileDialog>
-#include <KIconLoader>
-#include <KCmdLineArgs>
-#include <KConfig>
-#include <KEditToolBar>
-#include <KMessageBox>
-#include <KPushButton>
-#include <KMenuBar>
-#include <KDesktopFile>
-#include <KStandardDirs>
-#include <KIcon>
-#include <KXMLGUIFactory>
-#include <KToggleAction>
-#include <KShortcutsDialog>
-#include <KToolBar>
-#include <KStatusBar>
-
-#include <QLabel>
-#include <QObject>
-#include <QToolButton>
-#include <QPoint>
-#include <QTimer>
-#include <QDragEnterEvent>
-#include <QDropEvent>
-#include <QStandardItemModel>
+#include "kmfapplication.h"
+#include "kmfoptions.h"
+#include "kmfplugininterface.h"
+#include "kmfproject.h"
+#include "mediapage.h"
+#include "outputpage.h"
+#include "projectoptions.h"
+#include "projectoptions.h"
+#include "sizewidget.h"
+#include "templatepage.h"
+#include "tools.h"
 
 KMediaFactory::KMediaFactory()
   : KXmlGuiWindow(0), m_janusIconList(0), m_enabled(true),
@@ -369,7 +370,7 @@ void KMediaFactory::setProjectDirectory(const QString& dir)
 {
     projectPage->setProjectDirectory(dir);
 }
-    
+
 void KMediaFactory::fileSave()
 {
   if(!kmfApp->project()->save())
@@ -610,3 +611,6 @@ void KMediaFactory::showPage(int page)
 }
 
 #include "kmediafactory.moc"
+
+
+

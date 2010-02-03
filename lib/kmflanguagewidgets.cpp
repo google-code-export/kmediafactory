@@ -18,9 +18,12 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 #include "kmflanguagewidgets.h"
+
+#include <QtGui/QBitmap>
+#include <QtGui/QPixmap>
+
 #include <KDebug>
-#include <QPixmap>
-#include <QBitmap>
+
 #include "qdvdinfo.h"
 
 LanguageListModel::LanguageListModel(QObject *parent) :
@@ -182,3 +185,4 @@ QModelIndex LanguageListModel::index(const QString& lang) const
 QMap<QString, QString> LanguageListModel::m_dvd2l10n;
 
 #include "kmflanguagewidgets.moc"
+

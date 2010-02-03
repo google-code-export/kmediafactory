@@ -20,6 +20,8 @@
 #ifndef TEMPLATEPLUGIN_H
 #define TEMPLATEPLUGIN_H
 
+
+
 #include <kmediafactory/plugin.h>
 
 class TemplatePlugin :public KMF::Plugin
@@ -37,4 +39,5 @@ class TemplatePlugin :public KMF::Plugin
 };
 
 #endif /* TEMPLATEPLUGIN_H */
+
 

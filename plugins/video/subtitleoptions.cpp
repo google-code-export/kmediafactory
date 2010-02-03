@@ -18,15 +18,18 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 #include "subtitleoptions.h"
-#include "kmflanguagewidgets.h"
-#include <KFontRequester>
-#include <KUrlRequester>
-#include <KFontDialog>
-#include <KMessageBox>
+
+#include <QtGui/QLabel>
+
 #include <KApplication>
 #include <KDebug>
+#include <KFontDialog>
+#include <KFontRequester>
+#include <KMessageBox>
+#include <KUrlRequester>
 #include <KIO/NetAccess>
-#include <QLabel>
+
+#include <kmflanguagewidgets.h>
 
 SubtitleOptionsWidget::SubtitleOptionsWidget(QWidget *parent, bool wantFile)
  : QWidget(parent)
@@ -143,3 +146,4 @@ void SubtitleOptions::accept()
 }
 
 #include "subtitleoptions.moc"
+

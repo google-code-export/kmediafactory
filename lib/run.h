@@ -20,10 +20,13 @@
 #ifndef RUN_H
 #define RUN_H
 
+
+#include <QtCore/QObject>
+#include <QtCore/QProcess>
+#include <QtCore/QString>
+
 #include <kdemacros.h>
-#include <QObject>
-#include <QString>
-#include <QProcess>
+
 
 /**
 	@author Petri Damsten <petri.damsten@iki.fi>
@@ -57,3 +60,4 @@ class KDE_EXPORT Run : public QProcess
 };
 
 #endif
+

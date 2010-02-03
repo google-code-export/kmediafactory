@@ -19,9 +19,12 @@
 //**************************************************************************
 
 #include "kconfigxml.h"
+
+#include <QtXml/QDomDocument>
+
 #include <KDebug>
 #include <KTemporaryFile>
-#include <QDomDocument>
+
 
 class TempFileStore
 {
@@ -298,3 +301,4 @@ void KConfigXML::parseKCFGXMLEntry(const QDomElement& element)
     m_urls.append(url);
   }
 }
+

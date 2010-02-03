@@ -20,7 +20,10 @@
 #ifndef KMF_STDDEF_H
 #define KMF_STDDEF_H
 
-#include "config.h"
+
+
+#include <config.h>
+
 
 // Force define of MIN & MAX macros
 #ifdef HAVE_STDINT_H
@@ -31,3 +34,4 @@
 #endif
 
 #endif // KMF_STDDEF_H
+

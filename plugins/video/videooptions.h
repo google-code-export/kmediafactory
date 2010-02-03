@@ -21,10 +21,12 @@
 #ifndef VIDEOOPTIONS_H
 #define VIDEOOPTIONS_H
 
+
+
 #include <kmf_stddef.h>
-#include "ui_videooptions.h"
+#include <kmflanguagewidgets.h>
+#include <ui_videooptions.h>
 #include "videoobject.h"
-#include "kmflanguagewidgets.h"
 
 class Chapters;
 class VideoOptions : public KDialog, public Ui::VideoOptions
@@ -57,3 +59,4 @@ class VideoOptions : public KDialog, public Ui::VideoOptions
 };
 
 #endif
+

@@ -21,7 +21,9 @@
 #ifndef KMFGEOMETRY_H
 #define KMFGEOMETRY_H
 
-#include <QRect>
+
+#include <QtCore/QRect>
+
 
 class QString;
 class KMFWidget;
@@ -104,3 +106,4 @@ class KMFGeometry
 };
 
 #endif
+

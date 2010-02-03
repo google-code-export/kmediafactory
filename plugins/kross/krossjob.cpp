@@ -19,6 +19,7 @@
 
 #include "krossjob.h"
 
+
 KrossJob::KrossJob(QObject* parent, Kross::Object::Ptr job)
  : KMF::Job(parent), m_job(job)
 {
@@ -36,3 +37,4 @@ void KrossJob::run()
 }
 
 #include "krossjob.moc"
+

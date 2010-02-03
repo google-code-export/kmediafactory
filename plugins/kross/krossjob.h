@@ -20,8 +20,11 @@
 #ifndef KROSSJOBOBJECT_H
 #define KROSSJOBOBJECT_H
 
+
+
+#include <Kross/Object>
+
 #include <kmediafactory/plugininterface.h>
-#include <kross/core/object.h>
 
 class KrossJob : public KMF::Job
 {
@@ -37,3 +40,4 @@ class KrossJob : public KMF::Job
 };
 
 #endif // KROSSJOBOBJECT_H
+

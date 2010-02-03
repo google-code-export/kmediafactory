@@ -18,27 +18,31 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 #include "slideshowproperties.h"
-#include "slideshowobject.h"
-#include "subtitleoptions.h"
-#include <kmftime.h>
-#include <kmfmultiurldialog.h>
-#include <kmfmediafile.h>
-#include <KUrlRequester>
-#include <KMessageBox>
-#include <kio/previewjob.h>
-#include <KFileDialog>
-#include <KLocale>
+
+#include <QtCore/QFileInfo>
+#include <QtCore/QMimeData>
+#include <QtGui/QBoxLayout>
+#include <QtGui/QCheckBox>
+#include <QtGui/QLabel>
+#include <QtGui/QLineEdit>
+#include <QtGui/QPixmap>
+#include <QtGui/QSpinBox>
+
 #include <KApplication>
 #include <KDebug>
+#include <KFileDialog>
 #include <KIconLoader>
-#include <QPixmap>
-#include <QSpinBox>
-#include <QLabel>
-#include <QCheckBox>
-#include <QLineEdit>
-#include <QFileInfo>
-#include <QMimeData>
-#include <QBoxLayout>
+#include <KLocale>
+#include <KMessageBox>
+#include <KUrlRequester>
+#include <KIO/PreviewJob>
+
+#include <subtitleoptions.h>
+
+#include <kmfmediafile.h>
+#include <kmfmultiurldialog.h>
+#include <kmftime.h>
+#include "slideshowobject.h"
 
 enum Columns
 {
@@ -422,3 +426,4 @@ void SlideshowProperties::okClicked()
 }
 
 #include "slideshowproperties.moc"
+

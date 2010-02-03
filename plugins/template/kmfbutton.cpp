@@ -19,9 +19,11 @@
 //**************************************************************************
 
 #include "kmfbutton.h"
+
+#include <QtXml/QDomDocument>
+
 #include "kmfmenu.h"
 #include "kmfmenupage.h"
-#include <QDomDocument>
 
 KMFButton::KMFButton(QObject *parent)
  : KMFWidget(parent)
@@ -223,3 +225,4 @@ void KMFButton::parseDirections()
 }
 
 #include "kmfbutton.moc"
+

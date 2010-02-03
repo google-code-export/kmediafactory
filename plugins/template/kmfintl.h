@@ -48,3 +48,6 @@ char* kmf_nl_find_msg(const struct kmf_loaded_l10nfile *domain_file,
 void kmf_nl_unload_domain(struct loaded_domain *domain);
 
 #endif // KMFINTL_H
+
+
+

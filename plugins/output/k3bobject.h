@@ -21,8 +21,10 @@
 #ifndef K3BOBJECT_H
 #define K3BOBJECT_H
 
+
+#include <QtGui/QPixmap>
+
 #include "dvddirectoryobject.h"
-#include <QPixmap>
 
 class KUrl;
 
@@ -61,3 +63,4 @@ class K3bObject : public DvdDirectoryObject
 };
 
 #endif
+

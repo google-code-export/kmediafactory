@@ -18,20 +18,23 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 #include "videooptions.h"
-#include "chapters.h"
-#include "ui_languageselection.h"
-#include "kmflanguagewidgets.h"
-#include "videopluginsettings.h"
-#include "subtitleoptions.h"
-#include "kmftools.h"
-#include <qdvdinfo.h>
+
+#include <QtGui/QComboBox>
+#include <QtGui/QLabel>
+#include <QtGui/QLineEdit>
+
 #include <KApplication>
-#include <KLocale>
 #include <KDebug>
+#include <KLocale>
 #include <KUrlRequester>
-#include <QLineEdit>
-#include <QComboBox>
-#include <QLabel>
+
+#include <kmflanguagewidgets.h>
+#include <kmftools.h>
+#include <qdvdinfo.h>
+#include <ui_languageselection.h>
+#include <videopluginsettings.h>
+#include "chapters.h"
+#include "subtitleoptions.h"
 
 class LanguageSelection : public KDialog, public Ui::LanguageSelection
 {
@@ -223,3 +226,4 @@ bool VideoOptions::isSelectedSubtitleInVideo()
 }
 
 #include "videooptions.moc"
+

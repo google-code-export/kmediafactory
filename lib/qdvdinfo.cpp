@@ -38,13 +38,17 @@
 //
 //**************************************************************************
 
-#include "kmf_stddef.h"
 #include "qdvdinfo.h"
+
+#include <QtCore/QFileInfo>
+
+#include <KApplication>
 #include <KDebug>
 #include <KLocale>
-#include <KApplication>
-#include <QFileInfo>
+
 #include <malloc.h>
+
+#include "kmf_stddef.h"
 
 namespace QDVD
 {
@@ -1041,3 +1045,4 @@ void Info::clear()
 }
 
 #include "qdvdinfo.moc"
+

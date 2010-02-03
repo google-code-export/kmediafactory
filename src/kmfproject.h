@@ -21,12 +21,17 @@
 #ifndef KMFPROJECT_H
 #define KMFPROJECT_H
 
-#include <kmediafactory/plugininterface.h>
+
+
+
+#include <QtCore/QDateTime>
+#include <QtCore/QString>
+
 #include <KUrl>
-#include <QString>
-#include <QDateTime>
-#include <kmfobjectlistmodel.h>
+
 #include <qdvdinfo.h>
+#include <kmediafactory/plugininterface.h>
+#include "kmfobjectlistmodel.h"
 
 class KMFProject : public QObject
 {
@@ -118,3 +123,6 @@ class KMFProject : public QObject
 };
 
 #endif // KMFPROJECT_H
+
+
+

@@ -20,6 +20,8 @@
 #ifndef OUTPUTPLUGIN_H
 #define OUTPUTPLUGIN_H
 
+
+
 #include <kmf_stddef.h>
 #include <kmediafactory/plugin.h>
 
@@ -53,4 +55,5 @@ class OutputPlugin : public KMF::Plugin
 };
 
 #endif // OUTPUTPLUGIN_H
+
 

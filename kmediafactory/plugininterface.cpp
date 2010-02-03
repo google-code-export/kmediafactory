@@ -19,7 +19,9 @@
 //**************************************************************************
 
 #include "plugininterface.h"
-#include <QMutexLocker>
+
+#include <QtCore/QMutexLocker>
+
 
 KMF::MediaObject::MediaObject(QObject* parent) :
   Object(parent)
@@ -109,3 +111,4 @@ uint KMF::PluginInterface::parent(uint subid)
 }
 
 #include "plugininterface.moc"
+

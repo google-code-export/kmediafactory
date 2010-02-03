@@ -19,31 +19,34 @@
 //**************************************************************************
 
 #include "templateobject.h"
-#include "templateplugin.h"
-#include "kmfmenu.h"
-#include "kmftools.h"
-#include "kmftemplate.h"
-#include "kmflanguagewidgets.h"
-#include "templatepluginsettings.h"
-#include "dvdauthorparser.h"
-#include <KMimeType>
-#include <KApplication>
-#include <KUrl>
-#include <KLocale>
-#include <KConfigDialog>
-#include <KDebug>
-#include <KStandardDirs>
-#include <KIconLoader>
-#include <KIcon>
-#include <KActionCollection>
+
+#include <QtCore/QBuffer>
+#include <QtCore/QFileInfo>
+#include <QtCore/QTranslator>
+#include <QtGui/QImage>
+#include <QtGui/QPixmap>
+#include <QtUiTools/QUiLoader>
+
 #include <KAction>
+#include <KActionCollection>
+#include <KApplication>
+#include <KConfigDialog>
 #include <KConfigDialogManager>
-#include <QFileInfo>
-#include <QImage>
-#include <QBuffer>
-#include <QUiLoader>
-#include <QPixmap>
-#include <QTranslator>
+#include <KDebug>
+#include <KIcon>
+#include <KIconLoader>
+#include <KLocale>
+#include <KMimeType>
+#include <KStandardDirs>
+#include <KUrl>
+
+#include <dvdauthorparser.h>
+#include <kmflanguagewidgets.h>
+#include <kmftools.h>
+#include <templatepluginsettings.h>
+#include "kmfmenu.h"
+#include "kmftemplate.h"
+#include "templateplugin.h"
 
 class KMFTranslator : public QTranslator
 {
@@ -364,3 +367,4 @@ QVariant TemplateObject::writeDvdAuthorXml(QVariantList args)
 }
 
 #include "templateobject.moc"
+

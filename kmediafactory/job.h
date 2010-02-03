@@ -21,10 +21,13 @@
 #ifndef KMFJOB_H
 #define KMFJOB_H
 
-#include "kmediafactory.h"
+
+
 #include <KProcess>
 #include <kdemacros.h>
 #include <ThreadWeaver/Job>
+
+#include "kmediafactory.h"
 
 #define CHECK_IF_ABORTED(result) { \
 if (aborted()) { return result; }; \
@@ -73,3 +76,4 @@ namespace KMF
 } // namespace KMF
 
 #endif // KMFJOB_H
+

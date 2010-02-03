@@ -20,10 +20,12 @@
 #ifndef DVDDIRECTORYOBJECT_H
 #define DVDDIRECTORYOBJECT_H
 
-#include "dvdauthorobject.h"
+
+#include <QtCore/QFileInfo>
+#include <QtGui/QPixmap>
+
 #include <run.h>
-#include <QFileInfo>
-#include <QPixmap>
+#include "dvdauthorobject.h"
 
 class KAction;
 
@@ -55,3 +57,4 @@ class DvdDirectoryObject : public DvdAuthorObject
 };
 
 #endif // DVDDIRECTORYOBJECT_H
+

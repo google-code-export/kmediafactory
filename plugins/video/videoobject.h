@@ -21,14 +21,17 @@
 #ifndef VIDEOOBJECT_H
 #define VIDEOOBJECT_H
 
-#include <kmf_stddef.h>
-#include <kmediafactory/plugin.h>
-#include <rect.h>
-#include <KUrl>
+
+#include <QtCore/QDateTime>
+#include <QtGui/QPixmap>
+
 #include <KProcess>
+#include <KUrl>
+
+#include <kmf_stddef.h>
 #include <qdvdinfo.h>
-#include <QPixmap>
-#include <QDateTime>
+#include <rect.h>
+#include <kmediafactory/plugin.h>
 
 class QDir;
 class QMediaFile;
@@ -142,3 +145,4 @@ class VideoObject : public KMF::MediaObject
 };
 
 #endif // VIDEOOBJECT_H
+

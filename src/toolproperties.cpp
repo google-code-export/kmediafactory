@@ -18,10 +18,15 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 #include "toolproperties.h"
+
+#include <QtGui/QCheckBox>
+#include <QtGui/QLineEdit>
+
+#include <KIconDialog>
 #include <KUrlRequester>
-#include <kicondialog.h>
-#include <QLineEdit>
-#include <QCheckBox>
+
+
+
 
 ToolProperties::ToolProperties(QWidget *parent)
     : KDialog(parent)
@@ -68,3 +73,6 @@ void ToolProperties::setReadOnly(bool readonly)
 
 
 #include "toolproperties.moc"
+
+
+

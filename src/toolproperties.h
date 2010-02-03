@@ -20,7 +20,13 @@
 #ifndef TOOLPROPERTIES_H
 #define TOOLPROPERTIES_H
 
-#include "ui_toolproperties.h"
+
+
+
+
+
+
+#include <ui_toolproperties.h>
 #include "tools.h"
 
 class ToolProperties: public KDialog, public Ui::ToolProperties
@@ -36,3 +42,6 @@ class ToolProperties: public KDialog, public Ui::ToolProperties
 };
 
 #endif
+
+
+

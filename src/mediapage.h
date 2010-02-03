@@ -20,7 +20,13 @@
 #ifndef MEDIAPAGE_H
 #define MEDIAPAGE_H
 
-#include "ui_mediapage.h"
+
+
+
+
+
+
+#include <ui_mediapage.h>
 
 class QPoint;
 namespace KMF { class MediaObject; }
@@ -53,3 +59,6 @@ class MediaPage : public QWidget, public Ui::MediaPage
 };
 
 #endif
+
+
+

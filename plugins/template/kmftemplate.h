@@ -20,9 +20,11 @@
 #ifndef KMFTEMPLATE_H
 #define KMFTEMPLATE_H
 
+
+#include <QtCore/QString>
+#include <QtCore/QStringList>
+
 #include "kmfintl.h"
-#include <QString>
-#include <QStringList>
 
 class KoStore;
 
@@ -51,3 +53,4 @@ class KMFTemplate
 };
 
 #endif
+

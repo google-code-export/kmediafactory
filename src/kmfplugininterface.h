@@ -21,8 +21,17 @@
 #ifndef KMFPLUGININTERFACE_H
 #define KMFPLUGININTERFACE_H
 
+
+
+
+
+
+
 #include <KProgressDialog>
+
 #include <kmediafactory/plugininterface.h>
+
+
 
 class KMFProgressDialog : public KMF::ProgressDialog
 {
@@ -110,3 +119,6 @@ class KMFPluginInterface : public KMF::PluginInterface
 };
 
 #endif // KMFPLUGININTERFACE_H
+
+
+

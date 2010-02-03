@@ -19,17 +19,20 @@
 //**************************************************************************
 
 #include "dvdauthorobject.h"
-#include "outputplugin.h"
-#include <kmftools.h>
-#include <kmediafactory/job.h>
-#include <KMimeType>
+
+#include <QtCore/QFileInfo>
+#include <QtGui/QPixmap>
+#include <QtXml/QDomElement>
+
+#include <KAboutData>
+#include <KDebug>
 #include <KIconLoader>
 #include <KLocale>
-#include <KDebug>
-#include <KAboutData>
-#include <QPixmap>
-#include <QDomElement>
-#include <QFileInfo>
+#include <KMimeType>
+
+#include <kmftools.h>
+#include <kmediafactory/job.h>
+#include "outputplugin.h"
 
 static const char startString[] = I18N_NOOP("DVD Author XML file");
 
@@ -218,3 +221,4 @@ QPixmap DvdAuthorObject::pixmap() const
 }
 
 #include "dvdauthorobject.moc"
+

@@ -18,8 +18,11 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 #include "kmfimageview.h"
+
+#include <QtGui/QContextMenuEvent>
+
 #include <KDebug>
-#include <QContextMenuEvent>
+
 
 KMFImageView::KMFImageView(QWidget *parent)
   : QGraphicsView(parent), m_imageItem(0), m_scaled(false)
@@ -102,3 +105,4 @@ void KMFImageView::contextMenuEvent(QContextMenuEvent* e)
 }
 
 #include "kmfimageview.moc"
+

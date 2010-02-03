@@ -18,27 +18,29 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 #include "config.h"
-
 #include "videoplugin.h"
-#include "videoobject.h"
-#include "videopluginsettings.h"
-#include "ui_videoconfig.h"
-#include "kmfmediafile.h"
-#include <KStandardDirs>
-#include <KGenericFactory>
-#include <KActionCollection>
-#include <kdeversion.h>
-#include <kaction.h>
-#include <KFileDialog>
-#include <KGlobal>
-#include <KIconLoader>
-#include <KIcon>
+
+#include <QtCore/QRegExp>
+#include <QtGui/QCheckBox>
+#include <QtGui/QPixmap>
+
 #include <KAboutData>
+#include <KAction>
+#include <KActionCollection>
 #include <KApplication>
+#include <KFileDialog>
+#include <KGenericFactory>
+#include <KGlobal>
+#include <KIcon>
+#include <KIconLoader>
 #include <KMessageBox>
-#include <QRegExp>
-#include <QPixmap>
-#include <QCheckBox>
+#include <KStandardDirs>
+#include <kdeversion.h>
+
+#include <kmfmediafile.h>
+#include <ui_videoconfig.h>
+#include <videopluginsettings.h>
+#include "videoobject.h"
 
 K_EXPORT_KMEDIAFACTORY_PLUGIN(video, VideoPlugin)
 
@@ -207,3 +209,4 @@ QStringList VideoPlugin::supportedProjectTypes() const
 }
 
 #include "videoplugin.moc"
+

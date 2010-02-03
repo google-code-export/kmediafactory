@@ -21,10 +21,13 @@
 #ifndef KMFLISTMODEL_H
 #define KMFLISTMODEL_H
 
-#include <kdemacros.h>
+
+#include <QtCore/QList>
+#include <QtGui/QAbstractItemView>
+
 #include <KDebug>
-#include <QList>
-#include <QAbstractItemView>
+#include <kdemacros.h>
+
 
 // Based on QStringListModel from qt4 GPL-2
 
@@ -396,3 +399,4 @@ int KMFListModel<T>::count() const
 }
 
 #endif // KMFLISTMODEL_H
+

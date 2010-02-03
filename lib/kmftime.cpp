@@ -19,10 +19,14 @@
 //**************************************************************************
 
 #include "kmftime.h"
+
+#include <QtCore/QRegExp>
+#include <QtCore/QStringList>
+
 #include <KDebug>
-#include <QStringList>
-#include <QRegExp>
+
 #include <math.h>
+
 
 void KMF::Time::set(int msec)
 {
@@ -122,3 +126,4 @@ void KMF::Time::set(const QString& time)
   else
     set(time.toDouble());
 }
+

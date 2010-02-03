@@ -20,23 +20,26 @@
 
 #include "config.h"
 #include "outputplugin.h"
-#include "dvddirectoryobject.h"
-#include "dvdauthorobject.h"
-#include "k3bobject.h"
-#include <KActionCollection>
-#include <kdeversion.h>
-#include <KApplication>
-#include <KGenericFactory>
-#include <KFileDialog>
-#include <KGlobal>
-#include <KIconLoader>
+
+#include <QtCore/QRegExp>
+#include <QtGui/QPixmap>
+
 #include <KAboutData>
-#include <KStandardDirs>
-#include <KIcon>
-#include <KRun>
 #include <KAction>
-#include <QRegExp>
-#include <QPixmap>
+#include <KActionCollection>
+#include <KApplication>
+#include <KFileDialog>
+#include <KGenericFactory>
+#include <KGlobal>
+#include <KIcon>
+#include <KIconLoader>
+#include <KRun>
+#include <KStandardDirs>
+#include <kdeversion.h>
+
+#include "dvdauthorobject.h"
+#include "dvddirectoryobject.h"
+#include "k3bobject.h"
 
 #ifdef HAVE_LIBDVDREAD
 #include "dvdinfo.h"
@@ -148,3 +151,4 @@ QStringList OutputPlugin::supportedProjectTypes() const
 }
 
 #include "outputplugin.moc"
+

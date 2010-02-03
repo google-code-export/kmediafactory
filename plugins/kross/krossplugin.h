@@ -21,8 +21,11 @@
 #ifndef KROSSPLUGIN_H
 #define KROSSPLUGIN_H
 
+
+
+#include <Kross/Object>
+
 #include <kmediafactory/plugin.h>
-#include <kross/core/object.h>
 
 namespace Kross {
   class Action;
@@ -69,4 +72,5 @@ class KrossPlugin : public KMF::Plugin
 };
 
 #endif // KROSSPLUGIN_H
+
 

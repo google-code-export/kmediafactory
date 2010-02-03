@@ -20,6 +20,8 @@
 #ifndef KMFFRAME_H
 #define KMFFRAME_H
 
+
+
 #include "kmfwidget.h"
 
 class KMFFrame : public KMFWidget
@@ -43,3 +45,4 @@ class KMFFrame : public KMFWidget
 };
 
 #endif
+

@@ -19,19 +19,22 @@
 //**************************************************************************
 
 #include "kmfproject.h"
-#include "kmfapplication.h"
-#include "kmediafactorysettings.h"
-#include <kmftools.h>
-#include <KMessageBox>
-#include <KIO/NetAccess>
-#include <KIO/Job>
+
+#include <QtCore/QDir>
+#include <QtXml/QDomElement>
+
+#include <KDebug>
 #include <KLocale>
+#include <KMessageBox>
 #include <KSaveFile>
 #include <KStandardDirs>
-#include <KDebug>
 #include <KTemporaryFile>
-#include <QDir>
-#include <QDomElement>
+#include <KIO/Job>
+#include <KIO/NetAccess>
+
+#include <kmediafactorysettings.h>
+#include <kmftools.h>
+#include "kmfapplication.h"
 
 template <class S, class T>
 void addMap(QMap<S, T>* map, const QMap<S, T>& add)
@@ -509,3 +512,6 @@ QMap<QString, QString> KMFProject::subTypes() const
 }
 
 #include "kmfproject.moc"
+
+
+

@@ -21,12 +21,16 @@
 #ifndef KMFKMFTOOLS_H
 #define KMFKMFTOOLS_H
 
+
+#include <QtCore/QModelIndex>
+#include <QtCore/QSize>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
+
 #include <KUrl>
-#include <QString>
-#include <QSize>
-#include <QModelIndex>
-#include <QStringList>
+
 #include <stdint.h>
+
 
 class KXMLGUIClient;
 class QStringList;
@@ -99,3 +103,4 @@ namespace KMF
 }
 
 #endif // KMFKMFTOOLS_H
+

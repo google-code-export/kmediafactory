@@ -19,17 +19,19 @@
 //**************************************************************************
 
 #include "newstuffobject.h"
-#include "templateobject.h"
-#include "templateplugin.h"
-#include "templatepluginsettings.h"
-#include <KLocale>
-#if KDE_IS_VERSION(4,3,90)
-#include <knewstuff3/downloaddialog.h>
-#else
-#include <knewstuff2/engine.h>
-#endif
+
 #include <KApplication>
 #include <KIconLoader>
+#include <KLocale>
+#if KDE_IS_VERSION(4,3,90)
+#include <KNS3/DownloadDialog>
+#else
+#include <KNS/Engine>
+#endif
+
+#include <templatepluginsettings.h>
+#include "templateobject.h"
+#include "templateplugin.h"
 
 NewStuffObject::NewStuffObject(QObject* parent):
   KMF::TemplateObject(parent), m_newstuff(0)
@@ -92,3 +94,4 @@ QPixmap NewStuffObject::pixmap() const
 }
 
 #include "newstuffobject.moc"
+

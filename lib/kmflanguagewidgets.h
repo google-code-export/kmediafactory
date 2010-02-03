@@ -20,14 +20,17 @@
 #ifndef KMFLANGUAGEWIDGETS_H
 #define KMFLANGUAGEWIDGETS_H
 
-#include "kmf_stddef.h"
+
+#include <QtCore/QAbstractListModel>
+#include <QtCore/QMetaProperty>
+#include <QtGui/QComboBox>
+#include <QtGui/QListView>
+#include <QtGui/QPixmap>
+
+#include <KDebug>
 #include <KStandardDirs>
-#include "KDebug"
-#include <QComboBox>
-#include <QListView>
-#include <QPixmap>
-#include <QAbstractListModel>
-#include <QMetaProperty>
+
+#include "kmf_stddef.h"
 
 /**
 @author Petri Damsten
@@ -129,3 +132,4 @@ class KDE_EXPORT KMFLanguageListBox : public QListView
 };
 
 #endif
+

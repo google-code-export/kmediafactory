@@ -49,33 +49,26 @@ Cambridge, MA 02111-1307, USA.  */
 
 // modified kde gettext implementation to read mo from QIODevice
 
+#include "config.h"
 #include "kmfintl.h"
-#include <config.h>
 
-#include <QIODevice>
+#include <QtCore/QIODevice>
 
-#include <stdlib.h>
-
-#if defined HAVE_STRING_H
-# include <string.h>
-#else
-# include <strings.h>
-#endif
-
-#include <sys/types.h>
 #include <fcntl.h>
+#include <stdlib.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 
 #if defined HAVE_UNISTD_H
-# include <unistd.h>
+#include <unistd.h>
 #endif
 
 #if (defined HAVE_MMAP && defined HAVE_MUNMAP)
-# include <sys/mman.h>
+#include <sys/mman.h>
 #endif
 
 #ifndef W
-# define W(flag, data) ((flag) ? SWAP (data) : (data))
+#define W(flag, data) ((flag) ? SWAP (data) : (data))
 #endif
 
 typedef quint32 nls_uint32;
@@ -364,3 +357,4 @@ void kmf_nl_unload_domain (struct loaded_domain *domain)
   free ((void *) domain->data);
   free (domain);
 }
+

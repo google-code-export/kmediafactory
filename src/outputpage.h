@@ -21,9 +21,13 @@
 #ifndef OUTPUTPAGE_H
 #define OUTPUTPAGE_H
 
-#include "ui_outputpage.h"
+
+
+
+#include <QtGui/QMenu>
+
+#include <ui_outputpage.h>
 #include "kmfplugininterface.h"
-#include <QMenu>
 
 class KPageWidgetItem;
 class QStandardItem;
@@ -66,3 +70,6 @@ class OutputPage : public QWidget, public Ui::OutputPage
 };
 
 #endif // OUTPUTPAGE_H
+
+
+

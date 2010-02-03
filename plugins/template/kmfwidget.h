@@ -20,11 +20,13 @@
 #ifndef KMFWIDGET_H
 #define KMFWIDGET_H
 
+
+#include <QtCore/QObject>
+#include <QtGui/QColor>
+
+#include <rect.h>
 #include "kmfgeometry.h"
 #include "kmftemplatebase.h"
-#include "rect.h"
-#include <QObject>
-#include <QColor>
 
 class QImage;
 class QColor;
@@ -142,3 +144,4 @@ class KMFWidget : public KMFTemplateBase
 };
 
 #endif
+

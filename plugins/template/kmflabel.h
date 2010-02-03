@@ -20,8 +20,10 @@
 #ifndef KMFLABEL_H
 #define KMFLABEL_H
 
+
+#include <QtGui/QFont>
+
 #include "kmfwidget.h"
-#include <QFont>
 
 /**
 @author Petri Damsten
@@ -52,3 +54,4 @@ class KMFLabel : public KMFWidget
 };
 
 #endif
+

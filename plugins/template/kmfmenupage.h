@@ -20,10 +20,12 @@
 #ifndef KMFMENUPAGE_H
 #define KMFMENUPAGE_H
 
-#include "kmfwidget.h"
+
+#include <QtCore/QObject>
+#include <QtCore/QSize>
+
 #include <kmediafactory/plugin.h>
-#include <QObject>
-#include <QSize>
+#include "kmfwidget.h"
 
 #define DPM 2700
 
@@ -106,3 +108,4 @@ class KMFMenuPage : public KMFWidget
 };
 
 #endif
+

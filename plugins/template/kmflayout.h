@@ -20,7 +20,9 @@
 #ifndef KMFLAYOUT_H
 #define KMFLAYOUT_H
 
-#include <kmfwidget.h>
+
+
+#include "kmfwidget.h"
 
 class KMFGrid : public KMFWidget
 {
@@ -65,3 +67,4 @@ class KMFHBox : public KMFGrid
 };
 
 #endif
+

@@ -21,11 +21,14 @@
 #ifndef TEMPLATEOBJECT_H
 #define TEMPLATEOBJECT_H
 
-#include "kmfwidget.h"
-#include "kmfmenu.h"
-#include "kconfigxml.h"
-#include <kmediafactory/plugin.h>
+
+
 #include <KUrl>
+
+#include <kmediafactory/plugin.h>
+#include "kconfigxml.h"
+#include "kmfmenu.h"
+#include "kmfwidget.h"
 
 class TemplateOptions;
 class KAction;
@@ -86,3 +89,4 @@ class TemplateObject : public KMF::TemplateObject
 };
 
 #endif // TEMPLATEOBJECT_H
+

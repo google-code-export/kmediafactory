@@ -18,30 +18,33 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 #include "kmfapplication.h"
-#include "kmfplugininterface.h"
-#include "kmediafactory.h"
-#include "kmftools.h"
-#include "kmfdbusinterface.h"
-#include "kmediafactoryadaptor.h"
+
+#include <Qt/QtDBus>
+#include <QtCore/QFileInfo>
+#include <QtCore/QObject>
+
 #include <KCmdLineArgs>
+#include <KDebug>
+#include <KDesktopFile>
+#include <KLocale>
+#include <KMainWindow>
 #include <KServiceTypeTrader>
 #include <KStandardDirs>
-#include <KDesktopFile>
-#include <kparts/componentfactory.h>
-#include <KDebug>
-#include <KMainWindow>
-#include <KLocale>
-#include <KToolInvocation>
-#include <klauncher_iface.h>
-#include <QObject>
-#include <QFileInfo>
-#include <QtDBus>
-#include <errno.h>
-
-#if defined Q_WS_X11
 #include <KStartupInfo>
+#include <KToolInvocation>
+#include <OrgKdeKLauncherInterface>
+#include <KParts/ComponentFactory>
+
+#include <errno.h>
+#if defined Q_WS_X11
 #include <X11/Xlib.h>
 #endif
+
+#include <kmediafactoryadaptor.h>
+#include <kmftools.h>
+#include "kmediafactory.h"
+#include "kmfdbusinterface.h"
+#include "kmfplugininterface.h"
 
 KMFApplication::KMFApplication()
   : KApplication(), m_mainWin(0), m_project(0), m_pluginInterface(0),
@@ -240,3 +243,6 @@ int KMFApplication::startServiceByDesktopPath(const QString& _name,
       "(QString,QStringList,QValueList<QCString>,QCString ,bool)",
       _name, URLs, envs, error, serviceName, pid, startup_id, noWait);
 }
+
+
+

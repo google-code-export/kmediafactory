@@ -18,43 +18,47 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 
-#include "slideshowobject.h"
-#include "slideshowplugin.h"
-#include "slideshowpluginsettings.h"
-#include "slideshowproperties.h"
-#include "run.h"
 #include "config.h"
-#include <kmediafactory/job.h>
-#include <qdvdinfo.h>
-#include <kmfmediafile.h>
-#include <KFileItem>
-#include <KStandardDirs>
-#include <KFileMetaInfo>
-#include <KApplication>
-#include <KActionCollection>
+#include "slideshowobject.h"
+
+#include <QtCore/QDir>
+#include <QtCore/QRegExp>
+#include <QtCore/QSet>
+#include <QtGui/QImage>
+#include <QtGui/QPixmap>
+#include <QtXml/QDomDocument>
+
 #include <KAboutData>
-#include <kmftools.h>
-#include <kmftime.h>
-#include <KLocale>
-#include <KMimeType>
-#include <KDebug>
-#include <KMessageBox>
-#include <KIcon>
-#include <KProgressDialog>
-#include <KProcess>
 #include <KAction>
-#include <QImage>
-#include <QDir>
-#include <QRegExp>
-#include <QPixmap>
-#include <QDomDocument>
-#include <QSet>
-#include <list>
-#include <errno.h>
-#include <unistd.h>
+#include <KActionCollection>
+#include <KApplication>
+#include <KDebug>
+#include <KFileItem>
+#include <KFileMetaInfo>
+#include <KIcon>
+#include <KLocale>
+#include <KMessageBox>
+#include <KMimeType>
+#include <KProcess>
+#include <KProgressDialog>
+#include <KStandardDirs>
 #ifdef HAVE_KEXIV2
 #include <libkexiv2/kexiv2.h>
 #endif
+
+#include <errno.h>
+#include <list>
+#include <unistd.h>
+
+#include <kmfmediafile.h>
+#include <kmftime.h>
+#include <kmftools.h>
+#include <qdvdinfo.h>
+#include <run.h>
+#include <slideshowpluginsettings.h>
+#include <kmediafactory/job.h>
+#include "slideshowplugin.h"
+#include "slideshowproperties.h"
 
 class CopyOriginalsJob : public KMF::Job
 {
@@ -88,7 +92,7 @@ class SpumuxJob : public KMF::Job
 {
 public:
   const SlideshowObject& slideshow;
-  QString projectType; 
+  QString projectType;
   QString mediaDir;
 
   SpumuxJob(const SlideshowObject& s) : slideshow(s) {};
@@ -128,7 +132,7 @@ public:
         QFile::remove(output);
         QFile::rename(output+".tmp", output);
     }
-    
+
     message(msgId(), KMF::Done);
   }
 
@@ -210,7 +214,7 @@ private:
   qulonglong half;
 };
 
-    
+
 class SlideshowJob : public KMF::Job
 {
 public:
@@ -228,7 +232,7 @@ public:
     message(msgId(), KMF::Start, i18n("Slideshow: %1", slideshow.title()));
     QDir dir(mediaDir);
     QString output = dir.filePath(QString("%1.vob").arg(slideshow.id()));
-  
+
     if(writeSlideshowFile())
     {
       CHECK_IF_ABORTED();
@@ -284,7 +288,7 @@ public:
       dvdslideshow->setWorkingDirectory(mediaDir);
 
       int exitCode=dvdslideshow->execute();
- 
+
       switch(exitCode)
       {
         case -2:
@@ -308,7 +312,7 @@ public:
   }
 
   static inline int endFrame(int frame) { return frame-1; }
-  
+
   bool writeSlideshowFile() const
   {
     QDir dir(mediaDir);
@@ -317,7 +321,7 @@ public:
     QFile file(output),
           subFile(output+".sub");
     double duration = slideshow.calculatedSlideDuration();
-  
+
     if(file.open(QIODevice::WriteOnly | QIODevice::Truncate) &&
        (SlideshowPlugin::BACKEND_MELT!=backend ||
        subFile.open(QIODevice::WriteOnly | QIODevice::Truncate)))
@@ -385,7 +389,7 @@ public:
                       << "    <property name=\"video_index\" >-1</property>" << endl
                       << "    <property name=\"mlt_service\" >avformat</property>" << endl
                       << "  </producer>" << endl;
-                      
+
                 playlist << "    <entry in=\"0\" out=\"" << endFrame(useFrames)
                                        << "\" producer=\"a_" << file << "\" >" << endl;
                 if(fade) // Fade out...
@@ -691,7 +695,7 @@ SlideList SlideshowObject::slideList(QStringList list, QWidget *parent) const
       {
 #ifdef HAVE_KEXIV2
         QDateTime dt=KExiv2Iface::KExiv2(file).getImageDateTime();
-        
+
         slide.comment=dt.isNull() ? QFileInfo(file).fileName() : KGlobal::locale()->formatDateTime(dt, KLocale::ShortDate, true);
 #else
         Run run(QString("kmf_comment \"%1\"").arg(file));
@@ -877,7 +881,7 @@ bool SlideshowObject::prepare(const QString& type)
       QSet<QString> files;
       QString       dest(interface()->projectDir("DVD/PICTURES"));
       QDir          destDir(dest);
-    
+
       foreach(const Slide& slide, m_slides)
       {
         // Only use if it does not already exist in the destinaiton...
@@ -914,7 +918,7 @@ bool SlideshowObject::prepare(const QString& type)
       uptodate = false;
     }
     if(!uptodate)
-    {    
+    {
       SlideshowJob *job = new SlideshowJob(*this);
       job->mediaDir = interface()->projectDir("media");
       job->projectType = interface()->projectType();
@@ -926,7 +930,7 @@ bool SlideshowObject::prepare(const QString& type)
 
       if(SlideshowPlugin::BACKEND_MELT==job->backend)
       {
-        
+
         foreach(Slide slide, m_slides)
           if(!slide.comment.isEmpty())
           {
@@ -941,7 +945,7 @@ bool SlideshowObject::prepare(const QString& type)
     }
     else
     {
-      interface()->message(msgId(), KMF::Info, 
+      interface()->message(msgId(), KMF::Info,
                            i18n("Slideshow \"%1\" seems to be up to date", title()));
     }
   }
@@ -994,7 +998,7 @@ QVariant SlideshowObject::writeDvdAuthorXml(QVariantList args) const
 
   if(subLang.isEmpty())
       subLang = preferredLanguage;
-    
+
   sub.setAttribute("lang", subLang);
   titles.appendChild(sub);
 
@@ -1137,7 +1141,7 @@ uint64_t SlideshowObject::size() const
     {
         // A 1hr 25min and 30 second PAL slideshow was 1225431040bytes
         static const double constBytesPerSecond=1225431040/((85*60)+30);
-        
+
         size=constBytesPerSecond*(double)KMF::Time(duration());
     }
     else
@@ -1146,7 +1150,7 @@ uint64_t SlideshowObject::size() const
       size = (uint64_t)(d * 655415.35);
     }
   }
-  
+
   if(m_includeOriginals)
   {
     // Include size of image files...
@@ -1156,9 +1160,9 @@ uint64_t SlideshowObject::size() const
     foreach(const Slide& slide, m_slides)
     {
         if(!processed.contains(slide.picture))
-        {        
+        {
             KFileItem finfo(KFileItem::Unknown, KFileItem::Unknown, KUrl(slide.picture));
-        
+
             size+=finfo.size();
             processed.insert(slide.picture);
         }
@@ -1233,3 +1237,4 @@ double SlideshowObject::calculatedSlideDuration() const
 }
 
 #include "slideshowobject.moc"
+

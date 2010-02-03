@@ -28,9 +28,12 @@
  ***************************************************************************/
 
 #include "Q4puGenericSignalSpy.h"
-#include <QMetaObject>
-#include <QMetaMethod>
+
+#include <QtCore/QMetaMethod>
+#include <QtCore/QMetaObject>
+
 #include <KDebug>
+
 
 /**
 \class Q4puGenericSignalSpy Q4puGenericSignalSpy.h
@@ -358,4 +361,5 @@ const QString q4pugss_value(const char *type, void *argv)
 		return QString("%1(%2)").arg(type).arg(v.toString());
 	return QString("%1 <cannot decode>").arg(type);
 }
+
 

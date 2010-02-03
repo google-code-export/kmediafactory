@@ -20,11 +20,14 @@
 #ifndef KMFTOOLBAR_H
 #define KMFTOOLBAR_H
 
+
+#include <QtCore/QList>
+#include <QtCore/QMap>
+#include <QtGui/QHBoxLayout>
+#include <QtGui/QScrollArea>
+
 #include <kdemacros.h>
-#include <QScrollArea>
-#include <QHBoxLayout>
-#include <QMap>
-#include <QList>
+
 
 class QToolButton;
 
@@ -53,3 +56,4 @@ class KDE_EXPORT KMFToolBar : public QScrollArea
 };
 
 #endif
+

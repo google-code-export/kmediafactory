@@ -18,8 +18,9 @@
 //**************************************************************************
 
 #include "krosstemplateobject.h"
-#include "krossplugin.h"
+
 #include <kmftools.h>
+#include "krossplugin.h"
 
 KrossTemplateObject::KrossTemplateObject(QObject* parent, Kross::Object::Ptr object)
  : KMF::TemplateObject(parent), m_object(object)
@@ -98,4 +99,5 @@ bool KrossTemplateObject::clicked()
 }
 
 #include "krosstemplateobject.moc"
+
 

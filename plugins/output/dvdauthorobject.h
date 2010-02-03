@@ -21,9 +21,11 @@
 #ifndef DVDAUTHOROBJECT_H
 #define DVDAUTHOROBJECT_H
 
+
+#include <QtGui/QPixmap>
+#include <QtXml/QDomElement>
+
 #include <kmediafactory/plugin.h>
-#include <QPixmap>
-#include <QDomElement>
 
 class DvdAuthorObject : public KMF::OutputObject
 {
@@ -48,3 +50,4 @@ class DvdAuthorObject : public KMF::OutputObject
 };
 
 #endif // DVDAUTHOROBJECT_H
+

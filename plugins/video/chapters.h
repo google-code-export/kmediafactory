@@ -21,14 +21,14 @@
 #ifndef CHAPTERS_H
 #define CHAPTERS_H
 
-#include <kmf_stddef.h>
-#include <videooptions.h>
-#include <kmftime.h>
+#include <Phonon/VideoPlayer>
 
+#include <kmf_stddef.h>
+#include <kmftime.h>
 // How to use namespaces / Phonon in ui files?
-#include "Phonon/VideoPlayer"
 using namespace Phonon;
-#include "ui_chapters.h"
+#include <ui_chapters.h>
+#include "videooptions.h"
 
 class CellListModel;
 
@@ -86,3 +86,4 @@ class Chapters : public QWidget, public Ui::Chapters
 };
 
 #endif
+

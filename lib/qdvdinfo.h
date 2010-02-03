@@ -18,14 +18,16 @@
 #define QDVDINFO_H
 
 #include "config.h"
+
+#include <QtCore/QDateTime>
+#include <QtCore/QList>
+#include <QtCore/QMap>
+#include <QtCore/QObject>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
+#include <QtGui/QFont>
+
 #include <KLocale>
-#include <QDateTime>
-#include <QString>
-#include <QStringList>
-#include <QFont>
-#include <QMap>
-#include <QObject>
-#include <QList>
 
 #undef _STDINT_H
 #define __STDC_LIMIT_MACROS
@@ -403,4 +405,5 @@ namespace QDVD
 Q_DECLARE_METATYPE(const QDVD::Base*)
 
 #endif
+
 

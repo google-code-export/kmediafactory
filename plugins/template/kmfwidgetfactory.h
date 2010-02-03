@@ -20,8 +20,10 @@
 #ifndef KMFWIDGETFACTORY_H
 #define KMFWIDGETFACTORY_H
 
-#include <kmftemplatebase.h>
-#include <templateobject.h>
+
+
+#include "kmftemplatebase.h"
+#include "templateobject.h"
 
 class QDomElement;
 class KMFWidget;
@@ -50,3 +52,4 @@ class KMFWidgetFactory : public KMFTemplateBase
 };
 
 #endif
+

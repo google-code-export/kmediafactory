@@ -19,18 +19,20 @@
 //**************************************************************************
 
 #include "krossplugin.h"
-#include "krossplugininterface.h"
-#include "kmftools.h"
 
-#include <kross/core/action.h>
-#include <kross/core/interpreter.h>
-#include <kross/core/manager.h>
-#include <KSharedPtr>
-#include <KDebug>
-#include <KStandardDirs>
-#include <KMessageBox>
+#include <QtCore/QTimer>
+
 #include <KActionCollection>
-#include <QTimer>
+#include <KDebug>
+#include <KMessageBox>
+#include <KSharedPtr>
+#include <KStandardDirs>
+#include <Kross/Action>
+#include <Kross/InterpreterInfo>
+#include <Kross/Manager>
+
+#include <kmftools.h>
+#include "krossplugininterface.h"
 
 K_EXPORT_KMEDIAFACTORY_PLUGIN(kross, KrossPlugin)
 
@@ -123,3 +125,4 @@ void KrossPlugin::addActions(QList<QAction*>* actionList, QStringList actions)
 }
 
 #include "krossplugin.moc"
+

@@ -21,6 +21,8 @@
 #ifndef VIDEOPLUGIN_H
 #define VIDEOPLUGIN_H
 
+
+
 #include <kmf_stddef.h>
 #include <kmediafactory/plugin.h>
 
@@ -49,4 +51,5 @@ class VideoPlugin : public KMF::Plugin
 };
 
 #endif // VIDEOPLUGIN_H
+
 

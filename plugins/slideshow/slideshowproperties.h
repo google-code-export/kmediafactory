@@ -20,10 +20,12 @@
 #ifndef SLIDESHOWPROPERTIES_H
 #define SLIDESHOWPROPERTIES_H
 
+
+#include <QtGui/QPixmap>
+
 #include <kmflistmodel.h>
 #include <ui_slideshowproperties.h>
-#include <slideshowobject.h>
-#include <QPixmap>
+#include "slideshowobject.h"
 
 class KFileItem;
 class SlideshowObject;
@@ -86,3 +88,4 @@ class SlideshowProperties : public KDialog, public Ui::SlideshowProperties
 };
 
 #endif
+

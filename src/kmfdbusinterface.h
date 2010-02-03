@@ -21,8 +21,14 @@
 #ifndef KMFDCOPINTERFACE_H
 #define KMFDCOPINTERFACE_H
 
-#include <QObject>
-#include <QStringList>
+
+
+
+#include <QtCore/QObject>
+#include <QtCore/QStringList>
+
+
+
 
 class KProgressDialog;
 
@@ -82,3 +88,6 @@ class KMFDbusInterface : public QObject
 };
 
 #endif
+
+
+

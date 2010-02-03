@@ -21,7 +21,10 @@
 #ifndef KCONFIGXML_H
 #define KCONFIGXML_H
 
+
+
 #include <KConfigSkeleton>
+
 
 class QIODevice;
 class QDomElement;
@@ -56,3 +59,4 @@ class KConfigXML : public KConfigSkeleton
 };
 
 #endif
+

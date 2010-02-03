@@ -19,12 +19,14 @@
 //**************************************************************************
 
 #include "kmftemplatebase.h"
-#include "templateobject.h"
+
+#include <QtCore/QRegExp>
+
+#include <kmediafactory/plugin.h>
+#include <kmediafactory/plugininterface.h>
 #include "kmfmenu.h"
 #include "kmfmenupage.h"
-#include <kmediafactory/plugininterface.h>
-#include <kmediafactory/plugin.h>
-#include <QRegExp>
+#include "templateobject.h"
 
 KMFTemplateBase::KMFTemplateBase(QObject *parent) :
   QObject(parent), m_interface(0)
@@ -110,3 +112,4 @@ QString KMFTemplateBase::uiText(const QString& string)
 }
 
 #include "kmftemplatebase.moc"
+

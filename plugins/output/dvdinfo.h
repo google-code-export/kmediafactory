@@ -21,9 +21,10 @@
 
 #ifdef HAVE_LIBDVDREAD
 
+#include <QtGui/QStandardItemModel>
+
 #include <qdvdinfo.h>
 #include <ui_dvdinfo.h>
-#include <QStandardItemModel>
 
 class DVDInfo : public KDialog, public Ui::DVDInfo
 {
@@ -48,3 +49,4 @@ class DVDInfo : public KDialog, public Ui::DVDInfo
 
 #endif // HAVE_LIBDVDREAD
 #endif // DVDINFO_H
+

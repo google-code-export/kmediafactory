@@ -21,11 +21,14 @@
 #ifndef KMEDIAFACTORY_DVDAUTHORPARSER_H
 #define KMEDIAFACTORY_DVDAUTHORPARSER_H
 
+
+#include <QtCore/QObject>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
+#include <QtXml/QDomDocument>
+
 #include <kdemacros.h>
-#include <QObject>
-#include <QString>
-#include <QStringList>
-#include <QDomDocument>
+
 
 namespace KMF
 {
@@ -48,3 +51,4 @@ namespace KMF
 }
 
 #endif // KMEDIAFACTORY_DVDAUTHORPARSER_H
+

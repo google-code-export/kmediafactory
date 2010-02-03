@@ -18,34 +18,38 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //**************************************************************************
 #include "videoobject.h"
-#include "videoplugin.h"
-#include "videooptions.h"
-#include "videopluginsettings.h"
-#include <kmediafactory/job.h>
+
+#include <QtCore/QDir>
+#include <QtCore/QFileInfo>
+#include <QtGui/QColor>
+#include <QtGui/QImage>
+#include <QtGui/QPixmap>
+
+#include <KAction>
+#include <KActionCollection>
+#include <KApplication>
+#include <KDebug>
+#include <KFileItem>
+#include <KIcon>
+#include <KLocale>
+#include <KMimeType>
+#include <KProcess>
+#include <KRun>
+#include <KStandardDirs>
+#include <KStringHandler>
+#include <KUrl>
+#include <KIO/NetAccess>
+
+#include <errno.h>
+#include <unistd.h>
+
 #include <kmfmediafile.h>
 #include <kmftime.h>
 #include <kmftools.h>
-#include <KIO/NetAccess>
-#include <KActionCollection>
-#include <KApplication>
-#include <KStandardDirs>
-#include <KMimeType>
-#include <KUrl>
-#include <KStringHandler>
-#include <KLocale>
-#include <KDebug>
-#include <KIcon>
-#include <KRun>
-#include <KProcess>
-#include <KAction>
-#include <KFileItem>
-#include <QImage>
-#include <QColor>
-#include <QFileInfo>
-#include <QDir>
-#include <QPixmap>
-#include <unistd.h>
-#include <errno.h>
+#include <videopluginsettings.h>
+#include <kmediafactory/job.h>
+#include "videooptions.h"
+#include "videoplugin.h"
 
 static const char startString[] = I18N_NOOP("Subtitles for: %1");
 
@@ -1021,3 +1025,4 @@ QMap<QString, QString> VideoObject::subTypes() const
 }
 
 #include "videoobject.moc"
+

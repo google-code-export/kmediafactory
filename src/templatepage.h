@@ -21,9 +21,13 @@
 #ifndef TEMPLATEPAGE_H
 #define TEMPLATEPAGE_H
 
-#include "ui_templatepage.h"
+
+
+
+#include <QtCore/QDateTime>
+
+#include <ui_templatepage.h>
 #include "kmfplugininterface.h"
-#include <QDateTime>
 
 class KPageWidgetItem;
 
@@ -52,3 +56,6 @@ class TemplatePage : public QWidget, public Ui::TemplatePage
 };
 
 #endif // TEMPLATEPAGE_H
+
+
+

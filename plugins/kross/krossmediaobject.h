@@ -20,8 +20,11 @@
 #ifndef KROSSMEDIAOBJECT_H
 #define KROSSMEDIAOBJECT_H
 
+
+
+#include <Kross/Object>
+
 #include <kmediafactory/plugininterface.h>
-#include <kross/core/object.h>
 
 class KrossMediaObject : public KMF::MediaObject
 {
@@ -54,3 +57,4 @@ class KrossMediaObject : public KMF::MediaObject
 };
 
 #endif // KROSSMEDIAOBJECT_H
+
