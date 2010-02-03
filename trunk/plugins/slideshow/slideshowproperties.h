@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,10 +16,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #ifndef SLIDESHOWPROPERTIES_H
 #define SLIDESHOWPROPERTIES_H
-
 
 #include <QtGui/QPixmap>
 
@@ -31,61 +31,56 @@ class KFileItem;
 class SlideshowObject;
 class SubtitleOptionsWidget;
 
-/**
-	@author Petri Damsten <petri.damsten@iki.fi>
-*/
-
 class SlideListModel : public KMFListModel<Slide>
 {
-    virtual int columnCount(const QModelIndex&) const;
+    virtual int columnCount(const QModelIndex &) const;
     virtual QVariant data(const QModelIndex &index, int role) const;
-    virtual bool setData(const QModelIndex &index, const QVariant &value,
-                        int role = Qt::EditRole);
+    virtual bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
     virtual QVariant headerData(int column, Qt::Orientation, int role) const;
-    virtual Qt::ItemFlags flags(const QModelIndex& index) const;
+    virtual Qt::ItemFlags flags(const QModelIndex &index) const;
 
-  public:
-    void setPreview(const QString& file, const QPixmap& pixmap);
+    public:
+        void setPreview(const QString &file, const QPixmap &pixmap);
 
-  private:
-    QMap<QString, QPixmap> m_previews;
+    private:
+        QMap<QString, QPixmap> m_previews;
 };
 
 class SlideshowProperties : public KDialog, public Ui::SlideshowProperties
 {
     Q_OBJECT
-  public:
-    SlideshowProperties(QWidget *parent, bool showSubPage);
-    ~SlideshowProperties();
 
-    void getData(SlideshowObject& obj) const;
-    void setData(const SlideshowObject& obj);
+    public:
+        SlideshowProperties(QWidget *parent, bool showSubPage);
+        ~SlideshowProperties();
 
-  protected:
-    void addSlides(const SlideList& slides);
-    void addAudio(const QStringList& files);
+        void getData(SlideshowObject &obj) const;
+        void setData(const SlideshowObject &obj);
 
-  public slots:
-    void gotPreview(const KFileItem& item, const QPixmap& pixmap);
+    protected:
+        void addSlides(const SlideList &slides);
+        void addAudio(const QStringList &files);
 
-  protected slots:
-    virtual void moveUp();
-    virtual void moveDown();
-    virtual void add();
-    virtual void remove();
-    virtual void moveUpAudio();
-    virtual void moveDownAudio();
-    virtual void addAudio();
-    virtual void removeAudio();
-    virtual void okClicked();
-    void updateInfo();
+    public slots:
+        void gotPreview(const KFileItem &item, const QPixmap &pixmap);
 
-  private:
-    const SlideshowObject* m_sob;
-    SlideListModel m_model;
-    KMFListModel<QString> m_audioModel;
-    SubtitleOptionsWidget *m_subtitleWidget;
+    protected slots:
+        virtual void moveUp();
+        virtual void moveDown();
+        virtual void add();
+        virtual void remove();
+        virtual void moveUpAudio();
+        virtual void moveDownAudio();
+        virtual void addAudio();
+        virtual void removeAudio();
+        virtual void okClicked();
+        void updateInfo();
+
+    private:
+        const SlideshowObject *m_sob;
+        SlideListModel m_model;
+        KMFListModel<QString> m_audioModel;
+        SubtitleOptionsWidget *m_subtitleWidget;
 };
 
 #endif
-

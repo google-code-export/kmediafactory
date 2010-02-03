@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi
 //
@@ -16,11 +16,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
+
 #ifndef SLIDESHOWPLUGIN_H
 #define SLIDESHOWPLUGIN_H
-
-
 
 #include <kmf_stddef.h>
 #include <kmediafactory/plugin.h>
@@ -30,39 +29,42 @@ class QAction;
 class SlideshowPlugin : public KMF::Plugin
 {
     Q_OBJECT
-  public:
 
-    enum EBackend
-    {
-        BACKEND_NOT_FOUND,
-        BACKEND_MELT,
-        BACKEND_DVD_SLIDESHOW
-    };
-    
-    SlideshowPlugin(QObject *parent, const QVariantList&);
+    public:
+        enum EBackend {
+            BACKEND_NOT_FOUND,
+            BACKEND_MELT,
+            BACKEND_DVD_SLIDESHOW
+        };
 
-    QString app() { return m_app; };
-    EBackend backend() { return m_backend; }
+        SlideshowPlugin(QObject *parent, const QVariantList &);
 
-  public slots:
-    virtual void init(const QString &type);
+        QString app()
+        {
+            return m_app;
+        };
+        EBackend backend()
+        {
+            return m_backend;
+        }
 
-  public:
-    virtual const KMF::ConfigPage* configPage() const;
-    virtual KMF::MediaObject* createMediaObject(const QDomElement& element);
-    virtual QStringList supportedProjectTypes() const;
+    public slots:
+        virtual void init(const QString &type);
 
-  public slots:
-    void slotAddSlideshow();
+    public:
+        virtual const KMF::ConfigPage*configPage() const;
+        virtual KMF::MediaObject*createMediaObject(const QDomElement &element);
+        virtual QStringList supportedProjectTypes() const;
 
-  protected:
-    void setupActions();
+    public slots:
+        void slotAddSlideshow();
 
-  private:
-    EBackend m_backend;
-    QString  m_app;
+    protected:
+        void setupActions();
+
+    private:
+        EBackend m_backend;
+        QString  m_app;
 };
 
 #endif /* SLIDESHOWPLUGIN_H */
-
-
