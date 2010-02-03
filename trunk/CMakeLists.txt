@@ -130,7 +130,6 @@ add_subdirectory(plugins)
 add_subdirectory(mimetypes)
 add_subdirectory(icons)
 add_subdirectory(scripts)
-# add_subdirectory(media)
 add_subdirectory(po)
 add_subdirectory(doc)
 
