@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2008 by Petri Damsten <damu@iki.fi>
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -15,13 +15,13 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #include "krossjob.h"
 
-
-KrossJob::KrossJob(QObject* parent, Kross::Object::Ptr job)
- : KMF::Job(parent), m_job(job)
+KrossJob::KrossJob(QObject *parent, Kross::Object::Ptr job)
+    : KMF::Job(parent)
+    , m_job(job)
 {
 }
 
@@ -31,10 +31,9 @@ KrossJob::~KrossJob()
 
 void KrossJob::run()
 {
-  if (m_job) {
-    m_job->callMethod("run", QVariantList() << qVariantFromValue(qobject_cast<QObject*>(this)));
-  }
+    if (m_job) {
+        m_job->callMethod("run", QVariantList() << qVariantFromValue(qobject_cast<QObject *>(this)));
+    }
 }
 
 #include "krossjob.moc"
-

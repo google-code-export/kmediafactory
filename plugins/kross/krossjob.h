@@ -1,4 +1,4 @@
-//**************************************************************************
+// **************************************************************************
 //   Copyright (C) 2008 Petri Damsten <damu@iki.fi>
 //
 //   This program is free software; you can redistribute it and/or modify
@@ -15,12 +15,10 @@
 //   along with this program; if not, write to the
 //   Free Software Foundation, Inc.,
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-//**************************************************************************
+// **************************************************************************
 
 #ifndef KROSSJOBOBJECT_H
 #define KROSSJOBOBJECT_H
-
-
 
 #include <Kross/Object>
 
@@ -28,16 +26,16 @@
 
 class KrossJob : public KMF::Job
 {
-  Q_OBJECT
-  public:
-    KrossJob(QObject *parent, Kross::Object::Ptr job);
-    ~KrossJob();
+    Q_OBJECT
 
-    virtual void run();
+    public:
+        KrossJob(QObject *parent, Kross::Object::Ptr job);
+        ~KrossJob();
 
-  private:
-    Kross::Object::Ptr m_job;
+        virtual void run();
+
+    private:
+        Kross::Object::Ptr m_job;
 };
 
 #endif // KROSSJOBOBJECT_H
-
