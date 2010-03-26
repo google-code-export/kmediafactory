@@ -277,8 +277,9 @@ void KMediaFactory::itemDelete()
 void KMediaFactory::newStuff()
 {
 #if KDE_IS_VERSION(4, 3, 90)
-    KNS3::DownloadDialog dialog("kmediafactory.knsrc", this);
-    dialog.exec();
+    QPointer<KNS3::DownloadDialog> dialog = new KNS3::DownloadDialog("kmediafactory.knsrc", this);
+    dialog->exec();
+    delete dialog;
 #else
     KNS::Engine *engine = new KNS::Engine();
     engine->init("kmediafactory.knsrc");
@@ -519,7 +520,7 @@ void KMediaFactory::execTool()
     Run run(program, desktopFile.readPath());
     QString output = run.output();
 
-    if (run.output().trimmed() != "") {
+    if (!run.output().trimmed().isEmpty()) {
         kDebug() << "\n" + run.output();
     }
 

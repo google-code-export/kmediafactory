@@ -370,12 +370,12 @@ void OutputPage::makeLog()
             s += "</div>";
         }
 
-        s += "\n";
+        s += '\n';
 
         tmp = item->data(KMFProgressItemDelegate::LogRole).toString().trimmed();
 
         if (!tmp.isEmpty()) {
-            tmp = Qt::escape(tmp) + "\n";
+            tmp = Qt::escape(tmp) + '\n';
             s += "<pre>" + tmp + "</pre>";
         }
     }

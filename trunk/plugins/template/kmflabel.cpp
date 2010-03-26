@@ -115,7 +115,7 @@ void KMFLabel::setText(const QString &text)
                 }
             }
 
-            m_text.replace("%" + rx.cap(1) + "%", s);
+            m_text.replace('%' + rx.cap(1) + '%', s);
             pos += rx.matchedLength();
         }
     }

@@ -84,7 +84,7 @@ void Run::checkIfScript()
 
         foreach(QString path, paths)
         {
-            QFileInfo fi(path + "/" + m_program);
+            QFileInfo fi(path + '/' + m_program);
 
             // kDebug() << fi.filePath();
             if (fi.exists()) {

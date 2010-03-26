@@ -393,7 +393,7 @@ QString Subtitle::toString() const
     QString s;
 
     if (type() >= Large) {
-        s = " (" + typeString() + ")";
+        s = " (" + typeString() + ')';
     }
 
     return i18n("Subtitle: %1%4", languageString(), s);
@@ -500,7 +500,7 @@ QString AudioTrack::toString() const
     QString s;
 
     if (type() >= Impaired) {
-        s = " (" + typeString() + ")";
+        s = " (" + typeString() + ')';
     }
 
     return i18n("Audio: %1, %2 channels%3", languageString(), channels(), s);
@@ -852,7 +852,7 @@ bool Info::getTitleName(const char *dvd_device, QString &title)
     char t[33];
     QString path = dvd_device;
 
-    if (path.startsWith("/")) {
+    if (path.startsWith('/')) {
         path = path.left(path.length() - 1);
     }
 

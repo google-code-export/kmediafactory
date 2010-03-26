@@ -60,15 +60,17 @@ bool NewStuffObject::clicked()
     }
 
 #if KDE_IS_VERSION(4, 3, 90)
-    KNS3::DownloadDialog dialog("kmediafactory_template.knsrc", kapp->activeWindow());
-    dialog.exec();
-    KNS3::Entry::List entries = dialog.changedEntries();
+    QPointer<KNS3::DownloadDialog> dialog = new KNS3::DownloadDialog("kmediafactory_template.knsrc",
+                                                                 kapp->activeWindow());
+    dialog->exec();
+    KNS3::Entry::List entries = dialog->changedEntries();
     // Add installed
     foreach (const KNS3::Entry & entry, entries) {
         foreach (QString file, entry.installedFiles()) {
             new ::TemplateObject(file, parent());
         }
     }
+    delete dialog;
 #else
     KNS::Engine *engine = new KNS::Engine();
     engine->init("kmediafactory_template.knsrc");

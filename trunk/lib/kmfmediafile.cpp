@@ -44,11 +44,11 @@ bool KMFMediaFile::probe()
     Run run(QString("kmf_info \"%1\"").arg(m_file));
 
     if (run.exitStatus() == 0) {
-        QStringList lines = run.output().split("\n");
+        QStringList lines = run.output().split('\n');
         QMap<QString, QString> info;
 
         for (QStringList::Iterator it = lines.begin(); it != lines.end(); ++it) {
-            QStringList keyAndValue = it->split("=");
+            QStringList keyAndValue = it->split('=');
 
             if (keyAndValue.count() == 2) {
                 info[keyAndValue[0]] = keyAndValue[1];

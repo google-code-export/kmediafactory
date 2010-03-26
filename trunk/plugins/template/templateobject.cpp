@@ -226,17 +226,17 @@ void TemplateObject::slotProperties()
     // kDebug() << KGlobal::locale()->language();
     m_menu.setLanguage("ui", KGlobal::locale()->language());
 
-    KConfigDialog dialog(kapp->activeWindow(), "TemplateSettings",
-                         &m_customProperties);
-    dialog.setFaceType(KPageDialog::Plain);
-    dialog.setButtons(KDialog::Ok | KDialog::Cancel);
+    QPointer<KConfigDialog> dialog = new KConfigDialog(kapp->activeWindow(), "TemplateSettings",
+                                                       &m_customProperties);
+    dialog->setFaceType(KPageDialog::Plain);
+    dialog->setButtons(KDialog::Ok | KDialog::Cancel);
     // QUiLoader does not seem to work with the device
     // returned by KoStore/KZipFileEntry (KDE 4.4 beta 1)
     QByteArray ba = m_menu.templateStore()->readFile("settings.ui");
     QBuffer io(&ba);
     // QIODevice* io = m_menu.templateStore()->device("settings.ui");
     QUiLoader loader;
-    QWidget *page = loader.load(&io, &dialog);
+    QWidget *page = loader.load(&io, dialog);
     // m_menu.templateStore()->close();
 
     /*
@@ -262,10 +262,10 @@ void TemplateObject::slotProperties()
         // QWidget* w = (QWidget*)page->child("kcfg_language");
         // QSqlPropertyMap::defaultMap()->setProperty(w, "en");
 
-        dialog.addPage(page, title(), "kmediafactory");
+        dialog->addPage(page, title(), "kmediafactory");
     }
 
-    dialog.exec();
+    dialog->exec();
 
     /*
     * kDebug() << &m_customProperties;
@@ -275,11 +275,12 @@ void TemplateObject::slotProperties()
     *  kDebug() << (*it)->group() << " / " <<
     *      (*it)->key() << " = " << (*it)->property();
     */
-    if (dialog.result() == QDialog::Accepted) {
+    if (dialog->result() == QDialog::Accepted) {
         interface()->setDirty(KMF::Template);
     }
 
     kapp->removeTranslator(&kmftr);
+    delete dialog;
 }
 
 QString TemplateObject::propertyString(KConfigSkeletonItem *item) const

@@ -52,7 +52,7 @@ void KMFUnit::set(const QString &value)
         m_value = 0;
     }
 
-    QStringList list = temp.split(":");
+    QStringList list = temp.split(':');
     temp = list[0];
 
     if (temp == "min") {

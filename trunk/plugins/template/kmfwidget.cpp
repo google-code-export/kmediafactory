@@ -386,7 +386,7 @@ void KMFWidget::parseTitleChapter(const QString &s, int &title, int &chapter)
 {
     title = 0;
     chapter = 0;
-    QStringList list = s.split(".");
+    QStringList list = s.split('.');
 
     if (list.count() > 0) {
         title = toInt(list[0], page()->titleStart());
