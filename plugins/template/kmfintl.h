@@ -3,9 +3,11 @@
 //
 //   libintl.cpp -- gettext related functions from glibc-2.0.5
 //   Copyright (C) 1995 Software Foundation, Inc.
+//   gnu@gnu.org
 //
 //   gettext.c -- implementation of gettext(3) function
 //   Copyright (C) 1995 Software Foundation, Inc.
+//   gnu@gnu.org
 //
 //   Copyright (C) 2004-2006 by Petri Damsten
 //   petri.damsten@iki.fi

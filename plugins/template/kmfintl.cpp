@@ -1,5 +1,6 @@
 /* libintl.cpp -- gettext related functions from glibc-2.0.5
  * Copyright (C) 1995 Software Foundation, Inc.
+ * gnu@gnu.org
  *
  * This file is part of the KDE libraries, but it's derived work out
  * of glibc. The master sources can be found in
@@ -28,6 +29,7 @@
 
 /* gettext.c -- implementation of gettext(3) function
  * Copyright (C) 1995 Software Foundation, Inc.
+ * gnu@gnu.org
  *
  * This file is part of the GNU C Library.  Its master source is NOT part of
  * the C library, however.  The master source lives in /gd/gnu/lib.

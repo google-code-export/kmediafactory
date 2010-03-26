@@ -3,6 +3,7 @@
 ** Implementation of Q4puGenericSignalSpy
 **
 ** Copyright (C) 2005 Prashanth N Udupa
+** prashanth.udupa@gmail.com
 **
 ** Q4puGenericSignalSpy can be used to spy on QObjects
 ** for signals that they emit, and the slots that are
