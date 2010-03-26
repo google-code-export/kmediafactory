@@ -1,4 +1,6 @@
 // **************************************************************************
+//   Copyright (C) 2010 by Petri Damstén
+//   petri.damsten@iki.fi
 //
 //   This file is based on lsdvd.c, streamanalyze.c, dvdread.c
 //
@@ -15,11 +17,11 @@
 //   mplex        by mjpeg-tools developers group
 //
 //   dvdread.c : DvdRead input module for vlc
-//   Authors: St�hane Borel <stef@via.ecp.fr>
+//   Authors: St hane Borel <stef@via.ecp.fr>
 //            Gildas Bazin <gbazin@videolan.org>
 //
-//   Copyright (C) 2001-2004 VideoLAN
-//   Copyright (C) 2003 EFF
+//   Copyright (C) 2001-2004 VideoLAN <videolan@videolan.org>
+//   Copyright (C) 2003 EFF <information@eff.org>
 //
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License as published by
