@@ -471,11 +471,11 @@ class SlideshowJob : public KMF::Job
                         if (!slide.comment.isEmpty()) {
                             QString comment(slide.comment);
 
-                            comment.replace("<", "(");
-                            comment.replace(">", ")");
-                            comment.replace("{", "(");
-                            comment.replace("}", ")");
-                            comment.replace("\n", "|");
+                            comment.replace('<', '(');
+                            comment.replace('>', ')');
+                            comment.replace('{', '(');
+                            comment.replace('}', ')');
+                            comment.replace('\n', '|');
                             sub << '{' << (pic * pictureFrames) + pictureFadeFrames << "}{" <<
                             endFrame((pic + 1) * pictureFrames) << '}' <<
                             comment << endl;
@@ -596,10 +596,10 @@ class SlideshowJob : public KMF::Job
                     {
                         QString comment = slide.comment;
 
-                        comment.replace(":", "\\:");
-                        comment.replace("\n", " ");
-                        ts << slide.picture << ":" << QString::number(duration, 'f', 2) <<
-                        ":" << comment << "\n";
+                        comment.replace(':', "\\:");
+                        comment.replace('\n', ' ');
+                        ts << slide.picture << ':' << QString::number(duration, 'f', 2) <<
+                        ':' << comment << '\n';
 
                         if (slide.picture != slideshow.slides().last().picture) {
                             ts << "crossfade:1\n";
@@ -763,7 +763,7 @@ SlideList SlideshowObject::slideList(QStringList list, QWidget *parent) const
                 }
 
                 if (minfo.keys().contains("CreationTime")) {
-                    slide.comment += " " + minfo.item("CreationTime").value().toString();
+                    slide.comment += ' ' + minfo.item("CreationTime").value().toString();
                 }
             }
 
@@ -1303,16 +1303,17 @@ QTime SlideshowObject::chapterTime(int chap) const
 
 void SlideshowObject::slotProperties()
 {
-    SlideshowProperties dlg(kapp->activeWindow(), SlideshowPlugin::BACKEND_MELT ==
-                            static_cast<SlideshowPlugin *>(plugin())->backend());
+    QPointer<SlideshowProperties> dlg = new SlideshowProperties(kapp->activeWindow(),
+            SlideshowPlugin::BACKEND_MELT == static_cast<SlideshowPlugin *>(plugin())->backend());
 
-    dlg.setData(*this);
+    dlg->setData(*this);
 
-    if (dlg.exec()) {
+    if (dlg->exec()) {
         clean();
-        dlg.getData(*this);
+        dlg->getData(*this);
         interface()->setDirty(KMF::Media);
     }
+    delete dlg;
 }
 
 double SlideshowObject::calculatedSlideDuration() const

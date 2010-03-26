@@ -132,31 +132,33 @@ void VideoOptions::getData(VideoObject &obj) const
 
 void VideoOptions::audioPropertiesClicked()
 {
-    LanguageSelection dlg(this);
+    QPointer<LanguageSelection> dlg = new LanguageSelection(this);
     int n = audioListBox->selectionModel()->selectedIndexes().first().row();
 
-    dlg.setLanguage(m_audioTracks[n].language());
+    dlg->setLanguage(m_audioTracks[n].language());
 
-    if (dlg.exec()) {
-        QString newLanguage = dlg.language();
+    if (dlg->exec()) {
+        QString newLanguage = dlg->language();
         m_audioTracks[n].setLanguage(newLanguage);
     }
+    delete dlg;
 }
 
 void VideoOptions::subtitleAddClicked()
 {
     QDVD::Subtitle subtitle(VideoPluginSettings::defaultSubtitleLanguage());
-    SubtitleOptions dlg(this);
+    QPointer<SubtitleOptions> dlg = new SubtitleOptions(this);
 
-    dlg.setData(subtitle);
+    dlg->setData(subtitle);
 
-    if (dlg.exec()) {
-        dlg.getData(subtitle);
+    if (dlg->exec()) {
+        dlg->getData(subtitle);
         m_subtitles.append(subtitle);
     }
 
     m_subtitleModel.setLanguages(&m_subtitles);
     enableButtons();
+    delete dlg;
 }
 
 void VideoOptions::subtitleRemoveClicked()
@@ -173,21 +175,23 @@ void VideoOptions::subtitlePropertiesClicked()
     int n = subtitleListBox->currentIndex().row();
 
     if (isSelectedSubtitleInVideo()) {
-        LanguageSelection dlg(this);
+        QPointer<LanguageSelection> dlg = new LanguageSelection(this);
         int n = subtitleListBox->currentIndex().row();
-        dlg.setLanguage(m_subtitles[n].language());
+        dlg->setLanguage(m_subtitles[n].language());
 
-        if (dlg.exec()) {
-            QString lang = dlg.language();
+        if (dlg->exec()) {
+            QString lang = dlg->language();
             m_subtitles[n].setLanguage(lang);
         }
+        delete dlg;
     } else   {
-        SubtitleOptions dlg(this);
-        dlg.setData(m_subtitles[n]);
+        QPointer<SubtitleOptions> dlg = new SubtitleOptions(this);
+        dlg->setData(m_subtitles[n]);
 
-        if (dlg.exec()) {
-            dlg.getData(m_subtitles[n]);
+        if (dlg->exec()) {
+            dlg->getData(m_subtitles[n]);
         }
+        delete dlg;
     }
 }
 

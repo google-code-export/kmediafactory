@@ -121,11 +121,11 @@ Tools::~Tools()
 
 void Tools::addClicked()
 {
-    ToolProperties dlg(kapp->activeWindow());
+    QPointer<ToolProperties> dlg = new ToolProperties(kapp->activeWindow());
 
-    if (dlg.exec()) {
+    if (dlg->exec()) {
         ToolItem item;
-        dlg.getData(&item);
+        dlg->getData(&item);
 
         int i = 0;
         QFileInfo file;
@@ -142,7 +142,7 @@ void Tools::addClicked()
 
         m_model.append(item);
     }
-
+    delete dlg;
     enableButtons();
 }
 
@@ -152,14 +152,15 @@ void Tools::propertiesClicked()
 
     if (list.size() > 0) {
         ToolItem item = m_model.at(list.first());
-        ToolProperties dlg(kapp->activeWindow());
-        dlg.setData(item);
-        dlg.setReadOnly(!writableItem(&item));
+        QPointer<ToolProperties> dlg = new ToolProperties(kapp->activeWindow());
+        dlg->setData(item);
+        dlg->setReadOnly(!writableItem(&item));
 
-        if (dlg.exec()) {
-            dlg.getData(&item);
+        if (dlg->exec()) {
+            dlg->getData(&item);
             m_model.replace(list.first(), item);
         }
+        delete dlg;
     }
 }
 

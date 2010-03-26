@@ -526,15 +526,17 @@ bool KoEncryptedStore::openRead(const QString& name)
             } else {
                 if (!m_filename.isNull())
                     keepPass = false;
-                KPasswordDialog dlg(m_window , keepPass ? KPasswordDialog::ShowKeepPassword : static_cast<KPasswordDialog::KPasswordDialogFlags>(0));
-                dlg.setPrompt(i18n("Please enter the password to open this file."));
-                if (! dlg.exec()) {
+                QPointer<KPasswordDialog> dlg = new KPasswordDialog(m_window , keepPass ? KPasswordDialog::ShowKeepPassword : static_cast<KPasswordDialog::KPasswordDialogFlags>(0));
+                dlg->setPrompt(i18n("Please enter the password to open this file."));
+                if (! dlg->exec()) {
                     m_bPasswordDeclined = true;
                     m_stream = new QBuffer();
                     m_stream->open(QIODevice::ReadOnly);
                     m_iSize = 0;
+                    delete dlg;
                     return true;
                 }
+                delete dlg;
                 password = QCA::SecureArray(dlg.password().toUtf8());
                 if (keepPass)
                     keepPass = dlg.keepPassword();
@@ -693,16 +695,18 @@ bool KoEncryptedStore::closeWrite()
         findPasswordInKWallet();
     }
     while (m_password.isEmpty()) {
-        KNewPasswordDialog dlg(m_window);
-        dlg.setPrompt(i18n("Please enter the password to encrypt the document with."));
-        if (! dlg.exec()) {
+        QPointer<KNewPasswordDialog> dlg = new KNewPasswordDialog(m_window);
+        dlg->setPrompt(i18n("Please enter the password to encrypt the document with."));
+        if (! dlg->exec()) {
             // Without the first password, prevent asking again by deadsimply refusing to continue functioning
             // TODO: This feels rather hackish. There should be a better way to do this.
             delete m_pZip;
+            delete dlg;
             m_pZip = 0;
             m_bGood = false;
             return false;
         }
+        delete dlg;
         m_password = QCA::SecureArray(dlg.password().toUtf8());
         passWasAsked = true;
     }

@@ -104,7 +104,7 @@ QString KMFTemplateBase::uiText(const QString &string)
     int i = 0;
     QString s = string;
 
-    s.replace("_", " ");
+    s.replace('_', ' ');
     QRegExp rx("\\b\\w");
 
     s = s.trimmed().toLower();

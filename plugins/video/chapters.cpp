@@ -425,14 +425,14 @@ void Chapters::slotRemove()
 
 void Chapters::slotAdd()
 {
-    AddChapter dlg(this);
+    QPointer<AddChapter> dlg = new AddChapter(this);
 
-    dlg.chapterTime->setMaximumTime(m_obj->duration());
-    dlg.chapterTime->setTime(m_pos);
+    dlg->chapterTime->setMaximumTime(m_obj->duration());
+    dlg->chapterTime->setTime(m_pos);
 
-    if (dlg.exec() == QDialog::Accepted) {
-        QTime pos = dlg.chapterTime->time();
-        QString text = dlg.nameEdit->text();
+    if (dlg->exec() == QDialog::Accepted) {
+        QTime pos = dlg->chapterTime->time();
+        QString text = dlg->nameEdit->text();
         int i;
 
         // Don't lose milliseconds
@@ -451,6 +451,7 @@ void Chapters::slotAdd()
         m_cells.insert(i, QDVD::Cell(pos, QTime(), text));
         checkLengths();
     }
+    delete dlg;
 }
 
 void Chapters::slotContextMenu(const QPoint &p)
@@ -467,15 +468,15 @@ void Chapters::slotContextMenu(const QPoint &p)
 
 void Chapters::renameAll()
 {
-    AutoChapters dlg(kapp->activeWindow());
+    QPointer<AutoChapters> dlg = new AutoChapters(kapp->activeWindow());
 
-    dlg.intervalLabel->hide();
-    dlg.intervalTime->hide();
-    dlg.resize(dlg.minimumSize());
-    dlg.setCaption(i18n("Rename All"));
+    dlg->intervalLabel->hide();
+    dlg->intervalTime->hide();
+    dlg->resize(dlg->minimumSize());
+    dlg->setCaption(i18n("Rename All"));
 
-    if (dlg.exec()) {
-        QString text = dlg.nameEdit->text().replace("#", "%1");
+    if (dlg->exec()) {
+        QString text = dlg->nameEdit->text().replace('#', "%1");
 
         for (int i = 0; i < m_cells.size(); ++i) {
             m_cells[i].setName(QString(text).arg(i));
@@ -483,6 +484,7 @@ void Chapters::renameAll()
 
         chaptersView->viewport()->update();
     }
+    delete dlg;
 }
 
 void Chapters::deleteAll()
@@ -493,13 +495,13 @@ void Chapters::deleteAll()
 
 void Chapters::autoChapters()
 {
-    AutoChapters dlg(kapp->activeWindow());
+    QPointer<AutoChapters> dlg = new AutoChapters(kapp->activeWindow());
 
-    dlg.setCaption(i18n("Auto Chapters"));
+    dlg->setCaption(i18n("Auto Chapters"));
 
-    if (dlg.exec()) {
-        QString text = dlg.nameEdit->text().replace("#", "%1");
-        KMF::Time interval = dlg.intervalTime->time();
+    if (dlg->exec()) {
+        QString text = dlg->nameEdit->text().replace('#', "%1");
+        KMF::Time interval = dlg->intervalTime->time();
         KMF::Time time;
         int i = 1;
 
@@ -525,6 +527,7 @@ void Chapters::autoChapters()
         }
         checkLengths();
     }
+    delete dlg;
 }
 
 void Chapters::import()

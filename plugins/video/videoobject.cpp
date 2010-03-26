@@ -71,7 +71,7 @@ class ConvertSubtitlesJob : public KMF::Job
         {
             message(msgId(), KMF::Start, i18n("Subtitles for: %1", QFileInfo(videoFile).fileName()));
 
-            QStringList subtitleFiles = subtitle.file().split(";");
+            QStringList subtitleFiles = subtitle.file().split(';');
 
             writeSpumuxXml();
             CHECK_IF_ABORTED();
@@ -720,7 +720,7 @@ bool VideoObject::prepare(const QString &type)
     if (type != "dummy") {
         foreach (const QDVD::Subtitle & subtitle, m_subtitles) {
             if (!subtitle.file().isEmpty()) {
-                QStringList subtitleFiles = subtitle.file().split(";");
+                QStringList subtitleFiles = subtitle.file().split(';');
 
                 for (int i = 0; i < m_files.count(); ++i) {
                     if (i >= subtitleFiles.count()) {
@@ -761,12 +761,12 @@ bool VideoObject::prepare(const QString &type)
 
 void VideoObject::slotProperties()
 {
-    VideoOptions dlg(kapp->activeWindow());
+    QPointer<VideoOptions> dlg = new VideoOptions(kapp->activeWindow());
 
-    dlg.setData(*this);
+    dlg->setData(*this);
 
-    if (dlg.exec()) {
-        dlg.getData(*this);
+    if (dlg->exec()) {
+        dlg->getData(*this);
         interface()->setDirty(KMF::Media);
     }
 }

@@ -142,7 +142,7 @@ bool KMFButton::parseJump(bool addPages)
         m_jump.setCommand(" if (g0 gt 0) resume; else");
     } else   {
         int title = menuPage->titleStart(), chapter = menuPage->chapterStart();
-        QStringList j = m_jumpS.split(":");
+        QStringList j = m_jumpS.split(':');
 
         if (j[0].indexOf(".") > -1) {
             parseTitleChapter(j[0], title, chapter);
@@ -196,7 +196,7 @@ bool KMFButton::parseJump(bool addPages)
 
 KMFButton *KMFButton::parseDirection(const QString &dir)
 {
-    QStringList d = dir.split(",");
+    QStringList d = dir.split(',');
     KMFMenuPage *p = page();
     KMFButton *btn = 0;
 

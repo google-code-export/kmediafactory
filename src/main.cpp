@@ -81,8 +81,8 @@ int main(int argc, char **argv)
         for (; it != end; ++it) {
             if ((it.value().count() == 1) &&
                 (0 ==
-                 (*(it.value().begin())).compare(QString(it.key()).replace(" ",
-                                 ""), Qt::CaseInsensitive))) {
+                 (*(it.value().begin())).compare(QString(it.key()).replace(' ',
+                                 QString()), Qt::CaseInsensitive))) {
                 apps.append(it.key());
             } else {
                 apps.append(it.key() + " (" + it.value().join(", ") + ')');

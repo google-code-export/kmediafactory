@@ -554,10 +554,10 @@ QMap<QString, QString> KMF::Tools::readIniFile(const QString &ini)
     QFile f(ini);
 
     if (f.open(QIODevice::ReadOnly)) {
-        QStringList lines = QString(f.readAll()).split("\n");
+        QStringList lines = QString(f.readAll()).split('\n');
 
         for (QStringList::Iterator it = lines.begin(); it != lines.end(); ++it) {
-            QStringList keyAndValue = it->split("=");
+            QStringList keyAndValue = it->split('=');
 
             if (keyAndValue.count() == 2) {
                 info[keyAndValue[0]] = keyAndValue[1];

@@ -107,7 +107,7 @@ KMFWidget *KMFWidgetFactory::create(const QDomElement &element, QObject *parent)
         KConfigSkeletonItem::List items = m_customProperties->items();
 
         foreach (KConfigSkeletonItem * item, items) {
-            if (item->group().startsWith("%")) {
+            if (item->group().startsWith('%')) {
                 QString className = result->metaObject()->className();
                 set = (item->group().remove('%') == className);
                 // if(set) kDebug() << className;

@@ -116,18 +116,20 @@ void VideoPlugin::init(const QString &type)
 void VideoPlugin::slotAddVideo()
 {
     QCheckBox *multipleFiles = new QCheckBox(0);
-    KFileDialog dlg(KUrl("kfiledialog:///<AddVideo>"),
+    QPointer<KFileDialog> dlg = new KFileDialog(KUrl("kfiledialog:///<AddVideo>"),
                     "*.mpg *.mpeg *.vob|Video files\n*.*|All files",
                     kapp->activeWindow(), multipleFiles);
 
     multipleFiles->setText(i18n("Multiple files make multiple titles."));
     multipleFiles->setChecked(true);
-    dlg.setOperationMode(KFileDialog::Opening);
-    dlg.setCaption(i18n("Open"));
-    dlg.setMode(KFile::Files | KFile::ExistingOnly | KFile::LocalOnly);
-    dlg.exec();
+    dlg->setOperationMode(KFileDialog::Opening);
+    dlg->setCaption(i18n("Open"));
+    dlg->setMode(KFile::Files | KFile::ExistingOnly | KFile::LocalOnly);
+    dlg->exec();
 
-    QStringList filenames = dlg.selectedFiles();
+    QStringList filenames = dlg->selectedFiles();
+    delete dlg;
+
     KMF::PluginInterface *m = interface();
 
     kDebug() << m << filenames;

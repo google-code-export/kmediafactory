@@ -101,7 +101,7 @@ class DVDDirectoryJob : public KMF::Job
         {
             // kDebug() << line;
 
-            if (line.startsWith("\t") &&
+            if (line.startsWith('\t') &&
                 ((m_lastLine == Warning) || (m_lastLine == Error)))
             {
                 message(subid, (KMF::MsgType)m_lastLine, line.mid(1));

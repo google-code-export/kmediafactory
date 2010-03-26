@@ -93,7 +93,7 @@ void KMF::Job::Private::finished(int exitCode, QProcess::ExitStatus exitStatus)
     uint id = proc->property("id").toUInt();
 
     if (!buffer.isEmpty()) {
-        buffer += "\n";
+        buffer += '\n';
         out();
     }
 
