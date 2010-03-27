@@ -222,7 +222,7 @@ class KDE_EXPORT Subtitle : public Track
             Large_Director, Children_Director
         };
 
-        Subtitle(QString langCode = "en", QString file = "");
+        explicit Subtitle(QString langCode = "en", QString file = QString());
 #ifdef HAVE_LIBDVDREAD
         Subtitle(int pos, subp_attr_t * subp_attr,
             uint16_t subp_control, video_attr_t * video_attr);
@@ -622,8 +622,7 @@ class KDE_EXPORT Info : public QObject, public Base
     Q_OBJECT
 #ifdef HAVE_LIBDVDREAD
     public:
-        Info(const QString &device,
-            QObject * parent = 0);
+        explicit Info(const QString &device, QObject * parent = 0);
 
         bool parseDVD(const QString &device = "/dev/dvd");
 

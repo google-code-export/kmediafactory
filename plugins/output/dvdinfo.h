@@ -35,7 +35,7 @@ class DVDInfo : public KDialog, public Ui::DVDInfo
     Q_OBJECT
 
     public:
-        DVDInfo(QWidget *parent = 0, QString device = "/dev/dvd");
+        explicit DVDInfo(QWidget *parent = 0, QString device = "/dev/dvd");
         ~DVDInfo();
 
     protected slots:

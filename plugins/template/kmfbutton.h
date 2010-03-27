@@ -31,7 +31,7 @@ class KMFJump
     public:
         enum { TS_NONE = -1, TS_VMGM = 0};
         KMFJump() : m_titleset(TS_NONE), m_menu(-1), m_title(-1), m_chapter(0){};
-        KMFJump(int menu, int titleset = TS_NONE)
+        explicit KMFJump(int menu, int titleset = TS_NONE)
         {
             setMenu(menu, titleset);
         };

@@ -268,7 +268,7 @@ void SlideshowProperties::addSlides(const SlideList &slides)
 
     m_model.insert(current, slides);
 
-    foreach (Slide slide, slides) {
+    foreach (const Slide& slide, slides) {
         KFileItem item(KFileItem::Unknown, KFileItem::Unknown, slide.picture);
 
         list.append(item);
@@ -351,7 +351,7 @@ void SlideshowProperties::updateInfo()
     KMF::Time audioDuration = 0.0;
     QStringList audioFiles = m_audioModel.list();
 
-    foreach (QString file, audioFiles) {
+    foreach (const QString& file, audioFiles) {
         KMFMediaFile audio = KMFMediaFile::mediaFile(file);
 
         audioDuration += audio.duration();
@@ -407,10 +407,9 @@ void SlideshowProperties::addAudio()
 
 void SlideshowProperties::okClicked()
 {
-    SlideList slides = m_model.list();
-    int       chapterCount(0);
+    int chapterCount(0);
 
-    foreach (Slide slide, slides) {
+    foreach (const Slide& slide, m_model.list()) {
         if (slide.chapter) {
             chapterCount++;
         }

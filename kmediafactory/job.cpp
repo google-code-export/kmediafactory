@@ -112,7 +112,7 @@ void KMF::Job::Private::out()
         if (!filter.exactMatch(tmp)) {
             if (lastLine != tmp) {
                 if (count > 1) {
-                    log += tmp + i18n(" (%1 times)\n").arg(count);
+                    log += tmp + i18n(" (%1 times)\n", count);
                 } else   {
                     log += tmp + '\n';
                 }

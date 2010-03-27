@@ -35,7 +35,7 @@ class KMFMenu : public KMFTemplateBase
 
     public:
         enum { TotalPoints = 1000};
-        KMFMenu(const QString &tmplate, QObject *parent = 0);
+        explicit KMFMenu(const QString &tmplate, QObject *parent = 0);
         ~KMFMenu();
 
         bool makeMenu(const QString &type);

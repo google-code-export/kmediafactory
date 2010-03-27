@@ -112,8 +112,7 @@ int main(int argc, char **argv)
     KGlobal::locale()->insertCatalog("kmediafactory_kstore");
     // Add resource dirs
     QStringList tools = KGlobal::dirs()->findDirs("data", "kmediafactory/tools");
-    foreach(QString tooldir, tools)
-    {
+    foreach (const QString& tooldir, tools) {
         kDebug() << "Adding resource dir: " << tooldir;
         // For icons in tool scripts
         KGlobal::dirs()->addResourceDir("icon", tooldir);

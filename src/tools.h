@@ -75,7 +75,7 @@ class Tools : public QWidget, public Ui::Tools
         virtual void enableButtons();
 
     protected:
-        bool writableItem(ToolItem *item);
+        bool writableItem(const ToolItem& item);
 
     private:
         KUrl::List m_remove;

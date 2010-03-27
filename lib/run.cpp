@@ -82,8 +82,7 @@ void Run::checkIfScript()
     if (n > -1) {
         QStringList paths = env[n].mid(5).split(':');
 
-        foreach(QString path, paths)
-        {
+        foreach (const QString& path, paths) {
             QFileInfo fi(path + '/' + m_program);
 
             // kDebug() << fi.filePath();
@@ -127,8 +126,7 @@ bool Run::run()
     // kDebug() << kmfPaths;
     env << QString("KMF_DBUS=org.kde.kmediafactory-%1")
     .arg(getpid());
-    foreach(QString path, kmfPaths)
-    {
+    foreach (const QString& path, kmfPaths) {
         env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive),
                 "PATH=" + path.left(path.length() - 1) + ":\\1");
     }
