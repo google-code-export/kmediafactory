@@ -81,7 +81,7 @@ static QString fixDirectory(const QString &directory)
 {
     QString dir = KMF::Tools::addSlash(directory);
 
-    if (dir.startsWith("file://")) {
+    if (dir.startsWith(QLatin1String("file://"))) {
         dir = dir.mid(7);
     }
 
