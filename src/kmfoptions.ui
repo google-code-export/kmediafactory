@@ -31,7 +31,7 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QComboBox" name="kcfg_DefaultProjectType">
+    <widget class="KComboBox" name="kcfg_DefaultProjectType">
      <item>
       <property name="text">
        <string>DVD-NTSC</string>
@@ -58,7 +58,7 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QComboBox" name="kcfg_DefaultAspectRatio">
+    <widget class="KComboBox" name="kcfg_DefaultAspectRatio">
      <item>
       <property name="text">
        <string>4:3</string>

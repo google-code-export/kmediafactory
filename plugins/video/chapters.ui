@@ -16,9 +16,6 @@
     <height>400</height>
    </size>
   </property>
-  <property name="windowTitle">
-   <string>Chapters</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QSplitter" name="splitter">
@@ -146,9 +143,6 @@
         <widget class="KPushButton" name="customPreviewButton">
          <property name="text">
           <string>&amp;Use as Custom Preview</string>
-         </property>
-         <property name="shortcut">
-          <string>Alt+U</string>
          </property>
         </widget>
        </item>

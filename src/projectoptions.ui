@@ -37,7 +37,7 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QLineEdit" name="titleEdit"/>
+    <widget class="KLineEdit" name="titleEdit"/>
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="typeLabel">
@@ -53,7 +53,7 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QComboBox" name="typeComboBox"/>
+    <widget class="KComboBox" name="typeComboBox"/>
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="aspectLabel">
@@ -69,7 +69,7 @@
     </widget>
    </item>
    <item row="2" column="1">
-    <widget class="QComboBox" name="aspectComboBox">
+    <widget class="KComboBox" name="aspectComboBox">
      <item>
       <property name="text">
        <string>4:3</string>

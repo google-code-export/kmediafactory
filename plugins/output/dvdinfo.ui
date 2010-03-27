@@ -47,7 +47,7 @@
        <bool>false</bool>
       </property>
      </widget>
-     <widget class="QTextBrowser" name="textBrowser" >
+     <widget class="KTextBrowser" name="textBrowser" >
       <property name="sizePolicy" >
        <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
         <horstretch>0</horstretch>

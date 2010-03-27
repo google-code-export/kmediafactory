@@ -76,7 +76,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="nameEdit"/>
+      <widget class="KLineEdit" name="nameEdit"/>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="descriptionLabel">
@@ -92,7 +92,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="descriptionEdit"/>
+      <widget class="KLineEdit" name="descriptionEdit"/>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="commandLabel">
@@ -158,18 +158,12 @@
        <property name="text">
         <string>Place in media button bar</string>
        </property>
-       <property name="shortcut">
-        <string>Alt+B</string>
-       </property>
       </widget>
      </item>
      <item>
       <widget class="QCheckBox" name="runInTerminalCheckBox">
        <property name="text">
         <string>Run in terminal</string>
-       </property>
-       <property name="shortcut">
-        <string>Alt+I</string>
        </property>
       </widget>
      </item>

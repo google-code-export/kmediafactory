@@ -6,7 +6,7 @@
   <kcfgfile name="kmediafactory_videopluginrc"/>
   <group name="video">
       <entry name="UsePreviewCache" type="Bool">
-          <label>Save preview pictures in menu dir. Usefull when making
+          <label>Save preview pictures in menu dir. Useful when making
 same DVD multiple times (testing).</label>
           <default>false</default>
       </entry>

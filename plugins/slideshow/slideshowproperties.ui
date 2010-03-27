@@ -30,12 +30,12 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="titleEdit"/>
+      <widget class="KLineEdit" name="titleEdit"/>
      </item>
     </layout>
    </item>
    <item>
-    <widget class="QTabWidget" name="tabWidget">
+    <widget class="KTabWidget" name="tabWidget">
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -222,9 +222,6 @@
            <property name="text">
             <string>Add to DVD</string>
            </property>
-           <property name="shortcut">
-            <string>Alt+A</string>
-           </property>
           </widget>
          </item>
          <item row="2" column="1">
@@ -240,9 +237,6 @@
            </property>
            <property name="text">
             <string>Loop slideshow</string>
-           </property>
-           <property name="shortcut">
-            <string>Alt+L</string>
            </property>
           </widget>
          </item>
