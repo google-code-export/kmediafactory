@@ -21,7 +21,7 @@
 #ifndef QDVDINFO_H
 #define QDVDINFO_H
 
-#include "config.h"
+#include <config.h>
 
 #include <QtCore/QDateTime>
 #include <QtCore/QList>
