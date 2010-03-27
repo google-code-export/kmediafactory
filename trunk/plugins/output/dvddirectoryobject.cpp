@@ -101,15 +101,15 @@ class DVDDirectoryJob : public KMF::Job
         {
             // kDebug() << line;
 
-            if (line.startsWith('\t') &&
+            if (line.startsWith(QLatin1String("\t")) &&
                 ((m_lastLine == Warning) || (m_lastLine == Error)))
             {
                 message(subid, (KMF::MsgType)m_lastLine, line.mid(1));
-            } else if (line.startsWith("ERR:"))    {
+            } else if (line.startsWith(QLatin1String("ERR:")))    {
                 m_lastLine = Error;
                 m_error = true;
                 message(subid, KMF::Error, line.mid(6));
-            } else if (line.startsWith("WARN:"))    {
+            } else if (line.startsWith(QLatin1String("WARN:")))    {
                 m_lastLine = Warning;
                 QString temp = line.mid(6);
 
@@ -118,7 +118,7 @@ class DVDDirectoryJob : public KMF::Job
                     message(subid, KMF::Warning, temp);
                     m_warning = temp;
                 }
-            } else if (line.startsWith("STAT: Processing"))    {
+            } else if (line.startsWith(QLatin1String("STAT: Processing")))    {
                 QString previousFile = m_currentFile.filePath();
                 m_lastLine = Processing;
                 m_lastSize += m_currentFile.size() / 1024;
@@ -128,7 +128,7 @@ class DVDDirectoryJob : public KMF::Job
                 message(subid, KMF::Start, i18n("Processing: %1", m_currentFile.fileName()));
                 setMaximum(subid, m_currentFile.size() / 1024);
                 m_vobu = m_lastVobu;
-            } else if (line.startsWith("STAT: VOBU"))    {
+            } else if (line.startsWith(QLatin1String("STAT: VOBU")))    {
                 QRegExp reVobu("VOBU (\\d+) at (\\d+)MB, .*");
 
                 if ((m_lastLine != Vobu) && (m_lastLine != Processing)) {
@@ -152,7 +152,7 @@ class DVDDirectoryJob : public KMF::Job
 
                     setValue(subid, reVobu.cap(2).toInt() * 1024 - m_lastSize);
                 }
-            } else if (line.startsWith("STAT: fixing VOBU"))    {
+            } else if (line.startsWith(QLatin1String("STAT: fixing VOBU"))) {
                 QRegExp reFix(".* (\\d+)%\\)");
 
                 if (m_lastLine != FixingVobu) {

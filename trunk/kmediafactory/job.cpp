@@ -98,7 +98,7 @@ void KMF::Job::Private::finished(int exitCode, QProcess::ExitStatus exitStatus)
     }
 
     job->log(id, log);
-    log = QString();
+    log.clear();
 }
 
 void KMF::Job::Private::out()

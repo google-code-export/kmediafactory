@@ -217,7 +217,7 @@ QString KMF::Tools::findExe(const QString &exe, const QStringList &paths,
         }
     }
 
-    return QString::null;
+    return QString();
 }
 
 QStringList KMF::Tools::file2List(const QString &file, const QString &comment,
@@ -417,7 +417,7 @@ QString KMF::Tools::fontFile(const QFont &font)
         FcPatternDestroy(pat);
         FcObjectSetDestroy(os);
 
-        for (i = 0; i < fontset->nfont; i++) {
+        for (i = 0; i < fontset->nfont; ++i) {
             QFont font;
             FcChar8 *family;
             FcChar8 *file;

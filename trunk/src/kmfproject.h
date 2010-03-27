@@ -153,7 +153,7 @@ class KMFProject : public QObject
         mutable QString m_error;
         QString m_subType;
 
-        void setError(const QString &error = QString::null) const
+        void setError(const QString &error = QString()) const
         {
             m_error = error;
         };

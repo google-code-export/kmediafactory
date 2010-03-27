@@ -33,7 +33,7 @@ class OutputPlugin : public KMF::Plugin
     public:
         OutputPlugin(QObject *parent, const QVariantList &);
 
-        void play(const QString &player = QString::null);
+        void play(const QString &player = QString());
 
     public slots:
         virtual void init(const QString &type);

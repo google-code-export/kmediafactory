@@ -188,8 +188,8 @@ static int startServiceInternal(const char *_function, const QString &_name,
     if (QX11Info::display()) {
         QByteArray dpystring(XDisplayString(QX11Info::display()));
         envs << QString::fromLatin1(QByteArray("DISPLAY=") + dpystring);
-    } else if (getenv("DISPLAY"))   {
-        QByteArray dpystring(getenv("DISPLAY"));
+    } else if (!qgetenv("DISPLAY").isEmpty())   {
+        QByteArray dpystring(qgetenv("DISPLAY"));
         envs << QString::fromLatin1(QByteArray("DISPLAY=") + dpystring);
     }
 #endif

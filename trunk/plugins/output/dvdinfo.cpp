@@ -89,7 +89,7 @@ bool DVDInfo::isDVD()
         if (dir.exists()) {
             dvd = true;
         }
-    } else if (fi.filePath().startsWith("/dev/"))    {
+    } else if (fi.filePath().startsWith(QLatin1String("/dev/")))    {
         dvd = true;
     } else if (fi.suffix().toLower() == "iso")    {
         dvd = true;

@@ -246,7 +246,7 @@ static int lzff_compress(const void* input, int length, void* output, int maxout
     quint8* anchor;
 
     /* initializes hash table */
-    for (hslot = htab; hslot < htab + HASH_SIZE; hslot++)
+    for (hslot = htab; hslot < htab + HASH_SIZE; ++hslot)
         *hslot = ip;
 
     /* we start with literal copy */
@@ -1546,7 +1546,7 @@ void KoXmlNodeData::loadChildren(int depth)
 
     const KoXmlPackedItem& self = packedDoc->itemAt(nodeDepth, nodeIndex);
 
-    for (unsigned i = self.childStart; i < childStop; i++) {
+    for (unsigned i = self.childStart; i < childStop; ++i) {
         const KoXmlPackedItem& item = packedDoc->itemAt(nodeDepth + 1, i);
         bool textItem = (item.type == KoXmlNode::TextNode);
         textItem |= (item.type == KoXmlNode::CDATASectionNode);
@@ -1794,7 +1794,7 @@ static QDomNode itemAsQDomNode(QDomDocument ownerDoc, KoXmlPackedDocument* packe
             element = ownerDoc.createElement(name);
 
         // check all subnodes for attributes
-        for (unsigned i = self.childStart; i < childStop; i++) {
+        for (unsigned i = self.childStart; i < childStop; ++i) {
             const KoXmlPackedItem& item = packedDoc->itemAt(nodeDepth + 1, i);
             bool textItem = (item.type == KoXmlNode::TextNode);
             textItem |= (item.type == KoXmlNode::CDATASectionNode);

@@ -23,10 +23,10 @@
 
 #include <QtCore/QAbstractListModel>
 #include <QtCore/QMetaProperty>
-#include <QtGui/QComboBox>
 #include <QtGui/QListView>
 #include <QtGui/QPixmap>
 
+#include <KComboBox>
 #include <KDebug>
 #include <KStandardDirs>
 
@@ -80,12 +80,12 @@ class KDE_EXPORT LanguageListModel : public QAbstractListModel
         static QMap<QString, QString> m_dvd2l10n;
 };
 
-class KDE_EXPORT KMFLanguageComboBox : public QComboBox
+class KDE_EXPORT KMFLanguageComboBox : public KComboBox
 {
     Q_OBJECT Q_PROPERTY(QString language READ language WRITE setLanguage USER true)
 
     public:
-        KMFLanguageComboBox(QWidget * parent = 0) : QComboBox(parent)
+        KMFLanguageComboBox(QWidget * parent = 0) : KComboBox(parent)
         {
             m_model.useAllLanguages();
             setModel(&m_model);

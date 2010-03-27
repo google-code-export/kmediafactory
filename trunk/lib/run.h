@@ -27,16 +27,13 @@
 
 #include <kdemacros.h>
 
-/**
- *  @author Petri Damsten <petri.damsten@iki.fi>
- */
 class KDE_EXPORT Run : public QProcess
 {
     Q_OBJECT
 
     public:
-        explicit Run(QString command = QString::null, QString dir = QString::null);
-        explicit Run(QStringList command, QString dir = QString::null);
+        explicit Run(QString command = QString(), QString dir = QString());
+        explicit Run(QStringList command, QString dir = QString());
         ~Run();
 
         void setCommand(QString command);

@@ -682,11 +682,11 @@ SlideList SlideshowObject::slideList(QStringList list, QWidget *parent) const
 
     foreach (const QString& file, list) {
         QString currentFile = file;
-        KFileMetaInfo minfo(currentFile, QString::null, KFileMetaInfo::ContentInfo);
+        KFileMetaInfo minfo(currentFile, QString(), KFileMetaInfo::ContentInfo);
         QString mime;
         QFileInfo fi(currentFile);
         QDir dir(interface()->projectDir("media"));
-        KMimeType::Ptr type = KMimeType::findByUrl(QUrl::fromLocalFile(currentFile));
+        KMimeType::Ptr type = KMimeType::findByUrl(KUrl::fromLocalFile(currentFile));
 
         dlg.setLabelText(i18n("Processing %1...", currentFile));
         kapp->processEvents();
@@ -704,8 +704,8 @@ SlideList SlideshowObject::slideList(QStringList list, QWidget *parent) const
 
         kDebug() << mime;
 
-        if (mime.startsWith("application/vnd.oasis.opendocument") ||
-            mime.startsWith("application/vnd.sun.xml") ||
+        if (mime.startsWith(QLatin1String("application/vnd.oasis.opendocument")) ||
+            mime.startsWith(QLatin1String("application/vnd.sun.xml")) ||
             (mime == "application/msexcel") ||
             (mime == "application/msword") ||
             (mime == "application/mspowerpoint"))
@@ -719,7 +719,7 @@ SlideList SlideshowObject::slideList(QStringList list, QWidget *parent) const
 
             if (run.exitCode() == 0) {
                 mime = "application/pdf";
-                minfo = KFileMetaInfo(currentFile, QString::null, KFileMetaInfo::ContentInfo);
+                minfo = KFileMetaInfo(currentFile, QString(), KFileMetaInfo::ContentInfo);
                 currentFile = output;
             }
         }

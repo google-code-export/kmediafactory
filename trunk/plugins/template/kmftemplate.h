@@ -31,7 +31,7 @@ class KoStore;
 class KMFTemplate
 {
     public:
-        KMFTemplate(const QString file = QString::null);
+        KMFTemplate(const QString file = QString());
         ~KMFTemplate();
 
         bool setStore(const QString &store);

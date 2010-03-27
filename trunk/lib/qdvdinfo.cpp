@@ -47,6 +47,7 @@
 #include <KApplication>
 #include <KDebug>
 #include <KLocale>
+#include <kde_file.h>
 
 #include <malloc.h>
 
@@ -308,7 +309,7 @@ Cell::Cell(int cell, pgc_t *pgc)
     m_chapter = false;
     m_hidden = false;
 
-    for (i = 0; i < pgc->nr_of_programs; i++) {
+    for (i = 0; i < pgc->nr_of_programs; ++i) {
         if (m_cell == pgc->program_map[i] - 1) {
             m_chapter = true;
             break;
@@ -572,7 +573,7 @@ bool Title::parseAudioBitrates(dvd_reader_t *dvd)
         maxblocks = startSector() + PROBEBLOCKS;
     }
 
-    for (i = startSector(); i < maxblocks; i++) {
+    for (i = startSector(); i < maxblocks; ++i) {
         // read 10mb from dvd
         if (!DVDReadBlocks(vob, i, 1, buffer)) {
             kDebug() << "ERROR probing for streams";
@@ -852,7 +853,7 @@ bool Info::getTitleName(const char *dvd_device, QString &title)
     char t[33];
     QString path = dvd_device;
 
-    if (path.startsWith('/')) {
+    if (path.startsWith(QLatin1String("/"))) {
         path = path.left(path.length() - 1);
     }
 
@@ -869,7 +870,7 @@ bool Info::getTitleName(const char *dvd_device, QString &title)
         return false;
     }
 
-    if (fseek(filehandle, 32808, SEEK_SET)) {
+    if (KDE_fseek(filehandle, 32808, SEEK_SET)) {
         fclose(filehandle);
         kDebug() << "Couldn't seek in %s for title";
         title = i18nc("Unknown DVD title", "unknown");
@@ -934,10 +935,9 @@ bool Info::parseDVD(const QString &device)
         return false;
     }
 
-    ifo = (ifo_handle_t **)malloc((ifo_zero->vts_atrt->nr_of_vtss + 1) *
-            sizeof(ifo_handle_t *));
+    ifo = (ifo_handle_t **)malloc((ifo_zero->vts_atrt->nr_of_vtss + 1) * sizeof(ifo_handle_t *));
 
-    for (i = 1; i <= ifo_zero->vts_atrt->nr_of_vtss; i++) {
+    for (i = 1; i <= ifo_zero->vts_atrt->nr_of_vtss; ++i) {
         ifo[i] = ifoOpen(dvd, i);
 
         if (!ifo[i]) {
@@ -957,7 +957,7 @@ bool Info::parseDVD(const QString &device)
     m_providerIdentifier.sprintf("%.32s", vmgi_mat->provider_identifier);
     kDebug() << m_title;
 
-    for (j = 0; j < dvdTitles; j++) {
+    for (j = 0; j < dvdTitles; ++j) {
         // GENERAL
         if (ifo[ifo_zero->tt_srpt->title[j].title_set_nr]->vtsi_mat) {
             title_set_nr = ifo_zero->tt_srpt->title[j].title_set_nr;
@@ -974,18 +974,18 @@ bool Info::parseDVD(const QString &device)
             title.setVideo(VideoTrack(pgc, &vtsi_mat->vts_video_attr));
 
             // AUDIO
-            for (i = 0; i < vtsi_mat->nr_of_vts_audio_streams; i++) {
+            for (i = 0; i < vtsi_mat->nr_of_vts_audio_streams; ++i) {
                 title.addAudio(AudioTrack(&vtsi_mat->vts_audio_attr[i],
                                 pgc->audio_control[i]));
             }
 
             // CELLS & CHAPTERS
-            for (i = 0; i < pgc->nr_of_cells; i++) {
+            for (i = 0; i < pgc->nr_of_cells; ++i) {
                 title.addCell(Cell(i, pgc));
             }
 
             // SUBTITLES
-            for (i = 0; i < vtsi_mat->nr_of_vts_subp_streams; i++) {
+            for (i = 0; i < vtsi_mat->nr_of_vts_subp_streams; ++i) {
                 title.addSubtitle(Subtitle(i, &vtsi_mat->vts_subp_attr[i],
                                 pgc->subp_control[i],
                                 &vtsi_mat->vts_video_attr));
@@ -1006,7 +1006,7 @@ bool Info::parseDVD(const QString &device)
         kapp->processEvents();
     }
 
-    for (i = 1; i <= ifo_zero->vts_atrt->nr_of_vtss; i++) {
+    for (i = 1; i <= ifo_zero->vts_atrt->nr_of_vtss; ++i) {
         ifoClose(ifo[i]);
     }
 

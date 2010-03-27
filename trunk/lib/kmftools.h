@@ -57,11 +57,11 @@ class KDE_EXPORT Tools
         static void stripExisting(KUrl::List *src, const KUrl &dest);
         static QString addSlash(QString path);
         static QString joinPaths(QString path1, QString path2);
-        static QStringList file2List(const QString &file, const QString &comment = QString::null,
-            const QString &startsWith = QString::null);
+        static QStringList file2List(const QString &file, const QString &comment = QString(),
+            const QString &startsWith = QString());
         static QString findExe(const QString &exe, const QStringList &paths,
-            const QString &extraPrefix = QString::null);
-        static QStringList findAllResources(const char *type, const QString &filter = QString::null);
+            const QString &extraPrefix = QString());
+        static QStringList findAllResources(const char *type, const QString &filter = QString());
         static QSize resolution(const QSize &original, const QSize &originalRatio,
             const QSize &dest, const QSize &destRatio, Qt::AspectRatioMode mode =
                 Qt::KeepAspectRatioByExpanding);
