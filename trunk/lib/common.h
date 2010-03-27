@@ -18,6 +18,11 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 // **************************************************************************
 
+#ifndef KMF_COMMON
+#define KMF_COMMON
+
 #include <KIconLoader>
 
 #define BTN_ICON(x) KGlobal::iconLoader()->loadIconSet((x), KIconLoader::Small)
+
+#endif

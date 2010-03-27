@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef KOFFICE_XMLREADER
-#define KOFFICE_XMLREADER
+#ifndef KO_XMLREADER
+#define KO_XMLREADER
 
 // KOXML_USE_QDOM is defined there
 #include "KoXmlReaderForward.h"

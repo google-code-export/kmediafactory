@@ -18,8 +18,8 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 // **************************************************************************
 
-#ifndef KMF_DEFS_H
-#define KMF_DEFS_H
+#ifndef KMF_KMEDIAFACTORY_H
+#define KMF_KMEDIAFACTORY_H
 
 namespace KMF
 {

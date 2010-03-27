@@ -19,6 +19,7 @@
 // **************************************************************************
 
 #include "job.h"
+#include "job_p.h"
 
 #include <QtCore/QMetaType>
 #include <QtCore/QVariant>
@@ -27,7 +28,6 @@
 #include <KLocale>
 #include <ThreadWeaver/Thread>
 
-#include "job_p.h"
 #include "plugininterface.h"
 
 KMF::JobHelper::JobHelper(KMF::Job *parent)
