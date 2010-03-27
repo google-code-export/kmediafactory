@@ -18,8 +18,8 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 // **************************************************************************
 
-#ifndef KMFTEMPLATEICONVIEW_H
-#define KMFTEMPLATEICONVIEW_H
+#ifndef KMFOBJECTLISTMODEL_H
+#define KMFOBJECTLISTMODEL_H
 
 #include <QtCore/QMimeData>
 

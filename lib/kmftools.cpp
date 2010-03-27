@@ -33,7 +33,6 @@
 #include <QtGui/QPainter>
 #include <QtGui/QStringListModel>
 #include <QtXml/QDomElement>
-#include <QtXml/QDomElement>
 
 #include <KActionCollection>
 #include <KApplication>

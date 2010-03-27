@@ -74,7 +74,6 @@
 #include "mediapage.h"
 #include "outputpage.h"
 #include "projectoptions.h"
-#include "projectoptions.h"
 #include "sizewidget.h"
 #include "templatepage.h"
 #include "tools.h"
