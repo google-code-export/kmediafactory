@@ -154,7 +154,7 @@ void Tools::propertiesClicked()
         ToolItem item = m_model.at(list.first());
         QPointer<ToolProperties> dlg = new ToolProperties(kapp->activeWindow());
         dlg->setData(item);
-        dlg->setReadOnly(!writableItem(&item));
+        dlg->setReadOnly(!writableItem(item));
 
         if (dlg->exec()) {
             dlg->getData(&item);
@@ -190,9 +190,8 @@ void Tools::save()
 
     QList<ToolItem> items = m_model.list();
 
-    foreach(ToolItem item, items)
-    {
-        if (!writableItem(&item)) {
+    foreach(const ToolItem& item, items) {
+        if (!writableItem(item)) {
             continue;
         }
 
@@ -241,19 +240,15 @@ void Tools::load()
     enableButtons();
 }
 
-bool Tools::writableItem(ToolItem *item)
+bool Tools::writableItem(const ToolItem& item)
 {
-    if (item) {
-        QFileInfo fi(item->desktopFile);
+    QFileInfo fi(item.desktopFile);
 
-        if (fi.exists()) {
-            return fi.isWritable();
-        } else {
-            return true;
-        }
+    if (fi.exists()) {
+        return fi.isWritable();
+    } else {
+        return true;
     }
-
-    return false;
 }
 
 void Tools::enableButtons()
@@ -263,7 +258,7 @@ void Tools::enableButtons()
 
     if (list.size() > 0) {
         ToolItem item = m_model.at(list.first());
-        writable = writableItem(&item);
+        writable = writableItem(item);
     }
 
     propertiesButton->setEnabled(list.size() > 0);

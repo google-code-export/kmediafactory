@@ -104,8 +104,7 @@ void KMFApplication::loadPlugins()
 
     KService::List offers = KServiceTypeTrader::self()->query("KMediaFactory/Plugin");
     QStringList files = KGlobal::dirs()->findAllResources("appdata", "tools/services/*.desktop");
-    foreach(QString file, files)
-    {
+    foreach (const QString& file, files) {
         kDebug() << "Custom service: " << file;
         offers << KService::Ptr(new KService(file));
     }

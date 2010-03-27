@@ -47,7 +47,7 @@ void KMFUnit::set(const QString &value)
 
     temp.remove(rx);
 
-    if (temp == "") {
+    if (temp.isEmpty()) {
         m_type = Absolute;
         m_value = 0;
     }

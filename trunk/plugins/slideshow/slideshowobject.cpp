@@ -73,7 +73,7 @@ class CopyOriginalsJob : public KMF::Job
             message(msgId(), KMF::Start, i18n("Copying slideshow originals"));
             setMaximum(msgId(), files.size());
             int i = 0;
-            foreach (QString file, files) {
+            foreach (const QString& file, files) {
                 if (!QFile::copy(file, destDir + QFileInfo(file).fileName())) {
                     message(msgId(), KMF::Error, i18n("Copying originals failed."));
                     return;
@@ -309,7 +309,7 @@ class SlideshowJob : public KMF::Job
                     default:
                         if ((dvdslideshow->exitCode() != QProcess::NormalExit) || (exitCode != 0)) {
                             message(msgId(), KMF::Error,
-                                    i18n("Slideshow error (%1).").arg(exitCode));
+                                    i18n("Slideshow error (%1).", exitCode));
                         }
                 }
             } else {
@@ -461,7 +461,7 @@ class SlideshowJob : public KMF::Job
                     sub(&subFile);
                     t1playlist << "  <playlist id=\"imagePlayList2\" >" << endl;
                     t2playlist << "  <playlist id=\"imagePlayList1\" >" << endl;
-                    foreach (Slide slide, slideshow.slides()) {
+                    foreach (const Slide& slide, slideshow.slides()) {
                         QTextStream &pics = 0 == pic % 2 ? t1pics : t2pics,
                         &currentList = 0 == pic % 2 ? t1playlist : t2playlist,
                         &otherList = 0 == pic % 2 ? t2playlist : t1playlist;
@@ -592,8 +592,7 @@ class SlideshowJob : public KMF::Job
 
                     ts << "background:0::black\n";
                     ts << "fadein:1\n";
-                    foreach(Slide slide, slideshow.slides())
-                    {
+                    foreach (const Slide& slide, slideshow.slides()) {
                         QString comment = slide.comment;
 
                         comment.replace(':', "\\:");
@@ -681,14 +680,15 @@ SlideList SlideshowObject::slideList(QStringList list, QWidget *parent) const
     dlg.progressBar()->setMaximum(list.count());
     dlg.show();
 
-    foreach (QString file, list) {
-        KFileMetaInfo minfo(file, QString::null, KFileMetaInfo::ContentInfo);
+    foreach (const QString& file, list) {
+        QString currentFile = file;
+        KFileMetaInfo minfo(currentFile, QString::null, KFileMetaInfo::ContentInfo);
         QString mime;
-        QFileInfo fi(file);
+        QFileInfo fi(currentFile);
         QDir dir(interface()->projectDir("media"));
-        KMimeType::Ptr type = KMimeType::findByUrl(QUrl::fromLocalFile(file));
+        KMimeType::Ptr type = KMimeType::findByUrl(QUrl::fromLocalFile(currentFile));
 
-        dlg.setLabelText(i18n("Processing %1...", file));
+        dlg.setLabelText(i18n("Processing %1...", currentFile));
         kapp->processEvents();
 
         if (fi.isDir()) {
@@ -713,15 +713,14 @@ SlideList SlideshowObject::slideList(QStringList list, QWidget *parent) const
             QString output = QString("%1.pdf").arg(id());
             QDir dir(interface()->projectDir("media"));
             output = dir.filePath(output);
-            Run run(QString("kmf_oo2pdf \"%1\" \"%2\"").arg(file).arg(output));
+            Run run(QString("kmf_oo2pdf \"%1\" \"%2\"").arg(currentFile).arg(output));
 
-            kDebug() << file << "->" << output;
+            kDebug() << currentFile << "->" << output;
 
             if (run.exitCode() == 0) {
                 mime = "application/pdf";
-                minfo = KFileMetaInfo(file, QString::null,
-                        KFileMetaInfo::ContentInfo);
-                file = output;
+                minfo = KFileMetaInfo(currentFile, QString::null, KFileMetaInfo::ContentInfo);
+                currentFile = output;
             }
         }
 
@@ -729,20 +728,20 @@ SlideList SlideshowObject::slideList(QStringList list, QWidget *parent) const
             QString output = id() + "_%d.png";
             QDir dir(interface()->projectDir("media"));
             output = dir.filePath(output);
-            Run run(QString("kmf_pdf2png \"%1\" \"%2\"").arg(file).arg(output));
+            Run run(QString("kmf_pdf2png \"%1\" \"%2\"").arg(currentFile).arg(output));
 
-            kDebug() << file << "->" << output;
+            kDebug() << currentFile << "->" << output;
 
             for (int i = 1; true; ++i) {
                 Slide slide;
                 QString fileNameTemplate = id() + "_%1.png";
-                QString file = dir.filePath(QString(fileNameTemplate).arg(i));
-                QFileInfo fi(file);
+                QString slideFile = dir.filePath(QString(fileNameTemplate).arg(i));
+                QFileInfo fi(slideFile);
 
                 if (fi.exists()) {
                     kDebug() << "Slide: " << i;
                     slide.comment = i18n("Page %1", i);
-                    slide.picture = file;
+                    slide.picture = slideFile;
                     result.append(slide);
                 } else   {
                     break;
@@ -769,13 +768,12 @@ SlideList SlideshowObject::slideList(QStringList list, QWidget *parent) const
 
             if (slide.comment.isEmpty()) {
 #ifdef HAVE_KEXIV2
-                QDateTime dt = KExiv2Iface::KExiv2(file).getImageDateTime();
+                QDateTime dt = KExiv2Iface::KExiv2(currentFile).getImageDateTime();
 
-                slide.comment =
-                    dt.isNull() ? QFileInfo(file).fileName() : KGlobal::locale()->formatDateTime(
-                            dt, KLocale::ShortDate, true);
+                slide.comment = dt.isNull() ? QFileInfo(currentFile).fileName() :
+                            KGlobal::locale()->formatDateTime(dt, KLocale::ShortDate, true);
 #else
-                Run run(QString("kmf_comment \"%1\"").arg(file));
+                Run run(QString("kmf_comment \"%1\"").arg(currentFile));
 
                 if (run.exitStatus() == 0) {
                     slide.comment = run.output();
@@ -784,7 +782,7 @@ SlideList SlideshowObject::slideList(QStringList list, QWidget *parent) const
             }
 
             slide.comment = slide.comment.trimmed();
-            slide.picture = file;
+            slide.picture = currentFile;
             result.append(slide);
             kapp->processEvents();
             dlg.progressBar()->setValue(dlg.progressBar()->value() + 1);
@@ -1012,7 +1010,7 @@ bool SlideshowObject::prepare(const QString &type)
             interface()->addJob(job);
 
             if (SlideshowPlugin::BACKEND_MELT == job->backend) {
-                foreach (Slide slide, m_slides) {
+                foreach (const Slide& slide, m_slides) {
                     if (!slide.comment.isEmpty()) {
                         SpumuxJob *spumux = new SpumuxJob(*this);
 
@@ -1102,7 +1100,7 @@ QVariant SlideshowObject::writeDvdAuthorXml(QVariantList args) const
         double start = 0.0;
         double duration = calculatedSlideDuration();
 
-        foreach (Slide slide, m_slides) {
+        foreach (const Slide& slide, m_slides) {
             if (slide.chapter) {
                 chapters.append(start);
             }
@@ -1194,7 +1192,7 @@ int SlideshowObject::chapters() const
 {
     int i = 0;
 
-    foreach (Slide slide, m_slides) {
+    foreach (const Slide& slide, m_slides) {
         if (slide.chapter) {
             ++i;
         }
@@ -1260,7 +1258,7 @@ QTime SlideshowObject::audioDuration() const
 {
     KMF::Time audioDuration = 0.0;
 
-    foreach (QString file, m_audioFiles) {
+    foreach (const QString& file, m_audioFiles) {
         KMFMediaFile audio = KMFMediaFile::mediaFile(file);
 
         audioDuration += audio.duration();

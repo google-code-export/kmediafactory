@@ -754,8 +754,7 @@ QMap<QString, QString> KMF::Tools::variantMap2StringMap(const QMap<QString, QVar
 {
     QMap<QString, QString> result;
 
-    foreach(const QString &key, map.keys())
-    {
+    foreach (const QString& key, map.keys()) {
         result[key] = map[key].toString();
     }
     return result;
@@ -765,8 +764,7 @@ QStringList KMF::Tools::variantList2StringList(const QVariantList &list)
 {
     QStringList result;
 
-    foreach(const QVariant &v, list)
-    {
+    foreach(const QVariant &v, list) {
         result.append(v.toString());
     }
     return result;

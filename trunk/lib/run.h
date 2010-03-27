@@ -35,8 +35,8 @@ class KDE_EXPORT Run : public QProcess
     Q_OBJECT
 
     public:
-        Run(QString command = QString::null, QString dir = QString::null);
-        Run(QStringList command, QString dir = QString::null);
+        explicit Run(QString command = QString::null, QString dir = QString::null);
+        explicit Run(QStringList command, QString dir = QString::null);
         ~Run();
 
         void setCommand(QString command);

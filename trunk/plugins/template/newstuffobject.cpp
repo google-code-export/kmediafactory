@@ -65,7 +65,7 @@ bool NewStuffObject::clicked()
     dialog->exec();
     KNS3::Entry::List entries = dialog->changedEntries();
     // Add installed
-    foreach (const KNS3::Entry & entry, entries) {
+    foreach (const KNS3::Entry& entry, entries) {
         foreach (QString file, entry.installedFiles()) {
             new ::TemplateObject(file, parent());
         }
@@ -77,7 +77,7 @@ bool NewStuffObject::clicked()
     KNS::Entry::List entries = engine->downloadDialogModal(kapp->activeWindow());
     delete engine;
     // Add installed
-    foreach (KNS::Entry * entry, entries) {
+    foreach (const KNS::Entry* entry, entries) {
         foreach (QString file, entry->installedFiles()) {
             new ::TemplateObject(file, parent());
         }

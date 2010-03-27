@@ -330,7 +330,8 @@ void KMFProject::fromXML(QString xml)
     emit init(m_type);
 }
 
-void KMFProject::saveObj(QDomDocument &doc, QDomElement &root, const char *name, KMF::Object *ob)
+void KMFProject::saveObj(QDomDocument &doc, QDomElement &root, const char *name,
+                         const KMF::Object *ob)
 {
     if (ob) {
         QDomElement e = doc.createElement(name);
@@ -347,7 +348,6 @@ void KMFProject::saveObj(QDomDocument &doc, QDomElement &root, const char *name,
 
 QString KMFProject::toXML()
 {
-    KMF::MediaObject *obj;
     QDomDocument doc("kmf_project");
 
     doc.appendChild(doc.createProcessingInstruction("xml",
@@ -369,8 +369,9 @@ QString KMFProject::toXML()
 
     doc.appendChild(root);
 
-    foreach(obj, m_list.list())
-    saveObj(doc, root, "media", obj);
+    foreach (const KMF::MediaObject* obj, m_list.list()) {
+        saveObj(doc, root, "media", obj);
+    }
     saveObj(doc, root, "template", m_template);
     saveObj(doc, root, "output", m_output);
     return doc.toString();

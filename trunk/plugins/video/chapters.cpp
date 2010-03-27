@@ -185,7 +185,7 @@ class CellListModel : public QAbstractListModel
             } else if (role == Qt::ToolTipRole) {
                 switch (column) {
                     case COL_HIDDEN:
-                        return i18n("Visible");
+                        return i18nc("Column header for chapter visibility", "Visible");
                 }
             }
             return QVariant();

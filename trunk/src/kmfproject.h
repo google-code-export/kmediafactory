@@ -157,7 +157,7 @@ class KMFProject : public QObject
         {
             m_error = error;
         };
-        void saveObj(QDomDocument &doc, QDomElement &root, const char *name, KMF::Object *ob);
+        void saveObj(QDomDocument &doc, QDomElement &root, const char *name, const KMF::Object *ob);
 };
 
 #endif // KMFPROJECT_H

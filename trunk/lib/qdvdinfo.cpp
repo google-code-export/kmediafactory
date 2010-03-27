@@ -396,7 +396,7 @@ QString Subtitle::toString() const
         s = " (" + typeString() + ')';
     }
 
-    return i18n("Subtitle: %1%4", languageString(), s);
+    return i18n("Subtitle: %1%2", languageString(), s);
 }
 
 QString Subtitle::verticalAlign() const
@@ -865,21 +865,21 @@ bool Info::getTitleName(const char *dvd_device, QString &title)
 
     if (!(filehandle = fopen(dvd_device, "r"))) {
         kDebug() << "Couldn't open %s for title";
-        title = i18n("unknown");
+        title = i18nc("Unknown DVD title", "unknown");
         return false;
     }
 
     if (fseek(filehandle, 32808, SEEK_SET)) {
         fclose(filehandle);
         kDebug() << "Couldn't seek in %s for title";
-        title = i18n("unknown");
+        title = i18nc("Unknown DVD title", "unknown");
         return false;
     }
 
     if (32 != (i = fread(t, 1, 32, filehandle))) {
         fclose(filehandle);
         kDebug() << "Couldn't read enough bytes for title.";
-        title = i18n("unknown");
+        title = i18nc("Unknown DVD title", "unknown");
         return false;
     }
 
