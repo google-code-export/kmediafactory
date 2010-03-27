@@ -31,7 +31,7 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QComboBox" name="languageCombo">
+    <widget class="KComboBox" name="languageCombo">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -673,7 +673,7 @@
     </widget>
    </item>
    <item row="4" column="1">
-    <widget class="QComboBox" name="horizontalAlignCombo">
+    <widget class="KComboBox" name="horizontalAlignCombo">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -719,7 +719,7 @@
     </widget>
    </item>
    <item row="5" column="1">
-    <widget class="QComboBox" name="verticalAlignCombo">
+    <widget class="KComboBox" name="verticalAlignCombo">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -781,7 +781,7 @@
   </customwidget>
   <customwidget>
    <class>KComboBox</class>
-   <extends>QComboBox</extends>
+   <extends>KComboBox</extends>
    <header>kcombobox.h</header>
   </customwidget>
  </customwidgets>

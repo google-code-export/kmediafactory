@@ -1,5 +1,4 @@
 [Desktop Entry]
-Encoding=UTF-8
 Name=KMediaFactory
 Name[xx]=xxKMediaFactoryxx
 Exec=kmediafactory
@@ -10,6 +9,6 @@ Comment[fi]=Mallipohjiin perustuva DVD:n kokoamis ohjelma
 GenericName=DVD Authoring
 GenericName[fi]=DVD:n kokoaminen
 Terminal=false
-MimeType=application/x-kmediafactory
+MimeType=application/x-kmediafactory;
 X-KDE-NativeMimeType=application/x-kmediafactory
-Categories=KDE;Application;AudioVideo;
+Categories=KDE;AudioVideo;

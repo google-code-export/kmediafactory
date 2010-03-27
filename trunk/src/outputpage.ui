@@ -127,9 +127,6 @@
        <property name="text">
         <string>Show &amp;Log</string>
        </property>
-       <property name="shortcut">
-        <string>Alt+L</string>
-       </property>
       </widget>
      </item>
      <item>
@@ -151,9 +148,6 @@
        </property>
        <property name="text">
         <string>S&amp;top</string>
-       </property>
-       <property name="shortcut">
-        <string>Alt+T</string>
        </property>
       </widget>
      </item>

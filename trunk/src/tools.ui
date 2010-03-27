@@ -15,9 +15,6 @@
     <height>300</height>
    </size>
   </property>
-  <property name="windowTitle" >
-   <string>Tools</string>
-  </property>
   <layout class="QHBoxLayout" >
    <property name="leftMargin" >
     <number>0</number>
