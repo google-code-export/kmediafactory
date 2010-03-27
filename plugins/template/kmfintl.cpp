@@ -51,7 +51,7 @@
 
 // modified kde gettext implementation to read mo from QIODevice
 
-#include "config.h"
+#include <config.h>
 #include "kmfintl.h"
 
 #include <QtCore/QIODevice>
