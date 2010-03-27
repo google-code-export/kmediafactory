@@ -520,7 +520,7 @@ void KMediaFactory::execTool()
     QString output = run.output();
 
     if (!run.output().trimmed().isEmpty()) {
-        kDebug() << "\n" + run.output();
+        kDebug() << '\n' + run.output();
     }
 
     enableUi(true);
