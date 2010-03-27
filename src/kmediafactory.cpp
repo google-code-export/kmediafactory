@@ -254,7 +254,7 @@ void KMediaFactory::connectProject()
 
 void KMediaFactory::itemDelete()
 {
-    // Dont delete media object if the media page is not visible!
+    // Don't delete media object if the media page is not visible!
     if (mediaPage->isVisible()) {
         QModelIndex i = mediaPage->mediaFiles->currentIndex();
 
