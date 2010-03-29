@@ -16,7 +16,6 @@ set(kstore_LIB_SRCS
     KoXmlReader.cpp
     KoXmlWriter.cpp
     KoEncryptedStore.cpp
-    KoEncryptedStore.cpp
     KoEncryptionChecker.cpp
 )
 
