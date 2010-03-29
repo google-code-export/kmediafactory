@@ -4,4 +4,4 @@ Categories=KMediaFactory DVD Templates
 ChecksumPolicy=ifpossible
 SignaturePolicy=ifpossible
 TargetDir=kmediafactory_template
-Uncompress=archive
+Uncompress=never
