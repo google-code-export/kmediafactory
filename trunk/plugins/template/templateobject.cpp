@@ -79,6 +79,8 @@ TemplateObject::TemplateObject(const QString &templateFile, QObject *parent)
     , m_file(templateFile)
 {
     setObjectName(m_menu.id());
+    connect(&m_templateWatch, SIGNAL(deleted(const QString &)), this, SLOT(deleteLater()));
+    m_templateWatch.addFile(templateFile);
 
     if (m_menu.templateStore()->hasFile("settings.kcfg") &&
         m_menu.templateStore()->hasFile("settings.ui")) {

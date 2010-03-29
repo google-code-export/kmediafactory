@@ -21,6 +21,7 @@
 #ifndef TEMPLATEOBJECT_H
 #define TEMPLATEOBJECT_H
 
+#include <KDirWatch>
 #include <KUrl>
 
 #include <kmediafactory/plugin.h>
@@ -87,6 +88,7 @@ class TemplateObject : public KMF::TemplateObject
         KMFMenu m_menu;
         QString m_file;
         QString m_type;
+        KDirWatch m_templateWatch;
 
         QString propertyString(KConfigSkeletonItem *item) const;
         bool isUpToDate(QString type);
