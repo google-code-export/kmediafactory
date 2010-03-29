@@ -70,8 +70,13 @@
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
   <customwidget>
-   <class>KMFLanguageComboBox</class>
+   <class>KComboBox</class>
    <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KMFLanguageComboBox</class>
+   <extends>KComboBox</extends>
    <header>kmflanguagewidgets.h</header>
   </customwidget>
  </customwidgets>

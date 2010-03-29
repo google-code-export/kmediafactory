@@ -54,6 +54,13 @@
   </layout>
  </widget>
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+ <customwidgets>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+ </customwidgets>
  <includes>
   <include location="global">kpushbutton.h</include>
  </includes>
