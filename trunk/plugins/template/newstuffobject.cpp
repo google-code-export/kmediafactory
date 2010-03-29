@@ -61,7 +61,7 @@ bool NewStuffObject::clicked()
 
 #if KDE_IS_VERSION(4, 3, 90)
     QPointer<KNS3::DownloadDialog> dialog = new KNS3::DownloadDialog("kmediafactory_template.knsrc",
-                                                                 kapp->activeWindow());
+                                                                     kapp->activeWindow());
     dialog->exec();
     KNS3::Entry::List entries = dialog->changedEntries();
     // Add installed
