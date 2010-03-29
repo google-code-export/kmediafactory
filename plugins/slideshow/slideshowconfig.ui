@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>280</width>
+    <width>334</width>
     <height>78</height>
    </rect>
   </property>
@@ -63,6 +63,11 @@
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
+  <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
   <customwidget>
    <class>KMFLanguageComboBox</class>
    <extends>KComboBox</extends>
