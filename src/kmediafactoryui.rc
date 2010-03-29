@@ -13,8 +13,8 @@
   </Menu>
  </MenuBar>
  <Menu name="media_file_popup" >
-  <Action name="delete" />
   <ActionList name="media_file_actionlist" />
+  <Action name="delete" />
  </Menu>
  <Menu name="template_popup" >
   <ActionList name="template_actionlist" />
