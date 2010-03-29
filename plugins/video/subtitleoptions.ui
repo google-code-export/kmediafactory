@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>318</width>
+    <width>351</width>
     <height>192</height>
    </rect>
   </property>
@@ -781,7 +781,7 @@
   </customwidget>
   <customwidget>
    <class>KComboBox</class>
-   <extends>KComboBox</extends>
+   <extends>QComboBox</extends>
    <header>kcombobox.h</header>
   </customwidget>
  </customwidgets>
