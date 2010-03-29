@@ -110,6 +110,16 @@
    <header>kurlrequester.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>titleEdit</tabstop>
