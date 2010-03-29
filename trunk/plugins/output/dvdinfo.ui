@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>DVDInfo</class>
- <widget class="QWidget" name="DVDInfo" >
-  <property name="geometry" >
+ <widget class="QWidget" name="DVDInfo">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,52 +10,43 @@
     <height>445</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>DVD Info</string>
   </property>
-  <layout class="QVBoxLayout" >
-   <property name="leftMargin" >
-    <number>0</number>
-   </property>
-   <property name="topMargin" >
-    <number>0</number>
-   </property>
-   <property name="rightMargin" >
-    <number>0</number>
-   </property>
-   <property name="bottomMargin" >
+  <layout class="QVBoxLayout">
+   <property name="margin">
     <number>0</number>
    </property>
    <item>
-    <widget class="KUrlRequester" name="url" />
+    <widget class="KUrlRequester" name="url"/>
    </item>
    <item>
-    <widget class="QSplitter" name="splitter4" >
-     <property name="orientation" >
+    <widget class="QSplitter" name="splitter4">
+     <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <widget class="QTreeView" name="dvdListView" >
-      <property name="minimumSize" >
+     <widget class="QTreeView" name="dvdListView">
+      <property name="minimumSize">
        <size>
         <width>350</width>
         <height>200</height>
        </size>
       </property>
-      <property name="fullWidth" stdset="0" >
+      <property name="fullWidth" stdset="0">
        <bool>true</bool>
       </property>
-      <property name="itemsMovable" stdset="0" >
+      <property name="itemsMovable" stdset="0">
        <bool>false</bool>
       </property>
      </widget>
-     <widget class="KTextBrowser" name="textBrowser" >
-      <property name="sizePolicy" >
-       <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+     <widget class="KTextBrowser" name="textBrowser">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <property name="minimumSize" >
+      <property name="minimumSize">
        <size>
         <width>350</width>
         <height>200</height>
@@ -65,14 +57,19 @@
    </item>
   </layout>
  </widget>
- <layoutdefault spacing="6" margin="11" />
- <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
+ <layoutdefault spacing="6" margin="11"/>
+ <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
   <customwidget>
    <class>KUrlRequester</class>
    <extends>QFrame</extends>
    <header>kurlrequester.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KTextBrowser</class>
+   <extends>QTextBrowser</extends>
+   <header>ktextbrowser.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
