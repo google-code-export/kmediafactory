@@ -128,7 +128,6 @@ void VideoPlugin::slotAddVideo()
     dlg->exec();
 
     QStringList filenames = dlg->selectedFiles();
-    delete dlg;
 
     KMF::PluginInterface *m = interface();
 
@@ -197,6 +196,7 @@ void VideoPlugin::slotAddVideo()
             }
         }
     }
+    delete dlg;
 }
 
 KMF::MediaObject *VideoPlugin::createMediaObject(const QDomElement &element)
