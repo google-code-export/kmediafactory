@@ -1,11 +1,14 @@
-CHANGED IN RELEASE 0.7.5
+CHANGED IN RELEASE 0.8.0
 =========================
 
 Features:
-- Add combobox for subtitle encoding
+- GUI overhaul
+- Optinally using melt in slideshow
+- Hidden chapters
+- remove mplayer dependancy (only ffmpeg needed now)
 
 Bug fixes:
-- Fix K3b plugin crash
+- Several bug fixes
 
 
 # Dependencies (ubuntu package naming):                                       #
@@ -14,8 +17,9 @@ Bug fixes:
 # --------------------------------------------------------------------------- #
 # g++                     kdelibs5                 k3b                        #
 # make                    ffmpeg                   libdvdread3(-dev)          #
-# cmake                   mplayer                  dvd-slideshow              #
+# cmake                   dvdauthor                dvd-slideshow              #
 # zip                     mjpegtools               openoffice.org             #
-# gettext                 dvdauthor                kaffeine                   #
+# gettext                                          kaffeine                   #
 # kdelibs5-dev                                     xine-ui                    #
+#                                                  melt                       #
 # --------------------------------------------------------------------------- #

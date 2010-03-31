@@ -1,8 +1,8 @@
 #/bin/bash
 
 VERSION_MAJOR="0"
-VERSION_MINOR="7"
-NEXT_VERSION="5" # BUILD_VERSION
+VERSION_MINOR="8"
+NEXT_VERSION="0" # BUILD_VERSION
 VERSION_MM="$VERSION_MAJOR.$VERSION_MINOR."
 
 HOME=`echo ~`
@@ -168,7 +168,7 @@ function upload()
 
   cd $LOCALKMFDIR
   #kioclient copy $BZ2FILE.md5 $BZ2FILE $SNAPSHOT_HTML ftp://$SITE/$WEBDIR/
-  kioclient copy $SNAPSHOT_HTML ftp://$SITE/$WEBDIR/
+  #kioclient copy $SNAPSHOT_HTML ftp://$SITE/$WEBDIR/
   googlecode_upload.py -s "KMediaFactory $SNAPSHOT" -p KMediaFactory $BZ2FILE
 }
 
