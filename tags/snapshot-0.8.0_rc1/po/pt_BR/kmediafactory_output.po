@@ -1,0 +1,284 @@
+# translation of kmediafactory_output.po to
+# This file is put in the public domain.
+#
+# Caio Begotti <caio@ueberalles.net>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmediafactory_output\n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
+"PO-Revision-Date: 2006-04-30 17:49-0300\n"
+"Last-Translator: Caio Begotti <caio@ueberalles.net>\n"
+"Language-Team:  <en@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.2\n"
+
+#: dvdauthorobject.cpp:33
+#, fuzzy
+msgid "DVD Author XML file"
+msgstr "Projeto do DVDAuthor"
+
+#: dvdauthorobject.cpp:56
+#, kde-format
+msgid ""
+"\n"
+"**********************************************************************\n"
+"\n"
+"This file was made with %1 - %2\n"
+"http://www.iki.fi/damu/software/kmediafactory/\n"
+"\n"
+"**********************************************************************\n"
+"\n"
+"Register usage:\n"
+"================\n"
+"g0: Playing chapter saved here.\n"
+"g1: Play this chapter when entering titleset menu. 0 == show menu.\n"
+"    Also used by Back button.\n"
+"g2: Used vmgm button is saved here\n"
+"g3: Jump to this titleset. Also used for direct play.\n"
+"g4: Used titleset button is saved here\n"
+"g5: vmgm page is saved here\n"
+"g6: titleset page is saved here\n"
+"g7: temporary variable\n"
+"\n"
+"**********************************************************************\n"
+msgstr ""
+
+#: dvdauthorobject.cpp:87
+#, kde-format
+msgid "Main menu for %1"
+msgstr ""
+
+#: dvdauthorobject.cpp:134
+msgid "Error in saving dvdauthor.xml"
+msgstr ""
+
+#: dvdauthorobject.cpp:157
+msgid "DVDAuthor project"
+msgstr "Projeto do DVDAuthor"
+
+#: dvddirectoryobject.cpp:44 dvddirectoryobject.cpp:204
+msgid "DVD Directory"
+msgstr "Diretório do DVD"
+
+#: dvddirectoryobject.cpp:124 dvddirectoryobject.cpp:135
+#, fuzzy, kde-format
+msgid "Processing: %1"
+msgstr "  Processando: %1"
+
+#: dvddirectoryobject.cpp:158
+#, fuzzy, kde-format
+msgid "Fixing: %1"
+msgstr "  Corrigindo: %1"
+
+#: dvddirectoryobject.cpp:206
+msgid "&Clean directory"
+msgstr "Limpar diretório"
+
+#: dvddirectoryobject.cpp:262
+msgid "DVD Directory is up to date"
+msgstr "Diretório do DVD está atualizado"
+
+#. i18n: tag string
+#. i18n: file dvdinfo.ui line 13
+#: dvdinfo.cpp:41 outputplugin.cpp:59 rc.cpp:3
+msgid "DVD Info"
+msgstr "Informação do DVD"
+
+#: dvdinfo.cpp:66
+msgid "Analyzing DVD..."
+msgstr "Analizando DVD..."
+
+#: dvdinfo.cpp:108
+msgid "DVD"
+msgstr "DVD"
+
+#: dvdinfo.cpp:109
+msgid "Titles"
+msgstr "Títulos"
+
+#: dvdinfo.cpp:110
+msgid "Longest title"
+msgstr "Maior título"
+
+#: dvdinfo.cpp:113 dvdinfo.cpp:214
+msgid "Name"
+msgstr "Nome"
+
+#: dvdinfo.cpp:114
+msgid "VMG Identifier"
+msgstr "Identificação VMG"
+
+#: dvdinfo.cpp:115
+msgid "Provider indentifier"
+msgstr "Identificação do provedor"
+
+#: dvdinfo.cpp:121 dvdinfo.cpp:143
+msgid "Index"
+msgstr "Índice"
+
+#: dvdinfo.cpp:122 dvdinfo.cpp:145
+msgid "Length"
+msgstr "Tamanho"
+
+#: dvdinfo.cpp:123
+msgid "VTS ID"
+msgstr "Identificação VTS"
+
+#: dvdinfo.cpp:124
+msgid "VTS"
+msgstr "VTS"
+
+#: dvdinfo.cpp:125
+msgid "TTN"
+msgstr "TTN"
+
+#: dvdinfo.cpp:126
+msgid "PGC"
+msgstr "PGC"
+
+#: dvdinfo.cpp:127 dvdinfo.cpp:146
+msgid "Start sector"
+msgstr "Iniciar setor"
+
+#: dvdinfo.cpp:128 dvdinfo.cpp:147
+msgid "End sector"
+msgstr "Finalizar setor"
+
+#: dvdinfo.cpp:133
+msgid "Width"
+msgstr ""
+
+#: dvdinfo.cpp:134
+msgid "Height"
+msgstr ""
+
+#: dvdinfo.cpp:135 dvdinfo.cpp:155
+msgid "Format"
+msgstr "Formato"
+
+#: dvdinfo.cpp:136
+msgid "Aspect ratio"
+msgstr "Proporção visual"
+
+#: dvdinfo.cpp:137
+msgid "Frames per second"
+msgstr "Quadros por segundo"
+
+#: dvdinfo.cpp:138
+msgid "Permitted DF"
+msgstr "DF permitido"
+
+#: dvdinfo.cpp:144
+msgid "Start"
+msgstr "Iniciar"
+
+#: dvdinfo.cpp:148
+msgid "Is chapter"
+msgstr "É um capítulo"
+
+#: dvdinfo.cpp:149
+msgid "yes"
+msgstr "sim"
+
+#: dvdinfo.cpp:149
+msgid "no"
+msgstr "não"
+
+#: dvdinfo.cpp:154 dvdinfo.cpp:166
+msgid "Language"
+msgstr "Língua"
+
+#: dvdinfo.cpp:156
+msgid "Channels"
+msgstr "Canais"
+
+#: dvdinfo.cpp:157
+msgid "Sample frequency"
+msgstr "Frequência exemplo"
+
+#: dvdinfo.cpp:158
+msgid "Bitrate"
+msgstr "Bitrate"
+
+#: dvdinfo.cpp:159
+msgid "Quantization"
+msgstr "Quantização"
+
+#: dvdinfo.cpp:160
+msgid "AP Mode"
+msgstr "Modo AP"
+
+#: dvdinfo.cpp:161 dvdinfo.cpp:167
+msgid "Type"
+msgstr "Tipo"
+
+#: dvdinfo.cpp:207
+msgid "Not a DVD."
+msgstr "Não é um DVD."
+
+#: dvdinfo.cpp:215
+msgid "Size"
+msgstr "Tamanho"
+
+#: dvdinfo.cpp:255
+msgid "DVD files and directories"
+msgstr "Arquivos e diretórios do DVD"
+
+#: k3bobject.cpp:37
+#, fuzzy
+msgid "K3b project"
+msgstr "Projeto K3B"
+
+#: k3bobject.cpp:349
+#, kde-format
+msgid "%1 - Version %2"
+msgstr "%1 - Versão %2"
+
+#: k3bobject.cpp:436
+msgid "K3b Project"
+msgstr "Projeto K3B"
+
+#: outputplugin.cpp:67
+msgid "Preview DVD in Xine"
+msgstr "Preview do DVD no Xine"
+
+#: outputplugin.cpp:75
+msgid "Preview DVD in Kaffeine"
+msgstr "Preview do DVD no Kaffeine"
+
+#~ msgid ""
+#~ "_: NAME OF TRANSLATORS\n"
+#~ "Your names"
+#~ msgstr "Caio Begotti"
+
+#~ msgid ""
+#~ "_: EMAIL OF TRANSLATORS\n"
+#~ "Your emails"
+#~ msgstr "caio@ueberalles.net"
+
+#~ msgid "DVDAuthor project ready"
+#~ msgstr "Projeto do DVDAuthor pronto"
+
+#~ msgid "Making DVD Directory"
+#~ msgstr "Criando o diretório do DVD"
+
+#~ msgid "DVD Directory ready"
+#~ msgstr "Diretório do DVD pronto"
+
+#~ msgid "K3b project ready"
+#~ msgstr "Projeto K3B pronto"
+
+#~ msgid "Output plugin for KMediaFactory."
+#~ msgstr "Plugin de saída de comando do KMediaFacotry."
+
+#~ msgid "KMediaFactory Output"
+#~ msgstr "Saída de comando do KMediaFactory"
+
+#~ msgid "Preview DVD"
+#~ msgstr "Preview do DVD"
+
+#~ msgid "Alt+C"
+#~ msgstr "Alt+C"
