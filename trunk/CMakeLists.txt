@@ -41,21 +41,20 @@ macro_log_feature(MSGFMT_FOUND "gettext" "For translations" "http://www.gnu.org/
 find_program(MSGFMT_EXECUTABLE msgfmt)
 find_program(MSGMERGE_EXECUTABLE msgmerge)
 find_program(XGETTEXT_EXECUTABLE xgettext)
+find_program(EXTRACTRC_EXECUTABLE extractrc)
+macro_log_feature(EXTRACTRC_EXECUTABLE "extractrc" "For translations" "http://www.kde.org/" FALSE "" "")
 
 find_program(ZIP_EXECUTABLE zip)
 macro_log_feature(ZIP_EXECUTABLE "zip" "For packing templates" "http://www.info-zip.org/" TRUE "" "")
 
 find_program(DVDAUTHOR_EXECUTABLE dvdauthor)
-macro_log_feature(DVDAUTHOR_EXECUTABLE "dvdauthor" "For making DVDs" "http://dvdauthor.sourceforge.net/" TRUE "0.6.11" "")
+macro_log_feature(DVDAUTHOR_EXECUTABLE "dvdauthor" "For making DVDs" "http://dvdauthor.sourceforge.net/" FALSE "0.6.11" "NOTE: Is required runtime")
 
 find_program(FFMPEG_EXECUTABLE ffmpeg)
-macro_log_feature(FFMPEG_EXECUTABLE "ffmpeg" "For extracting frames from videos" "http://ffmpeg.mplayerhq.hu/" TRUE "" "")
+macro_log_feature(FFMPEG_EXECUTABLE "ffmpeg" "For extracting frames from videos" "http://ffmpeg.mplayerhq.hu/" FALSE "" "NOTE: Is required runtime")
 
 find_program(MPEG2ENC_EXECUTABLE mpeg2enc)
-macro_log_feature(MPEG2ENC_EXECUTABLE "mpeg2enc" "For making mpeg files" "http://mjpeg.sourceforge.net/" TRUE "" "")
-
-find_program(MPLAYER_EXECUTABLE mpeg2enc)
-macro_log_feature(MPLAYER_EXECUTABLE "mplayer" "For getting info from video file" "http://www.mplayerhq.hu/" TRUE "" "")
+macro_log_feature(MPEG2ENC_EXECUTABLE "mpeg2enc" "For making mpeg files" "http://mjpeg.sourceforge.net/" FALSE "" "NOTE: Is required runtime")
 
 # Optional packages
 find_package(LibDvdread)
@@ -83,11 +82,9 @@ macro_log_feature(OO_EXECUTABLE "openoffice.org" "For converting OpenOffice docs
 find_program(GS_EXECUTABLE gs)
 macro_log_feature(GS_EXECUTABLE "ghostscript" "For converting pdf to slideshow" "http://pages.cs.wisc.edu/~ghost/" FALSE "" "")
 
-# Are we using this?
-find_program(EXTRACTRC_EXECUTABLE extractrc)
-
 find_package(Kexiv2)
 macro_bool_to_01(KEXIV2_FOUND HAVE_KEXIV2)
+macro_log_feature(KEXIV2_FOUND "libkexiv2" "For slideshow picture comments" "http://www.kde.org/" FALSE "" "")
 
 add_definitions(
     ${QT_DEFINITIONS}
