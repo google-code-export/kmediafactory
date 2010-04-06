@@ -1,0 +1,143 @@
+# translation of kmediafactory_template.po to
+# This file is put in the public domain.
+#
+# Caio Begotti <caio@ueberalles.net>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmediafactory_template\n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
+"PO-Revision-Date: 2006-05-01 21:22-0300\n"
+"Last-Translator: Caio Begotti <caio@ueberalles.net>\n"
+"Language-Team:  <en@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.2\n"
+
+#: kmfmenu.cpp:128 kmfmenupage.cpp:57
+#, fuzzy, kde-format
+msgid "Menu: %1"
+msgstr "   Menu: %1"
+
+#: kmfmenupage.cpp:82
+msgid "Could not paint menu."
+msgstr ""
+
+#: kmfmenupage.cpp:88
+msgid "Could not write spumux xml file."
+msgstr ""
+
+#: kmfmenupage.cpp:94
+msgid "Could not save images."
+msgstr ""
+
+#: kmfmenupage.cpp:100
+msgid "Could not make mpeg file."
+msgstr ""
+
+#: newstuffobject.cpp:34
+msgid "Get more..."
+msgstr "Obter mais..."
+
+#. i18n: tag string
+#. i18n: file templateconfig.ui line 13
+#: rc.cpp:3
+msgid "Configure Template Plugin"
+msgstr "COnfigurar plugin de modelos"
+
+#. i18n: tag string
+#. i18n: file templateconfig.ui line 31
+#: rc.cpp:6
+msgid "Default &Menu Language:"
+msgstr "Língua padrão do &Menu:"
+
+#: templateobject.cpp:83
+msgid "&Properties"
+msgstr "&Propriedades"
+
+#: templateplugin.cpp:68
+msgid "Template plugin"
+msgstr "Plugin de Modelos"
+
+#~ msgid ""
+#~ "_: NAME OF TRANSLATORS\n"
+#~ "Your names"
+#~ msgstr "Caio Begotti"
+
+#~ msgid ""
+#~ "_: EMAIL OF TRANSLATORS\n"
+#~ "Your emails"
+#~ msgstr "caio@ueberalles.net"
+
+#~ msgid "Main menu for %1"
+#~ msgstr "Menu principal de %1"
+
+#~ msgid "No pages."
+#~ msgstr "Nenhuma página."
+
+#~ msgid "Cannot find page %1 from template."
+#~ msgstr "Não foi possível encontrar a página %1 do modelo."
+
+#~ msgid "Generating menus"
+#~ msgstr "Gerando os menus"
+
+#~ msgid "Making menu mpegs"
+#~ msgstr "Criando mpegs dos menus"
+
+#~ msgid "Generating DVDAuthor xml"
+#~ msgstr "Gerando XML do DVDAuthor"
+
+#~ msgid "   Converting %1 to ac3 format"
+#~ msgstr "   Convertendo %1 para o formato AC3"
+
+#~ msgid "   Conversion error."
+#~ msgstr "   Erro na conversão."
+
+#~ msgid "   Script file open failed. %1"
+#~ msgstr "   Falha ao abrir arquivo: %1"
+
+#~ msgid "ImageMagick error: %1"
+#~ msgstr "Erro no ImageMagick: %1"
+
+#~ msgid "Use this as a default menu language for new projects."
+#~ msgstr "Usar isso como língua padrão de menus para novos projetos."
+
+#~ msgid "Debug widgets. Draws rectangles in menu pictures."
+#~ msgstr "Telas de depuração. Desenham retângulos em imagens de menus."
+
+#~ msgid "Image debug. Blue rectangle."
+#~ msgstr "Depuração de imagem. Retângulo azul."
+
+#~ msgid "Label debug. Red rectangle."
+#~ msgstr "Depuração de legenda. Retângulo vermelho."
+
+#~ msgid "Frame debug. Green rectangle."
+#~ msgstr "Depuração de quadros. Retângulo verde."
+
+#~ msgid "Button debug. Yellow rectangle."
+#~ msgstr "Depuração de botões. Retângulos amarelos."
+
+#~ msgid "Box debug. White rectangle."
+#~ msgstr "Depuração de caixa. Retângulo branco."
+
+#~ msgid "Widget debug. Gray rectangle."
+#~ msgstr "Depuração de janelas. Retângulo cinza."
+
+#~ msgid "Print debug information from widget. "
+#~ msgstr "Exibir informações de depuração de uma janela."
+
+#~ msgid "Draw also margin."
+#~ msgstr "Desenhar margem também."
+
+#~ msgid "Providers URL for GHNS"
+#~ msgstr "URL de provedores GHNS"
+
+#~ msgid "Menus are up to date"
+#~ msgstr "Os menus estão prontos"
+
+#~ msgid "Template plugin for KMediaFactory."
+#~ msgstr "Plugin de modelos do KMediaFactory"
+
+#~ msgid "KMediaFactory Template"
+#~ msgstr "Modelos do KMediaFactory"

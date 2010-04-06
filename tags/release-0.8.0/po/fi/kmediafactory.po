@@ -1,0 +1,439 @@
+# translation of kmediafactory.po to Finnish
+# This file is put in the public domain.
+#
+# Petri Damsten <petri.damsten@iki.fi>, 2006.
+# Petri Damstén <petri.damsten@iki.fi>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmediafactory\n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2008-05-23 12:50+0300\n"
+"PO-Revision-Date: 2008-05-23 12:58+0300\n"
+"Last-Translator: Petri Damstén <petri.damsten@iki.fi>\n"
+"Language-Team: Finnish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#. i18n: tag string
+#. i18n: file mediapage.ui line 19
+#: kmediafactory.cpp:102 kmediafactory.cpp:103 rc.cpp:30
+msgid "Media"
+msgstr "Media"
+
+#: kmediafactory.cpp:109 kmediafactory.cpp:110
+msgid "Template"
+msgstr "Mallipohjat"
+
+#. i18n: tag string
+#. i18n: file outputpage.ui line 13
+#: kmediafactory.cpp:120 kmediafactory.cpp:121 rc.cpp:39
+msgid "Output"
+msgstr "Lopputulos"
+
+#: kmediafactory.cpp:164
+msgid "&Options"
+msgstr "&Asetukset"
+
+#: kmediafactory.cpp:169
+msgid "&Get new tools"
+msgstr "&Hae uusia työkaluja"
+
+#: kmediafactory.cpp:184
+msgid "&Delete"
+msgstr "&Poista"
+
+#: kmediafactory.cpp:338 templatepage.cpp:221
+#, kde-format
+msgid "Could not write to file: %1"
+msgstr "Tiedostoon %1 ei voitu kirjoittaa."
+
+#: kmediafactory.cpp:465 kmediafactory.cpp:466 main.cpp:31
+msgid "KMediaFactory"
+msgstr "KMediaFactory"
+
+#. i18n: tag string
+#. i18n: file tools.ui line 19
+#: kmediafactory.cpp:467 kmediafactory.cpp:468 rc.cpp:123
+msgid "Tools"
+msgstr "Työkalut"
+
+#: kmediafactory.cpp:504
+msgid "Save changes to project?"
+msgstr "Tallenna muutokset projektiin?"
+
+#: kmfapplication.cpp:209
+#, kde-format
+msgid ""
+"KLauncher could not be reached via D-Bus, error when calling %1:\n"
+"%2\n"
+msgstr ""
+"KLauncheriin ei saatu yhteyttä D-Busin kautta.\n"
+" Kutsu %1\n"
+"%2\n"
+
+#. i18n: tag string
+#. i18n: file outputpage.ui line 72
+#: kmfplugininterface.cpp:255 rc.cpp:45
+msgid "Progress:"
+msgstr "Viestit:"
+
+#: kmfproject.cpp:54 projectoptions.cpp:88
+msgid "Untitled"
+msgstr "Nimetön"
+
+#: kmfproject.cpp:61
+#, kde-format
+msgid "Project%1"
+msgstr "Projekti%1"
+
+#: kmfproject.cpp:83
+msgid "No media files."
+msgstr "Ei media tiedostoja."
+
+#: kmfproject.cpp:88
+msgid "No template selected."
+msgstr "Ei mallipohjaa valittuna."
+
+#: kmfproject.cpp:93
+msgid "No output type selected."
+msgstr "Ei lopputulosta valittuna."
+
+#: kmfproject.cpp:369
+#, kde-format
+msgid "Do you want to overwrite %1"
+msgstr "Haluatko ylikirjoittaa%1"
+
+#: main.cpp:32
+msgid "Template based DVD authoring software."
+msgstr "Maliipohjiin perustuva DVD:n teko ohjelma."
+
+#: main.cpp:36
+msgid "Petri Damsten"
+msgstr "Petri Damstén"
+
+#: main.cpp:36
+msgid "Developer"
+msgstr "Ohjelmoija"
+
+#: main.cpp:41
+msgid "Document to open"
+msgstr "Avattava dokumentti"
+
+#: outputpage.cpp:134
+msgid "User cancelled."
+msgstr "Käyttäjä peruutti toiminnon."
+
+#: outputpage.cpp:162
+msgid "Preparing files..."
+msgstr "Valmistellaan tiedostoja..."
+
+#: outputpage.cpp:169
+msgid "Making files..."
+msgstr "Tehdään tiedostoja..."
+
+#: projectoptions.cpp:76
+msgid "Project"
+msgstr "Projekti"
+
+#: projectoptions.cpp:111
+msgid ""
+"Media files will be removed from the project when project type changes. "
+"Continue?"
+msgstr ""
+"Media tiedostot poistetaan projektista kun projektin tyyppi vaihtuu. "
+"Haluatko jatkaa?"
+
+#. i18n: tag string
+#. i18n: file kmfoptions.ui line 13
+#: rc.cpp:3
+msgid "KMediaFactory Settings"
+msgstr "KMediaFactory asetukset"
+
+#. i18n: tag string
+#. i18n: file kmfoptions.ui line 34
+#: rc.cpp:6
+msgid "Def&ault Project Type:"
+msgstr "&Projektin oletus tyyppi."
+
+#. i18n: tag string
+#. i18n: file kmfoptions.ui line 51
+#: rc.cpp:9
+msgid "DVD-PAL"
+msgstr "DVD-PAL"
+
+#. i18n: tag string
+#. i18n: file kmfoptions.ui line 56
+#: rc.cpp:12
+msgid "DVD-NTSC"
+msgstr "DVD-NTSC"
+
+#. i18n: tag string
+#. i18n: file kmfoptions.ui line 64
+#: rc.cpp:15
+msgid "Default Project Director&y:"
+msgstr "Projektin oletus &hakemisto:"
+
+#. i18n: tag string
+#. i18n: file kmfoptions.ui line 80
+#: rc.cpp:18
+msgid "Show project &options on new project"
+msgstr "Näytä projektin asetukset kun uusi projekti avataan"
+
+#. i18n: tag string
+#. i18n: file kmfoptions.ui line 83
+#: rc.cpp:21
+msgid "Alt+O"
+msgstr "Alt+O"
+
+#. i18n: tag string
+#. i18n: file logview.ui line 19
+#: rc.cpp:24
+msgid "Log viewer"
+msgstr "Login katselu"
+
+#. i18n: tag string
+#. i18n: file logview.ui line 31
+#: rc.cpp:27
+msgid "&Log:"
+msgstr "&Logi:"
+
+#. i18n: tag string
+#. i18n: file mediapage.ui line 40
+#: rc.cpp:33
+msgid "Add media:"
+msgstr "Lisää media:"
+
+#. i18n: tag string
+#. i18n: file mediapage.ui line 72
+#: rc.cpp:36
+msgid "Selected &media:"
+msgstr "Valittu &media:"
+
+#. i18n: tag string
+#. i18n: file outputpage.ui line 25
+#: rc.cpp:42
+msgid "Select output t&ype:"
+msgstr "Valitse tuloksen tyyppi:"
+
+#. i18n: tag string
+#. i18n: file outputpage.ui line 153
+#: rc.cpp:48
+msgid "Show &Log"
+msgstr "Näytä &logi"
+
+#. i18n: tag string
+#. i18n: file outputpage.ui line 156
+#: rc.cpp:51
+msgid "Alt+L"
+msgstr "Alt+L"
+
+#. i18n: tag string
+#. i18n: file outputpage.ui line 178
+#: rc.cpp:54
+msgid "S&top"
+msgstr "Pysäy&tä"
+
+#. i18n: tag string
+#. i18n: file outputpage.ui line 181
+#: rc.cpp:57
+msgid "Alt+T"
+msgstr "Alt+T"
+
+#. i18n: tag string
+#. i18n: file outputpage.ui line 200
+#: rc.cpp:60
+msgid "&Start"
+msgstr "&Aloita"
+
+#. i18n: tag string
+#. i18n: file projectoptions.ui line 19
+#: rc.cpp:63
+msgid "Project Options"
+msgstr "Projektin asetukset"
+
+#. i18n: tag string
+#. i18n: file projectoptions.ui line 40
+#: rc.cpp:66
+msgid "&Title:"
+msgstr "O&tsikko:"
+
+#. i18n: tag string
+#. i18n: file projectoptions.ui line 56
+#: rc.cpp:69
+msgid "T&ype:"
+msgstr "T&yyppi:"
+
+#. i18n: tag string
+#. i18n: file projectoptions.ui line 72
+#: rc.cpp:72
+msgid "Direct&ory:"
+msgstr "Hakemist&o:"
+
+#. i18n: tag string
+#. i18n: file sizewidget.ui line 13
+#: rc.cpp:75
+msgid "Size Widget"
+msgstr "Koko vimpain"
+
+#. i18n: tag string
+#. i18n: file sizewidget.ui line 146
+#: rc.cpp:78
+msgid "0 B"
+msgstr "0 B"
+
+#. i18n: tag string
+#. i18n: file sizewidget.ui line 178
+#: rc.cpp:81
+msgid "4.4 GB"
+msgstr "4,4 GB"
+
+#. i18n: tag string
+#. i18n: file templatepage.ui line 19
+#: rc.cpp:84
+msgid "Templates"
+msgstr "Mallipohjat"
+
+#. i18n: tag string
+#. i18n: file templatepage.ui line 37
+#: rc.cpp:87
+msgid "&Templates:"
+msgstr "Mallipohja&t:"
+
+#. i18n: tag string
+#. i18n: file templatepage.ui line 84
+#: rc.cpp:90
+msgid "&Preview:"
+msgstr "&Esikatselu:"
+
+#. i18n: tag string
+#. i18n: file templatepage.ui line 87
+#: rc.cpp:93
+msgid "Alt+P"
+msgstr "Alt+E"
+
+#. i18n: tag string
+#. i18n: file toolproperties.ui line 13
+#: rc.cpp:96
+msgid "Tool Properties"
+msgstr "Työkalujen ominaisuudet"
+
+#. i18n: tag string
+#. i18n: file toolproperties.ui line 54
+#: rc.cpp:99
+msgid "&Name:"
+msgstr "&Nimi"
+
+#. i18n: tag string
+#. i18n: file toolproperties.ui line 73
+#: rc.cpp:102
+msgid "Wor&k path:"
+msgstr "&Työskentely polku:"
+
+#. i18n: tag string
+#. i18n: file toolproperties.ui line 114
+#: rc.cpp:105
+msgid "&Description:"
+msgstr "&Kuvaus:"
+
+#. i18n: tag string
+#. i18n: file toolproperties.ui line 127
+#: rc.cpp:108
+msgid "Co&mmand:"
+msgstr "Ko&mento:"
+
+#. i18n: tag string
+#. i18n: file toolproperties.ui line 142
+#: rc.cpp:111
+msgid "Place in media &button bar"
+msgstr "Sisällytä media &painike palkkiin:"
+
+#. i18n: tag string
+#. i18n: file toolproperties.ui line 145
+#: rc.cpp:114
+msgid "Alt+B"
+msgstr "Alt+P"
+
+#. i18n: tag string
+#. i18n: file toolproperties.ui line 152
+#: rc.cpp:117
+msgid "Run In Term&inal"
+msgstr "Aja term&inaalissa"
+
+#. i18n: tag string
+#. i18n: file toolproperties.ui line 155
+#: rc.cpp:120
+msgid "Alt+I"
+msgstr "Alt+I"
+
+#. i18n: tag string
+#. i18n: file tools.ui line 73
+#: rc.cpp:126
+msgid "Add"
+msgstr "Lisää"
+
+#. i18n: tag string
+#. i18n: file tools.ui line 86
+#: rc.cpp:129
+msgid "Properties"
+msgstr "Ominaisuudet"
+
+#. i18n: tag string
+#. i18n: file tools.ui line 99
+#: rc.cpp:132
+msgid "Remove"
+msgstr "Poista"
+
+#. i18n: tag text
+#. i18n: file kmediafactoryui.rc line 5
+#: rc.cpp:135
+msgid "&Project"
+msgstr "&Projekti"
+
+#. i18n: tag text
+#. i18n: file kmediafactoryui.rc line 9
+#: rc.cpp:138
+msgid "&Media"
+msgstr "&Media"
+
+#. i18n: tag text
+#. i18n: file kmediafactoryui.rc line 13
+#: rc.cpp:141
+msgid "&Tools"
+msgstr "&Työkalut"
+
+#. i18n: tag text
+#. i18n: file kmediafactoryui.rc line 35
+#: rc.cpp:144
+msgid "Main Toolbar"
+msgstr "Pääpainikepalkki"
+
+#: templatepage.cpp:183
+msgid "Save image"
+msgstr "Tallenna kuva"
+
+#: templatepage.cpp:184
+msgid "Scaled"
+msgstr "Skaalattu"
+
+#: templatepage.cpp:215
+msgid "*.png|PNG Graphics file"
+msgstr "*.png|PNG kuva tiedosto"
+
+#: toolproperties.cpp:31
+msgid "Tool properties"
+msgstr "Työkalujen ominaisuudet"
+
+#: tools.cpp:92
+msgid "Name"
+msgstr "Nimi"
+
+#: tools.cpp:94
+msgid "Description"
+msgstr "Kuvaus"
+
+#: kmfobjectlistmodel.h:49
+msgid "Title"
+msgstr "Otsikko:"
+

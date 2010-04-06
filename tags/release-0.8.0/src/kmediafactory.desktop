@@ -1,0 +1,14 @@
+[Desktop Entry]
+Name=KMediaFactory
+Name[xx]=xxKMediaFactoryxx
+Exec=kmediafactory
+Icon=kmediafactory
+Type=Application
+Comment=Template based DVD authoring software
+Comment[fi]=Mallipohjiin perustuva DVD:n kokoamis ohjelma
+GenericName=DVD Authoring
+GenericName[fi]=DVD:n kokoaminen
+Terminal=false
+MimeType=application/x-kmediafactory
+X-KDE-NativeMimeType=application/x-kmediafactory
+Categories=KDE;AudioVideo;AudioVideoEditing

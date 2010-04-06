@@ -1,0 +1,193 @@
+# translation of kmediafactory_template.po to German
+# This file is put in the public domain.
+#
+# FIRST AUTHOR <Lummi@in-4-matik.de>, YEAR.
+# Christoph Lumme <lummi@in-4-matik.de>, 2006.
+# Pavel Fric <pavelfric@seznam.cz>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmediafactory_template\n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
+"PO-Revision-Date: 2009-04-17 22:01+0200\n"
+"Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: kmfmenu.cpp:128 kmfmenupage.cpp:57, kde-format
+msgid "Menu: %1"
+msgstr "Menu: %1"
+
+#: kmfmenupage.cpp:82
+msgid "Could not paint menu."
+msgstr "Menu nelze namalovat."
+
+#: kmfmenupage.cpp:88
+msgid "Could not write spumux xml file."
+msgstr "Spumux xml soubor nelze zapsat."
+
+#: kmfmenupage.cpp:94
+msgid "Could not save images."
+msgstr "Nepodařilo se uložit obrázky."
+
+#: kmfmenupage.cpp:100
+msgid "Could not make mpeg file."
+msgstr "Nepodařilo se udělat mpeg soubor."
+
+#: newstuffobject.cpp:34
+msgid "Get more..."
+msgstr "Získat víc..."
+
+#. i18n: tag string
+#. i18n: file templateconfig.ui line 13
+#: rc.cpp:3
+msgid "Configure Template Plugin"
+msgstr "Nastavit přídavný modul šablony"
+
+#. i18n: tag string
+#. i18n: file templateconfig.ui line 31
+#: rc.cpp:6
+msgid "Default &Menu Language:"
+msgstr "Výchozí jazyk &menu"
+
+#: templateobject.cpp:83
+msgid "&Properties"
+msgstr "&Vlastnosti"
+
+#: templateplugin.cpp:68
+msgid "Template plugin"
+msgstr "Přídavný modul šablony"
+
+#~ msgid ""
+#~ "\n"
+#~ " *********************************************************************\n"
+#~ " %1\n"
+#~ " *********************************************************************\n"
+#~ " "
+#~ msgstr ""
+#~ "\n"
+#~ " *********************************************************************\n"
+#~ " %1\n"
+#~ " *********************************************************************\n"
+#~ " "
+
+#~ msgid ""
+#~ "\n"
+#~ "**********************************************************************\n"
+#~ "\n"
+#~ "This file was made with %1 - %2\n"
+#~ "http://www.iki.fi/damu/software/kmediafactory/\n"
+#~ "\n"
+#~ "**********************************************************************\n"
+#~ "\n"
+#~ "Register usage:\n"
+#~ "================\n"
+#~ "g0: Playing chapter saved here.\n"
+#~ "g1: Play this chapter when entering titleset menu. 0 == show menu.\n"
+#~ "    Also used by Back button.\n"
+#~ "g2: Used vmgm button is saved here\n"
+#~ "g3: Jump to this titleset. Also used for direct play.\n"
+#~ "g4: Used titleset button is saved here\n"
+#~ "g5: vmgm page is saved here\n"
+#~ "g6: titleset page is saved here\n"
+#~ "g7: temporary variable\n"
+#~ "\n"
+#~ "**********************************************************************\n"
+#~ msgstr ""
+#~ "\n"
+#~ "**********************************************************************\n"
+#~ "\n"
+#~ "Diese Datei wurde erzeugt mit: %1 - %2\n"
+#~ "http://www.iki.fi/damu/software/kmediafactory/\n"
+#~ "\n"
+#~ "**********************************************************************\n"
+#~ "\n"
+#~ "Registerbenutzung:\n"
+#~ "================\n"
+#~ "g0: Hier gespeichertes Kapitel spielen \n"
+#~ "g1: Dieses Kapitel beim betreten der Titelauswahl spielen. 0 == Menü "
+#~ "zeigen.\n"
+#~ "    Auch für Zurückschaltfläche benutzt \n"
+#~ "g2: Benutzte vmgm Schaltfläche wird hier gespeichert\n"
+#~ "g3: Zu dieser Titelauswahl springen. Wird auch für direktes Abspielen "
+#~ "genutzt\n"
+#~ "g4: Benutze Titelauswahlschaltfläche wird hier gespeichert\n"
+#~ "g5: vmgm Seite wird hier gespeichert\n"
+#~ "g6: Titelauswahlseite wird hier gespeichert\n"
+#~ "g7: temporäre Variable\n"
+#~ "\n"
+#~ "**********************************************************************\n"
+
+#~ msgid "Main menu for %1"
+#~ msgstr "Hauptmenü für %1"
+
+#, fuzzy
+#~ msgid "No pages."
+#~ msgstr "Keine Seiten."
+
+#~ msgid "Cannot find page %1 from template."
+#~ msgstr "Kann Seite %1 der Vorlage nicht finden."
+
+#~ msgid "Generating menus"
+#~ msgstr "Erstelle Menüs"
+
+#~ msgid "Making menu mpegs"
+#~ msgstr "Erstelle Menü MPEGs"
+
+#~ msgid "Generating DVDAuthor xml"
+#~ msgstr "Erstelle Xml-Datei für DVDAuthor"
+
+#~ msgid "   Converting %1 to ac3 format"
+#~ msgstr "   konvertiere %1 in das AC3-Format"
+
+#~ msgid "   Conversion error."
+#~ msgstr "  Konvertierungsfehler."
+
+#~ msgid "   Script file open failed. %1"
+#~ msgstr "   öffnen der Skriptdatei fehlgeschlagen. %1"
+
+#~ msgid "ImageMagick error: %1"
+#~ msgstr "ImageMagick Fehler: %1"
+
+#~ msgid "Use this as a default menu language for new projects."
+#~ msgstr "Als Standardsprache für Menüs bei neuen Projekten verwenden."
+
+#~ msgid "Debug widgets. Draws rectangles in menu pictures."
+#~ msgstr "Debug Elemente. Zeichnet Rechtecke in Menübildern."
+
+#~ msgid "Image debug. Blue rectangle."
+#~ msgstr "Debug Elemente. Blaue Rechtecke."
+
+#~ msgid "Label debug. Red rectangle."
+#~ msgstr "Rote Rechtecke um Labels"
+
+#~ msgid "Frame debug. Green rectangle."
+#~ msgstr "Grüne Rechtecke um Frames"
+
+#~ msgid "Button debug. Yellow rectangle."
+#~ msgstr "Gelbe Rechtecke um Schaltflächen"
+
+#~ msgid "Box debug. White rectangle."
+#~ msgstr "Weiße Rechtecke um Boxen"
+
+#~ msgid "Widget debug. Gray rectangle."
+#~ msgstr "Graue Rechtecke um Grafikelemente"
+
+#~ msgid "Print debug information from widget. "
+#~ msgstr "Debuginformationen für Grafikelemente anzeigen"
+
+#~ msgid "Draw also margin."
+#~ msgstr "Rand zeichnen"
+
+#~ msgid "Menus are up to date"
+#~ msgstr "Menüs sind aktuell"
+
+#~ msgid "Template plugin for KMediaFactory."
+#~ msgstr "Vorlagenplugin für KmediaFactory."
+
+#~ msgid "KMediaFactory Template"
+#~ msgstr "KMediaFactory Vorlage"

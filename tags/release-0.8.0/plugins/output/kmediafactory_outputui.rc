@@ -1,0 +1,12 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="kmediafactory-output" version="1">
+  <MenuBar>
+    <Menu name="Tools">
+      <Separator/>
+      <Action name="dvd_info" />
+      <Action name="preview_dvd" />
+      <Action name="preview_dvd_xine" />
+      <Action name="preview_dvd_kaffeine" />
+    </Menu>
+  </MenuBar>
+</kpartgui>
