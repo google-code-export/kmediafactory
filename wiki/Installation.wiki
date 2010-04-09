@@ -2,7 +2,7 @@
 
 ==Packages==
 
-OpenSuse Build Service Packages for (K)Ubuntu, OpenSuse, Fedora and Mandriva can be found from the [http://kde-apps.org/content/show.php?content=20121 KDE-Look.org page].
+openSUSE Build Service Packages for (K)Ubuntu, openSUSE, Fedora and Mandriva can be found from the [http://kde-apps.org/content/show.php?content=20121 KDE-Look.org page].
 
 ==Source Package==
 
