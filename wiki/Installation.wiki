@@ -14,3 +14,15 @@ cd kmediafactory-*
 make 
 sudo make install 
 }}}
+
+==Development Version==
+
+{{{
+svn checkout http://kmediafactory.googlecode.com/svn/trunk kmediafactory
+cd kmediafactory 
+mkdir debug 
+cd debug 
+cmake .. -DCMAKE_BUILD_TYPE=debugfull 
+make 
+sudo make install
+}}}
