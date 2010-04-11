@@ -563,7 +563,7 @@ void Chapters::saveCustomPreview()
     int serial = m_obj->interface()->serial();
     QDir dir(m_obj->interface()->projectDir("media"));
 
-    m_preview.sprintf("%3.3d_preview.png", serial);
+    m_preview.sprintf("%3.3d_preview.pnm", serial);
     m_preview = dir.filePath(m_preview);
     m_obj->getFrame(m_pos, m_preview);
 }
