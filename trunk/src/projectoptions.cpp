@@ -69,6 +69,10 @@ void ProjectOptions::init()
 
 void ProjectOptions::setData(const KMFProject &project)
 {
+    // Disconnect the text changed signal from the title edit field, so that
+    // the connected slot does not change the project directory!
+    disconnect(titleEdit, SIGNAL(textChanged(const QString &)),
+               this, SLOT(titleChanged(const QString &)));
     setProjectDirectory(project.directory("", false));
     setProjectTitle(project.title());
     setProjectType(project.type());
@@ -78,6 +82,9 @@ void ProjectOptions::setData(const KMFProject &project)
     m_saved = dir.dirName();
     m_type = project.type();
     m_count = project.mediaObjects().count();
+    // Reconnect signal - data has now been set.
+    connect(titleEdit, SIGNAL(textChanged(const QString &)),
+            this, SLOT(titleChanged(const QString &)));
 }
 
 void ProjectOptions::setProjectTitle(const QString &title)
