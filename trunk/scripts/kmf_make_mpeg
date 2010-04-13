@@ -39,7 +39,7 @@ SOUND=$4
 SUB="$NAME.xml"
 
 $PPMTOY4M -S $CHROMA -n 1 -r -I p -F $FRAMERATE -A $ASPECTRATIO $NAME.pnm | \
-$MPEG2ENC -q 1 -a 2 -f 8 -n $VIDEONORM -F $FRAMERATEMPLEX -o $NAME.m2v
+$MPEG2ENC -b 8000 -q 4 -a 2 -f 8 -4 2 -2 1 -s -M 0 -E -N -R 2 -n $VIDEONORM -F $FRAMERATEMPLEX -o $NAME.m2v
 
 if [[ $? == 0 ]]; then
   if [ -e $SUB ]; then
