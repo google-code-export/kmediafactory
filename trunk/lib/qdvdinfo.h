@@ -90,9 +90,9 @@ class KDE_EXPORT Cell : public Base
         {
         };
         Cell(QTime start, QTime length, QString name, bool chapter = true, bool hidden =
-                false) : m_cell(0), m_chapter(chapter), m_hidden(hidden), m_start(start), m_length(
+                false, QString previewFile=QString()) : m_cell(0), m_chapter(chapter), m_hidden(hidden), m_start(start), m_length(
                                  length),
-                         m_startSector(0), m_endSector(0), m_name(name)
+                         m_startSector(0), m_endSector(0), m_name(name), m_preview(previewFile)
         {
         };
 #ifdef HAVE_LIBDVDREAD
@@ -132,6 +132,10 @@ class KDE_EXPORT Cell : public Base
         {
             return m_hidden;
         };
+        QString previewFile() const
+        {
+            return m_preview;
+        }
         virtual uint64_t size() const;
 
         virtual QString toString() const;
@@ -167,6 +171,7 @@ class KDE_EXPORT Cell : public Base
         int m_startSector;
         int m_endSector;
         QString m_name;
+        QString m_preview;
 };
 
 typedef QList<Cell> CellList;
