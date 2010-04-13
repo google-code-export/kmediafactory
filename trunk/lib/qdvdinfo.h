@@ -296,6 +296,29 @@ class KDE_EXPORT Subtitle : public Track
 
         QString horizontalAlign() const;
 
+        int leftMargin() const
+        {
+            return m_leftMargin;
+        }
+        int rightMargin() const
+        {
+            return m_rightMargin;
+        }
+        int topMargin() const
+        {
+            return m_topMargin;
+        }
+        int bottomMargin() const
+        {
+            return m_bottomMargin;
+        }
+        void setMargins(int left, int right, int top, int bottom)
+        {
+            m_leftMargin=left;
+            m_rightMargin=right;
+            m_topMargin=top;
+            m_bottomMargin=bottom;
+        }
     protected:
         static const char *subpType[16];
         static const char *hAlign[4];
@@ -308,6 +331,10 @@ class KDE_EXPORT Subtitle : public Track
         QFont   m_font;
         Qt::Alignment m_align;
         QString m_encoding;
+        int     m_leftMargin,
+                m_rightMargin,
+                m_topMargin,
+                m_bottomMargin;
 };
 
 class KDE_EXPORT AudioTrack : public Track

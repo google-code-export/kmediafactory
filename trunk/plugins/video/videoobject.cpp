@@ -109,10 +109,10 @@ class ConvertSubtitlesJob : public KMF::Job
             textsub.setAttribute("filename", subtitleFile);
             textsub.setAttribute("vertical-alignment", subtitle.verticalAlign());
             textsub.setAttribute("horizontal-alignment", subtitle.horizontalAlign());
-            textsub.setAttribute("left-margin", 40);
-            textsub.setAttribute("right-margin", 40);
-            textsub.setAttribute("top-margin", 30);
-            textsub.setAttribute("bottom-margin", 40);
+            textsub.setAttribute("left-margin", subtitle.leftMargin());
+            textsub.setAttribute("right-margin", subtitle.rightMargin());
+            textsub.setAttribute("top-margin", subtitle.topMargin());
+            textsub.setAttribute("bottom-margin", subtitle.bottomMargin());
             textsub.setAttribute("movie-width", "720");
             textsub.setAttribute("characterset", subtitle.encoding());
 
@@ -420,6 +420,25 @@ bool VideoObject::fromXML(const QDomElement &element)
                                     QString("%1").arg(Qt::AlignHCenter | Qt::AlignBottom));
                             s.setAlignment(QFlags<Qt::AlignmentFlag>(a.toInt()));
                             s.setFont(font);
+                            if (e2.hasAttribute("margins")) {
+                                QStringList margins=e2.attribute("margins").split(',', QString::SkipEmptyParts);
+
+                                static const int constMarginMin=10;
+                                static const int constMarginMax=250;
+                                if(4==margins.count()) {
+                                    int left=margins[0].toInt(),
+                                        right=margins[1].toInt(),
+                                        top=margins[2].toInt(),
+                                        bottom=margins[3].toInt();
+
+                                    if(left>=constMarginMin && left<=constMarginMax &&
+                                       right>=constMarginMin && right<=constMarginMax &&
+                                       top>=constMarginMin && top<=constMarginMax &&
+                                       bottom>=constMarginMin && bottom<=constMarginMax) {
+                                        s.setMargins(left, right, top, bottom);
+                                    }
+                                }
+                            }
                             addSubtitle(s);
                         }
                     }
