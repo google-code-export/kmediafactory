@@ -22,6 +22,8 @@
 
 #include <QtCore/QMutexLocker>
 
+const int KMF::MediaObject::constIconSize = 96;
+
 KMF::MediaObject::MediaObject(QObject *parent)
     : Object(parent)
 {
