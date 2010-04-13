@@ -61,7 +61,7 @@ class KDE_EXPORT MediaObject : public Object
         }
 
     public:
-        static const int constIconSize = 96;
+        static const int constIconSize;
 };
 
 class KDE_EXPORT OutputObject : public Object
