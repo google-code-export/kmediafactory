@@ -361,6 +361,7 @@ bool VideoObject::fromXML(const QDomElement &element)
                             KMF::Time start(e2.attribute("start"));
                             KMF::Time length(e2.attribute("length"));
                             QString name = e2.attribute("name");
+                            QString previewFile = e2.attribute("preview");
                             bool chapter = (e2.attribute("chapter") == "1");
                             bool hidden = (e2.attribute("hidden") == "1");
 
@@ -384,7 +385,7 @@ bool VideoObject::fromXML(const QDomElement &element)
                                 name = start.toString("h:mm:ss");
                             }
 
-                            addCell(QDVD::Cell(start, length, name, chapter, hidden));
+                            addCell(QDVD::Cell(start, length, name, chapter, hidden, previewFile));
                         } else if (e2.tagName() == "audio")    {
                             QDVD::AudioTrack a(e2.attribute("language",
                                                        VideoPluginSettings::defaultAudioLanguage()));
@@ -497,6 +498,8 @@ void VideoObject::toXML(QDomElement *element) const
         e.setAttribute("length", KMF::Time(cell.length()).toString());
         e.setAttribute("chapter", cell.isChapter());
         e.setAttribute("hidden", cell.isHidden());
+        if(!cell.previewFile().isEmpty())
+            e.setAttribute("preview", cell.previewFile());
         video.appendChild(e);
     }
 
@@ -873,12 +876,18 @@ QImage VideoObject::generatePreview(int chap, QSize desiredSize) const
         }
     }
 
-    KMF::Time t = chapter(chap).start();
-    QDir dir(interface()->projectDir("media"));
-    QString s;
-    cacheFile = dir.filePath(s.sprintf("%s_%s.pnm",
-                    (const char *)m_id.toLocal8Bit(),
-                    (const char *)t.toString().toLocal8Bit()));
+    cacheFile=chapter(chap).previewFile();
+    
+    KMF::Time t;
+
+    if(cacheFile.isEmpty()) {
+        QDir dir(interface()->projectDir("media"));
+        QString s;
+        t = chapter(chap).start();
+        cacheFile = dir.filePath(s.sprintf("%s_%s.pnm",
+                        (const char *)m_id.toLocal8Bit(),
+                        (const char *)t.toString().toLocal8Bit()));
+    }
 
     if (img.load(cacheFile)) {
         return img;
