@@ -339,6 +339,10 @@ Subtitle::Subtitle(QString langCode, QString file)
     , m_file(file)
     , m_align(Qt::AlignCenter | Qt::AlignBottom)
     , m_encoding("UTF-8")
+    , m_leftMargin(40)
+    , m_rightMargin(40)
+    , m_topMargin(30)
+    , m_bottomMargin(40)
 {
     m_font.setPointSize(28);
 }
@@ -346,6 +350,10 @@ Subtitle::Subtitle(QString langCode, QString file)
 #ifdef HAVE_LIBDVDREAD
 Subtitle::Subtitle(int pos, subp_attr_t *subp_attr, uint16_t subp_control,
         video_attr_t *video_attr)
+        : m_leftMargin(40)
+        , m_rightMargin(40)
+        , m_topMargin(30)
+        , m_bottomMargin(40)
 {
     m_langCode.sprintf("%c%c", subp_attr->lang_code >> 8,
             subp_attr->lang_code & 0xff);
