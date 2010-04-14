@@ -145,6 +145,7 @@ class KDE_EXPORT PluginInterface : public QObject
 
         virtual void addJob(KMF::Job *job, JobDependency dependency = KMF::None) = 0;
         virtual void addJob(KMF::Job *job, KMF::Job *dependency) = 0;
+        virtual bool executableJobsRemaining() = 0;
 
         static uint messageId();
         virtual void message(uint id, MsgType type, const QString &msg = QString()) = 0;
