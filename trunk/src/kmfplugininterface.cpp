@@ -182,6 +182,16 @@ void KMFPluginInterface::selectOutput(const QString &xml)
     kmfApp->project()->outputFromXML(doc.documentElement());
 }
 
+bool KMFPluginInterface::executableJobsRemaining()
+{
+    foreach (KMF::Job* job, m_jobs) {
+        if (!job->isFinished() && job->canBeExecuted()) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void KMFPluginInterface::addJob(KMF::Job *job, KMF::JobDependency dependency)
 {
     switch (dependency) {

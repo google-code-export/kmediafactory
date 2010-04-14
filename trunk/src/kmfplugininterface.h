@@ -78,6 +78,7 @@ class KMFPluginInterface : public KMF::PluginInterface
         virtual void selectOutput(const QString &xml);
         virtual void addJob(KMF::Job *job, KMF::JobDependency dependency = KMF::None);
         virtual void addJob(KMF::Job *job, KMF::Job *dependency);
+        virtual bool executableJobsRemaining();
 
         void setUseMessageBox(bool useMessageBox)
         {

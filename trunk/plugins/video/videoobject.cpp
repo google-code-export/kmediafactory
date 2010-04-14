@@ -896,7 +896,7 @@ QImage VideoObject::generatePreview(int chap, QSize desiredSize) const
     }
 
     cacheFile=chapter(chap).previewFile();
-    
+
     KMF::Time t;
 
     if(cacheFile.isEmpty()) {

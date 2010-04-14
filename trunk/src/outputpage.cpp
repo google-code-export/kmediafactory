@@ -185,10 +185,15 @@ void OutputPage::start()
     finished();
 }
 
-void OutputPage::jobDone(ThreadWeaver::Job *)
+void OutputPage::jobDone(ThreadWeaver::Job *job)
 {
+    Q_UNUSED(job);
     CHECK_IF_STOPPED();
     progressBar->setValue(progressBar->value() + 1);
+    if (ThreadWeaver::Weaver::instance()->queueLength() > 0 &&
+        kmfApp->interface()->executableJobsRemaining() == false) {
+        finished();
+    }
 }
 
 void OutputPage::finished()
