@@ -50,7 +50,6 @@ class TemplatePage : public QWidget, public Ui::TemplatePage
     private:
         int m_menu;
         QDateTime m_lastUpdate;
-        bool m_scaled;
 };
 
 #endif // TEMPLATEPAGE_H

@@ -34,6 +34,7 @@
 #include <KPageDialog>
 #include <KXMLGUIFactory>
 
+#include <kmediafactorysettings.h>
 #include <kmfimageview.h>
 #include <kmftools.h>
 #include "kmediafactory.h"
@@ -42,12 +43,12 @@
 TemplatePage::TemplatePage(QWidget *parent)
     : QWidget(parent)
     , m_menu(0)
-    , m_scaled(false)
 {
     setupUi(this);
     templates->setSpacing(5);
     templates->setItemDelegate(new KFileItemDelegate(this));
     templates->setIconSize(QSize(KIconLoader::SizeHuge, KIconLoader::SizeHuge));
+    templatePreview->setScaled(KMediaFactorySettings::previewScaled());
     connect(templates, SIGNAL(customContextMenuRequested(const QPoint &)),
             this, SLOT(contextMenuRequested(const QPoint &)));
     connect(templatePreview,
@@ -212,7 +213,7 @@ void TemplatePage::imageContextMenuRequested(const QPoint &pos)
     }
 
     scaledAction->setCheckable(true);
-    scaledAction->setChecked(m_scaled);
+    scaledAction->setChecked(KMediaFactorySettings::previewScaled());
 
     popup.addAction(scaledAction);
     popup.addAction(saveAction);
@@ -257,8 +258,10 @@ void TemplatePage::imageContextMenuRequested(const QPoint &pos)
 
     if ((action = popup.exec(pos)) != 0) {
         if (action == scaledAction) {
-            m_scaled = (m_scaled) ? false : true;
-            templatePreview->setScaled(m_scaled);
+            KMediaFactorySettings::setPreviewScaled(
+                    KMediaFactorySettings::previewScaled() ? false : true);
+            templatePreview->setScaled(KMediaFactorySettings::previewScaled());
+            KMediaFactorySettings::self()->writeConfig();
         } else if (action == saveAction)    {
             KUrl url = KFileDialog::getSaveUrl(KUrl("kfiledialog:///<KMFPreview>"),
                     i18n("*.png|PNG Graphics file"),
