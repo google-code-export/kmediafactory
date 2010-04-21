@@ -101,7 +101,7 @@ void VideoOptions::setData(const VideoObject &obj)
     aspectComboBox->setCurrentIndex((int)obj.aspect());
 
     m_obj = &obj;
-    m_chapters->setData(obj.cellList(), m_obj);
+    m_chapters->setData(obj.cellList(), m_obj, this);
     m_audioTracks = obj.audioTracks();
     m_audioModel.setLanguages(&m_audioTracks);
     audioListBox->setModel(&m_audioModel);
@@ -118,6 +118,11 @@ void VideoOptions::setData(const VideoObject &obj)
             SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)),
             this, SLOT(enableButtons()));
     enableButtons();
+}
+
+void VideoOptions::setPreviewUrl(const QString& url)
+{
+    previewUrl->setUrl(url);
 }
 
 void VideoOptions::getData(VideoObject &obj) const

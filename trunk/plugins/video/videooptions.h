@@ -38,6 +38,7 @@ class VideoOptions : public KDialog, public Ui::VideoOptions
 
         void getData(VideoObject &obj) const;
         void setData(const VideoObject &obj);
+        void setPreviewUrl(const QString& url);
 
     protected slots:
         virtual void accept();

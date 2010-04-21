@@ -40,16 +40,11 @@ class Chapters : public QWidget, public Ui::Chapters
         Chapters(QWidget *parent = 0);
         ~Chapters();
 
-        void setData(const QDVD::CellList &cells, const VideoObject *obj);
+        void setData(const QDVD::CellList &cells, const VideoObject *obj, VideoOptions *vidOpt);
 
-        const QDVD::CellList&cells() const
+        const QDVD::CellList& cells() const
         {
             return m_cells;
-        }
-
-        const QString&preview() const
-        {
-            return m_preview;
         }
 
         bool ok();
@@ -80,9 +75,9 @@ class Chapters : public QWidget, public Ui::Chapters
 
     private:
         const VideoObject *m_obj;
+        VideoOptions *m_vidOpt;
         KMF::Time m_pos;
         QString m_duration;
-        QString m_preview;
         QDVD::CellList m_cells;
         CellListModel *m_model;
         QString m_lastFile;

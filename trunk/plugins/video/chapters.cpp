@@ -269,10 +269,11 @@ void Chapters::showEvent(QShowEvent *event)
     splitter->setSizes(cg.readEntry("splitter", QList<int>() << 330 << 330));
 }
 
-void Chapters::setData(const QDVD::CellList &cells, const VideoObject *obj)
+void Chapters::setData(const QDVD::CellList &cells, const VideoObject *obj, VideoOptions *vidOpt)
 {
     m_cells = cells;
     m_obj = obj;
+    m_vidOpt = vidOpt;
 
     if (m_model) {
         delete m_model;
@@ -562,10 +563,12 @@ void Chapters::saveCustomPreview()
 {
     int serial = m_obj->interface()->serial();
     QDir dir(m_obj->interface()->projectDir("media"));
+    QString preview;
 
-    m_preview.sprintf("%3.3d_preview.pnm", serial);
-    m_preview = dir.filePath(m_preview);
-    m_obj->getFrame(m_pos, m_preview);
+    preview.sprintf("%3.3d_preview.pnm", serial);
+    preview = dir.filePath(preview);
+    m_obj->getFrame(m_pos, preview);
+    m_vidOpt->setPreviewUrl(preview);
 }
 
 void Chapters::checkLengths()
