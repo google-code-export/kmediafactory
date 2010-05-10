@@ -23,6 +23,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QSize>
+#include <KDebug>
 
 #include <kmediafactory/plugin.h>
 #include "kmfwidget.h"
@@ -147,6 +148,7 @@ class KMFMenuPage : public KMFWidget
         };
         QString sound() const
         {
+            kDebug() << m_sound;
             return m_sound;
         };
 
