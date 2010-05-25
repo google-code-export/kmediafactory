@@ -617,8 +617,7 @@ void KMFMenuPage::setProperty(const QString &name, QVariant value)
     } else if (name == "direct_chapter_play") {
         m_directChapterPlay = value.toBool();
     } else if (name == "sound") {
-        m_sound = value.toString();
-        kDebug() << "***************************************" << m_sound;
+        m_sound = value.value<KUrl>().pathOrUrl();
     } else if (name == "continue_to_next_title") {
         m_continueToNextTitle = value.toInt();
     }

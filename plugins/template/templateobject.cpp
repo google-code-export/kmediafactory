@@ -270,17 +270,16 @@ void TemplateObject::slotProperties()
     dialog->exec();
 
     /*
-    * kDebug() << &m_customProperties;
-    * KConfigSkeletonItem::List list = m_customProperties.items();
-    * KConfigSkeletonItem::List::iterator it;
-    * for(it = list.begin(); it != list.end(); ++it)
-    *  kDebug() << (*it)->group() << " / " <<
-    *      (*it)->key() << " = " << (*it)->property();
-    */
-    if (dialog->result() == QDialog::Accepted) {
-        interface()->setDirty(KMF::Template);
+    kDebug() << &m_customProperties;
+    KConfigSkeletonItem::List list = m_customProperties.items();
+    KConfigSkeletonItem::List::iterator it;
+    for (it = list.begin(); it != list.end(); ++it) {
+        kDebug() << (*it)->group() << "/" << (*it)->key() << "=" << (*it)->property().toString();
+        if (dialog->result() == QDialog::Accepted) {
+            interface()->setDirty(KMF::Template);
+        }
     }
-
+    */
     kapp->removeTranslator(&kmftr);
     delete dialog;
 }
