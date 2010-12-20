@@ -158,7 +158,7 @@ bool KMFMenu::addPage(const QString &name, int title, int chapter)
     QDomElement pageElement = getPage(element.firstChild(), name);
 
     QList<KMF::MediaObject *> mobs = m_interface->mediaObjects();
-    const KMF::MediaObject *mob = title <= mobs.count() ? mobs.at(title - 1) : 0;
+    const KMF::MediaObject *mob = (title > 0 && title <= mobs.count()) ? mobs.at(title - 1) : 0;
     KMFMenuPage temp(this);
 
     temp.fromXML(pageElement);
