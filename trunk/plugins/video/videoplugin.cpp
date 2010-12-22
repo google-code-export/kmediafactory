@@ -136,10 +136,8 @@ void VideoPlugin::slotAddVideo()
     if (m && (filenames.count() > 0)) {
         VideoObject *vob = 0;
 
-        for (QStringList::ConstIterator filename = filenames.begin();
-             filename != filenames.end(); ++filename)
-        {
-            QFileInfo fi(*filename);
+        foreach (const QString& filename, filenames) {
+            QFileInfo fi(filename);
 
             if (fi.isDir()) {
                 KMessageBox::error(kapp->activeWindow(),
@@ -147,20 +145,20 @@ void VideoPlugin::slotAddVideo()
                 continue;
             }
 
-            if (multipleFiles->isChecked() || (filename == filenames.begin())) {
+            if (multipleFiles->isChecked() || (filename == filenames.first())) {
                 vob = new VideoObject(this);
             }
 
-            switch (vob->addFile(*filename)) {
+            switch (vob->addFile(filename)) {
                 case VideoObject::StatusOk:
                     break;
 
                 case VideoObject::StatusInvalidResolution:
                 {
-                    QSize res(KMFMediaFile::mediaFile(*filename).resolution());
+                    QSize res(KMFMediaFile::mediaFile(filename).resolution());
                     KMessageBox::error(kapp->activeWindow(),
                             i18n("Cannot use %1.\n%2x%3 is an invalid resolution",
-                                    *filename, res.width(), res.height()));
+                                 filename, res.width(), res.height()));
                     delete vob;
                     vob = 0L;
                     break;
@@ -169,7 +167,7 @@ void VideoPlugin::slotAddVideo()
                 case VideoObject::StatusNonCompataible:
                     KMessageBox::error(kapp->activeWindow(),
                         i18n("Cannot use %1.\nIt is not a DVD compatible file.",
-                                *filename));
+                             filename));
                     delete vob;
                     vob = 0L;
                     break;
@@ -181,7 +179,7 @@ void VideoPlugin::slotAddVideo()
 
             vob->setTitleFromFileName();
 
-            if (multipleFiles->isChecked() || (filename == filenames.end())) {
+            if (multipleFiles->isChecked() || (filename == filenames.last())) {
                 if (!m->addMediaObject(vob)) {
                     KMessageBox::error(kapp->activeWindow(),
                             i18n("A DVD can only have a maximum of 99 titles.\n"),
@@ -190,10 +188,9 @@ void VideoPlugin::slotAddVideo()
                     break;
                 }
             }
-
-            if (vob && (1 == filenames.count())) {
-                vob->slotProperties();
-            }
+        }
+        if (vob && (!multipleFiles->isChecked() || filenames.count() == 1)) {
+            vob->slotProperties();
         }
     }
     delete dlg;
