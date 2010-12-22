@@ -621,58 +621,44 @@ QVariant VideoObject::writeDvdAuthorXml(QVariantList args) const
 
     // Add cells
     KMF::Time pos;
-    bool open = false;
     QDomElement vob;
+    int cellIndex = 0;
     QDVD::Cell cell;
-    int file = 0;
 
-    for (i = 0; i <= m_cells.count(); ++i) {
-        if (!open) {
-            vob = doc.createElement("vob");
+    for (i = 0; i < m_files.count(); ++i) {
+        const QString file = videoFileFind(i);
+        vob = doc.createElement("vob");
 
-            if (m_type != "dummy") {
-                vob.setAttribute("file", videoFileFind(i));
-            } else   {
-                vob.setAttribute("file", dir.filePath("dummy.mpg"));
+        kDebug() << "File: " << file;
+        if (m_type != "dummy") {
+            vob.setAttribute("file", videoFileFind(i));
+        } else   {
+            vob.setAttribute("file", dir.filePath("dummy.mpg"));
+        }
+        while (cellIndex < m_cells.count() &&
+            (KMF::Time(cell.start()) < pos + duration(file))) {
+            cell = m_cells[cellIndex++];
+            KMF::Time start(cell.start());
+            KMF::Time end(cell.start());
+
+            start -= pos;
+            QDomElement c = vob.ownerDocument().createElement("cell");
+
+            c.setAttribute("start", KMF::Time(start).toString());
+
+            if (cell.length() == KMF::Time()) {
+                c.setAttribute("end", "-1");
+            } else {
+                end -= pos;
+                end += cell.length();
+                c.setAttribute("end", end.toString());
             }
-
-            open = true;
+            c.setAttribute("chapter", cell.isChapter());
+            vob.appendChild(c);
+            kDebug() << "Cell: " << start << ", " << end;
         }
-
-        if ((KMF::Time(cell.start()) > pos + duration(m_files[file])) ||
-            (i >= m_cells.count()))
-        {
-            pos += duration(m_files[file]);
-            pgc.appendChild(vob);
-
-            if ((i >= m_files.count()) || (i >= m_cells.count())) {
-                break;
-            }
-
-            open = false;
-            ++file;
-        }
-
-        cell = m_cells[i];
-        KMF::Time start(cell.start());
-        KMF::Time end(cell.start());
-
-        start -= pos;
-        QDomElement c = vob.ownerDocument().createElement("cell");
-
-        c.setAttribute("start", KMF::Time(start).toString());
-
-        if (cell.length() == KMF::Time()) {
-            c.setAttribute("end", "-1");
-        } else {
-            end -= pos;
-            end += cell.length();
-            c.setAttribute("end", end.toString());
-        }
-
-        c.setAttribute("chapter", cell.isChapter());
-        vob.appendChild(c);
-        // kDebug() << "Cell: " << start << ", " << end;
+        pgc.appendChild(vob);
+        pos += duration(file);
     }
 
     QString postString;
