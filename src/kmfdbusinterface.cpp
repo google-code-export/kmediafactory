@@ -138,6 +138,7 @@ void KMFDbusInterface::selectTemplate(const QString &xml)
 void KMFDbusInterface::selectOutput(const QString &xml)
 {
     kmfApp->interface()->selectOutput(xml);
+    kmfApp->mainWindow()->outputPage->projectInit();
 }
 
 void KMFDbusInterface::start()
