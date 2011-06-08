@@ -117,9 +117,11 @@ class ConvertSubtitlesJob : public KMF::Job
             textsub.setAttribute("characterset", subtitle.encoding());
 
             if (type == "DVD-PAL") {
+                root.setAttribute("format", "PAL");
                 textsub.setAttribute("movie-fps", "25");
                 textsub.setAttribute("movie-height", "574");
             } else   {
+                root.setAttribute("format", "NTSC");
                 textsub.setAttribute("movie-fps", "29.97");
                 textsub.setAttribute("movie-height", "478");
             }
