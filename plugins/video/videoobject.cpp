@@ -629,6 +629,7 @@ QVariant VideoObject::writeDvdAuthorXml(QVariantList args) const
 
     for (i = 0; i < m_files.count(); ++i) {
         const QString file = videoFileFind(i);
+        QTime fileDuration = duration(m_files.at(i));
         vob = doc.createElement("vob");
 
         kDebug() << "File: " << file;
@@ -638,7 +639,7 @@ QVariant VideoObject::writeDvdAuthorXml(QVariantList args) const
             vob.setAttribute("file", dir.filePath("dummy.mpg"));
         }
         while (cellIndex < m_cells.count() &&
-            (KMF::Time(cell.start()) < pos + duration(file))) {
+            (KMF::Time(cell.start()) < pos + fileDuration)) {
             cell = m_cells[cellIndex++];
             KMF::Time start(cell.start());
             KMF::Time end(cell.start());
@@ -660,7 +661,7 @@ QVariant VideoObject::writeDvdAuthorXml(QVariantList args) const
             kDebug() << "Cell: " << start << ", " << end;
         }
         pgc.appendChild(vob);
-        pos += duration(file);
+        pos += fileDuration;
     }
 
     QString postString;
