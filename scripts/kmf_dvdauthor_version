@@ -1,0 +1,2 @@
+#!/bin/bash
+dvdauthor -h 2>&1 | grep "DVDAuthor::dvdauthor, version" | awk -F"version " '{print $2}' | awk -F\. '{print "("$1"*65536)+("$2"*256)+"$3}' | bc -l
