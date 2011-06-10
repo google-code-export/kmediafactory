@@ -182,6 +182,7 @@ class DVDDirectoryJob : public KMF::Job
             KMF::Tools::cleanFiles(projectDir + "DVD/AUDIO_TS");
             KMF::Tools::cleanFiles(projectDir + "DVD/VIDEO_TS",
                     QStringList() << "*.VOB" << "*.BUP" << "*.IFO");
+            KMF::Tools::cleanFiles(projectDir + "DVD");
         }
 
         uint subId()
