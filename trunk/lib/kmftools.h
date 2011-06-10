@@ -92,6 +92,7 @@ class KDE_EXPORT Tools
         static QMap<QString, QString> variantMap2StringMap(const QMap<QString, QVariant> &map);
         static QStringList variantList2StringList(const QVariantList &list);
         static QString changeExt(const QString &f, const QString &newExt);
+        static int dvdauthorVersion();
 };
 
 }

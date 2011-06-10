@@ -3,6 +3,7 @@ set(kmediafactory_SCRIPTS
   kmf_info
   kmf_make_mpeg
   kmf_oo2pdf
+  kmf_dvdauthor_version
   tools
 )
 

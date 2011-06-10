@@ -19,6 +19,7 @@
 // **************************************************************************
 
 #include "kmftools.h"
+#include "run.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QFile>
@@ -783,3 +784,22 @@ QString KMF::Tools::changeExt(const QString &f, const QString &newExt)
 
     return newStr;
 }
+
+int KMF::Tools::dvdauthorVersion()
+{
+    static int version=-1;
+
+    if (-1==version) {
+        Run run(QString("kmf_dvdauthor_version"));
+
+        if (run.exitStatus() == 0) {
+            QStringList lines = run.output().split('\n');
+            if(lines.count()) {
+                version=lines.at(0).toInt();
+            }
+        }
+    }
+
+    return version;
+}
+

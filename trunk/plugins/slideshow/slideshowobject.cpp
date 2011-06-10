@@ -152,9 +152,15 @@ class SpumuxJob : public KMF::Job
             textsub.setAttribute("characterset", slideshow.subtitleSettings().encoding());
 
             if (projectType == "DVD-PAL") {
+                if(KMF::Tools::dvdauthorVersion()>=KDE_MAKE_VERSION(0, 7, 0)) {
+                    root.setAttribute("format", "PAL");
+                }
                 textsub.setAttribute("movie-fps", "25");
                 textsub.setAttribute("movie-height", "574");
             } else   {
+                if(KMF::Tools::dvdauthorVersion()>=KDE_MAKE_VERSION(0, 7, 0)) {
+                    root.setAttribute("format", "NTSC");
+                }
                 textsub.setAttribute("movie-fps", "29.97");
                 textsub.setAttribute("movie-height", "478");
             }
