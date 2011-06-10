@@ -50,6 +50,7 @@
 #include <errno.h>
 #include <fontconfig/fontconfig.h>
 #include <sys/stat.h>
+#include <stdlib.h>
 
 #include "Q4puGenericSignalSpy.h"
 
@@ -626,16 +627,8 @@ void KMF::Tools::cleanFiles(const QString &d, const QStringList &files)
         }
     }
 
-    // Remove dirs if they are empty
-    int pos = -1;
-
-    while ((pos = d.lastIndexOf(QDir::separator(), pos)) != -1) {
-        QString s = d.left(pos--);
-
-        if (dir.rmdir(s) == false) {
-            break;
-        }
-    }
+    // Remove dir if it is empty
+    ::rmdir(QFile::encodeName(d).constData());
 }
 
 QImage KMF::Tools::variantList2Image(QVariant v)
