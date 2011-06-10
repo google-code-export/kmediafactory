@@ -28,7 +28,6 @@
 
 #include <stdint.h>
 
-#include <qdvdinfo.h>
 #include "job.h"
 #include "object.h"
 
@@ -130,10 +129,7 @@ class KDE_EXPORT PluginInterface : public QObject
         virtual QDateTime lastModified(DirtyType type) = 0;
         virtual int serial() = 0;
         virtual bool addMediaAction(QAction *action, const QString &group = "") const = 0;
-        virtual QDVD::VideoTrack::AspectRatio aspectRatio() const
-        {
-            return QDVD::VideoTrack::Aspect_4_3;
-        }
+        virtual uint aspectRatio() const;
 
         virtual bool addMediaObject(MediaObject *media) const = 0;
         virtual bool addTemplateObject(TemplateObject *tob) = 0;
