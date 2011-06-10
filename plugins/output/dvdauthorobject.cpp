@@ -21,6 +21,7 @@
 #include "dvdauthorobject.h"
 
 #include <QtCore/QFileInfo>
+#include <QtCore/QFile>
 #include <QtGui/QPixmap>
 #include <QtXml/QDomElement>
 
@@ -29,6 +30,8 @@
 #include <KIconLoader>
 #include <KLocale>
 #include <KMimeType>
+#include <KAction>
+#include <KActionCollection>
 
 #include <kmftools.h>
 #include <kmediafactory/job.h>
@@ -163,6 +166,11 @@ DvdAuthorObject::DvdAuthorObject(QObject *parent)
 {
     setObjectName("dvdauthor");
     setTitle(i18n("DVDAuthor Project"));
+    
+    cleanFile = new KAction(KIcon("edit-delete"),
+            i18n("Remove Generated File"), this);
+    plugin()->actionCollection()->addAction("dvda_remove", cleanFile);
+    connect(cleanFile, SIGNAL(triggered()), SLOT(clean()));
 }
 
 DvdAuthorObject::~DvdAuthorObject()
@@ -174,9 +182,9 @@ DvdAuthorObject::~DvdAuthorObject()
     }
 }
 
-void DvdAuthorObject::actions(QList<QAction *> *) const
+void DvdAuthorObject::actions(QList<QAction *> *actionList) const
 {
-    // actionList.append(dvdAuthorProperties);
+    actionList->append(cleanFile);
 }
 
 bool DvdAuthorObject::fromXML(const QDomElement &)
@@ -227,6 +235,11 @@ QPixmap DvdAuthorObject::pixmap() const
 {
     return KIconLoader::global()->loadIcon("media-optical", KIconLoader::NoGroup,
             KIconLoader::SizeLarge);
+}
+
+void DvdAuthorObject::clean()
+{
+    QFile::remove(interface()->projectDir()+"dvdauthor.xml");
 }
 
 #include "dvdauthorobject.moc"
