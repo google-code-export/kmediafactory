@@ -29,6 +29,7 @@
 #include "kmediafactory.h"
 #include "kmfapplication.h"
 #include "outputpage.h"
+#include "templatepage.h"
 
 KMFDbusInterface::KMFDbusInterface(QObject *parent)
     : QObject(parent)
@@ -133,6 +134,7 @@ void KMFDbusInterface::addMediaObject(const QString &xml)
 void KMFDbusInterface::selectTemplate(const QString &xml)
 {
     kmfApp->interface()->selectTemplate(xml);
+    kmfApp->mainWindow()->templatePage->projectInit();
 }
 
 void KMFDbusInterface::selectOutput(const QString &xml)
