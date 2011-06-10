@@ -26,6 +26,8 @@
 
 #include <kmediafactory/plugin.h>
 
+class KAction;
+
 class DvdAuthorObject : public KMF::OutputObject
 {
     Q_OBJECT
@@ -42,11 +44,14 @@ class DvdAuthorObject : public KMF::OutputObject
     public slots:
         // Help Kross plugin declaring these as slots
         virtual QPixmap pixmap() const;
+        void clean();
 
     private:
         // KAction* dvdAuthorProperties;
         QDomElement toElement(const QVariant &element);
         bool isUpToDate(QString type);
+        
+        KAction *cleanFile;
 };
 
 #endif // DVDAUTHOROBJECT_H
