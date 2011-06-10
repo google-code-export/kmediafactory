@@ -516,6 +516,11 @@ bool K3bObject::prepare(const QString &type)
     return true;
 }
 
+bool K3bObject::isValid() const
+{
+    return DvdDirectoryObject::isValid() && !KStandardDirs::findExe("k3b").isEmpty();
+}
+
 void K3bObject::toXML(QDomElement *) const
 {
 }
