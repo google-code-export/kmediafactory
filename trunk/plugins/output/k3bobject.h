@@ -41,6 +41,7 @@ class K3bObject : public DvdDirectoryObject
         virtual bool fromXML(const QDomElement &element);
         virtual void actions(QList<QAction *> *actionList) const;
         virtual bool prepare(const QString &type);
+        virtual bool isValid() const;
 
     public slots:
         // Help Kross plugin declaring these as slots

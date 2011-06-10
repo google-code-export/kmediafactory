@@ -40,6 +40,7 @@
 #include "dvdauthorobject.h"
 #include "dvddirectoryobject.h"
 #include "k3bobject.h"
+#include "isoobject.h"
 
 #ifdef HAVE_LIBDVDREAD
 #include "dvdinfo.h"
@@ -95,12 +96,22 @@ void OutputPlugin::init(const QString &type)
         KMF::PluginInterface *ui = interface();
 
         if (ui) {
-            DvdAuthorObject *daob = new DvdAuthorObject(this);
-            ui->addOutputObject(daob);
-            DvdDirectoryObject *ddob = new DvdDirectoryObject(this);
-            ui->addOutputObject(ddob);
-            DvdAuthorObject *k3bob = new K3bObject(this);
-            ui->addOutputObject(k3bob);
+            QList<KMF::OutputObject *> objects;
+            
+            objects << new DvdAuthorObject(this)
+                    << new DvdDirectoryObject(this)
+                    << new K3bObject(this)
+                    << new IsoObject(this);
+
+            QList<KMF::OutputObject *>::ConstIterator it(objects.constBegin()),
+                                                      end(objects.constEnd());
+
+            for(; it!=end; ++it) {
+                if((*it)->isValid())
+                    ui->addOutputObject(*it);
+                else
+                    delete *it;
+            }
         }
     }
 }

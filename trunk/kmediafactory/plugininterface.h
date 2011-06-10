@@ -71,6 +71,8 @@ class KDE_EXPORT OutputObject : public Object
     public:
         explicit OutputObject(QObject *parent);
         ~OutputObject();
+        
+        virtual bool isValid() const { return true; }
 };
 
 class KDE_EXPORT TemplateObject : public Object

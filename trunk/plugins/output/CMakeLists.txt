@@ -11,6 +11,7 @@ set(kmediafactory_output_SRCS
   dvddirectoryobject.cpp
   dvdauthorobject.cpp
   k3bobject.cpp
+  isoobject.cpp
 )
 
 if(LIBDVDREAD_FOUND)
