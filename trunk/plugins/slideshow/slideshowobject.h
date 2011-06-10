@@ -25,6 +25,7 @@
 
 #include <kmf_stddef.h>
 #include <kmediafactory/plugin.h>
+#include <qdvdinfo.h>
 
 class Slide
 {

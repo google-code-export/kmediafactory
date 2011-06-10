@@ -21,6 +21,7 @@
 #include "plugininterface.h"
 
 #include <QtCore/QMutexLocker>
+#include <qdvdinfo.h>
 
 const int KMF::MediaObject::constIconSize = 96;
 
@@ -81,6 +82,11 @@ KMF::PluginInterface::PluginInterface(QObject *parent) : QObject(parent)
 
 KMF::PluginInterface::~PluginInterface()
 {
+}
+
+uint KMF::PluginInterface::aspectRatio() const
+{
+     return QDVD::VideoTrack::Aspect_4_3;
 }
 
 static QMutex mutex;

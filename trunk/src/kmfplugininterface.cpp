@@ -35,6 +35,7 @@
 #include "mediapage.h"
 #include "outputpage.h"
 #include "templatepage.h"
+#include <qdvdinfo.h>
 
 KMFProgressDialog::KMFProgressDialog(QWidget *parent)
     : KMF::ProgressDialog(parent)
@@ -386,7 +387,7 @@ QString KMFPluginInterface::projectType()
     return QString();
 }
 
-QDVD::VideoTrack::AspectRatio KMFPluginInterface::aspectRatio() const
+uint KMFPluginInterface::aspectRatio() const
 {
     if (kmfApp->project()) {
         return kmfApp->project()->aspectRatio();

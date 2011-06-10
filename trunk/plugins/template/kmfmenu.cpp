@@ -31,6 +31,8 @@
 #include <kmftime.h>
 #include <kmediafactory/job.h>
 #include <kstore/KoStore.h>
+#include <qdvdinfo.h>
+
 #include "kmfwidgetfactory.h"
 
 KMFMenu::KMFMenu(const QString &tmplate, QObject *parent)

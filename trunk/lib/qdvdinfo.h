@@ -482,6 +482,10 @@ class KDE_EXPORT VideoTrack : public Track
         {
             return AspectRatioString[aspect];
         };
+        static QString aspectRatioString(uint aspect)
+        {
+            return AspectRatioString[aspect<4 ? aspect : 0];
+        };
         virtual uint rtti() const
         {
             return VIDEO;
