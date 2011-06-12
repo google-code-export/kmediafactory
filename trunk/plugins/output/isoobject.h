@@ -41,7 +41,7 @@ class IsoObject : public DvdDirectoryObject
         void saveDataItem(const QFileInfo *fi, QDomDocument *doc, QDomElement *parent);
 
         QString m_rootDir;
-        KAction *cleanAll;
+        KAction *cleanImage;
 };
 
 #endif

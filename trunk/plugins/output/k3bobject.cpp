@@ -34,6 +34,8 @@
 #include <KRun>
 #include <KStandardDirs>
 #include <KUrl>
+#include <KAction>
+#include <KActionCollection>
 
 #include <kmediafactory/job.h>
 #include <kstore/KoStore.h>
@@ -459,14 +461,18 @@ K3bObject::K3bObject(QObject *parent)
 {
     setObjectName("k3b");
     setTitle(i18n("K3b Project"));
+    cleanFile = new KAction(KIcon("edit-delete"), i18n("Clean"), this);
+    plugin()->actionCollection()->addAction("k3b_clean", cleanFile);
+    connect(cleanFile, SIGNAL(triggered()), SLOT(clean()));
 }
 
 K3bObject::~K3bObject()
 {
 }
 
-void K3bObject::actions(QList<QAction *> *) const
+void K3bObject::actions(QList<QAction *> *actionList) const
 {
+    actionList->append(cleanFile);
 }
 
 bool K3bObject::fromXML(const QDomElement &)
@@ -529,6 +535,12 @@ QPixmap K3bObject::pixmap() const
 {
     return KIconLoader::global()->loadIcon("k3b", KIconLoader::NoGroup,
             KIconLoader::SizeLarge);
+}
+
+void K3bObject::clean()
+{
+    DvdDirectoryObject::clean();
+    QFile::remove(interface()->projectDir() + "dvd.k3b");
 }
 
 #include "k3bobject.moc"
