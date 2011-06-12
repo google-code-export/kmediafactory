@@ -167,8 +167,7 @@ DvdAuthorObject::DvdAuthorObject(QObject *parent)
     setObjectName("dvdauthor");
     setTitle(i18n("DVDAuthor Project"));
     
-    cleanFile = new KAction(KIcon("edit-delete"),
-            i18n("Remove Generated File"), this);
+    cleanFile = new KAction(KIcon("edit-delete"), i18n("Clean"), this);
     plugin()->actionCollection()->addAction("dvda_remove", cleanFile);
     connect(cleanFile, SIGNAL(triggered()), SLOT(clean()));
 }

@@ -209,8 +209,7 @@ DvdDirectoryObject::DvdDirectoryObject(QObject *parent)
 {
     setObjectName("dvddir");
     setTitle(i18n("DVD Folder"));
-    dvdCleanDirectory = new KAction(KIcon("edit-delete"),
-            i18n("Clean Folder"), this);
+    dvdCleanDirectory = new KAction(KIcon("edit-delete"), i18n("Clean"), this);
     plugin()->actionCollection()->addAction("ddob_cleandir", dvdCleanDirectory);
     connect(dvdCleanDirectory, SIGNAL(triggered()), SLOT(clean()));
 }

@@ -53,9 +53,9 @@ IsoObject::IsoObject(QObject *parent)
     setObjectName("iso");
     setTitle(i18n("ISO Image"));
     
-    cleanAll = new KAction(KIcon("edit-delete"), i18n("Clean Temporary Items"), this);
-    plugin()->actionCollection()->addAction("iso_clean_all", cleanAll);
-    connect(cleanAll, SIGNAL(triggered()), SLOT(clean()));
+    cleanImage = new KAction(KIcon("edit-delete"), i18n("Clean"), this);
+    plugin()->actionCollection()->addAction("iso_clean", cleanImage);
+    connect(cleanImage, SIGNAL(triggered()), SLOT(clean()));
 }
 
 IsoObject::~IsoObject()
@@ -64,7 +64,7 @@ IsoObject::~IsoObject()
 
 void IsoObject::actions(QList<QAction *> *actionList) const
 {
-    actionList->append(cleanAll);
+    actionList->append(cleanImage);
 }
 
 bool IsoObject::fromXML(const QDomElement &)
@@ -127,10 +127,7 @@ QPixmap IsoObject::pixmap() const
 void IsoObject::clean()
 {
     DvdDirectoryObject::clean();
-    
-    // Remove all other files...
-    KMF::Tools::cleanFiles(interface()->projectDir() + "menus", QStringList() << "*.png" << "*.mpg" << "*.pnm" << "*.xml");
-    KMF::Tools::cleanFiles(interface()->projectDir() + "media", QStringList() << "*.mpg" << "*.pnm" << "*.xml");
+    QFile::remove(interface()->projectDir() + interface()->title().replace("/", ".")+".iso");
 }
 
 #include "isoobject.moc"

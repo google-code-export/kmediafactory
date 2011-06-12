@@ -46,6 +46,7 @@ class K3bObject : public DvdDirectoryObject
     public slots:
         // Help Kross plugin declaring these as slots
         virtual QPixmap pixmap() const;
+        void clean();
 
     private:
         bool isUpToDate(const QString &type);
@@ -59,6 +60,7 @@ class K3bObject : public DvdDirectoryObject
         void saveDataItem(const QFileInfo *fi, QDomDocument *doc, QDomElement *parent);
 
         QString m_rootDir;
+        KAction *cleanFile;
 };
 
 #endif
