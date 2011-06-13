@@ -225,7 +225,7 @@ void TemplatePage::imageContextMenuRequested(const QPoint &pos)
     for (QStringList::Iterator it = menus.begin();
          it != menus.end(); ++it, ++i)
     {
-        action = new QAction(*it, this);
+        action = new QAction(QLatin1String("CHAPTER_PAGE")==(*it) ? i18n("Chapter Page") : *it, this);
         action->setCheckable(true);
         action->setData(i);
         action->setChecked(i == m_menu);
