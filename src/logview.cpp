@@ -46,9 +46,9 @@ void LogView::closeEvent(QCloseEvent *e)
     KDialog::closeEvent(e);
 }
 
-void LogView::setData(const KUrl &log)
+void LogView::setData(const QString &html)
 {
-    htmlFrame->setUrl(log);
+    htmlFrame->setHtml(html);
 }
 
 #include "logview.moc"

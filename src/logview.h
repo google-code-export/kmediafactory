@@ -30,7 +30,7 @@ class LogView : public KDialog, public Ui::LogView
     public:
         LogView(QWidget *parent = 0);
         virtual ~LogView();
-        void setData(const KUrl &log);
+        void setData(const QString &html);
 
     protected:
         void closeEvent(QCloseEvent *);
