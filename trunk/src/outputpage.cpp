@@ -130,9 +130,8 @@ void OutputPage::contextMenuRequested(const QPoint &pos)
 void OutputPage::showLog()
 {
     LogView dlg(this);
-    KUrl url = kmfApp->project()->directory() + "kmf_log.html";
 
-    dlg.setData(url);
+    dlg.setData(makeLog());
     dlg.exec();
 }
 
@@ -202,7 +201,6 @@ void OutputPage::finished()
     kmfApp->interface()->clearJobs();
     kmfApp->project()->finished();
     m_type = "";
-    makeLog();
     showLogPushBtn->setEnabled(true);
     stopPushBtn->setEnabled(false);
     startButton->setEnabled(true);
@@ -345,7 +343,7 @@ void OutputPage::log(uint id, const QString &msg)
     }
 }
 
-void OutputPage::makeLog()
+QString OutputPage::makeLog()
 {
     QString s = QString(
             "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n" \
@@ -386,7 +384,7 @@ void OutputPage::makeLog()
     }
     s += "</div></body></html>";
 
-    KMF::Tools::saveString2File(kmfApp->project()->directory() + "kmf_log.html", s);
+    return s;
 }
 
 #include "outputpage.moc"
