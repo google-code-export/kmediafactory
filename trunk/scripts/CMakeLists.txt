@@ -1,6 +1,4 @@
 set(kmediafactory_SCRIPTS
-  kmf_frame
-  kmf_info
   kmf_make_mpeg
   kmf_oo2pdf
   kmf_dvdauthor_version
@@ -10,6 +8,10 @@ set(kmediafactory_SCRIPTS
 if(NOT KEXIV2_FOUND)
 set(kmediafactory_SCRIPTS ${kmediafactory_SCRIPTS} kmf_comment)
 endif(NOT KEXIV2_FOUND)
+
+if(NOT FFMPEG_SWSCALE_FOUND)
+set(kmediafactory_SCRIPTS ${kmediafactory_SCRIPTS} kmf_frame kmf_info)
+endif(NOT FFMPEG_SWSCALE_FOUND)
 
 install(FILES kmf_converter.oxt DESTINATION ${DATA_INSTALL_DIR}/kmediafactory/scripts)
 install(PROGRAMS ${kmediafactory_SCRIPTS} DESTINATION ${DATA_INSTALL_DIR}/kmediafactory/scripts)

@@ -26,7 +26,13 @@
 #include <KDebug>
 
 #include "kmftime.h"
+#include "config.h"
+
+#ifdef HAVE_FFMPEG_SWSCALE
+#include "videofile.h"
+#else
 #include "run.h"
+#endif
 
 QMap<QString, KMFMediaFile> KMFMediaFile::m_cache;
 
@@ -41,6 +47,17 @@ KMFMediaFile::KMFMediaFile(const QString &file)
 
 bool KMFMediaFile::probe()
 {
+#ifdef HAVE_FFMPEG_SWSCALE
+    VideoFile video;
+    if(video.open(m_file)) {
+        m_aspectRatio = QDVD::VideoTrack::Aspect_16_9;
+        m_frameRate = video.getFrameRate();
+        m_audioStreams = video.getNumAudioStreams();
+        m_dvdCompatible = video.getCodec()=="mpeg2video";
+        m_duration = KMF::Time(video.getDuration());
+        m_resolution = QSize(video.getWidth(), video.getHeight());
+    }
+#else
     Run run(QString("kmf_info \"%1\"").arg(m_file));
 
     if (run.exitStatus() == 0) {
@@ -74,16 +91,29 @@ bool KMFMediaFile::probe()
          */
         return true;
     }
-
+#endif
     return false;
 }
 
 bool KMFMediaFile::frame(QTime pos, QString output) const
 {
+#ifdef HAVE_FFMPEG_SWSCALE
+    VideoFile video;
+    if(video.open(m_file)) {
+        video.seek(KMF::Time(pos).toMSec());
+        QImage img(video.getFrame());
+        
+        if(!img.isNull()) {
+            return img.save(output, output.endsWith(".pnm") ? "PPM" : 0L);
+        }
+    }
+    return false;
+#else
     Run run(QString("kmf_frame \"%1\" %2 \"%3\"").arg(m_file)
             .arg(KMF::Time(pos).toString()).arg(output));
 
     return (run.exitStatus() == 0);
+#endif
 }
 
 const KMFMediaFile &KMFMediaFile::mediaFile(const QString &file)

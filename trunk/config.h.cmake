@@ -18,4 +18,7 @@
 /* Define if you have libkexiv2 */
 #cmakedefine HAVE_KEXIV2 1
 
+/* Define if you have libavformat/libavcoded/libswscale */
+#cmakedefine HAVE_FFMPEG_SWSCALE 1
+
 #endif

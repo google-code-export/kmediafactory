@@ -5,6 +5,10 @@ if(LIBDVDREAD_FOUND)
    include_directories(${LIBDVDREAD_INCLUDE_DIR})
 endif(LIBDVDREAD_FOUND)
 
+if(FFMPEG_SWSCALE_FOUND)
+   include_directories(${FFMPEG_INCLUDE_DIR})
+endif(FFMPEG_SWSCALE_FOUND)
+
 set(kmf_LIB_SRCS
   kmflanguagewidgets.cpp
   rect.cpp
@@ -19,6 +23,10 @@ set(kmf_LIB_SRCS
   kmftoolbar.cpp
   Q4puGenericSignalSpy.cpp
 )
+
+if(FFMPEG_SWSCALE_FOUND)
+   set(kmf_LIB_SRCS videofile.cpp ${kmf_LIB_SRCS} )
+endif(FFMPEG_SWSCALE_FOUND)
 
 set(kmf_HEADERS
   kmflanguagewidgets.h
@@ -44,6 +52,9 @@ target_link_libraries(kmf ${KDE4_KIO_LIBS} ${QT_QTXML_LIBRARY} ${KDE4_KUTILS_LIB
 if(LIBDVDREAD_FOUND)
    target_link_libraries(kmf ${LIBDVDREAD_LIBRARY})
 endif(LIBDVDREAD_FOUND)
+if(FFMPEG_SWSCALE_FOUND)
+   target_link_libraries(kmf ${FFMPEG_LIBRARIES})
+endif(FFMPEG_SWSCALE_FOUND)
 set_target_properties(kmf PROPERTIES VERSION ${GENERIC_KMF_LIB_VERSION} SOVERSION ${GENERIC_KMF_LIB_SOVERSION})
 install(TARGETS kmf DESTINATION ${LIB_INSTALL_DIR})
 
