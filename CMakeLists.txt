@@ -86,6 +86,10 @@ find_package(Kexiv2)
 macro_bool_to_01(KEXIV2_FOUND HAVE_KEXIV2)
 macro_log_feature(KEXIV2_FOUND "libkexiv2" "For slideshow picture comments" "http://www.kde.org/" FALSE "" "")
 
+find_package(Ffmpeg)
+macro_log_feature(FFMPEG_SWSCALE_FOUND "ffmpeg" "Parsing of mpeg files" "www.ffmpeg.org/" FALSE "" "")
+macro_bool_to_01(FFMPEG_SWSCALE_FOUND HAVE_FFMPEG_SWSCALE)
+
 add_definitions(
     ${QT_DEFINITIONS}
     ${QT_QTDBUS_DEFINITIONS}
