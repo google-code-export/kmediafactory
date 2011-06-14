@@ -877,7 +877,6 @@ QImage VideoObject::preview(int chap) const
 QImage VideoObject::generatePreview(int chap, QSize desiredSize) const
 {
     bool black = true;
-    int counter;
     QImage img;
     QString cacheFile;
 
@@ -901,23 +900,24 @@ QImage VideoObject::generatePreview(int chap, QSize desiredSize) const
                         (const char *)t.toString().toLocal8Bit()));
     }
 
-    if (img.load(cacheFile)) {
-        return img;
-    }
+    img.load(cacheFile);
 
-    counter = 0;
+    if(img.isNull()) {
+        int counter = 0;
 
-    while (black && counter < 60) {
-        img = getFrame(t, cacheFile);
-        black = isBlack(img);
+        while (black && counter < 60) {
+            img = getFrame(t, cacheFile);
+            black = isBlack(img);
 
-        if (black) {
-            kDebug() << "Black frame: " << t.toString();
+            if (black) {
+                kDebug() << "Black frame: " << t.toString();
+            }
+
+            t += VideoPluginSettings::blackFrameJump();
+            ++counter;
         }
-
-        t += VideoPluginSettings::blackFrameJump();
-        ++counter;
     }
+
     QSize templateRatio = desiredSize.width() > 0
                           ? QSize(1, 1)
                           : (interface()->aspectRatio() == QDVD::VideoTrack::Aspect_4_3)
