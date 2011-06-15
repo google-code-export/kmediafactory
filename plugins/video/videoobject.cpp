@@ -870,13 +870,19 @@ QImage VideoObject::preview(int chap) const
 
 QImage VideoObject::generatePreview(int chap, QSize desiredSize) const
 {
-    bool black = true;
+    bool black = true, timeIsSet=false;
     QImage img;
+    KMF::Time t;
 
     if (chap == MainPreview) {
         if (m_previewUrl.isValid()) {
-            img.load(m_previewUrl.path());
-            return img;
+            if(m_previewUrl.protocol()=="position") {
+                t=KMF::Time(m_previewUrl.path().replace("/", ""));
+                timeIsSet=true;
+            } else {
+                img.load(m_previewUrl.path());
+                return img;
+            }
         }
     }
 
@@ -885,11 +891,19 @@ QImage VideoObject::generatePreview(int chap, QSize desiredSize) const
     bool    loadedFromCache=false;
     
     if(!previewFile.isEmpty()) {
-        img.load(previewFile);
+        KUrl url(previewFile);
+        if(url.protocol()=="position") {
+            t=KMF::Time(url.path().replace("/", ""));
+            timeIsSet=true;
+        } else {
+            img.load(previewFile);
+        }
     } else if(VideoPluginSettings::usePreviewCache()) {
         QDir dir(interface()->projectDir("media"));
         QString s;
-        KMF::Time t = chapter(chap).start();
+        if(!timeIsSet) {
+            t = chapter(chap).start();
+        }
         cacheFile = dir.filePath(s.sprintf("%s_%s.png",
                         (const char *)m_id.toLocal8Bit(),
                         (const char *)t.toString().toLocal8Bit()));
@@ -898,7 +912,9 @@ QImage VideoObject::generatePreview(int chap, QSize desiredSize) const
 
     if(img.isNull()) {
         int counter = 0;
-        KMF::Time t = chapter(chap).start();
+        if(!timeIsSet) {
+            t = chapter(chap).start();
+        }
         while (black && counter < 60) {
             img = getFrame(t);
             black = isBlack(img);
@@ -916,20 +932,22 @@ QImage VideoObject::generatePreview(int chap, QSize desiredSize) const
         img.save(cacheFile);
     }
 
-    QSize templateRatio = desiredSize.width() > 0
-                          ? QSize(1, 1)
-                          : (interface()->aspectRatio() == QDVD::VideoTrack::Aspect_4_3)
-                          ? QSize(4, 3) : QSize(16, 9);
-    QSize videoRatio = (aspect() == QDVD::VideoTrack::Aspect_4_3) ?
-                       QSize(4, 3) : QSize(16, 9);
-    QSize imageRatio = KMF::Tools::guessRatio(img.size(), videoRatio);
-    QSize templateSize = desiredSize.width() > 0 ? desiredSize : KMF::Tools::maxResolution(
-            interface()->projectType());
-    QSize imageSize = img.size();
-    QSize res = KMF::Tools::resolution(imageSize, imageRatio,
-            templateSize, templateRatio);
+    if(!desiredSize.isNull()) {
+        QSize templateRatio = desiredSize.width() > 0
+                            ? QSize(1, 1)
+                            : (interface()->aspectRatio() == QDVD::VideoTrack::Aspect_4_3)
+                            ? QSize(4, 3) : QSize(16, 9);
+        QSize videoRatio = (aspect() == QDVD::VideoTrack::Aspect_4_3) ?
+                        QSize(4, 3) : QSize(16, 9);
+        QSize imageRatio = KMF::Tools::guessRatio(img.size(), videoRatio);
+        QSize templateSize = desiredSize.width() > 0 ? desiredSize : KMF::Tools::maxResolution(
+                interface()->projectType());
+        QSize imageSize = img.size();
+        QSize res = KMF::Tools::resolution(imageSize, imageRatio,
+                templateSize, templateRatio);
 
-    img = img.scaled(res, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+        img = img.scaled(res, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    }
 
     return img;
 }

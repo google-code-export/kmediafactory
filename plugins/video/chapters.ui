@@ -140,11 +140,35 @@
         </widget>
        </item>
        <item>
-        <widget class="KPushButton" name="customPreviewButton">
-         <property name="text">
-          <string>&amp;Use as Custom Preview</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Use as:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KPushButton" name="customPreviewButton">
+           <property name="text">
+            <string>&amp;Custom Preview</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KPushButton" name="chapterThumbnailButton">
+           <property name="text">
+            <string>Chapter Thumbnail</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <layout class="QVBoxLayout">

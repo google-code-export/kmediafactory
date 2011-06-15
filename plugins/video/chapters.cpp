@@ -279,6 +279,8 @@ Chapters::Chapters(QWidget *parent)
             this, SLOT(chapterDoubleClicked(const QModelIndex &)));
     connect(customPreviewButton, SIGNAL(clicked()),
             this, SLOT(saveCustomPreview()));
+    connect(chapterThumbnailButton, SIGNAL(clicked()),
+            this, SLOT(chapterThumbnailButtonClicked()));
     startButton->setIcon(KIcon("media-skip-backward"));
     rewButton->setIcon(KIcon("media-seek-backward"));
     prevButton->setIcon(KIcon("arrow-left"));
@@ -611,14 +613,7 @@ void Chapters::import()
 
 void Chapters::saveCustomPreview()
 {
-    int serial = m_obj->interface()->serial();
-    QDir dir(m_obj->interface()->projectDir("media"));
-    QString preview;
-
-    preview.sprintf("%3.3d_preview.png", serial);
-    preview = dir.filePath(preview);
-    m_obj->getFrame(m_pos).save(preview);
-    m_vidOpt->setPreviewUrl(preview);
+    m_vidOpt->setPreviewUrl("position:///"+KMF::Time(m_pos).toString());
 }
 
 void Chapters::checkLengths()
@@ -683,6 +678,13 @@ void Chapters::setThumbnail()
 {
     if(popupIndex.isValid()) {
         setThumbnail(popupIndex.row());
+    }
+}
+
+void Chapters::chapterThumbnailButtonClicked()
+{
+    if(chaptersView->currentIndex().isValid()) {
+        m_cells[chaptersView->currentIndex().row()].setPreviewFile("position:///"+KMF::Time(m_pos).toString());
     }
 }
 
