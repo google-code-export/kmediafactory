@@ -1,0 +1,23 @@
+CHANGED IN RELEASE 0.8.0
+=========================
+
+Features:
+- ISO Image output
+- Support for dvdauthor 0.7.0
+
+Bug fixes:
+- Several bug fixes
+
+
+# Dependencies (ubuntu package naming):                                       #
+# =========================================================================== #
+# Build:                  Runtime:                 Optional:                  #
+# --------------------------------------------------------------------------- #
+# g++                     kdelibs5                 k3b                        #
+# make                    ffmpeg                   libdvdread3(-dev)          #
+# cmake                   dvdauthor                dvd-slideshow              #
+# zip                     mjpegtools               openoffice.org             #
+# gettext                                          kaffeine                   #
+# kdelibs5-dev                                     xine-ui                    #
+# libkexiv2-7-dev                                  melt                       #
+# --------------------------------------------------------------------------- #

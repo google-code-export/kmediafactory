@@ -1,0 +1,60 @@
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2008-05-23 12:23+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: ENCODING\n"
+
+#: kmfmenu.cpp:128 kmfmenupage.cpp:57
+#, kde-format
+msgid "Menu: %1"
+msgstr ""
+
+#: kmfmenupage.cpp:82
+msgid "Could not paint menu."
+msgstr ""
+
+#: kmfmenupage.cpp:88
+msgid "Could not write spumux xml file."
+msgstr ""
+
+#: kmfmenupage.cpp:94
+msgid "Could not save images."
+msgstr ""
+
+#: kmfmenupage.cpp:100
+msgid "Could not make mpeg file."
+msgstr ""
+
+#: newstuffobject.cpp:34
+msgid "Get more..."
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file templateconfig.ui line 13
+#: rc.cpp:3
+msgid "Configure Template Plugin"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file templateconfig.ui line 31
+#: rc.cpp:6
+msgid "Default &Menu Language:"
+msgstr ""
+
+#: templateobject.cpp:83
+msgid "&Properties"
+msgstr ""
+
+#: templateplugin.cpp:68
+msgid "Template plugin"
+msgstr ""

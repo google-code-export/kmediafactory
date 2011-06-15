@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>KMFOptions</class>
+ <widget class="QWidget" name="KMFOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>358</width>
+    <height>101</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>KMediaFactory Settings</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QLabel" name="typeLabel">
+     <property name="text">
+      <string>Default project type:</string>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+     <property name="buddy">
+      <cstring>kcfg_DefaultProjectType</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="KComboBox" name="kcfg_DefaultProjectType">
+     <item>
+      <property name="text">
+       <string>DVD-NTSC</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>DVD-PAL</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="aspectLabel">
+     <property name="text">
+      <string>Default project aspect ratio:</string>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+     <property name="buddy">
+      <cstring>kcfg_DefaultAspectRatio</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="KComboBox" name="kcfg_DefaultAspectRatio">
+     <item>
+      <property name="text">
+       <string>4:3</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>16:9</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="directoryLabel">
+     <property name="text">
+      <string>Default destination folder:</string>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+     <property name="buddy">
+      <cstring>kcfg_DefaultProjectDirectory</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="KUrlRequester" name="kcfg_DefaultProjectDirectory"/>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+ <pixmapfunction>BTN_ICON</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>KUrlRequester</class>
+   <extends>QFrame</extends>
+   <header>kurlrequester.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>kcfg_DefaultProjectType</tabstop>
+  <tabstop>kcfg_DefaultAspectRatio</tabstop>
+  <tabstop>kcfg_DefaultProjectDirectory</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
