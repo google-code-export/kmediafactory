@@ -161,6 +161,10 @@ class KDE_EXPORT Cell : public Base
         {
             m_hidden = h;
         }
+        void setPreviewFile(const QString &file)
+        {
+            m_preview = file;
+        }
 
     private:
         int m_cell;
