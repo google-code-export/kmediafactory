@@ -45,12 +45,28 @@ KMFMediaFile::KMFMediaFile(const QString &file)
     }
 }
 
+#ifdef HAVE_FFMPEG_SWSCALE
+bool checkRatio(double orig, double ratio)
+{
+    // Checlk returned ratio nis with +/- 1% of desired ratio...
+    return orig>(ratio*0.99) && orig<(ratio*1.01);
+}
+
+#endif
+
 bool KMFMediaFile::probe()
 {
 #ifdef HAVE_FFMPEG_SWSCALE
     VideoFile video;
     if(video.open(m_file)) {
-        m_aspectRatio = QDVD::VideoTrack::Aspect_16_9;
+        double ratio=video.getAspect();
+        if (checkRatio(ratio, 16.0/9.0)) {
+            m_aspectRatio = QDVD::VideoTrack::Aspect_16_9;
+        } else if (checkRatio(ratio, 4.0/3.0)) {
+            m_aspectRatio = QDVD::VideoTrack::Aspect_4_3;
+        } else {
+            m_aspectRatio = QDVD::VideoTrack::Aspect_Unknown;
+        }
         m_frameRate = video.getFrameRate();
         m_audioStreams = video.getNumAudioStreams();
         m_dvdCompatible = video.getCodec()=="mpeg2video";
