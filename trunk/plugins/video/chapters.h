@@ -69,6 +69,11 @@ class Chapters : public QWidget, public Ui::Chapters
         void slotPlay();
         void slotTick(qint64 time);
         void slotTotalTime(qint64 totalTime);
+        void setThumbnail();
+        void chapterDoubleClicked(const QModelIndex &index);
+
+    private:
+        void setThumbnail(int index);
 
     protected:
         virtual void showEvent(QShowEvent *event);
@@ -89,6 +94,7 @@ class Chapters : public QWidget, public Ui::Chapters
         void moveMSecs(int direction);
         void updateVideo();
         void checkLengths();
+        QModelIndex popupIndex;
 };
 
 #endif

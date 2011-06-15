@@ -264,7 +264,7 @@ void TemplatePage::imageContextMenuRequested(const QPoint &pos)
             KMediaFactorySettings::self()->writeConfig();
         } else if (action == saveAction)    {
             KUrl url = KFileDialog::getSaveUrl(KUrl("kfiledialog:///<KMFPreview>"),
-                    i18n("*.png|PNG Graphics file"),
+                    "image/png",
                     kapp->activeWindow());
 
             if (!url.isEmpty() && url.isValid()) {

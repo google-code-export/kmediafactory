@@ -53,6 +53,7 @@ enum Columns {
     COL_START,
     COL_LENGTH,
     COL_HIDDEN,
+    COL_THUMBNAIL,
     COL_COUNT
 };
 
@@ -140,8 +141,29 @@ class CellListModel : public QAbstractListModel
                                 return KMF::Time(m_data->at(index.row()).length()).toString();
                             }
 
+                        case COL_THUMBNAIL:
+                            return m_data->at(index.row()).isHidden()
+                                    ? i18n("Not Applicable")
+                                    : m_data->at(index.row()).previewFile().isEmpty() 
+                                        ? i18n("Generated") : m_data->at(index.row()).previewFile();
                         default:
                             break;
+                    }
+                    break;
+
+                case Qt::ToolTipRole:
+                    if (COL_THUMBNAIL == index.column() && 
+                        !m_data->at(index.row()).previewFile().isEmpty() &&  !m_data->at(index.row()).isHidden()) {
+                            return m_data->at(index.row()).previewFile();
+                    }
+                    break;
+
+                case Qt::FontRole:
+                    if (COL_THUMBNAIL == index.column() && 
+                        (m_data->at(index.row()).previewFile().isEmpty() ||  m_data->at(index.row()).isHidden())) {
+                        QFont font;
+                        font.setItalic(true);
+                        return font;
                     }
                     break;
 
@@ -176,6 +198,9 @@ class CellListModel : public QAbstractListModel
 
                     case COL_LENGTH:
                         return i18n("Length");
+                        
+                    case COL_THUMBNAIL:
+                        return i18n("Thumbnail");
                 }
             } else if (role == Qt::DecorationRole) {
                 switch (column) {
@@ -238,6 +263,8 @@ Chapters::Chapters(QWidget *parent)
     connect(playButton, SIGNAL(clicked()), this, SLOT(slotPlay()));
     connect(chaptersView, SIGNAL(customContextMenuRequested(const QPoint &)),
             this, SLOT(slotContextMenu(const QPoint &)));
+    connect(chaptersView, SIGNAL(doubleClicked(const QModelIndex &)),
+            this, SLOT(chapterDoubleClicked(const QModelIndex &)));
     connect(customPreviewButton, SIGNAL(clicked()),
             this, SLOT(saveCustomPreview()));
     startButton->setIcon(KIcon("media-skip-backward"));
@@ -260,11 +287,12 @@ Chapters::~Chapters()
 void Chapters::showEvent(QShowEvent *event)
 {
     Q_UNUSED(event)
-    chaptersView->header()->setResizeMode(0, QHeaderView::Stretch);
-    chaptersView->header()->setResizeMode(1, QHeaderView::ResizeToContents);
-    chaptersView->header()->setResizeMode(2, QHeaderView::ResizeToContents);
-    chaptersView->header()->setResizeMode(3, QHeaderView::ResizeToContents);
-    chaptersView->header()->setStretchLastSection(false);
+    chaptersView->header()->setResizeMode(COL_NAME, QHeaderView::ResizeToContents);
+    chaptersView->header()->setResizeMode(COL_START, QHeaderView::ResizeToContents);
+    chaptersView->header()->setResizeMode(COL_LENGTH, QHeaderView::ResizeToContents);
+    chaptersView->header()->setResizeMode(COL_HIDDEN, QHeaderView::ResizeToContents);
+    chaptersView->header()->setResizeMode(COL_THUMBNAIL, QHeaderView::ResizeToContents);
+    chaptersView->header()->setStretchLastSection(true);
     KConfigGroup cg = KGlobal::config()->group("ChaptersDlg");
     splitter->setSizes(cg.readEntry("splitter", QList<int>() << 330 << 330));
 }
@@ -462,8 +490,14 @@ void Chapters::slotContextMenu(const QPoint &p)
     popup->addAction(i18n("Delete All"), this, SLOT(deleteAll()));
     popup->addAction(i18n("Rename All"), this, SLOT(renameAll()));
     popup->addAction(i18n("Auto Chapters"), this, SLOT(autoChapters()));
-    popup->addAction(i18nc("Import chapter file", "Import"),
-            this, SLOT(import()));
+    popup->addAction(i18nc("Import chapter file", "Import..."), this, SLOT(import()));
+    
+    popupIndex=chaptersView->indexAt(p);
+    if(popupIndex.isValid()) {
+        popup->addSeparator();
+        popup->addAction(i18n("Set Thumbnail..."), this, SLOT(setThumbnail()));
+    }
+    
     popup->exec(chaptersView->viewport()->mapToGlobal(p));
 }
 
@@ -534,7 +568,7 @@ void Chapters::autoChapters()
 void Chapters::import()
 {
     QString chapterFile = KFileDialog::getOpenFileName(
-            KUrl("kfiledialog:///<Chapters"), "*.*|All files");
+            KUrl("kfiledialog:///<Chapters>"), QString(), this);
 
     if (!chapterFile.isEmpty()) {
         QMap<QString, QString> chapters = KMF::Tools::readIniFile(chapterFile);
@@ -626,6 +660,38 @@ void Chapters::slotPlay()
     } else {
         video->play();
         playButton->setIcon(KIcon("media-playback-pause"));
+    }
+}
+
+void Chapters::setThumbnail()
+{
+    if(popupIndex.isValid()) {
+        setThumbnail(popupIndex.row());
+    }
+}
+
+void Chapters::chapterDoubleClicked(const QModelIndex &index)
+{
+    if(index.isValid() && COL_THUMBNAIL==index.column()) {
+        setThumbnail(index.row());
+    }
+}
+
+void Chapters::setThumbnail(int index)
+{
+    QString existing = m_cells[index].previewFile(),
+            fileName = KFileDialog::getOpenFileName(KUrl(existing.isEmpty() ? "kfiledialog:///<Thumbnails>" : existing), 
+                                                    "image/jpeg image/png", this);
+
+    if (!fileName.isEmpty()) {
+        QImage img(fileName);
+        
+        if(img.isNull()) {
+            KMessageBox::error(this, i18n("%1 is not a vlid image file", fileName));
+        }
+        else {
+            m_cells[index].setPreviewFile(fileName);
+        }
     }
 }
 
