@@ -400,7 +400,7 @@ void SlideshowProperties::addAudio()
 {
     QStringList files = KFileDialog::getOpenFileNames(
             KUrl("kfiledialog:///<SlideshowAudioFiles>"),
-            i18n("*.mp3 *.wav *.ogg *.mp2|Audio Files"),
+            "audio/mpeg audio/mp2 audio/x-wav audio/ogg",
             this);
 
     if (files.count() > 0) {

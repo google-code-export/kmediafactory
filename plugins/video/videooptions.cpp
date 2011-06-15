@@ -78,6 +78,7 @@ VideoOptions::VideoOptions(QWidget *parent)
             this, SLOT(subtitleRemoveClicked()));
     connect(audioPropertiesButton, SIGNAL(clicked()),
             this, SLOT(audioPropertiesClicked()));
+    previewUrl->setFilter("image/jpeg image/png");
 }
 
 VideoOptions::~VideoOptions()
