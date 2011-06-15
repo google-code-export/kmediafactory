@@ -56,7 +56,7 @@ class KDE_EXPORT KMFMediaFile
         {
             return m_dvdCompatible;
         };
-        bool frame(QTime pos, QString output) const;
+        QImage frame(QTime pos) const;
         QString fileName() const
         {
             return m_file;

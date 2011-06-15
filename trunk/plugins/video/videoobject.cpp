@@ -845,9 +845,8 @@ QString VideoObject::videoFileName(KMF::Time *time) const
     return QString();
 }
 
-QImage VideoObject::getFrame(QTime time, QString frameFile) const
+QImage VideoObject::getFrame(QTime time) const
 {
-    bool ok = false;
     KMF::Time t = time;
 
     foreach (const QString &file, m_files) {
@@ -855,19 +854,13 @@ QImage VideoObject::getFrame(QTime time, QString frameFile) const
         const KMFMediaFile &media = KMFMediaFile::mediaFile(file);
 
         if (t <= KMF::Time(media.duration())) {
-            media.frame(t, frameFile);
-            ok = true;
-            break;
+            return media.frame(t);
         } else   {
             t -= media.duration();
         }
     }
 
-    if (ok) {
-        return QImage(frameFile);
-    } else {
-        return QImage();
-    }
+    return QImage();
 }
 
 QImage VideoObject::preview(int chap) const
@@ -879,7 +872,6 @@ QImage VideoObject::generatePreview(int chap, QSize desiredSize) const
 {
     bool black = true;
     QImage img;
-    QString cacheFile;
 
     if (chap == MainPreview) {
         if (m_previewUrl.isValid()) {
@@ -888,26 +880,27 @@ QImage VideoObject::generatePreview(int chap, QSize desiredSize) const
         }
     }
 
-    cacheFile=chapter(chap).previewFile();
-
-    KMF::Time t;
-
-    if(cacheFile.isEmpty()) {
+    QString cacheFile;
+    QString previewFile=chapter(chap).previewFile();
+    bool    loadedFromCache=false;
+    
+    if(!previewFile.isEmpty()) {
+        img.load(previewFile);
+    } else if(VideoPluginSettings::usePreviewCache()) {
         QDir dir(interface()->projectDir("media"));
         QString s;
-        t = chapter(chap).start();
-        cacheFile = dir.filePath(s.sprintf("%s_%s.pnm",
+        KMF::Time t = chapter(chap).start();
+        cacheFile = dir.filePath(s.sprintf("%s_%s.png",
                         (const char *)m_id.toLocal8Bit(),
                         (const char *)t.toString().toLocal8Bit()));
+        loadedFromCache=img.load(cacheFile);
     }
-
-    img.load(cacheFile);
 
     if(img.isNull()) {
         int counter = 0;
-
+        KMF::Time t = chapter(chap).start();
         while (black && counter < 60) {
-            img = getFrame(t, cacheFile);
+            img = getFrame(t);
             black = isBlack(img);
 
             if (black) {
@@ -917,6 +910,10 @@ QImage VideoObject::generatePreview(int chap, QSize desiredSize) const
             t += VideoPluginSettings::blackFrameJump();
             ++counter;
         }
+    }
+
+    if (!loadedFromCache && VideoPluginSettings::usePreviewCache()) {
+        img.save(cacheFile);
     }
 
     QSize templateRatio = desiredSize.width() > 0
@@ -933,18 +930,6 @@ QImage VideoObject::generatePreview(int chap, QSize desiredSize) const
             templateSize, templateRatio);
 
     img = img.scaled(res, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-
-    /*
-     * kDebug() << "Template size: " << templateSize;
-     * kDebug() << "Template ratio:" << templateRatio;
-     * kDebug() << "Video ratio:" << videoRatio;
-     * kDebug() << "Image size:" << imageSize;
-     * kDebug() << "Image ratio:" << imageRatio;
-     * kDebug() << "Final resolution:" << res;
-     */
-    if (!VideoPluginSettings::usePreviewCache()) {
-        QFile::remove(cacheFile);
-    }
 
     return img;
 }
