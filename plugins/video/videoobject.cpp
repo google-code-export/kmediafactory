@@ -881,7 +881,7 @@ QImage VideoObject::generatePreview(int chap, QSize desiredSize) const
     }
 
     QString cacheFile;
-    QString previewFile=chapter(chap).previewFile();
+    QString previewFile=MainPreview==chap ? QString() : chapter(chap).previewFile();
     bool    loadedFromCache=false;
     
     if(!previewFile.isEmpty()) {
