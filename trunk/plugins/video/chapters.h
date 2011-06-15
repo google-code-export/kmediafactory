@@ -70,6 +70,7 @@ class Chapters : public QWidget, public Ui::Chapters
         void slotTick(qint64 time);
         void slotTotalTime(qint64 totalTime);
         void setThumbnail();
+        void chapterThumbnailButtonClicked();
         void unsetThumbnail();
         void chapterDoubleClicked(const QModelIndex &index);
 
