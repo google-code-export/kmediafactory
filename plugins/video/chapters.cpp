@@ -599,9 +599,9 @@ void Chapters::saveCustomPreview()
     QDir dir(m_obj->interface()->projectDir("media"));
     QString preview;
 
-    preview.sprintf("%3.3d_preview.pnm", serial);
+    preview.sprintf("%3.3d_preview.png", serial);
     preview = dir.filePath(preview);
-    m_obj->getFrame(m_pos).save(preview, "PPM");
+    m_obj->getFrame(m_pos).save(preview);
     m_vidOpt->setPreviewUrl(preview);
 }
 
