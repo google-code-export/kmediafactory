@@ -164,13 +164,24 @@ double VideoFile::getDuration()
 
 double VideoFile::getAspect()
 {
-    // This is pixel aspect ratio!!! Really want 4/3 16/9, etc!!!
-    return avVideoStream || 0==avVideoCodecContext->sample_aspect_ratio.den ? (double)avVideoCodecContext->sample_aspect_ratio.num/(double)avVideoCodecContext->sample_aspect_ratio.den : 0.0;
+    if(avVideoStream && avVideoCodecContext)
+    {
+        AVRational displayAspectRatio;
+
+        av_reduce(&displayAspectRatio.num, &displayAspectRatio.den,
+                          avVideoCodecContext->width*avVideoCodecContext->sample_aspect_ratio.num,
+                          avVideoCodecContext->height*avVideoCodecContext->sample_aspect_ratio.den,
+                          1024*1024);
+        if(0!=displayAspectRatio.den)
+            return (double)displayAspectRatio.num/(double)displayAspectRatio.den;
+    }
+    
+    return 0.0;
 }
 
 double VideoFile::getFrameRate()
 {
-    return avVideoStream ||0==avVideoStream->r_frame_rate.den ? (double)avVideoStream->r_frame_rate.num/(double)avVideoStream->r_frame_rate.den : 0.0;
+    return avVideoStream && 0!=avVideoStream->r_frame_rate.den ? (double)avVideoStream->r_frame_rate.num/(double)avVideoStream->r_frame_rate.den : 0.0;
 }
 
 int VideoFile::getNumAudioStreams()
