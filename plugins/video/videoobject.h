@@ -119,7 +119,7 @@ class VideoObject : public KMF::MediaObject
             m_previewUrl = previewUrl;
             m_thumbnail = QPixmap();
         };
-        QImage getFrame(QTime time, QString file) const;
+        QImage getFrame(QTime time) const;
         const QString&id() const
         {
             return m_id;

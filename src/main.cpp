@@ -30,7 +30,6 @@
 
 #include "kmediafactory.h"
 #include "kmfapplication.h"
-#include "config.h"
 
 int main(int argc, char **argv)
 {
@@ -57,9 +56,6 @@ int main(int argc, char **argv)
                                missingApps;
 
     requiredApps[i18n("DVD Author")] << "dvdauthor" << "spumux";
-#ifndef HAVE_FFMPEG_SWSCALE
-    requiredApps[i18n("FFmpeg")] << "ffmpeg";
-#endif
     requiredApps[i18n("MJPEG Tools")] << "mplex" << "ppmtoy4m" << "mpeg2enc";
 
     QMap<QString, QStringList>::iterator it(requiredApps.begin()),

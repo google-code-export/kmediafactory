@@ -567,7 +567,7 @@ void Chapters::saveCustomPreview()
 
     preview.sprintf("%3.3d_preview.pnm", serial);
     preview = dir.filePath(preview);
-    m_obj->getFrame(m_pos, preview);
+    m_obj->getFrame(m_pos).save(preview, "PPM");
     m_vidOpt->setPreviewUrl(preview);
 }
 
