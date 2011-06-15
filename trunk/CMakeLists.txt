@@ -50,9 +50,6 @@ macro_log_feature(ZIP_EXECUTABLE "zip" "For packing templates" "http://www.info-
 find_program(DVDAUTHOR_EXECUTABLE dvdauthor)
 macro_log_feature(DVDAUTHOR_EXECUTABLE "dvdauthor" "For making DVDs" "http://dvdauthor.sourceforge.net/" FALSE "0.6.11" "NOTE: Is required runtime")
 
-find_program(FFMPEG_EXECUTABLE ffmpeg)
-macro_log_feature(FFMPEG_EXECUTABLE "ffmpeg" "For extracting frames from videos" "http://ffmpeg.mplayerhq.hu/" FALSE "" "NOTE: Is required runtime")
-
 find_program(MPEG2ENC_EXECUTABLE mpeg2enc)
 macro_log_feature(MPEG2ENC_EXECUTABLE "mpeg2enc" "For making mpeg files" "http://mjpeg.sourceforge.net/" FALSE "" "NOTE: Is required runtime")
 
@@ -87,8 +84,14 @@ macro_bool_to_01(KEXIV2_FOUND HAVE_KEXIV2)
 macro_log_feature(KEXIV2_FOUND "libkexiv2" "For slideshow picture comments" "http://www.kde.org/" FALSE "" "")
 
 find_package(Ffmpeg)
-macro_log_feature(FFMPEG_SWSCALE_FOUND "ffmpeg" "Parsing of mpeg files" "www.ffmpeg.org/" FALSE "" "")
+macro_log_feature(FFMPEG_SWSCALE_FOUND "ffmpeg libraries" "Parsing of mpeg files" "www.ffmpeg.org/" FALSE "" "")
 macro_bool_to_01(FFMPEG_SWSCALE_FOUND HAVE_FFMPEG_SWSCALE)
+
+if (NOT ${FFMPEG_SWSCALE_FOUND})
+    # ffmpeg commandline app is only rquired if we are not linking against ffmpeg libraries
+    find_program(FFMPEG_EXECUTABLE ffmpeg)
+    macro_log_feature(FFMPEG_EXECUTABLE "ffmpeg" "For extracting frames from videos" "http://ffmpeg.mplayerhq.hu/" FALSE "" "NOTE: Is required runtime")
+endif (NOT ${FFMPEG_SWSCALE_FOUND})
 
 add_definitions(
     ${QT_DEFINITIONS}
