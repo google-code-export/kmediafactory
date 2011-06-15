@@ -2,10 +2,8 @@ CHANGED IN RELEASE 0.8.0
 =========================
 
 Features:
-- GUI overhaul
-- Optinally using melt in slideshow
-- Hidden chapters
-- remove mplayer dependancy (only ffmpeg needed now)
+- ISO Image output
+- Support for dvdauthor 0.7.0
 
 Bug fixes:
 - Several bug fixes

@@ -1,7 +1,7 @@
 Begin4
 Title:          kmediafactory
-Version:        0.8.0
-Entered-date:   2010-04-08
+Version:        0.8.1_rc1
+Entered-date:   2011-06-15
 Description:    Easy to use template based dvd authoring tool
 Keywords:       KDE X11 desktop Qt dvd
 Author:         Petri Damsten <damu@iki.fi>
