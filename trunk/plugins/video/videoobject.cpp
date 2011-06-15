@@ -662,7 +662,8 @@ QVariant VideoObject::writeDvdAuthorXml(QVariantList args) const
             }
             c.setAttribute("chapter", cell.isChapter());
             vob.appendChild(c);
-            kDebug() << "Cell: " << start << ", " << end;
+            kDebug() << "Cell: " << start << ", " << end << cellIndex << m_cells.count() 
+                     << KMF::Time(cell.start()) << pos + duration(file);
         }
         pgc.appendChild(vob);
         pos += fileDuration;

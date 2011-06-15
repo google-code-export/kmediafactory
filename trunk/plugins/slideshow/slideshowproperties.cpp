@@ -273,7 +273,11 @@ void SlideshowProperties::addSlides(const SlideList &slides)
 
         list.append(item);
     }
+    #if KDE_IS_VERSION(4, 5, 90)
+    KIO::PreviewJob *job =  KIO::filePreview(list, QSize(80, 60));
+    #else
     KIO::PreviewJob *job =  KIO::filePreview(list, 80, 60);
+    #endif
     connect(job, SIGNAL(gotPreview(const KFileItem &, const QPixmap &)),
             this, SLOT(gotPreview(const KFileItem &, const QPixmap &)));
     updateInfo();
