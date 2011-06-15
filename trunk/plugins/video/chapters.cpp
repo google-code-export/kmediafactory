@@ -57,6 +57,18 @@ enum Columns {
     COL_COUNT
 };
 
+static QString getFile(const QString &f)
+{
+    QString d(f);
+
+    int slashPos=d.lastIndexOf('/');
+
+    if(slashPos!=-1)
+        d.remove(0, slashPos+1);
+
+    return d;
+}
+
 class CellListModel : public QAbstractListModel
 {
     public:
@@ -145,7 +157,7 @@ class CellListModel : public QAbstractListModel
                             return m_data->at(index.row()).isHidden()
                                     ? i18n("Not Applicable")
                                     : m_data->at(index.row()).previewFile().isEmpty() 
-                                        ? i18n("Generated") : m_data->at(index.row()).previewFile();
+                                        ? i18n("Generated") : getFile(m_data->at(index.row()).previewFile());
                         default:
                             break;
                     }
@@ -492,12 +504,16 @@ void Chapters::slotContextMenu(const QPoint &p)
     popup->addAction(i18n("Auto Chapters"), this, SLOT(autoChapters()));
     popup->addAction(i18nc("Import chapter file", "Import..."), this, SLOT(import()));
     
+    popup->addSeparator();
     popupIndex=chaptersView->indexAt(p);
-    if(popupIndex.isValid()) {
-        popup->addSeparator();
-        popup->addAction(i18n("Set Thumbnail..."), this, SLOT(setThumbnail()));
+    QAction *act=popup->addAction(i18n("Set Custom Thumbnail..."), this, SLOT(setThumbnail()));
+    if(!popupIndex.isValid()) {
+        act->setEnabled(false);
     }
-    
+    act=popup->addAction(i18n("Unset Custom Thumbnail"), this, SLOT(unsetThumbnail()));
+    if(!popupIndex.isValid() || m_cells[popupIndex.row()].previewFile().isEmpty()) {
+        act->setEnabled(false);
+    }
     popup->exec(chaptersView->viewport()->mapToGlobal(p));
 }
 
@@ -667,6 +683,13 @@ void Chapters::setThumbnail()
 {
     if(popupIndex.isValid()) {
         setThumbnail(popupIndex.row());
+    }
+}
+
+void Chapters::unsetThumbnail()
+{
+    if(popupIndex.isValid()) {
+        m_cells[popupIndex.row()].setPreviewFile(QString());
     }
 }
 
