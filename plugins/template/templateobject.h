@@ -56,6 +56,7 @@ class TemplateObject : public KMF::TemplateObject
         virtual bool fromXML(const QDomElement &element);
         virtual bool prepare(const QString &type);
         virtual QStringList menus();
+        virtual int chaptersPerPage(const QString &page);
         virtual void actions(QList<QAction *> *) const;
         KConfigXML&customProperties()
         {
@@ -69,7 +70,7 @@ class TemplateObject : public KMF::TemplateObject
         virtual void slotProperties();
         // Help Kross plugin declaring these as slots
         virtual QPixmap pixmap() const;
-        virtual QImage preview(const QString & = "");
+        virtual QImage preview(const QString &page=QString(), int title=0, int chapter=0);
         // KMF::Object::call slots
         QVariant directPlay(QVariantList args);
         QVariant continueToNextTitle(QVariantList args);

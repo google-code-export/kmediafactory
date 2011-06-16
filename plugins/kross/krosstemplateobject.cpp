@@ -85,9 +85,9 @@ void KrossTemplateObject::clean()
     m_object->callMethod("clean");
 }
 
-QImage KrossTemplateObject::preview(const QString &menu)
+QImage KrossTemplateObject::preview(const QString &page, int title, int chapter)
 {
-    return KMF::Tools::variantList2Image(m_object->callMethod("preview", QVariantList() << menu));
+    return KMF::Tools::variantList2Image(m_object->callMethod("preview", QVariantList() << page << title << chapter));
 }
 
 QStringList KrossTemplateObject::menus()

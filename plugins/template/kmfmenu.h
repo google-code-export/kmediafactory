@@ -22,6 +22,7 @@
 #define KMFMENU_H
 
 #include <QtCore/QObject>
+#include <QtCore/QMap>
 #include <QtGui/QImage>
 
 #include <kmediafactory/plugininterface.h>
@@ -39,7 +40,7 @@ class KMFMenu : public KMFTemplateBase
         ~KMFMenu();
 
         bool makeMenu(const QString &type);
-        QImage makeMenuPreview(QString page = "");
+        QImage makeMenuPreview(const QString &page=QString(), int title=0, int chapter=0);
         QImage icon() const
         {
             return templateImage("icon.png");
@@ -74,6 +75,7 @@ class KMFMenu : public KMFTemplateBase
 
         int mediaObjCount();
         int mediaObjChapterCount(int title);
+        int chaptersPerPage(const QString &page);
 
     protected:
         QImage templateImage(const QString &image) const;
@@ -94,6 +96,7 @@ class KMFMenu : public KMFTemplateBase
         QString m_id;
         int m_points;
         int m_pagePoints;
+        QMap<QString, int> m_chaptersPerPage;
 };
 
 #endif

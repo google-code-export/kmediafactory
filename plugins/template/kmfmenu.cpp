@@ -48,7 +48,9 @@ KMFMenu::KMFMenu(const QString &tmplate, QObject *parent)
     QDomNodeList list = m_templateXML.elementsByTagName("page");
 
     for (int i = 0; i < list.count(); ++i) {
-        m_menus.append(list.item(i).toElement().attribute("name"));
+        QString name=list.item(i).toElement().attribute("name");
+        m_menus.append(name);
+        m_chaptersPerPage[name]=list.item(i).toElement().attribute("chapters").toInt();
     }
 }
 
@@ -215,7 +217,7 @@ QImage KMFMenu::templateImage(const QString &image) const
     return img;
 }
 
-QImage KMFMenu::makeMenuPreview(QString page)
+QImage KMFMenu::makeMenuPreview(const QString &page, int title, int chapter)
 {
     clear();
 
@@ -225,7 +227,7 @@ QImage KMFMenu::makeMenuPreview(QString page)
         QDomElement element = m_templateXML.documentElement();
         QDomElement e = getPage(element.firstChild(), page);
         KMFMenuPage *p =
-            static_cast<KMFMenuPage *>(KMFWidgetFactory::createPage(e, this));
+            static_cast<KMFMenuPage *>(KMFWidgetFactory::createPage(e, this, title, chapter));
 
         if (p) {
             return p->preview();
@@ -300,6 +302,11 @@ int KMFMenu::mediaObjChapterCount(int title)
     }
 
     return result;
+}
+
+int KMFMenu::chaptersPerPage(const QString &page)
+{
+    return m_chaptersPerPage[page];
 }
 
 #include "kmfmenu.moc"
