@@ -613,7 +613,7 @@ void Chapters::import()
 
 void Chapters::saveCustomPreview()
 {
-    m_vidOpt->setPreviewUrl("position:///"+KMF::Time(m_pos).toString());
+    m_vidOpt->setPreviewUrl("position:/"+KMF::Time(m_pos).toString());
 }
 
 void Chapters::checkLengths()
@@ -684,7 +684,7 @@ void Chapters::setThumbnail()
 void Chapters::chapterThumbnailButtonClicked()
 {
     if(chaptersView->currentIndex().isValid()) {
-        m_cells[chaptersView->currentIndex().row()].setPreviewFile("position:///"+KMF::Time(m_pos).toString());
+        m_cells[chaptersView->currentIndex().row()].setPreviewFile("position:/"+KMF::Time(m_pos).toString());
     }
 }
 
