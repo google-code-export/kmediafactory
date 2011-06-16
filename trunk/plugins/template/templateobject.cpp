@@ -209,9 +209,14 @@ QStringList TemplateObject::menus()
     return m_menu.menus();
 }
 
-QImage TemplateObject::preview(const QString &menu)
+int TemplateObject::chaptersPerPage(const QString &page)
 {
-    return m_menu.makeMenuPreview(menu);
+    return m_menu.chaptersPerPage(page);
+}
+
+QImage TemplateObject::preview(const QString &menu, int title, int chapter)
+{
+    return m_menu.makeMenuPreview(menu, title, chapter);
 }
 
 QPixmap TemplateObject::pixmap() const

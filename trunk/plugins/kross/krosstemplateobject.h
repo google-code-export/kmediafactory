@@ -48,7 +48,7 @@ class KrossTemplateObject : public KMF::TemplateObject
         virtual QMap<QString, QString> subTypes() const;
         virtual QString title() const;
 
-        virtual QImage preview(const QString & = "");
+        virtual QImage preview(const QString &page=QString(), int title=0, int chapter=0);
         virtual QStringList menus();
         virtual bool clicked();
 

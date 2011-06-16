@@ -84,10 +84,11 @@ class KDE_EXPORT TemplateObject : public Object
 
         virtual bool clicked();
         virtual QStringList menus();
+        virtual int chaptersPerPage(const QString &page);
 
     public slots:
         // Help Kross plugin declaring these as slots
-        virtual QImage preview(const QString & = "");
+        virtual QImage preview(const QString &page=QString(), int title=0, int chapter=0);
 };
 
 class KDE_EXPORT ProgressDialog : public QObject

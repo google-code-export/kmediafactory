@@ -42,7 +42,6 @@
 
 TemplatePage::TemplatePage(QWidget *parent)
     : QWidget(parent)
-    , m_menu(0)
 {
     setupUi(this);
     templates->setSpacing(5);
@@ -92,7 +91,7 @@ void TemplatePage::selectionChanged(const QItemSelection &selected,
 
         if (ob) {
             if (ob->clicked() == false) {
-                m_menu = 0;
+                m_menu.reset();
                 kmfApp->project()->setTemplateObj(ob);
                 updatePreview(index.row());
             } else   {
@@ -147,8 +146,8 @@ void TemplatePage::updatePreview(int n)
                 kmfApp->project()->templateObjects()->at(selected[0].row());
             QStringList menus = ob->menus();
 
-            if (m_menu < menus.count()) {
-                menu = menus[m_menu];
+            if (m_menu.page < menus.count()) {
+                menu = menus[m_menu.page];
             } else {
                 menu = "Main";
             }
@@ -156,7 +155,7 @@ void TemplatePage::updatePreview(int n)
 
         KMF::TemplateObject *ob = kmfApp->project()->templateObjects()->at(n);
         // Scale to real 4:3. Should get aspect ratio from template plugin?
-        QImage image = ob->preview(menu).scaled(768, 576, Qt::IgnoreAspectRatio,
+        QImage image = ob->preview(menu, m_menu.title, m_menu.chapter).scaled(768, 576, Qt::IgnoreAspectRatio,
                 Qt::SmoothTransformation);
         templatePreview->setImage(image);
         kmfApp->interface()->setUseMessageBox(false);
@@ -225,11 +224,47 @@ void TemplatePage::imageContextMenuRequested(const QPoint &pos)
     for (QStringList::Iterator it = menus.begin();
          it != menus.end(); ++it, ++i)
     {
-        action = new QAction(QLatin1String("CHAPTER_PAGE")==(*it) ? i18n("Chapter Page") : *it, this);
-        action->setCheckable(true);
-        action->setData(i);
-        action->setChecked(i == m_menu);
-        popup.addAction(action);
+        QList<MenuIndex> pages;
+
+        if(ob && kmfApp->project()->mediaObjects()) {
+            int                                      chaptersPerPage=ob->chaptersPerPage(*it),
+                                                     chapter(0);
+            QList<KMF::MediaObject *>                mo=kmfApp->project()->mediaObjects()->list();
+            QList<KMF::MediaObject *>::ConstIterator moIt(mo.constBegin()),
+                                                     moEnd(mo.constEnd());
+
+            for(int title=0; moIt!=moEnd; ++moIt, ++title) {
+                for(int ch=0; ch<(*moIt)->chapters(); ++ch) {
+                    chapter++;
+                    if(1==chapter) {
+                        pages.append(MenuIndex(i, title, ch));
+                    }
+                    else if(chapter==chaptersPerPage) {
+                        chapter=0;
+                    }
+                }
+            }
+        }
+        
+        if(pages.isEmpty()) {
+            pages.append(MenuIndex());
+        }
+        
+        QList<MenuIndex>::ConstIterator pageIt(pages.constBegin()),
+                                        pageEnd(pages.constEnd());
+                                  
+        for(int p=1; pageIt!=pageEnd; ++pageIt, ++p) {
+            QString pageName(QLatin1String("CHAPTER_PAGE")==(*it)
+                                ? i18n("Chapter Page") 
+                                : QLatin1String("Main")==(*it)
+                                    ? i18n("Main Page")
+                                    : *it);
+            action = new QAction(pages.count()>1 ? i18nc("<page name> <page number>", "%1 %2", pageName, p) : pageName, this);
+            action->setCheckable(true);
+            action->setData((*pageIt).toInt());
+            action->setChecked(*pageIt == m_menu);
+            popup.addAction(action);
+        }
     }
 
     QList<QAction *> templateActions;
@@ -274,7 +309,7 @@ void TemplatePage::imageContextMenuRequested(const QPoint &pos)
                 }
             }
         } else if (!templateActions.contains(action))    {
-            m_menu = action->data().toInt();
+            m_menu = MenuIndex(action->data().toInt());
             // previewCheckBox->setChecked(true);
             updatePreview();
         }

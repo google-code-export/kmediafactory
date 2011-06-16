@@ -32,6 +32,19 @@ class TemplatePage : public QWidget, public Ui::TemplatePage
 {
     Q_OBJECT
 
+    struct MenuIndex
+    {
+        MenuIndex()  { reset(); }
+        MenuIndex(int p, int t, int c) : page(p), title(t), chapter(c) { }
+        MenuIndex(int idx) : page(idx&0xFF), title((idx&0xFF00)>>8), chapter((idx&0xFF0000)>>16) { }
+        int  toInt() const { return (page&0xFF)+((title&0xFF)<<8)+((chapter&0xFF)<<16); }
+        void reset() { page=title=chapter=0; }
+        bool operator==(MenuIndex &o) const { return page==o.page && title==o.title && chapter==o.chapter; }
+        int page,
+            title,
+            chapter;
+    };
+    
     public:
         TemplatePage(QWidget *parent = 0);
         virtual ~TemplatePage();
@@ -48,7 +61,7 @@ class TemplatePage : public QWidget, public Ui::TemplatePage
         virtual void previewClicked();
 
     private:
-        int m_menu;
+        MenuIndex m_menu;
         QDateTime m_lastUpdate;
 };
 

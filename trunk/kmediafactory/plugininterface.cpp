@@ -43,7 +43,7 @@ KMF::TemplateObject::~TemplateObject()
 {
 }
 
-QImage KMF::TemplateObject::preview(const QString &)
+QImage KMF::TemplateObject::preview(const QString &, int, int)
 {
     return QImage();
 }
@@ -51,6 +51,11 @@ QImage KMF::TemplateObject::preview(const QString &)
 QStringList KMF::TemplateObject::menus()
 {
     return QStringList();
+}
+
+int KMF::TemplateObject::chaptersPerPage(const QString &)
+{
+    return 0;
 }
 
 bool KMF::TemplateObject::clicked()
