@@ -49,10 +49,13 @@ KMFMultiURLDialog::KMFMultiURLDialog(const QString &startDir, const QString &fil
     connect(upButton, SIGNAL(clicked()), this, SLOT(moveUp()));
     connect(addButton, SIGNAL(clicked()), this, SLOT(add()));
     connect(removeButton, SIGNAL(clicked()), this, SLOT(remove()));
+    restoreDialogSize(KConfigGroup(KGlobal::config(), metaObject()->className()));
 }
 
 KMFMultiURLDialog::~KMFMultiURLDialog()
 {
+    KConfigGroup cg(KGlobal::config(), metaObject()->className());
+    KDialog::saveDialogSize(cg);
 }
 
 void KMFMultiURLDialog::moveDown()

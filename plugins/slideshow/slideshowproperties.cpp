@@ -222,10 +222,14 @@ SlideshowProperties::SlideshowProperties(QWidget *parent, bool showSubPage) : KD
     connect(addAudioButton, SIGNAL(clicked()), this, SLOT(addAudio()));
     connect(removeAudioButton, SIGNAL(clicked()), this, SLOT(removeAudio()));
     connect(durationSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateInfo()));
+ 
+    restoreDialogSize(KConfigGroup(KGlobal::config(), metaObject()->className()));
 }
 
 SlideshowProperties::~SlideshowProperties()
 {
+    KConfigGroup cg(KGlobal::config(), metaObject()->className());
+    KDialog::saveDialogSize(cg);
 }
 
 void SlideshowProperties::getData(SlideshowObject &obj) const

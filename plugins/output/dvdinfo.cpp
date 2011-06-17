@@ -56,10 +56,13 @@ DVDInfo::DVDInfo(QWidget *parent, QString device)
     connect(url, SIGNAL(urlSelected(const KUrl &)), this, SLOT(open()));
     url->setUrl(device);
     open();
+    restoreDialogSize(KConfigGroup(KGlobal::config(), metaObject()->className()));
 }
 
 DVDInfo::~DVDInfo()
 {
+    KConfigGroup cg(KGlobal::config(), metaObject()->className());
+    KDialog::saveDialogSize(cg);
 }
 
 void DVDInfo::analyze()
