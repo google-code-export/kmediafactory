@@ -79,10 +79,13 @@ VideoOptions::VideoOptions(QWidget *parent)
     connect(audioPropertiesButton, SIGNAL(clicked()),
             this, SLOT(audioPropertiesClicked()));
     previewUrl->setFilter("image/jpeg image/png");
+    restoreDialogSize(KConfigGroup(KGlobal::config(), metaObject()->className()));
 }
 
 VideoOptions::~VideoOptions()
 {
+    KConfigGroup cg(KGlobal::config(), metaObject()->className());
+    KDialog::saveDialogSize(cg);
 }
 
 void VideoOptions::accept()

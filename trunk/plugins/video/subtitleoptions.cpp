@@ -134,10 +134,13 @@ SubtitleOptions::SubtitleOptions(QWidget *parent)
     setMainWidget(m_widget = new SubtitleOptionsWidget(this, true));
     setButtons(KDialog::Ok | KDialog::Cancel);
     setCaption(i18n("Subtitle Options"));
+    restoreDialogSize(KConfigGroup(KGlobal::config(), metaObject()->className()));
 }
 
 SubtitleOptions::~SubtitleOptions()
 {
+    KConfigGroup cg(KGlobal::config(), metaObject()->className());
+    KDialog::saveDialogSize(cg);
 }
 
 void SubtitleOptions::accept()

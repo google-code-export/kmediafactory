@@ -30,7 +30,7 @@ class ToolProperties : public KDialog, public Ui::ToolProperties
 
     public:
         ToolProperties(QWidget *parent = 0);
-        virtual ~ToolProperties(){};
+        virtual ~ToolProperties();
 
         void setData(const ToolItem &item);
         void getData(ToolItem *item);

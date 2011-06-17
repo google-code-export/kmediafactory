@@ -34,6 +34,13 @@ ToolProperties::ToolProperties(QWidget *parent)
     setButtonFocus(KDialog::Ok);
     setCaption(i18n("Tool Properties"));
     workPathUrl->setMode(KFile::Directory | KFile::LocalOnly);
+    restoreDialogSize(KConfigGroup(KGlobal::config(), metaObject()->className()));
+}
+
+ToolProperties::~ToolProperties()
+{
+    KConfigGroup cg(KGlobal::config(), metaObject()->className());
+    KDialog::saveDialogSize(cg);
 }
 
 void ToolProperties::setData(const ToolItem &item)
