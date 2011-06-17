@@ -94,6 +94,7 @@ void TemplatePage::selectionChanged(const QItemSelection &selected,
                 m_menu.reset();
                 kmfApp->project()->setTemplateObj(ob);
                 updatePreview(index.row());
+                connect(ob, SIGNAL(updated()), SLOT(updatePreview()));
             } else   {
                 templates->selectionModel()->select(deselected, QItemSelectionModel::ClearAndSelect);
             }
