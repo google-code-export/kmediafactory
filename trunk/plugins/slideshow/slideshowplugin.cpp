@@ -129,9 +129,10 @@ void SlideshowPlugin::slotAddSlideshow()
 
         if (sob->slides().count() > 0) {
             if (m->addMediaObject(sob)) {
+                kapp->setActiveWindow(parent); // Otherwise activeWindow is not set and dialog has no parent!
                 sob->slotProperties();
             } else {
-                KMessageBox::error(kapp->activeWindow(),
+                KMessageBox::error(parent,
                         i18n("A DVD can only have a maximum of 99 titles.\n"),
                         i18n("Too Many Titles"));
                 delete sob;
