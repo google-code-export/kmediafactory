@@ -18,8 +18,8 @@
 //   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 // **************************************************************************
 
+#include <KLocale>
 #include "logview.h"
-
 #include "kmfapplication.h"
 
 LogView::LogView(QWidget *parent)
@@ -27,6 +27,7 @@ LogView::LogView(QWidget *parent)
 {
     setupUi(mainWidget());
     setButtons(KDialog::Close);
+    setCaption(i18n("Log"));
 
     setInitialSize(QSize(640, 420));
     KConfigGroup cg = KGlobal::config()->group("LogView");
