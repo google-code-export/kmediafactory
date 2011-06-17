@@ -140,7 +140,7 @@ void VideoPlugin::slotAddVideo()
             QFileInfo fi(filename);
 
             if (fi.isDir()) {
-                KMessageBox::error(kapp->activeWindow(),
+                KMessageBox::error(dlg->parentWidget(),
                         i18n("Cannot add directory."));
                 continue;
             }
@@ -156,7 +156,7 @@ void VideoPlugin::slotAddVideo()
                 case VideoObject::StatusInvalidResolution:
                 {
                     QSize res(KMFMediaFile::mediaFile(filename).resolution());
-                    KMessageBox::error(kapp->activeWindow(),
+                    KMessageBox::error(dlg->parentWidget(),
                             i18n("Cannot use %1.\n%2x%3 is an invalid resolution",
                                  filename, res.width(), res.height()));
                     delete vob;
@@ -165,7 +165,7 @@ void VideoPlugin::slotAddVideo()
                 }
 
                 case VideoObject::StatusNonCompataible:
-                    KMessageBox::error(kapp->activeWindow(),
+                    KMessageBox::error(dlg->parentWidget(),
                         i18n("Cannot use %1.\nIt is not a DVD compatible file.",
                              filename));
                     delete vob;
@@ -181,7 +181,7 @@ void VideoPlugin::slotAddVideo()
 
             if (multipleFiles->isChecked() || (filename == filenames.last())) {
                 if (!m->addMediaObject(vob)) {
-                    KMessageBox::error(kapp->activeWindow(),
+                    KMessageBox::error(dlg->parentWidget(),
                             i18n("A DVD can only have a maximum of 99 titles.\n"),
                             i18n("Too Many Titles"));
                     delete vob;
@@ -190,6 +190,7 @@ void VideoPlugin::slotAddVideo()
             }
         }
         if (vob && (!multipleFiles->isChecked() || filenames.count() == 1)) {
+            kapp->setActiveWindow(dlg->parentWidget());  // Otherwise activeWindow is not set and dialog has no parent!
             vob->slotProperties();
         }
     }
