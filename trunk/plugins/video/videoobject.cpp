@@ -785,6 +785,7 @@ void VideoObject::slotProperties()
         dlg->getData(*this);
         interface()->setDirty(KMF::Media);
     }
+    delete dlg;
 }
 
 QPixmap VideoObject::pixmap() const
