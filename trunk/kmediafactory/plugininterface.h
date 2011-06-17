@@ -89,6 +89,9 @@ class KDE_EXPORT TemplateObject : public Object
     public slots:
         // Help Kross plugin declaring these as slots
         virtual QImage preview(const QString &page=QString(), int title=0, int chapter=0);
+        
+    Q_SIGNALS:
+        void updated();
 };
 
 class KDE_EXPORT ProgressDialog : public QObject

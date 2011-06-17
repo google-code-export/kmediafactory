@@ -272,7 +272,9 @@ void TemplateObject::slotProperties()
         dialog->addPage(page, title(), "kmediafactory");
     }
 
-    dialog->exec();
+    if(QDialog::Accepted==dialog->exec()) {
+        emit updated();
+    }
 
     /*
     kDebug() << &m_customProperties;
