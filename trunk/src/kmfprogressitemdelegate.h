@@ -21,10 +21,10 @@
 #ifndef KMFPROGRESSITEMDELEGATE_H
 #define KMFPROGRESSITEMDELEGATE_H
 
-#include <QtGui/QItemDelegate>
-#include <QtGui/QProgressBar>
+#include <QtGui/QStyledItemDelegate>
+#include <QtGui/QPixmap>
 
-class KMFProgressItemDelegate : public QItemDelegate
+class KMFProgressItemDelegate : public QStyledItemDelegate
 {
     public:
         Q_ENUMS(ProgressRoles)
@@ -32,9 +32,9 @@ class KMFProgressItemDelegate : public QItemDelegate
 
         virtual void paint(QPainter *painter, const QStyleOptionViewItem &option,
             const QModelIndex &index) const;
-
+            
     private:
-        mutable QProgressBar bar;
+        mutable QPixmap pixmap;
 };
 
 #endif // KMFPROGRESSITEMDELEGATE_H
