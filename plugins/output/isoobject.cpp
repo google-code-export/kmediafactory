@@ -9,6 +9,7 @@
 #include <KActionCollection>
 #include <QtCore/QFile>
 #include <kmftools.h>
+#include <outputpluginsettings.h>
 
 static const char * exeName="genisoimage";
 static const char startString[] = I18N_NOOP("ISO Image");
@@ -31,6 +32,12 @@ class IsoImageJob : public KMF::Job
             *proc << exeName << "-dvd-video" << "-o" << isoImage << dvdDir;
             proc->setWorkingDirectory(dvdDir);
             proc->execute();
+            
+            if (success() && OutputPluginSettings::autoClean()) {
+                KMF::Tools::cleanFiles(projDir + "DVD/AUDIO_TS");
+                KMF::Tools::cleanFiles(projDir + "DVD/VIDEO_TS", QStringList() << "*.VOB" << "*.BUP" << "*.IFO");
+                KMF::Tools::cleanFiles(projDir + "DVD");
+            }
             message(subid, KMF::Done);
             message(msgId(), KMF::Done);
         }
@@ -43,6 +50,7 @@ class IsoImageJob : public KMF::Job
             {
                 subid = msgId();
                 setValue(subid, (int)(line.mid(0, percent).toDouble()));
+                
             }
         }
 };
@@ -102,7 +110,7 @@ bool IsoObject::prepare(const QString &type)
         IsoImageJob *job = new IsoImageJob();
         job->isoImage = interface()->projectDir() + interface()->title().replace("/", ".")+".iso";
         job->dvdDir = interface()->projectDir("DVD");
-        job->projDir = interface()->projectDir("DVD");
+        job->projDir = interface()->projectDir();
         job->title = interface()->title();
         interface()->addJob(job, KMF::All);
     }

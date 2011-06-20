@@ -39,6 +39,7 @@ class OutputPlugin : public KMF::Plugin
         virtual void init(const QString &type);
 
     public:
+        virtual const KMF::ConfigPage*configPage() const;
         virtual QStringList supportedProjectTypes() const;
 
     public slots:
