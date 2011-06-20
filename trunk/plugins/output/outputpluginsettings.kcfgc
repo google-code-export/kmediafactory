@@ -1,0 +1,4 @@
+File=outputplugin.kcfg
+ClassName=OutputPluginSettings
+Singleton=true
+Mutators=true

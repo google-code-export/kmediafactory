@@ -42,11 +42,23 @@
 #include "k3bobject.h"
 #include "isoobject.h"
 
+#include <outputpluginsettings.h>
+#include <ui_outputconfig.h>
+
 #ifdef HAVE_LIBDVDREAD
 #include "dvdinfo.h"
 #endif
 
 K_EXPORT_KMEDIAFACTORY_PLUGIN(output, OutputPlugin)
+
+class OutputConfig : public QWidget, public Ui::OutputConfig
+{
+    public:
+        OutputConfig(QWidget *parent = 0) : QWidget(parent)
+        {
+            setupUi(this);
+        };
+};
 
 OutputPlugin::OutputPlugin(QObject *parent, const QVariantList &)
     : KMF::Plugin(parent)
@@ -156,6 +168,19 @@ void OutputPlugin::slotDVDInfo()
     dlg->exec();
     delete dlg;
 #endif
+}
+
+const KMF::ConfigPage* OutputPlugin::configPage() const
+{
+    KMF::ConfigPage *configPage = new KMF::ConfigPage;
+
+    configPage->page = new OutputConfig;
+    configPage->config = OutputPluginSettings::self();
+    configPage->itemName = i18n("Output");
+    configPage->itemDescription = i18n("Output Settings");
+    configPage->pixmapName = "media-optical";
+    return configPage;
+
 }
 
 QStringList OutputPlugin::supportedProjectTypes() const

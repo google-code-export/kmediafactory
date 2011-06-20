@@ -43,6 +43,7 @@
 #include <kmftools.h>
 #include <kmediafactory/job.h>
 #include <kmediafactory/object.h>
+#include <outputpluginsettings.h>
 #include "outputplugin.h"
 
 static const char startString[] = I18N_NOOP("DVD Folder");
@@ -91,6 +92,11 @@ class DVDDirectoryJob : public KMF::Job
 
             if (m_error) {
                 clean(projectDir);
+            }
+            else if (OutputPluginSettings::autoClean()){
+                KMF::Tools::cleanFiles(projectDir + "media", QStringList() << "dummy.mpg" << "dummy.pnm");
+                KMF::Tools::cleanFiles(projectDir + "menus", QStringList() << "*.mpg" << "*.pnm" << "*.png" << "*.xml");
+                QFile::remove(projectDir + "dvdauthor.xml");
             }
 
             message(subid, KMF::Done);
