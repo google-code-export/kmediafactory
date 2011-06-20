@@ -94,7 +94,7 @@ class DVDDirectoryJob : public KMF::Job
                 clean(projectDir);
             }
             else if (OutputPluginSettings::autoClean()){
-                KMF::Tools::cleanFiles(projectDir + "media", QStringList() << "dummy.mpg" << "dummy.pnm");
+                KMF::Tools::cleanFiles(projectDir + "media", QStringList() << "dummy.mpg" << "dummy.pnm" << "*.sub.mpg" << "*.xml");
                 KMF::Tools::cleanFiles(projectDir + "menus", QStringList() << "*.mpg" << "*.pnm" << "*.png" << "*.xml");
                 QFile::remove(projectDir + "dvdauthor.xml");
             }
