@@ -114,7 +114,7 @@ bool IsoObject::prepare(const QString &type)
         job->title = interface()->title();
         interface()->addJob(job, KMF::All);
     }
-
+    interface()->message(msgId(), KMF::Done);
     return true;
 }
 
