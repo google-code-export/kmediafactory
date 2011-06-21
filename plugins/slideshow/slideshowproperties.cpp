@@ -41,7 +41,6 @@
 #include <subtitleoptions.h>
 
 #include <kmfmediafile.h>
-#include <kmfmultiurldialog.h>
 #include <kmftime.h>
 #include "slideshowobject.h"
 

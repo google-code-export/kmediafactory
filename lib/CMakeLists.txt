@@ -12,7 +12,6 @@ set(kmf_LIB_SRCS
   kmfimageview.cpp
   kmftime.cpp
   kmftools.cpp
-  kmfmultiurldialog.cpp
   qdvdinfo.cpp
   kmfmediafile.cpp
   run.cpp
@@ -28,16 +27,11 @@ set(kmf_HEADERS
   kmfimageview.h
   kmftime.h
   kmftools.h
-  kmfmultiurldialog.h
   qdvdinfo.h
   kmfmediafile.h
   run.h
   kmftoolbar.h
   kmflistmodel.h
-)
-
-kde4_add_ui_files(kmf_LIB_SRCS
-  kmfmultiurldialog.ui
 )
 
 kde4_add_library(kmf SHARED ${kmf_LIB_SRCS})
