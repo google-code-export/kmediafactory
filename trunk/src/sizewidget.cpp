@@ -33,7 +33,8 @@
 
 SizeWidget::SizeWidget(QWidget *parent)
     : QWidget(parent)
-    , m_bar(KCapacityBar::DrawTextInline)
+    , m_max(100)
+    , m_value(0)
 {
 }
 
@@ -41,72 +42,73 @@ SizeWidget::~SizeWidget()
 {
 }
 
+void SizeWidget::paintBar(QPainter *painter, const QPalette &pal)
+{
+    QStyleOptionProgressBar opt;
+    opt.minimum=0;
+    opt.maximum=100;
+    opt.progress=m_value > m_max ? m_max : ((100 * m_value) / m_max);
+    opt.textVisible=true;
+    opt.text=m_value > m_max ? i18n("Capacity (%1) exceeded by %2",
+                                    KGlobal::locale()->formatByteSize(m_max),
+                                    KGlobal::locale()->formatByteSize(m_value - m_max))
+                             : i18n("%1 of %2 used (%3%)",
+                                    KGlobal::locale()->formatByteSize(m_value),
+                                    KGlobal::locale()->formatByteSize(m_max),
+                                    (100 * m_value) / m_max);
+    
+    opt.rect=rect();
+    opt.state=QStyle::State_Enabled;
+    opt.palette=pal;
+    opt.direction=layoutDirection();
+    opt.fontMetrics=fontMetrics();
+
+    style()->drawControl(QStyle::CE_ProgressBar, &opt, painter, 0L);
+}
+
 void SizeWidget::paintEvent(QPaintEvent *ev)
 {
-    QPixmap barPixmap;
     QPainter painter(this);
     bool reverse = (Qt::RightToLeft == layoutDirection());
     QRect rc = rect();
-    bool exceeded = (m_bar.value() > 100);
-    int savedValue = m_bar.value();
-    int v = qMin(savedValue, 100) * rc.width() / qMax(savedValue, 100);
+    bool exceeded = m_value > m_max;
+    int percent=(100 * m_value) / m_max,
+        v = qMin(percent, 100) * rc.width() / qMax(percent, 100);
 
+    painter.setClipRegion(ev->region());
     if (exceeded) {
-        m_bar.setValue(100);
+        painter.save();
         painter.setClipRect(reverse ? v : rc.left(), rc.top(),
-                reverse ? rc.right() : v, rc.bottom());
+                               reverse ? rc.right() : v, rc.bottom(), Qt::IntersectClip);
     }
 
-    barPixmap = QPixmap::grabWidget(&m_bar, ev->rect());
-    painter.drawPixmap(ev->rect().topLeft(), barPixmap);
+    paintBar(&painter, palette());
 
     if (exceeded) {
         KColorScheme cs(QPalette::Active, KColorScheme::Window);
         QColor color = cs.foreground(KColorScheme::NegativeText).color();
-        QPalette original = m_bar.palette();
-        QPalette palette = original;
+        QPalette pal = palette();
 
-        palette.setColor(QPalette::Active, QPalette::Highlight, color);
-        m_bar.setPalette(palette);
-        barPixmap = QPixmap::grabWidget(&m_bar, ev->rect());
+        pal.setColor(QPalette::Active, QPalette::Highlight, color);
+        painter.restore();
         painter.setClipRect(reverse ? rc.left() : v, rc.top(),
-                reverse ? v : rc.right(), rc.bottom());
-        painter.drawPixmap(ev->rect().topLeft(), barPixmap);
-        m_bar.setPalette(original);
-        m_bar.setValue(savedValue);
+                               reverse ? v : rc.right(), rc.bottom(), Qt::IntersectClip);
+        paintBar(&painter, pal);
     }
 }
 
 void SizeWidget::setSizes(quint64 max, quint64 size)
 {
-    m_bar.setValue(size * 100 / max);
-    updateLabel(max, size);
-    updateGeometry();
-}
-
-void SizeWidget::updateLabel(quint64 max, quint64 size)
-{
-    QFont f(m_bar.font());
-
-    if (size > max) {
-        f.setBold(true);
-        m_bar.setText(i18n("Capacity (%1) exceeded by %2",
-                        KGlobal::locale()->formatByteSize(max),
-                        KGlobal::locale()->formatByteSize(size - max)));
-    } else {
-        f.setBold(false);
-        m_bar.setText(i18n("%1 of %2 used (%3%)",
-                        KGlobal::locale()->formatByteSize(size),
-                        KGlobal::locale()->formatByteSize(max),
-                        (100 * size) / max));
-    }
-
-    m_bar.setFont(f);
+    m_max=max;
+    m_value=size;
+    update();
 }
 
 QSize SizeWidget::minimumSizeHint() const
 {
-    return m_bar.minimumSizeHint();
+    return fontMetrics().size(0, i18n("Capacity (%1) exceeded by %2",
+                                      KGlobal::locale()->formatByteSize(999.99*1024*1024*1024), 
+                                      KGlobal::locale()->formatByteSize(999.99*1024*1024*1024)))+QSize(16, 2);
 }
 
 #include "sizewidget.moc"

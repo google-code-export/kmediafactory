@@ -21,7 +21,7 @@
 #ifndef SIZEWIDGET_H
 #define SIZEWIDGET_H
 
-#include <kcapacitybar.h>
+#include <QtGui/QWidget>
 
 class SizeWidget : public QWidget
 {
@@ -38,9 +38,10 @@ class SizeWidget : public QWidget
         void setSizes(quint64 max, quint64 size);
 
     private:
-        void updateLabel(quint64 max, quint64 size);
 
-        KCapacityBar m_bar;
+        void paintBar(QPainter *painter, const QPalette &pal);
+
+        quint64 m_max, m_value;
 };
 
 #endif
