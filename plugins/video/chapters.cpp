@@ -586,7 +586,7 @@ void Chapters::autoChapters()
 void Chapters::import()
 {
     QString chapterFile = KFileDialog::getOpenFileName(
-            KUrl("kfiledialog:///<Chapters>"), QString(), this);
+            KUrl("kfiledialog:///<Chapters>"), QString(), this, i18n("Select Chapters File"));
 
     if (!chapterFile.isEmpty()) {
         QMap<QString, QString> chapters = KMF::Tools::readIniFile(chapterFile);
@@ -706,7 +706,7 @@ void Chapters::setThumbnail(int index)
 {
     QString existing = m_cells[index].previewFile(),
             fileName = KFileDialog::getOpenFileName(KUrl(existing.isEmpty() ? "kfiledialog:///<Thumbnails>" : existing), 
-                                                    "image/jpeg image/png", this);
+                                                    "image/jpeg image/png", this, i18n("Select Thumbnail File"));
 
     if (!fileName.isEmpty()) {
         QImage img(fileName);

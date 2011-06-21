@@ -123,7 +123,7 @@ void VideoPlugin::slotAddVideo()
     multipleFiles->setText(i18n("Multiple files make multiple titles."));
     multipleFiles->setChecked(true);
     dlg->setOperationMode(KFileDialog::Opening);
-    dlg->setCaption(i18n("Open"));
+    dlg->setCaption(i18n("Select Video Files"));
     dlg->setMode(KFile::Files | KFile::ExistingOnly | KFile::LocalOnly);
     dlg->exec();
 
