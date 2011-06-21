@@ -7,6 +7,7 @@
       <Action name="preview_dvd" />
       <Action name="preview_dvd_xine" />
       <Action name="preview_dvd_kaffeine" />
+      <Action name="preview_dvd_dragon" />
     </Menu>
   </MenuBar>
 </kpartgui>

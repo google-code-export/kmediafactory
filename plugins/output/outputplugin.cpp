@@ -49,6 +49,8 @@
 #include "dvdinfo.h"
 #endif
 
+#define NO_PROTOCOL "NoProtocol"
+
 K_EXPORT_KMEDIAFACTORY_PLUGIN(output, OutputPlugin)
 
 class OutputConfig : public QWidget, public Ui::OutputConfig
@@ -62,16 +64,11 @@ class OutputConfig : public QWidget, public Ui::OutputConfig
 
 OutputPlugin::OutputPlugin(QObject *parent, const QVariantList &)
     : KMF::Plugin(parent)
-    , addPreviewDVDXine(0)
-    , addPreviewDVDKaffeine(0)
 {
     KGlobal::locale()->insertCatalog("kmediafactory_output");
     setObjectName("KMFOutput");
     // Initialize GUI
     setXMLFile("kmediafactory_outputui.rc");
-
-    m_xine = KStandardDirs::findExe("xine");
-    m_kaffeine = KStandardDirs::findExe("kaffeine");
 
 #ifdef HAVE_LIBDVDREAD
     dvdInfo = new KAction(KIcon("zoom-original"), i18n("DVD Info"), parent);
@@ -80,22 +77,25 @@ OutputPlugin::OutputPlugin(QObject *parent, const QVariantList &)
     connect(dvdInfo, SIGNAL(triggered()), SLOT(slotDVDInfo()));
 #endif
 
-    if (!m_xine.isEmpty()) {
-        addPreviewDVDXine = new KAction(KIcon("xine"),
-                i18n("Preview DVD in Xine"), parent);
-        addPreviewDVDXine->setShortcut(Qt::CTRL + Qt::Key_X);
-        actionCollection()->addAction("preview_dvd_xine", addPreviewDVDXine);
-        connect(addPreviewDVDXine, SIGNAL(triggered()), SLOT(slotPreviewDVDXine()));
-    }
+    addPreviewAction("xine", Qt::CTRL + Qt::Key_X);
+    addPreviewAction("kaffeine", Qt::CTRL + Qt::Key_K);
+    addPreviewAction("dragon", Qt::CTRL + Qt::Key_D, false, "dragonplayer");
+}
 
-    if (!m_kaffeine.isEmpty()) {
-        addPreviewDVDKaffeine = new KAction(KIcon("xine"),
-                i18n("Preview DVD in Kaffeine"), parent);
-        addPreviewDVDKaffeine->setShortcut(Qt::CTRL + Qt::Key_K);
-        actionCollection()->addAction("preview_dvd_kaffeine",
-                addPreviewDVDKaffeine);
-        connect(addPreviewDVDKaffeine, SIGNAL(triggered()),
-                SLOT(slotPreviewDVDKaffeine()));
+void OutputPlugin::addPreviewAction(const QString &app, QKeySequence shortcut, bool useDvdProtocol, const QString &icon)
+{
+    QString exe = KStandardDirs::findExe(app);
+
+    if (!exe.isEmpty()) {
+        QAction *action = new KAction(KIcon(icon.isEmpty() ? app : icon),
+                i18n("Preview DVD in %1", app[0].toUpper()+app.mid(1)), parent());
+        action->setData(exe);
+        action->setShortcut(shortcut);
+        actionCollection()->addAction("preview_dvd_"+app, action);
+        connect(action, SIGNAL(triggered()), SLOT(slotPreviewDVD()));
+        if(!useDvdProtocol) { 
+            action->setProperty(NO_PROTOCOL, !useDvdProtocol);
+        }
     }
 }
 
@@ -128,35 +128,29 @@ void OutputPlugin::init(const QString &type)
     }
 }
 
-void OutputPlugin::play(const QString &player)
+void OutputPlugin::slotPreviewDVD()
 {
-    QString cmd;
-    QString projectDir = interface()->projectDir();
+    QAction *action=qobject_cast<QAction *>(sender());
 
-    if (player.isEmpty()) {
-        if (!m_xine.isEmpty()) {
-            cmd = m_xine;
-        } else if (!m_kaffeine.isEmpty()) {
-            cmd = m_kaffeine;
-        } else {
-            return;
-        }
-    } else   {
-        cmd = player;
+    if(!action || action->data().toString().isEmpty()) {
+        return;
     }
 
-    cmd +=  " \"dvd:/" + projectDir + "DVD/VIDEO_TS\"";
-    KRun::runCommand(cmd, kapp->activeWindow());
-}
+    QString projectDir = interface()->projectDir(),
+            isoFile    = projectDir+interface()->title().replace("/", ".")+".iso",
+            dvd        = QFile::exists(isoFile)
+                            ? isoFile
+                            : QFile::exists(projectDir+"DVD/VIDEO_TS/VTS_01_0.VOB")
+                                ? projectDir+"DVD/"
+                                : QString();
+    
+    if(dvd.isEmpty()) {
+        return;
+    }
 
-void OutputPlugin::slotPreviewDVDXine()
-{
-    play(m_xine);
-}
+    bool useProtocol=action->property(NO_PROTOCOL).isNull();
 
-void OutputPlugin::slotPreviewDVDKaffeine()
-{
-    play(m_kaffeine);
+    KRun::runCommand(action->data().toString()+" \"" + (useProtocol ? "dvd://" : "") + dvd + '\"', kapp->activeWindow());
 }
 
 void OutputPlugin::slotDVDInfo()

@@ -33,8 +33,6 @@ class OutputPlugin : public KMF::Plugin
     public:
         OutputPlugin(QObject *parent, const QVariantList &);
 
-        void play(const QString &player = QString());
-
     public slots:
         virtual void init(const QString &type);
 
@@ -43,16 +41,14 @@ class OutputPlugin : public KMF::Plugin
         virtual QStringList supportedProjectTypes() const;
 
     public slots:
-        void slotPreviewDVDXine();
-        void slotPreviewDVDKaffeine();
+        void slotPreviewDVD();
         void slotDVDInfo();
 
     private:
+        void addPreviewAction(const QString &app, QKeySequence shortcut, bool useDvdProtocol=true, const QString &icon=QString());
+
+    private:
         QAction *dvdInfo;
-        QAction *addPreviewDVDXine;
-        QAction *addPreviewDVDKaffeine;
-        QString m_xine;
-        QString m_kaffeine;
 };
 
 #endif // OUTPUTPLUGIN_H
