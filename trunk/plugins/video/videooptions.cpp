@@ -28,6 +28,7 @@
 #include <KDebug>
 #include <KLocale>
 #include <KUrlRequester>
+#include <KFileDialog>
 
 #include <kmflanguagewidgets.h>
 #include <kmftools.h>
@@ -79,6 +80,7 @@ VideoOptions::VideoOptions(QWidget *parent)
     connect(audioPropertiesButton, SIGNAL(clicked()),
             this, SLOT(audioPropertiesClicked()));
     previewUrl->setFilter("image/jpeg image/png");
+    previewUrl->fileDialog()->setCaption(i18n("Select Preview File"));
     restoreDialogSize(KConfigGroup(KGlobal::config(), metaObject()->className()));
 }
 

@@ -107,7 +107,7 @@ void SlideshowPlugin::slotAddSlideshow()
     QStringList pics = KFileDialog::getOpenFileNames(KUrl("kfiledialog:///<AddSlideshow>"),
             "*.jpg *.png *.pdf *.odp *.odt *.ods *.odx *.sxw *.sxc *.sxi \
             *.ppt *.xls *.doc|Pictures, Presentations\n*.*|All files",
-            parent);
+            parent, i18n("Select Slideshow Files"));
 
     if (pics.count() > 0) {
         KMF::PluginInterface *m = interface();

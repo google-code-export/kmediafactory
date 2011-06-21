@@ -28,6 +28,7 @@
 #include <KFontRequester>
 #include <KMessageBox>
 #include <KUrlRequester>
+#include <KFileDialog>
 #include <KIO/NetAccess>
 
 #include <kmflanguagewidgets.h>
@@ -39,7 +40,9 @@ SubtitleOptionsWidget::SubtitleOptionsWidget(QWidget *parent, bool wantFile) : Q
     languageCombo->setModel(&m_languageModel);
     encodingCombo->model()->sort(0);
 
-    if (!wantFile) {
+    if (wantFile) {
+        subtitleUrl->fileDialog()->setCaption(i18n("Select Subtitle File"));
+    } else {
         delete subtitleUrl;
         subtitleUrl = 0L;
         delete subtitleFileLabel;

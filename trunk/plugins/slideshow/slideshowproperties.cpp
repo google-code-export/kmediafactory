@@ -384,7 +384,7 @@ void SlideshowProperties::add()
             i18n(
                     "*.jpg *.png *.pdf *.odp *.odt *.ods *.odx *.sxw *.sxc *.sxi \
             *.ppt *.xls *.doc|Pictures, Presentations\n*.*|All files"                                                                                   ),
-            this);
+            this, i18n("Select Slideshow Files"));
 
     if (pics.count() > 0) {
         addSlides(m_sob->slideList(pics, this));
@@ -405,7 +405,7 @@ void SlideshowProperties::addAudio()
     QStringList files = KFileDialog::getOpenFileNames(
             KUrl("kfiledialog:///<SlideshowAudioFiles>"),
             "audio/mpeg audio/mp2 audio/x-wav audio/ogg",
-            this);
+            this, i18n("Select Audio File"));
 
     if (files.count() > 0) {
         addAudio(files);
