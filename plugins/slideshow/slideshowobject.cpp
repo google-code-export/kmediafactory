@@ -680,7 +680,7 @@ QString SlideshowObject::information() const
 SlideList SlideshowObject::slideList(QStringList list, QWidget *parent) const
 {
     SlideList result;
-    KProgressDialog dlg(parent, i18n("(Importing Slideshow"));
+    KProgressDialog dlg(parent, i18n("Importing Slideshow"));
 
     dlg.progressBar()->setMinimum(0);
     dlg.progressBar()->setMaximum(list.count());
