@@ -63,7 +63,19 @@ void SizeWidget::paintBar(QPainter *painter, const QPalette &pal)
     opt.direction=layoutDirection();
     opt.fontMetrics=fontMetrics();
 
+    if(m_value > m_max) {
+        QFont font(painter->font());
+
+        font.setBold(true);
+        painter->save();
+        painter->setFont(font);
+    }
+
     style()->drawControl(QStyle::CE_ProgressBar, &opt, painter, 0L);
+
+    if(m_value > m_max) {
+        painter->restore();
+    }
 }
 
 void SizeWidget::paintEvent(QPaintEvent *ev)
@@ -108,7 +120,7 @@ QSize SizeWidget::minimumSizeHint() const
 {
     return fontMetrics().size(0, i18n("Capacity (%1) exceeded by %2",
                                       KGlobal::locale()->formatByteSize(999.99*1024*1024*1024), 
-                                      KGlobal::locale()->formatByteSize(999.99*1024*1024*1024)))+QSize(16, 2);
+                                      KGlobal::locale()->formatByteSize(999.99*1024*1024*1024)))+QSize(4, 2);
 }
 
 #include "sizewidget.moc"
