@@ -24,6 +24,7 @@
 #include <QtCore/QVariant>
 #include <QtGui/QColor>
 #include <QtGui/QPainter>
+#include <QtGui/QApplication>
 
 #include <KDebug>
 
@@ -130,14 +131,14 @@ void KMFLabel::paintWidget(QImage *layer, bool shdw) const
 {
     QPainter p(layer);
     QFontMetrics fm(m_font, layer);
+    bool ltr=Qt::LeftToRight==QApplication::layoutDirection();
 
     // kDebug() << m_font.family() << m_font.pointSize() <<
     //    m_font.weight();
     QString lt = layer->text("layer");
     QRect rc = (shdw) ? paintRect(shadow().offset()) : paintRect();
-    QString text = fitText(m_text, rc.width());
     QColor rgb = (shdw) ? shadow().color() : color();
-    KMF::Rect textrc(QPoint(0, 0), fm.size(Qt::TextSingleLine, m_text));
+    KMF::Rect textrc(0, 0, rc.width(), rc.height());
 
     p.setPen(QPen(rgb));
     p.setBrush(QBrush());
@@ -146,7 +147,8 @@ void KMFLabel::paintWidget(QImage *layer, bool shdw) const
     textrc.align(rc, halign(), valign());
     bool aa = (lt == "background" || lt == "temp");
     p.setRenderHint(QPainter::TextAntialiasing, aa);
-    p.drawText(textrc, Qt::AlignLeft, text);
+    p.drawText(textrc, ltr ? Qt::AlignLeft : Qt::AlignRight, 
+               fm.elidedText(m_text, ltr ? Qt::ElideRight : Qt::ElideLeft, rc.width()));
 }
 
 void KMFLabel::setProperty(const QString &name, QVariant value)
