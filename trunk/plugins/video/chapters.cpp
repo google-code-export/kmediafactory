@@ -712,7 +712,7 @@ void Chapters::setThumbnail(int index)
         QImage img(fileName);
         
         if(img.isNull()) {
-            KMessageBox::error(this, i18n("%1 is not a vlid image file", fileName));
+            KMessageBox::error(this, i18n("%1 is not a valid image file", fileName));
         }
         else {
             m_cells[index].setPreviewFile(fileName);
