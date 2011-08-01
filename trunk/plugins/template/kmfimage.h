@@ -22,8 +22,8 @@
 #define KMFIMAGE_H
 
 #include <QtGui/QImage>
+#include <QtSvg/QSvgRenderer>
 
-#include <KSvgRenderer>
 #include <KUrl>
 
 #include "kmfwidget.h"
@@ -60,7 +60,7 @@ class KMFImage : public KMFWidget
 
     private:
         QImage m_image;
-        mutable KSvgRenderer m_svg;
+        mutable QSvgRenderer m_svg;
         KUrl m_url;
         bool m_scale;
         bool m_proportional;
