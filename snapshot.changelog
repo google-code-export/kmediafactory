@@ -1,9 +1,10 @@
-CHANGED IN RELEASE 0.8.0
+CHANGED IN RELEASE 0.8.1
 =========================
 
 Features:
 - ISO Image output
 - Support for dvdauthor 0.7.0
+- Ukrainian translation
 
 Bug fixes:
 - Several bug fixes
