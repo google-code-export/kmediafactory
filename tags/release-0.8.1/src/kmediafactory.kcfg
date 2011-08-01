@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0 http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile name="kmediafactoryrc"/>
+  <include>kstandarddirs.h</include>
+  <group name="project">
+      <entry name="DefaultProjectDirectory" type="Url">
+          <label>Where the projects are saved by default.</label>
+          <default code="true">KStandardDirs::locateLocal("tmp", "kmf/")</default>
+      </entry>
+      <entry name="DefaultProjectType" type="String">
+          <label>Default project type.</label>
+          <default>1</default> <!-- 0 = NTSC, 1 = PAL -->
+      </entry>
+      <entry name="DefaultAspectRatio" type="String">
+          <label>Default project aspect ratio.</label>
+          <default>1</default> <!-- 0 = 4:3, 1 = 16:9 -->
+      </entry>
+      <entry name="PreviewScaled" type="Bool">
+          <label>Is preview scaled.</label>
+          <default>true</default>
+      </entry>
+  </group>
+</kcfg>

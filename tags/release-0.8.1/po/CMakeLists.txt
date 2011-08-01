@@ -1,0 +1,7 @@
+add_subdirectory(cs)
+add_subdirectory(de)
+add_subdirectory(fi)
+add_subdirectory(pl)
+add_subdirectory(pt_BR)
+add_subdirectory(ru)
+add_subdirectory(uk)

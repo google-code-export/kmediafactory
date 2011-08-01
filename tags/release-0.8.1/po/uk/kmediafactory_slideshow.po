@@ -1,0 +1,329 @@
+# Copyright (C) 2011 This_file_is_part_of_KMediaFactory
+# This file is distributed under the same license as the KMediaFactory package.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2011-07-23 12:41+0300\n"
+"PO-Revision-Date: 2011-07-23 13:58+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 1.2\n"
+
+#. i18n: file: slideshowconfig.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, SlideshowConfig)
+#: rc.cpp:3
+msgid "Configure Slideshow Plugin"
+msgstr "Налаштування додатка показу слайдів"
+
+#. i18n: file: slideshowconfig.ui:23
+#. i18n: ectx: property (text), widget (QLabel, audioTypeLabel)
+#: rc.cpp:6
+msgid "Audio type:"
+msgstr "Тип звуку:"
+
+#. i18n: file: slideshowconfig.ui:37
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_AudioType)
+#: rc.cpp:9
+msgid "MP2"
+msgstr "MP2"
+
+#. i18n: file: slideshowconfig.ui:42
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_AudioType)
+#: rc.cpp:12
+msgid "AC3"
+msgstr "AC3"
+
+#. i18n: file: slideshowconfig.ui:50
+#. i18n: ectx: property (text), widget (QLabel, defaultSubtitleLanguageLabel)
+#: rc.cpp:15
+msgid "Default subtitle language:"
+msgstr "Типова мова субтитрів:"
+
+#. i18n: file: slideshowproperties.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, SlideshowProperties)
+#: rc.cpp:18
+msgid "Slideshow properties"
+msgstr "Властивості показу слайдів"
+
+#. i18n: file: slideshowproperties.ui:25
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:21
+msgid "Title:"
+msgstr "Заголовок:"
+
+#. i18n: file: slideshowproperties.ui:44
+#. i18n: ectx: attribute (title), widget (QWidget, tab)
+#: rc.cpp:24
+msgid "Images"
+msgstr "Зображення"
+
+#. i18n: file: slideshowproperties.ui:98
+#. i18n: ectx: property (toolTip), widget (KPushButton, addButton)
+#. i18n: file: slideshowproperties.ui:302
+#. i18n: ectx: property (toolTip), widget (KPushButton, addAudioButton)
+#: rc.cpp:27 rc.cpp:72
+msgid "Add (Alt+ Insert)"
+msgstr "Додати(Alt+Insert)"
+
+#. i18n: file: slideshowproperties.ui:104
+#. i18n: ectx: property (shortcut), widget (KPushButton, addButton)
+#. i18n: file: slideshowproperties.ui:308
+#. i18n: ectx: property (shortcut), widget (KPushButton, addAudioButton)
+#: rc.cpp:30 rc.cpp:75
+msgid "Alt+Ins"
+msgstr "Alt+Ins"
+
+#. i18n: file: slideshowproperties.ui:114
+#. i18n: ectx: property (toolTip), widget (KPushButton, removeButton)
+#. i18n: file: slideshowproperties.ui:318
+#. i18n: ectx: property (toolTip), widget (KPushButton, removeAudioButton)
+#: rc.cpp:33 rc.cpp:78
+msgid "Remove (Alt + Delete)"
+msgstr "Вилучити (Alt+Delete)"
+
+#. i18n: file: slideshowproperties.ui:120
+#. i18n: ectx: property (shortcut), widget (KPushButton, removeButton)
+#. i18n: file: slideshowproperties.ui:324
+#. i18n: ectx: property (shortcut), widget (KPushButton, removeAudioButton)
+#: rc.cpp:36 rc.cpp:81
+msgid "Alt+Del"
+msgstr "Alt+Del"
+
+#. i18n: file: slideshowproperties.ui:146
+#. i18n: ectx: property (toolTip), widget (KPushButton, upButton)
+#. i18n: file: slideshowproperties.ui:350
+#. i18n: ectx: property (toolTip), widget (KPushButton, upAudioButton)
+#: rc.cpp:39 rc.cpp:84
+msgid "Move up (Alt + Up)"
+msgstr "Пересунути вище (Alt+↑)"
+
+#. i18n: file: slideshowproperties.ui:152
+#. i18n: ectx: property (shortcut), widget (KPushButton, upButton)
+#. i18n: file: slideshowproperties.ui:356
+#. i18n: ectx: property (shortcut), widget (KPushButton, upAudioButton)
+#: rc.cpp:42 rc.cpp:87
+msgid "Alt+Up"
+msgstr "Alt+↑"
+
+#. i18n: file: slideshowproperties.ui:162
+#. i18n: ectx: property (toolTip), widget (KPushButton, downButton)
+#. i18n: file: slideshowproperties.ui:366
+#. i18n: ectx: property (toolTip), widget (KPushButton, downAudioButton)
+#: rc.cpp:45 rc.cpp:90
+msgid "Move down (Alt + Down)"
+msgstr "Пересунути нижче (Alt+↓)"
+
+#. i18n: file: slideshowproperties.ui:168
+#. i18n: ectx: property (shortcut), widget (KPushButton, downButton)
+#. i18n: file: slideshowproperties.ui:372
+#. i18n: ectx: property (shortcut), widget (KPushButton, downAudioButton)
+#: rc.cpp:48 rc.cpp:93
+msgid "Alt+Down"
+msgstr "Alt+↓"
+
+#. i18n: file: slideshowproperties.ui:191
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:51
+msgid "Image duration:"
+msgstr "Тривалість показу зображення:"
+
+#. i18n: file: slideshowproperties.ui:213
+#. i18n: ectx: property (specialValueText), widget (QSpinBox, durationSpinBox)
+#: rc.cpp:54
+msgid "fit"
+msgstr "вмістити"
+
+#. i18n: file: slideshowproperties.ui:229
+#. i18n: ectx: property (text), widget (QCheckBox, addOriginalsCheckBox)
+#: rc.cpp:57
+msgid "Add to DVD"
+msgstr "Додати на DVD"
+
+#. i18n: file: slideshowproperties.ui:245
+#. i18n: ectx: property (text), widget (QCheckBox, loopCheckBox)
+#: rc.cpp:60
+msgid "Loop slideshow"
+msgstr "Циклічний показ слайдів"
+
+#. i18n: file: slideshowproperties.ui:252
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:63
+msgid "Image files:"
+msgstr "Файли зображень:"
+
+#. i18n: file: slideshowproperties.ui:262
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:66
+msgid "After last image:"
+msgstr "Після останнього зображення:"
+
+#. i18n: file: slideshowproperties.ui:275
+#. i18n: ectx: attribute (title), widget (QWidget, tab_2)
+#: rc.cpp:69
+msgid "Audio"
+msgstr "Звук"
+
+#: slideshowobject.cpp:73
+msgid "Copying slideshow originals"
+msgstr "Копіювання початкових зображень показу"
+
+#: slideshowobject.cpp:78
+msgid "Copying originals failed."
+msgstr "Спроба копіювання зазнала невдачі."
+
+#: slideshowobject.cpp:102
+#, kde-format
+msgid "Comments for: %1"
+msgstr "Коментарі до: %1"
+
+#: slideshowobject.cpp:127
+msgid "Failed to add comments."
+msgstr "Не вдалося додати коментарі."
+
+#: slideshowobject.cpp:240 slideshowobject.cpp:965
+#, kde-format
+msgid "Slideshow: %1"
+msgstr "Перегляд слайдів: %1"
+
+#: slideshowobject.cpp:308
+msgid "Failed to start dvd-slideshow application."
+msgstr "Не вдалося запустити програму dvd-slideshow."
+
+#: slideshowobject.cpp:312
+msgid "dvd-slideshow application crashed."
+msgstr "Програма dvd-slideshow завершила роботу у аварійному режимі."
+
+#: slideshowobject.cpp:318
+#, kde-format
+msgid "Slideshow error (%1)."
+msgstr "Помилка показу слайдів (%1)."
+
+#: slideshowobject.cpp:322
+msgid "Can't write slideshow file."
+msgstr "Не вдалося записати файл показу слайдів."
+
+#: slideshowobject.cpp:661
+msgid "Properties"
+msgstr "Властивості"
+
+#: slideshowobject.cpp:676
+#, fuzzy, kde-format
+msgid "%1 Image (%2)"
+msgid_plural "%1 Images (%2)"
+msgstr[0] "Зображення"
+
+#: slideshowobject.cpp:683
+msgid "Importing Slideshow"
+msgstr "Імпортування показу слайдів"
+
+#: slideshowobject.cpp:697
+#, kde-format
+msgid "Processing %1..."
+msgstr "Обробка %1…"
+
+#: slideshowobject.cpp:702 slideshowproperties.cpp:296
+msgid "Cannot add folder."
+msgstr "Не вдалося додати теку."
+
+#: slideshowobject.cpp:749
+#, kde-format
+msgid "Page %1"
+msgstr "Сторінка %1"
+
+#: slideshowobject.cpp:1032
+#, kde-format
+msgid "Slideshow \"%1\" seems to be up to date"
+msgstr "Здається, показ слайдів «%1» є актуальним"
+
+#: slideshowplugin.cpp:67
+msgid "Add Slideshow"
+msgstr "Додати показ слайдів"
+
+#: slideshowplugin.cpp:110 slideshowproperties.cpp:386
+msgid "Select Slideshow Files"
+msgstr "Виберіть файли показу слайдів"
+
+#: slideshowplugin.cpp:125 slideshowplugin.cpp:176
+msgid "Slideshow"
+msgstr "Показ слайдів"
+
+#: slideshowplugin.cpp:136
+msgid "A DVD can only have a maximum of 99 titles.\n"
+msgstr "DVD не може містити більше за 99 частин.\n"
+
+#: slideshowplugin.cpp:137
+msgid "Too Many Titles"
+msgstr "Забагато частин"
+
+#: slideshowplugin.cpp:177
+msgid "Slideshow Settings"
+msgstr "Параметри показу слайдів"
+
+#: slideshowproperties.cpp:158
+msgid "Image"
+msgstr "Зображення"
+
+#: slideshowproperties.cpp:161
+msgid "Chapter"
+msgstr "Розділ"
+
+#: slideshowproperties.cpp:164
+msgid "Comment"
+msgstr "Коментар"
+
+#: slideshowproperties.cpp:187
+msgid "Slideshow Properties"
+msgstr "Властивості показу слайдів"
+
+#: slideshowproperties.cpp:193
+msgid "Subtitles"
+msgstr "Субтитри"
+
+#: slideshowproperties.cpp:367
+#, kde-format
+msgid "<i>Images: %1, Duration: %2, Audio duration: %3</i>"
+msgstr "<i>Зображень: %1, тривалість: %2, тривалість звуку: %3</i>"
+
+#: slideshowproperties.cpp:384
+msgid ""
+"*.jpg *.png *.pdf *.odp *.odt *.ods *.odx *.sxw *.sxc *.sxi             *."
+"ppt *.xls *.doc|Pictures, Presentations\n"
+"*.*|All files"
+msgstr ""
+"*.jpg *.png *.pdf *.odp *.odt *.ods *.odx *.sxw *.sxc *.sxi *.ppt *.xls *."
+"doc|зображення, презентації\n"
+"*.*|всі файли"
+
+#: slideshowproperties.cpp:407
+msgid "Select Audio File"
+msgstr "Виберіть звуковий файл супроводу"
+
+#: slideshowproperties.cpp:427
+msgid "You should have at least one chapter."
+msgstr "У вас має бути принаймні один розділ."
+
+#: slideshowproperties.cpp:428
+msgid "No Chapters"
+msgstr "Немає розділів"
+
+#: slideshowproperties.cpp:431
+#, kde-format
+msgid ""
+"Each title in a DVD can have a maximum of 99 chapters.\n"
+"This title currently has %1."
+msgstr ""
+"У кожній частині у DVD може бути не більше 99 розділів.\n"
+"У поточній частині таких розділів %1."
+
+#: slideshowproperties.cpp:433
+msgid "Too Many Chapters"
+msgstr "Забагато розділів"
+

@@ -1,0 +1,1225 @@
+# Copyright (C) 2011 This_file_is_part_of_KMediaFactory
+# This file is distributed under the same license as the KMediaFactory package.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2011-07-23 12:41+0300\n"
+"PO-Revision-Date: 2011-07-23 14:23+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: chapters.cpp:158
+msgid "Not Applicable"
+msgstr "Не застосовне"
+
+#: chapters.cpp:160
+msgid "Generated"
+msgstr "Створена"
+
+#: chapters.cpp:206
+msgid "Chapter Name"
+msgstr "Назва розділу"
+
+#. i18n: file: chapters.ui:192
+#. i18n: ectx: property (toolTip), widget (KPushButton, startButton)
+#: chapters.cpp:209 rc.cpp:42
+msgid "Start"
+msgstr "Початок"
+
+#: chapters.cpp:212
+msgid "Length"
+msgstr "Тривалість"
+
+#: chapters.cpp:215
+msgid "Thumbnail"
+msgstr "Мініатюра"
+
+#: chapters.cpp:225
+msgctxt "Column header for chapter visibility"
+msgid "Visible"
+msgstr "Видимий"
+
+#: chapters.cpp:243
+msgid "Add Chapter"
+msgstr "Додати розділ"
+
+#: chapters.cpp:504
+msgid "Delete All"
+msgstr "Вилучити всі"
+
+#: chapters.cpp:505 chapters.cpp:529
+msgid "Rename All"
+msgstr "Перейменувати всі"
+
+#: chapters.cpp:506 chapters.cpp:553
+msgid "Auto Chapters"
+msgstr "Авторозділи"
+
+#: chapters.cpp:507
+msgctxt "Import chapter file"
+msgid "Import..."
+msgstr "Імпортувати…"
+
+#: chapters.cpp:511
+msgid "Set Custom Thumbnail..."
+msgstr "Встановити нетипову мініатюру…"
+
+#: chapters.cpp:515
+msgid "Unset Custom Thumbnail"
+msgstr "Вилучити нетипову мініатюру"
+
+#: chapters.cpp:589
+msgid "Select Chapters File"
+msgstr "Вибір файла розділу"
+
+#: chapters.cpp:647
+msgid "You should have at least one non-hidden chapter."
+msgstr "У вас має бути принаймні один неприхований розділ."
+
+#: chapters.cpp:648 chapters.cpp:660
+msgid "No Chapters"
+msgstr "Немає розділів"
+
+#: chapters.cpp:651
+#, kde-format
+msgid ""
+"Each title in a DVD can have a maximum of 99 chapters.\n"
+"This title currently has %1."
+msgstr ""
+"У кожній частині у DVD може бути не більше 99 розділів.\n"
+"У поточній частині таких розділів %1."
+
+#: chapters.cpp:653
+msgid "Too Many Chapters"
+msgstr "Забагато розділів"
+
+#: chapters.cpp:659
+msgid "You should have at least one chapter."
+msgstr "У вас має бути принаймні один розділ."
+
+#: chapters.cpp:709
+msgid "Select Thumbnail File"
+msgstr "Вибір файла мініатюри"
+
+#: chapters.cpp:715
+#, kde-format
+msgid "%1 is not a vlid image file"
+msgstr "%1 не є коректним файлом зображення"
+
+#. i18n: file: addchapter.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, AddChapter)
+#. i18n: file: autochapters.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, AutoChapters)
+#: rc.cpp:3 rc.cpp:15
+msgid "KMediaFactory"
+msgstr "KMediaFactory"
+
+#. i18n: file: addchapter.ui:23
+#. i18n: ectx: property (text), widget (QLabel, nameLabel)
+#: rc.cpp:6
+msgid "Name:"
+msgstr "Назва:"
+
+#. i18n: file: addchapter.ui:43
+#. i18n: ectx: property (text), widget (QLabel, chapterLabel)
+#: rc.cpp:9
+msgid "Position:"
+msgstr "Позиція:"
+
+#. i18n: file: addchapter.ui:62
+#. i18n: ectx: property (displayFormat), widget (QTimeEdit, chapterTime)
+#. i18n: file: autochapters.ui:43
+#. i18n: ectx: property (displayFormat), widget (QTimeEdit, intervalTime)
+#: rc.cpp:12 rc.cpp:24
+msgid "hh:mm:ss"
+msgstr "hh:mm:ss"
+
+#. i18n: file: autochapters.ui:20
+#. i18n: ectx: property (text), widget (QLabel, nameLabel)
+#: rc.cpp:18
+msgid "Name (use # for digit):"
+msgstr "Назва (# для цифр):"
+
+#. i18n: file: autochapters.ui:33
+#. i18n: ectx: property (text), widget (QLabel, intervalLabel)
+#: rc.cpp:21
+msgid "Interval:"
+msgstr "Інтервал:"
+
+#. i18n: file: chapters.ui:91
+#. i18n: ectx: property (text), widget (KPushButton, addButton)
+#. i18n: file: videooptions.ui:169
+#. i18n: ectx: property (text), widget (KPushButton, subtitleAddButton)
+#: rc.cpp:27 rc.cpp:492
+msgid "Add"
+msgstr "Додати"
+
+#. i18n: file: chapters.ui:107
+#. i18n: ectx: property (text), widget (KPushButton, removeButton)
+#. i18n: file: videooptions.ui:179
+#. i18n: ectx: property (text), widget (KPushButton, subtitleRemoveButton)
+#: rc.cpp:30 rc.cpp:495
+msgid "Remove"
+msgstr "Вилучити"
+
+#. i18n: file: chapters.ui:153
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:33
+msgid "Use as:"
+msgstr "Використання:"
+
+#. i18n: file: chapters.ui:160
+#. i18n: ectx: property (text), widget (KPushButton, customPreviewButton)
+#: rc.cpp:36
+msgid "&Custom Preview"
+msgstr "&Нетиповий перегляд"
+
+#. i18n: file: chapters.ui:167
+#. i18n: ectx: property (text), widget (KPushButton, chapterThumbnailButton)
+#: rc.cpp:39
+msgid "Chapter Thumbnail"
+msgstr "Мініатюра розділу"
+
+#. i18n: file: chapters.ui:205
+#. i18n: ectx: property (toolTip), widget (KPushButton, rewButton)
+#: rc.cpp:45
+msgid "Rewind 30s"
+msgstr "Назад на 30 с"
+
+#. i18n: file: chapters.ui:218
+#. i18n: ectx: property (toolTip), widget (KPushButton, prevButton)
+#: rc.cpp:48
+msgid "Rewind 0.5s"
+msgstr "Назад на 0,5 с"
+
+#. i18n: file: chapters.ui:231
+#. i18n: ectx: property (toolTip), widget (KPushButton, playButton)
+#: rc.cpp:51
+msgid "Play/Pause"
+msgstr "Старт/Пауза"
+
+#. i18n: file: chapters.ui:244
+#. i18n: ectx: property (toolTip), widget (KPushButton, nextButton)
+#: rc.cpp:54
+msgid "Forward 0.5s"
+msgstr "Вперед на 0,5 с"
+
+#. i18n: file: chapters.ui:257
+#. i18n: ectx: property (toolTip), widget (KPushButton, fwdButton)
+#: rc.cpp:57
+msgid "Forward 30s"
+msgstr "Вперед на 30 с"
+
+#. i18n: file: chapters.ui:270
+#. i18n: ectx: property (toolTip), widget (KPushButton, endButton)
+#: rc.cpp:60
+msgid "End"
+msgstr "Кінець"
+
+#. i18n: file: chapters.ui:285
+#. i18n: ectx: property (text), widget (QLabel, timeLabel)
+#: rc.cpp:63
+msgid "00:00"
+msgstr "00:00"
+
+#. i18n: file: languageselection.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, LanguageSelection)
+#: rc.cpp:66
+msgid "Select language"
+msgstr "Виберіть мову"
+
+#. i18n: file: subtitleoptions.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, SubtitleOptions)
+#: rc.cpp:69
+msgid "Subtitle options"
+msgstr "Параметри субтитрів"
+
+#. i18n: file: subtitleoptions.ui:23
+#. i18n: ectx: property (text), widget (QLabel, languageLabel)
+#: rc.cpp:72
+msgid "Language:"
+msgstr "Мова:"
+
+#. i18n: file: subtitleoptions.ui:46
+#. i18n: ectx: property (text), widget (QLabel, subtitleFileLabel)
+#: rc.cpp:75
+msgid "File:"
+msgstr "Файл:"
+
+#. i18n: file: subtitleoptions.ui:69
+#. i18n: ectx: property (text), widget (QLabel, encodingLabel)
+#: rc.cpp:78
+msgid "Encoding:"
+msgstr "Кодування:"
+
+#. i18n: file: subtitleoptions.ui:89
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:81
+msgid "ASCII"
+msgstr "ASCII"
+
+#. i18n: file: subtitleoptions.ui:94
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:84
+msgid "ISO-8859-1"
+msgstr "ISO-8859-1"
+
+#. i18n: file: subtitleoptions.ui:99
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:87
+msgid "ISO-8859-2"
+msgstr "ISO-8859-2"
+
+#. i18n: file: subtitleoptions.ui:104
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:90
+msgid "ISO-8859-3"
+msgstr "ISO-8859-3"
+
+#. i18n: file: subtitleoptions.ui:109
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:93
+msgid "ISO-8859-4"
+msgstr "ISO-8859-4"
+
+#. i18n: file: subtitleoptions.ui:114
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:96
+msgid "ISO-8859-5"
+msgstr "ISO-8859-5"
+
+#. i18n: file: subtitleoptions.ui:119
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:99
+msgid "ISO-8859-7"
+msgstr "ISO-8859-7"
+
+#. i18n: file: subtitleoptions.ui:124
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:102
+msgid "ISO-8859-9"
+msgstr "ISO-8859-9"
+
+#. i18n: file: subtitleoptions.ui:129
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:105
+msgid "ISO-8859-10"
+msgstr "ISO-8859-10"
+
+#. i18n: file: subtitleoptions.ui:134
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:108
+msgid "ISO-8859-13"
+msgstr "ISO-8859-13"
+
+#. i18n: file: subtitleoptions.ui:139
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:111
+msgid "ISO-8859-14"
+msgstr "ISO-8859-14"
+
+#. i18n: file: subtitleoptions.ui:144
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:114
+msgid "ISO-8859-15"
+msgstr "ISO-8859-15"
+
+#. i18n: file: subtitleoptions.ui:149
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:117
+msgid "ISO-8859-16"
+msgstr "ISO-8859-16"
+
+#. i18n: file: subtitleoptions.ui:154
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:120
+msgid "KOI8-R"
+msgstr "KOI8-R"
+
+#. i18n: file: subtitleoptions.ui:159
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:123
+msgid "KOI8-U"
+msgstr "KOI8-U"
+
+#. i18n: file: subtitleoptions.ui:164
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:126
+msgid "KOI8-RU"
+msgstr "KOI8-RU"
+
+#. i18n: file: subtitleoptions.ui:169
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:129
+msgid "CP1250"
+msgstr "CP1250"
+
+#. i18n: file: subtitleoptions.ui:174
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:132
+msgid "CP1251"
+msgstr "CP1251"
+
+#. i18n: file: subtitleoptions.ui:179
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:135
+msgid "CP1252"
+msgstr "CP1252"
+
+#. i18n: file: subtitleoptions.ui:184
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:138
+msgid "CP1253"
+msgstr "CP1253"
+
+#. i18n: file: subtitleoptions.ui:189
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:141
+msgid "CP1254"
+msgstr "CP1254"
+
+#. i18n: file: subtitleoptions.ui:194
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:144
+msgid "CP1257"
+msgstr "CP1257"
+
+#. i18n: file: subtitleoptions.ui:199
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:147
+msgid "CP850"
+msgstr "CP850"
+
+#. i18n: file: subtitleoptions.ui:204
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:150
+msgid "CP866"
+msgstr "CP866"
+
+#. i18n: file: subtitleoptions.ui:209
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:153
+msgid "CP1131"
+msgstr "CP1131"
+
+#. i18n: file: subtitleoptions.ui:214
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:156
+msgid "ISO-8859-6"
+msgstr "ISO-8859-6"
+
+#. i18n: file: subtitleoptions.ui:219
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:159
+msgid "ISO-8859-8"
+msgstr "ISO-8859-8"
+
+#. i18n: file: subtitleoptions.ui:224
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:162
+msgid "CP1255"
+msgstr "CP1255"
+
+#. i18n: file: subtitleoptions.ui:229
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:165
+msgid "CP1256"
+msgstr "CP1256"
+
+#. i18n: file: subtitleoptions.ui:234
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:168
+msgid "CP862"
+msgstr "CP862"
+
+#. i18n: file: subtitleoptions.ui:239
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:171
+msgid "EUC-JP"
+msgstr "EUC-JP"
+
+#. i18n: file: subtitleoptions.ui:244
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:174
+msgid "SHIFT_JIS"
+msgstr "SHIFT_JIS"
+
+#. i18n: file: subtitleoptions.ui:249
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:177
+msgid "CP932"
+msgstr "CP932"
+
+#. i18n: file: subtitleoptions.ui:254
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:180
+msgid "ISO-2022-JP"
+msgstr "ISO-2022-JP"
+
+#. i18n: file: subtitleoptions.ui:259
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:183
+msgid "ISO-2022-JP-2"
+msgstr "ISO-2022-JP-2"
+
+#. i18n: file: subtitleoptions.ui:264
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:186
+msgid "ISO-2022-JP-1"
+msgstr "ISO-2022-JP-1"
+
+#. i18n: file: subtitleoptions.ui:269
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:189
+msgid "EUC-CN"
+msgstr "EUC-CN"
+
+#. i18n: file: subtitleoptions.ui:274
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:192
+msgid "HZ"
+msgstr "HZ"
+
+#. i18n: file: subtitleoptions.ui:279
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:195
+msgid "GBK"
+msgstr "GBK"
+
+#. i18n: file: subtitleoptions.ui:284
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:198
+msgid "CP936"
+msgstr "CP936"
+
+#. i18n: file: subtitleoptions.ui:289
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:201
+msgid "GB18030"
+msgstr "GB18030"
+
+#. i18n: file: subtitleoptions.ui:294
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:204
+msgid "EUC-TW"
+msgstr "EUC-TW"
+
+#. i18n: file: subtitleoptions.ui:299
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:207
+msgid "BIG5"
+msgstr "BIG5"
+
+#. i18n: file: subtitleoptions.ui:304
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:210
+msgid "CP950"
+msgstr "CP950"
+
+#. i18n: file: subtitleoptions.ui:309
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:213
+msgid "BIG5-HKSCS"
+msgstr "BIG5-HKSCS"
+
+#. i18n: file: subtitleoptions.ui:314
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:216
+msgid "BIG5-HKSCS:2001"
+msgstr "BIG5-HKSCS:2001"
+
+#. i18n: file: subtitleoptions.ui:319
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:219
+msgid "BIG5-HKSCS:1999"
+msgstr "BIG5-HKSCS:1999"
+
+#. i18n: file: subtitleoptions.ui:324
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:222
+msgid "ISO-2022-CN"
+msgstr "ISO-2022-CN"
+
+#. i18n: file: subtitleoptions.ui:329
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:225
+msgid "ISO-2022-CN-EXT"
+msgstr "ISO-2022-CN-EXT"
+
+#. i18n: file: subtitleoptions.ui:334
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:228
+msgid "EUC-KR"
+msgstr "EUC-KR"
+
+#. i18n: file: subtitleoptions.ui:339
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:231
+msgid "CP949"
+msgstr "CP949"
+
+#. i18n: file: subtitleoptions.ui:344
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:234
+msgid "ISO-2022-KR"
+msgstr "ISO-2022-KR"
+
+#. i18n: file: subtitleoptions.ui:349
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:237
+msgid "JOHAB"
+msgstr "JOHAB"
+
+#. i18n: file: subtitleoptions.ui:354
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:240
+msgid "ARMSCII-8"
+msgstr "ARMSCII-8"
+
+#. i18n: file: subtitleoptions.ui:359
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:243
+msgid "KOI8-T"
+msgstr "KOI8-T"
+
+#. i18n: file: subtitleoptions.ui:364
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:246
+msgid "PT154"
+msgstr "PT154"
+
+#. i18n: file: subtitleoptions.ui:369
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:249
+msgid "RK1048"
+msgstr "RK1048"
+
+#. i18n: file: subtitleoptions.ui:374
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:252
+msgid "ISO-8859-11"
+msgstr "ISO-8859-11"
+
+#. i18n: file: subtitleoptions.ui:379
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:255
+msgid "TIS-620"
+msgstr "TIS-620"
+
+#. i18n: file: subtitleoptions.ui:384
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:258
+msgid "CP874"
+msgstr "CP874"
+
+#. i18n: file: subtitleoptions.ui:389
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:261
+msgid "CP1133"
+msgstr "CP1133"
+
+#. i18n: file: subtitleoptions.ui:394
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:264
+msgid "VISCII"
+msgstr "VISCII"
+
+#. i18n: file: subtitleoptions.ui:399
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:267
+msgid "TCVN"
+msgstr "TCVN"
+
+#. i18n: file: subtitleoptions.ui:404
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:270
+msgid "CP1258"
+msgstr "CP1258"
+
+#. i18n: file: subtitleoptions.ui:409
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:273
+msgid "UTF-8"
+msgstr "UTF-8"
+
+#. i18n: file: subtitleoptions.ui:414
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:276
+msgid "UCS-2"
+msgstr "UCS-2"
+
+#. i18n: file: subtitleoptions.ui:419
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:279
+msgid "UCS-2BE"
+msgstr "UCS-2BE"
+
+#. i18n: file: subtitleoptions.ui:424
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:282
+msgid "UCS-2LE"
+msgstr "UCS-2LE"
+
+#. i18n: file: subtitleoptions.ui:429
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:285
+msgid "UCS-4"
+msgstr "UCS-4"
+
+#. i18n: file: subtitleoptions.ui:434
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:288
+msgid "UCS-4BE"
+msgstr "UCS-4BE"
+
+#. i18n: file: subtitleoptions.ui:439
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:291
+msgid "UCS-4LE"
+msgstr "UCS-4LE"
+
+#. i18n: file: subtitleoptions.ui:444
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:294
+msgid "UTF-16"
+msgstr "UTF-16"
+
+#. i18n: file: subtitleoptions.ui:449
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:297
+msgid "UTF-16BE"
+msgstr "UTF-16BE"
+
+#. i18n: file: subtitleoptions.ui:454
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:300
+msgid "UTF-16LE"
+msgstr "UTF-16LE"
+
+#. i18n: file: subtitleoptions.ui:459
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:303
+msgid "UTF-32"
+msgstr "UTF-32"
+
+#. i18n: file: subtitleoptions.ui:464
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:306
+msgid "UTF-32BE"
+msgstr "UTF-32BE"
+
+#. i18n: file: subtitleoptions.ui:469
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:309
+msgid "UTF-32LE"
+msgstr "UTF-32LE"
+
+#. i18n: file: subtitleoptions.ui:474
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:312
+msgid "UTF-7"
+msgstr "UTF-7"
+
+#. i18n: file: subtitleoptions.ui:479
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:315
+msgid "C99"
+msgstr "C99"
+
+#. i18n: file: subtitleoptions.ui:484
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:318
+msgid "JAVA"
+msgstr "JAVA"
+
+#. i18n: file: subtitleoptions.ui:489
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:321
+msgid "CP437"
+msgstr "CP437"
+
+#. i18n: file: subtitleoptions.ui:494
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:324
+msgid "CP737"
+msgstr "CP737"
+
+#. i18n: file: subtitleoptions.ui:499
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:327
+msgid "CP775"
+msgstr "CP775"
+
+#. i18n: file: subtitleoptions.ui:504
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:330
+msgid "CP852"
+msgstr "CP852"
+
+#. i18n: file: subtitleoptions.ui:509
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:333
+msgid "CP853"
+msgstr "CP853"
+
+#. i18n: file: subtitleoptions.ui:514
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:336
+msgid "CP855"
+msgstr "CP855"
+
+#. i18n: file: subtitleoptions.ui:519
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:339
+msgid "CP857"
+msgstr "CP857"
+
+#. i18n: file: subtitleoptions.ui:524
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:342
+msgid "CP858"
+msgstr "CP858"
+
+#. i18n: file: subtitleoptions.ui:529
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:345
+msgid "CP860"
+msgstr "CP860"
+
+#. i18n: file: subtitleoptions.ui:534
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:348
+msgid "CP861"
+msgstr "CP861"
+
+#. i18n: file: subtitleoptions.ui:539
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:351
+msgid "CP863"
+msgstr "CP863"
+
+#. i18n: file: subtitleoptions.ui:544
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:354
+msgid "CP865"
+msgstr "CP865"
+
+#. i18n: file: subtitleoptions.ui:549
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:357
+msgid "CP869"
+msgstr "CP869"
+
+#. i18n: file: subtitleoptions.ui:554
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:360
+msgid "CP1125"
+msgstr "CP1125"
+
+#. i18n: file: subtitleoptions.ui:559
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:363
+msgid "CP864"
+msgstr "CP864"
+
+#. i18n: file: subtitleoptions.ui:564
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:366
+msgid "EUC-JISX0213"
+msgstr "EUC-JISX0213"
+
+#. i18n: file: subtitleoptions.ui:569
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:369
+msgid "SHIFT_JISX0213"
+msgstr "SHIFT_JISX0213"
+
+#. i18n: file: subtitleoptions.ui:574
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:372
+msgid "ISO-2022-JP-3"
+msgstr "ISO-2022-JP-3"
+
+#. i18n: file: subtitleoptions.ui:579
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:375
+msgid "TDS565"
+msgstr "TDS565"
+
+#. i18n: file: subtitleoptions.ui:584
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:378
+msgid "CSWINDOWS31J"
+msgstr "CSWINDOWS31J"
+
+#. i18n: file: subtitleoptions.ui:589
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:381
+msgid "WINDOWS-31J"
+msgstr "WINDOWS-31J"
+
+#. i18n: file: subtitleoptions.ui:594
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:384
+msgid "WINDOWS-874"
+msgstr "WINDOWS-874"
+
+#. i18n: file: subtitleoptions.ui:599
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:387
+msgid "WINDOWS-936"
+msgstr "WINDOWS-936"
+
+#. i18n: file: subtitleoptions.ui:604
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:390
+msgid "WINDOWS-1250"
+msgstr "WINDOWS-1250"
+
+#. i18n: file: subtitleoptions.ui:609
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:393
+msgid "WINDOWS-1251"
+msgstr "WINDOWS-1251"
+
+#. i18n: file: subtitleoptions.ui:614
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:396
+msgid "WINDOWS-1252"
+msgstr "WINDOWS-1252"
+
+#. i18n: file: subtitleoptions.ui:619
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:399
+msgid "WINDOWS-1253"
+msgstr "WINDOWS-1253"
+
+#. i18n: file: subtitleoptions.ui:624
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:402
+msgid "WINDOWS-1254"
+msgstr "WINDOWS-1254"
+
+#. i18n: file: subtitleoptions.ui:629
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:405
+msgid "WINDOWS-1255"
+msgstr "WINDOWS-1255"
+
+#. i18n: file: subtitleoptions.ui:634
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:408
+msgid "WINDOWS-1256"
+msgstr "WINDOWS-1256"
+
+#. i18n: file: subtitleoptions.ui:639
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:411
+msgid "WINDOWS-1257"
+msgstr "WINDOWS-1257"
+
+#. i18n: file: subtitleoptions.ui:644
+#. i18n: ectx: property (text), item, widget (KComboBox, encodingCombo)
+#: rc.cpp:414
+msgid "WINDOWS-1258"
+msgstr "WINDOWS-1258"
+
+#. i18n: file: subtitleoptions.ui:652
+#. i18n: ectx: property (text), widget (QLabel, subtitleFontLabel)
+#: rc.cpp:417
+msgid "Font:"
+msgstr "Шрифт:"
+
+#. i18n: file: subtitleoptions.ui:665
+#. i18n: ectx: property (text), widget (QLabel, horizontalLabel)
+#: rc.cpp:420
+msgid "Horizontal alignment:"
+msgstr "Горизонтальне вирівнювання:"
+
+#. i18n: file: subtitleoptions.ui:688
+#. i18n: ectx: property (text), item, widget (KComboBox, horizontalAlignCombo)
+#: rc.cpp:423
+msgid "Default"
+msgstr "Типове"
+
+#. i18n: file: subtitleoptions.ui:693
+#. i18n: ectx: property (text), item, widget (KComboBox, horizontalAlignCombo)
+#: rc.cpp:426
+msgid "Left"
+msgstr "Ліворуч"
+
+#. i18n: file: subtitleoptions.ui:698
+#. i18n: ectx: property (text), item, widget (KComboBox, horizontalAlignCombo)
+#: rc.cpp:429
+msgid "Right"
+msgstr "Праворуч"
+
+#. i18n: file: subtitleoptions.ui:703
+#. i18n: ectx: property (text), item, widget (KComboBox, horizontalAlignCombo)
+#. i18n: file: subtitleoptions.ui:744
+#. i18n: ectx: property (text), item, widget (KComboBox, verticalAlignCombo)
+#: rc.cpp:432 rc.cpp:444
+msgid "Center"
+msgstr "За центром"
+
+#. i18n: file: subtitleoptions.ui:711
+#. i18n: ectx: property (text), widget (QLabel, verticalLabel)
+#: rc.cpp:435
+msgid "Vertical alignment:"
+msgstr "Вертикальне вирівнювання:"
+
+#. i18n: file: subtitleoptions.ui:734
+#. i18n: ectx: property (text), item, widget (KComboBox, verticalAlignCombo)
+#: rc.cpp:438
+msgid "Top"
+msgstr "Вгорі"
+
+#. i18n: file: subtitleoptions.ui:739
+#. i18n: ectx: property (text), item, widget (KComboBox, verticalAlignCombo)
+#: rc.cpp:441
+msgid "Bottom"
+msgstr "Внизу"
+
+#. i18n: file: videoconfig.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, VideoConfig)
+#: rc.cpp:447
+msgid "Configure Video Plugin"
+msgstr "Налаштування додатка відео"
+
+#. i18n: file: videoconfig.ui:23
+#. i18n: ectx: property (text), widget (QLabel, defaultAudioLanguageLabel)
+#: rc.cpp:450
+msgid "Default audio language:"
+msgstr "Типова мова звуку:"
+
+#. i18n: file: videoconfig.ui:39
+#. i18n: ectx: property (text), widget (QLabel, defaultSubtitleLanguageLabel)
+#: rc.cpp:453
+msgid "Default subtitle language:"
+msgstr "Типова мова субтитрів:"
+
+#. i18n: file: videoconfig.ui:55
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_UsePreviewCache)
+#: rc.cpp:456
+msgid "Enabled"
+msgstr "Увімкнено"
+
+#. i18n: file: videoconfig.ui:62
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:459
+msgid "Image cache:"
+msgstr "Кеш зображень:"
+
+#. i18n: file: videooptions.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, VideoOptions)
+#: rc.cpp:462 videooptions.cpp:73
+msgid "Video Properties"
+msgstr "Властивості відеодоріжки"
+
+#. i18n: file: videooptions.ui:25
+#. i18n: ectx: property (text), widget (QLabel, titleLabel)
+#: rc.cpp:465
+msgid "Title:"
+msgstr "Назва:"
+
+#. i18n: file: videooptions.ui:41
+#. i18n: ectx: property (text), widget (QLabel, directoryLabel)
+#: rc.cpp:468
+msgid "Custom preview:"
+msgstr "Нетиповий перегляд:"
+
+#. i18n: file: videooptions.ui:57
+#. i18n: ectx: property (text), widget (QLabel, aspectLabel)
+#: rc.cpp:471
+msgid "Aspect ratio:"
+msgstr "Формат:"
+
+#. i18n: file: videooptions.ui:71
+#. i18n: ectx: property (text), item, widget (KComboBox, aspectComboBox)
+#: rc.cpp:474
+msgid "4:3"
+msgstr "4:3"
+
+#. i18n: file: videooptions.ui:76
+#. i18n: ectx: property (text), item, widget (KComboBox, aspectComboBox)
+#: rc.cpp:477
+msgid "16:9"
+msgstr "16:9"
+
+#. i18n: file: videooptions.ui:90
+#. i18n: ectx: attribute (title), widget (QWidget, tab)
+#: rc.cpp:480
+msgid "Audio && Subtitles"
+msgstr "Звук і субтитрування"
+
+#. i18n: file: videooptions.ui:100
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:483
+msgid "Audio Tracks"
+msgstr "Звукові доріжки"
+
+#. i18n: file: videooptions.ui:117
+#. i18n: ectx: property (text), widget (KPushButton, audioPropertiesButton)
+#. i18n: file: videooptions.ui:189
+#. i18n: ectx: property (text), widget (KPushButton, subtitlePropertiesButton)
+#: rc.cpp:486 rc.cpp:498 videoobject.cpp:198
+msgid "Properties"
+msgstr "Властивості"
+
+#. i18n: file: videooptions.ui:152
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:489
+msgid "Subtitles"
+msgstr "Субтитри"
+
+#: subtitleoptions.cpp:44
+msgid "Select Subtitle File"
+msgstr "Виберіть файл субтитрів"
+
+#: subtitleoptions.cpp:89
+msgid "Subtitle files"
+msgstr "Файли субтитрів"
+
+#: subtitleoptions.cpp:90
+msgid "All files"
+msgstr "Всі файли"
+
+#: subtitleoptions.cpp:139
+msgid "Subtitle Options"
+msgstr "Параметри субтитрів"
+
+#: subtitleoptions.cpp:154
+msgid "Subtitle file does not exists."
+msgstr "Файла субтитрів не існує."
+
+#: videoobject.cpp:55 videoobject.cpp:72
+#, kde-format
+msgid "Subtitles for: %1"
+msgstr "Субтитри до: %1"
+
+#: videoobject.cpp:96
+msgid "Conversion error."
+msgstr "Помилка під час спроби перетворення."
+
+#: videoobject.cpp:207
+msgid "Play Video"
+msgstr "Відтворити відео"
+
+#: videoobject.cpp:238
+msgid "Resolution:"
+msgstr "Роздільна здатність:"
+
+#: videoobject.cpp:242
+msgid "Chapters:"
+msgstr "Розділи:"
+
+#: videoobject.cpp:246
+msgid "Audio Tracks:"
+msgstr "Звукові доріжки:"
+
+#: videoobject.cpp:250
+msgid "Aspect Ratio:"
+msgstr "Формат:"
+
+#: videoobject.cpp:254
+msgid "Length:"
+msgstr "Тривалість:"
+
+#: videoobject.cpp:258
+msgid "Subtitles:"
+msgstr "Субтитри:"
+
+#: videoobject.cpp:731
+#, kde-format
+msgid "Video: %1"
+msgstr "Відео: %1"
+
+#: videoobject.cpp:766
+#, kde-format
+msgid "Subtitle conversion seems to be up to date for %1"
+msgstr "Здається, перетворені субтитри до %1 є актуальними"
+
+#: videoobject.cpp:1003
+#, kde-format
+msgid "Chapter %1"
+msgstr "Розділ %1"
+
+#: videoobject.cpp:1133
+msgid "Make DVD"
+msgstr "Створити DVD"
+
+#: videoobject.cpp:1134
+msgid "Make preview DVD with dummy videos"
+msgstr "Створити тестовий DVD з фіктивними відео"
+
+#: videooptions.cpp:48
+msgid "Select Language"
+msgstr "Виберіть мову"
+
+#: videooptions.cpp:70
+msgid "Chapters"
+msgstr "Розділи"
+
+#: videooptions.cpp:83
+msgid "Select Preview File"
+msgstr "Виберіть файл попереднього перегляду"
+
+#: videoplugin.cpp:75
+msgid "Video"
+msgstr "Відео"
+
+#: videoplugin.cpp:76
+msgid "Video Settings"
+msgstr "Параметри відео"
+
+#: videoplugin.cpp:84
+msgid "Add Video"
+msgstr "Додати відео"
+
+#: videoplugin.cpp:123
+msgid "Multiple files make multiple titles."
+msgstr "З декількох файлів вийде декілька розділів."
+
+#: videoplugin.cpp:126
+msgid "Select Video Files"
+msgstr "Виберіть файли відео"
+
+#: videoplugin.cpp:144
+msgid "Cannot add directory."
+msgstr "Не вдалося додати каталог."
+
+#: videoplugin.cpp:160
+#, kde-format
+msgid ""
+"Cannot use %1.\n"
+"%2x%3 is an invalid resolution"
+msgstr ""
+"Використання %1 неможливе.\n"
+"%2⨯%3 є некоректною роздільною здатністю"
+
+#: videoplugin.cpp:169
+#, kde-format
+msgid ""
+"Cannot use %1.\n"
+"It is not a DVD compatible file."
+msgstr ""
+"Використання %1 неможливе.\n"
+"Дані у файлі не є сумісними з форматом DVD."
+
+#: videoplugin.cpp:185
+msgid "A DVD can only have a maximum of 99 titles.\n"
+msgstr "DVD не може містити більше за 99 частин.\n"
+
+#: videoplugin.cpp:186
+msgid "Too Many Titles"
+msgstr "Забагато частин"
+

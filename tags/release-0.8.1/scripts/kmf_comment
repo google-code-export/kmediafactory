@@ -1,0 +1,26 @@
+#!/bin/bash
+# Get comment for jpg
+# Copyright (C) 2007 by Petri Damsten - GPL-2
+# Usage:
+# kmf_comment /media/photos/photo.jpg
+
+EXIFTIME=`which exiftime 2>/dev/null`
+if [ $? -ne 0 ]; then
+    EXIV2=`which exiv2 2>/dev/null`
+    if [ $? -ne 0 ]; then
+        EXIFTOOL=`which exiftool 2>/dev/null`
+        if [ $? -eq 0 ]; then
+            COMMENT=$($EXIFTOOL "$1" -p '$dateTimeOriginal' -q 2>/dev/null )
+        fi
+    else
+        COMMENT=$($EXIV2 "$1" 2>/dev/null | grep "Image timestamp" | sed "s/Image timestamp : //g")
+    fi
+else
+    COMMENT=$($EXIFTIME -tc "$1" 2>/dev/null | sed "s/Image Created: //g")
+fi
+
+if [ -z "$COMMENT" ] ; then
+    COMMENT=`basename $1`
+fi
+
+echo $COMMENT

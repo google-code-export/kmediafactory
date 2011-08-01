@@ -1,0 +1,95 @@
+# Copyright (C) 2011 This_file_is_part_of_KMediaFactory
+# This file is distributed under the same license as the KMediaFactory package.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2011-07-23 12:41+0300\n"
+"PO-Revision-Date: 2011-07-23 13:34+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: KoEncryptedStore.cpp:156 KoEncryptedStore.cpp:165
+msgid ""
+"The manifest file seems to be corrupted. The document could not be opened."
+msgstr "Здається файл маніфесту пошкоджено. Цей документ неможливо відкрити."
+
+#: KoEncryptedStore.cpp:223
+msgid ""
+"This document contains an unknown checksum. When you give a password it "
+"might not be verified."
+msgstr ""
+"Цей документ має невідому контрольну суму. Коли ви введете пароль, його, "
+"можливо, не можна буде перевірити."
+
+#: KoEncryptedStore.cpp:249 KoEncryptedStore.cpp:266
+msgid ""
+"This document contains an unknown encryption method. Some parts may be "
+"unreadable."
+msgstr ""
+"Цей документ зашифровано невідомим методом. Деякі його частини можуть "
+"виявитися непридатними для читання."
+
+#: KoEncryptedStore.cpp:281
+msgid ""
+"This document contains incomplete encryption data. Some parts may be "
+"unreadable."
+msgstr ""
+"Цей документ містить неповні дані про шифрування. Деякі його частини можуть "
+"бути непридатними для читання."
+
+#: KoEncryptedStore.cpp:295
+msgid ""
+"QCA has currently no support for SHA1 or PBKDF2 using SHA1. The document can "
+"not be opened."
+msgstr ""
+"У QCA зараз відсутня підтримка SHA1 або PBKDF2 з використанням SHA1. "
+"Відкрити документ неможливо."
+
+#: KoEncryptedStore.cpp:326
+msgid ""
+"The manifest file seems to be corrupted. It cannot be modified and the "
+"document will remain unreadable. Please try and save the document again to "
+"prevent losing your work."
+msgstr ""
+"Здається файл маніфесту пошкоджено. Його не можна змінити, а документ "
+"залишиться непридатним до читання. Будь ласка, спробуйте зберегти документ "
+"ще раз, щоб запобігти втраті результатів вашої роботи."
+
+#: KoEncryptedStore.cpp:424
+msgid ""
+"The manifest file cannot be written. The document will remain unreadable. "
+"Please try and save the document again to prevent losing your work."
+msgstr ""
+"Запис файла маніфесту неможливий. Документ залишиться непридатним для "
+"читання. Будь ласка, спробуйте зберегти документ ще раз, щоб запобігти "
+"втраті результатів вашої роботи."
+
+#: KoEncryptedStore.cpp:530
+msgid "Please enter the password to open this file."
+msgstr "Будь ласка, введіть пароль, щоб відкрити цей файл."
+
+#: KoEncryptedStore.cpp:699
+msgid "Please enter the password to encrypt the document with."
+msgstr "Будь ласка, введіть пароль для шифрування документа."
+
+#: KoEncryptedStore.cpp:715
+msgid "Do you want to save the password?"
+msgstr "Хочете зберегти пароль?"
+
+#: KoStore.cpp:182
+msgid "The folder mode is not supported for remote locations."
+msgstr "Підтримки режиму тек для віддалених адрес не передбачено."
+
+#: KoStore.cpp:183
+msgid "KOffice Storage"
+msgstr "Сховище KOffice"
+

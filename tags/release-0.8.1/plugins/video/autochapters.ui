@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AutoChapters</class>
+ <widget class="QWidget" name="AutoChapters">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>325</width>
+    <height>76</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>KMediaFactory</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="nameLabel">
+     <property name="text">
+      <string>Name (use # for digit):</string>
+     </property>
+     <property name="buddy">
+      <cstring>nameEdit</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="KLineEdit" name="nameEdit"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="intervalLabel">
+     <property name="text">
+      <string>Interval:</string>
+     </property>
+     <property name="buddy">
+      <cstring>intervalTime</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QTimeEdit" name="intervalTime">
+     <property name="displayFormat">
+      <string>hh:mm:ss</string>
+     </property>
+     <property name="time">
+      <time>
+       <hour>0</hour>
+       <minute>15</minute>
+       <second>0</second>
+      </time>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+ <customwidgets>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <includes>
+  <include location="global">kpushbutton.h</include>
+ </includes>
+ <resources/>
+ <connections/>
+</ui>

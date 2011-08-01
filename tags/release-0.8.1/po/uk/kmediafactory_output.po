@@ -1,0 +1,317 @@
+# Copyright (C) 2011 This_file_is_part_of_KMediaFactory
+# This file is distributed under the same license as the KMediaFactory package.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2011-07-23 12:41+0300\n"
+"PO-Revision-Date: 2011-07-23 14:01+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: dvdauthorobject.cpp:40
+msgid "DVD Author XML file"
+msgstr "Файл XML DVD Author"
+
+#: dvdauthorobject.cpp:66
+#, kde-format
+msgid ""
+"\n"
+"**********************************************************************\n"
+"\n"
+"This file was made with %1 - %2\n"
+"http://www.iki.fi/damu/software/kmediafactory/\n"
+"\n"
+"**********************************************************************\n"
+"\n"
+"Register usage:\n"
+"================\n"
+"g0: Playing chapter saved here.\n"
+"g1: Play this chapter when entering titleset menu. 0 == show menu.\n"
+"    Also used by Back button.\n"
+"g2: Used vmgm button is saved here\n"
+"g3: Jump to this titleset. Also used for direct play.\n"
+"g4: Used titleset button is saved here\n"
+"g5: vmgm page is saved here\n"
+"g6: titleset page is saved here\n"
+"g7: temporary variable\n"
+"\n"
+"**********************************************************************\n"
+msgstr ""
+"\n"
+"**********************************************************************\n"
+"\n"
+"Цей файл було створено за допомогою %1 - %2\n"
+"http://www.iki.fi/damu/software/kmediafactory/\n"
+"\n"
+"**********************************************************************\n"
+"\n"
+"Використання регістрів:\n"
+"================\n"
+"g0: відтворення збереженого тут розділу.\n"
+"g1: відтворення розділу за вибором пункту меню. 0 == показати меню.\n"
+"    Також використовується кнопкою «Назад».\n"
+"g2: тут зберігається кнопка vmgm.\n"
+"g3: перейти до цього набору частин. Також для безпосереднього відтв.\n"
+"g4: тут зберігається використана кнопка набору частин.\n"
+"g5: тут зберігається сторінка vmgm.\n"
+"g6: тут зберігається сторінка набору частин.\n"
+"g7: тимчасова змінна.\n"
+"\n"
+"**********************************************************************\n"
+
+#: dvdauthorobject.cpp:97
+#, kde-format
+msgid "Main menu for %1"
+msgstr "Головне меню для %1"
+
+#: dvdauthorobject.cpp:148
+msgid "Error in saving dvdauthor.xml"
+msgstr "Під час спроби зберегти dvdauthor.xml"
+
+#: dvdauthorobject.cpp:168
+msgid "DVDAuthor Project"
+msgstr "Проект DVDAuthor"
+
+#: dvdauthorobject.cpp:170 dvddirectoryobject.cpp:218 isoobject.cpp:64
+#: k3bobject.cpp:464
+msgid "Clean"
+msgstr "Спорожнити"
+
+#: dvdauthorobject.cpp:215
+msgid "DVD Author XML file is up to date"
+msgstr "Файл XML DVD Author є актуальним"
+
+#: dvddirectoryobject.cpp:49 dvddirectoryobject.cpp:217
+msgid "DVD Folder"
+msgstr "Тека DVD"
+
+#: dvddirectoryobject.cpp:134 dvddirectoryobject.cpp:142
+#, kde-format
+msgid "Processing: %1"
+msgstr "Обробка: %1"
+
+#: dvddirectoryobject.cpp:166
+#, kde-format
+msgid "Fixing: %1"
+msgstr "Виправлення: %1"
+
+#: dvddirectoryobject.cpp:282
+msgid "DVD Folder is up to date"
+msgstr "Тека DVD є актуальною"
+
+#. i18n: file: dvdinfo.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, DVDInfo)
+#: dvdinfo.cpp:48 outputplugin.cpp:74 rc.cpp:3
+msgid "DVD Info"
+msgstr "Дані щодо DVD"
+
+#: dvdinfo.cpp:77
+msgid "Analyzing DVD..."
+msgstr "Аналіз DVD…"
+
+#: dvdinfo.cpp:118
+msgid "DVD"
+msgstr "DVD"
+
+#: dvdinfo.cpp:119
+msgid "Titles"
+msgstr "Частини"
+
+#: dvdinfo.cpp:120
+msgid "Longest title"
+msgstr "Найдовша частина"
+
+#: dvdinfo.cpp:123 dvdinfo.cpp:218
+msgid "Name"
+msgstr "Назва"
+
+#: dvdinfo.cpp:124
+msgid "VMG Identifier"
+msgstr "Ідентифікатор VMG"
+
+#: dvdinfo.cpp:125
+msgid "Provider indentifier"
+msgstr "Ідентифікатор надавача"
+
+#: dvdinfo.cpp:129 dvdinfo.cpp:147
+msgid "Index"
+msgstr "Індекс"
+
+#: dvdinfo.cpp:130 dvdinfo.cpp:149
+msgid "Length"
+msgstr "Довжина"
+
+#: dvdinfo.cpp:131
+msgid "VTS ID"
+msgstr "Ід. VTS"
+
+#: dvdinfo.cpp:132
+msgid "VTS"
+msgstr "VTS"
+
+#: dvdinfo.cpp:133
+msgid "TTN"
+msgstr "TTN"
+
+#: dvdinfo.cpp:134
+msgid "PGC"
+msgstr "PGC"
+
+#: dvdinfo.cpp:135 dvdinfo.cpp:150
+msgid "Start sector"
+msgstr "Початковий сектор"
+
+#: dvdinfo.cpp:136 dvdinfo.cpp:151
+msgid "End sector"
+msgstr "Кінцевий сектор"
+
+#: dvdinfo.cpp:139
+msgid "Width"
+msgstr "Ширина"
+
+#: dvdinfo.cpp:140
+msgid "Height"
+msgstr "Висота"
+
+#: dvdinfo.cpp:141 dvdinfo.cpp:157
+msgid "Format"
+msgstr "Формат"
+
+#: dvdinfo.cpp:142
+msgid "Aspect ratio"
+msgstr "Формат"
+
+#: dvdinfo.cpp:143
+msgid "Frames per second"
+msgstr "Частота кадрів"
+
+#: dvdinfo.cpp:144
+msgid "Permitted DF"
+msgstr "Припустимий DF"
+
+#: dvdinfo.cpp:148
+msgid "Start"
+msgstr "Початок"
+
+#: dvdinfo.cpp:152
+msgid "Is chapter"
+msgstr "Є розділом"
+
+#: dvdinfo.cpp:153
+msgid "yes"
+msgstr "так"
+
+#: dvdinfo.cpp:153
+msgid "no"
+msgstr "ні"
+
+#: dvdinfo.cpp:156 dvdinfo.cpp:166
+msgid "Language"
+msgstr "Мова"
+
+#: dvdinfo.cpp:158
+msgid "Channels"
+msgstr "Канали"
+
+#: dvdinfo.cpp:159
+msgid "Sample frequency"
+msgstr "Частота фрагментів"
+
+#: dvdinfo.cpp:160
+msgid "Bitrate"
+msgstr "Біт. швидк."
+
+#: dvdinfo.cpp:161
+msgid "Quantization"
+msgstr "Квантування"
+
+#: dvdinfo.cpp:162
+msgid "AP Mode"
+msgstr "Режим AP"
+
+#: dvdinfo.cpp:163 dvdinfo.cpp:167
+msgid "Type"
+msgstr "Тип"
+
+#: dvdinfo.cpp:210
+msgid "Not a DVD."
+msgstr "Не є DVD."
+
+#: dvdinfo.cpp:219
+msgid "Size"
+msgstr "Розмір"
+
+#: dvdinfo.cpp:257
+msgid "DVD files and directories"
+msgstr "Файли і каталоги DVD"
+
+#: isoobject.cpp:15 isoobject.cpp:62
+msgid "ISO Image"
+msgstr "Образ ISO"
+
+#: isoobject.cpp:108
+msgid "ISO image is up to date"
+msgstr "Образ ISO є актуальним"
+
+#: k3bobject.cpp:44
+msgid "K3b project"
+msgstr "Проект K3b"
+
+#: k3bobject.cpp:54
+msgid "Running K3b"
+msgstr "Запуск K3b"
+
+#: k3bobject.cpp:376
+#, kde-format
+msgid "%1 - Version %2"
+msgstr "%1 — версія %2"
+
+#: k3bobject.cpp:463
+msgid "K3b Project"
+msgstr "Проект K3b"
+
+#: k3bobject.cpp:508
+msgid "K3b project is up to date"
+msgstr "Проект K3b є актуальним"
+
+#: outputplugin.cpp:91
+#, kde-format
+msgid "Preview DVD in %1"
+msgstr "Попередній перегляд DVD у %1"
+
+#: outputplugin.cpp:173
+msgid "Output"
+msgstr "Результат"
+
+#: outputplugin.cpp:174
+msgid "Output Settings"
+msgstr "Параметри результату"
+
+#. i18n: file: outputconfig.ui:6
+#. i18n: ectx: property (windowTitle), widget (QWidget, OutputConfig)
+#: rc.cpp:6
+msgid "Configure Output Plugin"
+msgstr "Налаштування додатка виведення даних"
+
+#. i18n: file: outputconfig.ui:15
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutoClean)
+#: rc.cpp:9
+msgid "Enabled"
+msgstr "Увімкнено"
+
+#. i18n: file: outputconfig.ui:22
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:12
+msgid "Auto clean temporary files:"
+msgstr "Автоматичне вилучення тимчасових файлів:"
+
+

@@ -1,0 +1,687 @@
+# Copyright (C) 2011 This_file_is_part_of_KMediaFactory
+# This file is distributed under the same license as the KMediaFactory package.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2011-07-23 12:41+0300\n"
+"PO-Revision-Date: 2011-07-23 14:44+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: kmftools.cpp:678
+#, kde-format
+msgid "Error saving file %1"
+msgstr "Помилка під час спроби зберегти файл %1"
+
+#: kmftools.cpp:704
+#, kde-format
+msgid "Error opening file %1"
+msgstr "Помилка під час відкриття файла %1"
+
+#: qdvdinfo.cpp:59 qdvdinfo.cpp:61
+msgid "Not Specified"
+msgstr "не вказано"
+
+#: qdvdinfo.cpp:60
+msgid "Unknown"
+msgstr "невідома"
+
+#: qdvdinfo.cpp:62
+msgid "Abkhazian"
+msgstr "абхазька"
+
+#: qdvdinfo.cpp:63
+msgid "Afan (Oromo)"
+msgstr "афан (оромо)"
+
+#: qdvdinfo.cpp:64
+msgid "Afar"
+msgstr "афар"
+
+#: qdvdinfo.cpp:65
+msgid "Afrikaans"
+msgstr "африкаанс"
+
+#: qdvdinfo.cpp:66
+msgid "Albanian"
+msgstr "албанська"
+
+#: qdvdinfo.cpp:67
+msgid "Amharic"
+msgstr "амхарська"
+
+#: qdvdinfo.cpp:68
+msgid "Arabic"
+msgstr "арабська"
+
+#: qdvdinfo.cpp:69
+msgid "Armenian"
+msgstr "вірменська"
+
+#: qdvdinfo.cpp:70
+msgid "Assamese"
+msgstr "ассамська"
+
+#: qdvdinfo.cpp:71
+msgid "Aymara"
+msgstr "аймарська"
+
+#: qdvdinfo.cpp:72
+msgid "Azerbaijani"
+msgstr "азербайджанська"
+
+#: qdvdinfo.cpp:73
+msgid "Bashkir"
+msgstr "башкирська"
+
+#: qdvdinfo.cpp:74
+msgid "Basque"
+msgstr "баскська"
+
+#: qdvdinfo.cpp:75
+msgid "Bengali;Bangla"
+msgstr "бенгалі (бангла)"
+
+#: qdvdinfo.cpp:76
+msgid "Bhutani"
+msgstr "бутанська"
+
+#: qdvdinfo.cpp:77
+msgid "Bihari"
+msgstr "біхарі"
+
+#: qdvdinfo.cpp:78
+msgid "Bislama"
+msgstr "біслама"
+
+#: qdvdinfo.cpp:79
+msgid "Breton"
+msgstr "бретонська"
+
+#: qdvdinfo.cpp:80
+msgid "Bulgarian"
+msgstr "болгарська"
+
+#: qdvdinfo.cpp:81
+msgid "Burmese"
+msgstr "бірманська"
+
+#: qdvdinfo.cpp:82
+msgid "Byelorussian"
+msgstr "білоруська"
+
+#: qdvdinfo.cpp:83
+msgid "Cambodian"
+msgstr "камбоджийська"
+
+#: qdvdinfo.cpp:84
+msgid "Catalan"
+msgstr "каталонська"
+
+#: qdvdinfo.cpp:85
+msgid "Chinese"
+msgstr "китайська"
+
+#: qdvdinfo.cpp:86
+msgid "Corsican"
+msgstr "корсиканська"
+
+#: qdvdinfo.cpp:87
+msgid "Croatian"
+msgstr "хорватська"
+
+#: qdvdinfo.cpp:88
+msgid "Czech"
+msgstr "чеська"
+
+#: qdvdinfo.cpp:89
+msgid "Danish"
+msgstr "данська"
+
+#: qdvdinfo.cpp:90
+msgid "Dutch"
+msgstr "голландська"
+
+#: qdvdinfo.cpp:91
+msgid "English"
+msgstr "англійська"
+
+#: qdvdinfo.cpp:92
+msgid "Esperanto"
+msgstr "есперанто"
+
+#: qdvdinfo.cpp:93
+msgid "Estonian"
+msgstr "естонська"
+
+#: qdvdinfo.cpp:94
+msgid "Faroese"
+msgstr "фарерська"
+
+#: qdvdinfo.cpp:95
+msgid "Fiji"
+msgstr "фіджийська"
+
+#: qdvdinfo.cpp:96
+msgid "Finnish"
+msgstr "фінська"
+
+#: qdvdinfo.cpp:97
+msgid "French"
+msgstr "французька"
+
+#: qdvdinfo.cpp:98
+msgid "Frisian"
+msgstr "фризька"
+
+#: qdvdinfo.cpp:99
+msgid "Galician"
+msgstr "галісійська"
+
+#: qdvdinfo.cpp:100
+msgid "Georgian"
+msgstr "грузинська"
+
+#: qdvdinfo.cpp:101
+msgid "German"
+msgstr "німецька"
+
+#: qdvdinfo.cpp:102
+msgid "Greek"
+msgstr "грецька"
+
+#: qdvdinfo.cpp:103
+msgid "Greenlandic"
+msgstr "гренландська"
+
+#: qdvdinfo.cpp:104
+msgid "Guarani"
+msgstr "гуарані"
+
+#: qdvdinfo.cpp:105
+msgid "Gujarati"
+msgstr "гуджараті"
+
+#: qdvdinfo.cpp:106
+msgid "Hausa"
+msgstr "хауса"
+
+#: qdvdinfo.cpp:107
+msgid "Hebrew"
+msgstr "іврит"
+
+#: qdvdinfo.cpp:108
+msgid "Hindi"
+msgstr "хінді"
+
+#: qdvdinfo.cpp:109
+msgid "Hungarian"
+msgstr "угорська"
+
+#: qdvdinfo.cpp:110
+msgid "Icelandic"
+msgstr "ісландська"
+
+#: qdvdinfo.cpp:111
+msgid "Indonesian"
+msgstr "індонезійська"
+
+#: qdvdinfo.cpp:112
+msgid "Interlingua"
+msgstr "інтерлінгва"
+
+#: qdvdinfo.cpp:113
+msgid "Interlingue"
+msgstr "окциденталь"
+
+#: qdvdinfo.cpp:114
+msgid "Inupiak"
+msgstr "інупіак"
+
+#: qdvdinfo.cpp:115
+msgid "Irish"
+msgstr "ірландська"
+
+#: qdvdinfo.cpp:116
+msgid "Italian"
+msgstr "італійська"
+
+#: qdvdinfo.cpp:117
+msgid "Japanese"
+msgstr "японська"
+
+#: qdvdinfo.cpp:118
+msgid "Javanese"
+msgstr "яванська"
+
+#: qdvdinfo.cpp:119
+msgid "Kannada"
+msgstr "каннада"
+
+#: qdvdinfo.cpp:120
+msgid "Kashmiri"
+msgstr "кашмірська"
+
+#: qdvdinfo.cpp:121
+msgid "Kazakh"
+msgstr "казахська"
+
+#: qdvdinfo.cpp:122
+msgid "Kinyarwanda"
+msgstr "кіньяруанда"
+
+#: qdvdinfo.cpp:123
+msgid "Kirghiz"
+msgstr "киргизька"
+
+#: qdvdinfo.cpp:124
+msgid "Kurundi"
+msgstr "курунді"
+
+#: qdvdinfo.cpp:125
+msgid "Korean"
+msgstr "корейська"
+
+#: qdvdinfo.cpp:126
+msgid "Kurdish"
+msgstr "курдська"
+
+#: qdvdinfo.cpp:127
+msgid "Laothian"
+msgstr "лаоська"
+
+#: qdvdinfo.cpp:128
+msgid "Latin"
+msgstr "латинська"
+
+#: qdvdinfo.cpp:129
+msgid "Latvian;Lettish"
+msgstr "латвійська"
+
+#: qdvdinfo.cpp:130
+msgid "Lingala"
+msgstr "лінгала"
+
+#: qdvdinfo.cpp:131
+msgid "Lithuanian"
+msgstr "литовська"
+
+#: qdvdinfo.cpp:132
+msgid "Macedonian"
+msgstr "македонська"
+
+#: qdvdinfo.cpp:133
+msgid "Malagasy"
+msgstr "малагасійська"
+
+#: qdvdinfo.cpp:134
+msgid "Malay"
+msgstr "малайська"
+
+#: qdvdinfo.cpp:135
+msgid "Malayalam"
+msgstr "малаялам"
+
+#: qdvdinfo.cpp:136
+msgid "Maltese"
+msgstr "мальтійська"
+
+#: qdvdinfo.cpp:137
+msgid "Maori"
+msgstr "маорійська"
+
+#: qdvdinfo.cpp:138
+msgid "Marathi"
+msgstr "мараті"
+
+#: qdvdinfo.cpp:139
+msgid "Moldavian"
+msgstr "молдавська"
+
+#: qdvdinfo.cpp:140
+msgid "Mongolian"
+msgstr "монгольська"
+
+#: qdvdinfo.cpp:141
+msgid "Nauru"
+msgstr "науру"
+
+#: qdvdinfo.cpp:142
+msgid "Nepali"
+msgstr "непальська"
+
+#: qdvdinfo.cpp:143
+msgid "Norwegian"
+msgstr "норвезька"
+
+#: qdvdinfo.cpp:144
+msgid "Occitan"
+msgstr "окситанська"
+
+#: qdvdinfo.cpp:145
+msgid "Oriya"
+msgstr "орія"
+
+#: qdvdinfo.cpp:146
+msgid "Pashto;Pushto"
+msgstr "пушту"
+
+#: qdvdinfo.cpp:147
+msgid "Persian (Farsi)"
+msgstr "фарсі"
+
+#: qdvdinfo.cpp:148
+msgid "Polish"
+msgstr "польська"
+
+#: qdvdinfo.cpp:149
+msgid "Portuguese"
+msgstr "португальська"
+
+#: qdvdinfo.cpp:150
+msgid "Punjabi"
+msgstr "пенджабі"
+
+#: qdvdinfo.cpp:151
+msgid "Quechua"
+msgstr "кечуа"
+
+#: qdvdinfo.cpp:152
+msgid "Rhaeto-Romance"
+msgstr "ретороманська"
+
+#: qdvdinfo.cpp:153
+msgid "Romanian"
+msgstr "румунська"
+
+#: qdvdinfo.cpp:154
+msgid "Russian"
+msgstr "російська"
+
+#: qdvdinfo.cpp:155
+msgid "Samoan"
+msgstr "самоанська"
+
+#: qdvdinfo.cpp:156
+msgid "Sangho"
+msgstr "сангхо"
+
+#: qdvdinfo.cpp:157
+msgid "Sanskrit"
+msgstr "санскрит"
+
+#: qdvdinfo.cpp:158
+msgid "Scots Gaelic"
+msgstr "шотландська гаельська"
+
+#: qdvdinfo.cpp:159
+msgid "Serbian"
+msgstr "сербська"
+
+#: qdvdinfo.cpp:160
+msgid "Serbo-Croatian"
+msgstr "сербо-хорватська"
+
+#: qdvdinfo.cpp:161
+msgid "Sesotho"
+msgstr "сесото"
+
+#: qdvdinfo.cpp:162
+msgid "Setswana"
+msgstr "сетсвана"
+
+#: qdvdinfo.cpp:163
+msgid "Shona"
+msgstr "шона"
+
+#: qdvdinfo.cpp:164
+msgid "Sindhi"
+msgstr "синдхі"
+
+#: qdvdinfo.cpp:165
+msgid "Singhalese"
+msgstr "сінгалезька"
+
+#: qdvdinfo.cpp:166
+msgid "Siswati"
+msgstr "сісваті"
+
+#: qdvdinfo.cpp:167
+msgid "Slovak"
+msgstr "словацька"
+
+#: qdvdinfo.cpp:168
+msgid "Slovenian"
+msgstr "словенська"
+
+#: qdvdinfo.cpp:169
+msgid "Somali"
+msgstr "сомалійська"
+
+#: qdvdinfo.cpp:170
+msgid "Spanish"
+msgstr "іспанська"
+
+#: qdvdinfo.cpp:171
+msgid "Sundanese"
+msgstr "сунданська"
+
+#: qdvdinfo.cpp:172
+msgid "Swahili"
+msgstr "суахілі"
+
+#: qdvdinfo.cpp:173
+msgid "Swedish"
+msgstr "шведська"
+
+#: qdvdinfo.cpp:174
+msgid "Tagalog"
+msgstr "тагалог"
+
+#: qdvdinfo.cpp:175
+msgid "Tajik"
+msgstr "таджицька"
+
+#: qdvdinfo.cpp:176
+msgid "Tamil"
+msgstr "тамільська"
+
+#: qdvdinfo.cpp:177
+msgid "Tatar"
+msgstr "татарська"
+
+#: qdvdinfo.cpp:178
+msgid "Telugu"
+msgstr "телугу"
+
+#: qdvdinfo.cpp:179
+msgid "Thai"
+msgstr "таїландська"
+
+#: qdvdinfo.cpp:180
+msgid "Tibetan"
+msgstr "тибетська"
+
+#: qdvdinfo.cpp:181
+msgid "Tigrinya"
+msgstr "тигринійська"
+
+#: qdvdinfo.cpp:182
+msgid "Tonga"
+msgstr "тонга"
+
+#: qdvdinfo.cpp:183
+msgid "Tsonga"
+msgstr "цонга"
+
+#: qdvdinfo.cpp:184
+msgid "Turkish"
+msgstr "турецька"
+
+#: qdvdinfo.cpp:185
+msgid "Turkmen"
+msgstr "туркменська"
+
+#: qdvdinfo.cpp:186
+msgid "Twi"
+msgstr "тві"
+
+#: qdvdinfo.cpp:187
+msgid "Ukrainian"
+msgstr "українська"
+
+#: qdvdinfo.cpp:188
+msgid "Urdu"
+msgstr "урду"
+
+#: qdvdinfo.cpp:189
+msgid "Uzbek"
+msgstr "узбецька"
+
+#: qdvdinfo.cpp:190
+msgid "Vietnamese"
+msgstr "в'єтнамська"
+
+#: qdvdinfo.cpp:191
+msgid "Volapuk"
+msgstr "воляпюк"
+
+#: qdvdinfo.cpp:192
+msgid "Welsh"
+msgstr "валійська"
+
+#: qdvdinfo.cpp:193
+msgid "Wolof"
+msgstr "волоф"
+
+#: qdvdinfo.cpp:194
+msgid "Xhosa"
+msgstr "хоза"
+
+#: qdvdinfo.cpp:195
+msgid "Yiddish"
+msgstr "ідиш"
+
+#: qdvdinfo.cpp:196
+msgid "Yoruba"
+msgstr "йоруба"
+
+#: qdvdinfo.cpp:197
+msgid "Zulu"
+msgstr "зулуська"
+
+#: qdvdinfo.cpp:204 qdvdinfo.cpp:222
+msgid "Undefined"
+msgstr "Не визначено"
+
+#: qdvdinfo.cpp:204 qdvdinfo.cpp:222
+msgid "Normal"
+msgstr "Звичайний"
+
+#: qdvdinfo.cpp:204
+msgid "Large"
+msgstr "Для дорослих"
+
+#: qdvdinfo.cpp:205
+msgid "Children"
+msgstr "Для дітей"
+
+#: qdvdinfo.cpp:205 qdvdinfo.cpp:207 qdvdinfo.cpp:208 qdvdinfo.cpp:209
+msgid "reserved"
+msgstr "зарезервовано"
+
+#: qdvdinfo.cpp:205
+msgid "Normal Captions"
+msgstr "Звичайні підписи"
+
+#: qdvdinfo.cpp:206
+msgid "Large Captions"
+msgstr "Великі підписи"
+
+#: qdvdinfo.cpp:206
+msgid "Children Captions"
+msgstr "Підписи для дітей"
+
+#: qdvdinfo.cpp:208
+msgid "Forced"
+msgstr "Примусово"
+
+#: qdvdinfo.cpp:209
+msgid "Director"
+msgstr "Режисер"
+
+#: qdvdinfo.cpp:209
+msgid "Large Director"
+msgstr "Дорослий режисер"
+
+#: qdvdinfo.cpp:210
+msgid "Children Director"
+msgstr "Дитячий режисер"
+
+#: qdvdinfo.cpp:222
+msgid "Impaired"
+msgstr "Для особливих потреб"
+
+#: qdvdinfo.cpp:223
+msgid "Comments1"
+msgstr "Коментар1"
+
+#: qdvdinfo.cpp:223
+msgid "Comments2"
+msgstr "Коментар2"
+
+#: qdvdinfo.cpp:233
+msgid "P&S + Letter"
+msgstr "П/С з Пошт. скр."
+
+#: qdvdinfo.cpp:233
+msgid "Pan&Scan"
+msgstr "Пан./Скан."
+
+#: qdvdinfo.cpp:233
+msgid "Letterbox"
+msgstr "Пошт. скр."
+
+#: qdvdinfo.cpp:234
+msgid "?"
+msgstr "?"
+
+#: qdvdinfo.cpp:334
+#, kde-format
+msgid "Cell: %1"
+msgstr "Комірка: %1"
+
+#: qdvdinfo.cpp:408
+#, kde-format
+msgid "Subtitle: %1%2"
+msgstr "Субтитри: %1%2"
+
+#: qdvdinfo.cpp:515
+#, kde-format
+msgid "Audio: %1, %2 channels%3"
+msgstr "Звук: %1, %2-канальний%3"
+
+#: qdvdinfo.cpp:539
+#, kde-format
+msgid "Video: %1, %2x%3, %4"
+msgstr "Відео: %1, %2⨯%3, %4"
+
+#: qdvdinfo.cpp:738
+#, kde-format
+msgid "Title: %1, %2"
+msgstr "Частина: %1, %2"
+
+#: qdvdinfo.cpp:877 qdvdinfo.cpp:884 qdvdinfo.cpp:891
+msgctxt "Unknown DVD title"
+msgid "unknown"
+msgstr "невідомо"
+
