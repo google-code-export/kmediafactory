@@ -1,0 +1,448 @@
+# Copyright (C) 2011 This_file_is_part_of_KMediaFactory
+# This file is distributed under the same license as the KMediaFactory package.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: damu@iki.fi\n"
+"POT-Creation-Date: 2011-07-23 12:41+0300\n"
+"PO-Revision-Date: 2011-07-23 14:00+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: kmediafactory.cpp:113 kmediafactory.cpp:538 projectoptions.cpp:81
+msgid "Project"
+msgstr "Проект"
+
+#: kmediafactory.cpp:114
+msgid "Project Settings"
+msgstr "Параметри проекту"
+
+#. i18n: file: mediapage.ui:20
+#. i18n: ectx: property (windowTitle), widget (QWidget, MediaPage)
+#: kmediafactory.cpp:121 rc.cpp:30
+msgid "Media"
+msgstr "Дані"
+
+#: kmediafactory.cpp:122
+msgid "Add Media To Project"
+msgstr "Додайте дані до проекту"
+
+#: kmediafactory.cpp:128
+msgid "Template"
+msgstr "Шаблон"
+
+#: kmediafactory.cpp:129
+msgid "Select Project Template"
+msgstr "Виберіть шаблон проекту"
+
+#. i18n: file: outputpage.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, OutputPage)
+#: kmediafactory.cpp:139 rc.cpp:33
+msgid "Output"
+msgstr "Результат"
+
+#: kmediafactory.cpp:140
+msgid "Choose Desired Output"
+msgstr "Виберіть бажаний результат"
+
+#: kmediafactory.cpp:192
+msgid "Get New Tools"
+msgstr "Отримання нових інструментів"
+
+#: kmediafactory.cpp:207
+msgid "Delete"
+msgstr "Вилучити"
+
+#: kmediafactory.cpp:266
+#, kde-format
+msgid "Remove \"%1\" from project?"
+msgstr "Вилучити «%1» з проекту?"
+
+#: kmediafactory.cpp:267
+msgid "Remove Media"
+msgstr "Вилучити дані"
+
+#: kmediafactory.cpp:403 templatepage.cpp:309
+#, kde-format
+msgid "Could not write to file: %1"
+msgstr "Спроба запису до файла «%1» завершилася невдало."
+
+#: kmediafactory.cpp:539
+msgid "Default Project Settings"
+msgstr "Параметри типового проекту"
+
+#: kmediafactory.cpp:540
+msgid "Tools"
+msgstr "Інструменти"
+
+#: kmediafactory.cpp:541
+msgid "External Tools"
+msgstr "Зовнішні інструменти"
+
+#: kmediafactory.cpp:581
+msgid "Save changes to project?"
+msgstr "Зберегти зміни до проекту?"
+
+#: kmfapplication.cpp:218
+#, kde-format
+msgid ""
+"KLauncher could not be reached via D-Bus, error when calling %1:\n"
+"%2\n"
+msgstr ""
+"Не вдалося дістатися до KLauncher через D-Bus; помилка виклику %1:\n"
+"%2\n"
+
+#: kmfplugininterface.cpp:282
+msgid "Progress:"
+msgstr "Поступ:"
+
+#: kmfprogressitemdelegate.cpp:56
+#, kde-format
+msgid "%1%"
+msgstr "%1%"
+
+#: kmfproject.cpp:106 projectoptions.cpp:123
+msgid "Untitled"
+msgstr "Без назви"
+
+#: kmfproject.cpp:114
+#, kde-format
+msgid "Project%1"
+msgstr "Проект%1"
+
+#: kmfproject.cpp:136
+msgid "No media files."
+msgstr "Немає файлів даних."
+
+#: kmfproject.cpp:141
+msgid "No template selected."
+msgstr "Не вибрано шаблона."
+
+#: kmfproject.cpp:146
+msgid "No output type selected."
+msgstr "Не вибрано типу результату."
+
+#: kmfproject.cpp:472
+#, kde-format
+msgid "Do you want to overwrite %1"
+msgstr "Чи бажаєте ви перезаписати %1?"
+
+#: logview.cpp:30
+msgid "Log"
+msgstr "Журнал"
+
+#: main.cpp:37
+msgid "KMediaFactory"
+msgstr "KMediaFactory"
+
+#: main.cpp:38
+msgid "Template based DVD authoring software."
+msgstr "Програма для створення DVD на основі шаблонів."
+
+#: main.cpp:43
+msgid "Petri Damsten"
+msgstr "Petri Damsten"
+
+#: main.cpp:43 main.cpp:45
+msgid "Developer"
+msgstr "Розробник"
+
+#: main.cpp:45
+msgid "Craig Drummond"
+msgstr "Craig Drummond"
+
+#: main.cpp:50
+msgid "Document to open"
+msgstr "Документ, який слід відкрити"
+
+#: main.cpp:58
+msgid "DVD Author"
+msgstr "DVD Author"
+
+#: main.cpp:59
+msgid "MJPEG Tools"
+msgstr "MJPEG Tools"
+
+#: main.cpp:94
+msgid ""
+"<p>KMediaFactory uses the following packages, and these have not been found "
+"on your system.</p><p>You must install them before KMediaFactory can "
+"continue.</p>"
+msgstr ""
+"<p>KMediaFactory використовує вказані нижче пакунки. Цього програмного "
+"забезпечення у системі не знайдено.</"
+"p><p>Вам слід встановити це програмне забезпечення, перш ніж KMediaFactory "
+"зможе продовжити роботу.</p>"
+
+#: main.cpp:101
+#, kde-format
+msgid ""
+"<p>KMediaFactory uses \"%1\", and this has not been found on your system.</"
+"p><p>You must install this before KMediaFactory can continue.</p>"
+msgstr ""
+"<p>KMediaFactory використовує «%1». Цього програмного забезпечення у системі "
+"не знайдено.</"
+"p><p>Вам слід встановити це програмне забезпечення, перш ніж KMediaFactory "
+"зможе продовжити роботу.</p>"
+
+#: mediapage.cpp:264
+#, kde-format
+msgid "Titles: %1 Duration: %2"
+msgstr "Частин: %1 Тривалість: %2"
+
+#: outputpage.cpp:141
+msgid "User cancelled."
+msgstr "Скасовано користувачем."
+
+#: outputpage.cpp:169
+msgid "Preparing files..."
+msgstr "Приготування файлів…"
+
+#: outputpage.cpp:178
+msgid "Making files..."
+msgstr "Створення файлів…"
+
+#. i18n: file: kmfoptions.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, KMFOptions)
+#: rc.cpp:3
+msgid "KMediaFactory Settings"
+msgstr "Параметри KMediaFactory"
+
+#. i18n: file: kmfoptions.ui:23
+#. i18n: ectx: property (text), widget (QLabel, typeLabel)
+#: rc.cpp:6
+msgid "Default project type:"
+msgstr "Типовий тип проекту:"
+
+#. i18n: file: kmfoptions.ui:37
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_DefaultProjectType)
+#: rc.cpp:9
+msgid "DVD-NTSC"
+msgstr "DVD-NTSC"
+
+#. i18n: file: kmfoptions.ui:42
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_DefaultProjectType)
+#: rc.cpp:12
+msgid "DVD-PAL"
+msgstr "DVD-PAL"
+
+#. i18n: file: kmfoptions.ui:50
+#. i18n: ectx: property (text), widget (QLabel, aspectLabel)
+#: rc.cpp:15
+msgid "Default project aspect ratio:"
+msgstr "Типовий формат проекту:"
+
+#. i18n: file: kmfoptions.ui:64
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_DefaultAspectRatio)
+#. i18n: file: projectoptions.ui:75
+#. i18n: ectx: property (text), item, widget (KComboBox, aspectComboBox)
+#: rc.cpp:18 rc.cpp:57
+msgid "4:3"
+msgstr "4:3"
+
+#. i18n: file: kmfoptions.ui:69
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_DefaultAspectRatio)
+#. i18n: file: projectoptions.ui:80
+#. i18n: ectx: property (text), item, widget (KComboBox, aspectComboBox)
+#: rc.cpp:21 rc.cpp:60
+msgid "16:9"
+msgstr "16:9"
+
+#. i18n: file: kmfoptions.ui:77
+#. i18n: ectx: property (text), widget (QLabel, directoryLabel)
+#: rc.cpp:24
+msgid "Default destination folder:"
+msgstr "Типова тека призначення:"
+
+#. i18n: file: logview.ui:20
+#. i18n: ectx: property (windowTitle), widget (QWidget, LogView)
+#: rc.cpp:27
+msgid "Log viewer"
+msgstr "Переглядач журналів"
+
+#. i18n: file: outputpage.ui:131
+#. i18n: ectx: property (text), widget (QToolButton, showLogPushBtn)
+#: rc.cpp:36
+msgid "Show &Log"
+msgstr "Показати &журнал"
+
+#. i18n: file: outputpage.ui:153
+#. i18n: ectx: property (text), widget (QToolButton, stopPushBtn)
+#: rc.cpp:39
+msgid "S&top"
+msgstr "З&упинити"
+
+#. i18n: file: outputpage.ui:172
+#. i18n: ectx: property (text), widget (QToolButton, startButton)
+#: rc.cpp:42
+msgid "&Start"
+msgstr "&Почати"
+
+#. i18n: file: projectoptions.ui:20
+#. i18n: ectx: property (windowTitle), widget (QWidget, ProjectOptions)
+#: rc.cpp:45
+msgid "Project Options"
+msgstr "Параметри проекту"
+
+#. i18n: file: projectoptions.ui:29
+#. i18n: ectx: property (text), widget (QLabel, titleLabel)
+#: rc.cpp:48
+msgid "Title:"
+msgstr "Назва:"
+
+#. i18n: file: projectoptions.ui:45
+#. i18n: ectx: property (text), widget (QLabel, typeLabel)
+#: rc.cpp:51
+msgid "Type:"
+msgstr "Тип:"
+
+#. i18n: file: projectoptions.ui:61
+#. i18n: ectx: property (text), widget (QLabel, aspectLabel)
+#: rc.cpp:54
+msgid "Aspect ratio:"
+msgstr "Формат:"
+
+#. i18n: file: projectoptions.ui:88
+#. i18n: ectx: property (text), widget (QLabel, directoryLabel)
+#: rc.cpp:63
+msgid "Destination folder:"
+msgstr "Тека призначення:"
+
+#. i18n: file: templatepage.ui:20
+#. i18n: ectx: property (windowTitle), widget (QWidget, TemplatePage)
+#: rc.cpp:66
+msgid "Templates"
+msgstr "Шаблони"
+
+#. i18n: file: toolproperties.ui:20
+#. i18n: ectx: property (windowTitle), widget (QWidget, ToolProperties)
+#: rc.cpp:69 toolproperties.cpp:35
+msgid "Tool Properties"
+msgstr "Властивості інструментів"
+
+#. i18n: file: toolproperties.ui:68
+#. i18n: ectx: property (text), widget (QLabel, nameLabel)
+#: rc.cpp:72
+msgid "Name:"
+msgstr "Назва:"
+
+#. i18n: file: toolproperties.ui:84
+#. i18n: ectx: property (text), widget (QLabel, descriptionLabel)
+#: rc.cpp:75
+msgid "Description:"
+msgstr "Опис:"
+
+#. i18n: file: toolproperties.ui:100
+#. i18n: ectx: property (text), widget (QLabel, commandLabel)
+#: rc.cpp:78
+msgid "Command:"
+msgstr "Команда:"
+
+#. i18n: file: toolproperties.ui:116
+#. i18n: ectx: property (text), widget (QLabel, workPathLabel)
+#: rc.cpp:81
+msgid "Work path:"
+msgstr "Робочий каталог:"
+
+#. i18n: file: toolproperties.ui:159
+#. i18n: ectx: property (text), widget (QCheckBox, mediaMenuCheckBox)
+#: rc.cpp:84
+msgid "Place in media button bar"
+msgstr "Розташувати на панелі кнопок"
+
+#. i18n: file: toolproperties.ui:166
+#. i18n: ectx: property (text), widget (QCheckBox, runInTerminalCheckBox)
+#: rc.cpp:87
+msgid "Run in terminal"
+msgstr "Виконувати в терміналі"
+
+#. i18n: file: tools.ui:53
+#. i18n: ectx: property (text), widget (KPushButton, addButton)
+#: rc.cpp:90
+msgid "Add"
+msgstr "Додати"
+
+#. i18n: file: tools.ui:66
+#. i18n: ectx: property (text), widget (KPushButton, propertiesButton)
+#: rc.cpp:93
+msgid "Properties"
+msgstr "Властивості"
+
+#. i18n: file: tools.ui:79
+#. i18n: ectx: property (text), widget (KPushButton, removeButton)
+#: rc.cpp:96
+msgid "Remove"
+msgstr "Вилучити"
+
+#. i18n: file: kmediafactoryui.rc:5
+#. i18n: ectx: Menu (media)
+#: rc.cpp:99
+msgid "&Media"
+msgstr "&Дані"
+
+#. i18n: file: kmediafactoryui.rc:9
+#. i18n: ectx: Menu (Tools)
+#: rc.cpp:102
+msgid "&Tools"
+msgstr "&Інструменти"
+
+#. i18n: file: kmediafactoryui.rc:31
+#. i18n: ectx: ToolBar (mainToolBar)
+#: rc.cpp:105
+msgid "Main Toolbar"
+msgstr "Головна панель"
+
+#: sizewidget.cpp:52 sizewidget.cpp:121
+#, kde-format
+msgid "Capacity (%1) exceeded by %2"
+msgstr "Місткість (%1) перевищено на %2"
+
+#: sizewidget.cpp:55
+#, kde-format
+msgid "%1 of %2 used (%3%)"
+msgstr "Використано %1 з %2 (%3%)"
+
+#: templatepage.cpp:203
+msgid "Save Image..."
+msgstr "Зберегти зображення…"
+
+#: templatepage.cpp:205
+msgctxt "Whether image is shown scaled or not"
+msgid "Scaled"
+msgstr "Масштабоване"
+
+#: templatepage.cpp:259
+msgid "Chapter Page"
+msgstr "Сторінка розділів"
+
+#: templatepage.cpp:261
+msgid "Main Page"
+msgstr "Основна сторінка"
+
+#: templatepage.cpp:263
+#, kde-format
+msgctxt "<page name> <page number>"
+msgid "%1 %2"
+msgstr "%1 %2"
+
+#: tools.cpp:97
+msgid "Name"
+msgstr "Назва"
+
+#: tools.cpp:100
+msgid "Description"
+msgstr "Опис"
+
+#: kmfobjectlistmodel.h:60
+msgid "Title"
+msgstr "Заголовок"
+
+
