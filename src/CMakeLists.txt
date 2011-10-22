@@ -35,9 +35,9 @@ qt4_add_dbus_adaptor(kmediafactory_SRCS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmed
 kde4_add_kcfg_files(kmediafactory_SRCS kmediafactorysettings.kcfgc)
 kde4_add_executable(kmediafactory ${kmediafactory_SRCS})
 if (KDE_4_4)
-target_link_libraries(kmediafactory kmf kmediafactoryinterfaces ${KDE4_KNEWSTUFF3_LIBS} ${QT_QTWEBKIT_LIBRARY})
+target_link_libraries(kmediafactory kmf kmediafactoryinterfaces ${KDE4_KIO_LIBS} ${KDE4_KNEWSTUFF3_LIBS} ${KDE4_THREADWEAVER_LIBRARIES} ${QT_QTWEBKIT_LIBRARY})
 else (KDE_4_4)
-target_link_libraries(kmediafactory kmf kmediafactoryinterfaces ${KDE4_KNEWSTUFF2_LIBS} ${QT_QTWEBKIT_LIBRARY})
+target_link_libraries(kmediafactory kmf kmediafactoryinterfaces ${KDE4_KIO_LIBS} ${KDE4_KNEWSTUFF2_LIBS} ${KDE4_THREADWEAVER_LIBRARIES} ${QT_QTWEBKIT_LIBRARY})
 endif (KDE_4_4)
 
 install(TARGETS kmediafactory DESTINATION ${BIN_INSTALL_DIR})
