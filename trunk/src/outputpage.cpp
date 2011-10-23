@@ -24,6 +24,7 @@
 #include <QtGui/QStandardItemModel>
 #include <QtGui/QTextDocument>
 #include <QtGui/QToolButton>
+#include <QtDBus/QDBusConnection>
 
 #include <KAboutData>
 #include <KCursor>
@@ -60,6 +61,7 @@ OutputPage::OutputPage(QWidget *parent)
     m_model = new QStandardItemModel();
     progressListView->setModel(m_model);
     progressListView->setItemDelegate(new KMFProgressItemDelegate());
+    m_unityMessage=QDBusMessage::createSignal("/KMediaFactory", "com.canonical.Unity.LauncherEntry", "Update");
 }
 
 OutputPage::~OutputPage()
@@ -165,13 +167,13 @@ void OutputPage::start()
     kmfApp->interface()->clearJobs();
     m_items.clear();
     m_model->clear();
-    progressBar->setValue(0);
+    updateProgress(0);
     message(KMF::Root, KMF::Info, i18n("Preparing files..."));
 
     if (kmfApp->project()->prepare(m_type)) {
         int jobs = kmfApp->interface()->jobCount();
         progressBar->setMaximum(jobs + 1);
-        progressBar->setValue(1);
+        updateProgress(1);
 
         // Run jobs
         if (jobs) {
@@ -188,7 +190,7 @@ void OutputPage::jobDone(ThreadWeaver::Job *job)
 {
     Q_UNUSED(job);
     CHECK_IF_STOPPED();
-    progressBar->setValue(progressBar->value() + 1);
+    updateProgress(progressBar->value() + 1);
     if (ThreadWeaver::Weaver::instance()->queueLength() > 0 &&
         kmfApp->interface()->executableJobsRemaining() == false) {
         finished();
@@ -205,6 +207,7 @@ void OutputPage::finished()
     stopPushBtn->setEnabled(false);
     startButton->setEnabled(true);
     kmfApp->mainWindow()->enableUi(true);
+    updateProgress(progressBar->value());
 }
 
 void OutputPage::currentPageChanged(KPageWidgetItem *current, KPageWidgetItem *)
@@ -231,7 +234,7 @@ void OutputPage::currentPageChanged(KPageWidgetItem *current, KPageWidgetItem *)
 
     if (/*current->parent() == this*/ isVisible()) {
         startButton->setEnabled(kmfApp->project()->mediaObjects()->count() > 0);
-        progressBar->setValue(0);
+        updateProgress(0);
     }
 
     // Arranges icon in a nice row. Otherwise icons are arranged in one column
@@ -385,6 +388,19 @@ QString OutputPage::makeLog()
     s += "</div></body></html>";
 
     return s;
+}
+
+void OutputPage::updateProgress(int value)
+{
+    progressBar->setValue(value);
+    QList<QVariant> args;
+    QMap<QString, QVariant> props;
+    props["progress-visible"]=value>0 && progressBar->maximum()>0 && stopPushBtn->isEnabled();
+    props["progress"]=value>0 && progressBar->maximum()>0 ? ((double)value)/progressBar->maximum() : 0.0;
+    args.append("application://kmediafactory.desktop");
+    args.append(props);
+    m_unityMessage.setArguments(args);
+    QDBusConnection::sessionBus().send(m_unityMessage);
 }
 
 #include "outputpage.moc"
