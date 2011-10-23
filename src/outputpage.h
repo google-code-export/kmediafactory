@@ -22,6 +22,7 @@
 #define OUTPUTPAGE_H
 
 #include <QtGui/QMenu>
+#include <QtDBus/QDBusMessage>
 
 #include <ui_outputpage.h>
 #include "kmfplugininterface.h"
@@ -63,8 +64,10 @@ class OutputPage : public QWidget, public Ui::OutputPage
         QMap<uint, QStandardItem *> m_items;
         QString m_type;
         QStandardItemModel *m_model;
+        QDBusMessage m_unityMessage;
 
         QString makeLog();
+        void updateProgress(int value);
 };
 
 #endif // OUTPUTPAGE_H
