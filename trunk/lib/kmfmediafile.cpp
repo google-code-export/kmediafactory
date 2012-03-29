@@ -33,6 +33,12 @@ QMap<QString, KMFMediaFile> KMFMediaFile::m_cache;
 KMFMediaFile::KMFMediaFile(const QString &file)
 {
     m_file = file;
+    m_aspectRatio = QDVD::VideoTrack::Aspect_Unknown;
+    m_frameRate = 0;
+    m_audioStreams = 0;
+    m_dvdCompatible = false;
+    m_duration = KMF::Time(0);
+    m_resolution = QSize(0, 0);
 
     if (!m_file.isEmpty()) {
         probe();
@@ -62,6 +68,7 @@ bool KMFMediaFile::probe()
         m_dvdCompatible = video.getCodec()=="mpeg2video";
         m_duration = KMF::Time(video.getDuration());
         m_resolution = QSize(video.getWidth(), video.getHeight());
+        return true;
     }
 
     return false;
