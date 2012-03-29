@@ -371,7 +371,7 @@ bool VideoObject::fromXML(const QDomElement &element)
                             bool chapter = (e2.attribute("chapter") == "1");
                             bool hidden = (e2.attribute("hidden") == "1");
 
-                            if (!e2.hasAttribute("length") || e2.isEmpty()) {
+                            if (!e2.hasAttribute("length") || e2.attribute("length").isEmpty()) {
                                 parseLengths = true;
                             }
 
