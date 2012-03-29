@@ -1096,7 +1096,7 @@ void VideoObject::parseCellLengths()
         if (!next.isNull()) {
             (*it).setLength(next - (*it).start());
         } else {
-            (*it).setLength(QTime());
+            (*it).setLength(QTime(0, 0));
         }
     }
 }
