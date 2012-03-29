@@ -138,7 +138,11 @@ void KMFLabel::paintWidget(QImage *layer, bool shdw) const
     QString lt = layer->text("layer");
     QRect rc = (shdw) ? paintRect(shadow().offset()) : paintRect();
     QColor rgb = (shdw) ? shadow().color() : color();
-    KMF::Rect textrc(0, 0, rc.width(), rc.height());
+    KMF::Rect textrc(QPoint(0, 0), fm.size(Qt::TextSingleLine, m_text));
+
+    if (textrc.width() > rc.width()) {
+      textrc.setWidth(rc.width());
+    }
 
     p.setPen(QPen(rgb));
     p.setBrush(QBrush());
