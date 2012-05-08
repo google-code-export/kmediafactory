@@ -21,4 +21,7 @@ Bug fixes:
 # gettext                                          kaffeine                   #
 # kdelibs5-dev                                     xine-ui                    #
 # libkexiv2-7-dev                                  melt                       #
+# libavcodec-dev                                                              #
+# libswscale-dev                                                              #
+# libavformat-dev                                                             #
 # --------------------------------------------------------------------------- #
