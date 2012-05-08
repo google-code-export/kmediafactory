@@ -597,15 +597,15 @@ QVariant VideoObject::writeDvdAuthorXml(QVariantList args) const
             lang = "xx";
         }
 
-        QDomElement sub = doc.createElement("subpicture");
+        QDomElement sub2 = doc.createElement("subpicture");
 
         if ((lang == preferredLanguage) && (subFound == false)) {
             subFound = true;
             subTrack = i;
         }
 
-        sub.setAttribute("lang", lang);
-        titles.appendChild(sub);
+        sub2.setAttribute("lang", lang);
+        titles.appendChild(sub2);
         ++i;
     }
 
