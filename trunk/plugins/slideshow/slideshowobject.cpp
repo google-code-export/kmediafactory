@@ -1146,13 +1146,10 @@ QVariant SlideshowObject::writeDvdAuthorXml(QVariantList args) const
 
     pgc.appendChild(vob);
 
-    if (m_loop) {
-        QDomElement postElem = doc.createElement("post");
-        QDomText text2;
-        text2 = doc.createTextNode(" jump chapter 1 ; ");
-        postElem.appendChild(text2);
-        pgc.appendChild(postElem);
-    }
+    QDomElement postElem = doc.createElement("post");
+    QDomText text2 = doc.createTextNode(m_loop ? " jump chapter 1 ; " : " call vmgm menu 1 ; ");
+    postElem.appendChild(text2);
+    pgc.appendChild(postElem);
 
     titles.appendChild(pgc);
 
