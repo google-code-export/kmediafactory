@@ -1,60 +1,63 @@
-# SOME DESCRIPTIVE TITLE.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+# Julia Dronova <juliette.tux@gmail.com>, 2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: damu@iki.fi\n"
 "POT-Creation-Date: 2008-05-23 12:23+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2013-08-23 16:34+0400\n"
+"Last-Translator: Julia Dronova <juliette.tux@gmail.com>\n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: ENCODING\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 1.5\n"
 
 #: kmfmenu.cpp:128 kmfmenupage.cpp:57
 #, kde-format
 msgid "Menu: %1"
-msgstr ""
+msgstr "Меню: %1"
 
 #: kmfmenupage.cpp:82
 msgid "Could not paint menu."
-msgstr ""
+msgstr "Не удалось нарисовать меню."
 
 #: kmfmenupage.cpp:88
 msgid "Could not write spumux xml file."
-msgstr ""
+msgstr "Не удалось записать файл spumux xml"
 
 #: kmfmenupage.cpp:94
 msgid "Could not save images."
-msgstr ""
+msgstr "Не ужалось сохранить изображения"
 
 #: kmfmenupage.cpp:100
 msgid "Could not make mpeg file."
-msgstr ""
+msgstr "Не удалось создать файл mpeg."
 
 #: newstuffobject.cpp:34
 msgid "Get more..."
-msgstr ""
+msgstr "Ещё..."
 
 #. i18n: tag string
 #. i18n: file templateconfig.ui line 13
 #: rc.cpp:3
 msgid "Configure Template Plugin"
-msgstr ""
+msgstr "Настроить модуль шаблона"
 
 #. i18n: tag string
 #. i18n: file templateconfig.ui line 31
 #: rc.cpp:6
 msgid "Default &Menu Language:"
-msgstr ""
+msgstr "Язык &меню по умолчанию:"
 
 #: templateobject.cpp:83
 msgid "&Properties"
-msgstr ""
+msgstr "&Свойства"
 
 #: templateplugin.cpp:68
 msgid "Template plugin"
-msgstr ""
+msgstr "Модуль шаблона"
+

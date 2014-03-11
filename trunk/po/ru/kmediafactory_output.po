@@ -1,22 +1,24 @@
-# SOME DESCRIPTIVE TITLE.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+# Julia Dronova <juliette.tux@gmail.com>, 2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: damu@iki.fi\n"
 "POT-Creation-Date: 2008-05-23 12:23+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2013-08-26 18:18+0400\n"
+"Last-Translator: Julia Dronova <juliette.tux@gmail.com>\n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: ENCODING\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 1.5\n"
 
 #: dvdauthorobject.cpp:33
 msgid "DVD Author XML file"
-msgstr ""
+msgstr "XML-файл DVD Author"
 
 #: dvdauthorobject.cpp:56
 #, kde-format
@@ -43,205 +45,230 @@ msgid ""
 "\n"
 "**********************************************************************\n"
 msgstr ""
+"\n"
+"**********************************************************************\n"
+"\n"
+"Этот файл был создан с помощью %1 - %2\n"
+"http://www.iki.fi/damu/software/kmediafactory/\n"
+"\n"
+"**********************************************************************\n"
+"\n"
+"Использование регистра:\n"
+"================\n"
+"g0: сюда сохраняется проигрываемая глава\n"
+"g1: Проиграть эту главу после входа в меню набора тайтлов. 0 == показать "
+"меню\n"
+"    Также используется кнопкой «назад»\n"
+"g2: сюда сохраняется используемая кнопка vmgm\n"
+"g3: Перейти к этому набору тайтлов. Также используется для прямого "
+"воспроизведения.\n"
+"g4: сюда сохраняется кнопка используемого набора тайтлов\n"
+"g5: сюда сохраняется страница vmgm\n"
+"g6: сюда сохраняется страница набора тайтлов\n"
+"g7: временная переменная\n"
+"\n"
+"**********************************************************************\n"
 
 #: dvdauthorobject.cpp:87
 #, kde-format
 msgid "Main menu for %1"
-msgstr ""
+msgstr "Главное меню для %1"
 
 #: dvdauthorobject.cpp:134
 msgid "Error in saving dvdauthor.xml"
-msgstr ""
+msgstr "Ошибка сохранения dvdauthor.xml"
 
 #: dvdauthorobject.cpp:157
 msgid "DVDAuthor project"
-msgstr ""
+msgstr "Проект DVDAuthor"
 
 #: dvddirectoryobject.cpp:44 dvddirectoryobject.cpp:204
 msgid "DVD Directory"
-msgstr ""
+msgstr "Каталог DVD"
 
 #: dvddirectoryobject.cpp:124 dvddirectoryobject.cpp:135
 #, kde-format
 msgid "Processing: %1"
-msgstr ""
+msgstr "Обработка: %1"
 
 #: dvddirectoryobject.cpp:158
 #, kde-format
 msgid "Fixing: %1"
-msgstr ""
+msgstr "Исправление: %1"
 
 #: dvddirectoryobject.cpp:206
 msgid "&Clean directory"
-msgstr ""
+msgstr "&Очистить каталог"
 
 #: dvddirectoryobject.cpp:262
 msgid "DVD Directory is up to date"
-msgstr ""
+msgstr "Каталог DVD не требует обновления"
 
 #. i18n: tag string
 #. i18n: file dvdinfo.ui line 13
 #: dvdinfo.cpp:41 outputplugin.cpp:59 rc.cpp:3
 msgid "DVD Info"
-msgstr ""
+msgstr "Сведения о DVD"
 
 #: dvdinfo.cpp:66
 msgid "Analyzing DVD..."
-msgstr ""
+msgstr "Анализ DVD..."
 
 #: dvdinfo.cpp:108
 msgid "DVD"
-msgstr ""
+msgstr "DVD"
 
 #: dvdinfo.cpp:109
 msgid "Titles"
-msgstr ""
+msgstr "Названия"
 
 #: dvdinfo.cpp:110
 msgid "Longest title"
-msgstr ""
+msgstr "Самое длинное название"
 
 #: dvdinfo.cpp:113 dvdinfo.cpp:214
 msgid "Name"
-msgstr ""
+msgstr "Имя"
 
 #: dvdinfo.cpp:114
 msgid "VMG Identifier"
-msgstr ""
+msgstr "Идентификатор VMG"
 
 #: dvdinfo.cpp:115
 msgid "Provider indentifier"
-msgstr ""
+msgstr "Идентификатор поставщика"
 
 #: dvdinfo.cpp:121 dvdinfo.cpp:143
 msgid "Index"
-msgstr ""
+msgstr "Индекс"
 
 #: dvdinfo.cpp:122 dvdinfo.cpp:145
 msgid "Length"
-msgstr ""
+msgstr "Длина"
 
 #: dvdinfo.cpp:123
 msgid "VTS ID"
-msgstr ""
+msgstr "VTS ID"
 
 #: dvdinfo.cpp:124
 msgid "VTS"
-msgstr ""
+msgstr "VTS"
 
 #: dvdinfo.cpp:125
 msgid "TTN"
-msgstr ""
+msgstr "TTN"
 
 #: dvdinfo.cpp:126
 msgid "PGC"
-msgstr ""
+msgstr "PGC"
 
 #: dvdinfo.cpp:127 dvdinfo.cpp:146
 msgid "Start sector"
-msgstr ""
+msgstr "Начальный сектор"
 
 #: dvdinfo.cpp:128 dvdinfo.cpp:147
 msgid "End sector"
-msgstr ""
+msgstr "Конечный сектор"
 
 #: dvdinfo.cpp:133
 msgid "Width"
-msgstr ""
+msgstr "Ширина"
 
 #: dvdinfo.cpp:134
 msgid "Height"
-msgstr ""
+msgstr "Высота"
 
 #: dvdinfo.cpp:135 dvdinfo.cpp:155
 msgid "Format"
-msgstr ""
+msgstr "Формат"
 
 #: dvdinfo.cpp:136
 msgid "Aspect ratio"
-msgstr ""
+msgstr "Соотношение сторон"
 
 #: dvdinfo.cpp:137
 msgid "Frames per second"
-msgstr ""
+msgstr "Кадры в секунду"
 
 #: dvdinfo.cpp:138
 msgid "Permitted DF"
-msgstr ""
+msgstr "Разрешённый DF"
 
 #: dvdinfo.cpp:144
 msgid "Start"
-msgstr ""
+msgstr "Начало"
 
 #: dvdinfo.cpp:148
 msgid "Is chapter"
-msgstr ""
+msgstr "Это глава"
 
 #: dvdinfo.cpp:149
 msgid "yes"
-msgstr ""
+msgstr "да"
 
 #: dvdinfo.cpp:149
 msgid "no"
-msgstr ""
+msgstr "нет"
 
 #: dvdinfo.cpp:154 dvdinfo.cpp:166
 msgid "Language"
-msgstr ""
+msgstr "Язык"
 
 #: dvdinfo.cpp:156
 msgid "Channels"
-msgstr ""
+msgstr "Каналы"
 
 #: dvdinfo.cpp:157
 msgid "Sample frequency"
-msgstr ""
+msgstr "Частота образца"
 
 #: dvdinfo.cpp:158
 msgid "Bitrate"
-msgstr ""
+msgstr "Битрейт"
 
 #: dvdinfo.cpp:159
 msgid "Quantization"
-msgstr ""
+msgstr "Квантование"
 
 #: dvdinfo.cpp:160
 msgid "AP Mode"
-msgstr ""
+msgstr "Режим AP"
 
 #: dvdinfo.cpp:161 dvdinfo.cpp:167
 msgid "Type"
-msgstr ""
+msgstr "Тип"
 
 #: dvdinfo.cpp:207
 msgid "Not a DVD."
-msgstr ""
+msgstr "Не DVD"
 
 #: dvdinfo.cpp:215
 msgid "Size"
-msgstr ""
+msgstr "Размер"
 
 #: dvdinfo.cpp:255
 msgid "DVD files and directories"
-msgstr ""
+msgstr "Файлы и каталоги DVD"
 
 #: k3bobject.cpp:37
 msgid "K3b project"
-msgstr ""
+msgstr "Проект k3b"
 
 #: k3bobject.cpp:349
 #, kde-format
 msgid "%1 - Version %2"
-msgstr ""
+msgstr "%1 — версия %2"
 
 #: k3bobject.cpp:436
 msgid "K3b Project"
-msgstr ""
+msgstr "Проект k3b"
 
 #: outputplugin.cpp:67
 msgid "Preview DVD in Xine"
-msgstr ""
+msgstr "Предварительный просмотр DVD в Xine"
 
 #: outputplugin.cpp:75
 msgid "Preview DVD in Kaffeine"
-msgstr ""
+msgstr "Предварительный просмотр DVD в Kaffeine"
+
+

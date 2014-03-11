@@ -1,65 +1,67 @@
-# SOME DESCRIPTIVE TITLE.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+# Julia Dronova <juliette.tux@gmail.com>, 2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: damu@iki.fi\n"
 "POT-Creation-Date: 2008-05-23 12:50+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2013-08-23 16:32+0400\n"
+"Last-Translator: Julia Dronova <juliette.tux@gmail.com>\n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: ENCODING\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 1.5\n"
 
 #. i18n: tag string
 #. i18n: file mediapage.ui line 19
 #: kmediafactory.cpp:102 kmediafactory.cpp:103 rc.cpp:30
 msgid "Media"
-msgstr ""
+msgstr "Медиа"
 
 #: kmediafactory.cpp:109 kmediafactory.cpp:110
 msgid "Template"
-msgstr ""
+msgstr "Шаблон"
 
 #. i18n: tag string
 #. i18n: file outputpage.ui line 13
 #: kmediafactory.cpp:120 kmediafactory.cpp:121 rc.cpp:39
 msgid "Output"
-msgstr ""
+msgstr "Вывод"
 
 #: kmediafactory.cpp:164
 msgid "&Options"
-msgstr ""
+msgstr "&Параметры"
 
 #: kmediafactory.cpp:169
 msgid "&Get new tools"
-msgstr ""
+msgstr "&Получить новые инструменты"
 
 #: kmediafactory.cpp:184
 msgid "&Delete"
-msgstr ""
+msgstr "&Удалить"
 
 #: kmediafactory.cpp:338 templatepage.cpp:221
 #, kde-format
 msgid "Could not write to file: %1"
-msgstr ""
+msgstr "Не удалось записать в файл: %1"
 
 #: kmediafactory.cpp:465 kmediafactory.cpp:466 main.cpp:31
 msgid "KMediaFactory"
-msgstr ""
+msgstr "KMediaFactory"
 
 #. i18n: tag string
 #. i18n: file tools.ui line 19
 #: kmediafactory.cpp:467 kmediafactory.cpp:468 rc.cpp:123
 msgid "Tools"
-msgstr ""
+msgstr "Инструменты"
 
 #: kmediafactory.cpp:504
 msgid "Save changes to project?"
-msgstr ""
+msgstr "Сохранить изменения в проекте?"
 
 #: kmfapplication.cpp:209
 #, kde-format
@@ -67,365 +69,370 @@ msgid ""
 "KLauncher could not be reached via D-Bus, error when calling %1:\n"
 "%2\n"
 msgstr ""
+"Не удалось связаться с KLauncher через D-Bus, ошибка вызова %1:\n"
+"%2\n"
 
 #. i18n: tag string
 #. i18n: file outputpage.ui line 72
 #: kmfplugininterface.cpp:255 rc.cpp:45
 msgid "Progress:"
-msgstr ""
+msgstr "Выполнение:"
 
 #: kmfproject.cpp:54 projectoptions.cpp:88
 msgid "Untitled"
-msgstr ""
+msgstr "Без наименования"
 
 #: kmfproject.cpp:61
 #, kde-format
 msgid "Project%1"
-msgstr ""
+msgstr "Проект%1"
 
 #: kmfproject.cpp:83
 msgid "No media files."
-msgstr ""
+msgstr "Медиа-файлы не найдены."
 
 #: kmfproject.cpp:88
 msgid "No template selected."
-msgstr ""
+msgstr "Шаблон не выбран."
 
 #: kmfproject.cpp:93
 msgid "No output type selected."
-msgstr ""
+msgstr "Тип вывода не выбран"
 
 #: kmfproject.cpp:369
 #, kde-format
 msgid "Do you want to overwrite %1"
-msgstr ""
+msgstr "Перезаписать %1?"
 
 #: main.cpp:32
 msgid "Template based DVD authoring software."
-msgstr ""
+msgstr "Программа для DVD-авторинга на основе шаблонов"
 
 #: main.cpp:36
 msgid "Petri Damsten"
-msgstr ""
+msgstr "Петри Дамштейн (Petri Damsten)"
 
 #: main.cpp:36
 msgid "Developer"
-msgstr ""
+msgstr "Разработчик"
 
 #: main.cpp:41
 msgid "Document to open"
-msgstr ""
+msgstr "Открыть документ"
 
 #: outputpage.cpp:134
 msgid "User cancelled."
-msgstr ""
+msgstr "Прервано пользователем."
 
 #: outputpage.cpp:162
 msgid "Preparing files..."
-msgstr ""
+msgstr "Подготовка файлов..."
 
 #: outputpage.cpp:169
 msgid "Making files..."
-msgstr ""
+msgstr "Создание файлов..."
 
 #: projectoptions.cpp:76
 msgid "Project"
-msgstr ""
+msgstr "Проект"
 
 #: projectoptions.cpp:111
 msgid ""
 "Media files will be removed from the project when project type changes. "
 "Continue?"
 msgstr ""
+"При изменении типа проекта медиа-файлы будут удалены из проекта. "
+"Продолжить?"
 
 #. i18n: tag string
 #. i18n: file kmfoptions.ui line 13
 #: rc.cpp:3
 msgid "KMediaFactory Settings"
-msgstr ""
+msgstr "Настройки KMediaFactory"
 
 #. i18n: tag string
 #. i18n: file kmfoptions.ui line 34
 #: rc.cpp:6
 msgid "Def&ault Project Type:"
-msgstr ""
+msgstr "Тип пр&оекта по умолчанию:"
 
 #. i18n: tag string
 #. i18n: file kmfoptions.ui line 51
 #: rc.cpp:9
 msgid "DVD-PAL"
-msgstr ""
+msgstr "DVD-PAL"
 
 #. i18n: tag string
 #. i18n: file kmfoptions.ui line 56
 #: rc.cpp:12
 msgid "DVD-NTSC"
-msgstr ""
+msgstr "DVD-NTSC"
 
 #. i18n: tag string
 #. i18n: file kmfoptions.ui line 64
 #: rc.cpp:15
 msgid "Default Project Director&y:"
-msgstr ""
+msgstr "Ка&талог проекта по умолчанию:"
 
 #. i18n: tag string
 #. i18n: file kmfoptions.ui line 80
 #: rc.cpp:18
 msgid "Show project &options on new project"
-msgstr ""
+msgstr "Показывать п&араметры проекта в новом проекте"
 
 #. i18n: tag string
 #. i18n: file kmfoptions.ui line 83
 #: rc.cpp:21
 msgid "Alt+O"
-msgstr ""
+msgstr "Alt+O"
 
 #. i18n: tag string
 #. i18n: file logview.ui line 19
 #: rc.cpp:24
 msgid "Log viewer"
-msgstr ""
+msgstr "Просмотр журнала"
 
 #. i18n: tag string
 #. i18n: file logview.ui line 31
 #: rc.cpp:27
 msgid "&Log:"
-msgstr ""
+msgstr "&Журнал:"
 
 #. i18n: tag string
 #. i18n: file mediapage.ui line 40
 #: rc.cpp:33
 msgid "Add media:"
-msgstr ""
+msgstr "Добавить медиа:"
 
 #. i18n: tag string
 #. i18n: file mediapage.ui line 72
 #: rc.cpp:36
 msgid "Selected &media:"
-msgstr ""
+msgstr "Выбранные  &медиа:"
 
 #. i18n: tag string
 #. i18n: file outputpage.ui line 25
 #: rc.cpp:42
 msgid "Select output t&ype:"
-msgstr ""
+msgstr "Выбрать т&ип вывода:"
 
 #. i18n: tag string
 #. i18n: file outputpage.ui line 153
 #: rc.cpp:48
 msgid "Show &Log"
-msgstr ""
+msgstr "Показывать &журнал:"
 
 #. i18n: tag string
 #. i18n: file outputpage.ui line 156
 #: rc.cpp:51
 msgid "Alt+L"
-msgstr ""
+msgstr "Alt+L"
 
 #. i18n: tag string
 #. i18n: file outputpage.ui line 178
 #: rc.cpp:54
 msgid "S&top"
-msgstr ""
+msgstr "Ст&оп"
 
 #. i18n: tag string
 #. i18n: file outputpage.ui line 181
 #: rc.cpp:57
 msgid "Alt+T"
-msgstr ""
+msgstr "Alt+T"
 
 #. i18n: tag string
 #. i18n: file outputpage.ui line 200
 #: rc.cpp:60
 msgid "&Start"
-msgstr ""
+msgstr "&Старт"
 
 #. i18n: tag string
 #. i18n: file projectoptions.ui line 19
 #: rc.cpp:63
 msgid "Project Options"
-msgstr ""
+msgstr "Параметры проекта"
 
 #. i18n: tag string
 #. i18n: file projectoptions.ui line 40
 #: rc.cpp:66
 msgid "&Title:"
-msgstr ""
+msgstr "&Название:"
 
 #. i18n: tag string
 #. i18n: file projectoptions.ui line 56
 #: rc.cpp:69
 msgid "T&ype:"
-msgstr ""
+msgstr "Т&ип:"
 
 #. i18n: tag string
 #. i18n: file projectoptions.ui line 72
 #: rc.cpp:72
 msgid "Direct&ory:"
-msgstr ""
+msgstr "К&аталог:"
 
 #. i18n: tag string
 #. i18n: file sizewidget.ui line 13
 #: rc.cpp:75
 msgid "Size Widget"
-msgstr ""
+msgstr "Виджет размера"
 
 #. i18n: tag string
 #. i18n: file sizewidget.ui line 146
 #: rc.cpp:78
 msgid "0 B"
-msgstr ""
+msgstr "0 Б"
 
 #. i18n: tag string
 #. i18n: file sizewidget.ui line 178
 #: rc.cpp:81
 msgid "4.4 GB"
-msgstr ""
+msgstr "4.4 ГБ"
 
 #. i18n: tag string
 #. i18n: file templatepage.ui line 19
 #: rc.cpp:84
 msgid "Templates"
-msgstr ""
+msgstr "Шаблоны"
 
 #. i18n: tag string
 #. i18n: file templatepage.ui line 37
 #: rc.cpp:87
 msgid "&Templates:"
-msgstr ""
+msgstr "&Шаблоны:"
 
 #. i18n: tag string
 #. i18n: file templatepage.ui line 84
 #: rc.cpp:90
 msgid "&Preview:"
-msgstr ""
+msgstr "&Предпросмотр:"
 
 #. i18n: tag string
 #. i18n: file templatepage.ui line 87
 #: rc.cpp:93
 msgid "Alt+P"
-msgstr ""
+msgstr "Alt+P"
 
 #. i18n: tag string
 #. i18n: file toolproperties.ui line 13
 #: rc.cpp:96
 msgid "Tool Properties"
-msgstr ""
+msgstr "Свойства инструмента"
 
 #. i18n: tag string
 #. i18n: file toolproperties.ui line 54
 #: rc.cpp:99
 msgid "&Name:"
-msgstr ""
+msgstr "&Имя:"
 
 #. i18n: tag string
 #. i18n: file toolproperties.ui line 73
 #: rc.cpp:102
 msgid "Wor&k path:"
-msgstr ""
+msgstr "Рабочий &путь:"
 
 #. i18n: tag string
 #. i18n: file toolproperties.ui line 114
 #: rc.cpp:105
 msgid "&Description:"
-msgstr ""
+msgstr "&Описание:"
 
 #. i18n: tag string
 #. i18n: file toolproperties.ui line 127
 #: rc.cpp:108
 msgid "Co&mmand:"
-msgstr ""
+msgstr "К&оманда:"
 
 #. i18n: tag string
 #. i18n: file toolproperties.ui line 142
 #: rc.cpp:111
 msgid "Place in media &button bar"
-msgstr ""
+msgstr "Разместить на панели &медиа"
 
 #. i18n: tag string
 #. i18n: file toolproperties.ui line 145
 #: rc.cpp:114
 msgid "Alt+B"
-msgstr ""
+msgstr "Alt+B"
 
 #. i18n: tag string
 #. i18n: file toolproperties.ui line 152
 #: rc.cpp:117
 msgid "Run In Term&inal"
-msgstr ""
+msgstr "Запустить в т&ерминале"
 
 #. i18n: tag string
 #. i18n: file toolproperties.ui line 155
 #: rc.cpp:120
 msgid "Alt+I"
-msgstr ""
+msgstr "Alt+I"
 
 #. i18n: tag string
 #. i18n: file tools.ui line 73
 #: rc.cpp:126
 msgid "Add"
-msgstr ""
+msgstr "Добавить"
 
 #. i18n: tag string
 #. i18n: file tools.ui line 86
 #: rc.cpp:129
 msgid "Properties"
-msgstr ""
+msgstr "Свойства"
 
 #. i18n: tag string
 #. i18n: file tools.ui line 99
 #: rc.cpp:132
 msgid "Remove"
-msgstr ""
+msgstr "Удалить"
 
 #. i18n: tag text
 #. i18n: file kmediafactoryui.rc line 5
 #: rc.cpp:135
 msgid "&Project"
-msgstr ""
+msgstr "&Проект"
 
 #. i18n: tag text
 #. i18n: file kmediafactoryui.rc line 9
 #: rc.cpp:138
 msgid "&Media"
-msgstr ""
+msgstr "&Медиа"
 
 #. i18n: tag text
 #. i18n: file kmediafactoryui.rc line 13
 #: rc.cpp:141
 msgid "&Tools"
-msgstr ""
+msgstr "&Инструменты"
 
 #. i18n: tag text
 #. i18n: file kmediafactoryui.rc line 35
 #: rc.cpp:144
 msgid "Main Toolbar"
-msgstr ""
+msgstr "Основная панель инструментов"
 
 #: templatepage.cpp:183
 msgid "Save image"
-msgstr ""
+msgstr "Сохранить изображение"
 
 #: templatepage.cpp:184
 msgid "Scaled"
-msgstr ""
+msgstr "Масштабированный"
 
 #: templatepage.cpp:215
 msgid "*.png|PNG Graphics file"
-msgstr ""
+msgstr "*.png|PNG Графические файлы"
 
 #: toolproperties.cpp:31
 msgid "Tool properties"
-msgstr ""
+msgstr "Свойства инструмента"
 
 #: tools.cpp:92
 msgid "Name"
-msgstr ""
+msgstr "Имя"
 
 #: tools.cpp:94
 msgid "Description"
-msgstr ""
+msgstr "Описание"
 
 #: kmfobjectlistmodel.h:49
 msgid "Title"
-msgstr ""
+msgstr "Название"
+
