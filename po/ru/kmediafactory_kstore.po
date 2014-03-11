@@ -1,49 +1,59 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR This_file_is_part_of_KMediaFactory
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+# Julia Dronova <juliette.tux@gmail.com>, 2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: damu@iki.fi\n"
 "POT-Creation-Date: 2008-05-23 11:23+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2013-08-20 18:20+0400\n"
+"Last-Translator: Julia Dronova <juliette.tux@gmail.com>\n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 1.5\n"
 
 #: KoEncryptedStore.cpp:155 KoEncryptedStore.cpp:164
 msgid ""
 "The manifest file seems to be corrupted. The document could not be opened."
-msgstr ""
+msgstr "Похоже, что файл описания повреждён. Не удалось открыть документ."
 
 #: KoEncryptedStore.cpp:223
 msgid ""
 "This document contains an unknown checksum. When you give a password it "
 "might not be verified."
 msgstr ""
+"Документ содержит неизвестную контрольную сумму, которую, возможно, "
+"не удастся проверить после ввода пароля."
 
 #: KoEncryptedStore.cpp:250 KoEncryptedStore.cpp:267
 msgid ""
 "This document contains an unknown encryption method. Some parts may be "
 "unreadable."
 msgstr ""
+"Документ содержит неизвестный метод шифрования. Некоторые его части "
+"могут быть нечитаемыми."
 
 #: KoEncryptedStore.cpp:282
 msgid ""
 "This document contains incomplete encryption data. Some parts may be "
 "unreadable."
 msgstr ""
+"Документ содержит неполные данные о шифровании. Некоторые его части "
+"могут быть нечитаемыми."
 
 #: KoEncryptedStore.cpp:296
 msgid ""
 "QCA has currently no support for SHA1 or PBKDF2 using SHA1. The document can "
 "not be opened."
 msgstr ""
+"В настоящее время QCA не имеет поддержки для SHA1 или PBKDF2 с использованием "
+"SHA1. Документ не может быть открыт."
 
 #: KoEncryptedStore.cpp:326
 msgid ""
@@ -51,29 +61,36 @@ msgid ""
 "document will remain unreadable. Please try and save the document again to "
 "prevent losing your work."
 msgstr ""
+"Похоже, что файл описания повреждён. Его нельзя изменить, и документ "
+"останется нечитаемым. Попробуйте снова сохранить документ для "
+"предотвращения потери сделанной работы."
 
 #: KoEncryptedStore.cpp:429
 msgid ""
 "The manifest file cannot be written. The document will remain unreadable. "
 "Please try and save the document again to prevent losing your work."
 msgstr ""
+"Файл описания недоступен для записи.Документ останется нечитаемым. "
+"Попробуйте снова сохранить документ для предотвращения потери "
+"сделанной работы."
 
 #: KoEncryptedStore.cpp:531
 msgid "Please enter the password to open this file."
-msgstr ""
+msgstr "Введите пароль чтобы открыть этот файл."
 
 #: KoEncryptedStore.cpp:692
 msgid "Please enter the password to encrypt the document with."
-msgstr ""
+msgstr "Введите пароль, с которым нужно зашифровать документ."
 
 #: KoEncryptedStore.cpp:706
 msgid "Do you want to save the password?"
-msgstr ""
+msgstr "Сохранить пароль?"
 
 #: KoStore.cpp:196
 msgid "The directory mode is not supported for remote locations."
-msgstr ""
+msgstr "Режим каталогов не поддерживается для удалённых местоположений."
 
 #: KoStore.cpp:197
 msgid "KOffice Storage"
-msgstr ""
+msgstr "Хранение KOffice"
+
